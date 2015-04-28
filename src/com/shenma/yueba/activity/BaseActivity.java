@@ -19,7 +19,7 @@ public class BaseActivity extends Activity {
 	protected BaseActivity mContext;// 上下文
 	private HttpUtils http = new HttpUtils();//httpUtils初始化
 	private RequestParams params = new RequestParams();//参数对象初始化
-	private  CustomProgressDialog dialog;
+	private  CustomProgressDialog dialog;//自定义对话框
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
