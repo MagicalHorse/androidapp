@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="80dip"
+    android:orientation="horizontal"
+    android:padding="10dip" >
+
+    <ImageView
+        android:id="@+id/iv_dynamic_icon"
+        android:layout_width="60dip"
+        android:layout_height="60dip"
+        android:background="@drawable/defalt_pic" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:paddingBottom="3dip"
+        android:paddingLeft="10dip"
+        android:paddingTop="3dip" >
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="叮当猫"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/tv_dynamic_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tv_name"
+            android:layout_marginLeft="5dip"
+            android:layout_toRightOf="@+id/tv_name"
+            android:text="加入圈子"
+            android:textColor="@color/text_gray_color"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:text="2019-01-29 19:39"
+            android:textColor="@color/text_gray_color"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/iv_dynamic_img"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/defalt_pic" />
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+         android:layout_width="150dip"
+            android:layout_height="150dip">
+
+        <com.shenma.yueba.view.RoundImageView
+            android:id="@+id/riv"
+            android:layout_centerInParent="true"
+            android:layout_width="110dip"
+            android:layout_height="110dip"
+            android:src="@drawable/a" />
+
+        <View
+            android:layout_width="110dip"
+            android:layout_height="110dip"
+            android:layout_centerInParent="true" 
+            android:background="@drawable/circle_shape" />
+       <View
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_centerInParent="true"
+            android:background="@drawable/guangyun" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_circle_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="欧美高端女包"
+        android:textSize="19sp" />
+
+    <TextView
+        android:id="@+id/tv_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="人数4320"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tv_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/address"
+        android:gravity="bottom"
+        android:text="王府井百货"
+        android:textColor="#999999"
+        android:textSize="16sp" />
+
+</LinearLayout>
