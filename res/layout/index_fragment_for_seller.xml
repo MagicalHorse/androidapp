@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F1F1F1"
+    android:orientation="vertical" >
+
+    <include layout="@layout/index_title_for_common" />
+
+    <View style="@style/style_horizontal_line" />
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <include layout="@layout/my_eq_code_item" />
+
+            <View style="@style/style_horizontal_line" />
+
+            <include
+                android:id="@+id/ll_earnings"
+                layout="@layout/earnings_manager_item" />
+
+            <View style="@style/style_horizontal_line" />
+
+            <include
+                android:id="@+id/ll_sales"
+                layout="@layout/sales_manager_item" />
+
+            <View style="@style/style_horizontal_line" />
+
+            <include
+                android:id="@+id/ll_share"
+                layout="@layout/share_manager_item" />
+
+            <View style="@style/style_horizontal_line" />
+
+            <include
+                android:id="@+id/ll_products"
+                layout="@layout/products_manager_item" />
+
+            <View style="@style/style_horizontal_line" />
+
+            <include
+                android:id="@+id/ll_fans"
+                layout="@layout/fans_manager_item" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
