@@ -23,7 +23,6 @@
             android:textColor="@color/main_color"
             android:textSize="@dimen/title_text_size" />
 
-
         <TextView
             android:id="@+id/tv_dynamic"
             android:layout_width="0dip"
@@ -47,20 +46,10 @@
         android:layout_height="4dip"
         android:orientation="horizontal"
         android:paddingLeft="20dip"
-        android:paddingRight="30dip" >
+        android:paddingRight="10dip" >
 
         <ImageView
             android:id="@+id/iv_cursor_left"
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dip"
-            android:layout_marginRight="5dip"
-            android:layout_weight="1"
-            android:background="@drawable/line_title"
-            android:visibility="invisible" />
-
-        <ImageView
-            android:id="@+id/iv_cursor_center"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dip"
@@ -77,6 +66,14 @@
             android:layout_marginRight="5dip"
             android:layout_weight="1"
             android:background="@drawable/line_title"
+            android:visibility="invisible" />
+
+        <Button
+            android:id="@+id/bt_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/msg"
+            android:paddingLeft="10dip"
             android:visibility="invisible" />
     </LinearLayout>
 

@@ -79,7 +79,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.shenma.yueba.activity.MainActivity"
+            android:name="com.shenma.yueba.seller.activity.MainActivityForSeller"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
             <intent-filter>
@@ -89,14 +89,14 @@
             </intent-filter>
         </activity>
         
-        
-        <activity android:name="com.shenma.yueba.activity.SwipeListViewActivity"></activity>
-        <activity android:name="com.shenma.yueba.activity.WebActivity"></activity>
-        <activity android:name="com.shenma.yueba.activity.LoginAndRegisterActivity"></activity>
-        <activity android:name="com.shenma.yueba.activity.FillPersonDataActivity"></activity>
-        <activity android:name="com.shenma.yueba.activity.FindPasswordActivity"></activity>
-        <activity android:name="com.shenma.yueba.activity.SetNewPasswordActivity"></activity>
-        <activity android:name="com.shenma.yueba.activity.CircleActivity"></activity>
+        <activity android:name="com.shenma.yueba.buyer.activity.MainActivityForBuyer"></activity>
+        <activity android:name="com.shenma.yueba.buyer.activity.SwipeListViewActivity"></activity>
+        <activity android:name="com.shenma.yueba.buyer.activity.WebActivity"></activity>
+        <activity android:name="com.shenma.yueba.buyer.activity.LoginAndRegisterActivity"></activity>
+        <activity android:name="com.shenma.yueba.buyer.activity.FillPersonDataActivity"></activity>
+        <activity android:name="com.shenma.yueba.buyer.activity.FindPasswordActivity"></activity>
+        <activity android:name="com.shenma.yueba.buyer.activity.SetNewPasswordActivity"></activity>
+        <activity android:name="com.shenma.yueba.buyer.activity.CircleActivity"></activity>
         
         
         <!-- 网络状态变化的广播 -->
