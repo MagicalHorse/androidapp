@@ -37,7 +37,7 @@ public class MyApplication extends Application {
 	
 	
 	/**
-	 * /** 初始化图片加载类MyApplication
+	 * /** 初始化图片加载类MyApplication123
 	 */
 	private ImageLoader ivL;
 	private DisplayImageOptions options;
