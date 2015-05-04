@@ -23,6 +23,12 @@
         <item name="android:background">#66999999</item>
     </style>
     
+    <style name="style_vertical_line">
+        <item name="android:layout_width">0.1dip</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">#66999999</item>
+    </style>
+    
     <style name="title_text_style">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

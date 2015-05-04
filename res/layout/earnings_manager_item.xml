@@ -20,6 +20,7 @@
         android:layout_marginLeft="5dip"
         android:layout_toRightOf="@id/iv_earnings_left"
         android:text="收益管理"
+        android:textColor="@color/text_gray_color"
         android:textSize="20sp" />
 
     <LinearLayout
@@ -41,6 +42,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="今日收益"
+                android:textColor="@color/text_gray_color"
                 android:textSize="20sp" />
 
             <TextView
@@ -58,6 +60,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dip"
                 android:text="元"
+                android:textColor="@color/text_gray_color"
                 android:textSize="16sp" />
         </LinearLayout>
 
@@ -77,6 +80,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="累计收益"
+                    android:textColor="@color/text_gray_color"
                     android:textSize="20sp" />
 
                 <TextView
@@ -94,6 +98,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dip"
                     android:text="元"
+                    android:textColor="@color/text_gray_color"
                     android:textSize="16sp" />
             </LinearLayout>
         </LinearLayout>

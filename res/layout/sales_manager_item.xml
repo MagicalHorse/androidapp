@@ -14,6 +14,7 @@
 
     <TextView
         android:id="@+id/tv_sales_title"
+        android:textColor="@color/text_gray_color"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
@@ -41,7 +42,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="今日订单"
+                android:textColor="@color/text_gray_color"
                 android:textSize="20sp" />
+            
 
             <TextView
                 android:id="@+id/tv_today_sales_count"
@@ -69,6 +72,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="累计订单"
+                    android:textColor="@color/text_gray_color"
                     android:textSize="20sp" />
 
                 <TextView
@@ -77,6 +81,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dip"
                     android:text="52100"
+                    android:textColor="@color/black"
                     android:textSize="19sp" />
             </LinearLayout>
         </LinearLayout>

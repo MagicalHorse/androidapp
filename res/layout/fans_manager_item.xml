@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@color/white"
     android:layout_height="wrap_content"
+    android:background="@color/white"
     android:padding="10dip" >
 
     <ImageView
@@ -20,6 +20,7 @@
         android:layout_marginLeft="5dip"
         android:layout_toRightOf="@id/iv_fans_left"
         android:text="粉丝管理"
+        android:textColor="@color/text_gray_color"
         android:textSize="20sp" />
 
     <LinearLayout
@@ -41,6 +42,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="我的粉丝"
+                android:textColor="@color/text_gray_color"
                 android:textSize="20sp" />
 
             <TextView
@@ -49,8 +51,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dip"
                 android:text="500"
+                android:textColor="@color/black"
                 android:textSize="19sp" />
-
         </LinearLayout>
 
         <LinearLayout
@@ -69,6 +71,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="我的圈子"
+                    android:textColor="@color/text_gray_color"
                     android:textSize="20sp" />
 
                 <TextView
@@ -77,8 +80,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dip"
                     android:text="52100"
+                    android:textColor="@color/black"
                     android:textSize="19sp" />
-
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

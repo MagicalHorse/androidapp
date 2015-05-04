@@ -1,6 +1,6 @@
 package com.shenma.yueba.util;
 
-import com.shenma.yueba.buyer.modle.LoginBackBean;
+import com.shenma.yueba.baijia.modle.LoginBackBean;
 
 
 /**

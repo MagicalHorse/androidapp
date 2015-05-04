@@ -79,9 +79,10 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.shenma.yueba.seller.activity.MainActivityForSeller"
+            android:name="com.shenma.yueba.yangjia.activity.MainActivityForYangJia"
             android:label="@string/app_name"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -89,14 +90,16 @@
             </intent-filter>
         </activity>
         
-        <activity android:name="com.shenma.yueba.buyer.activity.MainActivityForBuyer"></activity>
-        <activity android:name="com.shenma.yueba.buyer.activity.SwipeListViewActivity"></activity>
-        <activity android:name="com.shenma.yueba.buyer.activity.WebActivity"></activity>
-        <activity android:name="com.shenma.yueba.buyer.activity.LoginAndRegisterActivity"></activity>
-        <activity android:name="com.shenma.yueba.buyer.activity.FillPersonDataActivity"></activity>
-        <activity android:name="com.shenma.yueba.buyer.activity.FindPasswordActivity"></activity>
-        <activity android:name="com.shenma.yueba.buyer.activity.SetNewPasswordActivity"></activity>
-        <activity android:name="com.shenma.yueba.buyer.activity.CircleActivity"></activity>
+        <activity android:name="com.shenma.yueba.baijia.activity.MainActivityForBaiJia"></activity>
+        <activity android:name="com.shenma.yueba.baijia.activity.SwipeListViewActivity"></activity>
+        <activity android:name="com.shenma.yueba.baijia.activity.WebActivity"></activity>
+        <activity android:name="com.shenma.yueba.baijia.activity.LoginAndRegisterActivity"></activity>
+        <activity android:name="com.shenma.yueba.baijia.activity.FillPersonDataActivity"></activity>
+        <activity android:name="com.shenma.yueba.baijia.activity.FindPasswordActivity"></activity>
+        <activity android:name="com.shenma.yueba.baijia.activity.SetNewPasswordActivity"></activity>
+        <activity android:name="com.shenma.yueba.baijia.activity.CircleActivity"></activity>
+        <activity android:name="com.shenma.yueba.yangjia.activity.EarningManagerActivity"></activity>
+        <activity android:name="com.shenma.yueba.yangjia.activity.SalesManagerForSupperManActivity"></activity>
         
         
         <!-- 网络状态变化的广播 -->

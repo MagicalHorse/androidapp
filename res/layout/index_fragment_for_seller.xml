@@ -5,14 +5,15 @@
     android:background="#F1F1F1"
     android:orientation="vertical" >
 
-    <include layout="@layout/index_title_for_common" />
+    <include layout="@layout/title_for_common" />
 
     <View style="@style/style_horizontal_line" />
 
-    <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="none" >
+       <com.handmark.pulltorefresh.library.PullToRefreshScrollView
+           android:id="@+id/pull_refresh_scrollview"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:scrollbars="none" >
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -24,33 +25,33 @@
             <View style="@style/style_horizontal_line" />
 
             <include
-                android:id="@+id/ll_earnings"
+                android:id="@+id/rl_earnings"
                 layout="@layout/earnings_manager_item" />
 
             <View style="@style/style_horizontal_line" />
 
             <include
-                android:id="@+id/ll_sales"
+                android:id="@+id/rl_sales"
                 layout="@layout/sales_manager_item" />
 
             <View style="@style/style_horizontal_line" />
 
             <include
-                android:id="@+id/ll_share"
+                android:id="@+id/rl_share"
                 layout="@layout/share_manager_item" />
 
             <View style="@style/style_horizontal_line" />
 
             <include
-                android:id="@+id/ll_products"
+                android:id="@+id/rl_products"
                 layout="@layout/products_manager_item" />
 
             <View style="@style/style_horizontal_line" />
 
             <include
-                android:id="@+id/ll_fans"
+                android:id="@+id/rl_fans"
                 layout="@layout/fans_manager_item" />
         </LinearLayout>
-    </ScrollView>
+    </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
 
 </LinearLayout>

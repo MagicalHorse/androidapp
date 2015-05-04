@@ -1,10 +1,10 @@
 eclipse.preferences.version=1
 encoding//src/com/shenma/yueba/application/MyApplication.java=UTF-8
-encoding//src/com/shenma/yueba/buyer/activity/BaseActivityWithTopView.java=UTF-8
-encoding//src/com/shenma/yueba/buyer/activity/BasePullToRefreshActivity.java=UTF-8
-encoding//src/com/shenma/yueba/buyer/activity/MainActivityForBuyer.java=UTF-8
-encoding//src/com/shenma/yueba/buyer/adapter/BaseAdapterWithUtil.java=UTF-8
-encoding//src/com/shenma/yueba/buyer/adapter/MyAdapter.java=UTF-8
+encoding//src/com/shenma/yueba/baijia/activity/BaseActivityWithTopView.java=UTF-8
+encoding//src/com/shenma/yueba/baijia/activity/BasePullToRefreshActivity.java=UTF-8
+encoding//src/com/shenma/yueba/baijia/activity/MainActivityForBaiJia.java=UTF-8
+encoding//src/com/shenma/yueba/baijia/adapter/BaseAdapterWithUtil.java=UTF-8
+encoding//src/com/shenma/yueba/baijia/adapter/MyAdapter.java=UTF-8
 encoding//src/com/shenma/yueba/util/LogUtil.java=UTF-8
 encoding//src/com/shenma/yueba/util/MyDate.java=UTF-8
 encoding//src/com/shenma/yueba/util/ParserJson.java=UTF-8
