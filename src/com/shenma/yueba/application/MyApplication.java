@@ -34,6 +34,8 @@ public class MyApplication extends Application {
 	private BitmapUtils bitmapUtils;
 	public BitmapDisplayConfig bigPicDisplayConfig;
 	
+	
+	
 	/**
 	 * /** 初始化图片加载类
 	 */
