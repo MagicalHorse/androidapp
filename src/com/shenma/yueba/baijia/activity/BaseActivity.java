@@ -21,6 +21,13 @@ public class BaseActivity extends Activity {
 	private RequestParams params = new RequestParams();//参数对象初始化
 	private  CustomProgressDialog dialog;//自定义对话框
 	
+	
+	
+	
+	
+	
+	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
