@@ -46,7 +46,6 @@ public class MyApplication extends Application {
 	
 	
 	
-	
 	private DisplayImageOptions optionsForRound;
 
 	@Override
