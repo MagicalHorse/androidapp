@@ -46,6 +46,8 @@ public class MyApplication extends Application {
 	
 	private String ddddddd;
 	
+	private String ccc;
+	
 	private DisplayImageOptions optionsForRound;
 
 	@Override
