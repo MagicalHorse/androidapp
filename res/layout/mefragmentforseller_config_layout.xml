@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/top_bg"
+    >
+ 
+    <include 
+        layout="@layout/title_for_common"
+        android:background="@color/white"
+        />
+    <!-- 头像 -->
+     <include  
+         android:layout_marginTop="1dp"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         layout="@layout/mefragmentforseller_config_layout_item"  />
+     
+     <!-- 昵称 -->
+     <LinearLayout 
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:background="@color/white"
+         android:paddingLeft="@dimen/margin_left_and_right"
+         android:paddingRight="@dimen/margin_left_and_right"
+         >
+          <View style="@style/style_horizontal_line"  />
+     </LinearLayout>
+    
+     <include  
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         layout="@layout/mefragmentforseller_config_layout_item"  />
+     
+     <!-- 我的地址 -->
+     <include  
+         android:layout_marginTop="20dp"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         layout="@layout/mefragmentforseller_config_layout_item"  />
+     
+     <!-- 我的收藏 -->
+      <LinearLayout 
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:background="@color/white"
+         android:paddingLeft="@dimen/margin_left_and_right"
+         android:paddingRight="@dimen/margin_left_and_right"
+         >
+          <View style="@style/style_horizontal_line"  />
+     </LinearLayout>
+     <include  
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         layout="@layout/mefragmentforseller_config_layout_item"  />
+     
+     <!-- 账户密码 -->
+     <include  
+         android:layout_marginTop="20dp"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         layout="@layout/mefragmentforseller_config_layout_item"  />
+     
+     <!-- 消息免打扰 -->
+     <include  
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         layout="@layout/mefragmentforseller_config_layout_item"  />
+</LinearLayout>
