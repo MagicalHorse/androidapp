@@ -44,7 +44,8 @@ public class MyApplication extends Application {
 	
 	private String text;
 	
-	
+	private String ddddddd;
+	private String ccccccc;
 	
 	private DisplayImageOptions optionsForRound;
 
