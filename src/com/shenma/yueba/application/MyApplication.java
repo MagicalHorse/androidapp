@@ -33,6 +33,7 @@ public class MyApplication extends Application {
 	private static MyApplication instance;
 	private BitmapUtils bitmapUtils;
 	public BitmapDisplayConfig bigPicDisplayConfig;
+	
 	/**
 	 * /** 初始化图片加载类
 	 */
