@@ -42,7 +42,7 @@ public class MyApplication extends Application {
 	private ImageLoader ivL;
 	private DisplayImageOptions options;
 	
-	
+	private String text;
 	
 	
 	
