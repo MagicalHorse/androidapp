@@ -1,26 +1,18 @@
 package com.shenma.yueba.baijia.fragment;
 
-import java.util.ArrayList;
-
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.adapter.CircleFragmentPagerAdapter;
-import com.shenma.yueba.baijia.fragment.BaseFragment;
 import com.shenma.yueba.util.FontManager;
 
 /**
@@ -31,17 +23,27 @@ import com.shenma.yueba.util.FontManager;
  */
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class MeFragmentForBaiJia extends BaseFragment implements OnClickListener {
-	private MsgListFragment msgListFragment;
-	private DynamicListFragment dynamicFragment;
-	private ArrayList<Fragment> fragmentList = new ArrayList<Fragment>();
-	private ViewPager viewpager_circle;
-	private ImageView iv_cursor_left, iv_cursor_right;
-	private Button bt_search, bt_msg;
-	private RelativeLayout rl_my_circle;
 	private View view;
 	private CircleFragmentPagerAdapter myFragmentPagerAdapter;
 	private TextView tv_msg;
 	private TextView tv_dynamic;
+	private ImageView iv_setting;
+	private ImageView iv_icon;
+	private TextView tv_nickname;
+	private TextView tv_style;
+	private TextView tv_attention_count;
+	private TextView tv_attention_title;
+	private TextView tv_fans_count;
+	private TextView tv_fans_title;
+	private TextView tv_collection_count;
+	private TextView tv_collection_title;
+	private TextView tv_all_order;
+	private TextView tv_waiting_for_send;
+	private TextView tv_waiting_for_recieve;
+	private TextView tv_pick_by_myself;
+	private TextView tv_cart;
+	private TextView tv_supper_man;
+	private TextView tv_buyer;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -56,8 +58,6 @@ public class MeFragmentForBaiJia extends BaseFragment implements OnClickListener
 
 		if (view == null) {
 			initViews(inflater);
-//			initFragment();
-//			initViewPager();
 		}
 		// 缓存的rootView需要判断是否已经被加过parent，如果有parent需要从parent删除，要不然会发生这个rootview已经有parent的错误。
 		ViewGroup parent = (ViewGroup) view.getParent();
@@ -67,125 +67,43 @@ public class MeFragmentForBaiJia extends BaseFragment implements OnClickListener
 		return view;
 	}
 
-	private void initViewPager() {
-		viewpager_circle.setAdapter(myFragmentPagerAdapter);
-		viewpager_circle.setCurrentItem(0);
-		viewpager_circle.setOnPageChangeListener(new OnPageChangeListener() {
-
-			// private boolean isScrolled = false;
-
-			// public void onPageScrollStateChanged(int arg0) {
-			// /*
-			// * 页卡正常滑动时，会经历 1-2-0的三个阶段；
-			// *
-			// * 页卡在最后一页向右滑，或者第一页向左滑经历 1-0-2-0的阶段；
-			// *
-			// * 直接调用 setCurrentItem则只是经历 2-0的阶段
-			// */
-			// switch (arg0) {
-			// /*
-			// * 每一次的滑动arg0都会经历1-2-0的阶段，但是在最后一个页面向右滑，或者第一个页面向左滑时会经历 1-0-2-0的阶段
-			// * 例如： 最后页面右滑时
-			// * ，刚刚开始会是1，这时isScrolled为false，但是没有下一页面，所以此时的页面还是最后一个页面，满足if条件
-			// */
-			// case 0:
-			//
-			// if (viewPager.getCurrentItem() == viewPager.getAdapter()
-			// .getCount() - 1 && !isScrolled)
-			// viewPager.setCurrentItem(0);
-			// else if (viewPager.getCurrentItem() == 0 && !isScrolled) {
-			// viewPager.setCurrentItem(viewPager.getAdapter()
-			// .getCount() - 1);
-			// }
-			// break;
-			// case 1:
-			// isScrolled = false;
-			// break;
-			// case 2:
-			// isScrolled = true;
-			// break;
-			// }
-			// }
-
-			public void onPageScrolled(int arg0, float arg1, int arg2) {
-			}
-
-			/*
-			 * 页面跳转完成后调用的方法
-			 */
-			public void onPageSelected(int arg0) {
-				if (arg0 == 1) {
-					iv_cursor_right.setVisibility(View.VISIBLE);
-					iv_cursor_left.setVisibility(View.INVISIBLE);
-				}
-				if (arg0 == 0) {
-					iv_cursor_right.setVisibility(View.INVISIBLE);
-					iv_cursor_left.setVisibility(View.VISIBLE);
-				}
-
-			}
-
-			@Override
-			public void onPageScrollStateChanged(int arg0) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
-		// viewpager_circle.setOnPageChangeListener(new OnPageChangeListener() {
-		// @Override
-		// public void onPageSelected(int arg0) {
-		// if (arg0 == 1) {
-		// iv_cursor_right.setVisibility(View.VISIBLE);
-		// iv_cursor_left.setVisibility(View.INVISIBLE);
-		// }
-		// if (arg0 == 0) {
-		// iv_cursor_right.setVisibility(View.INVISIBLE);
-		// iv_cursor_left.setVisibility(View.VISIBLE);
-		// }
-		// }
-		//
-		// @Override
-		// public void onPageScrolled(int arg0, float arg1, int arg2) {
-		//
-		//
-		// }
-		//
-		// @Override
-		// public void onPageScrollStateChanged(int arg0) {
-		// // TODO Auto-generated method stub
-		//
-		// }
-		// });
-
-	}
-
-	private void initFragment() {
-		msgListFragment = new MsgListFragment();
-		dynamicFragment = new DynamicListFragment();
-		fragmentList.add(msgListFragment);
-		fragmentList.add(dynamicFragment);
-		myFragmentPagerAdapter = new CircleFragmentPagerAdapter(
-				getChildFragmentManager(), fragmentList);
-
-	}
 
 	/**
 	 * 初始化view
 	 */
 	private void initViews(LayoutInflater inflater) {
 		view = inflater.inflate(R.layout.me_fragment_for_baijia, null);
-//		tv_msg = (TextView) view.findViewById(R.id.tv_msg);
-//		tv_dynamic = (TextView) view.findViewById(R.id.tv_dynamic);
-//		tv_msg.setOnClickListener(this);
-//		tv_dynamic.setOnClickListener(this);
-//		viewpager_circle = (ViewPager) view.findViewById(R.id.viewpager_circle);
-//		iv_cursor_left = (ImageView) view.findViewById(R.id.iv_cursor_left);
-//		iv_cursor_left.setVisibility(View.VISIBLE);
-//		iv_cursor_right = (ImageView) view.findViewById(R.id.iv_cursor_right);
-//		bt_search = (Button) view.findViewById(R.id.bt_search);
-//		bt_search.setOnClickListener(this);
-//		FontManager.changeFonts(getActivity(), tv_msg, tv_dynamic);
+		iv_setting = (ImageView) view.findViewById(R.id.iv_setting);
+		iv_icon = (ImageView) view.findViewById(R.id.iv_icon);
+		tv_nickname = (TextView) view.findViewById(R.id.tv_nickname);
+		tv_style = (TextView) view.findViewById(R.id.tv_style);
+		tv_attention_count = (TextView) view.findViewById(R.id.tv_attention_count);
+		tv_attention_title = (TextView) view.findViewById(R.id.tv_attention_title);
+		tv_fans_count = (TextView) view.findViewById(R.id.tv_fans_count);
+		tv_fans_title = (TextView) view.findViewById(R.id.tv_fans_title);
+		tv_collection_count = (TextView) view.findViewById(R.id.tv_collection_count);
+		tv_collection_title = (TextView) view.findViewById(R.id.tv_collection_title);
+		tv_all_order = (TextView) view.findViewById(R.id.tv_all_order);
+		tv_waiting_for_send = (TextView) view.findViewById(R.id.tv_waiting_for_send);
+		tv_waiting_for_recieve = (TextView) view.findViewById(R.id.tv_waiting_for_recieve);
+		tv_pick_by_myself = (TextView) view.findViewById(R.id.tv_pick_by_myself);
+		tv_cart = (TextView) view.findViewById(R.id.tv_cart);
+		tv_supper_man = (TextView) view.findViewById(R.id.tv_supper_man);
+		tv_buyer = (TextView) view.findViewById(R.id.tv_buyer);
+		
+		iv_setting.setOnClickListener(this);
+		tv_all_order.setOnClickListener(this);
+		tv_waiting_for_send.setOnClickListener(this);
+		tv_waiting_for_recieve.setOnClickListener(this);
+		tv_pick_by_myself.setOnClickListener(this);
+		tv_cart.setOnClickListener(this);
+		tv_supper_man.setOnClickListener(this);
+		tv_buyer.setOnClickListener(this);
+		
+		FontManager.changeFonts(getActivity(), tv_nickname, tv_style,tv_attention_count,
+				tv_attention_title,tv_fans_count,tv_fans_title,tv_collection_count,
+				tv_collection_title,tv_all_order,tv_waiting_for_send,
+				tv_waiting_for_recieve,tv_pick_by_myself,tv_cart,tv_supper_man,tv_buyer);
 	}
 
 	@Override
@@ -197,11 +115,21 @@ public class MeFragmentForBaiJia extends BaseFragment implements OnClickListener
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.tv_msg:// 买手街
-			viewpager_circle.setCurrentItem(0);
+		case R.id.iv_setting://设置
 			break;
-		case R.id.tv_dynamic:// 他们说
-			viewpager_circle.setCurrentItem(1);
+		case R.id.tv_all_order://全部
+			break;
+		case R.id.tv_waiting_for_send://待发货
+			break;
+		case R.id.tv_waiting_for_recieve://待收货
+			break;
+		case R.id.tv_pick_by_myself://自提
+			break;
+		case R.id.tv_cart://购物车
+			break;
+		case R.id.tv_supper_man://申请达人或者我是达人
+			break;
+		case R.id.tv_buyer://申请买手或者我是买手
 			break;
 		default:
 			break;
