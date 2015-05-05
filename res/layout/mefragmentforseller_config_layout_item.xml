@@ -5,6 +5,8 @@
     android:minHeight="@dimen/top_title_height"
     android:paddingLeft="@dimen/margin_left_and_right"
     android:paddingRight="@dimen/margin_left_and_right"
+    android:paddingTop="@dimen/margin_left_and_right"
+    android:paddingBottom="@dimen/margin_left_and_right"
     android:background="@color/white"
     >
     
@@ -14,7 +16,7 @@
         android:layout_alignParentLeft="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/people_config_icon_str"
+        android:text="@string/user_config_icon_str"
         />
 
     <ImageView
@@ -28,24 +30,24 @@
     
     <ImageView
         android:scaleType="fitCenter"
-        android:maxWidth="100dp"
-        android:maxHeight="100dp"
         android:layout_toLeftOf="@+id/people_config_str1_imageview"
         android:id="@+id/people_config_str2_imageview"
         android:layout_centerVertical="true"
         android:layout_marginRight="@dimen/header_footer_left_right_padding"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/arrow_right"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/user_config_icon"
+        android:visibility="gone"
         />
     
     <TextView
         android:layout_centerVertical="true"
         android:layout_marginRight="@dimen/header_footer_left_right_padding"
         android:layout_toLeftOf="@+id/people_config_str1_imageview"
-        android:id="@+id/people_config_str2_imageview"
+        android:id="@+id/people_config_str2_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:text="1111"
         />
 </RelativeLayout>

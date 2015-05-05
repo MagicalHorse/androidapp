@@ -5,19 +5,28 @@
     android:orientation="vertical"
     android:background="@color/top_bg"
     >
- 
+ <ScrollView 
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     android:scrollbars="none"
+     >
+     <LinearLayout 
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:orientation="vertical"
+         >
     <include 
         layout="@layout/title_for_common"
         android:background="@color/white"
         />
     <!-- 头像 -->
      <include  
+         android:id="@+id/user_config_icon_include"
          android:layout_marginTop="1dp"
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
          layout="@layout/mefragmentforseller_config_layout_item"  />
      
-     <!-- 昵称 -->
      <LinearLayout 
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
@@ -27,20 +36,22 @@
          >
           <View style="@style/style_horizontal_line"  />
      </LinearLayout>
-    
+     
+     <!-- 昵称 -->
      <include  
+         android:id="@+id/user_config_nickname_include"
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
          layout="@layout/mefragmentforseller_config_layout_item"  />
      
      <!-- 我的地址 -->
      <include  
+         android:id="@+id/user_config_address_include"
          android:layout_marginTop="20dp"
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
          layout="@layout/mefragmentforseller_config_layout_item"  />
      
-     <!-- 我的收藏 -->
       <LinearLayout 
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
@@ -50,13 +61,17 @@
          >
           <View style="@style/style_horizontal_line"  />
      </LinearLayout>
+     
+       <!-- 我的收藏 -->
      <include  
+         android:id="@+id/user_config_collect_include"
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
          layout="@layout/mefragmentforseller_config_layout_item"  />
      
      <!-- 账户密码 -->
      <include  
+         android:id="@+id/user_config_password_include"
          android:layout_marginTop="20dp"
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
@@ -64,13 +79,34 @@
      
      <!-- 消息免打扰 -->
      <include  
+         android:id="@+id/user_config_dnd_include"
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
          layout="@layout/mefragmentforseller_config_layout_item"  />
      
      <Button
+         android:id="@+id/user_config_yangjia_button"
+         android:textColor="@color/white"
+         android:layout_marginTop="20dp"
+         android:layout_marginLeft="@dimen/header_footer_left_right_padding"
+         android:layout_marginRight="@dimen/header_footer_left_right_padding"
          android:layout_width="match_parent"
-         android:layout_height="45dp"
-         android:background="@drawable/userconfig_shape_main_color_button"
+         android:layout_height="@dimen/default_button_height"
+         android:background="@drawable/user_config_yangjia_button_background"
+         android:text="@string/user_config_woyaoyangjia_str"
          />
+     
+     <Button
+         android:id="@+id/user_config_exit_button"
+         android:textColor="@color/white"
+         android:layout_marginTop="20dp"
+         android:layout_marginLeft="@dimen/header_footer_left_right_padding"
+         android:layout_marginRight="@dimen/header_footer_left_right_padding"
+         android:layout_width="match_parent"
+         android:layout_height="@dimen/default_button_height"
+         android:background="@drawable/user_config_exit_button_background"
+         android:text="@string/user_config_exit_str"
+         />
+     </LinearLayout>
+     </ScrollView>
 </LinearLayout>

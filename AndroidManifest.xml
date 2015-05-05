@@ -101,6 +101,9 @@
         <activity android:name="com.shenma.yueba.yangjia.activity.EarningManagerActivity"></activity>
         <activity android:name="com.shenma.yueba.yangjia.activity.SalesManagerForSupperManActivity"></activity>
         
+        <!-- 用户中心 -->
+        <activity android:name="com.shenma.yueba.baijia.activity.UserConfigActivity"></activity>
+        
         
         <!-- 网络状态变化的广播 -->
         <receiver
