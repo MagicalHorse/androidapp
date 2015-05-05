@@ -9,7 +9,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.util.FontManager;
 
+/*****
+ * @author gyj
+ * @ date 2015-05-05
+ * 用户设置页面 用于查看用户头像 用户昵称 用户地址 用户收藏 账户密码 消息免打扰 以及  切换到我要养家  退出登录等
+ * 
+ * *****/
 public class UserConfigActivity extends BaseActivityWithTopView {
 
 	//头像图片
@@ -68,7 +75,7 @@ public class UserConfigActivity extends BaseActivityWithTopView {
 		TextView userpwd_textview=(TextView)userpwd_layout.findViewById(R.id.people_config_str1_textview);
 		userpwd_textview.setText(this.getResources().getText(R.string.user_config_userpwd_str));
 		
-		RelativeLayout messagednd_layout=(RelativeLayout)findViewById(R.id.user_config_password_include);
+		RelativeLayout messagednd_layout=(RelativeLayout)findViewById(R.id.user_config_dnd_include);
 		//消息免打扰
 		TextView messagednd_textview=(TextView)messagednd_layout.findViewById(R.id.people_config_str1_textview);
 		messagednd_textview.setText(this.getResources().getText(R.string.user_config_messagednd_str));
@@ -76,7 +83,8 @@ public class UserConfigActivity extends BaseActivityWithTopView {
 		Button user_config_yangjia_button=(Button)findViewById(R.id.user_config_yangjia_button);
 		//退出登录
 		Button user_config_exit_button=(Button)findViewById(R.id.user_config_exit_button);
-		
+		//设置字体样式
+		FontManager.changeFonts(this, tv_top_title,icon_text,nickname_text,nickname_textvalue,myaddress_textview,mycollect_textview,userpwd_textview,messagednd_textview,user_config_yangjia_button,user_config_exit_button);
 		//设置按键监听
 		icon_layout.setOnClickListener(onClickListener);
 		nickname_layout.setOnClickListener(onClickListener);
@@ -86,6 +94,7 @@ public class UserConfigActivity extends BaseActivityWithTopView {
 		messagednd_layout.setOnClickListener(onClickListener);
 		user_config_yangjia_button.setOnClickListener(onClickListener);
 		user_config_exit_button.setOnClickListener(onClickListener);
+		
 	}
 	
 	OnClickListener onClickListener=new OnClickListener() {
