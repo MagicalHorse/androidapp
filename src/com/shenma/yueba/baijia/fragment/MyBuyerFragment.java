@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * 买手街
+ * 我的买手
  * @author a
  *
  */
