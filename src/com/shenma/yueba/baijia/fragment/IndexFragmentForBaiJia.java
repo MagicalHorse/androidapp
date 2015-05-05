@@ -23,7 +23,7 @@ import com.shenma.yueba.util.FontManager;
  * 
  * @author a
  */
-public class IndexFragment extends BaseFragment implements OnClickListener {
+public class IndexFragmentForBaiJia extends BaseFragment implements OnClickListener {
 	private View view;
 	private TextView tv_buyer_street;
 	private TextView tv_they_say;

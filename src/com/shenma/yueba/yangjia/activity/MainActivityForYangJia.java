@@ -34,7 +34,7 @@ import com.google.inject.Inject;
 import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.fragment.CircleFragment;
 import com.shenma.yueba.baijia.fragment.Demo5Fragment;
-import com.shenma.yueba.baijia.fragment.IndexFragment;
+import com.shenma.yueba.baijia.fragment.IndexFragmentForBaiJia;
 import com.shenma.yueba.baijia.fragment.MessageFragment;
 import com.shenma.yueba.baijia.fragment.SearchFragment;
 import com.shenma.yueba.util.CustomProgressDialog;

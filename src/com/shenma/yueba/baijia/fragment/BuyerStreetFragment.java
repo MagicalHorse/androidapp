@@ -38,7 +38,6 @@ import com.shenma.yueba.view.scroll.PullToRefreshView.OnHeaderRefreshListener;
 
 public class BuyerStreetFragment extends BaseFragment implements
 		OnHeaderRefreshListener, OnFooterRefreshListener {
-
 	private View view;
 	ListView listview;
 	PullToRefreshView mPullToRefreshView;

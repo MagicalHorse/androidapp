@@ -34,7 +34,7 @@ import com.google.inject.Inject;
 import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.fragment.CircleFragment;
 import com.shenma.yueba.baijia.fragment.Demo5Fragment;
-import com.shenma.yueba.baijia.fragment.IndexFragment;
+import com.shenma.yueba.baijia.fragment.IndexFragmentForBaiJia;
 import com.shenma.yueba.baijia.fragment.MeFragmentForBaiJia;
 import com.shenma.yueba.baijia.fragment.MessageFragment;
 import com.shenma.yueba.baijia.fragment.SearchFragment;
@@ -68,7 +68,7 @@ public final class MainActivityForBaiJia extends FragmentActivity {
 	// Tab选项卡的文字
 		private String mTextviewArray[] = { "主页", "圈子", "信息", "发现","我" };
 	// 定义数组来存放Fragment界面
-	private Class fragmentArray[] = { IndexFragment.class,CircleFragment.class,MessageFragment.class,SearchFragment.class,MeFragmentForBaiJia.class};
+	private Class fragmentArray[] = { IndexFragmentForBaiJia.class,CircleFragment.class,MessageFragment.class,SearchFragment.class,MeFragmentForBaiJia.class};
 
 	
 	/** Called when the activity is first created. */
