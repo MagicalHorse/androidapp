@@ -1,6 +1,7 @@
 package com.shenma.yueba.baijia.fragment;
 
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.baijia.activity.UserConfigActivity;
 import com.shenma.yueba.baijia.adapter.CircleFragmentPagerAdapter;
 import com.shenma.yueba.util.FontManager;
 
@@ -116,6 +118,8 @@ public class MeFragmentForBaiJia extends BaseFragment implements OnClickListener
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.iv_setting://设置
+			Intent userConfigIntent = new Intent(getActivity(),UserConfigActivity.class);
+			startActivity(userConfigIntent);
 			break;
 		case R.id.tv_all_order://全部
 			break;

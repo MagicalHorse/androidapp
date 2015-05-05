@@ -37,7 +37,7 @@
                     android:layout_width="20dip"
                     android:layout_height="20dip"
                     android:layout_alignParentRight="true"
-                    android:src="@drawable/why" />
+                    android:src="@drawable/help" />
 
                 <TextView
                     android:id="@+id/tv_today_income"
