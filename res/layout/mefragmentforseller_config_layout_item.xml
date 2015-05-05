@@ -17,6 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/user_config_icon_str"
+        android:textColor="@color/black"
         />
 
     <ImageView
@@ -34,8 +35,8 @@
         android:id="@+id/people_config_str2_imageview"
         android:layout_centerVertical="true"
         android:layout_marginRight="@dimen/header_footer_left_right_padding"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="@dimen/user_config_iconwidth60_dimen"
+        android:layout_height="@dimen/user_config_iconwidth60_dimen"
         android:src="@drawable/user_config_icon"
         android:visibility="gone"
         />

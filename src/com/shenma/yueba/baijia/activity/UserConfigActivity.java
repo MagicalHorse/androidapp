@@ -44,7 +44,7 @@ public class UserConfigActivity extends BaseActivityWithTopView {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				
+				UserConfigActivity.this.finish();
 			}
 		});
 		RelativeLayout icon_layout=(RelativeLayout)findViewById(R.id.user_config_icon_include);
