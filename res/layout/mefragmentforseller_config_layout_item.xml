@@ -26,10 +26,25 @@
         android:src="@drawable/arrow_right"
         />
     
-    <TextView
+    <ImageView
+        android:scaleType="fitCenter"
+        android:maxWidth="100dp"
+        android:maxHeight="100dp"
         android:layout_toLeftOf="@+id/people_config_str1_imageview"
         android:id="@+id/people_config_str2_imageview"
-        android:layout_width="match_parent"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/header_footer_left_right_padding"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/arrow_right"
+        />
+    
+    <TextView
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/header_footer_left_right_padding"
+        android:layout_toLeftOf="@+id/people_config_str1_imageview"
+        android:id="@+id/people_config_str2_imageview"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="1111"
         />

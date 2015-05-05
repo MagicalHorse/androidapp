@@ -67,4 +67,10 @@
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
          layout="@layout/mefragmentforseller_config_layout_item"  />
+     
+     <Button
+         android:layout_width="match_parent"
+         android:layout_height="45dp"
+         android:background="@drawable/userconfig_shape_main_color_button"
+         />
 </LinearLayout>
