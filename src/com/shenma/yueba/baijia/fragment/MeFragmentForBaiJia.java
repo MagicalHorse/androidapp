@@ -1,4 +1,4 @@
-package com.shenma.yueba.yangjia.fragment;
+package com.shenma.yueba.baijia.fragment;
 
 import java.util.ArrayList;
 
@@ -24,13 +24,13 @@ import com.shenma.yueba.baijia.fragment.BaseFragment;
 import com.shenma.yueba.util.FontManager;
 
 /**
- * 养家--个人账户
+ * 败家--个人账户
  * 
  * @author a
  * 
  */
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-public class MeFragmentForSeller extends BaseFragment implements OnClickListener {
+public class MeFragmentForBaiJia extends BaseFragment implements OnClickListener {
 	private MsgListFragment msgListFragment;
 	private DynamicListFragment dynamicFragment;
 	private ArrayList<Fragment> fragmentList = new ArrayList<Fragment>();
@@ -56,8 +56,8 @@ public class MeFragmentForSeller extends BaseFragment implements OnClickListener
 
 		if (view == null) {
 			initViews(inflater);
-			initFragment();
-			initViewPager();
+//			initFragment();
+//			initViewPager();
 		}
 		// 缓存的rootView需要判断是否已经被加过parent，如果有parent需要从parent删除，要不然会发生这个rootview已经有parent的错误。
 		ViewGroup parent = (ViewGroup) view.getParent();
@@ -174,18 +174,18 @@ public class MeFragmentForSeller extends BaseFragment implements OnClickListener
 	 * 初始化view
 	 */
 	private void initViews(LayoutInflater inflater) {
-		view = inflater.inflate(R.layout.msg_fragment_layout, null);
-		tv_msg = (TextView) view.findViewById(R.id.tv_msg);
-		tv_dynamic = (TextView) view.findViewById(R.id.tv_dynamic);
-		tv_msg.setOnClickListener(this);
-		tv_dynamic.setOnClickListener(this);
-		viewpager_circle = (ViewPager) view.findViewById(R.id.viewpager_circle);
-		iv_cursor_left = (ImageView) view.findViewById(R.id.iv_cursor_left);
-		iv_cursor_left.setVisibility(View.VISIBLE);
-		iv_cursor_right = (ImageView) view.findViewById(R.id.iv_cursor_right);
-		bt_search = (Button) view.findViewById(R.id.bt_search);
-		bt_search.setOnClickListener(this);
-		FontManager.changeFonts(getActivity(), tv_msg, tv_dynamic);
+		view = inflater.inflate(R.layout.me_fragment_for_baijia, null);
+//		tv_msg = (TextView) view.findViewById(R.id.tv_msg);
+//		tv_dynamic = (TextView) view.findViewById(R.id.tv_dynamic);
+//		tv_msg.setOnClickListener(this);
+//		tv_dynamic.setOnClickListener(this);
+//		viewpager_circle = (ViewPager) view.findViewById(R.id.viewpager_circle);
+//		iv_cursor_left = (ImageView) view.findViewById(R.id.iv_cursor_left);
+//		iv_cursor_left.setVisibility(View.VISIBLE);
+//		iv_cursor_right = (ImageView) view.findViewById(R.id.iv_cursor_right);
+//		bt_search = (Button) view.findViewById(R.id.bt_search);
+//		bt_search.setOnClickListener(this);
+//		FontManager.changeFonts(getActivity(), tv_msg, tv_dynamic);
 	}
 
 	@Override
