@@ -2,4 +2,6 @@
 <resources>
     <color name="user_config_yangjia_defaultcolor">#009EA3</color>
     <color name="user_config_exit_defaultcolor">#FFA300</color>
+    <color name="color_transparent">#00000000</color>
+    <color name="color_lightgrey">#F1F1F1</color>
 </resources>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="user_config_iconwidth60_dimen">60dp</dimen>
+    <dimen name="shop_main_iconwidth80_dimen">80dp</dimen>
+    <dimen name="shop_main_lineheight10_dimen">10dp</dimen>
+    <dimen name="shop_main_width5_dimen">5dp</dimen>
+    <dimen name="shop_main_marginleft30_dimen">30dp</dimen>
+    <dimen name="shop_main_width20_dimen">20dp</dimen>
+    <dimen name="shop_main_width15_dimen">15dp</dimen>
+    <dimen name="shop_main_width100_dimen">100dp</dimen>
+    <dimen name="size90">90dp</dimen>
+    <dimen name="textsize20">20dip</dimen>
+</resources>
