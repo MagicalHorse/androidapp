@@ -83,11 +83,11 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:launchMode="singleTask" >
-            <intent-filter>
+            <!-- <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter> -->
         </activity>
         
         <activity android:name="com.shenma.yueba.baijia.activity.MainActivityForBaiJia"></activity>
@@ -105,6 +105,13 @@
         
         <!-- 用户中心 -->
         <activity android:name="com.shenma.yueba.baijia.activity.UserConfigActivity"></activity>
+        <activity android:name="com.shenma.yueba.baijia.activity.ShopMainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         
         
         <!-- 网络状态变化的广播 -->
