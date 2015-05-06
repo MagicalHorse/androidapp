@@ -63,8 +63,8 @@ public class CircleFragment extends Fragment implements OnClickListener {
 		Log.i("CircleFragment", "oncreateView");
 		if (view == null) {
 			initViews(inflater);
-//			initFragment();
-//			initViewPager();
+			initFragment();
+			initViewPager();
 		}
 		// 缓存的rootView需要判断是否已经被加过parent，如果有parent需要从parent删除，要不然会发生这个rootview已经有parent的错误。
 		ViewGroup parent = (ViewGroup) view.getParent();

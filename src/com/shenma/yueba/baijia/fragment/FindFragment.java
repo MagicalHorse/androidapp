@@ -1,4 +1,4 @@
-package com.shenma.yueba.yangjia.fragment;
+package com.shenma.yueba.baijia.fragment;
 
 import java.util.ArrayList;
 
@@ -20,33 +20,31 @@ import android.widget.TextView;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.adapter.CircleFragmentPagerAdapter;
-import com.shenma.yueba.baijia.fragment.MyCircleFragment;
 import com.shenma.yueba.util.FontManager;
 
 /**
- * 圈子
+ * 发现--- 败家
  * 
  * @author a
  * 
  */
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-public class CircleFragmentForSeller extends Fragment implements OnClickListener {
-	private RecommendedCircleFragment recommendedCircleFragment;
-	private MyCircleFragment myCircleFragment;
+public class FindFragment extends BaseFragment implements OnClickListener {
+	private BrandFragment brandFragment;
+	private SameCityFragment sameCityFragment;
 	private ArrayList<Fragment> fragmentList = new ArrayList<Fragment>();
 	private ViewPager viewpager_circle;
 	private ImageView iv_cursor_left, iv_cursor_right;
 	private Button bt_search, bt_msg;
-	private TextView tv_recommended_circle;
 	private RelativeLayout rl_my_circle;
 	private View view;
 	private CircleFragmentPagerAdapter myFragmentPagerAdapter;
+	private TextView tv_brand;
+	private TextView tv_same_city;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		Log.i("CircleFragment", "oncreate");
-		
-		
-		
 		super.onCreate(savedInstanceState);
 	}
 
@@ -54,6 +52,7 @@ public class CircleFragmentForSeller extends Fragment implements OnClickListener
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		Log.i("CircleFragment", "oncreateView");
+
 		if (view == null) {
 			initViews(inflater);
 			initFragment();
@@ -161,27 +160,12 @@ public class CircleFragmentForSeller extends Fragment implements OnClickListener
 	}
 
 	private void initFragment() {
-		recommendedCircleFragment = new RecommendedCircleFragment();
-		myCircleFragment = new MyCircleFragment();
-		fragmentList.add(recommendedCircleFragment);
-		fragmentList.add(myCircleFragment);
+		brandFragment = new BrandFragment();
+		sameCityFragment = new SameCityFragment();
+		fragmentList.add(brandFragment);
+		fragmentList.add(sameCityFragment);
 		myFragmentPagerAdapter = new CircleFragmentPagerAdapter(
 				getChildFragmentManager(), fragmentList);
-
-	}
-
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.tv_recommended_circle:// 推荐圈子
-			viewpager_circle.setCurrentItem(0);
-			break;
-		case R.id.rl_my_circle:// 我的圈子
-			viewpager_circle.setCurrentItem(1);
-			break;
-		default:
-			break;
-		}
 
 	}
 
@@ -189,24 +173,41 @@ public class CircleFragmentForSeller extends Fragment implements OnClickListener
 	 * 初始化view
 	 */
 	private void initViews(LayoutInflater inflater) {
-		view = inflater.inflate(R.layout.circle_fragment_activity, null);
+		view = inflater.inflate(R.layout.find_fragment_layout, null);
+		tv_brand = (TextView) view.findViewById(R.id.tv_brand);
+		tv_same_city = (TextView) view.findViewById(R.id.tv_same_city);
+		tv_brand.setOnClickListener(this);
+		tv_same_city.setOnClickListener(this);
 		viewpager_circle = (ViewPager) view.findViewById(R.id.viewpager_circle);
 		iv_cursor_left = (ImageView) view.findViewById(R.id.iv_cursor_left);
 		iv_cursor_left.setVisibility(View.VISIBLE);
 		iv_cursor_right = (ImageView) view.findViewById(R.id.iv_cursor_right);
 		bt_search = (Button) view.findViewById(R.id.bt_search);
-		bt_msg = (Button) view.findViewById(R.id.bt_msg);
-		tv_recommended_circle = (TextView) view
-				.findViewById(R.id.tv_recommended_circle);
-		rl_my_circle = (RelativeLayout) view.findViewById(R.id.rl_my_circle);
-		tv_recommended_circle.setOnClickListener(this);
-		rl_my_circle.setOnClickListener(this);
-		FontManager.changeFonts(getActivity(), tv_recommended_circle,rl_my_circle);
+		bt_search.setOnClickListener(this);
+		FontManager.changeFonts(getActivity(), tv_brand, tv_same_city);
 	}
 
 	@Override
 	public void onResume() {
 		Log.i("CircleFragment", "onResume");
 		super.onResume();
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.tv_brand://品牌
+			viewpager_circle.setCurrentItem(0);
+			break;
+		case R.id.tv_same_city://同城
+			viewpager_circle.setCurrentItem(1);
+			break;
+		case R.id.bt_search://搜索
+			
+			break;
+		default:
+			break;
+		}
+
 	}
 }

@@ -10,7 +10,7 @@
         android:padding="10dip" >
 
         <ImageView
-            android:id="@+id/iv_icon"
+            android:id="@+id/iv_head"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/defalt_pic" />
@@ -20,7 +20,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dip"
-            android:layout_toRightOf="@id/iv_icon"
+            android:layout_toRightOf="@id/iv_head"
             android:text="华宇商厦导购"
             android:textSize="20sp" />
 
@@ -37,19 +37,30 @@
             android:id="@+id/tv_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/iv_icon"
+            android:layout_alignBottom="@+id/iv_head"
             android:layout_alignLeft="@+id/tv_buyer_name"
             android:drawableLeft="@drawable/address"
             android:text="中关村南大街购物中心"
             android:textSize="12sp" />
     </RelativeLayout>
 
+    
+    <ImageView 
+        android:id="@+id/iv_big_image"
+        android:src="@drawable/defalt_pic"
+        android:layout_height="200dip"
+        android:scaleType="fitXY"
+        android:layout_width="fill_parent"
+        />
+    
     <LinearLayout
+        android:layout_marginTop="10dip"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
         <TextView
+            android:id="@+id/tv_introduce"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dip"
