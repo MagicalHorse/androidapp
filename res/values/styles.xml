@@ -271,5 +271,14 @@
         <item name="android:background">@android:color/transparent</item>
         <item name="android:windowNoTitle">true</item>
     </style>
-
+ <style name="edittext_style_for_input">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text_gray_color</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:padding">10dip</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:drawableLeft">@drawable/star</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
 </resources>
