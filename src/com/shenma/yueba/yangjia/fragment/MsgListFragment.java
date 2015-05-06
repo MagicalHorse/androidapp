@@ -37,7 +37,7 @@ public class MsgListFragment extends BaseFragment {
 		
 
 		if (view == null) {
-			view = inflater.inflate(R.layout.refresh_list_layout, null);
+			view = inflater.inflate(R.layout.refresh_listview_without_title_layout, null);
 			pull_refresh_list = (PullToRefreshListView) view.findViewById(R.id.pull_refresh_list);
 			pull_refresh_list.setMode(Mode.BOTH);
 			pull_refresh_list.setAdapter(new MsgAdapter(getActivity(), mList));

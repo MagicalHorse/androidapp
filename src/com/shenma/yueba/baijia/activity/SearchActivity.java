@@ -1,76 +1,117 @@
-package com.shenma.yueba.yangjia.fragment;
+package com.shenma.yueba.baijia.activity;
 
 import java.util.ArrayList;
 
-import android.annotation.TargetApi;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.adapter.CircleFragmentPagerAdapter;
-import com.shenma.yueba.baijia.fragment.MyCircleFragment;
+import com.shenma.yueba.baijia.fragment.BrandFragment;
+import com.shenma.yueba.baijia.fragment.BuyerFragment;
+import com.shenma.yueba.baijia.fragment.TagFragment;
 import com.shenma.yueba.util.FontManager;
 
+
+
 /**
- * 圈子
- * 
+ * 查询的界面
  * @author a
- * 
+ *
  */
-@TargetApi(Build.VERSION_CODES.HONEYCOMB)
-public class CircleFragmentForSeller extends Fragment implements OnClickListener {
-	private RecommendedCircleFragment recommendedCircleFragment;
-	private MyCircleFragment myCircleFragment;
+public class SearchActivity extends FragmentActivity implements OnClickListener {
+	
+	private BrandFragment brandFragment;// 品牌
+	private TagFragment tagFragment;// 标签
+	private BuyerFragment buyerFragment;// 买手
 	private ArrayList<Fragment> fragmentList = new ArrayList<Fragment>();
-	private ViewPager viewpager_circle;
-	private ImageView iv_cursor_left, iv_cursor_right;
+	private ViewPager viewpager_search;
+	private ImageView iv_cursor_left, iv_cursor_center, iv_cursor_right;
 	private Button bt_search, bt_msg;
 	private TextView tv_recommended_circle;
 	private RelativeLayout rl_my_circle;
 	private View view;
 	private CircleFragmentPagerAdapter myFragmentPagerAdapter;
+	private EditText et_search;
+	private TextView tv_brand;//品牌
+	private TextView tv_tag;//标签
+	private TextView tv_buyer;//买手
+	
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		Log.i("CircleFragment", "oncreate");
-		
-		
-		
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.search_layout);
+		initView();
+		initFragment();
+		initViewPager();
+	}
+
+	private void initView() {
+		et_search = (EditText) findViewById(R.id.et_search);
+		bt_search = (Button) findViewById(R.id.bt_search);
+		viewpager_search = (ViewPager) findViewById(R.id.viewpager_search);
+		iv_cursor_left = (ImageView) findViewById(R.id.iv_cursor_left);
+		iv_cursor_left.setVisibility(View.VISIBLE);
+		iv_cursor_center = (ImageView) findViewById(R.id.iv_cursor_center);
+		iv_cursor_right = (ImageView) findViewById(R.id.iv_cursor_right);
+		iv_cursor_left.setVisibility(View.VISIBLE);
+		tv_brand = (TextView) findViewById(R.id.tv_brand);
+		tv_tag = (TextView) findViewById(R.id.tv_tag);
+		tv_buyer = (TextView) findViewById(R.id.tv_buyer);
+		bt_search.setOnClickListener(this);
+		tv_brand.setOnClickListener(this);
+		tv_tag.setOnClickListener(this);
+		tv_buyer.setOnClickListener(this);
+		FontManager.changeFonts(this, et_search, bt_search, tv_brand,
+				tv_tag, tv_buyer);
+		
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		Log.i("CircleFragment", "oncreateView");
-		if (view == null) {
-			initViews(inflater);
-			initFragment();
-			initViewPager();
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.tv_brand:// 品牌
+			viewpager_search.setCurrentItem(0);
+			break;
+		case R.id.tv_tag:// 标签
+			viewpager_search.setCurrentItem(1);
+			break;
+		case R.id.tv_buyer:// 买手
+			viewpager_search.setCurrentItem(2);
+			break;
+		default:
+			break;
 		}
-		// 缓存的rootView需要判断是否已经被加过parent，如果有parent需要从parent删除，要不然会发生这个rootview已经有parent的错误。
-		ViewGroup parent = (ViewGroup) view.getParent();
-		if (parent != null) {
-			parent.removeView(view);
-		}
-		return view;
-	}
 
+	}
+	
+	
+	private void initFragment() {
+		brandFragment = new BrandFragment();
+		tagFragment = new TagFragment();
+		buyerFragment = new BuyerFragment();
+		fragmentList.add(brandFragment);
+		fragmentList.add(tagFragment);
+		fragmentList.add(buyerFragment);
+		myFragmentPagerAdapter = new CircleFragmentPagerAdapter(
+				getSupportFragmentManager(), fragmentList);
+
+	}
+	
 	private void initViewPager() {
-		viewpager_circle.setAdapter(myFragmentPagerAdapter);
-		viewpager_circle.setCurrentItem(0);
-		viewpager_circle.setOnPageChangeListener(new OnPageChangeListener() {
+		viewpager_search.setAdapter(myFragmentPagerAdapter);
+		viewpager_search.setCurrentItem(0);
+		viewpager_search.setOnPageChangeListener(new OnPageChangeListener() {
 
 			// private boolean isScrolled = false;
 
@@ -114,13 +155,20 @@ public class CircleFragmentForSeller extends Fragment implements OnClickListener
 			 * 页面跳转完成后调用的方法
 			 */
 			public void onPageSelected(int arg0) {
-				if (arg0 == 1) {
-					iv_cursor_right.setVisibility(View.VISIBLE);
-					iv_cursor_left.setVisibility(View.INVISIBLE);
-				}
 				if (arg0 == 0) {
-					iv_cursor_right.setVisibility(View.INVISIBLE);
 					iv_cursor_left.setVisibility(View.VISIBLE);
+					iv_cursor_center.setVisibility(View.INVISIBLE);
+					iv_cursor_right.setVisibility(View.INVISIBLE);
+				}
+				if (arg0 == 1) {
+					iv_cursor_left.setVisibility(View.INVISIBLE);
+					iv_cursor_center.setVisibility(View.VISIBLE);
+					iv_cursor_right.setVisibility(View.INVISIBLE);
+				}
+				if (arg0 == 2) {
+					iv_cursor_left.setVisibility(View.INVISIBLE);
+					iv_cursor_center.setVisibility(View.INVISIBLE);
+					iv_cursor_right.setVisibility(View.VISIBLE);
 				}
 
 			}
@@ -159,54 +207,5 @@ public class CircleFragmentForSeller extends Fragment implements OnClickListener
 		// });
 
 	}
-
-	private void initFragment() {
-		recommendedCircleFragment = new RecommendedCircleFragment();
-		myCircleFragment = new MyCircleFragment();
-		fragmentList.add(recommendedCircleFragment);
-		fragmentList.add(myCircleFragment);
-		myFragmentPagerAdapter = new CircleFragmentPagerAdapter(
-				getChildFragmentManager(), fragmentList);
-
-	}
-
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.tv_recommended_circle:// 推荐圈子
-			viewpager_circle.setCurrentItem(0);
-			break;
-		case R.id.rl_my_circle:// 我的圈子
-			viewpager_circle.setCurrentItem(1);
-			break;
-		default:
-			break;
-		}
-
-	}
-
-	/**
-	 * 初始化view
-	 */
-	private void initViews(LayoutInflater inflater) {
-		view = inflater.inflate(R.layout.circle_fragment_activity, null);
-		viewpager_circle = (ViewPager) view.findViewById(R.id.viewpager_circle);
-		iv_cursor_left = (ImageView) view.findViewById(R.id.iv_cursor_left);
-		iv_cursor_left.setVisibility(View.VISIBLE);
-		iv_cursor_right = (ImageView) view.findViewById(R.id.iv_cursor_right);
-		bt_search = (Button) view.findViewById(R.id.bt_search);
-		bt_msg = (Button) view.findViewById(R.id.bt_msg);
-		tv_recommended_circle = (TextView) view
-				.findViewById(R.id.tv_recommended_circle);
-		rl_my_circle = (RelativeLayout) view.findViewById(R.id.rl_my_circle);
-		tv_recommended_circle.setOnClickListener(this);
-		rl_my_circle.setOnClickListener(this);
-		FontManager.changeFonts(getActivity(), tv_recommended_circle,rl_my_circle);
-	}
-
-	@Override
-	public void onResume() {
-		Log.i("CircleFragment", "onResume");
-		super.onResume();
-	}
+	
 }

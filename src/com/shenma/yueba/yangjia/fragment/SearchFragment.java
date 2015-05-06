@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.adapter.CircleFragmentPagerAdapter;
 import com.shenma.yueba.baijia.fragment.BaseFragment;
+import com.shenma.yueba.baijia.fragment.BrandFragment;
 import com.shenma.yueba.util.FontManager;
 
 /**

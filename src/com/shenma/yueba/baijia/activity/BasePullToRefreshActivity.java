@@ -27,7 +27,7 @@ public abstract class BasePullToRefreshActivity extends BaseActivityWithTopView 
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		setContentView(R.layout.xlistview_layout);
+		setContentView(R.layout.refresh_listview_without_title_layout);
 		super.onCreate(savedInstanceState);
 		ll_top = getView(R.id.ll_top);
 		ll_bottom = getView(R.id.ll_bottom);

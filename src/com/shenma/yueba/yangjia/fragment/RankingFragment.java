@@ -2,8 +2,6 @@ package com.shenma.yueba.yangjia.fragment;
 
 import java.util.ArrayList;
 
-import android.annotation.TargetApi;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -20,33 +18,26 @@ import android.widget.TextView;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.adapter.CircleFragmentPagerAdapter;
-import com.shenma.yueba.baijia.fragment.MyCircleFragment;
+import com.shenma.yueba.baijia.fragment.BaseFragment;
 import com.shenma.yueba.util.FontManager;
 
-/**
- * 圈子
- * 
- * @author a
- * 
- */
-@TargetApi(Build.VERSION_CODES.HONEYCOMB)
-public class CircleFragmentForSeller extends Fragment implements OnClickListener {
-	private RecommendedCircleFragment recommendedCircleFragment;
-	private MyCircleFragment myCircleFragment;
+public class RankingFragment extends BaseFragment implements OnClickListener {
+	private CurrentRankingFragment currentRankingFragment;
+	private DynamicListFragment dynamicFragment;
 	private ArrayList<Fragment> fragmentList = new ArrayList<Fragment>();
 	private ViewPager viewpager_circle;
 	private ImageView iv_cursor_left, iv_cursor_right;
 	private Button bt_search, bt_msg;
-	private TextView tv_recommended_circle;
 	private RelativeLayout rl_my_circle;
 	private View view;
 	private CircleFragmentPagerAdapter myFragmentPagerAdapter;
+	private TextView tv_msg;
+	private TextView tv_history;
+	private TextView tv_list;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		Log.i("CircleFragment", "oncreate");
-		
-		
-		
 		super.onCreate(savedInstanceState);
 	}
 
@@ -54,6 +45,7 @@ public class CircleFragmentForSeller extends Fragment implements OnClickListener
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		Log.i("CircleFragment", "oncreateView");
+
 		if (view == null) {
 			initViews(inflater);
 			initFragment();
@@ -161,27 +153,12 @@ public class CircleFragmentForSeller extends Fragment implements OnClickListener
 	}
 
 	private void initFragment() {
-		recommendedCircleFragment = new RecommendedCircleFragment();
-		myCircleFragment = new MyCircleFragment();
-		fragmentList.add(recommendedCircleFragment);
-		fragmentList.add(myCircleFragment);
+		currentRankingFragment = new CurrentRankingFragment();
+		dynamicFragment = new DynamicListFragment();
+		fragmentList.add(currentRankingFragment);
+		fragmentList.add(dynamicFragment);
 		myFragmentPagerAdapter = new CircleFragmentPagerAdapter(
 				getChildFragmentManager(), fragmentList);
-
-	}
-
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.tv_recommended_circle:// 推荐圈子
-			viewpager_circle.setCurrentItem(0);
-			break;
-		case R.id.rl_my_circle:// 我的圈子
-			viewpager_circle.setCurrentItem(1);
-			break;
-		default:
-			break;
-		}
 
 	}
 
@@ -189,24 +166,38 @@ public class CircleFragmentForSeller extends Fragment implements OnClickListener
 	 * 初始化view
 	 */
 	private void initViews(LayoutInflater inflater) {
-		view = inflater.inflate(R.layout.circle_fragment_activity, null);
+		view = inflater.inflate(R.layout.ranking_layout2, null);
+		tv_msg = (TextView) view.findViewById(R.id.tv_ranking);
+		tv_history = (TextView) view.findViewById(R.id.tv_history);
+		tv_list = (TextView) view.findViewById(R.id.tv_list);
+		tv_msg.setOnClickListener(this);
+		tv_history.setOnClickListener(this);
+		tv_list.setOnClickListener(this);
 		viewpager_circle = (ViewPager) view.findViewById(R.id.viewpager_circle);
 		iv_cursor_left = (ImageView) view.findViewById(R.id.iv_cursor_left);
 		iv_cursor_left.setVisibility(View.VISIBLE);
 		iv_cursor_right = (ImageView) view.findViewById(R.id.iv_cursor_right);
-		bt_search = (Button) view.findViewById(R.id.bt_search);
-		bt_msg = (Button) view.findViewById(R.id.bt_msg);
-		tv_recommended_circle = (TextView) view
-				.findViewById(R.id.tv_recommended_circle);
-		rl_my_circle = (RelativeLayout) view.findViewById(R.id.rl_my_circle);
-		tv_recommended_circle.setOnClickListener(this);
-		rl_my_circle.setOnClickListener(this);
-		FontManager.changeFonts(getActivity(), tv_recommended_circle,rl_my_circle);
+		FontManager.changeFonts(getActivity(), tv_msg, tv_history,tv_list);
 	}
 
 	@Override
 	public void onResume() {
 		Log.i("CircleFragment", "onResume");
 		super.onResume();
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.tv_msg:// 买手街
+			viewpager_circle.setCurrentItem(0);
+			break;
+		case R.id.tv_dynamic:// 他们说
+			viewpager_circle.setCurrentItem(1);
+			break;
+		default:
+			break;
+		}
+
 	}
 }
