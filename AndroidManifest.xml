@@ -100,6 +100,7 @@
         <activity android:name="com.shenma.yueba.baijia.activity.CircleActivity"></activity>
         <activity android:name="com.shenma.yueba.yangjia.activity.EarningManagerActivity"></activity>
         <activity android:name="com.shenma.yueba.yangjia.activity.SalesManagerForSupperManActivity"></activity>
+        <activity android:name="com.shenma.yueba.baijia.activity.SearchActivity"></activity>
         
         <!-- 用户中心 -->
         <activity android:name="com.shenma.yueba.baijia.activity.UserConfigActivity"></activity>
