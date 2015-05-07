@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:weightSum="3" >
+
+    <include
+        android:id="@+id/shop_stay_layout_tab1_relativelayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        layout="@layout/shop_stay_layout_oitem" />
+
+    <View
+        style="@style/style_vertical_line"
+        android:layout_marginBottom="@dimen/shop_main_lineheight8_dimen"
+        android:layout_marginTop="@dimen/shop_main_lineheight8_dimen" />
+
+    <include
+        android:id="@+id/shop_stay_layout_tab2_relativelayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        layout="@layout/shop_stay_layout_oitem" />
+    
+    <View
+        style="@style/style_vertical_line"
+        android:layout_marginBottom="@dimen/shop_main_lineheight8_dimen"
+        android:layout_marginTop="@dimen/shop_main_lineheight8_dimen" />
+
+    <include
+        android:id="@+id/shop_stay_layout_tab3_relativelayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        layout="@layout/shop_stay_layout_oitem" />
+
+</LinearLayout>

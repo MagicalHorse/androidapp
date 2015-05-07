@@ -3,7 +3,11 @@
     <dimen name="user_config_iconwidth60_dimen">60dp</dimen>
     <dimen name="shop_main_iconwidth80_dimen">80dp</dimen>
     <dimen name="shop_main_lineheight10_dimen">10dp</dimen>
+    <dimen name="shop_main_lineheight8_dimen">8dp</dimen>
     <dimen name="shop_main_width5_dimen">5dp</dimen>
+    <dimen name="shop_main_width3_dimen">3dp</dimen>
+    <dimen name="shop_main_width2_dimen">2dp</dimen>
+    <dimen name="shop_main_width1_dimen">1dp</dimen>
     <dimen name="shop_main_marginleft30_dimen">30dp</dimen>
     <dimen name="shop_main_width20_dimen">20dp</dimen>
     <dimen name="shop_main_width15_dimen">15dp</dimen>
