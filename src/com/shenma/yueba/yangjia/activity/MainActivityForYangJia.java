@@ -34,7 +34,7 @@ import com.shenma.yueba.R;
 import com.shenma.yueba.util.DbHelper;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.yangjia.fragment.CartFragmentForSeller;
-import com.shenma.yueba.yangjia.fragment.IndexFragmentForSeller;
+import com.shenma.yueba.yangjia.fragment.IndexFragmentForYangJia;
 import com.shenma.yueba.yangjia.fragment.MeFragmentForYangJia;
 import com.shenma.yueba.yangjia.fragment.MessageFragmentForSeller;
 import com.shenma.yueba.yangjia.fragment.RankingFragment;
@@ -65,7 +65,7 @@ public final class MainActivityForYangJia extends FragmentActivity {
 	// Tab选项卡的文字
 		private String mTextviewArray[] = { "主页", "红榜", "发布", "消息","我" };
 	// 定义数组来存放Fragment界面
-	private Class fragmentArray[] = { IndexFragmentForSeller.class,RankingFragment.class,CartFragmentForSeller.class,MessageFragmentForSeller.class,MeFragmentForYangJia.class};
+	private Class fragmentArray[] = { IndexFragmentForYangJia.class,RankingFragment.class,CartFragmentForSeller.class,MessageFragmentForSeller.class,MeFragmentForYangJia.class};
 
 	
 	/** Called when the activity is first created. */

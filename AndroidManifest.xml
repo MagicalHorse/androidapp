@@ -101,6 +101,7 @@
         <activity android:name="com.shenma.yueba.yangjia.activity.EarningManagerActivity"></activity>
         <activity android:name="com.shenma.yueba.yangjia.activity.SalesManagerForSupperManActivity"></activity>
         <activity android:name="com.shenma.yueba.yangjia.activity.KaiXiaoPiaoActivity"></activity>
+        <activity android:name="com.shenma.yueba.yangjia.activity.SalesManagerForBuyerActivity"></activity>
         <activity android:name="com.shenma.yueba.baijia.activity.SearchActivity"></activity>
         
         <!-- 用户中心 -->

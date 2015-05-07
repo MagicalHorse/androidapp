@@ -29,14 +29,14 @@ import com.shenma.yueba.baijia.fragment.TheySayFragment;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.yangjia.activity.EarningManagerActivity;
-import com.shenma.yueba.yangjia.activity.SalesManagerForSupperManActivity;
+import com.shenma.yueba.yangjia.activity.SalesManagerForBuyerActivity;
 
 /**
  * 主界面
  * 
  * @author a
  */
-public class IndexFragmentForSeller extends BaseFragment implements
+public class IndexFragmentForYangJia extends BaseFragment implements
 		OnClickListener {
 	private View view;
 	private ImageView iv_cursor_left, iv_cursor_center, iv_cursor_right;
@@ -264,8 +264,15 @@ public class IndexFragmentForSeller extends BaseFragment implements
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.rl_sales:// 销售管理
-			Intent intentSales = new Intent(getActivity(), SalesManagerForSupperManActivity.class);
+			
+			
+			
+			Intent intentSales = new Intent(getActivity(), SalesManagerForBuyerActivity.class);
 			startActivity(intentSales);
+			
+			
+//			Intent intentSales = new Intent(getActivity(), SalesManagerForSupperManActivity.class);
+//			startActivity(intentSales);
 			break;
 		case R.id.rl_earnings://收益管理
 			Intent intentEarning = new Intent(getActivity(), EarningManagerActivity.class);
