@@ -16,7 +16,7 @@ import com.shenma.yueba.util.FontManager;
  * @author a
  */
 
-public class   extends BaseActivityWithTopView implements OnClickListener {
+public class KaiXiaoPiaoActivity extends BaseActivityWithTopView implements OnClickListener {
 	private EditText et_product_name;
 	private EditText et_product_style;
 	private EditText et_product_color;
