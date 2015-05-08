@@ -202,6 +202,7 @@
                android:textColor="@color/black"
             android:drawableRight="@drawable/arrow_right"
             android:padding="15dip"
+            android:textSize="17sp"
             android:text="购物车" />
 
         <TextView
@@ -210,6 +211,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
+             android:textSize="17sp"
                 android:textColor="@color/black"
             android:drawableRight="@drawable/arrow_right"
             android:padding="15dip"
@@ -220,6 +222,7 @@
             android:layout_marginTop="1dip"
             android:layout_width="fill_parent"
                 android:textColor="@color/black"
+                 android:textSize="17sp"
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:drawableRight="@drawable/arrow_right"

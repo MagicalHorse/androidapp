@@ -29,6 +29,7 @@ import com.shenma.yueba.baijia.fragment.TheySayFragment;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.yangjia.activity.EarningManagerActivity;
+import com.shenma.yueba.yangjia.activity.ProductManagerActivity;
 import com.shenma.yueba.yangjia.activity.SalesManagerForBuyerActivity;
 
 /**
@@ -108,7 +109,7 @@ public class IndexFragmentForYangJia extends BaseFragment implements
 	}
 
 	private void initView(LayoutInflater inflater) {
-		view = inflater.inflate(R.layout.index_fragment_for_seller, null);
+		view = inflater.inflate(R.layout.index_fragment_for_yangjia, null);
 		mPullRefreshScrollView = (PullToRefreshScrollView) view.findViewById(R.id.pull_refresh_scrollview);
 		mPullRefreshScrollView.setOnRefreshListener(new OnRefreshListener<ScrollView>() {
 			@Override
@@ -281,6 +282,8 @@ public class IndexFragmentForYangJia extends BaseFragment implements
 		case R.id.rl_share://分享管理
 			break;
 		case R.id.rl_products://商品管理
+			Intent intentProductManager = new Intent(getActivity(), ProductManagerActivity.class);
+			startActivity(intentProductManager);
 			break;
 		case R.id.rl_fans://粉丝管理
 			break;

@@ -1,47 +1,47 @@
 package com.shenma.yueba.yangjia.fragment;
 
-import java.util.ArrayList;
 
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.baijia.activity.UserConfigActivity;
 import com.shenma.yueba.baijia.adapter.CircleFragmentPagerAdapter;
 import com.shenma.yueba.baijia.fragment.BaseFragment;
 import com.shenma.yueba.util.FontManager;
+import com.shenma.yueba.yangjia.activity.BuyerIndentificationActivity;
+import com.shenma.yueba.yangjia.activity.IdentificationBuyerListActivity;
 
 /**
- * 养家--个人账户
+ * 败家--个人账户
  * 
  * @author a
  * 
  */
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class MeFragmentForYangJia extends BaseFragment implements OnClickListener {
-	private MsgListFragment msgListFragment;
-	private DynamicListFragment dynamicFragment;
-	private ArrayList<Fragment> fragmentList = new ArrayList<Fragment>();
-	private ViewPager viewpager_circle;
-	private ImageView iv_cursor_left, iv_cursor_right;
-	private Button bt_search, bt_msg;
-	private RelativeLayout rl_my_circle;
 	private View view;
 	private CircleFragmentPagerAdapter myFragmentPagerAdapter;
 	private TextView tv_msg;
 	private TextView tv_dynamic;
+	private ImageView iv_setting;
+	private ImageView iv_icon;
+	private TextView tv_nickname;
+	private TextView tv_grade;
+	private TextView tv_store;
+	private TextView tv_unidentification_buyer;
+	private TextView tv_invite_buyer;
+	private TextView tv_to_baijia;
+	private TextView tv_exit;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -56,8 +56,6 @@ public class MeFragmentForYangJia extends BaseFragment implements OnClickListene
 
 		if (view == null) {
 			initViews(inflater);
-			initFragment();
-			initViewPager();
 		}
 		// 缓存的rootView需要判断是否已经被加过parent，如果有parent需要从parent删除，要不然会发生这个rootview已经有parent的错误。
 		ViewGroup parent = (ViewGroup) view.getParent();
@@ -67,125 +65,32 @@ public class MeFragmentForYangJia extends BaseFragment implements OnClickListene
 		return view;
 	}
 
-	private void initViewPager() {
-		viewpager_circle.setAdapter(myFragmentPagerAdapter);
-		viewpager_circle.setCurrentItem(0);
-		viewpager_circle.setOnPageChangeListener(new OnPageChangeListener() {
-
-			// private boolean isScrolled = false;
-
-			// public void onPageScrollStateChanged(int arg0) {
-			// /*
-			// * 页卡正常滑动时，会经历 1-2-0的三个阶段；
-			// *
-			// * 页卡在最后一页向右滑，或者第一页向左滑经历 1-0-2-0的阶段；
-			// *
-			// * 直接调用 setCurrentItem则只是经历 2-0的阶段
-			// */
-			// switch (arg0) {
-			// /*
-			// * 每一次的滑动arg0都会经历1-2-0的阶段，但是在最后一个页面向右滑，或者第一个页面向左滑时会经历 1-0-2-0的阶段
-			// * 例如： 最后页面右滑时
-			// * ，刚刚开始会是1，这时isScrolled为false，但是没有下一页面，所以此时的页面还是最后一个页面，满足if条件
-			// */
-			// case 0:
-			//
-			// if (viewPager.getCurrentItem() == viewPager.getAdapter()
-			// .getCount() - 1 && !isScrolled)
-			// viewPager.setCurrentItem(0);
-			// else if (viewPager.getCurrentItem() == 0 && !isScrolled) {
-			// viewPager.setCurrentItem(viewPager.getAdapter()
-			// .getCount() - 1);
-			// }
-			// break;
-			// case 1:
-			// isScrolled = false;
-			// break;
-			// case 2:
-			// isScrolled = true;
-			// break;
-			// }
-			// }
-
-			public void onPageScrolled(int arg0, float arg1, int arg2) {
-			}
-
-			/*
-			 * 页面跳转完成后调用的方法
-			 */
-			public void onPageSelected(int arg0) {
-				if (arg0 == 1) {
-					iv_cursor_right.setVisibility(View.VISIBLE);
-					iv_cursor_left.setVisibility(View.INVISIBLE);
-				}
-				if (arg0 == 0) {
-					iv_cursor_right.setVisibility(View.INVISIBLE);
-					iv_cursor_left.setVisibility(View.VISIBLE);
-				}
-
-			}
-
-			@Override
-			public void onPageScrollStateChanged(int arg0) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
-		// viewpager_circle.setOnPageChangeListener(new OnPageChangeListener() {
-		// @Override
-		// public void onPageSelected(int arg0) {
-		// if (arg0 == 1) {
-		// iv_cursor_right.setVisibility(View.VISIBLE);
-		// iv_cursor_left.setVisibility(View.INVISIBLE);
-		// }
-		// if (arg0 == 0) {
-		// iv_cursor_right.setVisibility(View.INVISIBLE);
-		// iv_cursor_left.setVisibility(View.VISIBLE);
-		// }
-		// }
-		//
-		// @Override
-		// public void onPageScrolled(int arg0, float arg1, int arg2) {
-		//
-		//
-		// }
-		//
-		// @Override
-		// public void onPageScrollStateChanged(int arg0) {
-		// // TODO Auto-generated method stub
-		//
-		// }
-		// });
-
-	}
-
-	private void initFragment() {
-		msgListFragment = new MsgListFragment();
-		dynamicFragment = new DynamicListFragment();
-		fragmentList.add(msgListFragment);
-		fragmentList.add(dynamicFragment);
-		myFragmentPagerAdapter = new CircleFragmentPagerAdapter(
-				getChildFragmentManager(), fragmentList);
-
-	}
 
 	/**
 	 * 初始化view
 	 */
 	private void initViews(LayoutInflater inflater) {
-		view = inflater.inflate(R.layout.msg_fragment_layout, null);
-		tv_msg = (TextView) view.findViewById(R.id.tv_msg);
-		tv_dynamic = (TextView) view.findViewById(R.id.tv_dynamic);
-		tv_msg.setOnClickListener(this);
-		tv_dynamic.setOnClickListener(this);
-		viewpager_circle = (ViewPager) view.findViewById(R.id.viewpager_circle);
-		iv_cursor_left = (ImageView) view.findViewById(R.id.iv_cursor_left);
-		iv_cursor_left.setVisibility(View.VISIBLE);
-		iv_cursor_right = (ImageView) view.findViewById(R.id.iv_cursor_right);
-		bt_search = (Button) view.findViewById(R.id.bt_search);
-		bt_search.setOnClickListener(this);
-		FontManager.changeFonts(getActivity(), tv_msg, tv_dynamic);
+		view = inflater.inflate(R.layout.me_fragment_for_yangjia, null);
+		iv_setting = (ImageView) view.findViewById(R.id.iv_setting);
+		iv_icon = (ImageView) view.findViewById(R.id.iv_icon);
+	
+		tv_nickname = (TextView) view.findViewById(R.id.tv_nickname);
+		tv_grade = (TextView) view.findViewById(R.id.tv_grade);
+		tv_store = (TextView) view.findViewById(R.id.tv_store);
+		tv_unidentification_buyer = (TextView) view.findViewById(R.id.tv_unidentification_buyer);
+		tv_invite_buyer = (TextView) view.findViewById(R.id.tv_invite_buyer);
+		tv_to_baijia = (TextView) view.findViewById(R.id.tv_to_baijia);
+		tv_exit = (TextView) view.findViewById(R.id.tv_exit);
+		
+		iv_setting.setOnClickListener(this);
+		tv_store.setOnClickListener(this);
+		tv_unidentification_buyer.setOnClickListener(this);
+		tv_invite_buyer.setOnClickListener(this);
+		tv_to_baijia.setOnClickListener(this);
+		tv_exit.setOnClickListener(this);
+		
+		FontManager.changeFonts(getActivity(), tv_nickname, tv_grade,tv_store,
+				tv_unidentification_buyer,tv_invite_buyer,tv_to_baijia,tv_exit);
 	}
 
 	@Override
@@ -197,11 +102,22 @@ public class MeFragmentForYangJia extends BaseFragment implements OnClickListene
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.tv_msg:// 买手街
-			viewpager_circle.setCurrentItem(0);
+		case R.id.iv_setting://设置
+			Intent userConfigIntent = new Intent(getActivity(),UserConfigActivity.class);
+			startActivity(userConfigIntent);
 			break;
-		case R.id.tv_dynamic:// 他们说
-			viewpager_circle.setCurrentItem(1);
+		case R.id.tv_store://店铺首页
+			break;
+		case R.id.tv_unidentification_buyer://未认证买手
+			Intent identificationBuyerIntent = new Intent(getActivity(),BuyerIndentificationActivity.class);
+			startActivity(identificationBuyerIntent);
+			
+			break;
+		case R.id.tv_invite_buyer://邀请买手
+			break;
+		case R.id.tv_to_baijia://我要败家
+			break;
+		case R.id.tv_exit://退出
 			break;
 		default:
 			break;
