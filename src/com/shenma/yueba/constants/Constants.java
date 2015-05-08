@@ -4,6 +4,38 @@ package com.shenma.yueba.constants;
 import android.os.Environment;
 
 public class Constants {
+	
+	
+	//网络请求的字段
+	public static final String MOBILE="mobile";//手机号
+	public static final String CODE="code";//验证码
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public static int SCREENWIDTH = 0;//
 	public static int SCREENHEITH = 0;//
 	
@@ -264,7 +296,7 @@ public class Constants {
 	public static final String MASSID="massid";//技师id
 	public static final String MASS_ID="mass_id";//技师id,预定按摩师的接口里的
 	public static final String MASS_PEOPLE_COUNT="peopleCount";//预订界面里的按摩客人数
-	public static final String CUSTOMER_MOBILE="mobile";//预订界面里的按摩客电话
+	
 	public static final String SERVICEID="serviceId";//服务项目的id
 	public static final String DATE="date";//
 	
@@ -305,7 +337,6 @@ public class Constants {
 	public static final String MASSSERVE = "mass_serve";
 	public static final String EMAIL="email";   //
 	public static final String PWD="pwd";   //
-	public static final String MOBILE="mobile";  //
 	public static final String PASSWORD="password";   //
 	public static final String ISLOGIN="is_login";   //
 	public static final String SESSION_ID="session_Id";   //

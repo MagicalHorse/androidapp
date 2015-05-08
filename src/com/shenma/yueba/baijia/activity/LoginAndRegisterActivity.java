@@ -44,6 +44,7 @@ public class LoginAndRegisterActivity extends FragmentActivity implements OnClic
 	private TextView tv_login,tv_register;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		requestWindowFeature(getWindow().FEATURE_NO_TITLE);
 		setContentView(R.layout.login_and_register_layout);
 		super.onCreate(savedInstanceState);
 		initView();

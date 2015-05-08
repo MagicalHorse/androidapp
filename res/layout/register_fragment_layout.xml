@@ -81,12 +81,14 @@
 
             <TextView
                 android:id="@+id/tv_confirm"
+                android:gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/comfirm_bg"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:text="验证 >"
-                android:textColor="#069DD5"
+                android:text="验证"
+                android:textColor="@color/white"
                 android:textSize="14sp" />
         </RelativeLayout>
 

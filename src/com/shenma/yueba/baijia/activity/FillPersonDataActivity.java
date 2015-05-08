@@ -2,6 +2,7 @@ package com.shenma.yueba.baijia.activity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,6 +29,7 @@ public class FillPersonDataActivity extends BaseActivityWithTopView {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.fill_person_data);
 		super.onCreate(savedInstanceState);
 		initView();

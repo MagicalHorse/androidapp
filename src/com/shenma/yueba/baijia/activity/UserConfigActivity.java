@@ -2,6 +2,7 @@ package com.shenma.yueba.baijia.activity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -25,7 +26,7 @@ public class UserConfigActivity extends BaseActivityWithTopView {
 	TextView nickname_textvalue;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.mefragmentforseller_config_layout);
 		super.onCreate(savedInstanceState);
 		initView();

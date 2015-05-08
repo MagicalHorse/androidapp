@@ -72,7 +72,7 @@ public class ShopMainActivity extends BaseActivityWithTopView implements ScrollL
 	Map<Integer, Fragment> fragmentmap=new HashMap<Integer, Fragment>();
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
-		
+    	requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.shop_main_layout);
 		super.onCreate(savedInstanceState);
 		initView();

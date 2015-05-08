@@ -2,6 +2,7 @@ package com.shenma.yueba.yangjia.activity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -15,7 +16,7 @@ import com.shenma.yueba.util.FontManager;
  * @author a
  */
 
-public class KaiXiaoPiaoActivity extends BaseActivityWithTopView implements OnClickListener {
+public class   extends BaseActivityWithTopView implements OnClickListener {
 	private EditText et_product_name;
 	private EditText et_product_style;
 	private EditText et_product_color;
@@ -26,6 +27,7 @@ public class KaiXiaoPiaoActivity extends BaseActivityWithTopView implements OnCl
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.kaixiaopiao_layout);
 		super.onCreate(savedInstanceState);
 		initView();

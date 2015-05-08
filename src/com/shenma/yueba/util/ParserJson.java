@@ -1,6 +1,13 @@
 package com.shenma.yueba.util;
 
+import java.lang.reflect.Type;
+
+import android.text.TextUtils;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.shenma.yueba.baijia.modle.LoginBackBean;
+import com.shenma.yueba.baijia.modle.PhoneCodeBean;
 
 
 /**
@@ -32,10 +39,37 @@ public class ParserJson {
 	 * @return
 	 */
 	public static LoginBackBean parserLogin(String jsonData){
+		
 		return null;
 		
 	}
 	
+	/**
+	 * 获取验证码
+	 * @param <T>
+	 * @return
+	 */
+	public static PhoneCodeBean getvalidateCode(String jsonData){
+		PhoneCodeBean bean = null;
+		if(TextUtils.isEmpty(jsonData)){
+			return null;
+		}else {
+			try {
+				Type type = new TypeToken<PhoneCodeBean>() {
+				}.getType();
+				Gson gson = new Gson();
+				bean = gson.fromJson(jsonData, type);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+		return bean;
+		
+	}
+	
+	
+	
+
 	
 	
 }

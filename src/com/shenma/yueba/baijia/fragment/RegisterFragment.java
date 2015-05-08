@@ -3,6 +3,7 @@ package com.shenma.yueba.baijia.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,11 +11,19 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.shenma.yueba.R;
+import com.shenma.yueba.baijia.activity.CityListActivity;
 import com.shenma.yueba.baijia.activity.FillPersonDataActivity;
+import com.shenma.yueba.constants.Constants;
+import com.shenma.yueba.constants.HttpConstants;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.MyCountDown;
+import com.shenma.yueba.util.MyRequestCallBack;
+import com.shenma.yueba.util.ToolsUtil;
 
 public class RegisterFragment extends BaseFragment implements OnClickListener, TextWatcher {
 
@@ -28,7 +37,6 @@ public class RegisterFragment extends BaseFragment implements OnClickListener, T
 	private View view;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 	}
 
@@ -56,16 +64,52 @@ public class RegisterFragment extends BaseFragment implements OnClickListener, T
 		return view;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.tv_confirm://验证验证码
-			Intent intent = new Intent(getActivity(),FillPersonDataActivity.class);
-			startActivity(intent);
-			break;
 		case R.id.tv_getcode://获取验证码
-			new MyCountDown(maxSecond * 1000, 1000, tv_getcode, getCodeString)
-			.start();
+			if(getCodeString.equals(tv_getcode.getText().toString().trim())){
+				String mobile = et_mobile.getText().toString().trim();
+				//判断手机号码是否为空
+				if(TextUtils.isEmpty(mobile)){
+					Toast.makeText(getActivity(), "手机号不能为空", 1000).show();
+					return;
+				}
+				//判断手机号码是否合法
+				if(!ToolsUtil.checkPhone(mobile)){
+					Toast.makeText(getActivity(), "请输入正确的手机号", 1000).show();
+					return;
+				}
+				RequestParams params = new RequestParams();
+				params.addBodyParameter(Constants.MOBILE, et_mobile.getText().toString().trim());
+				getHttpUtils().send(HttpMethod.POST, HttpConstants.sendPhoneCode, params, new MyRequestCallBack(getActivity()) {
+					@Override
+					public void onSuccessd(String result) {
+						new MyCountDown(maxSecond * 1000, 1000, tv_getcode, getCodeString).start();
+					}
+					
+				});
+			}
+			break;
+		case R.id.tv_confirm://验证验证码
+		/*	if(TextUtils.isEmpty(et_code.getText().toString().trim())){
+				Toast.makeText(getActivity(), "验证码不能为空", 1000).show();
+			}else{
+				RequestParams params = new RequestParams();
+				params.addBodyParameter(Constants.MOBILE, et_mobile.getText().toString().trim());
+				params.addBodyParameter(Constants.CODE, et_code.getText().toString().trim());
+				getHttpUtils().send(HttpMethod.POST, HttpConstants.sendPhoneCode, params, new MyRequestCallBack(getActivity()) {
+					@Override
+					public void onSuccessd(String result) {
+						Intent intent = new Intent(getActivity(),FillPersonDataActivity.class);
+						startActivity(intent);
+					}
+				});
+			}*/
+			
+			Intent intent = new Intent(getActivity(),CityListActivity.class);
+			startActivity(intent);
 		default:
 			break;
 		}
@@ -75,9 +119,9 @@ public class RegisterFragment extends BaseFragment implements OnClickListener, T
 	@Override
 	public void afterTextChanged(Editable arg0) {
 		if(arg0.length()>0){
-			et_mobile.setVisibility(View.VISIBLE);
+			tv_getcode.setVisibility(View.VISIBLE);
 		}else{
-			et_mobile.setVisibility(View.INVISIBLE);
+			tv_getcode.setVisibility(View.INVISIBLE);
 		}
 		
 	}

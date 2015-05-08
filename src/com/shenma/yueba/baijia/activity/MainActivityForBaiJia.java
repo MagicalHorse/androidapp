@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
 import android.view.View;
+import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TabHost.OnTabChangeListener;
@@ -74,6 +75,7 @@ public final class MainActivityForBaiJia extends FragmentActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Toast.makeText(this, "mainoncrate", 1000).show();
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
 		initView();
 		CustomProgressDialog progressDialog = CustomProgressDialog.createDialog(this);

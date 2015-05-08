@@ -3,6 +3,7 @@ package com.shenma.yueba.baijia.activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.TextView;
 
 import com.shenma.yueba.R;

@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -28,6 +29,7 @@ public class SalesManagerForSupperManActivity extends BaseActivityWithTopView {
 	private List<SalesItemBean> mList = new ArrayList<SalesItemBean>();
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.sales_manager_layout);
 		super.onCreate(savedInstanceState);
 		initView();
