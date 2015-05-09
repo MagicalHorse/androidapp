@@ -30,7 +30,7 @@ import com.shenma.yueba.util.FontManager;
  * 
  */
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-public class MessageFragmentForSeller extends BaseFragment implements OnClickListener {
+public class MessageFragmentForYangJia extends BaseFragment implements OnClickListener {
 	private MsgListFragment msgListFragment;
 	private DynamicListFragment dynamicFragment;
 	private ArrayList<Fragment> fragmentList = new ArrayList<Fragment>();

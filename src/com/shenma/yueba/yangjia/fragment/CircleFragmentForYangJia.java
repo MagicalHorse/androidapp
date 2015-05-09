@@ -20,7 +20,7 @@ import android.widget.TextView;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.adapter.CircleFragmentPagerAdapter;
-import com.shenma.yueba.baijia.fragment.BaseFragment;
+import com.shenma.yueba.baijia.fragment.MyCircleFragment;
 import com.shenma.yueba.util.FontManager;
 
 /**
@@ -30,22 +30,23 @@ import com.shenma.yueba.util.FontManager;
  * 
  */
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-public class CartFragmentForSeller extends BaseFragment implements OnClickListener {
-	private MsgListFragment msgListFragment;
-	private DynamicListFragment dynamicFragment;
+public class CircleFragmentForYangJia extends Fragment implements OnClickListener {
+	private RecommendedCircleFragment recommendedCircleFragment;
+	private MyCircleFragment myCircleFragment;
 	private ArrayList<Fragment> fragmentList = new ArrayList<Fragment>();
 	private ViewPager viewpager_circle;
 	private ImageView iv_cursor_left, iv_cursor_right;
 	private Button bt_search, bt_msg;
+	private TextView tv_recommended_circle;
 	private RelativeLayout rl_my_circle;
 	private View view;
 	private CircleFragmentPagerAdapter myFragmentPagerAdapter;
-	private TextView tv_msg;
-	private TextView tv_dynamic;
-
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		Log.i("CircleFragment", "oncreate");
+		
+		
+		
 		super.onCreate(savedInstanceState);
 	}
 
@@ -53,7 +54,6 @@ public class CartFragmentForSeller extends BaseFragment implements OnClickListen
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		Log.i("CircleFragment", "oncreateView");
-
 		if (view == null) {
 			initViews(inflater);
 			initFragment();
@@ -161,12 +161,27 @@ public class CartFragmentForSeller extends BaseFragment implements OnClickListen
 	}
 
 	private void initFragment() {
-		msgListFragment = new MsgListFragment();
-		dynamicFragment = new DynamicListFragment();
-		fragmentList.add(msgListFragment);
-		fragmentList.add(dynamicFragment);
+		recommendedCircleFragment = new RecommendedCircleFragment();
+		myCircleFragment = new MyCircleFragment();
+		fragmentList.add(recommendedCircleFragment);
+		fragmentList.add(myCircleFragment);
 		myFragmentPagerAdapter = new CircleFragmentPagerAdapter(
 				getChildFragmentManager(), fragmentList);
+
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.tv_recommended_circle:// 推荐圈子
+			viewpager_circle.setCurrentItem(0);
+			break;
+		case R.id.rl_my_circle:// 我的圈子
+			viewpager_circle.setCurrentItem(1);
+			break;
+		default:
+			break;
+		}
 
 	}
 
@@ -174,38 +189,24 @@ public class CartFragmentForSeller extends BaseFragment implements OnClickListen
 	 * 初始化view
 	 */
 	private void initViews(LayoutInflater inflater) {
-		view = inflater.inflate(R.layout.msg_fragment_layout, null);
-		tv_msg = (TextView) view.findViewById(R.id.tv_msg);
-		tv_dynamic = (TextView) view.findViewById(R.id.tv_dynamic);
-		tv_msg.setOnClickListener(this);
-		tv_dynamic.setOnClickListener(this);
+		view = inflater.inflate(R.layout.circle_fragment_activity, null);
 		viewpager_circle = (ViewPager) view.findViewById(R.id.viewpager_circle);
 		iv_cursor_left = (ImageView) view.findViewById(R.id.iv_cursor_left);
 		iv_cursor_left.setVisibility(View.VISIBLE);
 		iv_cursor_right = (ImageView) view.findViewById(R.id.iv_cursor_right);
 		bt_search = (Button) view.findViewById(R.id.bt_search);
-		bt_search.setOnClickListener(this);
-		FontManager.changeFonts(getActivity(), tv_msg, tv_dynamic);
+		bt_msg = (Button) view.findViewById(R.id.bt_msg);
+		tv_recommended_circle = (TextView) view
+				.findViewById(R.id.tv_recommended_circle);
+		rl_my_circle = (RelativeLayout) view.findViewById(R.id.rl_my_circle);
+		tv_recommended_circle.setOnClickListener(this);
+		rl_my_circle.setOnClickListener(this);
+		FontManager.changeFonts(getActivity(), tv_recommended_circle,rl_my_circle);
 	}
 
 	@Override
 	public void onResume() {
 		Log.i("CircleFragment", "onResume");
 		super.onResume();
-	}
-
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.tv_msg:// 买手街
-			viewpager_circle.setCurrentItem(0);
-			break;
-		case R.id.tv_dynamic:// 他们说
-			viewpager_circle.setCurrentItem(1);
-			break;
-		default:
-			break;
-		}
-
 	}
 }
