@@ -13,16 +13,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.lidroid.xutils.http.RequestParams;
-import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.shenma.yueba.R;
-import com.shenma.yueba.baijia.activity.CityListActivity;
 import com.shenma.yueba.baijia.activity.FillPersonDataActivity;
+import com.shenma.yueba.baijia.modle.CommonBackBean;
 import com.shenma.yueba.constants.Constants;
-import com.shenma.yueba.constants.HttpConstants;
 import com.shenma.yueba.util.FontManager;
+import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.MyCountDown;
-import com.shenma.yueba.util.MyRequestCallBack;
 import com.shenma.yueba.util.ToolsUtil;
 
 public class RegisterFragment extends BaseFragment implements OnClickListener, TextWatcher {
@@ -81,35 +79,58 @@ public class RegisterFragment extends BaseFragment implements OnClickListener, T
 					Toast.makeText(getActivity(), "请输入正确的手机号", 1000).show();
 					return;
 				}
-				RequestParams params = new RequestParams();
-				params.addBodyParameter(Constants.MOBILE, et_mobile.getText().toString().trim());
-				getHttpUtils().send(HttpMethod.POST, HttpConstants.sendPhoneCode, params, new MyRequestCallBack(getActivity()) {
+				
+				HttpControl.the().sendPhoeCode(et_mobile.getText().toString().trim(), new HttpCallBackInterface() {
+					
 					@Override
-					public void onSuccessd(String result) {
+					public void http_Success(Object obj) {
+						
 						new MyCountDown(maxSecond * 1000, 1000, tv_getcode, getCodeString).start();
 					}
 					
-				});
+					@Override
+					public void http_Fails(int error, String msg) {
+						
+						Toast.makeText(getActivity(),msg, 1000).show();
+					}
+					
+					
+				}, getActivity());
 			}
 			break;
 		case R.id.tv_confirm://验证验证码
-		/*	if(TextUtils.isEmpty(et_code.getText().toString().trim())){
+			String mobile = et_mobile.getText().toString().trim();
+			//判断手机号码是否为空
+			if(TextUtils.isEmpty(mobile)){
+				Toast.makeText(getActivity(), "手机号不能为空", 1000).show();
+				return;
+			}//判断手机号码是否合法
+			else if(!ToolsUtil.checkPhone(mobile)){
+				Toast.makeText(getActivity(), "请输入正确的手机号", 1000).show();
+				return;
+			}
+			String code = et_code.getText().toString().trim();
+			if(TextUtils.isEmpty(code)){
 				Toast.makeText(getActivity(), "验证码不能为空", 1000).show();
-			}else{
-				RequestParams params = new RequestParams();
-				params.addBodyParameter(Constants.MOBILE, et_mobile.getText().toString().trim());
-				params.addBodyParameter(Constants.CODE, et_code.getText().toString().trim());
-				getHttpUtils().send(HttpMethod.POST, HttpConstants.sendPhoneCode, params, new MyRequestCallBack(getActivity()) {
-					@Override
-					public void onSuccessd(String result) {
-						Intent intent = new Intent(getActivity(),FillPersonDataActivity.class);
-						startActivity(intent);
-					}
-				});
-			}*/
+				return;
+			}
+			HttpControl.the().validVerifyCode(et_mobile.getText().toString().trim(), et_code.getText().toString().trim(), new HttpCallBackInterface() {
+				
+				@Override
+				public void http_Success(Object obj) {
+					
+					Intent intent = new Intent(getActivity(),FillPersonDataActivity.class);
+					intent.putExtra(Constants.MOBILE, et_mobile.getText().toString().trim());
+					startActivity(intent);
+				}
+				
+				@Override
+				public void http_Fails(int error, String msg) {
+					
+					Toast.makeText(getActivity(),msg, 1000).show();
+				}
+			}, getActivity());
 			
-			Intent intent = new Intent(getActivity(),CityListActivity.class);
-			startActivity(intent);
 		default:
 			break;
 		}
@@ -129,13 +150,13 @@ public class RegisterFragment extends BaseFragment implements OnClickListener, T
 	@Override
 	public void beforeTextChanged(CharSequence s, int start, int count,
 			int after) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
 	@Override
 	public void onTextChanged(CharSequence s, int start, int before, int count) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 }
