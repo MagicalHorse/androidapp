@@ -22,11 +22,11 @@ import android.widget.TextView;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
-import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.FileUtils;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.PhotoUtils;
 import com.shenma.yueba.util.ToolsUtil;
+import com.shenma.yueba.view.RoundImageView;
 import com.shenma.yueba.view.SelectePhotoType;
 import com.shenma.yueba.yangjia.activity.MainActivityForYangJia;
 
@@ -40,7 +40,7 @@ import com.shenma.yueba.yangjia.activity.MainActivityForYangJia;
 public class UserConfigActivity extends BaseActivityWithTopView {
 
 	// 头像图片
-	ImageView icon_imageview;
+	RoundImageView icon_imageview;
 	// 昵称值
 	TextView nickname_textvalue;
 
@@ -76,7 +76,7 @@ public class UserConfigActivity extends BaseActivityWithTopView {
 				.findViewById(R.id.people_config_str1_textview);
 		icon_text.setText(this.getResources().getText(
 				R.string.user_config_icon_str));
-		icon_imageview = (ImageView) icon_layout
+		icon_imageview = (RoundImageView) icon_layout
 				.findViewById(R.id.people_config_str2_imageview);
 		icon_imageview.setVisibility(View.VISIBLE);
 

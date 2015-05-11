@@ -29,7 +29,7 @@
         android:src="@drawable/arrow_right"
         />
     
-    <ImageView
+    <com.shenma.yueba.view.RoundImageView
         android:scaleType="fitCenter"
         android:layout_toLeftOf="@+id/people_config_str1_imageview"
         android:id="@+id/people_config_str2_imageview"
