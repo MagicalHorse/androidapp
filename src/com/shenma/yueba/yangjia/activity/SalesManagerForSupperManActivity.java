@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.BaseActivityWithTopView;
 import com.shenma.yueba.receiver.SalesAdapter;
 import com.shenma.yueba.util.FontManager;
@@ -29,6 +30,7 @@ public class SalesManagerForSupperManActivity extends BaseActivityWithTopView {
 	private List<SalesItemBean> mList = new ArrayList<SalesItemBean>();
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		MyApplication.getInstance().addActivity(this);//加入回退栈
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.sales_manager_layout);
 		super.onCreate(savedInstanceState);

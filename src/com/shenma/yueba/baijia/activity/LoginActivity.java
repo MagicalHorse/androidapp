@@ -141,7 +141,7 @@ public class LoginActivity extends BaseActivityWithTopView implements
 				getHttpUtils().send(HttpMethod.POST,NetUtils.loginUrl, params, new RequestCallBack<String>() {
 					@Override
 					public void onStart() {
-						showDialog();
+						showBottomDialog();
 						super.onStart();
 					}
 					

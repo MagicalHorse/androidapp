@@ -32,6 +32,7 @@ import android.widget.Toast;
 
 import com.google.inject.Inject;
 import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.util.DbHelper;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.yangjia.fragment.CartFragment;
@@ -73,6 +74,7 @@ public final class MainActivityForYangJia extends FragmentActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		MyApplication.getInstance().addActivity(this);//加入回退栈
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
 		initView();

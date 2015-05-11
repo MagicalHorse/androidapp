@@ -14,12 +14,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.activity.MainActivityForBaiJia;
 import com.shenma.yueba.baijia.activity.UserConfigActivity;
 import com.shenma.yueba.baijia.adapter.CircleFragmentPagerAdapter;
 import com.shenma.yueba.baijia.fragment.BaseFragment;
+import com.shenma.yueba.util.CustomProgressDialog;
+import com.shenma.yueba.util.DialogUtils;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.yangjia.activity.BuyerIndentificationActivity;
 import com.shenma.yueba.yangjia.activity.IdentificationBuyerListActivity;
+import com.shenma.yueba.yangjia.activity.MainActivityForYangJia;
 
 /**
  * 败家--个人账户
@@ -103,8 +108,8 @@ public class MeFragmentForYangJia extends BaseFragment implements OnClickListene
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.iv_setting://设置
-			Intent userConfigIntent = new Intent(getActivity(),UserConfigActivity.class);
-			startActivity(userConfigIntent);
+//			Intent userConfigIntent = new Intent(getActivity(),UserConfigActivity.class);
+//			startActivity(userConfigIntent);
 			break;
 		case R.id.tv_store://店铺首页
 			break;
@@ -116,6 +121,13 @@ public class MeFragmentForYangJia extends BaseFragment implements OnClickListene
 		case R.id.tv_invite_buyer://邀请买手
 			break;
 		case R.id.tv_to_baijia://我要败家
+			CustomProgressDialog dialog = new CustomProgressDialog(getActivity());
+			dialog.show();
+			MyApplication.getInstance().removeAllActivity();
+			Intent intent = new Intent(getActivity(),
+					MainActivityForBaiJia.class);
+			startActivity(intent);
+			dialog.dismiss();
 			break;
 		case R.id.tv_exit://退出
 			break;

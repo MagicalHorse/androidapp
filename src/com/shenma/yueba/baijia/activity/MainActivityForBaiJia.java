@@ -32,6 +32,7 @@ import android.widget.Toast;
 
 import com.google.inject.Inject;
 import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.fragment.CircleFragment;
 import com.shenma.yueba.baijia.fragment.FindFragment;
 import com.shenma.yueba.baijia.fragment.IndexFragmentForBaiJia;
@@ -75,6 +76,7 @@ public final class MainActivityForBaiJia extends FragmentActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Toast.makeText(this, "mainoncrate", 1000).show();
+		MyApplication.getInstance().addActivity(this);//加入回退栈
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
 		initView();

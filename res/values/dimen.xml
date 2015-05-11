@@ -11,4 +11,5 @@
   <dimen name="item_height">45dip</dimen>
   <dimen name="margin_left_or_right">15dip</dimen>
   <dimen name="default_button_height">45dip</dimen>
+  <dimen name="title_image_with_height">25dip</dimen>
 </resources>

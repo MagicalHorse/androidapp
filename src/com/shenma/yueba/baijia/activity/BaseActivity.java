@@ -35,7 +35,7 @@ public class BaseActivity extends Activity {
 		dialog = new CustomProgressDialog(this);
 	}
 	
-	protected void showDialog(){
+	protected void showBottomDialog(){
 		dialog.show();
 	}
 	

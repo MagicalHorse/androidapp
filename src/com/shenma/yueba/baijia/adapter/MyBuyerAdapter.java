@@ -3,16 +3,21 @@ package com.shenma.yueba.baijia.adapter;
 import java.util.List;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.lidroid.xutils.bitmap.BitmapDisplayConfig;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.modle.MyBuyerBean;
-import com.shenma.yueba.baijia.modle.MyCircleBean;
 import com.shenma.yueba.util.FontManager;
+import com.shenma.yueba.util.PhotoUtils;
+import com.shenma.yueba.view.RoundImageView2;
 
 public class MyBuyerAdapter extends BaseAdapterWithUtil {
 	private List<MyBuyerBean> mList;
@@ -42,7 +47,7 @@ public class MyBuyerAdapter extends BaseAdapterWithUtil {
 	@SuppressWarnings("null")
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		Holder holder;
+		final Holder holder;
 		if(convertView == null){
 			holder = new Holder();
 			convertView = View.inflate(ctx, R.layout.my_buyer_item, null);
@@ -56,7 +61,15 @@ public class MyBuyerAdapter extends BaseAdapterWithUtil {
 			holder.tv_chat = (TextView) convertView.findViewById(R.id.tv_chat);
 			holder.tv_share = (TextView) convertView.findViewById(R.id.tv_share);
 			holder.tv_zan = (TextView) convertView.findViewById(R.id.tv_zan);
-			MyApplication.getInstance().getImageLoader().displayImage("http://img3.redocn.com/20091221/20091217_fa2a743db1f556f82b9asJ320coGmYFf.jpg", holder.iv_head, MyApplication.getInstance().getRoundDisplayImageOptions());
+//			new Thread(){
+//				public void run() {
+//					Bitmap bitmap = MyApplication.getInstance().getImageLoader().loadImageSync("http://wenwen.soso.com/p/20090901/20090901120123-329341688.jpg");
+//					Bitmap bitmap2 = PhotoUtils.toRoundCorner(bitmap, 30);
+//					holder.iv_head.setImageBitmap(bitmap2);
+//				};
+//			}.start();
+			
+		//	MyApplication.getInstance().getImageLoader().displayImage("http://wenwen.soso.com/p/20090901/20090901120123-329341688.jpg", holder.iv_head);
 			FontManager.changeFonts(ctx, holder.tv_buyer_name,holder.tv_time,holder.tv_address,
 					holder.tv_money,holder.tv_introduce,holder.tv_chat,holder.tv_share,holder.tv_zan);
 			convertView.setTag(holder);

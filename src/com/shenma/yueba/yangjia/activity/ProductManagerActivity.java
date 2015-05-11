@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.adapter.CircleFragmentPagerAdapter;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.yangjia.fragment.ProductManagerFragmentForOnLine;
@@ -40,6 +41,7 @@ public class ProductManagerActivity extends FragmentActivity implements
 
 	@Override
 	protected void onCreate(Bundle arg0) {
+		MyApplication.getInstance().addActivity(this);//加入回退栈
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.product_manager_layout);
 		initView();

@@ -6,79 +6,72 @@
     android:orientation="vertical" >
 
     <LinearLayout
-        android:layout_height="@dimen/top_title_height"
         android:layout_width="match_parent"
+        android:layout_height="@dimen/top_title_height"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingLeft="10dip" 
-        android:paddingRight="10dip">
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip" >
 
         <TextView
             android:id="@+id/tv_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="今天"
             android:drawablePadding="3dip"
             android:drawableRight="@drawable/arrow_down"
-             />
+            android:text="今天" />
 
-        <TextView
-            android:id="@+id/tv_ranking"
+        <LinearLayout
             android:layout_width="0dip"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:gravity="center"
-            android:text="红榜"
-            android:textColor="@color/main_color"
-            android:textSize="@dimen/title_text_size" />
+            android:orientation="vertical" >
 
-        <TextView
-            android:id="@+id/tv_history"
+            <TextView
+                android:id="@+id/tv_ranking"
+                android:layout_width="fill_parent"
+                android:layout_height="0dip"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="红榜"
+                android:textColor="@color/main_color"
+                android:textSize="@dimen/title_text_size" />
+
+            <ImageView
+                android:id="@+id/iv_cursor_left"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/line_title"
+                android:visibility="invisible" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="0dip"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:gravity="center"
-            android:text="历史"
-            android:textColor="@color/main_color"
-            android:textSize="@dimen/title_text_size" />
+            android:orientation="vertical" >
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/tv_history"
+                android:layout_width="fill_parent"
+                android:layout_height="0dip"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="历史"
+                android:textColor="@color/main_color"
+                android:textSize="@dimen/title_text_size" />
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="4dip"
-        android:orientation="horizontal"
-        android:paddingLeft="5dip"
-        android:paddingRight="5dip" >
-
-      <TextView
-            android:id="@+id/tv_list"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="今天"
-            android:drawablePadding="3dip"
-            android:visibility="invisible"
-            android:drawableRight="@drawable/arrow_down"
-             />
-
-        <ImageView
-            android:id="@+id/iv_cursor_left"
-            android:layout_width="0dip"
-            android:visibility="invisible"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/line_title" />
-
-        <ImageView
-            android:id="@+id/iv_cursor_right"
-            android:visibility="invisible"
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/line_title" />
+            <ImageView
+                android:id="@+id/iv_cursor_right"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/line_title"
+                android:visibility="invisible" />
+        </LinearLayout>
     </LinearLayout>
 
     <View
+        android:id="@+id/view_line"
         android:layout_width="fill_parent"
         android:layout_height="0.1dip"
         android:layout_alignParentBottom="true"

@@ -1,6 +1,7 @@
 package com.shenma.yueba.yangjia.fragment;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -19,9 +20,11 @@ import android.widget.TextView;
 import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.adapter.CircleFragmentPagerAdapter;
 import com.shenma.yueba.baijia.fragment.BaseFragment;
+import com.shenma.yueba.inter.PopupWindowInter;
 import com.shenma.yueba.util.FontManager;
+import com.shenma.yueba.util.PopwindowUtil;
 
-public class RankingFragment extends BaseFragment implements OnClickListener {
+public class RankingFragment extends BaseFragment implements OnClickListener, PopupWindowInter {
 	private CurrentRankingFragment currentRankingFragment;
 	private DynamicListFragment dynamicFragment;
 	private ArrayList<Fragment> fragmentList = new ArrayList<Fragment>();
@@ -34,6 +37,9 @@ public class RankingFragment extends BaseFragment implements OnClickListener {
 	private TextView tv_msg;
 	private TextView tv_history;
 	private TextView tv_list;
+	private PopwindowUtil popwindowUtil;
+	private List<String> dataList = new ArrayList<String>();
+	private View view_line;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -167,6 +173,7 @@ public class RankingFragment extends BaseFragment implements OnClickListener {
 	 */
 	private void initViews(LayoutInflater inflater) {
 		view = inflater.inflate(R.layout.ranking_layout2, null);
+		view_line = view.findViewById(R.id.view_line);
 		tv_msg = (TextView) view.findViewById(R.id.tv_ranking);
 		tv_history = (TextView) view.findViewById(R.id.tv_history);
 		tv_list = (TextView) view.findViewById(R.id.tv_list);
@@ -177,6 +184,11 @@ public class RankingFragment extends BaseFragment implements OnClickListener {
 		iv_cursor_left = (ImageView) view.findViewById(R.id.iv_cursor_left);
 		iv_cursor_left.setVisibility(View.VISIBLE);
 		iv_cursor_right = (ImageView) view.findViewById(R.id.iv_cursor_right);
+		popwindowUtil = new PopwindowUtil();
+		popwindowUtil.setPopwindowInter(this);
+		dataList.add("今天");
+		dataList.add("本周");
+		dataList.add("本月");
 		FontManager.changeFonts(getActivity(), tv_msg, tv_history,tv_list);
 	}
 
@@ -195,9 +207,23 @@ public class RankingFragment extends BaseFragment implements OnClickListener {
 		case R.id.tv_dynamic:// 他们说
 			viewpager_circle.setCurrentItem(1);
 			break;
+		case R.id.tv_list://时间选择
+			popwindowUtil.initCategrayPopupWindow(getActivity(), dataList, view_line, 0, 0);
 		default:
 			break;
 		}
 
+	}
+
+	@Override
+	public void onItemClickListner(View view, int position) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onItemClickListner(int flag, View view, int position) {
+		tv_list.setText(dataList.get(position));
+		
 	}
 }
