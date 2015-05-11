@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.modle.RecommendedCircleBean;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.view.RoundImageView;
@@ -49,6 +50,7 @@ public class RecommendedCircleAdapter extends BaseAdapterWithUtil {
 			holder.tv_count = (TextView) convertView.findViewById(R.id.tv_count);
 			holder.tv_address = (TextView) convertView.findViewById(R.id.tv_address);
 			FontManager.changeFonts(ctx, holder.riv,holder.tv_address,holder.tv_circle_name,holder.tv_count);
+			MyApplication.getInstance().getImageLoader().displayImage("http://img3.redocn.com/20091221/20091217_fa2a743db1f556f82b9asJ320coGmYFf.jpg", holder.riv);
 			convertView.setTag(holder);
 		}else{
 			holder = (Holder) convertView.getTag();

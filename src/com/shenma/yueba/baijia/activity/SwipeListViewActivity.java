@@ -15,6 +15,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.swipemenulistview.SwipeMenu;
 import com.shenma.yueba.swipemenulistview.SwipeMenuCreator;
 import com.shenma.yueba.swipemenulistview.SwipeMenuItem;
@@ -27,6 +28,7 @@ public class SwipeListViewActivity extends Activity{
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		MyApplication.getInstance().addActivity(this);//加入回退栈
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.swipe_list);
 		super.onCreate(savedInstanceState);

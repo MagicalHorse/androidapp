@@ -22,6 +22,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.fragment.ShopMainFragmentTab1;
 import com.shenma.yueba.baijia.fragment.StayLayFragment;
 import com.shenma.yueba.view.scroll.CustomScrollView;
@@ -72,6 +73,7 @@ public class ShopMainActivity extends BaseActivityWithTopView implements ScrollL
 	Map<Integer, Fragment> fragmentmap=new HashMap<Integer, Fragment>();
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
+    	MyApplication.getInstance().addActivity(this);//加入回退栈
     	requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.shop_main_layout);
 		super.onCreate(savedInstanceState);
