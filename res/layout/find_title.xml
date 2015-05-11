@@ -36,7 +36,7 @@
                 android:layout_marginLeft="5dip"
                 android:layout_marginRight="5dip"
                 android:background="@drawable/line_title"
-                android:visibility="visible" />
+                android:visibility="invisible" />
         </LinearLayout>
 
         <LinearLayout
@@ -62,7 +62,7 @@
                 android:layout_marginLeft="5dip"
                 android:layout_marginRight="5dip"
                 android:background="@drawable/line_title"
-                android:visibility="visible" />
+                android:visibility="invisible" />
         </LinearLayout>
 
         <Button

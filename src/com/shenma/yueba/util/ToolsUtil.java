@@ -1,12 +1,18 @@
 package com.shenma.yueba.util;
 
+import java.io.File;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Environment;
+import android.os.StatFs;
 import android.util.DisplayMetrics;
+import android.view.WindowManager;
+import android.widget.Toast;
 
 public class ToolsUtil {
 
@@ -124,5 +130,63 @@ public class ToolsUtil {
 			int screenWidth = dm.widthPixels;
 			return screenWidth;
 		}
+
+	
+	/**
+	 * 刚进入界面时，隐藏软键盘
+	 * 
+	 * @param context
+	 *            上下文
+	 */
+	public static void hideSoftInputKeyBoard(Activity context) {
+		context.getWindow().setSoftInputMode(
+				WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+	}
+
+	
+	/**
+	 * 判断空间是否可用
+	 * 
+	 * @param mContext
+	 * @return
+	 */
+	public static boolean isAvailableSpace(Context mContext) {
+		if (isMounted(mContext) && isEnoughSpace(mContext)) {
+			return true;
+		}
+		return false;
+	}
+
+	public static boolean isMounted(Context mContext) {
+		if (Environment.getExternalStorageState().equals(
+				Environment.MEDIA_MOUNTED)) {
+			return true;
+		}
+		Toast.makeText(mContext, "SD卡不可用",
+				1000).show();
+		return false;
+	}
+
+	/**
+	 * 空闲区限制不能小于5M
+	 * 
+	 * @param mContext
+	 * @return
+	 */
+	public static boolean isEnoughSpace(Context mContext) {
+		if (getSDFreeSize() < 5) {
+			Toast.makeText(mContext,"存储空间不足", 1000).show();
+			return false;
+		}
+		return true;
+	}
+
+	private static long getSDFreeSize() {
+		File path = Environment.getExternalStorageDirectory();
+		StatFs sf = new StatFs(path.getPath());
+		long blockSize = sf.getBlockSize();
+		long freeBlocks = sf.getAvailableBlocks();
+		return (freeBlocks * blockSize) / 1024 / 1024; // 单位MB
+	}
 
 }

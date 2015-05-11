@@ -127,7 +127,7 @@ public class WebActivity extends BaseActivityWithTopView {
 	            if (newProgress == 100) {
 	            	dismissDialog();
 	            }else {
-	            	showDialog();
+	            	showBottomDialog();
 	            }
 	            super.onProgressChanged(view, newProgress);
 	        }

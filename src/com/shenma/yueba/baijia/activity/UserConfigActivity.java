@@ -1,10 +1,20 @@
 package com.shenma.yueba.baijia.activity;
 
+import java.io.File;
+import java.util.UUID;
+
+import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.View;
-import android.view.Window;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -12,7 +22,12 @@ import android.widget.TextView;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.constants.Constants;
+import com.shenma.yueba.util.FileUtils;
 import com.shenma.yueba.util.FontManager;
+import com.shenma.yueba.util.PhotoUtils;
+import com.shenma.yueba.util.ToolsUtil;
+import com.shenma.yueba.view.SelectePhotoType;
 import com.shenma.yueba.yangjia.activity.MainActivityForYangJia;
 
 /*****
@@ -29,6 +44,8 @@ public class UserConfigActivity extends BaseActivityWithTopView {
 	// 昵称值
 	TextView nickname_textvalue;
 
+	private String littlePicPath;//小图路径
+	private String littlePicPath_cache;//裁剪后图片存储的路径
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		MyApplication.getInstance().addActivity(this);//加入回退栈
@@ -131,10 +148,123 @@ public class UserConfigActivity extends BaseActivityWithTopView {
 				startActivity(intent);
 				MyApplication.getInstance().removeAllActivity();
 				break;
+			case R.id.user_config_icon_include:
+				showBottomDialog();
+				break;
 			default:
 				break;
 			}
 
 		}
 	};
+	
+	
+	/**
+	 * 弹出底部菜单(相机和图库)
+	 */
+	protected void showBottomDialog() {
+		ToolsUtil.hideSoftInputKeyBoard(UserConfigActivity.this);
+		ShowMenu showMenu = new ShowMenu(mContext,
+				findViewById(R.id.parent), R.layout.camera_pic_popwindow);
+		showMenu.createView();
+	}
+	
+	
+	/**
+	 * 弹出底部菜单
+	 * 
+	 * @author
+	 */
+	class ShowMenu extends SelectePhotoType {
+		public ShowMenu(Activity activity, View parent, int popLayout) {
+			super(activity, parent, popLayout);
+		}
+
+		@Override
+		public void onExitClick(View v) {
+			canceView();
+		}
+
+		@Override
+		public void onCamera(View v) {
+			if (ToolsUtil.isAvailableSpace(mContext)) {
+				littlePicPath = PhotoUtils
+						.takePicture(mContext);
+			}
+			canceView();
+		}
+
+		@Override
+		public void onPic(View v) {
+			if (ToolsUtil.isAvailableSpace(mContext)) {
+				PhotoUtils.selectPhoto(mContext);
+			}
+			canceView();
+		}
+
+	
+	}
+	
+	
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == PhotoUtils.INTENT_REQUEST_CODE_ALBUM) {
+			// 调用相册返回
+			if (resultCode == RESULT_OK) {
+				if (data.getData() == null) {
+					return;
+				}
+				Uri uri = data.getData();
+				String[] proj = { MediaStore.Images.Media.DATA };
+				Cursor cursor = managedQuery(uri, proj, null, null, null);
+				if (cursor != null) {
+					int column_index = cursor
+							.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+					if (cursor.getCount() > 0 && cursor.moveToFirst()) {
+						littlePicPath = cursor.getString(column_index);
+						//裁剪之后存储的路径
+						littlePicPath_cache = Environment
+								.getExternalStorageDirectory().toString()
+								+ File.separator
+								+ UUID.randomUUID().toString()
+								+ "littlePic.jpg";
+						// 裁剪图片
+						startActivityForResult(PhotoUtils.getZoomIntent(
+								Uri.fromFile(new File(littlePicPath)),
+								Uri.fromFile(FileUtils.createNewFile(littlePicPath_cache))),
+								PhotoUtils.INTENT_REQUEST_CODE_CROP);
+					}
+				}
+			}
+		}
+		if (requestCode == PhotoUtils.INTENT_REQUEST_CODE_CROP) {// 裁剪后返回
+			if (resultCode == RESULT_OK) {
+				//tv_upload.setVisibility(View.GONE);
+				Bitmap bm = BitmapFactory.decodeFile(littlePicPath_cache); 
+				//iv_pic.setImageBitmap(bm); 
+				//iv_pic.setVisibility(View.VISIBLE);
+				icon_imageview.setImageBitmap(bm);
+			}
+		}
+		if (requestCode == PhotoUtils.INTENT_REQUEST_CODE_CAMERA) {// 调用相机返回
+			if (resultCode == RESULT_OK) {
+				if (littlePicPath != null) {
+					//裁剪之后存储的路径
+					littlePicPath_cache = Environment
+							.getExternalStorageDirectory().toString()
+							+ File.separator
+							+ UUID.randomUUID().toString()
+							+ "littlePic.jpg";
+					// 裁剪图片
+					startActivityForResult(PhotoUtils.getZoomIntent(
+							Uri.fromFile(new File(littlePicPath)),
+							Uri.fromFile(FileUtils.createNewFile(littlePicPath_cache))),
+							PhotoUtils.INTENT_REQUEST_CODE_CROP);
+				}
+			}
+		}
+		super.onActivityResult(requestCode, resultCode, data);
+	
+	}
 }
