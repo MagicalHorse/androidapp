@@ -139,7 +139,7 @@
             android:name="com.shenma.yueba.yangjia.activity.BuyerIndentificationActivity"
             android:screenOrientation="portrait" >
         </activity>
-         <activity
+        <activity
             android:name="com.shenma.yueba.yangjia.activity.IdentificationBuyerListActivity"
             android:screenOrientation="portrait" >
         </activity>
@@ -155,6 +155,10 @@
             android:name="com.shenma.yueba.baijia.activity.CityListActivity"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name="com.shenma.yueba.yangjia.activity.PublishProductsActivity"
+            android:screenOrientation="portrait" >
+        </activity>
 
         <!-- 用户中心 -->
         <activity
@@ -168,11 +172,7 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
-
-
-
+            </intent-filter>
             -->
         </activity>
 
