@@ -32,7 +32,7 @@ public abstract class MyRequestCallBack extends RequestCallBack {
 		if(progressDialog!=null){
 			progressDialog.dismiss();
 		}
-		CommonBackBean backBean = getCommonData((String)responseInfo.result);
+		CommonBackBean backBean = (CommonBackBean) getCommonData((String)responseInfo.result);
 		if(200 == backBean.getStatusCode()){
 			onSuccessd((String)responseInfo.result);
 		}else{
@@ -45,7 +45,7 @@ public abstract class MyRequestCallBack extends RequestCallBack {
 		if(progressDialog!=null){
 			progressDialog.dismiss();
 		}
-		Toast.makeText(ctx,"获取失败，请稍后重试", 1000).show();
+		Toast.makeText(ctx,msg, 1000).show();
 	}
 	
 	
@@ -59,8 +59,8 @@ public abstract class MyRequestCallBack extends RequestCallBack {
 	
 	public abstract void onSuccessd(String result);
 	
-	private CommonBackBean getCommonData(String jsonData){
-		CommonBackBean bean = null;
+	private Object getCommonData(String jsonData){
+		CommonBackBean  bean = null;
 		if(TextUtils.isEmpty(jsonData)){
 			return null;
 		}else {

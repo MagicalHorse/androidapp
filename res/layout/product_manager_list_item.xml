@@ -3,7 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="10dip" >
+    android:paddingLeft="10dip"
+    android:paddingTop="10dip"
+    android:paddingRight="10dip" >
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -97,7 +99,7 @@
         <View style="@style/style_vertical_line" />
 
         <TextView
-            android:id="@+id/tv_down"
+            android:id="@+id/tv_copy"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -108,7 +110,7 @@
         <View style="@style/style_vertical_line" />
 
         <TextView
-            android:id="@+id/tv_down"
+            android:id="@+id/tv_modify"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -125,7 +127,7 @@
         android:visibility="gone" >
 
         <TextView
-            android:id="@+id/tv_down"
+            android:id="@+id/tv_up"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -136,7 +138,7 @@
         <View style="@style/style_vertical_line" />
 
         <TextView
-            android:id="@+id/tv_down"
+            android:id="@+id/tv_copy_willbeoffline"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1"

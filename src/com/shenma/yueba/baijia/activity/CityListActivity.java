@@ -3,13 +3,16 @@ package com.shenma.yueba.baijia.activity;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -20,7 +23,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shenma.yueba.R;
-import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.modle.CityBean;
+import com.shenma.yueba.baijia.modle.CityBeanList;
+import com.shenma.yueba.baijia.modle.CityListRequestBean;
+import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.sore.CharacterParser;
 import com.shenma.yueba.util.sore.ClearEditText;
 import com.shenma.yueba.util.sore.PinyinComparator;
@@ -40,8 +47,11 @@ public class CityListActivity extends BaseActivityWithTopView {
 	 * 汉字转换成拼音的类
 	 */
 	private CharacterParser characterParser;
-	private List<SortModel> SourceDateList;
-	
+	private List<SortModel> sourceDateList;
+	//城市列表map  string--城市名称    Integer--对应城市的id
+	Map<String, Integer> citymap=new HashMap<String, Integer>();
+	List<String> city_list=new ArrayList<String>();
+	static CityListRequestBean cityBeanList;
 	/**
 	 * 根据拼音来排列ListView里面的数据类
 	 */
@@ -49,7 +59,6 @@ public class CityListActivity extends BaseActivityWithTopView {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		MyApplication.getInstance().addActivity(this);//加入回退栈
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.city_list_layout);
 		super.onCreate(savedInstanceState);
@@ -95,15 +104,36 @@ public class CityListActivity extends BaseActivityWithTopView {
 					int position, long id) {
 				//这里要利用adapter.getItem(position)来获取当前position所对应的对象
 				Toast.makeText(getApplication(), ((SortModel)adapter.getItem(position)).getName(), Toast.LENGTH_SHORT).show();
+				List<SortModel> sortmodel=adapter.getListData();
+				if(sortmodel!=null)
+				{
+					SortModel sortModel=sortmodel.get(position);
+					String name=sortModel.getName();
+					if(citymap.containsKey(name))
+					{
+						int value=citymap.get(name);
+						Intent intent=new Intent();
+						intent.putExtra(FillPersonDataActivity.CITY_NAME, name);
+						intent.putExtra(FillPersonDataActivity.CITY_VALUE, value);
+						Log.i("TAG",FillPersonDataActivity.CITY_VALUE+ ":"+value);
+						setResult(FillPersonDataActivity.REQUESTCODE, intent);
+					}
+				}
+				finish();
 			}
 		});
-		
-		SourceDateList = filledData(getResources().getStringArray(R.array.date));
-		
-		// 根据a-z进行排序源数据
-		Collections.sort(SourceDateList, pinyinComparator);
-		adapter = new SortAdapter(this, SourceDateList);
+		sourceDateList=new ArrayList<SortModel>();
+		//SourceDateList = filledData(getResources().getStringArray(R.array.date));
+		adapter = new SortAdapter(this, sourceDateList);
 		sortListView.setAdapter(adapter);
+		//如果从在 城市列表数据 则直接设置 否则 从网络获取
+		if(cityBeanList!=null && cityBeanList.getData().size()>0)
+		{
+			setCityList(cityBeanList);
+		}else
+		{
+			getCityList();
+		}
 		
 		
 		mClearEditText = (ClearEditText) findViewById(R.id.filter_edit);
@@ -129,20 +159,89 @@ public class CityListActivity extends BaseActivityWithTopView {
 		});
 	}
 
+	/*****
+	 * 访问网络获取城市列表
+	 * **/
+	void getCityList()
+	{
+		HttpControl.the().getCityList(new HttpCallBackInterface() {
+			
+			@Override
+			public void http_Success(Object obj) {
+				
+				setCityList(obj);
+			}
+			
+			@Override
+			public void http_Fails(int error, String msg) {
+				
+				Toast.makeText(CityListActivity.this, msg, 1000).show();
+				
+			}
+		}, this);
+		
+	}
 
+	/*****
+	 * 根据 城市列表对象 获取列表信息
+	 * ***/
+	void setCityList(Object obj)
+	{
+		if(obj!=null && obj instanceof CityListRequestBean)
+		{
+			cityBeanList=(CityListRequestBean)obj;
+			List<CityBeanList> list=cityBeanList.getData();
+			if(list!=null && list.size()>0 )
+			{
+				sourceDateList.clear();
+				citymap.clear();
+				for(int i=0;i<list.size();i++)
+				{
+					CityBeanList citybeanlsit=list.get(i);
+					List<CityBean>  citybean_array=citybeanlsit.getCities();
+					for(int j=0;j<citybean_array.size();j++)
+					{
+						CityBean cityBean=citybean_array.get(j);
+						citymap.put(cityBean.getName(), cityBean.getId());
+						city_list.add(cityBean.getName());
+					}
+					
+					//CityBean cityBean=list.get(i);
+					
+				}
+				
+			}
+			
+		}
+        setShowCityList();
+	}
+	
+	
+	void setShowCityList()
+	{
+		sourceDateList.clear();
+		//将汉子转化为拼音
+		sourceDateList=filledData(city_list);
+		// 根据a-z进行排序源数据
+	    Collections.sort(sourceDateList, pinyinComparator);
+	    adapter.updateListView(sourceDateList);
+	    adapter.notifyDataSetChanged();
+	}
+	
+	
 	/**
 	 * 为ListView填充数据
 	 * @param date
 	 * @return
 	 */
-	private List<SortModel> filledData(String [] date){
+	private List<SortModel> filledData(List<String> city_array){
 		List<SortModel> mSortList = new ArrayList<SortModel>();
 		
-		for(int i=0; i<date.length; i++){
+		for(int i=0; i<city_array.size(); i++){
 			SortModel sortModel = new SortModel();
-			sortModel.setName(date[i]);
+			sortModel.setName(city_array.get(i));
 			//汉字转换成拼音
-			String pinyin = characterParser.getSelling(date[i]);
+			String pinyin = characterParser.getSelling(city_array.get(i));
 			String sortString = pinyin.substring(0, 1).toUpperCase();
 			
 			// 正则表达式，判断首字母是否是英文字母
@@ -166,10 +265,10 @@ public class CityListActivity extends BaseActivityWithTopView {
 		List<SortModel> filterDateList = new ArrayList<SortModel>();
 		
 		if(TextUtils.isEmpty(filterStr)){
-			filterDateList = SourceDateList;
+			filterDateList = sourceDateList;
 		}else{
 			filterDateList.clear();
-			for(SortModel sortModel : SourceDateList){
+			for(SortModel sortModel : sourceDateList){
 				String name = sortModel.getName();
 				if(name.indexOf(filterStr.toString()) != -1 || characterParser.getSelling(name).startsWith(filterStr.toString())){
 					filterDateList.add(sortModel);

@@ -6,11 +6,15 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.text.DecimalFormat;
 
 import com.shenma.yueba.constants.Constants;
 
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Environment;
 
@@ -216,6 +220,75 @@ public class FileUtils {
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
+		}
+		return null;
+	}
+	
+	
+	private static int FILE_SIZE = 4 * 1024;
+
+	public static boolean hasSdcard() {
+		String status = Environment.getExternalStorageState();
+		if (status.equals(Environment.MEDIA_MOUNTED)) {
+			return true;
+		}
+		return false;
+	}
+
+	public static boolean createPath(String path) {
+		File f = new File(path);
+		if (!f.exists()) {
+			Boolean o = f.mkdirs();
+			return o;
+		}
+		return true;
+	}
+
+
+	public static File saveFile(String file, InputStream inputStream) {
+		File f = null;
+		OutputStream outSm = null;
+
+		try {
+			f = new File(file);
+			String path = f.getParent();
+			if (!createPath(path)) {
+				return null;
+			}
+
+			if (!f.exists()) {
+				f.createNewFile();
+			}
+
+			outSm = new FileOutputStream(f);
+			byte[] buffer = new byte[FILE_SIZE];
+			while ((inputStream.read(buffer)) != -1) {
+				outSm.write(buffer);
+			}
+			outSm.flush();
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			return null;
+
+		} finally {
+			try {
+				if (outSm != null)
+					outSm.close();
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		}
+		return f;
+	}
+
+	public static Drawable getImageDrawable(String file) {
+		if (!exists(file))
+			return null;
+		try {
+			InputStream inp = new FileInputStream(new File(file));
+			return BitmapDrawable.createFromStream(inp, "img");
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
 		return null;
 	}

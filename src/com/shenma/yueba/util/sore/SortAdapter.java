@@ -31,6 +31,11 @@ public class SortAdapter extends BaseAdapter implements SectionIndexer{
 		notifyDataSetChanged();
 	}
 
+	public List<SortModel>  getListData()
+	{
+		return list;
+	}
+	
 	public int getCount() {
 		return this.list.size();
 	}

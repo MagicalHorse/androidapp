@@ -9,6 +9,7 @@ import android.app.Application;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
+import android.widget.Toast;
 
 import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.bitmap.BitmapCommonUtils;
@@ -219,5 +220,15 @@ public class MyApplication extends Application {
 				.cacheInMemory(true).displayer(new RoundedBitmapDisplayer(55))
 				.imageScaleType(ImageScaleType.EXACTLY)
 				.bitmapConfig(Bitmap.Config.RGB_565).build();
+	}
+	
+	/******
+	 * 显示提示信息
+	 * @param Context context
+	 * @param String msg 提示的消息
+	 * ***/
+	public void showMessage(Context context,String msg)
+	{
+		Toast.makeText(context, msg, 1000).show();
 	}
 }
