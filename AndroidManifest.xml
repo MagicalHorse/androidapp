@@ -159,8 +159,9 @@
             android:name="com.shenma.yueba.yangjia.activity.PublishProductsActivity"
             android:screenOrientation="portrait" >
         </activity>
+        <!-- 重置密码 -->
         <activity
-            android:name="com.shenma.yueba.yangjia.activity.PublishProductsActivity"
+            android:name="com.shenma.yueba.baijia.activity.ResetPasswordActivity"
             android:screenOrientation="portrait" >
         </activity>
 
@@ -170,23 +171,6 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity android:name="com.shenma.yueba.baijia.activity.ShopMainActivity" >
-
-            <!--
-                 <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-<<<<<<< HEAD
-            </intent-filter>
-
-
-
-
-
-=======
-            </intent-filter>
->>>>>>> branch 'develop' of https://github.com/MagicalHorse/androidapp
-            -->
         </activity>
 
         <!-- 网络状态变化的广播 -->

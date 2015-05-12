@@ -1,18 +1,23 @@
 package com.shenma.yueba.baijia.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
-import android.view.Window;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.FontManager;
+import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.MyCountDown;
 /**
  * 找回密码
@@ -60,11 +65,55 @@ public class FindPasswordActivity extends BaseActivityWithTopView implements
 
 	@Override
 	public void onClick(View v) {
+		final String phone=et_mobile.getText().toString().trim();
+		final String code=et_code.getText().toString().trim();
 		switch (v.getId()) {
 		case R.id.bt_sure:// 确定找回密码
-			skip(SetNewPasswordActivity.class, false);
+			
+			if(TextUtils.isEmpty(phone))
+			{
+				MyApplication.getInstance().showMessage(FindPasswordActivity.this, "手机号码不能为空");
+				return;
+			}else if(TextUtils.isEmpty(code))
+			{
+				MyApplication.getInstance().showMessage(FindPasswordActivity.this, "验证码不能为空");
+				return;
+			}
+			HttpControl.the().validVerifyCode(phone, code, new HttpCallBackInterface() {
+				
+				@Override
+				public void http_Success(Object obj) {
+					skip(Constants.USER_MOBILE, phone, ResetPasswordActivity.class, true);
+				}
+				
+				@Override
+				public void http_Fails(int error, String msg) {
+					
+					MyApplication.getInstance().showMessage(FindPasswordActivity.this, msg);
+				}
+			}, FindPasswordActivity.this);
+			
 			break;
 		case R.id.tv_getcode:// 获取验证码
+			if(TextUtils.isEmpty(phone))
+			{
+				MyApplication.getInstance().showMessage(FindPasswordActivity.this, "手机号码不能为空");
+				return;
+			}
+			HttpControl.the().sendPhoeCode(phone, new HttpCallBackInterface() {
+				
+				@Override
+				public void http_Success(Object obj) {
+					
+					MyApplication.getInstance().showMessage(FindPasswordActivity.this, "验证码发送成功请注意查收");
+				}
+				
+				@Override
+				public void http_Fails(int error, String msg) {
+					
+					MyApplication.getInstance().showMessage(FindPasswordActivity.this, msg);
+				}
+			}, FindPasswordActivity.this);
 			new MyCountDown(maxSecond * 1000, 1000, tv_getcode, getCodeString)
 					.start();
 			break;
@@ -87,13 +136,13 @@ public class FindPasswordActivity extends BaseActivityWithTopView implements
 	@Override
 	public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
 			int arg3) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
 	@Override
 	public void onTextChanged(CharSequence s, int start, int before, int count) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 }
