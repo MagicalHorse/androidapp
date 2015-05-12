@@ -29,6 +29,7 @@ import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.RoundImageView;
 import com.shenma.yueba.view.SelectePhotoType;
 import com.shenma.yueba.yangjia.activity.MainActivityForYangJia;
+import com.shenma.yueba.yangjia.activity.PublishProductsActivity;
 
 /*****
  * 用户设置
@@ -149,7 +150,11 @@ public class UserConfigActivity extends BaseActivityWithTopView {
 				MyApplication.getInstance().removeAllActivity();
 				break;
 			case R.id.user_config_icon_include:
-				showBottomDialog();
+				//showBottomDialog();
+				Intent intent2 = new Intent(UserConfigActivity.this,
+						PublishProductsActivity.class);
+				startActivity(intent2);
+				
 				break;
 			default:
 				break;

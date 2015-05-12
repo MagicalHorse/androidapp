@@ -32,7 +32,7 @@
                 android:textSize="17sp" 
                 android:inputType="phone"
                 android:maxLength="11"
-                
+                android:singleLine="true"
                 >
 				
                 <requestFocus />
@@ -68,6 +68,8 @@
                 android:layout_height="wrap_content"
                 android:background="@color/transparent"
                 android:hint="请输入密码"
+                android:singleLine="true"
+                android:password="true"
                 android:textSize="17sp" />
 
             <TextView

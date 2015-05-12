@@ -6,16 +6,21 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.animation.AnimationUtils;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.FindPasswordActivity;
+import com.shenma.yueba.baijia.activity.MainActivityForBaiJia;
+import com.shenma.yueba.baijia.modle.UserRequestBean;
 import com.shenma.yueba.util.FontManager;
+import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.ToolsUtil;
 
 public class LoginFragment extends BaseFragment implements OnClickListener{
@@ -75,7 +80,27 @@ public class LoginFragment extends BaseFragment implements OnClickListener{
 				Toast.makeText(getActivity(), "密码不能为空", 1000).show();
 				et_password.startAnimation(AnimationUtils.loadAnimation(getActivity(),R.anim.shake));
 			}else{
-				//开始网络请求
+				HttpControl.the().userLogin(et_mobile.getText().toString().trim(), et_password.getText().toString().trim(), new HttpCallBackInterface() {
+					
+					@Override
+					public void http_Success(Object obj) {
+						// TODO Auto-generated method stub
+						if(obj!=null && obj instanceof UserRequestBean)
+						{
+							UserRequestBean bean=(UserRequestBean)obj;
+							Intent intent=new Intent(getActivity(),MainActivityForBaiJia.class);
+							intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+							startActivity(intent);
+							getActivity().finish();
+						}
+					}
+					
+					@Override
+					public void http_Fails(int error, String msg) {
+						// TODO Auto-generated method stub
+						MyApplication.getInstance().showMessage(getActivity(), msg);
+					}
+				}, getActivity());
 			}
 		default:
 			break;

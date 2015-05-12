@@ -18,4 +18,6 @@ public class HttpConstants {
 	public static String METHOD_LOGIN = USERURL+"Login";
 	//修改登录密码
 	public static String METHOD_UPDATEPWD = USERURL+"ChangePassword";
+	//重置手机密码
+	public static String METHOD_RESETPASSWORD = USERURL+"ResetPassword ";
 }

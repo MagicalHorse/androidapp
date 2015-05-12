@@ -70,6 +70,7 @@ public class FillPersonDataActivity extends BaseActivityWithTopView {
 		et_password = (EditText) findViewById(R.id.et_password);
 		et_repassword = (EditText) findViewById(R.id.et_repassword);
 		tv_city = (TextView) findViewById(R.id.tv_city);
+		tv_city.setTag(new Integer(2));
 		tv_change_city = (TextView) findViewById(R.id.tv_change_city);
 		bt_commit = (Button) findViewById(R.id.bt_commit);
 		FontManager.changeFonts(mContext, tv_top_title, et_username,

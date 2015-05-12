@@ -15,6 +15,7 @@ public class Constants {
 	public static final String CODE="code";//验证码
 	public static final String NAME="name";//用户名
 	public static final String _PASSWORD="password";//密码
+	public static final String _OLDPASSWORD="oldpassword";//密码
 	public static final String CITYID="cityid";//城市ID
 	public static final String CLIENTVERSION="client_version";//客户端版本
 	public static final String SIGN="sign";//MD5加密

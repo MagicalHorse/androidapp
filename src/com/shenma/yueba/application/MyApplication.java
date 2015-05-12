@@ -7,6 +7,7 @@ import java.util.List;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.widget.Toast;
@@ -27,6 +28,9 @@ import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 import com.shenma.yueba.R;
+import com.shenma.yueba.baijia.activity.LoginAndRegisterActivity;
+import com.shenma.yueba.baijia.modle.UserRequestBean;
+import com.shenma.yueba.util.SharedUtil;
 
 public class MyApplication extends Application {
 
@@ -47,7 +51,9 @@ public class MyApplication extends Application {
 	private String ddddddd;
 	private String cccc;
 	private DisplayImageOptions optionsForRound;
+    private UserRequestBean userRequestBean;
 
+	
 	@Override
 	public void onCreate() {
 		super.onCreate();
@@ -230,5 +236,24 @@ public class MyApplication extends Application {
 	public void showMessage(Context context,String msg)
 	{
 		Toast.makeText(context, msg, 1000).show();
+	}
+	
+	/*****
+	 * 判断用户是否已经登录
+	 * ***/
+	public boolean isUserLogin(Activity activity)
+	{
+		boolean status=SharedUtil.getBooleanPerfernece(this.getApplicationContext(), SharedUtil.user_loginstatus);
+		if(status)
+		{
+			return true;
+		}else
+		{
+			showMessage(activity, "请先登录");
+			Intent intent=new Intent(activity,LoginAndRegisterActivity.class);
+			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);
+			return false;
+		}
 	}
 }

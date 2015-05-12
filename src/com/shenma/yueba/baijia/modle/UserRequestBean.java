@@ -9,29 +9,9 @@ import java.io.Serializable;
  * 
  */
 
-public class UserRequestBean implements Serializable{
-	String isSuccessful = "";
-	int statusCode = 200;
-	String message = "";
+public class UserRequestBean extends BaseRequest implements Serializable{
+	
 	UserInfo data = new UserInfo();
-	public String getIsSuccessful() {
-		return isSuccessful;
-	}
-	public void setIsSuccessful(String isSuccessful) {
-		this.isSuccessful = isSuccessful;
-	}
-	public int getStatusCode() {
-		return statusCode;
-	}
-	public void setStatusCode(int statusCode) {
-		this.statusCode = statusCode;
-	}
-	public String getMessage() {
-		return message;
-	}
-	public void setMessage(String message) {
-		this.message = message;
-	}
 	public UserInfo getData() {
 		return data;
 	}

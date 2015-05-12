@@ -4,10 +4,10 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 import android.content.Context;
 import android.content.pm.PackageInfo;
-import android.os.SystemClock;
 
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -15,8 +15,9 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
+import com.shenma.yueba.baijia.modle.BaseRequest;
 import com.shenma.yueba.baijia.modle.CityListRequestBean;
-import com.shenma.yueba.baijia.modle.CommonBackBean;
+import com.shenma.yueba.baijia.modle.UserInfo;
 import com.shenma.yueba.baijia.modle.UserRequestBean;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.constants.HttpConstants;
@@ -49,10 +50,8 @@ public class HttpControl {
 	/**
 	 * 发送手机验证码
 	 * 
-	 * @param String
-	 *            str手机号码
-	 * @param HttpCallBackInterface
-	 *            回调接口
+	 * @param String str手机号码
+	 * @param HttpCallBackInterface  回调接口
 	 * @param Context
 	 * @return void
 	 * **/
@@ -69,9 +68,7 @@ public class HttpControl {
 					public void onSuccess(ResponseInfo<String> responseInfo) {
 
 						try {
-							CommonBackBean bean = BaseGsonUtils
-									.getJsonToObject(CommonBackBean.class,
-											responseInfo.result);
+							BaseRequest bean = BaseGsonUtils.getJsonToObject(BaseRequest.class,responseInfo.result);
 
 							if (bean == null || bean.getStatusCode() != 200) {
 								httpCallBack.http_Fails(bean.getStatusCode(), bean.getMessage());
@@ -100,12 +97,9 @@ public class HttpControl {
 	/**
 	 * 校验手机验证码
 	 * 
-	 * @param String
-	 *            phone手机号码
-	 * @param String
-	 *            code验证码
-	 * @param HttpCallBackInterface
-	 *            回调接口
+	 * @param String  phone手机号码
+	 * @param String code验证码
+	 * @param HttpCallBackInterface 回调接口
 	 * @param Context
 	 * @return void
 	 * **/
@@ -124,9 +118,7 @@ public class HttpControl {
 
 						if (httpCallBack != null) {
 							try {
-								CommonBackBean bean = BaseGsonUtils
-										.getJsonToObject(CommonBackBean.class,
-												responseInfo.result);
+								BaseRequest bean = BaseGsonUtils.getJsonToObject(BaseRequest.class,responseInfo.result);
 								if (bean == null || bean.getStatusCode() != 200) {
 									httpCallBack.http_Fails(bean.getStatusCode(), bean.getMessage());
 
@@ -155,8 +147,7 @@ public class HttpControl {
 	/**
 	 * 获取城市列表
 	 * 
-	 * @param HttpCallBackInterface
-	 *            回调接口
+	 * @param HttpCallBackInterface 回调接口
 	 * @param Context
 	 * @return void
 	 * **/
@@ -231,22 +222,15 @@ public class HttpControl {
 	/**
 	 * 注册用户信息
 	 * 
-	 * @param String
-	 *            phone手机号码
-	 * @param String
-	 *            name用户名
-	 * @param String
-	 *            pwd密码
-	 * @param String
-	 *            cityId城市ID
-	 * @param HttpCallBackInterface
-	 *            回调接口
+	 * @param String  phone手机号码
+	 * @param String  name用户名
+	 * @param String pwd密码
+	 * @param String cityId城市ID
+	 * @param HttpCallBackInterface 回调接口
 	 * @param Context
 	 * @return void
 	 * **/
-	public void registerUserInfo(String phone, String name, String pwd,
-			int cityId, final HttpCallBackInterface httpCallBack,
-			Context context) {
+	public void registerUserInfo(String phone, String name, String pwd,int cityId, final HttpCallBackInterface httpCallBack,final Context context) {
 		Map<String, String> map=new HashMap<String, String>();
 		map.put(Constants.NAME, name.trim());
 		map.put(Constants.MOBILE, phone.trim());
@@ -263,13 +247,12 @@ public class HttpControl {
 
 						if (httpCallBack != null) {
 							try {
-								UserRequestBean bean = BaseGsonUtils
-										.getJsonToObject(UserRequestBean.class,
-												responseInfo.result);
+								UserRequestBean bean = BaseGsonUtils.getJsonToObject(UserRequestBean.class,responseInfo.result);
 								if (bean == null || bean.getStatusCode() != 200) {
 									httpCallBack.http_Fails(bean.getStatusCode(), bean.getMessage());
 
 								} else {
+									setLoginInfo(context, bean);
 									httpCallBack.http_Success(bean);
 								}
 							} catch (Exception e) {
@@ -293,19 +276,16 @@ public class HttpControl {
 	}
 
 	/**
-	 * 登录
+	 * 登录用户
 	 * 
-	 * @param String
-	 *            phone手机号码
-	 * @param String
-	 *            password密码
-	 * @param HttpCallBackInterface
-	 *            回调接口
+	 * @param String  phone手机号码
+	 * @param String password密码
+	 * @param HttpCallBackInterface 回调接口
 	 * @param Context
 	 * @return void
 	 * **/
-	public void registerUserInfo(String phone, String password,
-			final HttpCallBackInterface httpCallBack, Context context) {
+	public void userLogin(String phone, String password,
+			final HttpCallBackInterface httpCallBack,final Context context) {
 		Map<String, String> map=new HashMap<String, String>();
 		map.put(Constants.MOBILE, phone.trim());
 		map.put(Constants._PASSWORD, password.trim());
@@ -327,6 +307,7 @@ public class HttpControl {
 									httpCallBack.http_Fails(bean.getStatusCode(), bean.getMessage());
 
 								} else {
+									setLoginInfo(context,bean);
 									httpCallBack.http_Success(bean);
 								}
 							} catch (Exception e) {
@@ -352,20 +333,18 @@ public class HttpControl {
 	/**
 	 * 修改登录密码
 	 * 
-	 * @param String
-	 *            phone手机号码
-	 * @param String
-	 *            password密码
-	 * @param HttpCallBackInterface
-	 *            回调接口
+	 * @param String  phone手机号码
+	 * @param String oldpassword旧密码
+	 * @param String password新密码
+	 * @param HttpCallBackInterface回调接口
 	 * @param Context
 	 * @return void
 	 * **/
-	public void registerUserInfos(String phone, String password,
-			final HttpCallBackInterface httpCallBack, Context context) {
+	public void updateLoginPwd(String phone, String password,String oldpassword,final HttpCallBackInterface httpCallBack, Context context) {
 		Map<String, String> map=new HashMap<String, String>();
 		map.put(Constants.MOBILE, phone.trim());
 		map.put(Constants._PASSWORD, password.trim());
+		map.put(Constants._OLDPASSWORD, oldpassword.trim());
 		final CustomProgressDialog progressDialog = CustomProgressDialog
 				.createDialog(context);
 		progressDialog.show();
@@ -376,9 +355,57 @@ public class HttpControl {
 
 						if (httpCallBack != null) {
 							try {
-								UserRequestBean bean = BaseGsonUtils
-										.getJsonToObject(UserRequestBean.class,
-												responseInfo.result);
+								BaseRequest bean = BaseGsonUtils.getJsonToObject(BaseRequest.class,responseInfo.result);
+								if (bean == null || bean.getStatusCode() != 200) {
+									httpCallBack.http_Fails(bean.getStatusCode(), bean.getMessage());
+
+								} else {
+									httpCallBack.http_Success(bean);
+								}
+							} catch (Exception e) {
+								httpCallBack.http_Fails(0, "数据不存在");
+							}
+
+						}
+						progressDialog.cancel();
+					}
+
+					@Override
+					public void onFailure(HttpException error, String msg) {
+
+						if (httpCallBack != null) {
+							httpCallBack.http_Fails(0, msg);
+						}
+						progressDialog.cancel();
+					}
+				});
+
+	}
+	
+	
+	/**
+	 * 重置密码
+	 * 
+	 * @param String  phone手机号码
+	 * @param String password密码
+	 * @param HttpCallBackInterface回调接口
+	 * @param Context
+	 * @return void
+	 * **/
+	public void resetPassword (String phone, String password,final HttpCallBackInterface httpCallBack, Context context) {
+		Map<String, String> map=new HashMap<String, String>();
+		map.put(Constants.MOBILE, phone.trim());
+		map.put(Constants._PASSWORD, password.trim());
+		final CustomProgressDialog progressDialog = CustomProgressDialog.createDialog(context);
+		progressDialog.show();
+        httpSend(map,context, HttpConstants.METHOD_RESETPASSWORD,new RequestCallBack<String>() {
+
+					@Override
+					public void onSuccess(ResponseInfo<String> responseInfo) {
+
+						if (httpCallBack != null) {
+							try {
+								BaseRequest bean = BaseGsonUtils.getJsonToObject(BaseRequest.class,responseInfo.result);
 								if (bean == null || bean.getStatusCode() != 200) {
 									httpCallBack.http_Fails(bean.getStatusCode(), bean.getMessage());
 
@@ -424,7 +451,7 @@ public class HttpControl {
 			if (map != null) {
 				map.put(Constants.HTTPCHANNEL, Constants.ANDROID);
 				map.put(Constants.CLIENTVERSION, versionName);
-				map.put(Constants.UUID, Long.toString(SystemClock.currentThreadTimeMillis()));
+				map.put(Constants.UUID, UUID.randomUUID().toString());
 				String md5str = Md5Utils.md5ToString(map);
 				map.put(Constants.SIGN, md5str);
 				Set<String> set=map.keySet();
@@ -450,18 +477,56 @@ public class HttpControl {
 	/*****
 	 * 访问网络
 	 * 
-	 * @param RequestParams
-	 *            params传输的 数据
-	 * @param String
-	 *            method 方法名
-	 * @param RequestCallBack
-	 *            <T> requestCallBack 回调
+	 * @param RequestParams  params传输的 数据
+	 * @param String  method 方法名
+	 * @param RequestCallBack  <T> requestCallBack 回调
 	 * ***/
 	<T> void httpSend(final Map<String, String> map, final Context context,final String method,final RequestCallBack<T> requestCallBack) {
 		httpUtils.send(HttpMethod.POST, method,setBaseRequestParams(map, context), requestCallBack);
 
 	}
 
+	
+	/****
+	 * 设置登录信息 存储到属性文件
+	 * @param UserRequestBean bean 用户登录信息类
+	 * ***/
+	void setLoginInfo(Context context,UserRequestBean bean)
+	{
+		if(bean!=null)
+		{
+		  UserInfo userInfo=bean.getData();
+		   SharedUtil.setStringPerfernece(context, SharedUtil.user_id, Integer.toString(userInfo.getId()));
+		   SharedUtil.setStringPerfernece(context, SharedUtil.user_name, userInfo.getName());
+		   SharedUtil.setStringPerfernece(context, SharedUtil.user_names, userInfo.getNickname());
+		   SharedUtil.setStringPerfernece(context, SharedUtil.user_logo, userInfo.getLogo());
+		   SharedUtil.setStringPerfernece(context, SharedUtil.user_logo_full, userInfo.getLogo_full());
+		   SharedUtil.setStringPerfernece(context, SharedUtil.user_logobg, userInfo.getLogobg());
+		   SharedUtil.setStringPerfernece(context, SharedUtil.user_logobg_s, userInfo.getLogobg_s());
+		   SharedUtil.setStringPerfernece(context, SharedUtil.user_mobile, userInfo.getMobile());
+		   SharedUtil.setStringPerfernece(context, SharedUtil.user_token, userInfo.getToken());
+		   SharedUtil.setBooleanPerfernece(context, SharedUtil.user_loginstatus, true);
+		}
+	}
+	
+	/****
+	 * 设置登录信息 存储到属性文件
+	 * ***/
+	void setUnLoginInfo(Context context)
+	{
+		   SharedUtil.setStringPerfernece(context, SharedUtil.user_id, null);
+		   SharedUtil.setStringPerfernece(context, SharedUtil.user_name, null);
+		   SharedUtil.setStringPerfernece(context, SharedUtil.user_names, null);
+		   SharedUtil.setStringPerfernece(context, SharedUtil.user_logo, null);
+		   SharedUtil.setStringPerfernece(context, SharedUtil.user_logo_full, null);
+		   SharedUtil.setStringPerfernece(context, SharedUtil.user_logobg, null);
+		   SharedUtil.setStringPerfernece(context, SharedUtil.user_logobg_s,null);
+		   SharedUtil.setStringPerfernece(context, SharedUtil.user_mobile, null);
+		   SharedUtil.setStringPerfernece(context, SharedUtil.user_token, null);
+		   SharedUtil.setBooleanPerfernece(context, SharedUtil.user_loginstatus, false);
+	}
+	
+	
 	/****
 	 * 定义Http接口回调类 用于接收返回的 成功与失败
 	 * 

@@ -12,6 +12,7 @@ import com.shenma.yueba.baijia.modle.MyBuyerBean;
 import com.shenma.yueba.baijia.modle.TheySayBean;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +38,7 @@ public class TheySayFragment extends BaseFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-
+		Log.i("aaaaa", "TheySayFragment");
 		if (view == null) {
 			view = inflater.inflate(
 					R.layout.refresh_listview_without_title_layout, null);

@@ -9,7 +9,7 @@ import java.util.List;
  * @version 创建时间：2015-5-10 下午5:55:12 程序的简单说明
  */
 
-public class CityListRequestBean implements Serializable{
+public class CityListRequestBean extends BaseRequest implements Serializable{
 	List<CityBeanList> data = new ArrayList<CityBeanList>();
 	public List<CityBeanList> getData() {
 		return data;
@@ -17,27 +17,4 @@ public class CityListRequestBean implements Serializable{
 	public void setData(List<CityBeanList> data) {
 		this.data = data;
 	}
-	int statusCode=0;
-	String message="";
-	boolean isSuccessful=false;
-	
-	public boolean isSuccessful() {
-		return isSuccessful;
-	}
-	public void setSuccessful(boolean isSuccessful) {
-		this.isSuccessful = isSuccessful;
-	}
-	public int getStatusCode() {
-		return statusCode;
-	}
-	public void setStatusCode(int statusCode) {
-		this.statusCode = statusCode;
-	}
-	public String getMessage() {
-		return message;
-	}
-	public void setMessage(String message) {
-		this.message = message;
-	}
-	
 }

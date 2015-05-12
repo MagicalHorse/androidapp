@@ -1,6 +1,8 @@
 package com.shenma.yueba.util;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,7 +19,7 @@ import android.widget.Toast;
 public class ToolsUtil {
 
 	
-	
+	public static final Pattern EMOTION_URL = Pattern.compile("\\[(\\S+?)\\]");
 	public static int widthPixels;
 	public static int heightPixels;
 
@@ -153,8 +155,9 @@ public class ToolsUtil {
 	public static boolean isAvailableSpace(Context mContext) {
 		if (isMounted(mContext) && isEnoughSpace(mContext)) {
 			return true;
+		}else{
+			return false;
 		}
-		return false;
 	}
 
 	public static boolean isMounted(Context mContext) {
@@ -188,5 +191,29 @@ public class ToolsUtil {
 		long freeBlocks = sf.getAvailableBlocks();
 		return (freeBlocks * blockSize) / 1024 / 1024; // 单位MB
 	}
+	
+	
+	
+	/**
+	 * 正则表达式抽取内容中的图片本地地址
+	 */
+	public static List<String> convertNormalStringToSpannableString(
+			String content) {
+		List<String> listImg = new ArrayList<String>();
+		Matcher localMatcher = EMOTION_URL.matcher(content);
+		while (localMatcher.find()) {
+			int k = localMatcher.start();
+			int m = localMatcher.end();
+			if (m - k > 4) {
+				listImg.add(content.substring(k + 1, m - 1));
+			}
+		}
+		return listImg;
+	}
+
+	public static int getImgCountFromContent(String contentStr) {
+		return convertNormalStringToSpannableString(contentStr).size();
+	}
+
 
 }

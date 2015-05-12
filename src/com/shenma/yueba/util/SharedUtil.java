@@ -12,11 +12,23 @@ import android.text.TextUtils;
  * 
  */
 public class SharedUtil {
-	private static final String install_flag = "install_flag";
-	private static final String user_id = "user_id";
-	private static final String store_id = "store_id";
-	private static final String user_name = "user_name";
-	private static final String user_names = "user_names";
+	public static final String install_flag = "install_flag";
+	public static final String user_id = "user_id";//登录用户id
+	public static final String store_id = "store_id";
+	public static final String user_name = "user_name";//登录用户名称
+	public static final String user_names = "user_names";//登录用户昵称
+	public static final String user_mobile = "user_mobile";//登录用户手机号
+	public static final String user_logo = "user_logo";//登录用户头像（缩略图）
+	public static final String user_logo_full = "user_logo_full";///登录用户头像（大图）
+	public static final String user_logobg_s = "user_logobg_s";///登录用户背景
+	public static final String user_logobg = "user_logobg";///登录用户背景
+	public static final String user_token = "user_token";///登录用户令牌
+	public static final String user_loginstatus = "user_loginstatus";//用户登录状态
+	
+	
+	
+	
+	
 	private static final String user_password = "user_password";
 	private static final String weibo_sina = "weibo_sina";
 	private static final String weibo_qq = "weibo_qq";
@@ -28,6 +40,28 @@ public class SharedUtil {
 	private static final String weixin_friends = "weixin_friends";
 	private static final String headImage = "headImage";// 用户头像
 	private static final String session_id = "session_id";
+	
+	
+	public static String getStringPerfernece(Context context,String str) {
+		return getSharedPreferences(context).getString(str, "");
+	}
+
+	public static void setStringPerfernece(Context context, String str1,String value) {
+		if (str1 != null) {
+			getSharedPreferences(context).edit().putString(str1, value).commit();
+		}
+	}
+	
+	public static boolean getBooleanPerfernece(Context context,String str) {
+		return getSharedPreferences(context).getBoolean(str, false);
+	}
+
+	public static void setBooleanPerfernece(Context context, String str1,boolean value) {
+		if (str1 != null) {
+			getSharedPreferences(context).edit().putBoolean(str1, value).commit();
+		}
+	}
+	
 
 	public static boolean getInstallFlag(Context context) {
 		return getSharedPreferences(context).getBoolean(install_flag, false);
