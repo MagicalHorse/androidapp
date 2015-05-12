@@ -159,6 +159,10 @@
             android:name="com.shenma.yueba.yangjia.activity.PublishProductsActivity"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name="com.shenma.yueba.yangjia.activity.PublishProductsActivity"
+            android:screenOrientation="portrait" >
+        </activity>
 
         <!-- 用户中心 -->
         <activity
@@ -172,12 +176,16 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+<<<<<<< HEAD
             </intent-filter>
 
 
 
 
 
+=======
+            </intent-filter>
+>>>>>>> branch 'develop' of https://github.com/MagicalHorse/androidapp
             -->
         </activity>
 
