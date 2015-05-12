@@ -164,7 +164,8 @@ public class CityListActivity extends BaseActivityWithTopView {
 	 * **/
 	void getCityList()
 	{
-		HttpControl.the().getCityList(new HttpCallBackInterface() {
+		HttpControl httpControl=new HttpControl();
+		httpControl.getCityList(new HttpCallBackInterface() {
 			
 			@Override
 			public void http_Success(Object obj) {

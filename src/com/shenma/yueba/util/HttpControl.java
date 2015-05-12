@@ -1,5 +1,10 @@
 package com.shenma.yueba.util;
 
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -8,6 +13,8 @@ import java.util.UUID;
 
 import android.content.Context;
 import android.content.pm.PackageInfo;
+import android.os.Handler;
+import android.os.Message;
 
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -21,6 +28,8 @@ import com.shenma.yueba.baijia.modle.UserInfo;
 import com.shenma.yueba.baijia.modle.UserRequestBean;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.constants.HttpConstants;
+import com.shenma.yueba.yangjia.modle.ContactsAddressRequestBean;
+import com.shenma.yueba.yangjia.modle.ContactsAddressResponseBean;
 
 /**
  * @author gyj
@@ -28,22 +37,30 @@ import com.shenma.yueba.constants.HttpConstants;
  *          {@link HttpCallBackInterface}
  * @see #getCityList(HttpCallBackInterface, Context)
  * @see #sendPhoeCode(String, HttpCallBackInterface, Context)
- * @see #sendPhoeCode(String, HttpCallBackInterface, Context)
+ * @see #setLoginInfo(Context, UserRequestBean)
+ * @see #createContactAddress(HttpCallBackInterface, Context, ContactsAddressResponseBean)
+ * @see #registerUserInfo(String, String, String, int, HttpCallBackInterface, Context)
+ * @see #validVerifyCode(String, String, HttpCallBackInterface, Context)
+ * @see #updateLoginPwd(String, String, String, HttpCallBackInterface, Context)
  * 
  */
 public class HttpControl {
-	private static HttpUtils httpUtils;
-	private static HttpControl httpControl;
+	private  HttpUtils httpUtils;
+	private  HttpControl httpControl;
 	private final String setContentType = "application/json;charset=UTF-8";
 
+	/****
+	 * 创建对象
+	 * **//*
 	public static HttpControl the() {
 		if (httpControl == null) {
 			httpControl = new HttpControl();
 		}
+		httpControl = new HttpControl();
 		return httpControl;
-	}
+	}*/
 
-	private HttpControl() {
+	public HttpControl() {
 		httpUtils = new HttpUtils();
 	}
 
@@ -55,43 +72,10 @@ public class HttpControl {
 	 * @param Context
 	 * @return void
 	 * **/
-	public void sendPhoeCode(String str,
-			final HttpCallBackInterface httpCallBack, Context context) {
+	public void sendPhoeCode(String str,final HttpCallBackInterface httpCallBack, Context context) {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put(Constants.MOBILE, str.trim());
-		final CustomProgressDialog progressDialog = CustomProgressDialog.createDialog(context);
-		progressDialog.setCancelable(false);
-		progressDialog.show();
-		httpSend(map, context, HttpConstants.sendPhoneCode,new RequestCallBack<String>() {
-
-					@Override
-					public void onSuccess(ResponseInfo<String> responseInfo) {
-
-						try {
-							BaseRequest bean = BaseGsonUtils.getJsonToObject(BaseRequest.class,responseInfo.result);
-
-							if (bean == null || bean.getStatusCode() != 200) {
-								httpCallBack.http_Fails(bean.getStatusCode(), bean.getMessage());
-
-							} else {
-								httpCallBack.http_Success(bean);
-							}
-						} catch (Exception e) {
-							httpCallBack.http_Fails(0, "数据不存在");
-						}
-						progressDialog.cancel();
-					}
-
-					@Override
-					public void onFailure(HttpException error, String msg) {
-
-						if (httpCallBack != null) {
-							httpCallBack.http_Fails(0, msg);
-						}
-						progressDialog.cancel();
-					}
-				});
-
+		BasehttpSend(map, context, HttpConstants.sendPhoneCode, httpCallBack, BaseRequest.class, true, true);
 	}
 
 	/**
@@ -103,45 +87,11 @@ public class HttpControl {
 	 * @param Context
 	 * @return void
 	 * **/
-	public void validVerifyCode(String phone, String code,
-			final HttpCallBackInterface httpCallBack, Context context) {
+	public void validVerifyCode(String phone, String code,final HttpCallBackInterface httpCallBack, Context context) {
 		Map<String, String> map=new HashMap<String, String>();
 		map.put(Constants.MOBILE, phone.trim());
 		map.put(Constants.CODE, code.trim());
-		final CustomProgressDialog progressDialog = CustomProgressDialog.createDialog(context);
-		progressDialog.setCancelable(false);
-		progressDialog.show();
-		httpSend(map,context, HttpConstants.METHOD_VERIFYCODE,new RequestCallBack<String>() {
-
-					@Override
-					public void onSuccess(ResponseInfo<String> responseInfo) {
-
-						if (httpCallBack != null) {
-							try {
-								BaseRequest bean = BaseGsonUtils.getJsonToObject(BaseRequest.class,responseInfo.result);
-								if (bean == null || bean.getStatusCode() != 200) {
-									httpCallBack.http_Fails(bean.getStatusCode(), bean.getMessage());
-
-								} else {
-									httpCallBack.http_Success(bean);
-								}
-							} catch (Exception e) {
-								httpCallBack.http_Fails(0, "数据不存在");
-							}
-
-						}
-						progressDialog.cancel();
-					}
-
-					@Override
-					public void onFailure(HttpException error, String msg) {
-
-						if (httpCallBack != null) {
-							httpCallBack.http_Fails(0, msg);
-						}
-						progressDialog.cancel();
-					}
-				});
+		BasehttpSend(map, context, HttpConstants.METHOD_VERIFYCODE, httpCallBack, BaseRequest.class, true, true);
 	}
 
 	/**
@@ -151,72 +101,8 @@ public class HttpControl {
 	 * @param Context
 	 * @return void
 	 * **/
-	public void getCityList(final HttpCallBackInterface httpCallBack,
-			Context context) {
-
-		final CustomProgressDialog progressDialog = CustomProgressDialog.createDialog(context);
-		progressDialog.setCancelable(false);
-		progressDialog.show();
-		Map<String, String> map=new HashMap<String, String>();
-		httpSend(map,context,HttpConstants.METHOD_GETCITYLIST,new RequestCallBack<String>() {
-
-					@Override
-					public void onSuccess(ResponseInfo<String> responseInfo) {
-
-						if (httpCallBack != null) {
-							try {
-								/*CityListRequestBean request = new CityListRequestBean();
-								CityBeanList lista = new CityBeanList();
-								lista.setKey("A");
-								List<CityBean> arraya = new ArrayList<CityBean>();
-								arraya.add(new CityBean("A", "阿尔卑斯", 1001));
-								arraya.add(new CityBean("A", "阿拉斯加", 1002));
-								arraya.add(new CityBean("A", "阿尔胡", 1003));
-								lista.setList(arraya);
-
-								List<CityBeanList> requestlist = new ArrayList<CityBeanList>();
-								requestlist.add(lista);
-
-								CityBeanList listb = new CityBeanList();
-								List<CityBean> arrayb = new ArrayList<CityBean>();
-								arrayb.add(new CityBean("B", "北京", 2001));
-								arrayb.add(new CityBean("B", "北海", 2002));
-								arrayb.add(new CityBean("B", "别克", 2003));
-								listb.setList(arrayb);
-								requestlist.add(listb);
-								request.setData(requestlist);
-
-								String json_str = BaseGsonUtils
-										.getObjectToJson(request);
-
-								CityListRequestBean bean = BaseGsonUtils
-										.getJsonToObject(
-												CityListRequestBean.class,
-												json_str);*/
-								CityListRequestBean bean=BaseGsonUtils.getJsonToObject(CityListRequestBean.class,responseInfo.result);
-								if (bean == null || bean.getStatusCode() != 200) {
-									httpCallBack.http_Fails(bean.getStatusCode(), bean.getMessage());
-								} else {
-									httpCallBack.http_Success(bean);
-								}
-							} catch (Exception e) {
-								httpCallBack.http_Fails(0, "数据不存在");
-							}
-
-						}
-						progressDialog.cancel();
-					}
-
-					@Override
-					public void onFailure(HttpException error, String msg) {
-
-						if (httpCallBack != null) {
-							httpCallBack.http_Fails(0, msg);
-						}
-						progressDialog.cancel();
-					}
-				});
-
+	public void getCityList(final HttpCallBackInterface httpCallBack,Context context) {
+		BasehttpSend(null, context, HttpConstants.METHOD_GETCITYLIST, httpCallBack, CityListRequestBean.class, true, true);
 	}
 
 	/**
@@ -236,43 +122,7 @@ public class HttpControl {
 		map.put(Constants.MOBILE, phone.trim());
 		map.put(Constants._PASSWORD, pwd.trim());
 		map.put(Constants.CITYID, Integer.toString(cityId));
-		final CustomProgressDialog progressDialog = CustomProgressDialog.createDialog(context);
-		progressDialog.setCancelable(false);
-		progressDialog.show();
-
-		httpSend(map,context, HttpConstants.METHOD_REGISTER,new RequestCallBack<String>() {
-
-					@Override
-					public void onSuccess(ResponseInfo<String> responseInfo) {
-
-						if (httpCallBack != null) {
-							try {
-								UserRequestBean bean = BaseGsonUtils.getJsonToObject(UserRequestBean.class,responseInfo.result);
-								if (bean == null || bean.getStatusCode() != 200) {
-									httpCallBack.http_Fails(bean.getStatusCode(), bean.getMessage());
-
-								} else {
-									setLoginInfo(context, bean);
-									httpCallBack.http_Success(bean);
-								}
-							} catch (Exception e) {
-								httpCallBack.http_Fails(0, "数据不存在");
-							}
-
-						}
-						progressDialog.cancel();
-					}
-
-					@Override
-					public void onFailure(HttpException error, String msg) {
-
-						if (httpCallBack != null) {
-							httpCallBack.http_Fails(0, msg);
-						}
-						progressDialog.cancel();
-					}
-				});
-
+		BasehttpSend(map, context, HttpConstants.METHOD_REGISTER, httpCallBack, UserRequestBean.class, true, true);
 	}
 
 	/**
@@ -284,50 +134,11 @@ public class HttpControl {
 	 * @param Context
 	 * @return void
 	 * **/
-	public void userLogin(String phone, String password,
-			final HttpCallBackInterface httpCallBack,final Context context) {
+	public void userLogin(String phone, String password,final HttpCallBackInterface httpCallBack,final Context context) {
 		Map<String, String> map=new HashMap<String, String>();
 		map.put(Constants.MOBILE, phone.trim());
 		map.put(Constants._PASSWORD, password.trim());
-		final CustomProgressDialog progressDialog = CustomProgressDialog
-				.createDialog(context);
-		progressDialog.show();
-
-		httpSend(map,context, HttpConstants.METHOD_LOGIN,new RequestCallBack<String>() {
-
-					@Override
-					public void onSuccess(ResponseInfo<String> responseInfo) {
-
-						if (httpCallBack != null) {
-							try {
-								UserRequestBean bean = BaseGsonUtils
-										.getJsonToObject(UserRequestBean.class,
-												responseInfo.result);
-								if (bean == null || bean.getStatusCode() != 200) {
-									httpCallBack.http_Fails(bean.getStatusCode(), bean.getMessage());
-
-								} else {
-									setLoginInfo(context,bean);
-									httpCallBack.http_Success(bean);
-								}
-							} catch (Exception e) {
-								httpCallBack.http_Fails(0, "数据不存在");
-							}
-
-						}
-						progressDialog.cancel();
-					}
-
-					@Override
-					public void onFailure(HttpException error, String msg) {
-
-						if (httpCallBack != null) {
-							httpCallBack.http_Fails(0, msg);
-						}
-						progressDialog.cancel();
-					}
-				});
-
+		BasehttpSend(map, context, HttpConstants.METHOD_LOGIN, httpCallBack, UserRequestBean.class, true, true);
 	}
 
 	/**
@@ -345,41 +156,7 @@ public class HttpControl {
 		map.put(Constants.MOBILE, phone.trim());
 		map.put(Constants._PASSWORD, password.trim());
 		map.put(Constants._OLDPASSWORD, oldpassword.trim());
-		final CustomProgressDialog progressDialog = CustomProgressDialog
-				.createDialog(context);
-		progressDialog.show();
-        httpSend(map,context, HttpConstants.METHOD_UPDATEPWD,new RequestCallBack<String>() {
-
-					@Override
-					public void onSuccess(ResponseInfo<String> responseInfo) {
-
-						if (httpCallBack != null) {
-							try {
-								BaseRequest bean = BaseGsonUtils.getJsonToObject(BaseRequest.class,responseInfo.result);
-								if (bean == null || bean.getStatusCode() != 200) {
-									httpCallBack.http_Fails(bean.getStatusCode(), bean.getMessage());
-
-								} else {
-									httpCallBack.http_Success(bean);
-								}
-							} catch (Exception e) {
-								httpCallBack.http_Fails(0, "数据不存在");
-							}
-
-						}
-						progressDialog.cancel();
-					}
-
-					@Override
-					public void onFailure(HttpException error, String msg) {
-
-						if (httpCallBack != null) {
-							httpCallBack.http_Fails(0, msg);
-						}
-						progressDialog.cancel();
-					}
-				});
-
+		BasehttpSend(map, context, HttpConstants.METHOD_UPDATEPWD, httpCallBack, BaseRequest.class, true, true);
 	}
 	
 	
@@ -396,46 +173,142 @@ public class HttpControl {
 		Map<String, String> map=new HashMap<String, String>();
 		map.put(Constants.MOBILE, phone.trim());
 		map.put(Constants._PASSWORD, password.trim());
-		final CustomProgressDialog progressDialog = CustomProgressDialog.createDialog(context);
-		progressDialog.show();
-        httpSend(map,context, HttpConstants.METHOD_RESETPASSWORD,new RequestCallBack<String>() {
-
-					@Override
-					public void onSuccess(ResponseInfo<String> responseInfo) {
-
-						if (httpCallBack != null) {
-							try {
-								BaseRequest bean = BaseGsonUtils.getJsonToObject(BaseRequest.class,responseInfo.result);
-								if (bean == null || bean.getStatusCode() != 200) {
-									httpCallBack.http_Fails(bean.getStatusCode(), bean.getMessage());
-
-								} else {
-									httpCallBack.http_Success(bean);
-								}
-							} catch (Exception e) {
-								httpCallBack.http_Fails(0, "数据不存在");
-							}
-
-						}
-						progressDialog.cancel();
-					}
-
-					@Override
-					public void onFailure(HttpException error, String msg) {
-
-						if (httpCallBack != null) {
-							httpCallBack.http_Fails(0, msg);
-						}
-						progressDialog.cancel();
-					}
-				});
-
+		BasehttpSend(map, context, HttpConstants.METHOD_RESETPASSWORD, httpCallBack, BaseRequest.class, true, true);
 	}
 
+	
+	
+	/**
+	 * 创建联系人地址
+	 * @param HttpCallBackInterface 回调接口
+	 * @param Context
+	 * @return void
+	 * **/
+	public void createContactAddress(final HttpCallBackInterface httpCallBack,Context context,ContactsAddressResponseBean responsebrean) {
+        String responsejsonstr=BaseGsonUtils.getObjectToJson(responsebrean);
+		if(responsejsonstr==null)
+		{
+			httpCallBack.http_Fails(500, "数据错误");
+		}
+		basehttpSendToJson(responsejsonstr, null, context, HttpConstants.METHOD_ADDRESSCREATE, httpCallBack, ContactsAddressRequestBean.class, true, true);
+	}
+	
+	
+	/********
+	 * 基础Http传递json数据通用类
+	 * @param String responsejsonstr JSON类型数据
+	 * @param Map<String, String> map 传递的参数
+	 * @param String method 访问的方法
+	 * @param HttpCallBackInterface httpCallBackUi回调
+	 * @param Class<T> classzz 泛型即相应成功后 返回的对象类型<T extends BaseRequest> 且 只能是BaseRequest 或 BaseRequest的 子类
+	 * @param boolean isshwoDialog 是否显示等待对话框 true 显示 false不显示  默认不显示
+	 * @param boolean isDialogCancell 是否可取消对话框 true 不可取消 false 可取消 默认 可取消
+	 * ****/
+	<T extends BaseRequest> void basehttpSendToJson(String responsejsonstr,Map<String, String> map,Context context,String method,final HttpCallBackInterface httpCallBack,final Class<T> classzz,boolean isshwoDialog,boolean isDialogCancell)
+	{
+		final CustomProgressDialog progressDialog = CustomProgressDialog.createDialog(context);
+		if(isDialogCancell)
+		{
+			progressDialog.setCancelable(false);
+		}
+		if(isshwoDialog)
+		{
+			progressDialog.show();
+		}
+		httpSendToJson(responsejsonstr, map, context,method , new HttpRequestDataInterface() {
+			
+			@Override
+			public void httpRequestDataInterface_Sucss(Object obj) {
+				
+				if(obj!=null && obj instanceof String)
+				{
+					String str=(String)obj;
+					BaseRequest bean = BaseGsonUtils.getJsonToObject(classzz,str);
+					if(bean==null)
+					{
+						httpRequestDataInterface_Fails("数据不存在");
+					}else if(bean.getStatusCode()!=200)
+					{
+						httpRequestDataInterface_Fails(bean.getMessage());
+					}
+					else
+					{
+						httpCallBack.http_Success(bean);
+					}
+				}else
+				{
+					httpRequestDataInterface_Fails("数据不存在");
+				}
+				progressDialog.cancel();
+			}
+			
+			@Override
+			public void httpRequestDataInterface_Fails(String msg) {
+				
+				httpCallBack.http_Fails(400, msg);
+				progressDialog.cancel();
+			}
+		});
+	}
+	
+	
 	/****
 	 * 通用传输数据
+	 * 用于上传JSON类型数据 返回url拼接后的字符串 
+	 * 如 a=1&b=2&sign=md5
 	 * **/
-	RequestParams setBaseRequestParams(final Map<String, String> map, Context context) {
+	String setBaseRequestJsonParams(Map<String, String> map, Context context,final String json) {
+		StringBuilder stringBuilder=new StringBuilder();
+		if (stringBuilder != null) {
+			String versionName = "0";
+			try {
+				// 获取版本号
+				PackageInfo pi = context.getPackageManager().getPackageInfo(
+						context.getPackageName(), 0);
+				versionName = pi.versionName;
+				versionName="2.3";
+			} catch (Exception e) {
+
+			}
+			if(map==null)
+			{
+				map=new HashMap<String, String>();
+			}
+			if (map != null) {
+				map.put(Constants.HTTPCHANNEL, Constants.ANDROID);
+				map.put(Constants.CLIENTVERSION, versionName);
+				map.put(Constants.UUID, UUID.randomUUID().toString());
+				String md5str = Md5Utils.md5ToString(map,json);
+				map.put(Constants.SIGN, md5str);
+				Set<String> set=map.keySet();
+				if(set!=null && set.size()>0)
+				{
+					Iterator<String> iterator=set.iterator();
+					while(iterator.hasNext())
+					{
+						String k=iterator.next();
+						if(map.containsKey(k))
+						{
+							String v=map.get(k);
+							stringBuilder.append(k);
+							stringBuilder.append("=");
+							stringBuilder.append(v);
+							stringBuilder.append("&");
+						}
+						
+					}
+				}
+			}
+		}
+		return stringBuilder.toString();
+	}
+	
+	/****
+	 * 通用传输数据
+	 * 生成http传输对象 RequestParams
+	 * @param Map<String, String> map 需要传递的参数 K=v K-传递的参数   V-对应的值
+	 * **/
+	RequestParams setBaseRequestParams(Map<String, String> map, Context context) {
 		RequestParams params = new RequestParams();
 		if (params != null) {
 			String versionName = "0";
@@ -448,11 +321,15 @@ public class HttpControl {
 			} catch (Exception e) {
 
 			}
+			if(map==null)
+			{
+				map=new HashMap<String, String>();
+			}
 			if (map != null) {
 				map.put(Constants.HTTPCHANNEL, Constants.ANDROID);
 				map.put(Constants.CLIENTVERSION, versionName);
 				map.put(Constants.UUID, UUID.randomUUID().toString());
-				String md5str = Md5Utils.md5ToString(map);
+				String md5str = Md5Utils.md5ToString(map,null);
 				map.put(Constants.SIGN, md5str);
 				Set<String> set=map.keySet();
 				if(set!=null && set.size()>0)
@@ -474,18 +351,182 @@ public class HttpControl {
 		return params;
 	}
 
+	
+
 	/*****
-	 * 访问网络
+	 * 访问网络基础Http 用于post上传K-V
+	 * @param  Map<String, String> map上传的参数 k-V
+	 * @param String  method 方法名
+	 * @param RequestCallBack  <T> requestCallBack 回调
+	 * @param Class<T> classzz 泛型即相应成功后 返回的对象类型<T extends BaseRequest> 且 只能是BaseRequest 或 BaseRequest的 子类
+	 * @param boolean isshwoDialog 是否显示等待对话框 true 显示 false不显示  默认不显示
+	 * @param boolean isDialogCancell 是否可取消对话框 true 不可取消 false 可取消 默认 可取消
+	 * ***/
+	<T extends BaseRequest> void BasehttpSend(final Map<String, String> map, final Context context,final String method,final HttpCallBackInterface httpCallBack,final Class<T> classzz,boolean isshwoDialog,boolean isDialogCancell) {
+		final CustomProgressDialog progressDialog = CustomProgressDialog.createDialog(context);
+		if(isDialogCancell)
+		{
+			progressDialog.setCancelable(false);
+		}
+		if(isshwoDialog)
+		{
+			progressDialog.show();
+		}
+		httpUtils.send(HttpMethod.POST, method.trim(),setBaseRequestParams(map, context),new RequestCallBack<String>() {
+            
+			@Override
+			public void onSuccess(ResponseInfo<String> responseInfo) {
+
+				if (httpCallBack != null) {
+					try {
+						BaseRequest bean = BaseGsonUtils.getJsonToObject(classzz,responseInfo.result);
+						if (bean == null) {
+							httpCallBack.http_Fails(0,"数据不存在");
+
+						}else if(bean.getStatusCode() != 200)
+						{
+							httpCallBack.http_Fails(bean.getStatusCode(), bean.getMessage());
+						}
+						else {
+							httpCallBack.http_Success(bean);
+						}
+					} catch (Exception e) {
+						httpCallBack.http_Fails(0, "数据不存在");
+					}
+
+				}
+				progressDialog.cancel();
+			}
+
+			@Override
+			public void onFailure(HttpException error, String msg) {
+
+				if (httpCallBack != null) {
+					httpCallBack.http_Fails(0, msg);
+				}
+				progressDialog.cancel();
+			}
+		});
+	}
+	
+	
+	/*****
+	 * 访问网络 上传JSON类型数据
 	 * 
 	 * @param RequestParams  params传输的 数据
 	 * @param String  method 方法名
 	 * @param RequestCallBack  <T> requestCallBack 回调
 	 * ***/
-	<T> void httpSend(final Map<String, String> map, final Context context,final String method,final RequestCallBack<T> requestCallBack) {
-		httpUtils.send(HttpMethod.POST, method,setBaseRequestParams(map, context), requestCallBack);
-
+	<T> void httpSendToJson(final String json,final Map<String, String> map, final Context context, String method,final HttpRequestDataInterface httpRequestDataInterface) {
+		String parameter=setBaseRequestJsonParams(map, context, json);
+		/*if(parameter!=null && !parameter.trim().equals(""))
+		{
+			try {
+				method=method+"?"+URLEncoder.encode(parameter, "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				
+				e.printStackTrace();
+			}
+		}*/
+		method=method+"?"+setBaseRequestJsonParams(map, context, json);
+		sendHttpJson(method, json, httpRequestDataInterface);
 	}
 
+	
+	/*******
+	 * 本类定义 异步 上传JSON 数据
+	 * @param String url 访问的url 
+	 * @param String json 需要传递的json 格式的字符串
+	 * @param HttpRequestDataInterface httpRequestDataInterface 回调接口
+	 * @return void 
+	 * ***/
+	void sendHttpJson(final String url,final String json,final HttpRequestDataInterface httpRequestDataInterface)
+	{
+		final CustonHandler handler=new CustonHandler(){
+			@Override
+			public void handleMessage(Message msg) {
+				
+				super.handleMessage(msg);
+				if(httpRequestDataInterface==null)
+				{
+					return;
+				}
+				switch(msg.what)
+				{
+				case 200:
+					httpRequestDataInterface.httpRequestDataInterface_Sucss(msg.obj);
+					break;
+				case 400:
+					httpRequestDataInterface.httpRequestDataInterface_Fails((String)msg.obj);
+					break;
+				}
+			}
+		};
+		//启动线程进行数据请求
+		new Thread()
+		{
+		public void run() {
+			try {
+				URL htturl = new URL(url);
+				HttpURLConnection http=(HttpURLConnection) htturl.openConnection();
+				http.setDoInput(true);
+				http.setDoOutput(true);
+				http.setReadTimeout(10000);
+				http.setConnectTimeout(3000);
+				http.setRequestMethod("POST");
+				http.setRequestProperty("Content-type", "application/json;charset=UTF-8");
+				 OutputStream  out=http.getOutputStream();
+				 if(out!=null)
+				 {
+					 out.write(json.getBytes());
+				 }else
+				 {
+					 handler.sendError("连接失败");
+				 }
+				InputStream io= http.getInputStream();
+				StringBuilder sb=new StringBuilder();
+				if(io!=null)
+				{
+					byte[] buffer=new byte[1024];
+					int count=0;
+					while((count=io.read(buffer, 0, 1024))!=-1)
+					{
+						sb.append(new String(buffer, 0, count, "UTF-8"));
+					}
+					String returnValue=URLDecoder.decode(sb.toString(), sb.toString().trim());
+					handler.sendSucess(returnValue);
+				}else
+				{
+					handler.sendError("连接失败");
+				}
+			} catch (Exception e) {
+				
+				e.printStackTrace();
+				handler.sendError(e.getMessage());
+			}
+		};
+		}.start();
+	}
+	
+	/******
+	 * Handler
+	 * ****/
+	class CustonHandler extends Handler
+	{
+		public void sendError(String errormsg)
+		{
+			Message msg=obtainMessage(400);
+			msg.obj=errormsg;
+			sendMessage(msg);
+		}
+		
+		public void sendSucess(String sucessMsg)
+		{
+			Message msg=obtainMessage(200);
+			msg.obj=sucessMsg;
+			sendMessage(msg);
+		}
+	}
 	
 	/****
 	 * 设置登录信息 存储到属性文件
@@ -553,4 +594,16 @@ public class HttpControl {
 		void http_Fails(int error, String msg);
 
 	};
+	
+	/****
+	 * 定义Http接口回调类 用于接收返回的 成功与失败
+	 * 用于 异步上传Json类型数据时 的回调接口
+	 * @see #httpRequestDataInterface_Sucss(Object)
+	 * @see #httpRequestDataInterface_Fails(String)
+	 * ***/
+	private interface HttpRequestDataInterface
+	{
+		void httpRequestDataInterface_Sucss(Object obj);
+		void httpRequestDataInterface_Fails(String msg);
+	}
 }

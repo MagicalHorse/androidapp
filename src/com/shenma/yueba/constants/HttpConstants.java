@@ -5,6 +5,7 @@ public class HttpConstants {
 	private static String baseUrl = "http://123.57.77.86:8080/app/";
 	private static String USERURL=baseUrl+"User/";//USER接口
 	private static String COMMONURL=baseUrl+"Common/";
+	private static String ADDRESS=baseUrl+"Address/";
 	//注册----获取手机短信验证码
 	public static String sendPhoneCode = USERURL+"SendMobileCode";
 	public static String RegisterCompleate = USERURL+"RegisterCompleate";
@@ -19,5 +20,6 @@ public class HttpConstants {
 	//修改登录密码
 	public static String METHOD_UPDATEPWD = USERURL+"ChangePassword";
 	//重置手机密码
-	public static String METHOD_RESETPASSWORD = USERURL+"ResetPassword ";
+	public static String METHOD_RESETPASSWORD = USERURL+"ResetPassword";
+	public static String METHOD_ADDRESSCREATE = ADDRESS+"Create";
 }

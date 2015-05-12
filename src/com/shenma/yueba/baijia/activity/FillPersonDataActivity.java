@@ -155,7 +155,8 @@ public class FillPersonDataActivity extends BaseActivityWithTopView {
 			MyApplication.getInstance().showMessage(FillPersonDataActivity.this, "城市信息错误");
 			return;
 		}
-		HttpControl.the().registerUserInfo(moblie, name, pass, cityvalue, new HttpCallBackInterface() {
+		HttpControl httpControl=new HttpControl();
+		httpControl.registerUserInfo(moblie, name, pass, cityvalue, new HttpCallBackInterface() {
 			
 			@Override
 			public void http_Success(Object obj) {

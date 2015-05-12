@@ -80,7 +80,8 @@ public class RegisterFragment extends BaseFragment implements OnClickListener, T
 					return;
 				}
 				
-				HttpControl.the().sendPhoeCode(et_mobile.getText().toString().trim(), new HttpCallBackInterface() {
+				HttpControl httpControl=new HttpControl();
+				httpControl.sendPhoeCode(et_mobile.getText().toString().trim(), new HttpCallBackInterface() {
 					
 					@Override
 					public void http_Success(Object obj) {
@@ -114,7 +115,8 @@ public class RegisterFragment extends BaseFragment implements OnClickListener, T
 				Toast.makeText(getActivity(), "验证码不能为空", 1000).show();
 				return;
 			}
-			HttpControl.the().validVerifyCode(et_mobile.getText().toString().trim(), et_code.getText().toString().trim(), new HttpCallBackInterface() {
+			HttpControl httpControl=new HttpControl();
+			httpControl.validVerifyCode(et_mobile.getText().toString().trim(), et_code.getText().toString().trim(), new HttpCallBackInterface() {
 				
 				@Override
 				public void http_Success(Object obj) {
@@ -130,7 +132,7 @@ public class RegisterFragment extends BaseFragment implements OnClickListener, T
 					Toast.makeText(getActivity(),msg, 1000).show();
 				}
 			}, getActivity());
-			
+			break;
 		default:
 			break;
 		}

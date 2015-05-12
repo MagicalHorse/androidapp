@@ -42,7 +42,7 @@ public class ResetPasswordActivity extends BaseActivityWithTopView implements On
 		{
 			this.finish();
 		}
-		setTitle("设置新密码");
+		setTitle("重置密码");
 		setLeftTextView(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -89,7 +89,8 @@ public class ResetPasswordActivity extends BaseActivityWithTopView implements On
 				MyApplication.getInstance().showMessage(ResetPasswordActivity.this, "未获取的注册的手机号码");
 				return;
 			}
-			HttpControl.the().resetPassword(phone, newpwd, new HttpCallBackInterface() {
+			HttpControl httpControl=new HttpControl();
+			httpControl.resetPassword(phone, newpwd, new HttpCallBackInterface() {
 				
 				@Override
 				public void http_Success(Object obj) {

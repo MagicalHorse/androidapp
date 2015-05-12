@@ -22,6 +22,7 @@ import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.ToolsUtil;
+import com.shenma.yueba.yangjia.modle.ContactsAddressResponseBean;
 
 public class LoginFragment extends BaseFragment implements OnClickListener{
 
@@ -36,7 +37,7 @@ public class LoginFragment extends BaseFragment implements OnClickListener{
 	private View view;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
+		
 		super.onCreate(savedInstanceState);
 	}
 
@@ -70,6 +71,7 @@ public class LoginFragment extends BaseFragment implements OnClickListener{
 		case R.id.tv_forget://找回密码
 			Intent intent = new Intent(getActivity(),FindPasswordActivity.class);
 			startActivity(intent);
+			break;
 		case R.id.bt_login://登录
 			if(TextUtils.isEmpty(et_mobile.getText().toString())){
 				Toast.makeText(getActivity(), "手机号不能为空", 1000).show();
@@ -80,11 +82,12 @@ public class LoginFragment extends BaseFragment implements OnClickListener{
 				Toast.makeText(getActivity(), "密码不能为空", 1000).show();
 				et_password.startAnimation(AnimationUtils.loadAnimation(getActivity(),R.anim.shake));
 			}else{
-				HttpControl.the().userLogin(et_mobile.getText().toString().trim(), et_password.getText().toString().trim(), new HttpCallBackInterface() {
+				HttpControl httpControl=new HttpControl();
+				httpControl.userLogin(et_mobile.getText().toString().trim(), et_password.getText().toString().trim(), new HttpCallBackInterface() {
 					
 					@Override
 					public void http_Success(Object obj) {
-						// TODO Auto-generated method stub
+						
 						if(obj!=null && obj instanceof UserRequestBean)
 						{
 							UserRequestBean bean=(UserRequestBean)obj;
@@ -97,7 +100,7 @@ public class LoginFragment extends BaseFragment implements OnClickListener{
 					
 					@Override
 					public void http_Fails(int error, String msg) {
-						// TODO Auto-generated method stub
+						
 						MyApplication.getInstance().showMessage(getActivity(), msg);
 					}
 				}, getActivity());

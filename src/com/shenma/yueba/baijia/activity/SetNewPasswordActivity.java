@@ -83,17 +83,18 @@ public class SetNewPasswordActivity extends BaseActivityWithTopView implements O
 				MyApplication.getInstance().showMessage(SetNewPasswordActivity.this, "未获取的注册的手机号码");
 				return;
 			}
-			HttpControl.the().updateLoginPwd(phone, newpwd, oldpwd, new HttpCallBackInterface() {
+			HttpControl httpControl=new HttpControl();
+			httpControl.updateLoginPwd(phone, newpwd, oldpwd, new HttpCallBackInterface() {
 				
 				@Override
 				public void http_Success(Object obj) {
-					// TODO Auto-generated method stub
+					
 					SetNewPasswordActivity.this.finish();
 				}
 				
 				@Override
 				public void http_Fails(int error, String msg) {
-					// TODO Auto-generated method stub
+					
 					MyApplication.getInstance().showMessage(SetNewPasswordActivity.this, msg);
 				}
 			}, SetNewPasswordActivity.this);

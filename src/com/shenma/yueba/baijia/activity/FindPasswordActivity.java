@@ -44,7 +44,7 @@ public class FindPasswordActivity extends BaseActivityWithTopView implements
 	}
 
 	private void initView() {
-		setTitle("找回密码");
+		setTitle("重置密码");
 		setLeftTextView(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -57,6 +57,7 @@ public class FindPasswordActivity extends BaseActivityWithTopView implements
 		tv_getcode = (TextView) findViewById(R.id.tv_getcode);
 		et_code = (EditText) findViewById(R.id.et_code);
 		bt_sure = (Button) findViewById(R.id.bt_sure);
+		bt_sure.setText("下一步");
 		bt_sure.setOnClickListener(this);
 		tv_getcode.setOnClickListener(this);
 		FontManager.changeFonts(mContext, tv_mobile_title, et_mobile,
@@ -79,7 +80,8 @@ public class FindPasswordActivity extends BaseActivityWithTopView implements
 				MyApplication.getInstance().showMessage(FindPasswordActivity.this, "验证码不能为空");
 				return;
 			}
-			HttpControl.the().validVerifyCode(phone, code, new HttpCallBackInterface() {
+			HttpControl httpControl=new HttpControl();
+			httpControl.validVerifyCode(phone, code, new HttpCallBackInterface() {
 				
 				@Override
 				public void http_Success(Object obj) {
@@ -100,7 +102,8 @@ public class FindPasswordActivity extends BaseActivityWithTopView implements
 				MyApplication.getInstance().showMessage(FindPasswordActivity.this, "手机号码不能为空");
 				return;
 			}
-			HttpControl.the().sendPhoeCode(phone, new HttpCallBackInterface() {
+			HttpControl hControl=new HttpControl();
+			hControl.sendPhoeCode(phone, new HttpCallBackInterface() {
 				
 				@Override
 				public void http_Success(Object obj) {

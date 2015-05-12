@@ -68,9 +68,11 @@ public class Md5Utils {
 	/****
 	 * MD5加密后的字符串
 	 * 根据 K-V根据K 进行排序 最终生成 MD5字符串
-	 * @param Map<String, String> map_list K--传递的自动   v--对应的值
+	 * 根据Map的k,v 按照K的小写排序 最终生成类似于 a=1&b=2&c=3类型的字符串   如果json不为空 则加入字符串末端  之后再在 字符串前后加上钥匙
+	 * @param Map<String, String> map_list K--传递的参数   v--对应的值 
+	 * @param String json JSON格式字符串(没有可设置NUll 主要用上传json类型数据)
 	 * ****/
-	public static String md5ToString(Map<String, String> map_list)
+	public static String md5ToString(Map<String, String> map_list,String json)
 	{
 		if(map_list==null)		
 		{
@@ -115,6 +117,10 @@ public class Md5Utils {
 				{
 					sb.append("&");
 				}
+			}
+			if(json!=null)
+			{
+				sb.append(json);
 			}
 			sb.append(Constants.PRIVATEKEY);
 			return encodeByMD5(sb.toString());
