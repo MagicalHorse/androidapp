@@ -24,11 +24,13 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.shenma.yueba.baijia.modle.BaseRequest;
 import com.shenma.yueba.baijia.modle.CityListRequestBean;
+import com.shenma.yueba.baijia.modle.ProvinceCityListBeanRequest;
 import com.shenma.yueba.baijia.modle.UserInfo;
 import com.shenma.yueba.baijia.modle.UserRequestBean;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.constants.HttpConstants;
 import com.shenma.yueba.yangjia.modle.ContactsAddressRequestBean;
+import com.shenma.yueba.yangjia.modle.ContactsAddressRequestListBean;
 import com.shenma.yueba.yangjia.modle.ContactsAddressResponseBean;
 
 /**
@@ -36,12 +38,19 @@ import com.shenma.yueba.yangjia.modle.ContactsAddressResponseBean;
  * @version 创建时间：2015-5-10 下午4:29:03 程序的简单说明:本类定义 Http控制类 用于各种Http访问的的方法处理
  *          {@link HttpCallBackInterface}
  * @see #getCityList(HttpCallBackInterface, Context)
+ * @see #getAllCityList(HttpCallBackInterface, Context)
  * @see #sendPhoeCode(String, HttpCallBackInterface, Context)
  * @see #setLoginInfo(Context, UserRequestBean)
  * @see #createContactAddress(HttpCallBackInterface, Context, ContactsAddressResponseBean)
  * @see #registerUserInfo(String, String, String, int, HttpCallBackInterface, Context)
  * @see #validVerifyCode(String, String, HttpCallBackInterface, Context)
  * @see #updateLoginPwd(String, String, String, HttpCallBackInterface, Context)
+ * @see #getContactAddressDetails(HttpCallBackInterface, Context, int)
+ * @see #getDefaultContactAddress(HttpCallBackInterface, Context, int)
+ * @see #getDeleteContactAddress(HttpCallBackInterface, Context, int)
+ * @see #getMyContactAddressList(HttpCallBackInterface, Context, int)
+ * @see #getUpdateContactAddress(HttpCallBackInterface, Context, ContactsAddressResponseBean)
+ * @see #setDefaultContactAddress(HttpCallBackInterface, Context, int)
  * 
  */
 public class HttpControl {
@@ -67,9 +76,9 @@ public class HttpControl {
 	/**
 	 * 发送手机验证码
 	 * 
-	 * @param String str手机号码
-	 * @param HttpCallBackInterface  回调接口
-	 * @param Context
+	 * @param str String 手机号码
+	 * @param httpCallBack HttpCallBackInterface  回调接口
+	 * @param context
 	 * @return void
 	 * **/
 	public void sendPhoeCode(String str,final HttpCallBackInterface httpCallBack, Context context) {
@@ -81,10 +90,10 @@ public class HttpControl {
 	/**
 	 * 校验手机验证码
 	 * 
-	 * @param String  phone手机号码
-	 * @param String code验证码
-	 * @param HttpCallBackInterface 回调接口
-	 * @param Context
+	 * @param phone String 手机号码
+	 * @param code String验证码
+	 * @param httpCallBack HttpCallBackInterface 回调接口
+	 * @param context Context
 	 * @return void
 	 * **/
 	public void validVerifyCode(String phone, String code,final HttpCallBackInterface httpCallBack, Context context) {
@@ -97,23 +106,34 @@ public class HttpControl {
 	/**
 	 * 获取城市列表
 	 * 
-	 * @param HttpCallBackInterface 回调接口
-	 * @param Context
+	 * @param httpCallBack HttpCallBackInterface 回调接口
+	 * @param context Context
 	 * @return void
 	 * **/
 	public void getCityList(final HttpCallBackInterface httpCallBack,Context context) {
 		BasehttpSend(null, context, HttpConstants.METHOD_GETCITYLIST, httpCallBack, CityListRequestBean.class, true, true);
 	}
+	
+	
+	/**
+	 * 获取省市地区所有数据
+	 * @param httpCallBack HttpCallBackInterface 回调接口
+	 * @param context Context
+	 * @return void
+	 * **/
+	public void getAllCityList(final HttpCallBackInterface httpCallBack,Context context) {
+		BasehttpSend(null, context, HttpConstants.METHOD_ALLGETCITYLIST, httpCallBack, ProvinceCityListBeanRequest.class, true, true);
+	}
 
 	/**
 	 * 注册用户信息
 	 * 
-	 * @param String  phone手机号码
-	 * @param String  name用户名
-	 * @param String pwd密码
-	 * @param String cityId城市ID
-	 * @param HttpCallBackInterface 回调接口
-	 * @param Context
+	 * @param phone   String手机号码
+	 * @param name    String用户名
+	 * @param pwd     String密码
+	 * @param cityId  String 城市ID
+	 * @param httpCallBack HttpCallBackInterface 回调接口
+	 * @param context Context
 	 * @return void
 	 * **/
 	public void registerUserInfo(String phone, String name, String pwd,int cityId, final HttpCallBackInterface httpCallBack,final Context context) {
@@ -128,10 +148,10 @@ public class HttpControl {
 	/**
 	 * 登录用户
 	 * 
-	 * @param String  phone手机号码
-	 * @param String password密码
-	 * @param HttpCallBackInterface 回调接口
-	 * @param Context
+	 * @param phone      String手机号码
+	 * @param password   String密码
+	 * @param httpCallBack HttpCallBackInterface 回调接口
+	 * @param context  Context
 	 * @return void
 	 * **/
 	public void userLogin(String phone, String password,final HttpCallBackInterface httpCallBack,final Context context) {
@@ -144,11 +164,11 @@ public class HttpControl {
 	/**
 	 * 修改登录密码
 	 * 
-	 * @param String  phone手机号码
-	 * @param String oldpassword旧密码
-	 * @param String password新密码
-	 * @param HttpCallBackInterface回调接口
-	 * @param Context
+	 * @param phone            String手机号码
+	 * @param oldpassword      String旧密码
+	 * @param password        String新密码
+	 * @param httpCallBack HttpCallBackInterface回调接口
+	 * @param context Context
 	 * @return void
 	 * **/
 	public void updateLoginPwd(String phone, String password,String oldpassword,final HttpCallBackInterface httpCallBack, Context context) {
@@ -163,10 +183,10 @@ public class HttpControl {
 	/**
 	 * 重置密码
 	 * 
-	 * @param String  phone手机号码
-	 * @param String password密码
-	 * @param HttpCallBackInterface回调接口
-	 * @param Context
+	 * @param phone           String手机号码
+	 * @param password        String 密码
+	 * @param httpCallBack HttpCallBackInterface回调接口
+	 * @param context Context
 	 * @return void
 	 * **/
 	public void resetPassword (String phone, String password,final HttpCallBackInterface httpCallBack, Context context) {
@@ -180,8 +200,9 @@ public class HttpControl {
 	
 	/**
 	 * 创建联系人地址
-	 * @param HttpCallBackInterface 回调接口
-	 * @param Context
+	 * @param httpCallBack  HttpCallBackInterface 回调接口
+	 * @param context  Context
+	 * @param responsebrean  ContactsAddressResponseBean联系人地址信息
 	 * @return void
 	 * **/
 	public void createContactAddress(final HttpCallBackInterface httpCallBack,Context context,ContactsAddressResponseBean responsebrean) {
@@ -194,15 +215,97 @@ public class HttpControl {
 	}
 	
 	
+	/**
+	 * 获取联系人地址详细信息
+	 * @param httpCallBack   HttpCallBackInterface 回调接口
+	 * @param context  Context
+	 * @param Id  int  指定id
+	 * @return void
+	 * **/
+	public void getContactAddressDetails(final HttpCallBackInterface httpCallBack,Context context,int Id ) {
+        String json="{'Id':"+Id+"}";
+		basehttpSendToJson(json, null, context, HttpConstants.METHOD_ADDRESSCREATE_DETAILS, httpCallBack, ContactsAddressRequestBean.class, true, true);
+	}
+	
+	/**
+	 * 获取联系人地址列表
+	 * @param httpCallBack  HttpCallBackInterface 回调接口
+	 * @param context  Context
+	 * @param Id  int
+	 * @return void
+	 * **/
+	public void getMyContactAddressList(final HttpCallBackInterface httpCallBack,Context context,int Id ) {
+        String json="{'Id':"+Id+"}";
+		basehttpSendToJson(json, null, context, HttpConstants.METHOD_MYADDRESSCREATE_LIST, httpCallBack, ContactsAddressRequestListBean.class, true, true);
+	}
+	
+	
+	/**
+	 * 删除联系人地址详细信息
+	 * @param httpCallBack  HttpCallBackInterface 回调接口
+	 * @param context  Context
+	 * @param Id  int 删除的ID
+	 * @return void
+	 * **/
+	public void getDeleteContactAddress(final HttpCallBackInterface httpCallBack,Context context,int Id ) {
+        String json="{'id':"+Id+"}";
+		basehttpSendToJson(json, null, context, HttpConstants.METHOD_ADDRESSCREATE_DELETE, httpCallBack, BaseRequest.class, true, true);
+	}
+	
+	
+	/**
+	 * 修改联系人地址详细信息
+	 * @param httpCallBack  HttpCallBackInterface 回调接口
+	 * @param context  Context
+	 * @param bean  ContactsAddressResponseBean  修改的数据
+	 * @return void
+	 * **/
+	public void getUpdateContactAddress(final HttpCallBackInterface httpCallBack,Context context,ContactsAddressResponseBean bean ) {
+		String responsejsonstr=BaseGsonUtils.getObjectToJson(bean);
+		if(responsejsonstr==null)
+		{
+			httpCallBack.http_Fails(500, "数据错误");
+		}
+		basehttpSendToJson(responsejsonstr, null, context, HttpConstants.METHOD_ADDRESSCREATE_UPDATE, httpCallBack, ContactsAddressRequestListBean.class, true, true);
+	}
+	
+	
+	/**
+	 * 设置默认联系人地址详细信息
+	 * @param httpCallBack  HttpCallBackInterface 回调接口
+	 * @param context  Context
+	 * @param Id int 
+	 * @return void
+	 * **/
+	public void setDefaultContactAddress(final HttpCallBackInterface httpCallBack,Context context,int Id ) {
+		String json="{'id':"+Id+"}";
+		basehttpSendToJson(json, null, context, HttpConstants.METHOD_ADDRESSCREATE_DEFAULT, httpCallBack, BaseRequest.class, true, true);
+	}
+	
+	
+	/**
+	 * 获取默认联系人地址详细信息
+	 * @param httpCallBack HttpCallBackInterface 回调接口
+	 * @param context  Context
+	 * @param Id  int
+	 * @return void
+	 * **/
+	public void getDefaultContactAddress(final HttpCallBackInterface httpCallBack,Context context,int Id ) {
+		basehttpSendToJson(null, null, context, HttpConstants.METHOD_ADDRESSCREATE_GETDEFAULT, httpCallBack, ContactsAddressRequestBean.class, true, true);
+	}
+	
+	
+	
 	/********
 	 * 基础Http传递json数据通用类
-	 * @param String responsejsonstr JSON类型数据
-	 * @param Map<String, String> map 传递的参数
-	 * @param String method 访问的方法
-	 * @param HttpCallBackInterface httpCallBackUi回调
-	 * @param Class<T> classzz 泛型即相应成功后 返回的对象类型<T extends BaseRequest> 且 只能是BaseRequest 或 BaseRequest的 子类
-	 * @param boolean isshwoDialog 是否显示等待对话框 true 显示 false不显示  默认不显示
-	 * @param boolean isDialogCancell 是否可取消对话框 true 不可取消 false 可取消 默认 可取消
+	 * @param responsejsonstr       String  JSON类型数据
+	 * @param map  Map<String, String> map 传递的参数
+	 * @param method  String  访问的方法
+	 * @param httpCallBack   HttpCallBackInterface Ui回调
+	 * @param classzz  Class<T>  泛型即相应成功后 返回的对象类型<T extends BaseRequest> 且 只能是BaseRequest 或 BaseRequest的 子类
+	 * @param isshwoDialog  boolean  是否显示等待对话框 true 显示 false不显示  默认不显示
+	 * @param isDialogCancell  boolean  是否可取消对话框 true 不可取消 false 可取消 默认 可取消
+	 * @return void
 	 * ****/
 	<T extends BaseRequest> void basehttpSendToJson(String responsejsonstr,Map<String, String> map,Context context,String method,final HttpCallBackInterface httpCallBack,final Class<T> classzz,boolean isshwoDialog,boolean isDialogCancell)
 	{
@@ -256,6 +359,10 @@ public class HttpControl {
 	 * 通用传输数据
 	 * 用于上传JSON类型数据 返回url拼接后的字符串 
 	 * 如 a=1&b=2&sign=md5
+	 * @param  map  Map<String, String> 传递的参数
+	 * @param  context Context
+	 * @param  json  String传递的json数据  没有值传递NULL
+	 * @return String
 	 * **/
 	String setBaseRequestJsonParams(Map<String, String> map, Context context,final String json) {
 		StringBuilder stringBuilder=new StringBuilder();
@@ -306,7 +413,9 @@ public class HttpControl {
 	/****
 	 * 通用传输数据
 	 * 生成http传输对象 RequestParams
-	 * @param Map<String, String> map 需要传递的参数 K=v K-传递的参数   V-对应的值
+	 * @param map  Map<String, String>  需要传递的参数 K=v K-传递的参数   V-对应的值
+	 * @param context  Context 
+	 * @return RequestParams
 	 * **/
 	RequestParams setBaseRequestParams(Map<String, String> map, Context context) {
 		RequestParams params = new RequestParams();
@@ -355,12 +464,15 @@ public class HttpControl {
 
 	/*****
 	 * 访问网络基础Http 用于post上传K-V
-	 * @param  Map<String, String> map上传的参数 k-V
-	 * @param String  method 方法名
-	 * @param RequestCallBack  <T> requestCallBack 回调
-	 * @param Class<T> classzz 泛型即相应成功后 返回的对象类型<T extends BaseRequest> 且 只能是BaseRequest 或 BaseRequest的 子类
-	 * @param boolean isshwoDialog 是否显示等待对话框 true 显示 false不显示  默认不显示
-	 * @param boolean isDialogCancell 是否可取消对话框 true 不可取消 false 可取消 默认 可取消
+	 * @param map  Map<String, String> 上传的参数 k-V
+	 * @param method   String   方法名
+	 * @param requestCallBack  RequestCallBack<T>  回调
+	 * @param classzz  Class<T>  泛型即相应成功后 返回的对象类型<T extends BaseRequest> 且 只能是BaseRequest 或 BaseRequest的 子类
+	 * @param isshwoDialog   boolean  是否显示等待对话框 true 显示 false不显示  默认不显示
+	 * @param isDialogCancell  boolean  是否可取消对话框 true 不可取消 false 可取消 默认 可取消
+	 * @param httpCallBack HttpCallBackInterface回调接口
+	 * @param context Context
+	 * @return void 
 	 * ***/
 	<T extends BaseRequest> void BasehttpSend(final Map<String, String> map, final Context context,final String method,final HttpCallBackInterface httpCallBack,final Class<T> classzz,boolean isshwoDialog,boolean isDialogCancell) {
 		final CustomProgressDialog progressDialog = CustomProgressDialog.createDialog(context);
@@ -412,10 +524,14 @@ public class HttpControl {
 	
 	/*****
 	 * 访问网络 上传JSON类型数据
-	 * 
+	 * @param json String json类型的字符串
+	 * @param map  Map<String, String> 传递的参数
 	 * @param RequestParams  params传输的 数据
-	 * @param String  method 方法名
-	 * @param RequestCallBack  <T> requestCallBack 回调
+	 * @param context Context 
+	 * @param method  String   方法名
+	 * @param requestCallBack RequestCallBack<T>  回调
+	 * @param httpRequestDataInterface HttpRequestDataInterface http接口
+	 * @return void 
 	 * ***/
 	<T> void httpSendToJson(final String json,final Map<String, String> map, final Context context, String method,final HttpRequestDataInterface httpRequestDataInterface) {
 		String parameter=setBaseRequestJsonParams(map, context, json);
@@ -435,9 +551,9 @@ public class HttpControl {
 	
 	/*******
 	 * 本类定义 异步 上传JSON 数据
-	 * @param String url 访问的url 
-	 * @param String json 需要传递的json 格式的字符串
-	 * @param HttpRequestDataInterface httpRequestDataInterface 回调接口
+	 * @param url  String  访问的url 
+	 * @param json  String  需要传递的json 格式的字符串
+	 * @param httpRequestDataInterface  HttpRequestDataInterface  回调接口
 	 * @return void 
 	 * ***/
 	void sendHttpJson(final String url,final String json,final HttpRequestDataInterface httpRequestDataInterface)
@@ -530,7 +646,9 @@ public class HttpControl {
 	
 	/****
 	 * 设置登录信息 存储到属性文件
-	 * @param UserRequestBean bean 用户登录信息类
+	 * @param bean UserRequestBean  用户登录信息类
+	 * @param context Context
+	 * @return void
 	 * ***/
 	void setLoginInfo(Context context,UserRequestBean bean)
 	{
@@ -552,6 +670,8 @@ public class HttpControl {
 	
 	/****
 	 * 设置登录信息 存储到属性文件
+	 * @param context Context 
+	 * @return void 
 	 * ***/
 	void setUnLoginInfo(Context context)
 	{
@@ -579,7 +699,7 @@ public class HttpControl {
 		/**
 		 * 返回成功
 		 * 
-		 * @param obj
+		 * @param obj  Object
 		 * @return void
 		 */
 		void http_Success(Object obj);
@@ -587,8 +707,8 @@ public class HttpControl {
 		/**
 		 * 返回失败
 		 * 
-		 * @param error
-		 * @param msg
+		 * @param error int
+		 * @param msg  String
 		 * @return void
 		 */
 		void http_Fails(int error, String msg);
@@ -603,7 +723,18 @@ public class HttpControl {
 	 * ***/
 	private interface HttpRequestDataInterface
 	{
+		/**
+		 * json上传成功
+		 * @param obj Object
+		 * @return void
+		 * */
 		void httpRequestDataInterface_Sucss(Object obj);
+		
+		/**
+		 * json上传失败
+		 * @param msg String
+		 * @return void
+		 * */
 		void httpRequestDataInterface_Fails(String msg);
 	}
 }

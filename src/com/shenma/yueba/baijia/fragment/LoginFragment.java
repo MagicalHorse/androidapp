@@ -3,6 +3,7 @@ package com.shenma.yueba.baijia.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -22,7 +23,6 @@ import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.ToolsUtil;
-import com.shenma.yueba.yangjia.modle.ContactsAddressResponseBean;
 
 public class LoginFragment extends BaseFragment implements OnClickListener{
 
