@@ -150,7 +150,7 @@ public class UserConfigActivity extends BaseActivityWithTopView {
 				MyApplication.getInstance().removeAllActivity();
 				break;
 			case R.id.user_config_icon_include:
-				//showBottomDialog();
+				showBottomDialog();
 				Intent intent2 = new Intent(UserConfigActivity.this,
 						PublishProductsActivity.class);
 				startActivity(intent2);

@@ -106,7 +106,13 @@
             android:name="com.shenma.yueba.baijia.activity.WebActivity"
             android:screenOrientation="portrait" >
         </activity>
-        <!-- <activity android:name="com.shenma.yueba.baijia.activity.LoginAndRegisterActivity" android:screenOrientation="portrait" ></activity> -->
+        <activity android:name="com.shenma.yueba.baijia.activity.LoginAndRegisterActivity" android:screenOrientation="portrait" >
+           <!--  <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter> -->
+        </activity>
         <activity
             android:name="com.shenma.yueba.baijia.activity.FillPersonDataActivity"
             android:screenOrientation="portrait" >

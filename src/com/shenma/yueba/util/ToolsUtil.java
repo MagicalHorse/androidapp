@@ -135,6 +135,19 @@ public class ToolsUtil {
 
 	
 	/**
+	 * 获取当前页面的屏幕高度
+	 * 
+	 * @param cx
+	 * @return
+	 */
+	public static int getDisplayHeight(Context cx) {
+			DisplayMetrics dm = new DisplayMetrics();
+			dm = cx.getApplicationContext().getResources().getDisplayMetrics();
+			int screenHeight = dm.heightPixels;
+			return screenHeight;
+		}
+
+	/**
 	 * 刚进入界面时，隐藏软键盘
 	 * 
 	 * @param context

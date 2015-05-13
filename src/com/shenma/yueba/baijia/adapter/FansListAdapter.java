@@ -5,28 +5,28 @@ import java.util.List;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.lidroid.xutils.HttpUtils;
-import com.lidroid.xutils.http.RequestParams;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
-import com.shenma.yueba.baijia.modle.RecommendedCircleBean;
+import com.shenma.yueba.baijia.modle.BrandListBean;
+import com.shenma.yueba.baijia.modle.FansListBean;
+import com.shenma.yueba.baijia.modle.MyCircleBean;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.view.RoundImageView;
 
-public class RecommendedCircleAdapter extends BaseAdapterWithUtil {
-	private List<RecommendedCircleBean> mList;
-	public RecommendedCircleAdapter(Context ctx,List<RecommendedCircleBean> mList) {
+public class FansListAdapter extends BaseAdapterWithUtil {
+	private List<FansListBean> mList;
+	public FansListAdapter(Context ctx,List<FansListBean> mList) {
 		super(ctx);
 		this.mList = mList;
-		
 	}
 
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return 50;
+		return 10;
 	}
 
 	@Override
@@ -47,13 +47,14 @@ public class RecommendedCircleAdapter extends BaseAdapterWithUtil {
 		Holder holder;
 		if(convertView == null){
 			holder = new Holder();
-			convertView = View.inflate(ctx, R.layout.circle_item, null);
-			holder.riv = (RoundImageView) convertView.findViewById(R.id.riv);
-			holder.tv_circle_name = (TextView) convertView.findViewById(R.id.tv_circle_name);
-			holder.tv_count = (TextView) convertView.findViewById(R.id.tv_count);
+			convertView = View.inflate(ctx, R.layout.fans_list_item, null);
+			holder.riv_head = (RoundImageView) convertView.findViewById(R.id.riv_head);
+			holder.tv_type = (TextView) convertView.findViewById(R.id.tv_type);
+			holder.tv_name = (TextView) convertView.findViewById(R.id.tv_name);
+			holder.tv_attention_count = (TextView) convertView.findViewById(R.id.tv_attention_count);
+			holder.tv_fans_count = (TextView) convertView.findViewById(R.id.tv_fans_count);
+			holder.tv_atttention = (TextView) convertView.findViewById(R.id.tv_atttention);
 			holder.tv_address = (TextView) convertView.findViewById(R.id.tv_address);
-			FontManager.changeFonts(ctx, holder.riv,holder.tv_address,holder.tv_circle_name,holder.tv_count);
-			MyApplication.getInstance().getImageLoader().displayImage("http://img3.redocn.com/20091221/20091217_fa2a743db1f556f82b9asJ320coGmYFf.jpg", holder.riv);
 			convertView.setTag(holder);
 		}else{
 			holder = (Holder) convertView.getTag();
@@ -63,10 +64,14 @@ public class RecommendedCircleAdapter extends BaseAdapterWithUtil {
 	
 	
 	class Holder{
-		RoundImageView riv;
-		TextView tv_circle_name;
-		TextView tv_count;
+		RoundImageView riv_head;
+		TextView tv_type;
+		TextView tv_name;
+		TextView tv_attention_count;
+		TextView tv_fans_count;
+		TextView tv_atttention;
 		TextView tv_address;
+		
 	}
 
 }

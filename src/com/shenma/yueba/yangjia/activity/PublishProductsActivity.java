@@ -1,7 +1,9 @@
 package com.shenma.yueba.yangjia.activity;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -9,9 +11,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -30,6 +34,7 @@ import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.activity.BaseActivityWithTopView;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.FileUtils;
+import com.shenma.yueba.util.PhotoUtils;
 import com.shenma.yueba.util.PictureCompress;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.SelectePhotoType;
@@ -60,6 +65,9 @@ public class PublishProductsActivity extends BaseActivityWithTopView implements
 	private List<String> listFileName = new ArrayList<String>();// 保存添加的图片，方便上传之后进行删除
 	private InputMethodManager imm;
 
+	private String littlePicPath;//小图路径
+	private String littlePicPath_cache;//裁剪后图片存储的路径
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -147,15 +155,16 @@ public class PublishProductsActivity extends BaseActivityWithTopView implements
 		@Override
 		public void onCamera(View v) {
 			if (ToolsUtil.isAvailableSpace(mContext)) {
-				canceView();
+				littlePicPath = PhotoUtils
+						.takePicture(mContext);
 			}
-			callGrallery();
+			canceView();
 		}
 
 		@Override
 		public void onPic(View v) {
 			if (ToolsUtil.isAvailableSpace(mContext)) {
-				callGrallery();
+				PhotoUtils.selectPhoto(mContext);
 			}
 			canceView();
 		}
@@ -218,51 +227,73 @@ public class PublishProductsActivity extends BaseActivityWithTopView implements
 	String big_img_path = "";
 	String result_img_name = "";
 
-	/**
-	 * 添加照片返回信息
-	 */
+	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == PhotoUtils.INTENT_REQUEST_CODE_ALBUM) {
+			// 调用相册返回
+			if (resultCode == RESULT_OK) {
+				if (data.getData() == null) {
+					return;
+				}
+				Uri uri = data.getData();
+				String[] proj = { MediaStore.Images.Media.DATA };
+				Cursor cursor = managedQuery(uri, proj, null, null, null);
+				if (cursor != null) {
+					int column_index = cursor
+							.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+					if (cursor.getCount() > 0 && cursor.moveToFirst()) {
+						littlePicPath = cursor.getString(column_index);
+						//裁剪之后存储的路径
+						littlePicPath_cache = Environment
+								.getExternalStorageDirectory().toString()
+								+ File.separator
+								+ UUID.randomUUID().toString()
+								+ "littlePic.jpg";
+						
+						
+						
+						
+						// 裁剪图片
+						startActivityForResult(PhotoUtils.getZoomIntent(
+								Uri.fromFile(new File(littlePicPath)),
+								Uri.fromFile(FileUtils.createNewFile(littlePicPath_cache))),
+								PhotoUtils.INTENT_REQUEST_CODE_CROP);
+					}
+				}
+			}
+		}
+		if (requestCode == PhotoUtils.INTENT_REQUEST_CODE_CROP) {// 裁剪后返回
+			if (resultCode == RESULT_OK) {
+				//tv_upload.setVisibility(View.GONE);
+				Bitmap bm = BitmapFactory.decodeFile(littlePicPath_cache); 
+				saveUploadImage(littlePicPath_cache, "littlePic");
+				//iv_pic.setImageBitmap(bm); 
+				//iv_pic.setVisibility(View.VISIBLE);
+				//icon_imageview.setImageBitmap(bm);
+			}
+		}
+		if (requestCode == PhotoUtils.INTENT_REQUEST_CODE_CAMERA) {// 调用相机返回
+			if (resultCode == RESULT_OK) {
+				if (littlePicPath != null) {
+					//裁剪之后存储的路径
+					littlePicPath_cache = Environment
+							.getExternalStorageDirectory().toString()
+							+ File.separator
+							+ UUID.randomUUID().toString()
+							+ "littlePic.jpg";
+					
+					
+					// 裁剪图片
+					startActivityForResult(PhotoUtils.getZoomIntent(
+							Uri.fromFile(new File(littlePicPath)),
+							Uri.fromFile(FileUtils.createNewFile(littlePicPath_cache))),
+							PhotoUtils.INTENT_REQUEST_CODE_CROP);
+				}
+			}
+		}
 		super.onActivityResult(requestCode, resultCode, data);
-		if (data == null) {
-			return;
-		}
-		// 拍照
-		if (requestCode == RESULT_LOAD_IMAGE1) {
-			Bundle bundle = data.getExtras();
-			if (bundle == null) {
-				return;
-			}
-			Bitmap bitmap = (Bitmap) bundle.get("data");// 获取相机返回的数据，并转换为Bitmap图片格式
-			PictureCompress.saveBitmapToSDCard(bitmap, takeImage + ".png");// 保存拍照的图片
-			listFileName.add(takeImage + ".png");
-			result_img_name = String.valueOf(System.currentTimeMillis())
-					+ ".png";// 保存小图的名称
-			big_img_path = Constants.SD + takeImage + ".png";// 大图路径
-			if (PictureCompress.getBitMapWH(big_img_path)[0] > 640) {// 判断图片宽度是否大于640，如果大于则压缩为640_*,按比例压缩
-				big_img_path = PictureCompress.newBigImgPath(big_img_path);
-				listFileName.add(big_img_path.substring(big_img_path
-						.lastIndexOf("/")));
-			}
-			saveUploadImage(big_img_path, result_img_name);// 保存压缩后的小图
-			listFileName.add(result_img_name);
-		}
-		// 相册
-		if (requestCode == RESULT_LOAD_IMAGE2) {
-			result_img_name = String.valueOf(System.currentTimeMillis())
-					+ ".png";// 保存小图的名称
-			big_img_path = getImageUrl(data);// 大图路径,需要上传的图片本地路径
-			if (big_img_path == null || "".equals(big_img_path)) {
-				return;
-			}
-			if (PictureCompress.getBitMapWH(big_img_path)[0] > 640) {// 判断图片宽度是否大于640，如果大于则压缩为640_*,按比例压缩
-				big_img_path = PictureCompress.newBigImgPath(big_img_path);
-				listFileName.add(big_img_path.substring(big_img_path
-						.lastIndexOf("/")));
-			}
-			saveUploadImage(big_img_path, result_img_name);// 保存压缩后的小图
-			listFileName.add(result_img_name);// 保存需要删除的小图名称
-		}
+	
 	}
 
 	/**
@@ -277,7 +308,7 @@ public class PublishProductsActivity extends BaseActivityWithTopView implements
 		Bitmap bigBitmap = PictureCompress.zoomImg(
 				PictureCompress.startPhotoZoomY(bigImgPath), 100, 100);// 压缩成100*100的小图
 		PictureCompress.saveBitmapToSDCard(bigBitmap, resultImgName);// 保存压缩后的小图，需要显示到EditText中，真正上传的是大图，小图不用上传
-		inputImgToEditText(Constants.SD + resultImgName, bigImgPath);// 在输入框中显示图片
+		inputImgToEditText(bigImgPath);// 在输入框中显示图片
 	}
 
 	/**
@@ -288,14 +319,18 @@ public class PublishProductsActivity extends BaseActivityWithTopView implements
 	 * @param uploadImgPath
 	 *            需要上传的图片路径
 	 */
-	private void inputImgToEditText(String showImgPath, String uploadImgPath) {
+	private void inputImgToEditText(String uploadImgPath) {
 		SpannableString ss = new SpannableString(toString(uploadImgPath));
-		Drawable d = FileUtils.getImageDrawable(showImgPath);
+		Drawable d = FileUtils.getImageDrawable(uploadImgPath);
 		d.setBounds(0, 0, d.getIntrinsicWidth(), d.getIntrinsicHeight());
 		ImageSpan span = new ImageSpan(d, ImageSpan.ALIGN_BASELINE);
 		ss.setSpan(span, 0, toString(uploadImgPath).length(),
 				Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+		if(et_content.getSelectionStart() != 0){
+			et_content.getText().insert(et_content.getSelectionStart(), "\n");
+		}
 		et_content.getText().insert(et_content.getSelectionStart(), ss);
+		et_content.getText().insert(et_content.getSelectionStart(), "\n");
 	}
 
 	private String toString(String str) {

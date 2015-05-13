@@ -113,8 +113,8 @@ public class PhotoUtils {
 		intent.putExtra("crop", "true");// 下面这个crop=true是设置在开启的Intent中设置显示的VIEW可裁剪
 		intent.putExtra("aspectX", 2);// aspectX aspectY 是宽高的比例
 		intent.putExtra("aspectY", 2);
-		intent.putExtra("outputX", 480);// outputX outputY 是裁剪图片宽高
-		intent.putExtra("outputY", 480);
+		intent.putExtra("outputX", Constants.SCREENHEITH);// outputX outputY 是裁剪图片宽高
+		intent.putExtra("outputY", Constants.SCREENHEITH);
 		intent.putExtra("scale", true);
 		intent.putExtra("scaleUpIfNeeded", true);
 		intent.putExtra(MediaStore.EXTRA_OUTPUT, uri_cache);

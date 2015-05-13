@@ -30,7 +30,9 @@ import com.nostra13.universalimageloader.utils.StorageUtils;
 import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.activity.LoginAndRegisterActivity;
 import com.shenma.yueba.baijia.modle.UserRequestBean;
+import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.SharedUtil;
+import com.shenma.yueba.util.ToolsUtil;
 
 public class MyApplication extends Application {
 
@@ -256,4 +258,10 @@ public class MyApplication extends Application {
 			return false;
 		}
 	}
+	
+	private void initScreenWithAndHeight() {
+		int width = ToolsUtil.getDisplayHeight(getApplicationContext());
+		Constants.SCREENHEITH = width;
+	}
+
 }
