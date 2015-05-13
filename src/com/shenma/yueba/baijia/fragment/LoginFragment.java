@@ -69,25 +69,6 @@ public class LoginFragment extends BaseFragment implements OnClickListener{
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.tv_forget://找回密码
-			if(true)
-			{
-				HttpControl hc=new HttpControl();
-				hc.getAllCityList(new HttpCallBackInterface() {
-					
-					@Override
-					public void http_Success(Object obj) {
-						// TODO Auto-generated method stub
-						MyApplication.getInstance().showMessage(getActivity(), "数据获取成功");
-					}
-					
-					@Override
-					public void http_Fails(int error, String msg) {
-						// TODO Auto-generated method stub
-						MyApplication.getInstance().showMessage(getActivity(), msg);
-					}
-				}, getActivity());
-				return ;
-			}
 			Intent intent = new Intent(getActivity(),FindPasswordActivity.class);
 			startActivity(intent);
 			break;
