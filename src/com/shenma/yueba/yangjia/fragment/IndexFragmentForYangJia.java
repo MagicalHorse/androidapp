@@ -27,10 +27,12 @@ import com.shenma.yueba.baijia.fragment.BaseFragment;
 import com.shenma.yueba.baijia.fragment.MyBuyerFragment;
 import com.shenma.yueba.baijia.fragment.TheySayFragment;
 import com.shenma.yueba.util.FontManager;
+import com.shenma.yueba.util.SocicalShareUtil;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.yangjia.activity.EarningManagerActivity;
 import com.shenma.yueba.yangjia.activity.ProductManagerActivity;
 import com.shenma.yueba.yangjia.activity.SalesManagerForBuyerActivity;
+import com.tencent.open.SocialApi;
 
 /**
  * 主界面
@@ -128,6 +130,7 @@ public class IndexFragmentForYangJia extends BaseFragment implements
 		bt_top_right = (Button) view.findViewById(R.id.bt_top_right);
 		bt_top_right.setVisibility(View.VISIBLE);
 		bt_top_right.setBackgroundResource(R.drawable.exit);
+		bt_top_right.setOnClickListener(this);
 		tv_earnings_title = (TextView) view
 				.findViewById(R.id.tv_earnings_title);
 		tv_today_earnings_title = (TextView) view
@@ -287,6 +290,10 @@ public class IndexFragmentForYangJia extends BaseFragment implements
 			break;
 		case R.id.rl_fans://粉丝管理
 			break;
+		case R.id.bt_top_right:
+			SocicalShareUtil shareUtil = new SocicalShareUtil(getActivity());
+			shareUtil.showShareDialog();
+			
 		default:
 			break;
 		}
