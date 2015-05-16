@@ -11,6 +11,7 @@ import com.umeng.socialize.sso.SinaSsoHandler;
 import com.umeng.socialize.sso.TencentWBSsoHandler;
 import com.umeng.socialize.sso.UMQQSsoHandler;
 import com.umeng.socialize.weixin.controller.UMWXHandler;
+import com.umeng.socialize.weixin.media.WeiXinShareContent;
 
 /**
  * 友盟社会化分享
@@ -78,8 +79,12 @@ public class SocicalShareUtil {
 		String appSecret = "5bb696d9ccd75a38c8a0bfe0675559b3";
 		// 添加微信平台
 		UMWXHandler wxHandler = new UMWXHandler(ctx, appId, appSecret);
+		wxHandler.setTargetUrl("www.baidu.com");
+		wxHandler.setTitle("我是微信");
+		WeiXinShareContent weixinShareContent = new WeiXinShareContent();
+		weixinShareContent.setShareContent("dddddddd");
+		mController.setShareMedia(weixinShareContent);
 		wxHandler.addToSocialSDK();
-
 		// 支持微信朋友圈
 		UMWXHandler wxCircleHandler = new UMWXHandler(ctx, appId, appSecret);
 		wxCircleHandler.setToCircle(true);
@@ -91,6 +96,5 @@ public class SocicalShareUtil {
 				SHARE_MEDIA.WEIXIN_CIRCLE, SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE,
 				SHARE_MEDIA.SINA, SHARE_MEDIA.TENCENT);
 		mController.openShare((Activity) ctx, false);
-
 	}
 }

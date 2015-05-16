@@ -23,6 +23,7 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.shenma.yueba.baijia.modle.BaseRequest;
+import com.shenma.yueba.baijia.modle.BrandDetailInfoBean;
 import com.shenma.yueba.baijia.modle.CityListRequestBean;
 import com.shenma.yueba.baijia.modle.ProvinceCityListBeanRequest;
 import com.shenma.yueba.baijia.modle.UserInfo;
@@ -293,6 +294,124 @@ public class HttpControl {
 	public void getDefaultContactAddress(final HttpCallBackInterface httpCallBack,Context context,int Id ) {
 		basehttpSendToJson(null, null, context, HttpConstants.METHOD_ADDRESSCREATE_GETDEFAULT, httpCallBack, ContactsAddressRequestBean.class, true, true);
 	}
+	
+	
+	/**
+	 * 获取品牌信息详细
+	 * @param httpCallBack HttpCallBackInterface 回调接口
+	 * @param context  Context
+	 * @param Id  int
+	 * @return void
+	 * **/
+	public void getBrandDetailInfo(final HttpCallBackInterface httpCallBack,Context context,int BrandId ) {
+		Map<String, String> map=new HashMap<String, String>();
+		map.put(Constants.BRANDID, BrandId+"");
+		BasehttpSend(map, context, HttpConstants.METHOD_BRANDMANAGEER_DETAIL, httpCallBack, BrandDetailInfoBean.class, true, true);
+	}
+	
+	
+	/**
+	 * 获取品牌列表
+	 * @param httpCallBack HttpCallBackInterface 回调接口
+	 * @param context  Context
+	 * @param Id  int
+	 * @return void
+	 * **/
+	public void getBrandList(final HttpCallBackInterface httpCallBack,Context context,String type,String refreshts) {
+		Map<String, String> map=new HashMap<String, String>();
+		map.put(Constants.TYPE, type);
+		map.put(Constants.REFRESHTS, refreshts);
+		BasehttpSend(map, context, HttpConstants.METHOD_BRANDMANAGEER_ALL, httpCallBack, BrandDetailInfoBean.class, true, true);
+	}
+	
+	
+	
+	
+	/**
+	 * 按照时间获取传入时间后的品牌列表
+	 * @param httpCallBack HttpCallBackInterface 回调接口
+	 * @param context  Context
+	 * @param Id  int
+	 * @return void
+	 * **/
+	public void getRecentBrandList(final HttpCallBackInterface httpCallBack,Context context,String type,String refreshts) {
+		Map<String, String> map=new HashMap<String, String>();
+		map.put(Constants.REFRESHTS, refreshts);
+		BasehttpSend(map, context, HttpConstants.METHOD_BRANDMANAGEER_REFRESH, httpCallBack, BrandDetailInfoBean.class, true, true);
+	}
+	
+	
+	
+	/**
+	 * 按照时间获取传入时间后的品牌列表
+	 * @param httpCallBack HttpCallBackInterface 回调接口
+	 * @param context  Context
+	 * @param Id  int
+	 * @return void
+	 * **/
+//	public void getRecentBrandList(final HttpCallBackInterface httpCallBack,Context context,String type,String refreshts) {
+//		Map<String, String> map=new HashMap<String, String>();
+//		map.put(Constants.REFRESHTS, refreshts);
+//		BasehttpSend(map, context, HttpConstants.METHOD_BRANDMANAGEER_GROUPALL, httpCallBack, BrandDetailInfoBean.class, true, true);
+//	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
