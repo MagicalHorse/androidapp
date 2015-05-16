@@ -1,6 +1,8 @@
 package com.shenma.yueba.baijia.activity;
 
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.Set;
 
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -9,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,12 +19,21 @@ import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.adapter.LoginAndRegisterFragmentPagerAdapter;
 import com.shenma.yueba.baijia.fragment.LoginFragment;
 import com.shenma.yueba.baijia.fragment.RegisterFragment;
 import com.shenma.yueba.util.FontManager;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.controller.UMServiceFactory;
+import com.umeng.socialize.controller.UMSocialService;
+import com.umeng.socialize.controller.listener.SocializeListeners.UMAuthListener;
+import com.umeng.socialize.controller.listener.SocializeListeners.UMDataListener;
+import com.umeng.socialize.exception.SocializeException;
+import com.umeng.socialize.utils.Log;
+import com.umeng.socialize.weixin.controller.UMWXHandler;
 
 /**
  * 登录注册界面
@@ -164,4 +176,6 @@ public class LoginAndRegisterActivity extends FragmentActivity implements OnClic
 		}
 		
 	}
+	
+	
 }

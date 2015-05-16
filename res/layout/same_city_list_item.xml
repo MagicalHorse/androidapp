@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/iv_head"
-            android:layout_alignLeft="@+id/nick_name"
+            android:layout_alignLeft="@+id/tv_nick_name"
             android:layout_toRightOf="@+id/iv_head"
             android:text="王府井百货--GIVN"
             android:textColor="@color/text_gray_color"

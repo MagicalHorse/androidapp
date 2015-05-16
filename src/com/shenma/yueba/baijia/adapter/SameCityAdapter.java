@@ -48,7 +48,7 @@ public class SameCityAdapter extends BaseAdapterWithUtil {
 			holder = new Holder();
 			convertView = View.inflate(ctx, R.layout.same_city_list_item, null);
 			holder.iv_head = (ImageView) convertView.findViewById(R.id.iv_head);
-			holder.nick_name = (TextView) convertView.findViewById(R.id.nick_name);
+			holder.nick_name = (TextView) convertView.findViewById(R.id.tv_nick_name);
 			holder.tv_belong = (TextView) convertView.findViewById(R.id.tv_belong);
 			holder.tv_attention = (TextView) convertView.findViewById(R.id.tv_attention);
 			convertView.setTag(holder);
