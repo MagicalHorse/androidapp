@@ -1,6 +1,5 @@
 package com.shenma.yueba.yangjia.fragment;
 
-
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
@@ -33,20 +32,17 @@ import com.shenma.yueba.yangjia.activity.MainActivityForYangJia;
  * 
  */
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-public class MeFragmentForYangJia extends BaseFragment implements OnClickListener {
+public class MeFragmentForYangJia extends BaseFragment implements
+		OnClickListener {
 	private View view;
-	private CircleFragmentPagerAdapter myFragmentPagerAdapter;
-	private TextView tv_msg;
-	private TextView tv_dynamic;
 	private ImageView iv_setting;
 	private ImageView iv_icon;
 	private TextView tv_nickname;
 	private TextView tv_grade;
 	private TextView tv_store;
-	private TextView tv_unidentification_buyer;
+	private TextView tv_store_introduce;
 	private TextView tv_invite_buyer;
 	private TextView tv_to_baijia;
-	private TextView tv_exit;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -70,7 +66,6 @@ public class MeFragmentForYangJia extends BaseFragment implements OnClickListene
 		return view;
 	}
 
-
 	/**
 	 * 初始化view
 	 */
@@ -78,24 +73,23 @@ public class MeFragmentForYangJia extends BaseFragment implements OnClickListene
 		view = inflater.inflate(R.layout.me_fragment_for_yangjia, null);
 		iv_setting = (ImageView) view.findViewById(R.id.iv_setting);
 		iv_icon = (ImageView) view.findViewById(R.id.iv_icon);
-	
+
 		tv_nickname = (TextView) view.findViewById(R.id.tv_nickname);
 		tv_grade = (TextView) view.findViewById(R.id.tv_grade);
 		tv_store = (TextView) view.findViewById(R.id.tv_store);
-		tv_unidentification_buyer = (TextView) view.findViewById(R.id.tv_unidentification_buyer);
+		tv_store_introduce = (TextView) view
+				.findViewById(R.id.tv_store_introduce);
 		tv_invite_buyer = (TextView) view.findViewById(R.id.tv_invite_buyer);
 		tv_to_baijia = (TextView) view.findViewById(R.id.tv_to_baijia);
-		tv_exit = (TextView) view.findViewById(R.id.tv_exit);
-		
+
 		iv_setting.setOnClickListener(this);
 		tv_store.setOnClickListener(this);
-		tv_unidentification_buyer.setOnClickListener(this);
+		tv_store_introduce.setOnClickListener(this);
 		tv_invite_buyer.setOnClickListener(this);
 		tv_to_baijia.setOnClickListener(this);
-		tv_exit.setOnClickListener(this);
-		
-		FontManager.changeFonts(getActivity(), tv_nickname, tv_grade,tv_store,
-				tv_unidentification_buyer,tv_invite_buyer,tv_to_baijia,tv_exit);
+
+		FontManager.changeFonts(getActivity(), tv_nickname, tv_grade, tv_store,
+				tv_store_introduce, tv_invite_buyer, tv_to_baijia);
 	}
 
 	@Override
@@ -107,29 +101,30 @@ public class MeFragmentForYangJia extends BaseFragment implements OnClickListene
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.iv_setting://设置
-//			Intent userConfigIntent = new Intent(getActivity(),UserConfigActivity.class);
-//			startActivity(userConfigIntent);
+		case R.id.iv_setting:// 设置
+			// Intent userConfigIntent = new
+			// Intent(getActivity(),UserConfigActivity.class);
+			// startActivity(userConfigIntent);
 			break;
-		case R.id.tv_store://店铺首页
+		case R.id.tv_store:// 店铺首页
 			break;
-		case R.id.tv_unidentification_buyer://未认证买手
-			Intent identificationBuyerIntent = new Intent(getActivity(),BuyerIndentificationActivity.class);
+		case R.id.tv_store_introduce:// 店铺说明
+			Intent identificationBuyerIntent = new Intent(getActivity(),
+					BuyerIndentificationActivity.class);
 			startActivity(identificationBuyerIntent);
-			
+
 			break;
-		case R.id.tv_invite_buyer://邀请买手
+		case R.id.tv_invite_buyer:// 邀请买手
 			break;
-		case R.id.tv_to_baijia://我要败家
-			CustomProgressDialog dialog = new CustomProgressDialog(getActivity());
+		case R.id.tv_to_baijia:// 我要败家
+			CustomProgressDialog dialog = new CustomProgressDialog(
+					getActivity());
 			dialog.show();
 			MyApplication.getInstance().removeAllActivity();
 			Intent intent = new Intent(getActivity(),
 					MainActivityForBaiJia.class);
 			startActivity(intent);
 			dialog.dismiss();
-			break;
-		case R.id.tv_exit://退出
 			break;
 		default:
 			break;

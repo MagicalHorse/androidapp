@@ -15,8 +15,7 @@
             android:background="@drawable/me_bg"
             android:paddingBottom="10dip" >
 
-                
-                            <ImageView
+            <ImageView
                 android:id="@+id/iv_setting"
                 android:layout_width="30dip"
                 android:layout_height="30dip"
@@ -25,7 +24,6 @@
                 android:layout_marginRight="10dip"
                 android:layout_marginTop="10dip"
                 android:background="@drawable/setting" />
-
 
             <com.shenma.yueba.view.RoundImageView
                 android:id="@+id/iv_icon"
@@ -62,7 +60,7 @@
             android:id="@+id/tv_store"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dip"
+            android:layout_marginTop="15dip"
             android:background="@color/white"
             android:drawableRight="@drawable/arrow_right"
             android:padding="15dip"
@@ -71,14 +69,14 @@
             android:textSize="17sp" />
 
         <TextView
-            android:id="@+id/tv_unidentification_buyer"
+            android:id="@+id/tv_store_introduce"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="1dip"
             android:background="@color/white"
             android:drawableRight="@drawable/arrow_right"
             android:padding="15dip"
-            android:text="未认证买手"
+            android:text="店铺说明"
             android:textColor="@color/black"
             android:textSize="17sp" />
 
@@ -86,7 +84,7 @@
             android:id="@+id/tv_invite_buyer"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="1dip"
+            android:layout_marginTop="15dip"
             android:background="@color/white"
             android:drawableRight="@drawable/arrow_right"
             android:padding="15dip"
@@ -100,21 +98,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dip"
             android:background="@color/white"
-            android:drawableRight="@drawable/arrow_right"
-            android:padding="15dip"
-            android:text="我要败家"
-            android:textColor="@color/black"
-            android:textSize="17sp" />
-
-        <TextView
-            android:id="@+id/tv_exit"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dip"
-            android:background="@color/white"
             android:gravity="center"
             android:padding="15dip"
-            android:text="退出登录"
+            android:text="我要败家"
             android:textColor="@color/black"
             android:textSize="17sp" />
     </LinearLayout>

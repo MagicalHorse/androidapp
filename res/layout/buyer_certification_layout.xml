@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_bg" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/tv_idcard_title"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:layout_marginTop="10dip"
+                android:text="身份证/护照" />
+
+            <View
+                style="@style/style_horizontal_line"
+                android:layout_margin="10dip" />
+
+            <ImageView
+                android:id="@+id/iv_idcard_positive"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/iv_idcard_reverse"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/tv_get_point"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:layout_marginTop="10dip"
+                android:text="商品自提点" />
+
+            <View
+                style="@style/style_horizontal_line"
+                android:layout_margin="10dip" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dip"
+                android:background="@drawable/shape_linearlayout10"
+                android:orientation="vertical" >
+
+                <EditText
+                    android:id="@+id/et_info"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="请填写顾客支付后，到专柜提货的地址，务必正确填写，否则会影响收款确认"
+                    android:minLines="3"
+                    android:background="@null"
+                    android:padding="5dip" />
+
+                <TextView
+                    android:id="@+id/tv_retain"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dip"
+                    android:gravity="right"
+                    android:paddingRight="10dip"
+                    android:text="30字" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_commit"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="15dip"
+        android:background="@color/white"
+        android:gravity="center"
+        android:padding="15dip"
+        android:text="确认提交"
+        android:textColor="@color/black"
+        android:textSize="17sp" />
+
+</RelativeLayout>

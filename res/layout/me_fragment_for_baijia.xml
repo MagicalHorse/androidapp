@@ -156,6 +156,7 @@
                 android:drawableTop="@drawable/all_order"
                 android:gravity="center_horizontal"
                 android:text="全部"
+               android:drawablePadding="3dip"
                    android:textColor="@color/black"
                 android:textSize="13dip" />
 
@@ -165,9 +166,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                    android:textColor="@color/black"
-                android:drawableTop="@drawable/all_order"
+                android:drawableTop="@drawable/dfk"
                 android:gravity="center_horizontal"
-                android:text="待发货"
+                android:text="代付款"
+                 android:drawablePadding="3dip"
                 android:textSize="13dip" />
 
             <TextView
@@ -176,9 +178,10 @@
                 android:layout_height="wrap_content"
                    android:textColor="@color/black"
                 android:layout_weight="1"
-                android:drawableTop="@drawable/all_order"
+                android:drawableTop="@drawable/zgzt"
                 android:gravity="center_horizontal"
-                android:text="待收货"
+                 android:drawablePadding="3dip"
+                android:text="专柜自提"
                 android:textSize="13dip" />
 
             <TextView
@@ -187,14 +190,15 @@
                    android:textColor="@color/black"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:drawableTop="@drawable/all_order"
+                android:drawableTop="@drawable/sh"
                 android:gravity="center_horizontal"
-                android:text="专柜自提"
+                 android:drawablePadding="3dip"
+                android:text="售后"
                 android:textSize="13dip" />
         </LinearLayout>
 
         <TextView
-            android:id="@+id/tv_cart"
+            android:id="@+id/tv_my_collection"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dip"
@@ -203,10 +207,10 @@
             android:drawableRight="@drawable/arrow_right"
             android:padding="15dip"
             android:textSize="17sp"
-            android:text="购物车" />
+            android:text="我的收藏" />
 
         <TextView
-            android:id="@+id/tv_supper_man"
+            android:id="@+id/tv_will_yangjia"
             android:layout_marginTop="1dip"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -215,19 +219,7 @@
                 android:textColor="@color/black"
             android:drawableRight="@drawable/arrow_right"
             android:padding="15dip"
-            android:text="我是达人" />
-
-        <TextView
-            android:id="@+id/tv_buyer"
-            android:layout_marginTop="1dip"
-            android:layout_width="fill_parent"
-                android:textColor="@color/black"
-                 android:textSize="17sp"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:drawableRight="@drawable/arrow_right"
-            android:padding="15dip"
-            android:text="我是买手" />
+            android:text="我要养家" />
     </LinearLayout>
 
 </ScrollView>

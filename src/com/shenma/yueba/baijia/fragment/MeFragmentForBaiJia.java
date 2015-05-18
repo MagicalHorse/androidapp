@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.baijia.activity.BuyerCertificationActivity;
 import com.shenma.yueba.baijia.activity.UserConfigActivity;
 import com.shenma.yueba.baijia.adapter.CircleFragmentPagerAdapter;
 import com.shenma.yueba.util.FontManager;
@@ -26,9 +27,6 @@ import com.shenma.yueba.util.FontManager;
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class MeFragmentForBaiJia extends BaseFragment implements OnClickListener {
 	private View view;
-	private CircleFragmentPagerAdapter myFragmentPagerAdapter;
-	private TextView tv_msg;
-	private TextView tv_dynamic;
 	private ImageView iv_setting;
 	private ImageView iv_icon;
 	private TextView tv_nickname;
@@ -43,10 +41,8 @@ public class MeFragmentForBaiJia extends BaseFragment implements OnClickListener
 	private TextView tv_waiting_for_send;
 	private TextView tv_waiting_for_recieve;
 	private TextView tv_pick_by_myself;
-	private TextView tv_cart;
-	private TextView tv_supper_man;
-	private TextView tv_buyer;
-
+	private TextView tv_will_yangjia;//我要养家
+	private TextView tv_my_collection;//我的收藏
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		Log.i("CircleFragment", "oncreate");
@@ -89,23 +85,18 @@ public class MeFragmentForBaiJia extends BaseFragment implements OnClickListener
 		tv_waiting_for_send = (TextView) view.findViewById(R.id.tv_waiting_for_send);
 		tv_waiting_for_recieve = (TextView) view.findViewById(R.id.tv_waiting_for_recieve);
 		tv_pick_by_myself = (TextView) view.findViewById(R.id.tv_pick_by_myself);
-		tv_cart = (TextView) view.findViewById(R.id.tv_cart);
-		tv_supper_man = (TextView) view.findViewById(R.id.tv_supper_man);
-		tv_buyer = (TextView) view.findViewById(R.id.tv_buyer);
-		
+		tv_my_collection = (TextView) view.findViewById(R.id.tv_my_collection);
+		tv_will_yangjia = (TextView) view.findViewById(R.id.tv_will_yangjia);
 		iv_setting.setOnClickListener(this);
 		tv_all_order.setOnClickListener(this);
 		tv_waiting_for_send.setOnClickListener(this);
 		tv_waiting_for_recieve.setOnClickListener(this);
 		tv_pick_by_myself.setOnClickListener(this);
-		tv_cart.setOnClickListener(this);
-		tv_supper_man.setOnClickListener(this);
-		tv_buyer.setOnClickListener(this);
 		
 		FontManager.changeFonts(getActivity(), tv_nickname, tv_style,tv_attention_count,
 				tv_attention_title,tv_fans_count,tv_fans_title,tv_collection_count,
 				tv_collection_title,tv_all_order,tv_waiting_for_send,
-				tv_waiting_for_recieve,tv_pick_by_myself,tv_cart,tv_supper_man,tv_buyer);
+				tv_waiting_for_recieve,tv_pick_by_myself,tv_will_yangjia,tv_my_collection);
 	}
 
 	@Override
@@ -129,11 +120,13 @@ public class MeFragmentForBaiJia extends BaseFragment implements OnClickListener
 			break;
 		case R.id.tv_pick_by_myself://自提
 			break;
-		case R.id.tv_cart://购物车
-			break;
-		case R.id.tv_supper_man://申请达人或者我是达人
-			break;
 		case R.id.tv_buyer://申请买手或者我是买手
+			break;
+		case R.id.tv_will_yangjia://我要养家
+			Intent buyerCertificaitonIntent = new Intent(getActivity(),BuyerCertificationActivity.class);
+			startActivity(buyerCertificaitonIntent);
+			break;
+		case R.id.tv_my_collection://我的收藏
 			break;
 		default:
 			break;

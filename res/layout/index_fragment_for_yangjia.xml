@@ -9,15 +9,16 @@
 
     <View style="@style/style_horizontal_line" />
 
-       <com.handmark.pulltorefresh.library.PullToRefreshScrollView
-           android:id="@+id/pull_refresh_scrollview"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:scrollbars="none" >
+    <com.handmark.pulltorefresh.library.PullToRefreshScrollView
+        android:id="@+id/pull_refresh_scrollview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scrollbars="none" >
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             android:orientation="vertical" >
 
             <include layout="@layout/my_eq_code_item" />
@@ -28,28 +29,34 @@
                 android:id="@+id/rl_earnings"
                 layout="@layout/earnings_manager_item" />
 
-            <View style="@style/style_horizontal_line" />
-
+            <View style="@style/style_horizontal_line" 
+                  android:layout_marginLeft="15dip"
+                />
             <include
                 android:id="@+id/rl_sales"
                 layout="@layout/sales_manager_item" />
 
-            <View 
-                android:visibility="gone"
-                style="@style/style_horizontal_line" />
+            <View
+                style="@style/style_horizontal_line"
+                  android:layout_marginLeft="15dip"
+                android:visibility="gone" />
 
             <include
                 android:id="@+id/rl_share"
-                android:visibility="gone"
-                layout="@layout/share_manager_item" />
+                layout="@layout/share_manager_item"
+                android:visibility="gone" />
 
-            <View style="@style/style_horizontal_line" />
+            <View style="@style/style_horizontal_line"
+                   android:layout_marginLeft="15dip"
+                 />
 
             <include
                 android:id="@+id/rl_products"
                 layout="@layout/products_manager_item" />
 
-            <View style="@style/style_horizontal_line" />
+              <View 
+                android:layout_marginLeft="15dip"
+                style="@style/style_horizontal_line" />
 
             <include
                 android:id="@+id/rl_fans"
@@ -57,4 +64,6 @@
         </LinearLayout>
     </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
 
+    
+  
 </LinearLayout>

@@ -10,7 +10,6 @@ import java.io.Serializable;
  */
 
 public class UserRequestBean extends BaseRequest implements Serializable{
-	
 	UserInfo data = new UserInfo();
 	public UserInfo getData() {
 		return data;
