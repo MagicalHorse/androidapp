@@ -64,7 +64,6 @@ public class BuyerStreetFragment extends BaseFragment implements
 		
 		mPullToRefreshView.setOnHeaderRefreshListener(this);
 		mPullToRefreshView.setOnFooterRefreshListener(this);
-		
 		viewpager = (ViewPager) view.findViewById(R.id.pager);
 		android.view.ViewGroup.LayoutParams params = viewpager.getLayoutParams();
 		params.height = ToolsUtil.getDisplayWidth(getActivity())/7*4;
