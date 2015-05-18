@@ -113,7 +113,7 @@ public class IndexFragmentForYangJia extends BaseFragment implements
 		if (parent != null) {
 			parent.removeView(view);
 		}
-		getIndexInfo();//联网获取数据
+		getIndexInfo(true);//联网获取数据
 		return view;
 	}
 
@@ -125,7 +125,7 @@ public class IndexFragmentForYangJia extends BaseFragment implements
 			public void onRefresh(PullToRefreshBase<ScrollView> refreshView) {
     	if(ToolsUtil.isNetworkConnected(getActivity())){
     		//刷新数据
-    		//mPullRefreshScrollView.onRefreshComplete();
+    		getIndexInfo(false);
     	}else{
 			Toast.makeText(getActivity(), "网络不可用，请稍后重试", 1000).show();
 		}
@@ -311,12 +311,13 @@ public class IndexFragmentForYangJia extends BaseFragment implements
 	/**
 	 * 联网获取首页信息
 	 */
-	public void getIndexInfo(){
+	public void getIndexInfo(boolean showProgress){
 		HttpControl httpControl=new HttpControl();
 		httpControl.getBuyerIndexInfo(new HttpCallBackInterface() {
 			
 			@Override
 			public void http_Success(Object obj) {
+				mPullRefreshScrollView.onRefreshComplete();
 				BuyerIndexInfoBean bean = (BuyerIndexInfoBean) obj;
 				BuyerIndexInfo data = bean.getData();
 				//处理返回来的数据
@@ -343,7 +344,7 @@ public class IndexFragmentForYangJia extends BaseFragment implements
 				Toast.makeText(getActivity(), msg, 1000).show();
 				
 			}
-		}, getActivity(), true, true);
+		}, getActivity(), showProgress, true);
 		
 		
 		}

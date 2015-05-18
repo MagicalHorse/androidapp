@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
-    android:padding="10dip" >
+    android:padding="15dip" >
 
     <ImageView
         android:id="@+id/iv_products_left"
@@ -49,7 +49,7 @@
                 android:id="@+id/tv_products_online_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dip"
+                android:layout_marginLeft="10dip"
                 android:text="500"
                 android:textColor="@color/black"
                 android:textSize="@dimen/index_little_size_font" />
@@ -62,6 +62,7 @@
             android:orientation="vertical" >
 
             <LinearLayout
+                  android:layout_marginTop="3dip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal" >
@@ -78,7 +79,7 @@
                     android:id="@+id/tv_products_offlining_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dip"
+                    android:layout_marginLeft="10dip"
                     android:text="52100"
                     android:textColor="@color/black"
                     android:textSize="@dimen/index_little_size_font" />
