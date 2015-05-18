@@ -23,7 +23,9 @@ public class Constants {
 	
 	
 	
-	
+	public static final String BRANDID = "BrandId";//品牌编号
+	public static final String TYPE = "Type";//品牌编号
+	public static final String REFRESHTS = "Refreshts";//品牌编号
 	
 	
 	
@@ -112,7 +114,7 @@ public class Constants {
 	public static String TOKEN = "token";//电话号码
 	public static String LEVEL = "level";//用户id
 	public static String AREA = "area";//地区
-	public static String TYPE = "type";//类型
+	
 	
 	public static String USERNAME = "username";//用戶名
 	public static String USER_NAME = "user_name";//用戶名

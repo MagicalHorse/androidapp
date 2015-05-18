@@ -142,7 +142,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:orientation="vertical" >
+                android:orientation="horizontal" >
 
                 <TextView
                     android:id="@+id/tv_wechat"
@@ -153,6 +153,16 @@
                     android:drawableTop="@drawable/wechat"
                     android:gravity="center_horizontal"
                     android:text="微信登录" />
+                <TextView
+                    android:layout_marginLeft="15dip"
+                    android:id="@+id/tv_qq"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:drawablePadding="8dip"
+                    android:drawableTop="@drawable/qq"
+                    android:gravity="center_horizontal"
+                    android:text="QQ登录" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

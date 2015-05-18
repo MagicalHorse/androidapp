@@ -49,7 +49,7 @@ public class EarningManagerActivity extends BaseActivityWithTopView {
 		TextView tv_total_income_title = getView(R.id.tv_total_income_title);
 		TextView tv_total_income_money = getView(R.id.tv_total_income_money);
 		
-		FontManager.changeFonts(mContext, tv_earnings_today_title,tv_today_income,tv_withdraw_cash_title,
+		FontManager.changeFonts(mContext, tv_top_title,tv_earnings_today_title,tv_today_income,tv_withdraw_cash_title,
 				tv_withdraw_cash_money,tv_withdraw_cash_history,tv_apply_withdraw,tv_total_income_title
 				,tv_total_income_money);
 	}
