@@ -24,6 +24,7 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.shenma.yueba.baijia.modle.BaseRequest;
 import com.shenma.yueba.baijia.modle.BrandDetailInfoBean;
+import com.shenma.yueba.baijia.modle.BuyerIndexInfoBean;
 import com.shenma.yueba.baijia.modle.CityListRequestBean;
 import com.shenma.yueba.baijia.modle.ProvinceCityListBeanRequest;
 import com.shenma.yueba.baijia.modle.UserInfo;
@@ -358,7 +359,17 @@ public class HttpControl {
 	
 	
 	
-	
+	/**
+	 *  买手首页统计信息
+	 * @param httpCallBack HttpCallBackInterface 回调接口
+	 * @param context  Context
+	 * @param Id  int
+	 * @return void
+	 * **/
+	public void getBuyerIndexInfo(final HttpCallBackInterface httpCallBack,Context context,boolean refresh,boolean canCancle) {
+		Map<String, String> map=new HashMap<String, String>();
+		BasehttpSend(map, context, HttpConstants.METHOD_BUYER_INDEX, httpCallBack, BuyerIndexInfoBean.class, refresh,canCancle);
+	}
 	
 	
 	
@@ -504,6 +515,7 @@ public class HttpControl {
 				map.put(Constants.HTTPCHANNEL, Constants.ANDROID);
 				map.put(Constants.CLIENTVERSION, versionName);
 				map.put(Constants.UUID, UUID.randomUUID().toString());
+				map.put(Constants.TOKEN, SharedUtil.getStringPerfernece(context, SharedUtil.user_token));
 				String md5str = Md5Utils.md5ToString(map,json);
 				map.put(Constants.SIGN, md5str);
 				Set<String> set=map.keySet();
@@ -557,6 +569,7 @@ public class HttpControl {
 				map.put(Constants.HTTPCHANNEL, Constants.ANDROID);
 				map.put(Constants.CLIENTVERSION, versionName);
 				map.put(Constants.UUID, UUID.randomUUID().toString());
+				map.put(Constants.TOKEN, SharedUtil.getStringPerfernece(context, SharedUtil.user_token));
 				String md5str = Md5Utils.md5ToString(map,null);
 				map.put(Constants.SIGN, md5str);
 				Set<String> set=map.keySet();
@@ -769,7 +782,7 @@ public class HttpControl {
 	 * @param context Context
 	 * @return void
 	 * ***/
-	void setLoginInfo(Context context,UserRequestBean bean)
+	public void setLoginInfo(Context context,UserRequestBean bean)
 	{
 		if(bean!=null)
 		{

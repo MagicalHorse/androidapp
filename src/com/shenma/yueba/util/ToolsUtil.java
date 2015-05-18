@@ -228,5 +228,14 @@ public class ToolsUtil {
 		return convertNormalStringToSpannableString(contentStr).size();
 	}
 
+	
+	
+	public static String nullToString(String str) {
+		if (str == null) {
+			return "";
+		} else {
+			return str;
+		}
+	}
 
 }

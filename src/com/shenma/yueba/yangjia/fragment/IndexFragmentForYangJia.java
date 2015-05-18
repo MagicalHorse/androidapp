@@ -26,13 +26,20 @@ import com.shenma.yueba.baijia.adapter.CircleFragmentPagerAdapter;
 import com.shenma.yueba.baijia.fragment.BaseFragment;
 import com.shenma.yueba.baijia.fragment.MyBuyerFragment;
 import com.shenma.yueba.baijia.fragment.TheySayFragment;
+import com.shenma.yueba.baijia.modle.BuyerIndexInfo;
+import com.shenma.yueba.baijia.modle.BuyerIndexInfoBean;
+import com.shenma.yueba.baijia.modle.Favorite;
+import com.shenma.yueba.baijia.modle.Income;
+import com.shenma.yueba.baijia.modle.Order;
+import com.shenma.yueba.baijia.modle.Product;
 import com.shenma.yueba.util.FontManager;
+import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.SocicalShareUtil;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.yangjia.activity.EarningManagerActivity;
 import com.shenma.yueba.yangjia.activity.ProductManagerActivity;
 import com.shenma.yueba.yangjia.activity.SalesManagerForBuyerActivity;
-import com.tencent.open.SocialApi;
 
 /**
  * 主界面
@@ -59,9 +66,9 @@ public class IndexFragmentForYangJia extends BaseFragment implements
 	private TextView tv_all_earnings_money;
 	private TextView tv_all_earnings_yuan;
 
-	private TextView tv_fans_title;
-	private TextView tv_my_fans_title;
-	private TextView tv_my_fans_count;
+	private TextView tv_society_title;
+	private TextView tv_my_society_title;
+	private TextView tv_my_society_count;
 	private TextView tv_my_circle_title;
 	private TextView tv_my_circle_count;
 
@@ -106,7 +113,7 @@ public class IndexFragmentForYangJia extends BaseFragment implements
 		if (parent != null) {
 			parent.removeView(view);
 		}
-
+		getIndexInfo();//联网获取数据
 		return view;
 	}
 
@@ -146,9 +153,9 @@ public class IndexFragmentForYangJia extends BaseFragment implements
 		tv_all_earnings_yuan = (TextView) view
 				.findViewById(R.id.tv_all_earnings_yuan);
 
-		tv_fans_title = (TextView) view.findViewById(R.id.tv_fans_title);
-		tv_my_fans_title = (TextView) view.findViewById(R.id.tv_my_fans_title);
-		tv_my_fans_count = (TextView) view.findViewById(R.id.tv_my_fans_count);
+		tv_society_title = (TextView) view.findViewById(R.id.tv_society_title);
+		tv_my_society_title = (TextView) view.findViewById(R.id.tv_my_society_title);
+		tv_my_society_count = (TextView) view.findViewById(R.id.tv_my_society_count);
 		tv_my_circle_title = (TextView) view
 				.findViewById(R.id.tv_my_circle_title);
 		tv_my_circle_count = (TextView) view
@@ -202,8 +209,8 @@ public class IndexFragmentForYangJia extends BaseFragment implements
 		FontManager.changeFonts(getActivity(), tv_top_title, tv_earnings_title,
 				tv_today_earnings_title, tv_today_earnings_money,
 				tv_today_earnings_yuan, tv_all_earnings_title,
-				tv_all_earnings_money, tv_all_earnings_yuan, tv_fans_title,
-				tv_my_fans_title, tv_my_fans_count, tv_my_circle_title,
+				tv_all_earnings_money, tv_all_earnings_yuan, tv_society_title,
+				tv_my_society_title, tv_my_society_count, tv_my_circle_title,
 				tv_my_circle_count, tv_products_title,
 				tv_products_online_title, tv_products_online_count,
 				tv_products_offlining_title, tv_products_offlining_count,
@@ -299,4 +306,45 @@ public class IndexFragmentForYangJia extends BaseFragment implements
 
 	}
 
-}
+	
+	
+	/**
+	 * 联网获取首页信息
+	 */
+	public void getIndexInfo(){
+		HttpControl httpControl=new HttpControl();
+		httpControl.getBuyerIndexInfo(new HttpCallBackInterface() {
+			
+			@Override
+			public void http_Success(Object obj) {
+				BuyerIndexInfoBean bean = (BuyerIndexInfoBean) obj;
+				BuyerIndexInfo data = bean.getData();
+				//处理返回来的数据
+				Product product = data.getProduct();//商品管理
+				tv_products_online_count.setText(ToolsUtil.nullToString(product!=null?product.getOnlineCount():""));
+				tv_products_offlining_count.setText(ToolsUtil.nullToString(product!=null?product.getSoonDownCount():""));
+				
+				Favorite favorite = data.getFavorite();//社交管理
+				tv_my_society_count.setText(ToolsUtil.nullToString(favorite!=null?favorite.getFavoritecount():""));
+				tv_my_circle_count.setText(ToolsUtil.nullToString(favorite!=null?favorite.getGroupcount():""));
+				
+				Order order= data.getOrder();//销售管理
+				tv_today_sales_count.setText(ToolsUtil.nullToString(order!=null?order.getTodayorder():""));
+				tv_all_sales_count.setText(ToolsUtil.nullToString(order!=null?order.getAllorder():""));
+				
+				Income income = data.getIncome();//收益管理
+				tv_today_earnings_money.setText(ToolsUtil.nullToString(income!=null?income.getToday_income():""));
+				tv_all_earnings_money.setText(ToolsUtil.nullToString(income!=null?income.getTotal_income():""));
+				
+			}
+			
+			@Override
+			public void http_Fails(int error, String msg) {
+				Toast.makeText(getActivity(), msg, 1000).show();
+				
+			}
+		}, getActivity(), true, true);
+		
+		
+		}
+	}

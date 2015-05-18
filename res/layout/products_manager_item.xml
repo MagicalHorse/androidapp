@@ -17,17 +17,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="5dip"
+        android:layout_marginLeft="8dip"
         android:layout_toRightOf="@id/iv_products_left"
         android:text="商品管理"
         android:textColor="@color/text_gray_color"
-        android:textSize="20sp" />
+        android:textSize="@dimen/index_big_size_font" />
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="5dip"
+        android:layout_marginLeft="20dip"
         android:layout_marginRight="5dip"
         android:layout_toRightOf="@id/tv_products_title"
         android:orientation="vertical" >
@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:text="在线商品"
                 android:textColor="@color/text_gray_color"
-                android:textSize="20sp" />
+                android:textSize="@dimen/index_little_size_font" />
 
             <TextView
                 android:id="@+id/tv_products_online_count"
@@ -52,7 +52,7 @@
                 android:layout_marginLeft="5dip"
                 android:text="500"
                 android:textColor="@color/black"
-                android:textSize="19sp" />
+                android:textSize="@dimen/index_little_size_font" />
         </LinearLayout>
 
         <LinearLayout
@@ -72,7 +72,7 @@
                     android:layout_height="wrap_content"
                     android:text="即将下线"
                     android:textColor="@color/text_gray_color"
-                    android:textSize="20sp" />
+                    android:textSize="@dimen/index_little_size_font" />
 
                 <TextView
                     android:id="@+id/tv_products_offlining_count"
@@ -81,7 +81,7 @@
                     android:layout_marginLeft="5dip"
                     android:text="52100"
                     android:textColor="@color/black"
-                    android:textSize="19sp" />
+                    android:textSize="@dimen/index_little_size_font" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

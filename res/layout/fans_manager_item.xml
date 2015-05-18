@@ -6,30 +6,30 @@
     android:padding="10dip" >
 
     <ImageView
-        android:id="@+id/iv_fans_left"
+        android:id="@+id/iv_society_left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:background="@drawable/fans_manager" />
 
     <TextView
-        android:id="@+id/tv_fans_title"
+        android:id="@+id/tv_society_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="5dip"
-        android:layout_toRightOf="@id/iv_fans_left"
-        android:text="粉丝管理"
+        android:layout_marginLeft="8dip"
+        android:layout_toRightOf="@id/iv_society_left"
+        android:text="社交管理"
         android:textColor="@color/text_gray_color"
-        android:textSize="20sp" />
+        android:textSize="@dimen/index_big_size_font" />
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="5dip"
+        android:layout_marginLeft="20dip"
         android:layout_marginRight="5dip"
-        android:layout_toRightOf="@id/tv_fans_title"
+        android:layout_toRightOf="@id/tv_society_title"
         android:orientation="vertical" >
 
         <LinearLayout
@@ -38,21 +38,21 @@
             android:orientation="horizontal" >
 
             <TextView
-                android:id="@+id/tv_my_fans_title"
+                android:id="@+id/tv_my_society_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="我的粉丝"
                 android:textColor="@color/text_gray_color"
-                android:textSize="20sp" />
+                android:textSize="@dimen/index_little_size_font"/>
 
             <TextView
-                android:id="@+id/tv_my_fans_count"
+                android:id="@+id/tv_my_society_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dip"
                 android:text="500"
                 android:textColor="@color/black"
-                android:textSize="19sp" />
+                android:textSize="@dimen/index_little_size_font" />
         </LinearLayout>
 
         <LinearLayout
@@ -72,7 +72,7 @@
                     android:layout_height="wrap_content"
                     android:text="我的圈子"
                     android:textColor="@color/text_gray_color"
-                    android:textSize="20sp" />
+                    android:textSize="@dimen/index_little_size_font" />
 
                 <TextView
                     android:id="@+id/tv_my_circle_count"
@@ -81,7 +81,7 @@
                     android:layout_marginLeft="5dip"
                     android:text="52100"
                     android:textColor="@color/black"
-                    android:textSize="19sp" />
+                    android:textSize="@dimen/index_little_size_font" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

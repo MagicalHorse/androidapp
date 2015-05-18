@@ -20,12 +20,12 @@ import android.widget.Toast;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.FindPasswordActivity;
-import com.shenma.yueba.baijia.activity.MainActivityForBaiJia;
 import com.shenma.yueba.baijia.modle.UserRequestBean;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.ToolsUtil;
+import com.shenma.yueba.yangjia.activity.MainActivityForYangJia;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
@@ -103,7 +103,7 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
 				et_password.startAnimation(AnimationUtils.loadAnimation(
 						getActivity(), R.anim.shake));
 			} else {
-				HttpControl httpControl = new HttpControl();
+				final HttpControl httpControl = new HttpControl();
 				httpControl.userLogin(et_mobile.getText().toString().trim(),
 						et_password.getText().toString().trim(),
 						new HttpCallBackInterface() {
@@ -114,8 +114,9 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
 								if (obj != null
 										&& obj instanceof UserRequestBean) {
 									UserRequestBean bean = (UserRequestBean) obj;
+									httpControl.setLoginInfo(getActivity(), bean);
 									Intent intent = new Intent(getActivity(),
-											MainActivityForBaiJia.class);
+											MainActivityForYangJia.class);
 									intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 									startActivity(intent);
 									getActivity().finish();
@@ -130,10 +131,13 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
 							}
 						}, getActivity());
 			}
+			break;
 		case R.id.tv_wechat:// 微信登录
 			initWeiChatLogin();
+			break;
 		case R.id.tv_qq:// QQ登录
 			initQQLogin();
+			break;
 		default:
 			break;
 		}

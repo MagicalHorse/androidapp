@@ -34,10 +34,13 @@
                 android:id="@+id/rl_sales"
                 layout="@layout/sales_manager_item" />
 
-            <View style="@style/style_horizontal_line" />
+            <View 
+                android:visibility="gone"
+                style="@style/style_horizontal_line" />
 
             <include
                 android:id="@+id/rl_share"
+                android:visibility="gone"
                 layout="@layout/share_manager_item" />
 
             <View style="@style/style_horizontal_line" />

@@ -20,6 +20,7 @@ public class Constants {
 	public static final String CLIENTVERSION="client_version";//客户端版本
 	public static final String SIGN="sign";//MD5加密
 	public static final String UUID="uid";//随机数
+	public static final String TOKEN="token";//随机数
 	
 	
 	
@@ -111,7 +112,6 @@ public class Constants {
 	public static String ORDERID = "orderid";//订单Id
 	public static String STOREENVIRO = "store_enviro";//店名环境
 	public static String TELEPHONENUM = "telephoneNum";//电话号码
-	public static String TOKEN = "token";//电话号码
 	public static String LEVEL = "level";//用户id
 	public static String AREA = "area";//地区
 	

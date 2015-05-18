@@ -2,13 +2,14 @@ package com.shenma.yueba.constants;
 
 public class HttpConstants {
 
-	private static String baseUrl = "http://123.57.77.86:8080/app/";
+	private static String baseUrl = "http://123.57.52.187:8080/app/";
 	private static String USERURL = baseUrl + "User/";// USER接口
 	private static String COMMONURL = baseUrl + "Common/";
 	private static String ADDRESS = baseUrl + "Address/";// 地址管理
 	private static String BRAND = baseUrl + "Brand/";// 品牌管理
 	private static String PRODUCT = baseUrl + "Product/";// 商品管理
 	private static String ASSISTANT = baseUrl + "Assistant/";// 买手相关的接口
+	private static String BUYER = baseUrl + "Buyer/";// 买手相关的接口
 
 	/**
 	 * 注册----获取手机短信验证码
@@ -276,4 +277,22 @@ public class HttpConstants {
 	public static String METHOD_ASSISTANT_LATEST_BANKINFO = ASSISTANT
 			+ "Latest_BankInfo";
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * buyer相关的接口
+	 */
+	
+	/**
+	 * 买手首页统计信息
+	 */
+	public static String METHOD_BUYER_INDEX = BUYER
+			+ "Index";
 }
