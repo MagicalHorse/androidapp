@@ -69,9 +69,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-
-    
-        <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -88,7 +86,7 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
-    
+
     <supports-screens
         android:anyDensity="true"
         android:largeScreens="true"
@@ -113,16 +111,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-          <!-- 友盟AppKey， 需要替换成你自己的 -->
+
+        <!-- 友盟AppKey， 需要替换成你自己的 -->
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="555321fae0f55ae751002b84" >
@@ -168,23 +158,12 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
         <activity
             android:name="com.shenma.yueba.yangjia.activity.MainActivityForYangJia"
-            android:screenOrientation="portrait" >
-        </activity>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.shenma.yueba.baijia.activity.BuyerCertificationActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.shenma.yueba.baijia.activity.SwipeListViewActivity"
             android:screenOrientation="portrait" >
@@ -193,12 +172,17 @@
             android:name="com.shenma.yueba.baijia.activity.WebActivity"
             android:screenOrientation="portrait" >
         </activity>
-        <activity android:name="com.shenma.yueba.baijia.activity.MainActivityForBaiJia" android:screenOrientation="portrait" >
-           <!--  <intent-filter>
+        <activity
+            android:name="com.shenma.yueba.baijia.activity.MainActivityForBaiJia"
+            android:screenOrientation="portrait" >
+
+            <!--
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter> -->
+            </intent-filter>
+            -->
         </activity>
         <activity
             android:name="com.shenma.yueba.baijia.activity.FillPersonDataActivity"

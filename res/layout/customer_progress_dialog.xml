@@ -3,20 +3,21 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:gravity="center_vertical"
-    android:orientation="horizontal" >
+    android:orientation="vertical" >
 
     <ProgressBar
         android:id="@+id/hint_progress_top"
-        android:layout_width="40dp"
-        android:layout_height="16dp"
+        android:layout_width="80dip"
+        android:layout_height="80dip"
+        android:layout_gravity="center_horizontal"
         android:indeterminateDrawable="@anim/progress_round" />
 
     <TextView
+        android:layout_marginTop="5dip"
         android:id="@+id/id_tv_loadingmsg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="5dip"
+        android:layout_gravity="center_horizontal"
         android:text="加载中..."
         android:textColor="@android:color/black"
         android:textSize="16dp" />
