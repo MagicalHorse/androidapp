@@ -24,6 +24,7 @@ public class Constants {
 	public static final String TOKEN="token";//随机数
 	public static final String PAGE="page";//第几页，页码
 	public static final String PAGESIZE="pagesize";//页size
+	public static final String ID="id";
 	
 	
 	

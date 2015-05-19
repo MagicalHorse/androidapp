@@ -35,7 +35,7 @@ import com.shenma.yueba.view.scroll.CustomScrollView.ScrollListener;
  * @author gyj
  * @date 2015-05-05
  * ***/
-public class ShopMainActivity extends BaseActivityWithTopView implements ScrollListener {
+public class ShopMainActivity extends BaseActivityWithTopView {
 	//商品logo 
     CustomImageView shop_main_layout_icon_imageview;
     //店铺名称
@@ -54,20 +54,6 @@ public class ShopMainActivity extends BaseActivityWithTopView implements ScrollL
     TextView shop_main_praise_textview;
     //商品描述
     TextView shap_main_description1_textview,shap_main_description2_textview,shap_main_description3_textview;
-	//滑动滚动视图
-    CustomScrollView shop_main_layout_stayscrollview;
-    //需要停留的 视图
-    LinearLayout shop_content_stayLayout;
-    //固定的 头文件
-    LinearLayout shop_stayLayout_Linearlayout;
-    //主要内容
-    FrameLayout shop_stay_context_framelayout;
-    //顶部title视图
-    RelativeLayout shop_main_layout_title_relativelayout;
-    //主页头像与 关注的上半部分内容视图
-    LinearLayout shop_main_head_include;
-    //当前选择的 条目
-    int currid=-1;
     /*RelativeLayout shop_stay_layout_tab1_relativelayout,
 	shop_stay_layout_tab2_relativelayout,
 	shop_stay_layout_tab3_relativelayout,hid_shop_stay_layout_tab1_relativelayout,hid_shop_stay_layout_tab2_relativelayout,hid_shop_stay_layout_tab3_relativelayout;*/
@@ -109,12 +95,7 @@ public class ShopMainActivity extends BaseActivityWithTopView implements ScrollL
 		shap_main_description1_textview=(TextView)findViewById(R.id.shap_main_description1_textview); 
 		shap_main_description2_textview=(TextView)findViewById(R.id.shap_main_description2_textview); 
 		shap_main_description3_textview=(TextView)findViewById(R.id.shap_main_description3_textview); 
-		shop_main_layout_stayscrollview=(CustomScrollView)findViewById(R.id.shop_main_layout_stayscrollview);
-		shop_content_stayLayout=(LinearLayout)findViewById(R.id.shop_content_stayLayout);
-		shop_stayLayout_Linearlayout=(LinearLayout)findViewById(R.id.shop_stayLayout_Linearlayout);
-		shop_stay_context_framelayout=(FrameLayout)findViewById(R.id.shop_stay_context_framelayout);
-		shop_main_layout_title_relativelayout=(RelativeLayout)findViewById(R.id.shop_main_layout_title_relativelayout);
-		shop_main_head_include=(LinearLayout)findViewById(R.id.shop_main_head_include);
+		
 		
 		
 		
@@ -127,125 +108,6 @@ public class ShopMainActivity extends BaseActivityWithTopView implements ScrollL
 		fragmentmap.put(R.id.shop_stay_layout_tab1_relativelayout, shopMainFragmentTab1);
 		fragmentmap.put(R.id.shop_stay_layout_tab2_relativelayout, shopMainFragmentTab2);
 		fragmentmap.put(R.id.shop_stay_layout_tab3_relativelayout, shopMainFragmentTab3);
-		//初始默认选择
-		setFragmentContent(R.id.shop_stay_layout_tab1_relativelayout);
-		
-		shop_main_layout_stayscrollview.setOverScrollMode(View.OVER_SCROLL_NEVER);
-		shop_main_layout_stayscrollview.setScrollListener(this);
-		DisplayMetrics displayMetrics=new DisplayMetrics();
-		this.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-		shop_stay_context_framelayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, displayMetrics.heightPixels));
-		//需要固定的视图
-		StayLayFragment stayLayFragment=new StayLayFragment();
-	}
-	
-	
-	/****
-	 * TAB的点击事件
-	 * ****/
-	public void shapOnClick(View v)
-	{
-		switch (v.getId()) {
-		case R.id.shop_stay_layout_tab1_relativelayout:
-		case R.id.shop_stay_layout_tab2_relativelayout:
-		case R.id.shop_stay_layout_tab3_relativelayout:
-			setFragmentContent(v.getId());
-			break;
-		}
-	}
-	
-	@Override
-	public void onWindowFocusChanged(boolean hasFocus) {
-		// TODO Auto-generated method stub
-		super.onWindowFocusChanged(hasFocus);
-	}
-	
-	
-
-	@Override
-	public void ScrollChanged(int x, int y) {
-		// TODO Auto-generated method stub
-		int titleheight=shop_main_layout_title_relativelayout.getHeight();
-		int stayheight=shop_main_head_include.getHeight();
-		int contextHeight=this.getWindow().findViewById(Window.ID_ANDROID_CONTENT).getHeight();
-		Log.i("TAG", "Y:"+y +" titleheight:"+titleheight+"  stayheight:"+stayheight+" contextHeight："+contextHeight +" -"+(contextHeight-titleheight-stayheight));
-		if(y >= (stayheight))
-		{
-			shop_stayLayout_Linearlayout.setVisibility(View.VISIBLE);
-		}
-		else
-		{
-			shop_stayLayout_Linearlayout.setVisibility(View.INVISIBLE);
-		}
-	}
-	
-	/****
-	 * 根据 选择的V 设置 加载的fragment
-	 * 
-	 * @param int id 当前选择的view 的
-	 * ***/
-	@SuppressLint("NewApi")
-	void setFragmentContent(int id) {
-		if (currid == id || id == -1) {
-			return;
-		}
-
-		else if (currid == -1) {
-			Fragment fragment = fragmentmap.get(id);
-			if (fragment != null) {
-				setShoplayoutTab(id);
-				fm.beginTransaction()
-						.add(R.id.shop_stay_context_framelayout, fragment)
-						.commit();
-			}
-		} else {
-			Fragment fragment = fragmentmap.get(id);
-			if (fragment != null) {
-				setShoplayoutTab(id);
-				fm.beginTransaction()
-						.replace(R.id.shop_stay_context_framelayout, fragment)
-						.commit();
-			}
-		}
-		currid = id;
-	}
-
-	/****
-	 * 设置选择TAB的 样式
-	 * **/
-	void setShoplayoutTab(int id) {
-		if (id >0) {
-			if (fragmentmap.containsKey(id)) {
-				Set<Integer> set = fragmentmap.keySet();
-				Iterator<Integer> iterator = set.iterator();
-				while (iterator.hasNext()) {
-					Integer currid = iterator.next();
-					setViewShowORHidden(getViewByViewId(R.id.shop_stay_layout_item_line_view, getViewByViewId(currid, shop_content_stayLayout)), false);
-					setViewShowORHidden(getViewByViewId(R.id.shop_stay_layout_item_line_view, getViewByViewId(currid, shop_stayLayout_Linearlayout)), false);
-
-					setTextViewColor(getViewByViewId(R.id.shop_stay_layout_item_textview1, getViewByViewId(currid, shop_content_stayLayout)), this.getResources().getColor(R.color.lightblack));
-					setTextViewColor(getViewByViewId(R.id.shop_stay_layout_item_textview1, getViewByViewId(currid, shop_stayLayout_Linearlayout)), this.getResources().getColor(R.color.lightblack));
-					setTextViewColor(getViewByViewId(R.id.shop_stay_layout_item_textview2, getViewByViewId(currid, shop_content_stayLayout)), this.getResources().getColor(R.color.lightblack));
-					setTextViewColor(getViewByViewId(R.id.shop_stay_layout_item_textview2, getViewByViewId(currid, shop_stayLayout_Linearlayout)), this.getResources().getColor(R.color.lightblack));
-				}
-				setViewShowORHidden(getViewByViewId(R.id.shop_stay_layout_item_line_view, getViewByViewId(id, shop_content_stayLayout)), true);
-				setViewShowORHidden(getViewByViewId(R.id.shop_stay_layout_item_line_view, getViewByViewId(id, shop_stayLayout_Linearlayout)), true);
-
-				setTextViewColor(getViewByViewId(R.id.shop_stay_layout_item_textview1, getViewByViewId(currid, shop_content_stayLayout)), this.getResources().getColor(R.color.black));
-				setTextViewColor(getViewByViewId(R.id.shop_stay_layout_item_textview1, getViewByViewId(currid, shop_stayLayout_Linearlayout)), this.getResources().getColor(R.color.black));
-				setTextViewColor(getViewByViewId(R.id.shop_stay_layout_item_textview2, getViewByViewId(currid, shop_content_stayLayout)), this.getResources().getColor(R.color.black));
-				setTextViewColor(getViewByViewId(R.id.shop_stay_layout_item_textview2, getViewByViewId(currid, shop_stayLayout_Linearlayout)), this.getResources().getColor(R.color.black));
-			}
-		}
-	}
-	
-	View getViewByViewId(int id,View v)
-	{
-		if(v==null || id<0)
-		{
-			return null;
-		}
-		return v.findViewById(id);
 	}
 	
 
