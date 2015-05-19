@@ -64,8 +64,13 @@ public class CurrentRankingFragment extends BaseFragment {
 				.findViewById(R.id.tv_top_sales_title);
 		iv_icon = (ImageView) view.findViewById(R.id.iv_icon);
 		lv_ranking_list = (ListView) view.findViewById(R.id.lv_ranking_list);
-		FontManager.changeFonts(getActivity(), tv_my_name,tv_ranking_count,tv_ranking_name,
-				tv_top_sales_money,tv_top_sales_title);
+		
+		new Thread(){
+			public void run() {
+				FontManager.changeFonts(getActivity(), tv_my_name,tv_ranking_count,tv_ranking_name,
+						tv_top_sales_money,tv_top_sales_title);
+			};
+		}.start();
 	}
 
 }

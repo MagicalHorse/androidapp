@@ -57,8 +57,8 @@ public class CurrentRankingAdapter extends BaseAdapterWithUtil {
 			holder.tv_classification = (TextView) convertView.findViewById(R.id.tv_classification);
 			holder.tv_sales_title = (TextView) convertView.findViewById(R.id.tv_sales_title);
 			holder.tv_sales_count = (TextView) convertView.findViewById(R.id.tv_sales_count);
-			FontManager.changeFonts(ctx, holder.tv_name,holder.tv_number,holder.tv_classification,
-					holder.tv_sales_title,holder.tv_sales_count);
+//			FontManager.changeFonts(ctx, holder.tv_name,holder.tv_number,holder.tv_classification,
+//					holder.tv_sales_title,holder.tv_sales_count);
 			convertView.setTag(holder);
 		}else{
 			holder = (Holder) convertView.getTag();

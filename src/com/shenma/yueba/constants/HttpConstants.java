@@ -11,6 +11,8 @@ public class HttpConstants {
 	private static String ASSISTANT = baseUrl + "Assistant/";// 买手相关的接口
 	private static String BUYER = baseUrl + "Buyer/";// 买手相关的接口
 
+	
+	
 	/**
 	 * 注册----获取手机短信验证码
 	 */
@@ -149,6 +151,18 @@ public class HttpConstants {
 	 * 获取商品被喜欢的用户列表
 	 */
 	public static String METHOD_PRODUCTMANAGER_DETAIL = PRODUCT + "Detail";
+	/**
+	 * 获取买手在线商品列表（买手）
+	 */
+	public static String METHOD_PRODUCTMANAGER_ONLINEPRODUCTS = PRODUCT + "OnLineProducts";
+	/**
+	 * 获取买手即将下线商品列表（买手）
+	 */
+	public static String METHOD_PRODUCTMANAGER_WILLOFFLINE = PRODUCT + "SoonDownProducts";
+	/**
+	 * 获取买手已经下线商品列表（买手）
+	 */
+	public static String METHOD_PRODUCTMANAGER_HASOFFLINE = PRODUCT + "DownLineProducts";
 
 	/**
 	 * ---------------------------------买手相关接口----------------------------------

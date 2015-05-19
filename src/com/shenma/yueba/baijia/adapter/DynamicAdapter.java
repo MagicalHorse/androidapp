@@ -50,6 +50,7 @@ public class DynamicAdapter extends BaseAdapterWithUtil {
 			holder.tv_dynamic_type = (TextView) convertView.findViewById(R.id.tv_dynamic_type);
 			holder.tv_time = (TextView) convertView.findViewById(R.id.tv_time);
 			FontManager.changeFonts(ctx, holder.tv_name,holder.tv_time,holder.tv_dynamic_type);
+			
 			convertView.setTag(holder);
 		}else{
 			holder = (Holder) convertView.getTag();

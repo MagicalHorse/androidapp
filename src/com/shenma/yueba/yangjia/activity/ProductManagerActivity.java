@@ -12,11 +12,22 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.adapter.CircleFragmentPagerAdapter;
+import com.shenma.yueba.baijia.modle.BuyerIndexInfo;
+import com.shenma.yueba.baijia.modle.BuyerIndexInfoBean;
+import com.shenma.yueba.baijia.modle.Favorite;
+import com.shenma.yueba.baijia.modle.Income;
+import com.shenma.yueba.baijia.modle.Order;
+import com.shenma.yueba.baijia.modle.Product;
+import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.FontManager;
+import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.ToolsUtil;
+import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.yangjia.fragment.ProductManagerFragmentForOnLine;
 
 /**
@@ -38,7 +49,8 @@ public class ProductManagerActivity extends FragmentActivity implements
 	private CircleFragmentPagerAdapter myFragmentPagerAdapter;
 	private TextView tv_top_left;
 	private TextView tv_top_title;
-
+	private int page =1;
+	private int index;
 	@Override
 	protected void onCreate(Bundle arg0) {
 		MyApplication.getInstance().addActivity(this);//加入回退栈
@@ -47,8 +59,11 @@ public class ProductManagerActivity extends FragmentActivity implements
 		initView();
 		initFragment();
 		initViewPager();
+		productManagerFragmentForOnLine.getData(0,ProductManagerActivity.this);
 		super.onCreate(arg0);
 	}
+
+	
 
 	private void initView() {
 
@@ -81,9 +96,9 @@ public class ProductManagerActivity extends FragmentActivity implements
 	}
 
 	private void initFragment() {
-		productManagerFragmentForOnLine = new ProductManagerFragmentForOnLine();
-		productManagerFragmentForOnLine2 = new ProductManagerFragmentForOnLine();
-		productManagerFragmentForOnLine3 = new ProductManagerFragmentForOnLine();
+		productManagerFragmentForOnLine = new ProductManagerFragmentForOnLine(0);
+		productManagerFragmentForOnLine2 = new ProductManagerFragmentForOnLine(1);
+		productManagerFragmentForOnLine3 = new ProductManagerFragmentForOnLine(2);
 		fragmentList.add(productManagerFragmentForOnLine);
 		fragmentList.add(productManagerFragmentForOnLine2);
 		fragmentList.add(productManagerFragmentForOnLine3);
@@ -118,6 +133,20 @@ public class ProductManagerActivity extends FragmentActivity implements
 					iv_cursor_center.setVisibility(View.INVISIBLE);
 					iv_cursor_left.setVisibility(View.INVISIBLE);
 					iv_cursor_right.setVisibility(View.VISIBLE);
+				}
+				index = arg0;
+				switch (index) {
+				case 0:
+					productManagerFragmentForOnLine.getData(index,ProductManagerActivity.this);
+					break;
+				case 1:
+					productManagerFragmentForOnLine2.getData(index,ProductManagerActivity.this);
+					break;
+				case 2 :
+					productManagerFragmentForOnLine3.getData(index,ProductManagerActivity.this);
+					break;
+				default:
+					break;
 				}
 
 			}

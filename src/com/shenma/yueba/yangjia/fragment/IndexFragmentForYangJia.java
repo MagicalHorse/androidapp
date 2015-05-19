@@ -1,6 +1,7 @@
 package com.shenma.yueba.yangjia.fragment;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
+import com.lidroid.xutils.BitmapUtils;
 import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.adapter.CircleFragmentPagerAdapter;
 import com.shenma.yueba.baijia.fragment.BaseFragment;
@@ -37,6 +39,7 @@ import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.SocicalShareUtil;
 import com.shenma.yueba.util.ToolsUtil;
+import com.shenma.yueba.view.imageshow.ImageShowActivity;
 import com.shenma.yueba.yangjia.activity.EarningManagerActivity;
 import com.shenma.yueba.yangjia.activity.ProductManagerActivity;
 import com.shenma.yueba.yangjia.activity.SalesManagerForBuyerActivity;
@@ -58,6 +61,13 @@ public class IndexFragmentForYangJia extends BaseFragment implements
 	private ArrayList<Fragment> fragmentList = new ArrayList<Fragment>();
 	private CircleFragmentPagerAdapter myFragmentPagerAdapter;
 
+	private BitmapUtils bitmapUtils;
+	
+	private ImageView iv_qr_code;
+	private TextView tv_qr_name;
+	
+	private ArrayList<String> urlList = new ArrayList<String>();
+	
 	private TextView tv_earnings_title;
 	private TextView tv_today_earnings_title;
 	private TextView tv_today_earnings_money;
@@ -100,6 +110,12 @@ public class IndexFragmentForYangJia extends BaseFragment implements
 	
 	private PullToRefreshScrollView mPullRefreshScrollView;
 
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		bitmapUtils = new BitmapUtils(getActivity());
+		super.onCreate(savedInstanceState);
+	}
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -138,6 +154,12 @@ public class IndexFragmentForYangJia extends BaseFragment implements
 		bt_top_right.setVisibility(View.VISIBLE);
 		bt_top_right.setBackgroundResource(R.drawable.exit);
 		bt_top_right.setOnClickListener(this);
+		
+		
+		tv_qr_name = (TextView) view.findViewById(R.id.tv_qr_name);
+		iv_qr_code = (ImageView) view.findViewById(R.id.iv_qr_code);
+		iv_qr_code.setOnClickListener(this);
+		
 		tv_earnings_title = (TextView) view
 				.findViewById(R.id.tv_earnings_title);
 		tv_today_earnings_title = (TextView) view
@@ -274,6 +296,12 @@ public class IndexFragmentForYangJia extends BaseFragment implements
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
+		case R.id.iv_qr_code://查看二維碼大图
+			Intent imageShowIntent = new Intent(getActivity(), ImageShowActivity.class);
+			imageShowIntent.putStringArrayListExtra(ImageShowActivity.BIGIMAGES,urlList);
+			imageShowIntent.putExtra(ImageShowActivity.IMAGE_INDEX, 0);
+			getActivity().startActivity(imageShowIntent);
+			break;
 		case R.id.rl_sales:// 销售管理
 			
 			
@@ -320,6 +348,14 @@ public class IndexFragmentForYangJia extends BaseFragment implements
 				mPullRefreshScrollView.onRefreshComplete();
 				BuyerIndexInfoBean bean = (BuyerIndexInfoBean) obj;
 				BuyerIndexInfo data = bean.getData();
+				
+				
+				String codeUrl = data.getBarcode();
+				String shopName = data.getShopname();
+				bitmapUtils.display(iv_qr_code, codeUrl);
+				urlList.add(codeUrl);
+				tv_qr_name.setText(ToolsUtil.nullToString(shopName));
+				
 				//处理返回来的数据
 				Product product = data.getProduct();//商品管理
 				tv_products_online_count.setText(ToolsUtil.nullToString(product!=null?product.getOnlineCount():""));
