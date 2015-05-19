@@ -10,6 +10,7 @@ public class Constants {
 	public static final String HTTPCHANNEL="channel";//附加参数
 	public static final String ANDROID="Android";//附加参数
 	public static final String PRIVATEKEY="97CCE28B-345C-4C83-ACE3-C2E349BF53D7";//私钥
+	public static final String PageSize = "10";
 	
 	public static final String MOBILE="mobile";//手机号
 	public static final String CODE="code";//验证码
@@ -21,6 +22,9 @@ public class Constants {
 	public static final String SIGN="sign";//MD5加密
 	public static final String UUID="uid";//随机数
 	public static final String TOKEN="token";//随机数
+	public static final String PAGE="page";//第几页，页码
+	public static final String PAGESIZE="pagesize";//页size
+	
 	
 	
 	

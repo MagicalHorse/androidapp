@@ -56,8 +56,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dip"
                 android:background="@color/transparent"
-                android:hint="请输入手机号码"
+                android:hint="请输入密码"
                 android:textSize="17sp" 
+                android:password="true"
                 android:singleLine="true"/>
 
             <TextView

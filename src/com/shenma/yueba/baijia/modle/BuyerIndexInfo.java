@@ -11,6 +11,8 @@ import java.util.List;
 
 public class BuyerIndexInfo extends BaseRequest implements Serializable {
 
+	private String barcode;
+	private String shopname;
 	private Product product;
 	private Favorite favorite;
 	private Order order;
@@ -38,6 +40,21 @@ public class BuyerIndexInfo extends BaseRequest implements Serializable {
 	}
 	public void setIncome(Income income) {
 		this.income = income;
+	}
+	
+	
+	
+	public String getBarcode() {
+		return barcode;
+	}
+	public void setBarcode(String barcode) {
+		this.barcode = barcode;
+	}
+	public String getShopname() {
+		return shopname;
+	}
+	public void setShopname(String shopname) {
+		this.shopname = shopname;
 	}
 
 
