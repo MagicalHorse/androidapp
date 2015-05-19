@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.shenma.yueba.R;
@@ -24,8 +25,8 @@ import com.shenma.yueba.baijia.view.CircleView;
 import com.shenma.yueba.baijia.view.MyCircleView;
 
 public class CircleFragment extends Fragment{
-	List<FragmentBean> fragment_list=new ArrayList<FragmentBean>();
 	List<View> footer_list=new ArrayList<View>();
+	List<FragmentBean> fragment_list=new ArrayList<FragmentBean>();
 	CircleFragment baiJiaFrament;
 	ViewPager baijia_fragment_tab1_pagerview;
 	LinearLayout baijia_fragment_tab1_head_linearlayout;
@@ -81,9 +82,10 @@ public class CircleFragment extends Fragment{
 		baijia_fragment_tab1_head_linearlayout=(LinearLayout)v.findViewById(R.id.baijia_fragment_tab1_head_linearlayout);
 		for(int i=0;i<fragment_list.size();i++)
 		{
-			TextView tv=new TextView(getActivity());
-			tv.setTag(i);
-			tv.setOnClickListener(new OnClickListener() {
+			RelativeLayout rl=(RelativeLayout)RelativeLayout.inflate(getActivity(), R.layout.tab_line_layout, null);
+			TextView tv=(TextView)rl.findViewById(R.id.tab_line_textview);
+			rl.setTag(i);
+			rl.setOnClickListener(new OnClickListener() {
 				
 				@Override
 				public void onClick(View v) {
@@ -95,7 +97,9 @@ public class CircleFragment extends Fragment{
 			tv.setText(fragment_list.get(i).getName());
 			LinearLayout.LayoutParams param=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
 			param.weight=1;
-			baijia_fragment_tab1_head_linearlayout.addView(tv,param);
+			param.gravity=Gravity.CENTER;
+			baijia_fragment_tab1_head_linearlayout.addView(rl,param);
+			footer_list.add(rl);
 		}
 		baijia_fragment_tab1_pagerview=(ViewPager)v.findViewById(R.id.baijia_fragment_tab1_pagerview);
 		baijia_fragment_tab1_pagerview.setAdapter(new PagerAdapter() {
@@ -130,39 +134,11 @@ public class CircleFragment extends Fragment{
 			}
 		});
 		
-		/*baijia_fragment_tab1_pagerview.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
-			
-			@Override
-			public int getCount() {
-				
-				return fragment_list.size();
-			}
-
-			@Override
-			public Fragment getItem(int arg0) {
-				
-				return fragment_list.get(arg0).getFragment();
-			}
-			
-			@Override
-			public int getItemPosition(Object object) {
-				return super.getItemPosition(object);
-			}
-			
-			@Override
-			public Parcelable saveState() {
-			    return null;
-			}
-
-			
-		});*/
-		
-		
 		baijia_fragment_tab1_pagerview.setOnPageChangeListener(new OnPageChangeListener() {
 			
 			@Override
 			public void onPageSelected(int arg0) {
-				
+				setTextColor(arg0);
 				
 			}
 			
@@ -189,6 +165,7 @@ public class CircleFragment extends Fragment{
 		{
 			return;
 		}
+		setTextColor(i);
 		baijia_fragment_tab1_pagerview.setCurrentItem(i);
 	}
 	
@@ -208,4 +185,24 @@ public class CircleFragment extends Fragment{
     	}
     
     }
+	
+	void setTextColor(int value)
+	{
+		for(int i=0;i<footer_list.size();i++)
+		{
+			RelativeLayout rl=(RelativeLayout)footer_list.get(i);
+			TextView tv=(TextView)rl.findViewById(R.id.tab_line_textview);
+			View v=(View)rl.findViewById(R.id.tab_line_view);
+			if(i==value)
+			{
+			  tv.setTextColor(this.getResources().getColor(R.color.color_deeoyellow));
+		      v.setVisibility(View.VISIBLE);
+			}else
+			{
+				tv.setTextColor(this.getResources().getColor(R.color.black));
+				v.setVisibility(View.INVISIBLE);
+			}
+			
+		}
+	}
 }

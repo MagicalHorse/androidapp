@@ -50,9 +50,36 @@
     </RelativeLayout>
 
     <LinearLayout
+        android:layout_marginTop="2dp"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
         android:orientation="horizontal"
         android:id="@+id/ll_images"
-        ></LinearLayout>
+        >
+         <ImageView
+            android:id="@+id/brandlist_item_imageview1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:scaleType="fitXY"
+            android:src="@drawable/test001"
+            />
+          <ImageView
+            android:id="@+id/brandlist_item_imageview2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:scaleType="fitXY"
+            android:src="@drawable/test001"
+            />
+           <ImageView
+            android:id="@+id/brandlist_item_imageview3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:scaleType="fitXY"
+            android:src="@drawable/test001"
+            />
+        
+    </LinearLayout>
 </LinearLayout>

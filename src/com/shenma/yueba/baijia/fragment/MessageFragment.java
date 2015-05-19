@@ -1,210 +1,209 @@
 package com.shenma.yueba.baijia.fragment;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.List;
 
-import android.annotation.TargetApi;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.shenma.yueba.R;
-import com.shenma.yueba.baijia.adapter.CircleFragmentPagerAdapter;
-import com.shenma.yueba.util.FontManager;
+import com.shenma.yueba.baijia.modle.FragmentBean;
+import com.shenma.yueba.baijia.view.CircleView;
+import com.shenma.yueba.baijia.view.DynamicListView;
+import com.shenma.yueba.baijia.view.MsgListView;
+import com.shenma.yueba.baijia.view.MyCircleView;
 
-/**
- * 圈子
- * 
- * @author a
- * 
- */
-@TargetApi(Build.VERSION_CODES.HONEYCOMB)
-public class MessageFragment extends BaseFragment implements OnClickListener {
-	private MsgListFragment msgListFragment;
-	private DynamicListFragment dynamicFragment;
-	private ArrayList<Fragment> fragmentList = new ArrayList<Fragment>();
-	private ViewPager viewpager_circle;
-	private ImageView iv_cursor_left, iv_cursor_right;
-	private Button bt_search, bt_msg;
-	private RelativeLayout rl_my_circle;
-	private View view;
-	private CircleFragmentPagerAdapter myFragmentPagerAdapter;
-	private TextView tv_msg;
-	private TextView tv_dynamic;
-
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		Log.i("CircleFragment", "oncreate");
-		super.onCreate(savedInstanceState);
-	}
-
+public class MessageFragment extends Fragment{
+	List<FragmentBean> fragment_list=new ArrayList<FragmentBean>();
+	MessageFragment baiJiaFrament;
+	ViewPager baijia_fragment_tab1_pagerview;
+	LinearLayout baijia_fragment_tab1_head_linearlayout;
+	//当前选中的id
+	int currid=-1;
+	View v;
+	ViewPager baijia_head_viewpager;
+	FragmentManager fragmentManager;
+	List<View> footer_list=new ArrayList<View>();
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		Log.i("CircleFragment", "oncreateView");
-
-		if (view == null) {
-			initViews(inflater);
-			initFragment();
-			initViewPager();
+		
+		if(v==null)
+		{
+			fragmentManager=this.getChildFragmentManager();
+			v=inflater.inflate(R.layout.circlefragment_layout, null);
+			initView(v);
 		}
-		// 缓存的rootView需要判断是否已经被加过parent，如果有parent需要从parent删除，要不然会发生这个rootview已经有parent的错误。
-		ViewGroup parent = (ViewGroup) view.getParent();
-		if (parent != null) {
-			parent.removeView(view);
+		ViewGroup vp=(ViewGroup)v.getParent();
+		if(vp!=null)
+		{
+			vp.removeView(v);
 		}
-		return view;
+		//return super.onCreateView(inflater, container, savedInstanceState);
+		return v;
 	}
-
-	private void initViewPager() {
-		viewpager_circle.setAdapter(myFragmentPagerAdapter);
-		viewpager_circle.setCurrentItem(0);
-		viewpager_circle.setOnPageChangeListener(new OnPageChangeListener() {
-
-			// private boolean isScrolled = false;
-
-			// public void onPageScrollStateChanged(int arg0) {
-			// /*
-			// * 页卡正常滑动时，会经历 1-2-0的三个阶段；
-			// *
-			// * 页卡在最后一页向右滑，或者第一页向左滑经历 1-0-2-0的阶段；
-			// *
-			// * 直接调用 setCurrentItem则只是经历 2-0的阶段
-			// */
-			// switch (arg0) {
-			// /*
-			// * 每一次的滑动arg0都会经历1-2-0的阶段，但是在最后一个页面向右滑，或者第一个页面向左滑时会经历 1-0-2-0的阶段
-			// * 例如： 最后页面右滑时
-			// * ，刚刚开始会是1，这时isScrolled为false，但是没有下一页面，所以此时的页面还是最后一个页面，满足if条件
-			// */
-			// case 0:
-			//
-			// if (viewPager.getCurrentItem() == viewPager.getAdapter()
-			// .getCount() - 1 && !isScrolled)
-			// viewPager.setCurrentItem(0);
-			// else if (viewPager.getCurrentItem() == 0 && !isScrolled) {
-			// viewPager.setCurrentItem(viewPager.getAdapter()
-			// .getCount() - 1);
-			// }
-			// break;
-			// case 1:
-			// isScrolled = false;
-			// break;
-			// case 2:
-			// isScrolled = true;
-			// break;
-			// }
-			// }
-
-			public void onPageScrolled(int arg0, float arg1, int arg2) {
-			}
-
-			/*
-			 * 页面跳转完成后调用的方法
-			 */
-			public void onPageSelected(int arg0) {
-				if (arg0 == 1) {
-					iv_cursor_right.setVisibility(View.VISIBLE);
-					iv_cursor_left.setVisibility(View.INVISIBLE);
-				}
-				if (arg0 == 0) {
-					iv_cursor_right.setVisibility(View.INVISIBLE);
-					iv_cursor_left.setVisibility(View.VISIBLE);
-				}
-
-			}
-
-			@Override
-			public void onPageScrollStateChanged(int arg0) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
-		// viewpager_circle.setOnPageChangeListener(new OnPageChangeListener() {
-		// @Override
-		// public void onPageSelected(int arg0) {
-		// if (arg0 == 1) {
-		// iv_cursor_right.setVisibility(View.VISIBLE);
-		// iv_cursor_left.setVisibility(View.INVISIBLE);
-		// }
-		// if (arg0 == 0) {
-		// iv_cursor_right.setVisibility(View.INVISIBLE);
-		// iv_cursor_left.setVisibility(View.VISIBLE);
-		// }
-		// }
-		//
-		// @Override
-		// public void onPageScrolled(int arg0, float arg1, int arg2) {
-		//
-		//
-		// }
-		//
-		// @Override
-		// public void onPageScrollStateChanged(int arg0) {
-		// // TODO Auto-generated method stub
-		//
-		// }
-		// });
-
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		
+		super.onCreate(savedInstanceState);
 	}
-
-	private void initFragment() {
-		msgListFragment = new MsgListFragment();
-		dynamicFragment = new DynamicListFragment();
-		fragmentList.add(msgListFragment);
-		fragmentList.add(dynamicFragment);
-		myFragmentPagerAdapter = new CircleFragmentPagerAdapter(
-				getChildFragmentManager(), fragmentList);
-
-	}
-
-	/**
-	 * 初始化view
-	 */
-	private void initViews(LayoutInflater inflater) {
-		view = inflater.inflate(R.layout.msg_fragment_layout, null);
-		tv_msg = (TextView) view.findViewById(R.id.tv_msg);
-		tv_dynamic = (TextView) view.findViewById(R.id.tv_dynamic);
-		tv_msg.setOnClickListener(this);
-		tv_dynamic.setOnClickListener(this);
-		viewpager_circle = (ViewPager) view.findViewById(R.id.viewpager_circle);
-		iv_cursor_left = (ImageView) view.findViewById(R.id.iv_cursor_left);
-		iv_cursor_left.setVisibility(View.VISIBLE);
-		iv_cursor_right = (ImageView) view.findViewById(R.id.iv_cursor_right);
-		bt_search = (Button) view.findViewById(R.id.bt_search);
-		bt_search.setOnClickListener(this);
-		FontManager.changeFonts(getActivity(), tv_msg, tv_dynamic);
-	}
-
+	
+	
 	@Override
 	public void onResume() {
-		Log.i("CircleFragment", "onResume");
+		
 		super.onResume();
+        
 	}
-
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.tv_msg:// 买手街
-			viewpager_circle.setCurrentItem(0);
-			break;
-		case R.id.tv_dynamic:// 他们说
-			viewpager_circle.setCurrentItem(1);
-			break;
-		default:
-			break;
+	
+	
+	void initView(View v)
+	{
+		/*Fragment recommendedCircleFragment=new RecommendedCircleFragment();
+		Fragment myCircleFragment=new MyCircleFragment();
+		*/
+		fragment_list.add(new FragmentBean("消息", -1, MsgListView.the().getView(getActivity())));
+		fragment_list.add(new FragmentBean("动态", -1, DynamicListView.the().getView(getActivity())));
+		
+		baijia_fragment_tab1_head_linearlayout=(LinearLayout)v.findViewById(R.id.baijia_fragment_tab1_head_linearlayout);
+		for(int i=0;i<fragment_list.size();i++)
+		{
+			RelativeLayout rl=(RelativeLayout)RelativeLayout.inflate(getActivity(), R.layout.tab_line_layout, null);
+			TextView tv=(TextView)rl.findViewById(R.id.tab_line_textview);
+			rl.setTag(i);
+			rl.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					int i=(Integer)v.getTag();
+					setCurrView(i);
+				}
+			});
+			tv.setGravity(Gravity.CENTER);
+			tv.setText(fragment_list.get(i).getName());
+			LinearLayout.LayoutParams param=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+			param.weight=1;
+			param.gravity=Gravity.CENTER;
+			baijia_fragment_tab1_head_linearlayout.addView(rl,param);
+			footer_list.add(rl);
 		}
+		baijia_fragment_tab1_pagerview=(ViewPager)v.findViewById(R.id.baijia_fragment_tab1_pagerview);
+		baijia_fragment_tab1_pagerview.setAdapter(new PagerAdapter() {
+			
+			@Override
+			public boolean isViewFromObject(View arg0, Object arg1) {
+				
+				return arg0==arg1;
+			}
+			
+			@Override
+			public int getCount() {
+				
+				return fragment_list.size();
+			}
+			
+			@Override
+			public Object instantiateItem(ViewGroup container, int position) {
+				
+				//return super.instantiateItem(container, position);
+				View v=(View)fragment_list.get(position).getFragment();
+				container.addView(v,0);
+				return v;
+			}
+			
+			@Override
+			public void destroyItem(ViewGroup container, int position,
+					Object object) {
+				
+				super.destroyItem(container, position, object);
+				container.removeViewAt(0);
+			}
+		});
+		
+		baijia_fragment_tab1_pagerview.setOnPageChangeListener(new OnPageChangeListener() {
+			
+			@Override
+			public void onPageSelected(int arg0) {
+				
+				setTextColor(arg0);
+			}
+			
+			@Override
+			public void onPageScrolled(int arg0, float arg1, int arg2) {
+				
+				
+			}
+			
+			@Override
+			public void onPageScrollStateChanged(int arg0) {
+				
+				
+			}
+		});
+		
+		
+		setCurrView(0);
+	}
+	
+	void setCurrView(int i)
+	{
+		if(currid==i)
+		{
+			return;
+		}
+		setTextColor(i);
+		baijia_fragment_tab1_pagerview.setCurrentItem(i);
+	}
+	
+	
+	@Override
+    public void onDetach() {
+    	super.onDetach();
+    	try {
+    	    Field childFragmentManager = Fragment.class.getDeclaredField("mChildFragmentManager");
+    	    childFragmentManager.setAccessible(true);
+    	    childFragmentManager.set(this, null);
 
+    	} catch (NoSuchFieldException e) {
+    	    throw new RuntimeException(e);
+    	} catch (IllegalAccessException e) {
+    	    throw new RuntimeException(e);
+    	}
+    
+    }
+	
+	void setTextColor(int value)
+	{
+		for(int i=0;i<footer_list.size();i++)
+		{
+			RelativeLayout rl=(RelativeLayout)footer_list.get(i);
+			TextView tv=(TextView)rl.findViewById(R.id.tab_line_textview);
+			View v=(View)rl.findViewById(R.id.tab_line_view);
+			if(i==value)
+			{
+			  tv.setTextColor(this.getResources().getColor(R.color.color_deeoyellow));
+		      v.setVisibility(View.VISIBLE);
+			}else
+			{
+				tv.setTextColor(this.getResources().getColor(R.color.black));
+				v.setVisibility(View.INVISIBLE);
+			}
+			
+		}
 	}
 }

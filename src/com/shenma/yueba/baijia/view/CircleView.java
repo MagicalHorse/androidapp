@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
@@ -32,6 +33,7 @@ public class CircleView {
 	int currid=-1;
 	View v;
 	PullToRefreshGridView baijia_quanzi_layout_tanb1_gridbview;
+	LinearLayout showloading_layout_view;
 	List<Object> obj_list=new ArrayList<Object>();
 	LayoutInflater inflater;
 	
@@ -96,7 +98,7 @@ public class CircleView {
 			@Override
 			public void onPullDownToRefresh(PullToRefreshBase refreshView) {
 				
-				//SystemClock.sleep(3000);
+				//SystemClock.sleep(100);
 				Log.i("TAG", "onPullDownToRefresh");
 				//pulltorefreshscrollview.setRefreshing();
 				requestFalshData();
@@ -104,7 +106,7 @@ public class CircleView {
 
 			@Override
 			public void onPullUpToRefresh(PullToRefreshBase refreshView) {
-				//SystemClock.sleep(3000);
+				//SystemClock.sleep(100);
 				//pulltorefreshscrollview.setRefreshing();
 				Log.i("TAG", "onPullUpToRefresh");
 				requestData();
@@ -115,6 +117,8 @@ public class CircleView {
 	void initView(View v)
 	{
 		baijia_quanzi_layout_tanb1_gridbview=(PullToRefreshGridView)v.findViewById(R.id.baijia_quanzi_layout_tanb1_gridbview);
+		showloading_layout_view=(LinearLayout)v.findViewById(R.id.showloading_layout_view);
+		
 		baijia_quanzi_layout_tanb1_gridbview.setAdapter(baseAdapter);
 		baijia_quanzi_layout_tanb1_gridbview.setOnItemClickListener(new OnItemClickListener() {
 
@@ -179,10 +183,11 @@ public class CircleView {
 	
 	void requestData()
 	{
+		baijia_quanzi_layout_tanb1_gridbview.setRefreshing();
 		new Thread()
 		{
 			public void run() {
-				SystemClock.sleep(3000);
+				SystemClock.sleep(100);
 				activity.runOnUiThread(new Runnable() {
 					
 					@Override
@@ -197,6 +202,7 @@ public class CircleView {
 	
 	void requestFalshData()
 	{
+		baijia_quanzi_layout_tanb1_gridbview.setRefreshing();
 		new Thread()
 		{
 			public void run() {
@@ -221,6 +227,7 @@ public class CircleView {
 			obj_list.add(null);
 			
 		}
+		showloading_layout_view.setVisibility(View.GONE);
 		baseAdapter.notifyDataSetChanged();
 		//ListUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
 		baijia_quanzi_layout_tanb1_gridbview.onRefreshComplete();
@@ -234,6 +241,7 @@ public class CircleView {
 			obj_list.add(null);
 			
 		}
+		showloading_layout_view.setVisibility(View.GONE);
 		baseAdapter.notifyDataSetChanged();
 		
 		//ListUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);

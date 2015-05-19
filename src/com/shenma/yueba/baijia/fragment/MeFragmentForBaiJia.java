@@ -93,10 +93,10 @@ public class MeFragmentForBaiJia extends BaseFragment implements OnClickListener
 		tv_waiting_for_recieve.setOnClickListener(this);
 		tv_pick_by_myself.setOnClickListener(this);
 		tv_will_yangjia.setOnClickListener(this);
-		FontManager.changeFonts(getActivity(), tv_nickname, tv_style,tv_attention_count,
+		/*FontManager.changeFonts(getActivity(), tv_nickname, tv_style,tv_attention_count,
 				tv_attention_title,tv_fans_count,tv_fans_title,tv_collection_count,
 				tv_collection_title,tv_all_order,tv_waiting_for_send,
-				tv_waiting_for_recieve,tv_pick_by_myself,tv_will_yangjia,tv_my_collection);
+				tv_waiting_for_recieve,tv_pick_by_myself,tv_will_yangjia,tv_my_collection);*/
 	}
 
 	@Override

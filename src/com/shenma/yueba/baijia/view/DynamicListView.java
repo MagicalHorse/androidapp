@@ -18,54 +18,52 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.State;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.shenma.yueba.R;
-import com.shenma.yueba.baijia.adapter.MyCircleAdapter;
-import com.shenma.yueba.baijia.modle.MyBuyerBean;
-import com.shenma.yueba.baijia.modle.MyCircleBean;
+import com.shenma.yueba.baijia.adapter.DynamicAdapter;
+import com.shenma.yueba.baijia.adapter.SameCityAdapter;
+import com.shenma.yueba.baijia.modle.DynamicBean;
+import com.shenma.yueba.baijia.modle.SameCityBean;
 
-/**
- * 我的买手
- * 
- * @author a
- * 
+/**  
+ * @author gyj  
+ * @version 创建时间：2015-5-19 下午2:03:37  
+ * 程序的简单说明  
  */
 
-public class MyCircleView {
-	private List<MyCircleBean> mList = new ArrayList<MyCircleBean>();
+public class DynamicListView {
+	static DynamicListView msgListView;
+	Activity activity;
+	LayoutInflater layoutInflater;
+	
+	private SameCityAdapter msgAdapter;
+	private List<SameCityBean> mList = new ArrayList<SameCityBean>();
 	private View view;
 	private PullToRefreshListView pull_refresh_list;
 	LinearLayout showloading_layout_view;
-	static MyCircleView myCircleView;
-	Activity activity;
-	LayoutInflater inflater;
-	MyCircleAdapter myCircleAdapter;
-	public static MyCircleView the()
+	public static DynamicListView the()
 	{
-		if(myCircleView==null)
+		if(msgListView==null)
 		{
-			myCircleView=new MyCircleView();
+			msgListView=new DynamicListView();
 		}
-		return myCircleView;
+		return msgListView;
 	}
-	
 	
 	public View getView(Activity activity)
 	{
 		this.activity=activity;
-		if(view == null)
+		if(view==null)
 		{
+			layoutInflater=activity.getLayoutInflater();
 			initView();
 			initPullView();
 			requestFalshData();
 		}
-		return view ;
+		return view;
 	}
-	
-	
 	
 	void initView()
 	{
-		inflater=activity.getLayoutInflater();
-		view = inflater.inflate(R.layout.refresh_listview_without_title_layout, null);
+		view=layoutInflater.inflate(R.layout.refresh_listview_without_title_layout, null);
 	}
 	
 	void initPullView()
@@ -100,7 +98,7 @@ public class MyCircleView {
 			@Override
 			public void onPullDownToRefresh(PullToRefreshBase refreshView) {
 				
-				//SystemClock.sleep(100);
+				//SystemClock.sleep(myCircleAdapter);
 				Log.i("TAG", "onPullDownToRefresh");
 				//pulltorefreshscrollview.setRefreshing();
 				requestFalshData();
@@ -108,14 +106,14 @@ public class MyCircleView {
 
 			@Override
 			public void onPullUpToRefresh(PullToRefreshBase refreshView) {
-				//SystemClock.sleep(100);
+				//SystemClock.sleep(myCircleAdapter);
 				//pulltorefreshscrollview.setRefreshing();
 				Log.i("TAG", "onPullUpToRefresh");
 				requestData();
 			}
 		});
-		myCircleAdapter=new MyCircleAdapter(activity, mList);
-		pull_refresh_list.setAdapter(myCircleAdapter);
+		msgAdapter=new SameCityAdapter(activity, mList);
+		pull_refresh_list.setAdapter(msgAdapter);
 	}
 	
 	
@@ -162,11 +160,11 @@ public class MyCircleView {
 	{
 		for(int i=0;i<10;i++)
 		{
-			mList.add(new MyCircleBean());
+			mList.add(new SameCityBean());
 			
 		}
 		showloading_layout_view.setVisibility(View.GONE);
-		myCircleAdapter.notifyDataSetChanged();
+		msgAdapter.notifyDataSetChanged();
 		//ListUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
 		pull_refresh_list.onRefreshComplete();
 	}
@@ -176,11 +174,11 @@ public class MyCircleView {
 		mList.clear();
 		for(int i=0;i<10;i++)
 		{
-			mList.add(new MyCircleBean());
+			mList.add(new SameCityBean());
 			
 		}
 		showloading_layout_view.setVisibility(View.GONE);
-		myCircleAdapter.notifyDataSetChanged();
+		msgAdapter.notifyDataSetChanged();
 		
 		//ListUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
 		pull_refresh_list.onRefreshComplete();

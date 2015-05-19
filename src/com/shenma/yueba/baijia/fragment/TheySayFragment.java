@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -33,7 +34,7 @@ public class TheySayFragment extends BaseFragment {
 	private List<TheySayBean> mList = new ArrayList<TheySayBean>();
 	private View view;
 	private PullToRefreshListView pull_refresh_list;
-
+    LinearLayout showloading_layout_view;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -45,7 +46,9 @@ public class TheySayFragment extends BaseFragment {
 		Log.i("aaaaa", "TheySayFragment");
 		if (view == null) {
 			view = inflater.inflate(R.layout.refresh_listview_without_title_layout, null);
+			showloading_layout_view=(LinearLayout)view.findViewById(R.id.showloading_layout_view);
 			initPullView();
+			requestFalshData();
 		}
 		// 缓存的rootView需要判断是否已经被加过parent，如果有parent需要从parent删除，要不然会发生这个rootview已经有parent的错误。
 		ViewGroup parent = (ViewGroup) view.getParent();
@@ -90,7 +93,7 @@ public class TheySayFragment extends BaseFragment {
 			@Override
 			public void onPullDownToRefresh(PullToRefreshBase refreshView) {
 				
-				//SystemClock.sleep(3000);
+				//SystemClock.sleep(100);
 				Log.i("TAG", "onPullDownToRefresh");
 				//pulltorefreshscrollview.setRefreshing();
 				requestFalshData();
@@ -98,13 +101,12 @@ public class TheySayFragment extends BaseFragment {
 
 			@Override
 			public void onPullUpToRefresh(PullToRefreshBase refreshView) {
-				//SystemClock.sleep(3000);
+				//SystemClock.sleep(100);
 				//pulltorefreshscrollview.setRefreshing();
 				Log.i("TAG", "onPullUpToRefresh");
 				requestData();
 			}
 		});
-		requestFalshData();
 	}
 	
 	
@@ -114,7 +116,7 @@ public class TheySayFragment extends BaseFragment {
 		new Thread()
 		{
 			public void run() {
-				SystemClock.sleep(3000);
+				SystemClock.sleep(100);
 				getActivity().runOnUiThread(new Runnable() {
 					
 					@Override
@@ -154,6 +156,7 @@ public class TheySayFragment extends BaseFragment {
 			mList.add(new TheySayBean());
 			
 		}
+		showloading_layout_view.setVisibility(View.GONE);
 		theySayAdapter.notifyDataSetChanged();
 		//ListUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
 		pull_refresh_list.onRefreshComplete();
@@ -167,6 +170,7 @@ public class TheySayFragment extends BaseFragment {
 			mList.add(new TheySayBean());
 			
 		}
+		showloading_layout_view.setVisibility(View.GONE);
 		theySayAdapter.notifyDataSetChanged();
 		
 		//ListUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);

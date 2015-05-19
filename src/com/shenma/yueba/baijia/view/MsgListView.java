@@ -18,54 +18,50 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.State;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.shenma.yueba.R;
-import com.shenma.yueba.baijia.adapter.MyCircleAdapter;
-import com.shenma.yueba.baijia.modle.MyBuyerBean;
-import com.shenma.yueba.baijia.modle.MyCircleBean;
+import com.shenma.yueba.baijia.adapter.MsgAdapter;
+import com.shenma.yueba.baijia.modle.MsgBean;
 
-/**
- * 我的买手
- * 
- * @author a
- * 
+/**  
+ * @author gyj  
+ * @version 创建时间：2015-5-19 下午2:03:37  
+ * 程序的简单说明  
  */
 
-public class MyCircleView {
-	private List<MyCircleBean> mList = new ArrayList<MyCircleBean>();
+public class MsgListView {
+	static MsgListView msgListView;
+	Activity activity;
+	LayoutInflater layoutInflater;
+	
+	private List<MsgBean> mList = new ArrayList<MsgBean>();
 	private View view;
 	private PullToRefreshListView pull_refresh_list;
 	LinearLayout showloading_layout_view;
-	static MyCircleView myCircleView;
-	Activity activity;
-	LayoutInflater inflater;
-	MyCircleAdapter myCircleAdapter;
-	public static MyCircleView the()
+	MsgAdapter msgAdapter;
+	public static MsgListView the()
 	{
-		if(myCircleView==null)
+		if(msgListView==null)
 		{
-			myCircleView=new MyCircleView();
+			msgListView=new MsgListView();
 		}
-		return myCircleView;
+		return msgListView;
 	}
-	
 	
 	public View getView(Activity activity)
 	{
 		this.activity=activity;
-		if(view == null)
+		if(view==null)
 		{
+			layoutInflater=activity.getLayoutInflater();
 			initView();
 			initPullView();
 			requestFalshData();
 		}
-		return view ;
+		return view;
 	}
-	
-	
 	
 	void initView()
 	{
-		inflater=activity.getLayoutInflater();
-		view = inflater.inflate(R.layout.refresh_listview_without_title_layout, null);
+		view=layoutInflater.inflate(R.layout.refresh_listview_without_title_layout, null);
 	}
 	
 	void initPullView()
@@ -114,8 +110,8 @@ public class MyCircleView {
 				requestData();
 			}
 		});
-		myCircleAdapter=new MyCircleAdapter(activity, mList);
-		pull_refresh_list.setAdapter(myCircleAdapter);
+		msgAdapter=new MsgAdapter(activity, mList);
+		pull_refresh_list.setAdapter(msgAdapter);
 	}
 	
 	
@@ -162,11 +158,11 @@ public class MyCircleView {
 	{
 		for(int i=0;i<10;i++)
 		{
-			mList.add(new MyCircleBean());
+			mList.add(new MsgBean());
 			
 		}
 		showloading_layout_view.setVisibility(View.GONE);
-		myCircleAdapter.notifyDataSetChanged();
+		msgAdapter.notifyDataSetChanged();
 		//ListUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
 		pull_refresh_list.onRefreshComplete();
 	}
@@ -176,11 +172,11 @@ public class MyCircleView {
 		mList.clear();
 		for(int i=0;i<10;i++)
 		{
-			mList.add(new MyCircleBean());
+			mList.add(new MsgBean());
 			
 		}
 		showloading_layout_view.setVisibility(View.GONE);
-		myCircleAdapter.notifyDataSetChanged();
+		msgAdapter.notifyDataSetChanged();
 		
 		//ListUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
 		pull_refresh_list.onRefreshComplete();

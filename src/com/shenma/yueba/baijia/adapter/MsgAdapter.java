@@ -27,7 +27,7 @@ public class MsgAdapter extends BaseAdapterWithUtil {
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return 10;
+		return mList.size();
 	}
 
 	@Override
@@ -54,7 +54,7 @@ public class MsgAdapter extends BaseAdapterWithUtil {
 			holder.tv_time = (TextView) convertView.findViewById(R.id.tv_time);
 			holder.tv_msg = (TextView) convertView.findViewById(R.id.tv_msg);
 			MyApplication.getInstance().getImageLoader().displayImage("http://img3.redocn.com/20091221/20091217_fa2a743db1f556f82b9asJ320coGmYFf.jpg", holder.iv_msg, MyApplication.getInstance().getRoundDisplayImageOptions());
-			FontManager.changeFonts(ctx, holder.tv_name,holder.tv_time,holder.tv_msg);
+			//FontManager.changeFonts(ctx, holder.tv_name,holder.tv_time,holder.tv_msg);
 			convertView.setTag(holder);
 		}else{
 			holder = (Holder) convertView.getTag();

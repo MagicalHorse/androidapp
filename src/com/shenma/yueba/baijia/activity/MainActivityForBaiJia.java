@@ -34,9 +34,11 @@ FragmentManager fragmentManager;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		requestWindowFeature(getWindow().FEATURE_NO_TITLE);
 		setContentView(R.layout.baijia_main_layout);
 		initView();
 		initaddFooterView();
+		setCurrView(0);
 	}
 
 	void initView()
@@ -52,7 +54,7 @@ FragmentManager fragmentManager;
 		
 		fragment_list.add(new FragmentBean("主页",R.drawable.tab_index_selector,indexFragmentForBaiJia));
 		fragment_list.add(new FragmentBean("圈子",R.drawable.tab_circle_selector,circleFragment));
-		fragment_list.add(new FragmentBean("购物车",R.drawable.tab_msg_selector,messageFragment));
+		fragment_list.add(new FragmentBean("消息",R.drawable.tab_msg_selector,messageFragment));
 		fragment_list.add(new FragmentBean("发现",R.drawable.tab_find_selector,findFragment));
 		fragment_list.add(new FragmentBean("我",R.drawable.tab_me_selector,meFragmentForBaiJia));
 		
@@ -77,27 +79,49 @@ FragmentManager fragmentManager;
 				
 				@Override
 				public void onClick(View v) {
-					// TODO Auto-generated method stub
 					int i=(Integer)v.getTag();
 					setCurrView(i);
 				}
 			});
-			if(i==0)
-			{
-				currid=i;
-				fragmentManager.beginTransaction().add(R.id.baijia_main_framelayout, (Fragment) fragment_list.get(i).getFragment()).commit();
-			}
 		}
 	}
 	
 	
 	void setCurrView(int i)
 	{
-		if(currid==i)
+		if(currid==-1 && i==0)
+		{
+			fragmentManager.beginTransaction().add(R.id.baijia_main_framelayout, (Fragment) fragment_list.get(i).getFragment()).commit();
+		}
+	    else if(currid==i)
 		{
 			return;
 		}
 		currid=i;
+		setTextColor(i);
 		fragmentManager.beginTransaction().replace(R.id.baijia_main_framelayout,(Fragment) fragment_list.get(i).getFragment()).commit();
+		
+	}
+	
+	void setTextColor(int value)
+	{
+		for(int i=0;i<footer_list.size();i++)
+		{
+			LinearLayout ll =(LinearLayout)footer_list.get(i);
+			ImageView iv=(ImageView)ll.findViewById(R.id.imageview);
+			TextView tv=(TextView)ll.findViewById(R.id.tv1);
+			if(i==value)
+			{
+			  tv.setTextColor(this.getResources().getColor(R.color.color_deeoyellow));
+			  iv.setSelected(true);
+				
+			}else
+			{
+				tv.setTextColor(this.getResources().getColor(R.color.black));
+				iv.setSelected(false);
+			}
+			
+			
+		}
 	}
 }

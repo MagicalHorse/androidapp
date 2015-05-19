@@ -7,14 +7,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.adapter.MsgAdapter;
 import com.shenma.yueba.baijia.modle.MsgBean;
-import com.shenma.yueba.util.FontManager;
 
 
 /**

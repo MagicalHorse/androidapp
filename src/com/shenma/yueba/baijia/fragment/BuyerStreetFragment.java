@@ -3,6 +3,7 @@ package com.shenma.yueba.baijia.fragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v4.app.Fragment;
@@ -13,7 +14,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -26,6 +30,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.State;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.lidroid.xutils.BitmapUtils;
 import com.shenma.yueba.R;
+import com.shenma.yueba.baijia.activity.ShopMainActivity;
 import com.shenma.yueba.baijia.modle.FragmentBean;
 import com.shenma.yueba.baijia.modle.ImageStringBean;
 import com.shenma.yueba.util.ListViewUtils;
@@ -33,7 +38,6 @@ import com.shenma.yueba.util.ListViewUtils;
 public class BuyerStreetFragment extends Fragment{
 	List<FragmentBean> fragment_list=new ArrayList<FragmentBean>();
 	List<View> footer_list=new ArrayList<View>();
-	BuyerStreetFragment baiJiaFrament;
 	//当前选中的id
 	int currid=-1;
 	FragmentManager fragmentManager;
@@ -45,6 +49,7 @@ public class BuyerStreetFragment extends Fragment{
 	List<ImageStringBean> icon_list=new ArrayList<ImageStringBean>();
 	List<Object> obj_list=new ArrayList<Object>();
 	LayoutInflater inflater;
+	LinearLayout showloading_layout_view;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -114,7 +119,7 @@ public class BuyerStreetFragment extends Fragment{
 			@Override
 			public void onPullDownToRefresh(PullToRefreshBase refreshView) {
 				
-				//SystemClock.sleep(3000);
+				//SystemClock.sleep(100);
 				Log.i("TAG", "onPullDownToRefresh");
 				//pulltorefreshscrollview.setRefreshing();
 				requestFalshData();
@@ -122,7 +127,7 @@ public class BuyerStreetFragment extends Fragment{
 
 			@Override
 			public void onPullUpToRefresh(PullToRefreshBase refreshView) {
-				//SystemClock.sleep(3000);
+				//SystemClock.sleep(100);
 				//pulltorefreshscrollview.setRefreshing();
 				Log.i("TAG", "onPullUpToRefresh");
 				requestData();
@@ -134,6 +139,7 @@ public class BuyerStreetFragment extends Fragment{
 	{
 		focus_textview=(TextView)v.findViewById(R.id.focus_textview);
 		String iconurl="http://img4.imgtn.bdimg.com/it/u=716148157,58117191&fm=21&gp=0.jpg";
+		showloading_layout_view=(LinearLayout)v.findViewById(R.id.showloading_layout_view);
 		for(int i=0;i<5;i++)
 		{
 			icon_list.add(new ImageStringBean(getActivity(), iconurl));
@@ -175,6 +181,16 @@ public class BuyerStreetFragment extends Fragment{
 				//super.destroyItem(container, position, object);
 			}
 			
+		});
+		
+		baijia_contact_listview.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				Intent intent=new Intent(getActivity(),ShopMainActivity.class);
+				startActivity(intent);
+			}
 		});
 	}
 	
@@ -241,7 +257,7 @@ public class BuyerStreetFragment extends Fragment{
 		new Thread()
 		{
 			public void run() {
-				SystemClock.sleep(3000);
+				SystemClock.sleep(100);
 				getActivity().runOnUiThread(new Runnable() {
 					
 					@Override
@@ -260,7 +276,7 @@ public class BuyerStreetFragment extends Fragment{
 		new Thread()
 		{
 			public void run() {
-				SystemClock.sleep(3000);
+				SystemClock.sleep(100);
 				getActivity().runOnUiThread(new Runnable() {
 					
 					@Override
@@ -281,6 +297,7 @@ public class BuyerStreetFragment extends Fragment{
 			obj_list.add(null);
 			
 		}
+		showloading_layout_view.setVisibility(View.GONE);
 		baseAdapter.notifyDataSetChanged();
 		ListViewUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
 		pulltorefreshscrollview.onRefreshComplete();
@@ -294,6 +311,7 @@ public class BuyerStreetFragment extends Fragment{
 			obj_list.add(null);
 			
 		}
+		showloading_layout_view.setVisibility(View.GONE);
 		baseAdapter.notifyDataSetChanged();
 		
 		ListViewUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);

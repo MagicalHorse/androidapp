@@ -63,8 +63,8 @@ public class MyBuyerAdapter extends BaseAdapterWithUtil {
 //			}.start();
 			
 		//	MyApplication.getInstance().getImageLoader().displayImage("http://wenwen.soso.com/p/20090901/20090901120123-329341688.jpg", holder.iv_head);
-			FontManager.changeFonts(ctx, holder.tv_buyer_name,holder.tv_time,holder.tv_address,
-					holder.tv_money,holder.tv_introduce,holder.tv_chat,holder.tv_share,holder.tv_zan);
+			/*FontManager.changeFonts(ctx, holder.tv_buyer_name,holder.tv_time,holder.tv_address,
+					holder.tv_money,holder.tv_introduce,holder.tv_chat,holder.tv_share,holder.tv_zan);*/
 			convertView.setTag(holder);
 		}else{
 			holder = (Holder) convertView.getTag();

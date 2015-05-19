@@ -3,9 +3,6 @@ package com.shenma.yueba.baijia.fragment;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.shenma.yueba.R;
-import com.shenma.yueba.baijia.modle.FragmentBean;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -19,19 +16,29 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.shenma.yueba.R;
+import com.shenma.yueba.baijia.modle.FragmentBean;
+/******
+ * @author gyj
+ * @date 2015-05-19
+ * 买手主页Fragment  
+ * 主要布局采用viewPager+Linerlayout实现TAB效果切换数据
+ * 
+ * ****/
 public class IndexFragmentForBaiJia extends Fragment{
+	//存储切换的数据
 	List<FragmentBean> fragment_list=new ArrayList<FragmentBean>();
+	//存储Tab切换的视图对象
 	List<View> footer_list=new ArrayList<View>();
-	IndexFragmentForBaiJia baiJiaFrament;
 	ViewPager baijia_fragment_tab1_pagerview;
 	LinearLayout baijia_fragment_tab1_head_linearlayout;
 	//当前选中的id
 	int currid=-1;
 	FragmentManager fragmentManager;
 	View v;
-	ViewPager baijia_head_viewpager;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -46,7 +53,6 @@ public class IndexFragmentForBaiJia extends Fragment{
 		{
 			vp.removeView(v);
 		}
-		//return super.onCreateView(inflater, container, savedInstanceState);
 		return v;
 	}
 	
@@ -56,6 +62,10 @@ public class IndexFragmentForBaiJia extends Fragment{
 		super.onCreate(savedInstanceState);
 	}
 	
+	
+	/***
+	 * 初始化视图
+	 * ***/
 	void initView(View v)
 	{
 		fragmentManager=((FragmentActivity)getActivity()).getSupportFragmentManager();
@@ -68,9 +78,10 @@ public class IndexFragmentForBaiJia extends Fragment{
 		baijia_fragment_tab1_head_linearlayout=(LinearLayout)v.findViewById(R.id.baijia_fragment_tab1_head_linearlayout);
 		for(int i=0;i<fragment_list.size();i++)
 		{
-			TextView tv=new TextView(getActivity());
-			tv.setTag(i);
-			tv.setOnClickListener(new OnClickListener() {
+			RelativeLayout rl=(RelativeLayout)RelativeLayout.inflate(getActivity(), R.layout.tab_line_layout, null);
+			TextView tv=(TextView)rl.findViewById(R.id.tab_line_textview);
+			rl.setTag(i);
+			rl.setOnClickListener(new OnClickListener() {
 				
 				@Override
 				public void onClick(View v) {
@@ -83,7 +94,8 @@ public class IndexFragmentForBaiJia extends Fragment{
 			LinearLayout.LayoutParams param=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
 			param.weight=1;
 			param.gravity=Gravity.CENTER;
-			baijia_fragment_tab1_head_linearlayout.addView(tv,param);
+			baijia_fragment_tab1_head_linearlayout.addView(rl,param);
+			footer_list.add(rl);
 		}
 		baijia_fragment_tab1_pagerview=(ViewPager)v.findViewById(R.id.baijia_fragment_tab1_pagerview);
 		//baijia_fragment_tab1_pagerview.setOffscreenPageLimit(fragment_list.size());
@@ -109,8 +121,7 @@ public class IndexFragmentForBaiJia extends Fragment{
 			
 			@Override
 			public void onPageSelected(int arg0) {
-				
-				
+				setTextColor(arg0);
 			}
 			
 			@Override
@@ -125,11 +136,44 @@ public class IndexFragmentForBaiJia extends Fragment{
 				
 			}
 		});
+		setCurrView(0);
 	}
 	
+	
+	/***
+	 * 设置当前需要显示的 item
+	 * ***/
 	void setCurrView(int i)
 	{
-		View v=((Fragment) fragment_list.get(i).getFragment()).getView();
+		if(currid==i)
+		{
+			return;
+		}
+		currid=i;
+		setTextColor(i);
 		baijia_fragment_tab1_pagerview.setCurrentItem(i);
+	}
+	
+	/*****
+	 * 设置字体颜色及选中后显示的图片
+	 * ***/
+	void setTextColor(int value)
+	{
+		for(int i=0;i<footer_list.size();i++)
+		{
+			RelativeLayout rl=(RelativeLayout)footer_list.get(i);
+			TextView tv=(TextView)rl.findViewById(R.id.tab_line_textview);
+			View v=(View)rl.findViewById(R.id.tab_line_view);
+			if(i==value)
+			{
+			  tv.setTextColor(this.getResources().getColor(R.color.color_deeoyellow));
+		      v.setVisibility(View.VISIBLE);
+			}else
+			{
+				tv.setTextColor(this.getResources().getColor(R.color.black));
+				v.setVisibility(View.INVISIBLE);
+			}
+			
+		}
 	}
 }

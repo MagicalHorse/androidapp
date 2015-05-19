@@ -22,7 +22,7 @@ public class DynamicAdapter extends BaseAdapterWithUtil {
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return 10;
+		return mList.size();
 	}
 
 	@Override
@@ -49,7 +49,7 @@ public class DynamicAdapter extends BaseAdapterWithUtil {
 			holder.tv_name = (TextView) convertView.findViewById(R.id.tv_name);
 			holder.tv_dynamic_type = (TextView) convertView.findViewById(R.id.tv_dynamic_type);
 			holder.tv_time = (TextView) convertView.findViewById(R.id.tv_time);
-			FontManager.changeFonts(ctx, holder.tv_name,holder.tv_time,holder.tv_dynamic_type);
+			//FontManager.changeFonts(ctx, holder.tv_name,holder.tv_time,holder.tv_dynamic_type);
 			convertView.setTag(holder);
 		}else{
 			holder = (Holder) convertView.getTag();

@@ -52,7 +52,7 @@ public class TheySayAdapter extends BaseAdapterWithUtil {
 			holder.tv_zan_count = (TextView) convertView.findViewById(R.id.tv_zan_count);
 			holder.tv_chat = (TextView) convertView.findViewById(R.id.tv_chat);
 			holder.tv_share = (TextView) convertView.findViewById(R.id.tv_share);
-			FontManager.changeFonts(ctx,holder.tv_introduce,holder.tv_zan_count,holder.tv_chat,holder.tv_share);
+			//FontManager.changeFonts(ctx,holder.tv_introduce,holder.tv_zan_count,holder.tv_chat,holder.tv_share);
 			convertView.setTag(holder);
 		}else{
 			holder = (Holder) convertView.getTag();

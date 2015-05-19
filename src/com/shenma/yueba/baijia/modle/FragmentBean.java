@@ -1,9 +1,9 @@
 package com.shenma.yueba.baijia.modle;
 
-import android.support.v4.app.Fragment;
+import java.io.Serializable;
 
 
-public class FragmentBean {
+public class FragmentBean implements Serializable{
 	String name = "";
 	int icon;
 	Object fragment = null;

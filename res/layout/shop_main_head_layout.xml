@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:zhy="http://schemas.android.com/apk/res/com.shenma.yueba"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
@@ -10,14 +11,14 @@
    
     <!-- 头像 -->
 
-    <ImageView
+    <com.shenma.yueba.view.imageshow.CustomImageView
         android:layout_gravity="center_horizontal"
         android:id="@+id/shop_main_layout_icon_imageview"
         android:layout_width="@dimen/shop_main_iconwidth80_dimen"
         android:layout_height="@dimen/shop_main_iconwidth80_dimen"
         android:layout_marginTop="@dimen/margin_left_and_right"
-        android:scaleType="fitCenter"
-        android:src="@drawable/user_config_icon" />
+        zhy:type="circle"
+        zhy:src="@drawable/user_config_icon" />
     <!-- 店名 -->
 
     <TextView

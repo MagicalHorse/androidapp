@@ -25,6 +25,8 @@ import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.fragment.ShopMainFragmentTab1;
 import com.shenma.yueba.baijia.fragment.StayLayFragment;
+import com.shenma.yueba.view.RoundImageView;
+import com.shenma.yueba.view.imageshow.CustomImageView;
 import com.shenma.yueba.view.scroll.CustomScrollView;
 import com.shenma.yueba.view.scroll.CustomScrollView.ScrollListener;
 /*****
@@ -35,7 +37,7 @@ import com.shenma.yueba.view.scroll.CustomScrollView.ScrollListener;
  * ***/
 public class ShopMainActivity extends BaseActivityWithTopView implements ScrollListener {
 	//商品logo 
-    ImageView shop_main_layout_icon_imageview;
+    CustomImageView shop_main_layout_icon_imageview;
     //店铺名称
     TextView shop_main_layout_name_textview;
     //商场名称
@@ -96,7 +98,7 @@ public class ShopMainActivity extends BaseActivityWithTopView implements ScrollL
 			}
 		});
 		fm=this.getFragmentManager();
-		shop_main_layout_icon_imageview=(ImageView)findViewById(R.id.shop_main_layout_icon_imageview);
+		shop_main_layout_icon_imageview=(CustomImageView)findViewById(R.id.shop_main_layout_icon_imageview);
 		shop_main_layout_name_textview=(TextView)findViewById(R.id.shop_main_layout_name_textview);
 		shop_main_layout_market_textview=(TextView)findViewById(R.id.shop_main_layout_market_textview);
 		shop_main_siliao_imagebutton=(ImageButton)findViewById(R.id.shop_main_siliao_imagebutton); 

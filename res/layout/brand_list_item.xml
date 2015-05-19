@@ -22,7 +22,40 @@
         android:layout_width="fill_parent"
         android:orientation="horizontal"
         >
+        <ImageView
+            android:id="@+id/brandlist_item_imageview1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/test001"
+            />
         
+        <ImageView
+            android:id="@+id/brandlist_item_imageview2"
+            android:layout_marginLeft="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/test001"
+            />
+        
+        <ImageView
+            android:id="@+id/brandlist_item_imageview3"
+            android:layout_marginLeft="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/test001"
+            />
+        
+        <ImageView
+            android:id="@+id/brandlist_item_imageview4"
+            android:layout_marginLeft="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/test001"
+            />
     </LinearLayout>
     
 </LinearLayout>

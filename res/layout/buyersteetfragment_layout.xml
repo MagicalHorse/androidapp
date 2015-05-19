@@ -1,52 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout 
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical" >
+
     <TextView
         android:id="@+id/focus_textview"
         android:layout_width="wrap_content"
         android:layout_height="1px"
         android:focusable="true"
-        android:focusableInTouchMode="true"
-        />
-    <com.handmark.pulltorefresh.library.PullToRefreshScrollView
-        android:id="@+id/pulltorefreshscrollview"
+        android:focusableInTouchMode="true" />
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
-        <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical" >
-
-        <RelativeLayout
+        <com.handmark.pulltorefresh.library.PullToRefreshScrollView
+            android:id="@+id/pulltorefreshscrollview"
             android:layout_width="match_parent"
-            android:layout_height="100dp" >
-
-            <android.support.v4.view.ViewPager
-                android:id="@+id/baijia_head_viewpager"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+            android:layout_height="match_parent" >
 
             <LinearLayout
-                android:id="@+id/baijia_head_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal" />
-        </RelativeLayout>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="最新上新"
-            />
-        <ListView
-            android:id="@+id/baijia_contact_listview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
-    </LinearLayout>
-        
-    </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
-    </LinearLayout>
+                android:layout_height="match_parent"
+                android:orientation="vertical" >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp" >
+
+                    <android.support.v4.view.ViewPager
+                        android:id="@+id/baijia_head_viewpager"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                    <LinearLayout
+                        android:id="@+id/baijia_head_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal" />
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="最新上新" />
+
+                <ListView
+                    android:id="@+id/baijia_contact_listview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
+
+        <include
+            android:id="@+id/showloading_layout_view"
+            android:layout_centerInParent="true"
+            layout="@layout/showloading_layout" />
+    </RelativeLayout>
+
+</LinearLayout>
