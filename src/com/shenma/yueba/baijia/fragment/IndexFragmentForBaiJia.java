@@ -1,146 +1,135 @@
 package com.shenma.yueba.baijia.fragment;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import com.shenma.yueba.R;
+import com.shenma.yueba.baijia.modle.FragmentBean;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.shenma.yueba.R;
-import com.shenma.yueba.baijia.adapter.CircleFragmentPagerAdapter;
-import com.shenma.yueba.util.FontManager;
-
-/**
- * 主界面
- * 
- * @author a
- */
-public class IndexFragmentForBaiJia extends BaseFragment implements OnClickListener {
-	private View view;
-	private TextView tv_buyer_street;
-	private TextView tv_they_say;
-	private TextView tv_my_buyer;
-	private ImageView iv_cursor_left, iv_cursor_center, iv_cursor_right;
-	private Button bt_cart;
-	private ViewPager viewpager_main;
-	private BuyerStreetFragment buyerStreetFragment;// 买手街
-	private TheySayFragment theySayFragment;// 他们说
-	private MyBuyerFragment myBuyerFragment;// 我的买手
-	private ArrayList<Fragment> fragmentList = new ArrayList<Fragment>();
-	private CircleFragmentPagerAdapter myFragmentPagerAdapter;
-
+public class IndexFragmentForBaiJia extends Fragment{
+	List<FragmentBean> fragment_list=new ArrayList<FragmentBean>();
+	List<View> footer_list=new ArrayList<View>();
+	IndexFragmentForBaiJia baiJiaFrament;
+	ViewPager baijia_fragment_tab1_pagerview;
+	LinearLayout baijia_fragment_tab1_head_linearlayout;
+	//当前选中的id
+	int currid=-1;
+	FragmentManager fragmentManager;
+	View v;
+	ViewPager baijia_head_viewpager;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		if (view == null) {
-			initView(inflater);
-			initFragment();
-			initViewPager();
+		
+		if(v==null)
+		{
+			v=inflater.inflate(R.layout.indexfragmentforbaijia_layout, null);
+			initView(v);
 		}
-		// 缓存的rootView需要判断是否已经被加过parent，如果有parent需要从parent删除，要不然会发生这个rootview已经有parent的错误。
-		ViewGroup parent = (ViewGroup) view.getParent();
-		if (parent != null) {
-			parent.removeView(view);
+		ViewGroup vp=(ViewGroup)v.getParent();
+		if(vp!=null)
+		{
+			vp.removeView(v);
 		}
-
-		return view;
+		//return super.onCreateView(inflater, container, savedInstanceState);
+		return v;
 	}
-
-	private void initView(LayoutInflater inflater) {
-		view = inflater.inflate(R.layout.index_fragment_layout, null);
-		tv_buyer_street = (TextView) view.findViewById(R.id.tv_buyer_street);
-		tv_they_say = (TextView) view.findViewById(R.id.tv_they_say);
-		tv_my_buyer = (TextView) view.findViewById(R.id.tv_my_buyer);
-		tv_buyer_street.setOnClickListener(this);
-		tv_they_say.setOnClickListener(this);
-		tv_my_buyer.setOnClickListener(this);
-		bt_cart = (Button) view.findViewById(R.id.bt_cart);
-		iv_cursor_left = (ImageView) view.findViewById(R.id.iv_cursor_left);
-		iv_cursor_left.setVisibility(View.VISIBLE);
-		iv_cursor_center = (ImageView) view.findViewById(R.id.iv_cursor_center);
-		iv_cursor_right = (ImageView) view.findViewById(R.id.iv_cursor_right);
-		bt_cart = (Button) view.findViewById(R.id.bt_cart);
-		bt_cart = (Button) view.findViewById(R.id.bt_cart);
-		viewpager_main = (ViewPager) view.findViewById(R.id.viewpager_main);
-		FontManager.changeFonts(getActivity(), tv_buyer_street, tv_they_say,
-				tv_my_buyer);
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		
+		super.onCreate(savedInstanceState);
 	}
-
-	private void initFragment() {
-		buyerStreetFragment = new BuyerStreetFragment();
-		theySayFragment = new TheySayFragment();
-		myBuyerFragment = new MyBuyerFragment();
-		fragmentList.add(buyerStreetFragment);
-		fragmentList.add(theySayFragment);
-		fragmentList.add(myBuyerFragment);
-		myFragmentPagerAdapter = new CircleFragmentPagerAdapter(
-				getChildFragmentManager(), fragmentList);
-
-	}
-
-	private void initViewPager() {
-		viewpager_main.setAdapter(myFragmentPagerAdapter);
-		viewpager_main.setCurrentItem(0);
-		viewpager_main.setOnPageChangeListener(new OnPageChangeListener() {
-
-			public void onPageScrolled(int arg0, float arg1, int arg2) {
-			}
-
-			/*
-			 * 页面跳转完成后调用的方法
-			 */
-			public void onPageSelected(int arg0) {
-				if (arg0 == 0) {
-					iv_cursor_left.setVisibility(View.VISIBLE);
-					iv_cursor_center.setVisibility(View.INVISIBLE);
-					iv_cursor_right.setVisibility(View.INVISIBLE);
+	
+	void initView(View v)
+	{
+		fragmentManager=((FragmentActivity)getActivity()).getSupportFragmentManager();
+		Fragment buyerStreetFragment=new BuyerStreetFragment();
+		Fragment theySayFragment=new TheySayFragment();
+		Fragment myBuyerFragment=new MyBuyerFragment();
+		fragment_list.add(new FragmentBean("买手街", -1, buyerStreetFragment));
+		fragment_list.add(new FragmentBean("TA们说", -1, theySayFragment));
+		fragment_list.add(new FragmentBean("我的买手", -1, myBuyerFragment));
+		baijia_fragment_tab1_head_linearlayout=(LinearLayout)v.findViewById(R.id.baijia_fragment_tab1_head_linearlayout);
+		for(int i=0;i<fragment_list.size();i++)
+		{
+			TextView tv=new TextView(getActivity());
+			tv.setTag(i);
+			tv.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					int i=(Integer)v.getTag();
+					setCurrView(i);
 				}
-				if (arg0 == 1) {
-					iv_cursor_center.setVisibility(View.VISIBLE);
-					iv_cursor_left.setVisibility(View.INVISIBLE);
-					iv_cursor_right.setVisibility(View.INVISIBLE);
-				}
-				if (arg0 == 2) {
-					iv_cursor_center.setVisibility(View.INVISIBLE);
-					iv_cursor_left.setVisibility(View.INVISIBLE);
-					iv_cursor_right.setVisibility(View.VISIBLE);
-				}
-
+			});
+			tv.setGravity(Gravity.CENTER);
+			tv.setText(fragment_list.get(i).getName());
+			LinearLayout.LayoutParams param=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+			param.weight=1;
+			param.gravity=Gravity.CENTER;
+			baijia_fragment_tab1_head_linearlayout.addView(tv,param);
+		}
+		baijia_fragment_tab1_pagerview=(ViewPager)v.findViewById(R.id.baijia_fragment_tab1_pagerview);
+		//baijia_fragment_tab1_pagerview.setOffscreenPageLimit(fragment_list.size());
+		baijia_fragment_tab1_pagerview.setAdapter(new FragmentPagerAdapter(fragmentManager) {
+			
+			@Override
+			public int getCount() {
+				
+				return fragment_list.size();
 			}
 
 			@Override
+			public android.support.v4.app.Fragment getItem(int arg0) {
+				
+				return (Fragment) fragment_list.get(arg0).getFragment();
+			}
+			
+			
+		});
+		
+		
+		baijia_fragment_tab1_pagerview.setOnPageChangeListener(new OnPageChangeListener() {
+			
+			@Override
+			public void onPageSelected(int arg0) {
+				
+				
+			}
+			
+			@Override
+			public void onPageScrolled(int arg0, float arg1, int arg2) {
+				
+				
+			}
+			
+			@Override
 			public void onPageScrollStateChanged(int arg0) {
-				// TODO Auto-generated method stub
-
+				
+				
 			}
 		});
-
 	}
-
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.tv_buyer_street:// 买手街
-			viewpager_main.setCurrentItem(0);
-			break;
-		case R.id.tv_they_say:// 他们说
-			viewpager_main.setCurrentItem(1);
-			break;
-		case R.id.tv_my_buyer:// 我的买手
-			viewpager_main.setCurrentItem(2);
-			break;
-		default:
-			break;
-		}
-
+	
+	void setCurrView(int i)
+	{
+		View v=((Fragment) fragment_list.get(i).getFragment()).getView();
+		baijia_fragment_tab1_pagerview.setCurrentItem(i);
 	}
-
 }

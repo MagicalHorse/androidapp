@@ -1,14 +1,13 @@
-package com.shenma.yueba.baijia.fragment;
+package com.shenma.yueba.baijia.view;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import android.os.Bundle;
+import android.app.Activity;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -18,53 +17,66 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.State;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.shenma.yueba.R;
-import com.shenma.yueba.baijia.adapter.MyCircleAdapter;
-import com.shenma.yueba.baijia.modle.MyCircleBean;
+import com.shenma.yueba.baijia.adapter.MyBuyerAdapter;
+import com.shenma.yueba.baijia.modle.MyBuyerBean;
 
-public class MyCircleFragment extends BaseFragment {
-	private MyCircleAdapter myCircleAdapter;
-	private List<MyCircleBean> mList = new ArrayList<MyCircleBean>();
+/**
+ * 我的买手
+ * 
+ * @author a
+ * 
+ */
+
+public class MyCircleView {
+	private List<MyBuyerBean> mList = new ArrayList<MyBuyerBean>();
 	private View view;
 	private PullToRefreshListView pull_refresh_list;
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+	static MyCircleView myCircleView;
+	Activity activity;
+	LayoutInflater inflater;
+	MyBuyerAdapter myBuyerAdapter;
+	public static MyCircleView the()
+	{
+		if(myCircleView==null)
+		{
+			myCircleView=new MyCircleView();
+		}
+		return myCircleView;
 	}
 	
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		
-		if (view == null) {
-			view = inflater.inflate(R.layout.refresh_listview_without_title_layout, null);
+	
+	public View getView(Activity activity)
+	{
+		this.activity=activity;
+		if(view == null)
+		{
+			initView();
 			initPullView();
-			
+			requestFalshData();
 		}
-		// 缓存的rootView需要判断是否已经被加过parent，如果有parent需要从parent删除，要不然会发生这个rootview已经有parent的错误。
-		ViewGroup parent = (ViewGroup) view.getParent();
-		if (parent != null) {
-			parent.removeView(view);
-		}
-		return view;
+		return view ;
 	}
 	
+	
+	
+	void initView()
+	{
+		inflater=activity.getLayoutInflater();
+		view = inflater.inflate(R.layout.refresh_listview_without_title_layout, null);
+	}
 	
 	void initPullView()
 	{
 		pull_refresh_list=(PullToRefreshListView)view.findViewById(R.id.pull_refresh_list);
-		 //设置标签显示的内容
 		pull_refresh_list.setMode(Mode.BOTH);
-		myCircleAdapter=new MyCircleAdapter(getActivity(), mList); 
-		pull_refresh_list.setAdapter(myCircleAdapter);
-		
-		
+		 
 		pull_refresh_list.setOnPullEventListener(new OnPullEventListener<ListView>() {
 
 			@Override
 			public void onPullEvent(PullToRefreshBase<ListView> refreshView,
 					State state, Mode direction) {
-				
-				 //设置标签显示的内容
+				//设置标签显示的内容
+				 
 				if(direction==Mode.PULL_FROM_START)
 				{
 					pull_refresh_list.getLoadingLayoutProxy().setPullLabel("上拉刷新");  
@@ -98,18 +110,18 @@ public class MyCircleFragment extends BaseFragment {
 				requestData();
 			}
 		});
-		requestFalshData();
+		myBuyerAdapter=new MyBuyerAdapter(activity, mList);
+		pull_refresh_list.setAdapter(myBuyerAdapter);
 	}
 	
 	
 	void requestData()
 	{
-		pull_refresh_list.setRefreshing();
 		new Thread()
 		{
 			public void run() {
 				SystemClock.sleep(3000);
-				getActivity().runOnUiThread(new Runnable() {
+				activity.runOnUiThread(new Runnable() {
 					
 					@Override
 					public void run() {
@@ -123,12 +135,11 @@ public class MyCircleFragment extends BaseFragment {
 	
 	void requestFalshData()
 	{
-		pull_refresh_list.setRefreshing();
 		new Thread()
 		{
 			public void run() {
 				SystemClock.sleep(100);
-				getActivity().runOnUiThread(new Runnable() {
+				activity.runOnUiThread(new Runnable() {
 					
 					@Override
 					public void run() {
@@ -145,10 +156,10 @@ public class MyCircleFragment extends BaseFragment {
 	{
 		for(int i=0;i<10;i++)
 		{
-			mList.add(new MyCircleBean());
+			mList.add(new MyBuyerBean());
 			
 		}
-		myCircleAdapter.notifyDataSetChanged();
+		myBuyerAdapter.notifyDataSetChanged();
 		//ListUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
 		pull_refresh_list.onRefreshComplete();
 	}
@@ -158,10 +169,10 @@ public class MyCircleFragment extends BaseFragment {
 		mList.clear();
 		for(int i=0;i<10;i++)
 		{
-			mList.add(new MyCircleBean());
+			mList.add(new MyBuyerBean());
 			
 		}
-		myCircleAdapter.notifyDataSetChanged();
+		myBuyerAdapter.notifyDataSetChanged();
 		
 		//ListUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
 		pull_refresh_list.onRefreshComplete();

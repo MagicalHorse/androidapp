@@ -3,21 +3,14 @@ package com.shenma.yueba.baijia.adapter;
 import java.util.List;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.lidroid.xutils.bitmap.BitmapDisplayConfig;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.shenma.yueba.R;
-import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.modle.MyBuyerBean;
 import com.shenma.yueba.util.FontManager;
-import com.shenma.yueba.util.PhotoUtils;
-import com.shenma.yueba.view.RoundImageView2;
 
 public class MyBuyerAdapter extends BaseAdapterWithUtil {
 	private List<MyBuyerBean> mList;
@@ -29,7 +22,7 @@ public class MyBuyerAdapter extends BaseAdapterWithUtil {
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return 10;
+		return mList.size();
 	}
 
 	@Override

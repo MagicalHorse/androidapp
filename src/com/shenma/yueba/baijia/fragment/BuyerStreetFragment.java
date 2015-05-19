@@ -1,287 +1,317 @@
 package com.shenma.yueba.baijia.fragment;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import android.os.Bundle;
-import android.os.Handler;
+import android.os.SystemClock;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
-import android.view.animation.AccelerateInterpolator;
-import android.widget.ImageView;
-import android.widget.ImageView.ScaleType;
-import android.widget.LinearLayout;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.ScrollView;
+import android.widget.TextView;
 
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnPullEventListener;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.State;
+import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
+import com.lidroid.xutils.BitmapUtils;
 import com.shenma.yueba.R;
-import com.shenma.yueba.application.MyApplication;
-import com.shenma.yueba.util.ToolsUtil;
-import com.shenma.yueba.view.FixedSpeedScroller;
-import com.shenma.yueba.view.SetListViewHeight;
-import com.shenma.yueba.view.scroll.PullToRefreshView;
-import com.shenma.yueba.view.scroll.PullToRefreshView.OnFooterRefreshListener;
-import com.shenma.yueba.view.scroll.PullToRefreshView.OnHeaderRefreshListener;
+import com.shenma.yueba.baijia.modle.FragmentBean;
+import com.shenma.yueba.baijia.modle.ImageStringBean;
+import com.shenma.yueba.util.ListViewUtils;
 
-/**
- * 买手街
- * 
- * @author a
- * 
- */
-
-public class BuyerStreetFragment extends BaseFragment implements
-		OnHeaderRefreshListener, OnFooterRefreshListener {
-	private View view;
-	ListView listview;
-	PullToRefreshView mPullToRefreshView;
-	private ViewPager viewpager;
-	List<HashMap<String, String>> imgurl_list;
-	List<View> mListViews;
-	private FixedSpeedScroller mScroller;
-	private int interver = 2500;// 时间间隔2500毫秒
-	private Handler handler = new Handler();
-//	List<HashMap<String, Object>> newslist;
-	private LinearLayout indexGroup, ll_viewpager_group, ll_viewpager;
-	private ArrayList<ImageView> imageList, indexList;
-	public static boolean boolPageNotChange = true;// false表明onPageSelected没被调用
-
+public class BuyerStreetFragment extends Fragment{
+	List<FragmentBean> fragment_list=new ArrayList<FragmentBean>();
+	List<View> footer_list=new ArrayList<View>();
+	BuyerStreetFragment baiJiaFrament;
+	//当前选中的id
+	int currid=-1;
+	FragmentManager fragmentManager;
+	ListView baijia_contact_listview;
+	TextView focus_textview;
+	View v;
+	PullToRefreshScrollView pulltorefreshscrollview;
+	ViewPager baijia_head_viewpager;
+	List<ImageStringBean> icon_list=new ArrayList<ImageStringBean>();
+	List<Object> obj_list=new ArrayList<Object>();
+	LayoutInflater inflater;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-
-		Log.i("aaaaa", "buyerStree");
-		View view = inflater.inflate(R.layout.buyer_street_layout, null, false);
-		
-		mPullToRefreshView = (PullToRefreshView) view.findViewById(R.id.main_pull_refresh_view);
-		
-		mPullToRefreshView.setOnHeaderRefreshListener(this);
-		mPullToRefreshView.setOnFooterRefreshListener(this);
-		viewpager = (ViewPager) view.findViewById(R.id.pager);
-		android.view.ViewGroup.LayoutParams params = viewpager.getLayoutParams();
-		params.height = ToolsUtil.getDisplayWidth(getActivity())/7*4;
-		viewpager.setLayoutParams(params);
-		
-		listview = (ListView) view.findViewById(R.id.listview);
-		
-		String[] imgurl={"http://c.hiphotos.baidu.com/image/w%3D400/sign=c9dfb8697bf0f736d8fe4d013a54b382/a8014c086e061d9568c0b92e78f40ad162d9ca26.jpg",
-				"http://img0.bdstatic.com/img/image/shouye/lvyou0424.jpg",
-				"http://b.hiphotos.baidu.com/image/w%3D400/sign=e5758968cebf6c81f7372de88c3fb1d7/8694a4c27d1ed21b770343e5af6eddc450da3fe3.jpg",
-				"http://s0.hao123img.com/res/r/image/2014-04-29/04ad57f37adab5c6954970a00f73a0b8.jpg"};
-		
-		imgurl_list=new ArrayList<HashMap<String,String>>();
-		for(int i=0;i<4;i++){
-			HashMap<String,String> map=new HashMap<String, String>();
-			map.put("imgurl", imgurl[i]);
-			imgurl_list.add(map);
+		this.inflater=inflater;
+		if(v==null)
+		{
+			v=inflater.inflate(R.layout.buyersteetfragment_layout, null);
+			initPullView();
+			initView(v);
+			requestFalshData();
 		}
-
-		
-		mListViews = new ArrayList<View>();
-		
-		for(int i=0;i<imgurl_list.size();i++){
-			ImageView iv = new ImageView(getActivity());
-			iv.setScaleType(ScaleType.FIT_XY);
-			MyApplication.getInstance().getBitmapUtil().display(iv, imgurl_list.get(i).get("imgurl"));
-			mListViews.add(iv);
+		ViewGroup vp=(ViewGroup)v.getParent();
+		if(vp!=null)
+		{
+			vp.removeView(v);
 		}
+		//return super.onCreateView(inflater, container, savedInstanceState);
+		focus_textview.setFocusable(true);
+		focus_textview.setFocusableInTouchMode(true);
+		pulltorefreshscrollview.setFocusable(false);
+		pulltorefreshscrollview.setFocusableInTouchMode(false);
+		return v;
+		
+		
+	}
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		
+		super.onCreate(savedInstanceState);
+		
+	}
+	
+	
+	void initPullView()
+	{
+		pulltorefreshscrollview=(PullToRefreshScrollView)v.findViewById(R.id.pulltorefreshscrollview);
+		 //设置标签显示的内容
+		 //pulltorefreshscrollview.getLoadingLayoutProxy().setLastUpdatedLabel("lastUpdateLabel");   
+		 pulltorefreshscrollview.getLoadingLayoutProxy().setPullLabel("下拉刷新");  
+		 pulltorefreshscrollview.getLoadingLayoutProxy().setRefreshingLabel("刷新中。。。");  
+		 pulltorefreshscrollview.getLoadingLayoutProxy().setReleaseLabel("松开刷新");
+		 pulltorefreshscrollview.setMode(Mode.BOTH);
+		 pulltorefreshscrollview.setOnPullEventListener(new OnPullEventListener<ScrollView>() {
 
-
-		viewpager.setAdapter(new MyViewPagerAdapter(mListViews));
-		setScroller();
-		viewpager.setOnPageChangeListener(new OnPageChangeListener() {
 			@Override
-			public void onPageSelected(int index) {
-				for (int i = 0; i < indexList.size(); i++) {
-					indexList.get(i).setBackgroundResource(R.drawable.point_n);
+			public void onPullEvent(
+					PullToRefreshBase<ScrollView> refreshView, State state,
+					Mode direction) {
+				if(direction==Mode.PULL_FROM_START)
+				{
+					pulltorefreshscrollview.getLoadingLayoutProxy().setPullLabel("上拉刷新");  
+					 pulltorefreshscrollview.getLoadingLayoutProxy().setRefreshingLabel("刷新中。。。");  
+					 pulltorefreshscrollview.getLoadingLayoutProxy().setReleaseLabel("松开刷新");
+				}else if(direction==Mode.PULL_FROM_END)
+				{
+					pulltorefreshscrollview.getLoadingLayoutProxy().setPullLabel("下拉加载");  
+					 pulltorefreshscrollview.getLoadingLayoutProxy().setRefreshingLabel("加载中。。。");  
+					 pulltorefreshscrollview.getLoadingLayoutProxy().setReleaseLabel("松开加载");
 				}
-				if (indexList.size() > 0) {
-					indexList.get(index % indexList.size())
-							.setBackgroundResource(R.drawable.point_y);
-				}
-			}
-			@Override
-			public void onPageScrolled(int arg0, float arg1, int arg2) {
-				
-			}
-			@Override
-			public void onPageScrollStateChanged(int arg0) {
-				
 			}
 		});
-		
-		
-		SetListViewHeight.setListViewHeightBasedOnChildren(listview);
-		
-		indexGroup = (LinearLayout)
-				view.findViewById(R.id.main_viewpager_index);
-		indexList = new ArrayList<ImageView>();
-		createSmallPoint(4);
-		return view;
+		 
+		 pulltorefreshscrollview.setOnRefreshListener(new OnRefreshListener2() {
+
+			@Override
+			public void onPullDownToRefresh(PullToRefreshBase refreshView) {
+				
+				//SystemClock.sleep(3000);
+				Log.i("TAG", "onPullDownToRefresh");
+				//pulltorefreshscrollview.setRefreshing();
+				requestFalshData();
+			}
+
+			@Override
+			public void onPullUpToRefresh(PullToRefreshBase refreshView) {
+				//SystemClock.sleep(3000);
+				//pulltorefreshscrollview.setRefreshing();
+				Log.i("TAG", "onPullUpToRefresh");
+				requestData();
+			}
+		});
 	}
-
-	@Override
-	public void onHeaderRefresh(PullToRefreshView view) {
-		// TODO Auto-generated method stub
-
+	
+	void initView(View v)
+	{
+		focus_textview=(TextView)v.findViewById(R.id.focus_textview);
+		String iconurl="http://img4.imgtn.bdimg.com/it/u=716148157,58117191&fm=21&gp=0.jpg";
+		for(int i=0;i<5;i++)
+		{
+			icon_list.add(new ImageStringBean(getActivity(), iconurl));
+		}
+		baijia_contact_listview=(ListView)v.findViewById(R.id.baijia_contact_listview);
+		baijia_contact_listview.setAdapter(baseAdapter);
+		
+		baijia_head_viewpager=(ViewPager)v.findViewById(R.id.baijia_head_viewpager);
+		baijia_head_viewpager.setAdapter(new PagerAdapter() {
+			
+			@Override
+			public boolean isViewFromObject(View arg0, Object arg1) {
+				
+				return arg0==arg1;
+			}
+			
+			@Override
+			public int getCount() {
+				
+				return icon_list.size();
+			}
+			
+			@Override
+			public Object instantiateItem(ViewGroup container, int position) {
+				ImageStringBean imageStringBean=icon_list.get(position);
+				View v=imageStringBean.getIv();
+				container.addView(v, 0, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+				getImageView(icon_list.get(position));
+				return v;
+				//return super.instantiateItem(container, position);
+			}
+			
+			@Override
+			public void destroyItem(ViewGroup container, int position,
+					Object object) {
+				ImageStringBean imageStringBean=icon_list.get(position);
+				View v=imageStringBean.getIv();
+				container.removeView(v);
+				//super.destroyItem(container, position, object);
+			}
+			
+		});
 	}
-
-	@Override
-	public void onFooterRefresh(PullToRefreshView view) {
-		// TODO Auto-generated method stub
-
+	
+	
+	void getImageView(ImageStringBean bean)
+	{
+		BitmapUtils bitmapUtils=new BitmapUtils(getActivity());
+		bitmapUtils.configDefaultLoadFailedImage(R.drawable.ic_launcher);
+		bitmapUtils.display(bean.getIv(), bean.getIconurl());
+		
 	}
-
-//	private void setViewPager(View view) {
-//		ll_viewpager_group = (LinearLayout) view
-//				.findViewById(R.id.ll_viewpager_group);
-//		// 屏幕的宽度
-//		int width_viewpager = ToolsUtil.getDisplayWidth(getActivity());
-//		// 动态构建ll_viewpager
-//		ll_viewpager = new LinearLayout(getActivity());
-//		LinearLayout.LayoutParams params_viewpager = new LinearLayout.LayoutParams(
-//				width_viewpager, width_viewpager / 7 * 3);
-//		ll_viewpager.setLayoutParams(params_viewpager);
-//		ll_viewpager.setOrientation(LinearLayout.HORIZONTAL);
-//		// 加入ll_viewpager_group
-//		ll_viewpager_group.addView(ll_viewpager);
-//
-//		// 生成控件
-//		View view_vp = View.inflate(getActivity(),
-//				R.layout.viewpager_guang_gao_wei, null);
-//		viewpager = (ViewPager) view_vp.findViewById(R.id.main_viewpager);
-//		indexGroup = (LinearLayout) view_vp
-//				.findViewById(R.id.main_viewpager_index);
-//		// 向ll_viewpager填充视图
-//		ll_viewpager.addView(view);
-//		// 设置监听器
-//		viewpager.setOnPageChangeListener(new OnPageChangeListener() {
-//			@Override
-//			public void onPageSelected(int index) {
-//				for (int i = 0; i < indexList.size(); i++) {
-//					indexList.get(i).setBackgroundResource(R.drawable.point_n);
-//				}
-//				if (indexList.size() > 0) {
-//					indexList.get(index % indexList.size())
-//							.setBackgroundResource(R.drawable.point_y);
-//				}
-//
-//			}
-//
-//			@Override
-//			public void onPageScrolled(int arg0, float arg1, int arg2) {
-//			}
-//
-//			@Override
-//			public void onPageScrollStateChanged(int arg0) {
-//			}
-//		});
-//	}
-
-	public class MyViewPagerAdapter extends PagerAdapter {
-		private List<View> mListViews;
-
-		public MyViewPagerAdapter(List<View> mListViews) {
-			this.mListViews = mListViews;
-		}
-
-		@Override
-		public void destroyItem(View v, int position, Object object) {
-			((ViewPager) v).removeView(mListViews.get(position));
-		}
-
-		@Override
-		public Object instantiateItem(View v, int position) {
-			View view = mListViews.get(position);
-			((ViewPager) v).addView(view);
-			return view;
-
-		}
+	
+	
+	BaseAdapter baseAdapter=new BaseAdapter()
+	{
 
 		@Override
 		public int getCount() {
-			return mListViews.size();
+			
+			return obj_list.size();
 		}
 
 		@Override
-		public boolean isViewFromObject(View arg0, Object arg1) {
-			return arg0 == arg1;
+		public Object getItem(int position) {
+			
+			return null;
 		}
-	}
-	
-	
-	// 创建广告位小圆点
-	private void createSmallPoint(int i) {
-		for (int j = 0; j < i; j++) {
-			ImageView index = new ImageView(getActivity());
-			LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-					LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-			params.setMargins(5, 0, 5, 0);
-			if (j == 0) {
-				index.setBackgroundResource(R.drawable.point_y);
-			} else {
-				index.setBackgroundResource(R.drawable.point_n);
-			}
-			indexGroup.addView(index, params);
-			indexList.add(index);
-		}
-	
-	}
-	
-	@Override
-	public void onStart() {
-		handler.postDelayed(refresh, interver);
-		super.onStart();
-	}
 
-	@Override
-	public void onStop() {
-		handler.removeCallbacks(refresh);
-		super.onStop();
-	}
-	
-	private Runnable refresh = new Runnable() {
 		@Override
-		public void run() {
-			// 如果用户没有触摸屏幕
-			if (boolPageNotChange) {
-				viewpager.setCurrentItem(viewpager.getCurrentItem() + 1);
-				handler.postDelayed(refresh, interver);
-			} else {// 为了用户体验，此处减一秒钟更好一点
-				handler.postDelayed(refresh, interver - 1000);
-			}
-			boolPageNotChange = true;
+		public long getItemId(int position) {
+			
+			return 0;
 		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			
+			Holder holder;
+			if(convertView==null)
+			{
+				holder=new Holder();
+				convertView=inflater.inflate(R.layout.buyersteetfragment_item, null);
+				holder.v=convertView;
+				convertView.setTag(holder);
+			}else
+			{
+				holder=(Holder)convertView.getTag();
+				
+			}
+			
+			return convertView;
+		}
+		
 	};
-
 	
-	private void setScroller() {
-		// 设置左右滑动的间隔时间
-		try {
-			Field mField = ViewPager.class.getDeclaredField("mScroller");
-			mField.setAccessible(true);
-			mScroller = new FixedSpeedScroller(viewpager.getContext(),
-					new AccelerateInterpolator());
-			mScroller.setmDuration(500);// 可以用setDuration的方式调整速率
-			mField.set(viewpager, mScroller);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	class Holder
+	{
+		View v;
 	}
-
+	
+	void requestData()
+	{
+		pulltorefreshscrollview.setRefreshing();
+		new Thread()
+		{
+			public void run() {
+				SystemClock.sleep(3000);
+				getActivity().runOnUiThread(new Runnable() {
+					
+					@Override
+					public void run() {
+						
+						addData();
+					}
+				});
+			};
+		}.start();
+	}
+	
+	void requestFalshData()
+	{
+		pulltorefreshscrollview.setRefreshing();
+		new Thread()
+		{
+			public void run() {
+				SystemClock.sleep(3000);
+				getActivity().runOnUiThread(new Runnable() {
+					
+					@Override
+					public void run() {
+						
+						falshData();
+					}
+				});
+			};
+		}.start();
+	}
+	
+	
+	void addData()
+	{
+		for(int i=0;i<10;i++)
+		{
+			obj_list.add(null);
+			
+		}
+		baseAdapter.notifyDataSetChanged();
+		ListViewUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
+		pulltorefreshscrollview.onRefreshComplete();
+	}
+	
+	void falshData()
+	{
+		obj_list.clear();
+		for(int i=0;i<10;i++)
+		{
+			obj_list.add(null);
+			
+		}
+		baseAdapter.notifyDataSetChanged();
+		
+		ListViewUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
+		pulltorefreshscrollview.onRefreshComplete();
+		
+	}
 	
 	@Override
-	public void onDestroy() {
-		if(viewpager!=null){
-			viewpager = null;
-		}
-		super.onDestroy();
+	public void onResume() {
+		
+		super.onResume();
+		pulltorefreshscrollview.setFocusable(false);
+		pulltorefreshscrollview.setFocusableInTouchMode(false);
+	}
+	
+	@Override
+	public void onPause() {
+		 
+		super.onPause();
 	}
 }

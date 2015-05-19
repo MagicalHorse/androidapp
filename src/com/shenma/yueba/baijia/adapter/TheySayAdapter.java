@@ -25,7 +25,7 @@ public class TheySayAdapter extends BaseAdapterWithUtil {
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return 10;
+		return mList.size();
 	}
 
 	@Override
