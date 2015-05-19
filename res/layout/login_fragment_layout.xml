@@ -52,14 +52,13 @@
 
             <EditText
                 android:id="@+id/et_password"
-                android:layout_width="fill_parent"
+             android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="15dip"
                 android:background="@color/transparent"
-                android:hint="请输入密码"
-                android:singleLine="true"
-                android:textColor="@color/black"
-                android:password="true"
-                android:textSize="17sp" />
+                android:hint="请输入手机号码"
+                android:textSize="17sp" 
+                android:singleLine="true"/>
 
             <TextView
                 android:id="@+id/tv_forget"
