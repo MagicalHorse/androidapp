@@ -231,6 +231,7 @@
         </activity>
         <activity
             android:name="com.shenma.yueba.baijia.activity.SearchActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan"
             android:screenOrientation="portrait" >
         </activity>
         <activity

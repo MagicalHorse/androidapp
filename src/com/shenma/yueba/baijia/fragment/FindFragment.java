@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -15,11 +16,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.baijia.activity.SearchActivity;
 import com.shenma.yueba.baijia.modle.FragmentBean;
 import com.shenma.yueba.baijia.view.BrandListView;
 import com.shenma.yueba.baijia.view.DynamicListView;
@@ -29,6 +32,7 @@ public class FindFragment extends Fragment{
 	FindFragment baiJiaFrament;
 	ViewPager baijia_fragment_tab1_pagerview;
 	LinearLayout baijia_fragment_tab1_head_linearlayout;
+	Button bt_search;
 	//当前选中的id
 	int currid=-1;
 	View v;
@@ -75,6 +79,15 @@ public class FindFragment extends Fragment{
 		/*Fragment recommendedCircleFragment=new RecommendedCircleFragment();
 		Fragment myCircleFragment=new MyCircleFragment();
 		*/
+		bt_search=(Button)v.findViewById(R.id.bt_search);
+		bt_search.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent=new Intent(getActivity(),SearchActivity.class);
+				startActivityForResult(intent, 200);
+			}
+		});
 		fragment_list.add(new FragmentBean("品牌", -1, BrandListView.the().getView(getActivity())));
 		fragment_list.add(new FragmentBean("同城", -1, DynamicListView.the().getView(getActivity())));
 		
