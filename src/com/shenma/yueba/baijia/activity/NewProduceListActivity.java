@@ -6,6 +6,7 @@ import java.util.List;
 
 import me.maxwin.view.XListView;
 import me.maxwin.view.XListView.IXListViewListener;
+import me.maxwin.view.XListViewHeader;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,8 +41,9 @@ public class NewProduceListActivity extends BaseActivityWithTopView{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		super.onCreate(savedInstanceState);
+		requestWindowFeature(getWindow().FEATURE_NO_TITLE);
 		setContentView(R.layout.shop_main_layout);
+		super.onCreate(savedInstanceState);
 		initView();
 	}
 	
@@ -58,6 +60,7 @@ public class NewProduceListActivity extends BaseActivityWithTopView{
 		});
 		
 		xListView=(XListView)findViewById(R.id.xListView);
+		xListView.addHeaderView(new XListViewHeader(NewProduceListActivity.this));
 		xListView.setPullLoadEnable(true);
 		xListView.setXListViewListener(new IXListViewListener() {
 			

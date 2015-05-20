@@ -9,7 +9,9 @@
         android:layout_alignParentTop="true"
         layout="@layout/top_layout" />
 
-    <RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
 
         <com.handmark.pulltorefresh.library.PullToRefreshListView
             android:id="@+id/circlelistactivity_layout_pulltorefreshlistview"

@@ -32,10 +32,11 @@ public class CircleListActivity extends BaseActivityWithTopView{
 	private List<MyCircleBean> mList = new ArrayList<MyCircleBean>();
 	MyCircleAdapter myCircleAdapter;
 	protected void onCreate(Bundle savedInstanceState) {
-		
-		super.onCreate(savedInstanceState);
+		requestWindowFeature(getWindow().FEATURE_NO_TITLE);
 		setContentView(R.layout.circlelistactivity_layout);
+		super.onCreate(savedInstanceState);
 		initView();
+		requestFalshData();
 	}
 	
 	void initView()

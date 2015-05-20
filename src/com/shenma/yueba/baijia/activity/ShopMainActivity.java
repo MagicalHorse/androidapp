@@ -17,6 +17,7 @@ import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.AsyncTask.Status;
 import android.os.Bundle;
@@ -118,13 +119,13 @@ public class ShopMainActivity extends BaseActivityWithTopView {
 			
 			@Override
 			public void onRefresh() {
-				// TODO Auto-generated method stub
+				
 				AddItemToContainer(++currentPage, 1);
 			}
 			
 			@Override
 			public void onLoadMore() {
-				// TODO Auto-generated method stub
+				
 				AddItemToContainer(++currentPage, 2);
 			}
 		});
@@ -149,15 +150,23 @@ public class ShopMainActivity extends BaseActivityWithTopView {
 		
 		@Override
 		public void onClick(View v) {
-			// TODO Auto-generated method stub
+			
+			Intent intent=null;
 			switch(v.getId())
 			{
 			case R.id.shop_stay_layout_tab1_relativelayout:
+				intent=null;
 				break;
 			case R.id.shop_stay_layout_tab2_relativelayout:
+				intent=new Intent(ShopMainActivity.this,NewProduceListActivity.class);
 				break;
 			case R.id.shop_stay_layout_tab3_relativelayout:
+				intent=new Intent(ShopMainActivity.this,CircleListActivity.class);
 				break;
+			}
+			if(intent!=null)
+			{
+				startActivity(intent);
 			}
 		}
 	};
