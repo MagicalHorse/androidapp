@@ -251,8 +251,13 @@
             android:name="com.shenma.yueba.baijia.activity.UserConfigActivity"
             android:screenOrientation="portrait" >
         </activity>
+        <!-- 买手主页 -->
         <activity android:name="com.shenma.yueba.baijia.activity.ShopMainActivity" >
         </activity>
+        <!-- 上新-->
+        <activity android:name="com.shenma.yueba.baijia.activity.NewProduceListActivity" ></activity>
+        <!-- 圈子-->
+        <activity android:name="com.shenma.yueba.baijia.activity.CircleListActivity" ></activity>
 
         <!-- 网络状态变化的广播 -->
         <receiver
