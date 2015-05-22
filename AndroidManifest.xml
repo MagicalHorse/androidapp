@@ -231,6 +231,7 @@
         </activity>
         <activity
             android:name="com.shenma.yueba.baijia.activity.SearchActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan"
             android:screenOrientation="portrait" >
         </activity>
         <activity
@@ -259,7 +260,9 @@
         <activity android:name="com.shenma.yueba.baijia.activity.NewProduceListActivity" ></activity>
         <!-- 圈子-->
         <activity android:name="com.shenma.yueba.baijia.activity.CircleListActivity" ></activity>
-
+ 		<!-- 聊天界面-->
+        <activity android:name="com.shenma.yueba.ChatActivity" ></activity>
+        
         <!-- 网络状态变化的广播 -->
         <receiver
             android:name="com.blackboard.androidtest.receiver.ConnectionChangeReceiver"
