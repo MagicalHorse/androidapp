@@ -3,16 +3,12 @@ package com.shenma.yueba.db;
 /**
  * 数据库的工具类
  */
-import java.util.ArrayList;
-
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.constants.Constants;
 
 @Singleton
@@ -136,31 +132,31 @@ public class DBHelper {
 	// }
 	//
 	//
-	// /**
-	// * 存储文字聊天消息
-	// * @param myid 用户自己的id
-	// * @param otherId 和自己聊天的人的id
-	// * @param MsgContent 消息内容
-	// * @param isLeft 是不是展现在聊天窗口的左边，也就是别人，而不是自己
-	// * @param isRead 是否已经读过
-	// * @param msgType 消息类型
-	// * @param msgTime 消息事件
-	// * @return
-	// */
-	// public long saveTextMsg(String myid, String otherId, String MsgContent,
-	// String isLeft, String isRead,String msgType,String msgTime) {
-	// SQLiteDatabase db = getHelper().getWritableDatabase();
-	// ContentValues values = new ContentValues();
-	// values.put(Constants.MYID,null == myid ? "" : myid);
-	// values.put(Constants.OTHERID,null == otherId ? "" : otherId);
-	// values.put(Constants.MsgContent,null == MsgContent ? "" : MsgContent);
-	// values.put(Constants.IsLeft,null == isLeft ? "" : isLeft);
-	// values.put(Constants.IsRead,null == isRead ? "" : isRead);
-	// values.put(Constants.MSG_TYPE,null == msgType ? "" : msgType);
-	// values.put(Constants.MSG_TIME,null == msgTime ? "" : msgTime);
-	// long count = db.insert(Constants.MsgInfo,null, values);
-	// return count;
-	// }
+	 /**
+	 * 存储文字聊天消息
+	 * @param myid 用户自己的id
+	 * @param otherId 和自己聊天的人的id
+	 * @param MsgContent 消息内容
+	 * @param isLeft 是不是展现在聊天窗口的左边，也就是别人，而不是自己
+	 * @param isRead 是否已经读过
+	 * @param msgType 消息类型
+	 * @param msgTime 消息事件
+	 * @return
+	 */
+	 public long saveTextMsg(String myid, String otherId, String MsgContent,
+	 String isLeft, String isRead,String msgType,String msgTime) {
+	 SQLiteDatabase db = getHelper().getWritableDatabase();
+	 ContentValues values = new ContentValues();
+	 values.put(Constants.MYID,null == myid ? "" : myid);
+	 values.put(Constants.OTHERID,null == otherId ? "" : otherId);
+	 values.put(Constants.MsgContent,null == MsgContent ? "" : MsgContent);
+	 values.put(Constants.IsLeft,null == isLeft ? "" : isLeft);
+	 values.put(Constants.IsRead,null == isRead ? "" : isRead);
+	 values.put(Constants.MSG_TYPE,null == msgType ? "" : msgType);
+	 values.put(Constants.MSG_TIME,null == msgTime ? "" : msgTime);
+	 long count = db.insert(Constants.MsgInfo,null, values);
+	 return count;
+	 }
 	//
 	//
 	//

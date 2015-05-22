@@ -68,7 +68,9 @@
          android:id="@+id/user_config_collect_include"
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
-         layout="@layout/mefragmentforseller_config_layout_item"  />
+         layout="@layout/mefragmentforseller_config_layout_item" 
+         android:visibility="gone"
+         />
      
      <!-- 账户密码 -->
      <include  

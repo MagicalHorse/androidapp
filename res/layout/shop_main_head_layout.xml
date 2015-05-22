@@ -4,31 +4,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:gravity="center_horizontal"
-    android:orientation="vertical"
     android:background="@color/white"
-    >
-   
+    android:gravity="center_horizontal"
+    android:orientation="vertical" >
+
     <!-- 头像 -->
 
     <com.shenma.yueba.view.imageshow.CustomImageView
-        android:layout_gravity="center_horizontal"
         android:id="@+id/shop_main_layout_icon_imageview"
         android:layout_width="@dimen/shop_main_iconwidth80_dimen"
         android:layout_height="@dimen/shop_main_iconwidth80_dimen"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/margin_left_and_right"
-        zhy:type="circle"
-        zhy:src="@drawable/user_config_icon" />
+        zhy:src="@drawable/user_config_icon"
+        zhy:type="circle" />
     <!-- 店名 -->
 
     <TextView
-        android:textSize="@dimen/textsize20"
         android:id="@+id/shop_main_layout_name_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/shop_main_lineheight10_dimen"
         android:gravity="center"
-        android:hint="@string/shop_name_str" />
+        android:hint="@string/shop_name_str"
+        android:textSize="@dimen/textsize20" />
 
     <!-- 商场 -->
 
@@ -78,14 +77,26 @@
             android:layout_width="@dimen/shop_main_iconwidth80_dimen"
             android:layout_height="@dimen/shop_main_iconwidth80_dimen"
             android:background="@drawable/round_background"
-            android:gravity="center" >
+            android:gravity="center"
+            android:orientation="vertical" >
 
             <!-- 关注 -->
 
             <TextView
+                android:id="@+id/shop_main_attentionvalue_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="bottom"
+                android:singleLine="true"
+                android:hint="1" />
+
+            <TextView
                 android:id="@+id/shop_main_attention_textview"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="top"
                 android:hint="@string/shop_attention_str" />
         </LinearLayout>
 
@@ -96,14 +107,26 @@
             android:layout_height="@dimen/shop_main_iconwidth80_dimen"
             android:layout_marginLeft="@dimen/shop_main_lineheight10_dimen"
             android:background="@drawable/round_background"
-            android:gravity="center" >
+            android:gravity="center"
+            android:orientation="vertical" >
 
             <!-- 粉丝 -->
 
             <TextView
+                android:id="@+id/shop_main_fansvalue_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="bottom"
+                android:singleLine="true"
+                android:hint="1" />
+
+            <TextView
                 android:id="@+id/shop_main_fans_textview"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="top"
                 android:hint="@string/shop_fans_str" />
         </LinearLayout>
 
@@ -114,55 +137,65 @@
             android:layout_height="@dimen/shop_main_iconwidth80_dimen"
             android:layout_marginLeft="@dimen/shop_main_lineheight10_dimen"
             android:background="@drawable/round_background"
-            android:gravity="center" >
+            android:gravity="center"
+            android:orientation="vertical" >
 
             <!-- 赞 -->
 
             <TextView
+                android:id="@+id/shop_main_praisevalue_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="bottom"
+                android:singleLine="true"
+                android:hint="1" />
+
+            <TextView
                 android:id="@+id/shop_main_praise_textview"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="top"
                 android:hint="@string/shop_praise_str" />
         </LinearLayout>
     </LinearLayout>
 
     <TextView
         android:id="@+id/shap_main_description1_textview"
-        android:paddingLeft="@dimen/margin_left_and_right"
-        android:paddingRight="@dimen/margin_left_and_right"
-        android:layout_marginTop="@dimen/shop_main_width15_dimen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/shop_main_width15_dimen"
         android:hint="@string/shop_description1_str"
-        />
-    
+        android:paddingLeft="@dimen/margin_left_and_right"
+        android:paddingRight="@dimen/margin_left_and_right" />
+
     <TextView
         android:id="@+id/shap_main_description2_textview"
-        android:paddingLeft="@dimen/margin_left_and_right"
-        android:paddingRight="@dimen/margin_left_and_right"
-        android:layout_marginTop="@dimen/shop_main_lineheight10_dimen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/shop_main_lineheight10_dimen"
         android:hint="@string/shop_description2_str"
-        />
-    
+        android:paddingLeft="@dimen/margin_left_and_right"
+        android:paddingRight="@dimen/margin_left_and_right" />
+
     <TextView
         android:id="@+id/shap_main_description3_textview"
-        android:paddingLeft="@dimen/margin_left_and_right"
-        android:paddingRight="@dimen/margin_left_and_right"
-        android:layout_marginTop="@dimen/shop_main_lineheight10_dimen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/shop_main_lineheight10_dimen"
         android:hint="@string/shop_description3_str"
-        />
-    
+        android:paddingLeft="@dimen/margin_left_and_right"
+        android:paddingRight="@dimen/margin_left_and_right" />
+
     <!-- 头文件 -->
 
     <include
-        android:layout_marginTop="@dimen/shop_main_lineheight10_dimen"
-        android:layout_marginBottom="@dimen/shop_main_lineheight10_dimen"
         android:id="@+id/shop_content_stayLayout"
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:layout_marginBottom="@dimen/shop_main_lineheight10_dimen"
+        android:layout_marginTop="@dimen/shop_main_lineheight10_dimen"
         layout="@layout/shop_stay_layout" />
+
 </LinearLayout>

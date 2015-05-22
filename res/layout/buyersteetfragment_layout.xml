@@ -38,6 +38,8 @@
                         android:id="@+id/baijia_head_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="@dimen/shop_main_lineheight8_dimen"
                         android:orientation="horizontal" />
                 </RelativeLayout>
 

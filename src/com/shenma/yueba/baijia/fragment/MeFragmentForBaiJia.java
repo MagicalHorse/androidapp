@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.activity.BuyerCertificationActivity;
+import com.shenma.yueba.baijia.activity.MyCollectionActivity;
 import com.shenma.yueba.baijia.activity.UserConfigActivity;
 import com.shenma.yueba.baijia.adapter.CircleFragmentPagerAdapter;
 import com.shenma.yueba.util.FontManager;
@@ -88,6 +89,7 @@ public class MeFragmentForBaiJia extends BaseFragment implements OnClickListener
 		tv_my_collection = (TextView) view.findViewById(R.id.tv_my_collection);
 		tv_will_yangjia = (TextView) view.findViewById(R.id.tv_will_yangjia);
 		iv_setting.setOnClickListener(this);
+		tv_my_collection.setOnClickListener(this);
 		tv_all_order.setOnClickListener(this);
 		tv_waiting_for_send.setOnClickListener(this);
 		tv_waiting_for_recieve.setOnClickListener(this);
@@ -127,6 +129,8 @@ public class MeFragmentForBaiJia extends BaseFragment implements OnClickListener
 			startActivity(buyerCertificaitonIntent);
 			break;
 		case R.id.tv_my_collection://我的收藏
+			Intent intent3 = new Intent(getActivity(),MyCollectionActivity.class);
+			startActivity(intent3);
 			break;
 		default:
 			break;

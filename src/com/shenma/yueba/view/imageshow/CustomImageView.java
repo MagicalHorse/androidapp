@@ -14,6 +14,7 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
+import android.graphics.drawable.BitmapDrawable;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
@@ -99,6 +100,17 @@ public class CustomImageView extends View
 		a.recycle();
 	}
 
+	/*****
+	 * 设置显示的图片 即显示的样式
+	 * ***/
+	public void setSrc(Context context,int image,int type)
+	{
+		this.type=type;
+		BitmapDrawable db=(BitmapDrawable)context.getResources().getDrawable(image);
+		mSrc=db.getBitmap();
+		invalidate();
+	}
+	
 	/**
 	 * 计算控件的高度和宽度
 	 */

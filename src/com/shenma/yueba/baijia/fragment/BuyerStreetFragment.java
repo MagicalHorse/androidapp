@@ -2,6 +2,8 @@ package com.shenma.yueba.baijia.fragment;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,9 +12,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -38,11 +43,13 @@ import com.shenma.yueba.util.ListViewUtils;
 public class BuyerStreetFragment extends Fragment{
 	List<FragmentBean> fragment_list=new ArrayList<FragmentBean>();
 	List<View> footer_list=new ArrayList<View>();
-	//当前选中的id
+	//当前选中的id （ViewPager选中的id）
 	int currid=-1;
 	FragmentManager fragmentManager;
 	ListView baijia_contact_listview;
 	TextView focus_textview;
+	//tab原点的 父视图
+	LinearLayout baijia_head_layout;
 	View v;
 	PullToRefreshScrollView pulltorefreshscrollview;
 	ViewPager baijia_head_viewpager;
@@ -50,7 +57,8 @@ public class BuyerStreetFragment extends Fragment{
 	List<Object> obj_list=new ArrayList<Object>();
 	LayoutInflater inflater;
 	LinearLayout showloading_layout_view;
-	
+	Timer timer;
+	CustomPagerAdapter pagerAdapter;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -137,51 +145,54 @@ public class BuyerStreetFragment extends Fragment{
 	
 	void initView(View v)
 	{
+		baijia_head_layout=(LinearLayout)v.findViewById(R.id.baijia_head_layout);
 		focus_textview=(TextView)v.findViewById(R.id.focus_textview);
-		String iconurl="http://img4.imgtn.bdimg.com/it/u=716148157,58117191&fm=21&gp=0.jpg";
 		showloading_layout_view=(LinearLayout)v.findViewById(R.id.showloading_layout_view);
-		for(int i=0;i<5;i++)
-		{
-			icon_list.add(new ImageStringBean(getActivity(), iconurl));
-		}
 		baijia_contact_listview=(ListView)v.findViewById(R.id.baijia_contact_listview);
 		baijia_contact_listview.setAdapter(baseAdapter);
 		
 		baijia_head_viewpager=(ViewPager)v.findViewById(R.id.baijia_head_viewpager);
-		baijia_head_viewpager.setAdapter(new PagerAdapter() {
+		
+		baijia_head_viewpager.setOnPageChangeListener(new OnPageChangeListener() {
 			
 			@Override
-			public boolean isViewFromObject(View arg0, Object arg1) {
+			public void onPageSelected(int arg0) {
+				currid=arg0;
+				setcurrItem(arg0);
+			}
+			
+			@Override
+			public void onPageScrolled(int arg0, float arg1, int arg2) {
 				
-				return arg0==arg1;
-			}
-			
-			@Override
-			public int getCount() {
 				
-				return icon_list.size();
 			}
 			
 			@Override
-			public Object instantiateItem(ViewGroup container, int position) {
-				ImageStringBean imageStringBean=icon_list.get(position);
-				View v=imageStringBean.getIv();
-				container.addView(v, 0, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-				getImageView(icon_list.get(position));
-				return v;
-				//return super.instantiateItem(container, position);
+			public void onPageScrollStateChanged(int arg0) {
+				
+				
 			}
-			
-			@Override
-			public void destroyItem(ViewGroup container, int position,
-					Object object) {
-				ImageStringBean imageStringBean=icon_list.get(position);
-				View v=imageStringBean.getIv();
-				container.removeView(v);
-				//super.destroyItem(container, position, object);
-			}
-			
 		});
+		
+		
+		baijia_head_viewpager.setOnTouchListener(new OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				
+				switch(event.getAction())
+				{
+				case MotionEvent.ACTION_DOWN:
+				     stopTimerToViewPager();
+				break;
+				case MotionEvent.ACTION_UP:
+					startTimeToViewPager();
+					break;
+				}
+				return false;
+			}
+		});
+		
 		
 		baijia_contact_listview.setOnItemClickListener(new OnItemClickListener() {
 
@@ -258,6 +269,11 @@ public class BuyerStreetFragment extends Fragment{
 		{
 			public void run() {
 				SystemClock.sleep(100);
+				for(int i=0;i<10;i++)
+				{
+					obj_list.add(null);
+					
+				}
 				getActivity().runOnUiThread(new Runnable() {
 					
 					@Override
@@ -277,6 +293,18 @@ public class BuyerStreetFragment extends Fragment{
 		{
 			public void run() {
 				SystemClock.sleep(100);
+				obj_list.clear();
+				for(int i=0;i<10;i++)
+				{
+					obj_list.add(null);
+					
+				}
+				String iconurl="http://img4.imgtn.bdimg.com/it/u=716148157,58117191&fm=21&gp=0.jpg";
+				icon_list.clear();
+				for(int i=0;i<5;i++)
+				{
+					icon_list.add(new ImageStringBean(getActivity(), iconurl));
+				}
 				getActivity().runOnUiThread(new Runnable() {
 					
 					@Override
@@ -292,11 +320,6 @@ public class BuyerStreetFragment extends Fragment{
 	
 	void addData()
 	{
-		for(int i=0;i<10;i++)
-		{
-			obj_list.add(null);
-			
-		}
 		showloading_layout_view.setVisibility(View.GONE);
 		baseAdapter.notifyDataSetChanged();
 		ListViewUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
@@ -305,17 +328,17 @@ public class BuyerStreetFragment extends Fragment{
 	
 	void falshData()
 	{
-		obj_list.clear();
-		for(int i=0;i<10;i++)
-		{
-			obj_list.add(null);
-			
-		}
+		pagerAdapter=new CustomPagerAdapter();
+		baijia_head_viewpager.setAdapter(pagerAdapter);
 		showloading_layout_view.setVisibility(View.GONE);
+		
 		baseAdapter.notifyDataSetChanged();
 		
 		ListViewUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
 		pulltorefreshscrollview.onRefreshComplete();
+		setcurrItem(0);
+		pagerAdapter.notifyDataSetChanged();
+		
 		
 	}
 	
@@ -332,4 +355,108 @@ public class BuyerStreetFragment extends Fragment{
 		 
 		super.onPause();
 	}
+	
+	
+	/***
+	 * 添加原点
+	 * @param size int 原点的个数
+	 * @param value int 当前选中的tab
+	 * **/
+	void addTabImageView(int size,int value)
+	{
+		baijia_head_layout.removeAllViews();
+		for(int i=0;i<size;i++)
+		{
+			View v=new View(getActivity());
+			v.setBackgroundResource(R.drawable.tabround_background);
+			int width=(int)getActivity().getResources().getDimension(R.dimen.shop_main_lineheight8_dimen);
+			LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(width, width);
+			params.leftMargin=(int)getActivity().getResources().getDimension(R.dimen.shop_main_width3_dimen);
+			baijia_head_layout.addView(v, params);
+			if(i==value)
+			{
+				v.setSelected(true);
+			}else
+			{
+				v.setSelected(false);
+			}
+		}
+	}
+	
+	/****
+	 * 设置当前显示的 item
+	 * **/
+	void setcurrItem(int value)
+	{
+		baijia_head_viewpager.setCurrentItem(value);
+		addTabImageView(icon_list.size(), value);
+	}
+	
+	/*****
+	 * 启动自动滚动
+	 * **/
+	void startTimeToViewPager()
+	{
+		stopTimerToViewPager();
+		timer=new Timer();
+		timer.schedule(new TimerTask() {
+			
+			@Override
+			public void run() {
+				currid++;
+				if(currid>=(icon_list.size()-1))
+				{
+					currid=0;
+				}
+				setcurrItem(currid);
+			}
+		}, 2000, 2000);
+	}
+	
+	/*****
+	 * 停止自动滚动
+	 * **/
+	void stopTimerToViewPager()
+	{
+		if(timer!=null)
+		{
+			timer.cancel();
+			timer=null;
+		}
+	}
+	
+	class CustomPagerAdapter extends PagerAdapter{
+		
+		@Override
+		public boolean isViewFromObject(View arg0, Object arg1) {
+			
+			return arg0==arg1;
+		}
+		
+		@Override
+		public int getCount() {
+			
+			return icon_list.size();
+		}
+		
+		@Override
+		public Object instantiateItem(ViewGroup container, int position) {
+			ImageStringBean imageStringBean=icon_list.get(position);
+			View v=imageStringBean.getIv();
+			container.addView(v, 0, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+			getImageView(icon_list.get(position));
+			return v;
+			//return super.instantiateItem(container, position);
+		}
+		
+		@Override
+		public void destroyItem(ViewGroup container, int position,
+				Object object) {
+			ImageStringBean imageStringBean=icon_list.get(position);
+			View v=imageStringBean.getIv();
+			container.removeView(v);
+			//super.destroyItem(container, position, object);
+		}
+		
+	};
 }

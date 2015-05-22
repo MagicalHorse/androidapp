@@ -2,9 +2,7 @@ package com.shenma.yueba.baijia.activity;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import me.maxwin.view.XListView;
 import me.maxwin.view.XListView.IXListViewListener;
@@ -14,8 +12,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -33,6 +29,8 @@ import android.widget.TextView;
 import com.dodola.model.DuitangInfo;
 import com.dodowaterfall.Helper;
 import com.example.android.bitmapfun.util.ImageFetcher;
+import com.huewu.pla.lib.internal.PLA_AdapterView;
+import com.huewu.pla.lib.internal.PLA_AdapterView.OnItemClickListener;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.adapter.StaggeredAdapter;
@@ -55,11 +53,11 @@ public class ShopMainActivity extends BaseActivityWithTopView {
     //关注按钮
     ImageButton shop_main_attention_imagebutton;
     //关注 值
-    TextView shop_main_attention_textview;
+    TextView shop_main_attentionvalue_textview;
     //粉丝值
-    TextView shop_main_fans_textview;
+    TextView shop_main_fansvalue_textview;
     //赞值
-    TextView shop_main_praise_textview;
+    TextView shop_main_praisevalue_textview;
     XListView xListView;
     
     
@@ -69,11 +67,7 @@ public class ShopMainActivity extends BaseActivityWithTopView {
     ContentTask task = new ContentTask(this, 2);
     //商品描述
     TextView shap_main_description1_textview,shap_main_description2_textview,shap_main_description3_textview;
-    /*RelativeLayout shop_stay_layout_tab1_relativelayout,
-	shop_stay_layout_tab2_relativelayout,
-	shop_stay_layout_tab3_relativelayout,hid_shop_stay_layout_tab1_relativelayout,hid_shop_stay_layout_tab2_relativelayout,hid_shop_stay_layout_tab3_relativelayout;*/
-    FragmentManager fm;
-	Map<Integer, Fragment> fragmentmap=new HashMap<Integer, Fragment>();
+    
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
     	MyApplication.getInstance().addActivity(this);//加入回退栈
@@ -86,7 +80,6 @@ public class ShopMainActivity extends BaseActivityWithTopView {
 	/****
 	 * 初始化视图信息
 	 * **/
-	@SuppressLint("NewApi")
 	void initView()
 	{
 		setTitle("店铺名称");
@@ -98,7 +91,6 @@ public class ShopMainActivity extends BaseActivityWithTopView {
 				ShopMainActivity.this.finish();
 			}
 		});
-		fm=this.getFragmentManager();
 		xListView=(XListView)findViewById(R.id.xListView);
 		LinearLayout headview=(LinearLayout)LinearLayout.inflate(this, R.layout.shop_main_head_layout, null);
 		xListView.addHeader(this,headview);
@@ -107,9 +99,12 @@ public class ShopMainActivity extends BaseActivityWithTopView {
 		shop_main_layout_market_textview=(TextView)headview.findViewById(R.id.shop_main_layout_market_textview);
 		shop_main_siliao_imagebutton=(ImageButton)headview.findViewById(R.id.shop_main_siliao_imagebutton); 
 		shop_main_attention_imagebutton=(ImageButton)headview.findViewById(R.id.shop_main_attention_imagebutton); 
-		shop_main_attention_textview=(TextView)headview.findViewById(R.id.shop_main_attention_textview); 
-		shop_main_fans_textview=(TextView)headview.findViewById(R.id.shop_main_fans_textview); 
-		shop_main_praise_textview=(TextView)headview.findViewById(R.id.shop_main_praise_textview); 
+		shop_main_attentionvalue_textview=(TextView)headview.findViewById(R.id.shop_main_attentionvalue_textview); 
+		shop_main_attentionvalue_textview.setText("886");
+		shop_main_fansvalue_textview=(TextView)headview.findViewById(R.id.shop_main_fansvalue_textview); 
+		shop_main_fansvalue_textview.setText("4883");
+		shop_main_praisevalue_textview=(TextView)headview.findViewById(R.id.shop_main_praisevalue_textview); 
+		shop_main_praisevalue_textview.setText("456");
 		shap_main_description1_textview=(TextView)headview.findViewById(R.id.shap_main_description1_textview); 
 		shap_main_description2_textview=(TextView)headview.findViewById(R.id.shap_main_description2_textview); 
 		shap_main_description3_textview=(TextView)headview.findViewById(R.id.shap_main_description3_textview); 
@@ -130,6 +125,17 @@ public class ShopMainActivity extends BaseActivityWithTopView {
 			}
 		});
 
+		xListView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(PLA_AdapterView<?> parent, View view,
+					int position, long id) {
+				
+				Intent intent=new Intent(ShopMainActivity.this,ApproveBuyerDetailsActivity.class);
+				startActivity(intent);
+			}
+		});
+		
         mImageFetcher = new ImageFetcher(this, 240);
         mImageFetcher.setLoadingImage(R.drawable.empty_photo);
         mAdapter = new StaggeredAdapter(this, xListView,mImageFetcher);

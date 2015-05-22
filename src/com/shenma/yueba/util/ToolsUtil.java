@@ -1,20 +1,28 @@
 package com.shenma.yueba.util;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Environment;
 import android.os.StatFs;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ImageSpan;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
 import android.widget.Toast;
+
+import com.shenma.yueba.application.MyApplication;
 
 public class ToolsUtil {
 
@@ -238,4 +246,67 @@ public class ToolsUtil {
 		}
 	}
 
+	
+
+	/**
+	 * 解析表情
+	 * 
+	 * @param message
+	 *            传入的需要处理的String
+	 * @return
+	 */
+	public static CharSequence analysisFace(Context context, String message) {
+		String hackTxt;
+		if (message.startsWith("[") && message.endsWith("]")) {
+			hackTxt = message + " ";
+		} else {
+			hackTxt = message;
+		}
+		SpannableString value = SpannableString.valueOf(hackTxt);
+		Matcher localMatcher = EMOTION_URL.matcher(value);
+		while (localMatcher.find()) {
+			String str2 = localMatcher.group(0);
+			int k = localMatcher.start();
+			int m = localMatcher.end();
+			if (m - k < 8) {
+				if (MyApplication.getInstance().getFaceMap().containsKey(str2)) {
+					int face = MyApplication.getInstance().getFaceMap()
+							.get(str2);
+					Drawable d = context.getResources().getDrawable(face);
+					if (d != null) {
+						d.setBounds(0, 0, 25, 25);// 设置表情图片的显示大小
+						ImageSpan span = new ImageSpan(d,
+								ImageSpan.ALIGN_BOTTOM);
+						value.setSpan(span, k, m,
+								Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+					}
+				}
+			}
+		}
+		return value;
+	}
+	
+	
+	/**
+	 * 获取当前时间的字符串
+	 * 
+	 * @param ctx
+	 * @return
+	 */
+	public static String getCurrentTime() {
+		return dateToStrLong(new Date(System.currentTimeMillis()));
+	}
+	
+	
+	/**
+	 * 将长时间格式时间转换为字符串 yyyy-MM-dd HH:mm:ss
+	 * 
+	 * @param dateDate
+	 * @return
+	 */
+	public static String dateToStrLong(java.util.Date dateDate) {
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String dateString = formatter.format(dateDate);
+		return dateString;
+	}
 }

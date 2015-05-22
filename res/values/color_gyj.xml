@@ -5,4 +5,6 @@
     <color name="color_transparent">#00000000</color>
     <color name="color_lightgrey">#F1F1F1</color>
     <color name="color_deeoyellow">#FFA300</color>
+    <color name="color_blue">#009DA2</color>
+    <color name="color_deepyellow">#FF894B</color>
 </resources>
