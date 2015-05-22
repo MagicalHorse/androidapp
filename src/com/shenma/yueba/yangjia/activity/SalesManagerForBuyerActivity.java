@@ -31,8 +31,6 @@ public class SalesManagerForBuyerActivity extends FragmentActivity implements On
 	private static final String[] TITLE = new String[] { "全部订单", "待发货", "待收货",
 			"专柜自提" };
 	private List<ItemCustomerFragment> fragmentList = new ArrayList<ItemCustomerFragment>();
-	private int page = 1;
-	private int index;
 	private TextView tv_top_left, tv_top_title;
 
 	@Override
@@ -43,7 +41,36 @@ public class SalesManagerForBuyerActivity extends FragmentActivity implements On
 		super.onCreate(savedInstanceState);
 		initView();
 		setFragmentList();
-		setTabPageIndicator(setViewPager());
+		FragmentPagerAdapter adapter = new TabPageIndicatorAdapter(getSupportFragmentManager());
+        ViewPager pager = (ViewPager)findViewById(R.id.pager);
+        pager.setAdapter(adapter);
+        //实例化TabPageIndicator然后设置ViewPager与之关联
+        TabPageIndicator indicator = (TabPageIndicator)findViewById(R.id.indicator);
+        indicator.setViewPager(pager);
+        
+        //如果我们要对ViewPager设置监听，用indicator设置就行了
+        indicator.setOnPageChangeListener(new OnPageChangeListener() {
+			
+			@Override
+			public void onPageSelected(int arg0) {
+			}
+			
+			@Override
+			public void onPageScrolled(int arg0, float arg1, int arg2) {
+				
+			}
+			
+			@Override
+			public void onPageScrollStateChanged(int arg0) {
+				
+			}
+		});
+        
+	
+		
+		
+		
+		
 	}
 
 	private void initView() {
@@ -55,6 +82,8 @@ public class SalesManagerForBuyerActivity extends FragmentActivity implements On
 		tv_top_left.setOnClickListener(this);
 	}
 
+	
+	
 	/**
 	 * 初始化ItemFragment3
 	 */
@@ -64,42 +93,6 @@ public class SalesManagerForBuyerActivity extends FragmentActivity implements On
 		}
 	}
 
-	private ViewPager setViewPager() {
-		// ViewPager的adapter
-		ViewPager pager = (ViewPager) findViewById(R.id.pager);
-		pager.setAdapter(new TabPageIndicatorAdapter(
-				getSupportFragmentManager()));
-		return pager;
-	}
-
-	private void setTabPageIndicator(ViewPager pager) {
-		// 实例化TabPageIndicator然后设置ViewPager与之关联
-		TabPageIndicator indicator = (TabPageIndicator) findViewById(R.id.indicator);
-		indicator.setViewPager(pager);
-		// TitlePageIndicator titleIndicator =
-		// (TitlePageIndicator)findViewById(R.id.titles);
-		// titleIndicator.setViewPager(pager);
-		indicator.setCurrentItem(index);
-		// 如果我们要对ViewPager设置监听，用indicator设置就行了
-		indicator.setOnPageChangeListener(new OnPageChangeListener() {
-
-			@Override
-			public void onPageSelected(int arg0) {
-				index = arg0;
-				// setPage(true,true);
-			}
-
-			@Override
-			public void onPageScrolled(int arg0, float arg1, int arg2) {
-
-			}
-
-			@Override
-			public void onPageScrollStateChanged(int arg0) {
-
-			}
-		});
-	}
 
 	/**
 	 * ViewPager适配器
