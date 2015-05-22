@@ -9,7 +9,9 @@
     <View style="@style/style_horizontal_line" />
 
     <include layout="@layout/product_manager_title" />
-
+  <View 
+        style="@style/style_horizontal_line"
+        />
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager_main"
         android:layout_width="fill_parent"

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
@@ -12,22 +11,12 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.shenma.yueba.BaseFragmentActivity;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.adapter.CircleFragmentPagerAdapter;
-import com.shenma.yueba.baijia.modle.BuyerIndexInfo;
-import com.shenma.yueba.baijia.modle.BuyerIndexInfoBean;
-import com.shenma.yueba.baijia.modle.Favorite;
-import com.shenma.yueba.baijia.modle.Income;
-import com.shenma.yueba.baijia.modle.Order;
-import com.shenma.yueba.baijia.modle.Product;
-import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.FontManager;
-import com.shenma.yueba.util.HttpControl;
-import com.shenma.yueba.util.ToolsUtil;
-import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.yangjia.fragment.ProductManagerFragmentForOnLine;
 
 /**
@@ -35,7 +24,7 @@ import com.shenma.yueba.yangjia.fragment.ProductManagerFragmentForOnLine;
  * 
  * @author a
  */
-public class ProductManagerActivity extends FragmentActivity implements
+public class ProductManagerActivity extends BaseFragmentActivity implements
 		OnClickListener {
 	private TextView tv_product_online;
 	private TextView tv_product_will_down;
@@ -49,6 +38,8 @@ public class ProductManagerActivity extends FragmentActivity implements
 	private CircleFragmentPagerAdapter myFragmentPagerAdapter;
 	private TextView tv_top_left;
 	private TextView tv_top_title;
+	private ArrayList<ImageView> cursorImageList = new ArrayList<ImageView>();
+	private ArrayList<TextView> titleTextList = new ArrayList<TextView>();
 	private int page =1;
 	private int index;
 	@Override
@@ -82,14 +73,21 @@ public class ProductManagerActivity extends FragmentActivity implements
 		tv_product_online = (TextView) findViewById(R.id.tv_product_online);
 		tv_product_will_down = (TextView) findViewById(R.id.tv_product_will_down);
 		tv_product_has_down = (TextView) findViewById(R.id.tv_product_has_down);
+		tv_product_online.setTextSize(20);
 		tv_product_online.setOnClickListener(this);
 		tv_product_will_down.setOnClickListener(this);
 		tv_product_has_down.setOnClickListener(this);
-
+		titleTextList.add(tv_product_online);
+		titleTextList.add(tv_product_will_down);
+		titleTextList.add(tv_product_has_down);
+		
 		iv_cursor_left = (ImageView) findViewById(R.id.iv_cursor_left);
 		iv_cursor_left.setVisibility(View.VISIBLE);
 		iv_cursor_center = (ImageView) findViewById(R.id.iv_cursor_center);
 		iv_cursor_right = (ImageView) findViewById(R.id.iv_cursor_right);
+		cursorImageList.add(iv_cursor_left);
+		cursorImageList.add(iv_cursor_center);
+		cursorImageList.add(iv_cursor_right);
 		viewpager_main = (ViewPager) findViewById(R.id.viewpager_main);
 		FontManager.changeFonts(this, tv_product_online, tv_product_will_down,
 				tv_product_has_down,tv_top_left,tv_top_title);
@@ -107,6 +105,9 @@ public class ProductManagerActivity extends FragmentActivity implements
 
 	}
 
+	
+	
+	
 	private void initViewPager() {
 		viewpager_main.setAdapter(myFragmentPagerAdapter);
 		viewpager_main.setCurrentItem(0);
@@ -119,36 +120,7 @@ public class ProductManagerActivity extends FragmentActivity implements
 			 * 页面跳转完成后调用的方法
 			 */
 			public void onPageSelected(int arg0) {
-				if (arg0 == 0) {
-					iv_cursor_left.setVisibility(View.VISIBLE);
-					iv_cursor_center.setVisibility(View.INVISIBLE);
-					iv_cursor_right.setVisibility(View.INVISIBLE);
-				}
-				if (arg0 == 1) {
-					iv_cursor_center.setVisibility(View.VISIBLE);
-					iv_cursor_left.setVisibility(View.INVISIBLE);
-					iv_cursor_right.setVisibility(View.INVISIBLE);
-				}
-				if (arg0 == 2) {
-					iv_cursor_center.setVisibility(View.INVISIBLE);
-					iv_cursor_left.setVisibility(View.INVISIBLE);
-					iv_cursor_right.setVisibility(View.VISIBLE);
-				}
-				index = arg0;
-				switch (index) {
-				case 0:
-					productManagerFragmentForOnLine.getData(index,ProductManagerActivity.this);
-					break;
-				case 1:
-					productManagerFragmentForOnLine2.getData(index,ProductManagerActivity.this);
-					break;
-				case 2 :
-					productManagerFragmentForOnLine3.getData(index,ProductManagerActivity.this);
-					break;
-				default:
-					break;
-				}
-
+				setCursorAndText(arg0,cursorImageList,titleTextList);
 			}
 
 			@Override

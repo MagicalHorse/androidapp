@@ -1,7 +1,6 @@
 package com.shenma.yueba.yangjia.fragment;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -43,6 +42,7 @@ import com.shenma.yueba.view.imageshow.ImageShowActivity;
 import com.shenma.yueba.yangjia.activity.EarningManagerActivity;
 import com.shenma.yueba.yangjia.activity.ProductManagerActivity;
 import com.shenma.yueba.yangjia.activity.SalesManagerForBuyerActivity;
+import com.shenma.yueba.yangjia.activity.SocialManagerActivity;
 
 /**
  * 主界面
@@ -328,7 +328,7 @@ public class IndexFragmentForYangJia extends BaseFragment implements
 			startActivity(intentProductManager);
 			break;
 		case R.id.rl_social://粉丝管理
-			Intent intentSocialManager = new Intent(getActivity(), ProductManagerActivity.class);
+			Intent intentSocialManager = new Intent(getActivity(), SocialManagerActivity.class);
 			startActivity(intentSocialManager);
 			break;
 		case R.id.bt_top_right:

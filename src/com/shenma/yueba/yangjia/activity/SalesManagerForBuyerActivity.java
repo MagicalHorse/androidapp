@@ -5,7 +5,6 @@ import java.util.List;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -16,9 +15,10 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.shenma.yueba.BaseFragmentActivity;
 import com.shenma.yueba.R;
-import com.shenma.yueba.R.id;
 import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.yangjia.fragment.ItemCustomerFragment;
 
 /**
@@ -28,7 +28,7 @@ import com.shenma.yueba.yangjia.fragment.ItemCustomerFragment;
  * 
  */
 
-public class SalesManagerForBuyerActivity extends FragmentActivity implements
+public class SalesManagerForBuyerActivity extends BaseFragmentActivity implements
 		OnClickListener {
 	private static final String[] TITLE = new String[] { "全部订单", "待发货", "待收货",
 			"专柜自提" };
@@ -77,7 +77,9 @@ public class SalesManagerForBuyerActivity extends FragmentActivity implements
 		tv_wating_for_pay = (TextView) findViewById(R.id.tv_wating_for_pay);
 		tv_get_byself = (TextView) findViewById(R.id.tv_get_byself);
 		tv_help = (TextView) findViewById(R.id.tv_help);
-
+		tv_all_order.setTextSize(20);
+		FontManager.changeFonts(getApplicationContext(), tv_top_title,
+				tv_all_order, tv_wating_for_pay, tv_get_byself, tv_help);
 		titleTextList.add(tv_all_order);
 		titleTextList.add(tv_wating_for_pay);
 		titleTextList.add(tv_get_byself);
@@ -102,24 +104,7 @@ public class SalesManagerForBuyerActivity extends FragmentActivity implements
 			 * 页面跳转完成后调用的方法
 			 */
 			public void onPageSelected(int arg0) {
-				setCursorAndText(arg0);
-			}
-
-			private void setCursorAndText(int index) {
-				for (int i = 0; i < cursorImageList.size(); i++) {
-					if (i != index) {
-						cursorImageList.get(i).setVisibility(View.INVISIBLE);
-					} else {
-						cursorImageList.get(i).setVisibility(View.VISIBLE);
-					}
-				}
-				for (int j = 0; j < titleTextList.size(); j++) {
-					if (j != index) {
-						titleTextList.get(j).setTextSize(17);
-					} else {
-						titleTextList.get(j).setTextSize(20);
-					}
-				}
+				setCursorAndText(arg0,cursorImageList,titleTextList);
 			}
 
 			@Override

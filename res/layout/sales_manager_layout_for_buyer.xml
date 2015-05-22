@@ -7,115 +7,11 @@
         android:id="@+id/title"
         layout="@layout/title_for_common" />
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="@dimen/top_title_height"
-        android:orientation="horizontal" >
+    <View style="@style/style_horizontal_line" />
 
-        <LinearLayout
-            android:layout_width="0dip"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:orientation="vertical" >
+    <include layout="@layout/sales_title" />
 
-            <TextView
-                android:id="@+id/tv_all_order"
-                android:layout_width="fill_parent"
-                android:layout_height="0dip"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="全部订单"
-                android:textColor="@color/main_color"
-                android:textSize="@dimen/title_text_size" />
-
-            <ImageView
-                android:id="@+id/iv_cursor_left"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/corsur_margin"
-                android:layout_marginRight="@dimen/corsur_margin"
-                android:background="@drawable/line_title"
-                android:visibility="invisible" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dip"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/tv_wating_for_pay"
-                android:layout_width="fill_parent"
-                android:layout_height="0dip"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="待付款"
-                android:textColor="@color/main_color"
-                android:textSize="@dimen/title_text_size" />
-
-            <ImageView
-                android:id="@+id/iv_cursor_left2"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/corsur_margin"
-                android:layout_marginRight="@dimen/corsur_margin"
-                android:background="@drawable/line_title"
-                android:visibility="invisible" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dip"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/tv_get_byself"
-                android:layout_width="fill_parent"
-                android:layout_height="0dip"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="专柜自提"
-                android:textColor="@color/main_color"
-                android:textSize="@dimen/title_text_size" />
-
-            <ImageView
-                android:id="@+id/iv_cursor_right2"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/corsur_margin"
-                android:layout_marginRight="@dimen/corsur_margin"
-                android:background="@drawable/line_title"
-                android:visibility="invisible" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dip"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/tv_help"
-                android:layout_width="fill_parent"
-                android:layout_height="0dip"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="售后中心"
-                android:textColor="@color/main_color"
-                android:textSize="@dimen/title_text_size" />
-
-            <ImageView
-                android:id="@+id/iv_cursor_right"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/corsur_margin"
-                android:layout_marginRight="@dimen/corsur_margin"
-                android:background="@drawable/line_title"
-                android:visibility="invisible" />
-        </LinearLayout>
-    </LinearLayout>
+    <View style="@style/style_horizontal_line" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/sales_manager_pager"

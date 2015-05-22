@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
@@ -13,6 +12,7 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.shenma.yueba.BaseFragmentActivity;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.adapter.CircleFragmentPagerAdapter;
@@ -24,7 +24,7 @@ import com.shenma.yueba.yangjia.fragment.ProductManagerFragmentForOnLine;
  * 
  * @author a
  */
-public class SocialManagerActivity extends FragmentActivity implements
+public class SocialManagerActivity extends BaseFragmentActivity implements
 		OnClickListener {
 	private TextView tv_product_online;
 	private TextView tv_product_will_down;
@@ -42,11 +42,14 @@ public class SocialManagerActivity extends FragmentActivity implements
 	private TextView tv_top_title;
 	private int page =1;
 	private int index;
+	private TextView tv_my_circle;
+	private TextView tv_my_attetion;
+	private TextView tv_my_fans;
 	@Override
 	protected void onCreate(Bundle arg0) {
 		MyApplication.getInstance().addActivity(this);//加入回退栈
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.product_manager_layout);
+		setContentView(R.layout.soical_manager_title);
 		initView();
 		initFragment();
 		initViewPager();
@@ -70,13 +73,17 @@ public class SocialManagerActivity extends FragmentActivity implements
 			}
 		});
 		
-		tv_product_online = (TextView) findViewById(R.id.tv_product_online);
-		tv_product_will_down = (TextView) findViewById(R.id.tv_product_will_down);
-		tv_product_has_down = (TextView) findViewById(R.id.tv_product_has_down);
-		tv_product_online.setOnClickListener(this);
-		tv_product_will_down.setOnClickListener(this);
-		tv_product_has_down.setOnClickListener(this);
-//		titleTextList.add();
+		tv_my_circle = (TextView) findViewById(R.id.tv_my_circle);
+		tv_my_attetion = (TextView) findViewById(R.id.tv_my_attetion);
+		tv_my_fans = (TextView) findViewById(R.id.tv_my_fans);
+		
+		tv_my_circle.setOnClickListener(this);
+		tv_my_attetion.setOnClickListener(this);
+		tv_my_fans.setOnClickListener(this);
+		
+		titleTextList.add(tv_my_circle);
+		titleTextList.add(tv_my_attetion);
+		titleTextList.add(tv_my_fans);
 		iv_cursor_left = (ImageView) findViewById(R.id.iv_cursor_left);
 		iv_cursor_center = (ImageView) findViewById(R.id.iv_cursor_center);
 		iv_cursor_right = (ImageView) findViewById(R.id.iv_cursor_right);
@@ -113,21 +120,7 @@ public class SocialManagerActivity extends FragmentActivity implements
 			 * 页面跳转完成后调用的方法
 			 */
 			public void onPageSelected(int arg0) {
-				if (arg0 == 0) {
-					iv_cursor_left.setVisibility(View.VISIBLE);
-					iv_cursor_center.setVisibility(View.INVISIBLE);
-					iv_cursor_right.setVisibility(View.INVISIBLE);
-				}
-				if (arg0 == 1) {
-					iv_cursor_center.setVisibility(View.VISIBLE);
-					iv_cursor_left.setVisibility(View.INVISIBLE);
-					iv_cursor_right.setVisibility(View.INVISIBLE);
-				}
-				if (arg0 == 2) {
-					iv_cursor_center.setVisibility(View.INVISIBLE);
-					iv_cursor_left.setVisibility(View.INVISIBLE);
-					iv_cursor_right.setVisibility(View.VISIBLE);
-				}
+				setCursorAndText(arg0, cursorImageList, titleTextList);
 				index = arg0;
 				switch (index) {
 				case 0:

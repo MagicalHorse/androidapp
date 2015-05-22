@@ -24,6 +24,7 @@ import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.yangjia.activity.BuyerIndentificationActivity;
 import com.shenma.yueba.yangjia.activity.IdentificationBuyerListActivity;
 import com.shenma.yueba.yangjia.activity.MainActivityForYangJia;
+import com.shenma.yueba.yangjia.activity.StoreIntroduceActivity;
 
 /**
  * 败家--个人账户
@@ -109,9 +110,9 @@ public class MeFragmentForYangJia extends BaseFragment implements
 		case R.id.tv_store:// 店铺首页
 			break;
 		case R.id.tv_store_introduce:// 店铺说明
-			Intent identificationBuyerIntent = new Intent(getActivity(),
-					BuyerIndentificationActivity.class);
-			startActivity(identificationBuyerIntent);
+			Intent storeIntroduceIntent = new Intent(getActivity(),
+					StoreIntroduceActivity.class);
+			startActivity(storeIntroduceIntent);
 
 			break;
 		case R.id.tv_invite_buyer:// 邀请买手

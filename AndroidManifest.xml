@@ -185,8 +185,7 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
+            </intent-filter>
             -->
         </activity>
         <activity
@@ -231,8 +230,8 @@
         </activity>
         <activity
             android:name="com.shenma.yueba.baijia.activity.SearchActivity"
-            android:windowSoftInputMode="stateHidden|adjustPan"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" >
         </activity>
         <activity
             android:name="com.shenma.yueba.baijia.activity.CityListActivity"
@@ -247,26 +246,51 @@
             android:name="com.shenma.yueba.baijia.activity.ResetPasswordActivity"
             android:screenOrientation="portrait" >
         </activity>
-
         <!-- 用户中心 -->
         <activity
             android:name="com.shenma.yueba.baijia.activity.UserConfigActivity"
             android:screenOrientation="portrait" >
         </activity>
         <!-- 买手主页 -->
-        <activity android:name="com.shenma.yueba.baijia.activity.ShopMainActivity" >
+        <activity
+            android:name="com.shenma.yueba.baijia.activity.ShopMainActivity"
+            android:screenOrientation="portrait" >
         </activity>
-        <!-- 上新-->
-        <activity android:name="com.shenma.yueba.baijia.activity.NewProduceListActivity" ></activity>
-        <!-- 圈子-->
-        <activity android:name="com.shenma.yueba.baijia.activity.CircleListActivity" ></activity>
-<!-- 我的收藏-->
-        <activity android:name="com.shenma.yueba.baijia.activity.MyCollectionActivity" ></activity>
+        <!-- 上新 -->
+        <activity
+            android:name="com.shenma.yueba.baijia.activity.NewProduceListActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <!-- 圈子 -->
+        <activity
+            android:name="com.shenma.yueba.baijia.activity.CircleListActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <!-- 我的收藏 -->
+        <activity
+            android:name="com.shenma.yueba.baijia.activity.MyCollectionActivity"
+            android:screenOrientation="portrait" >
+        </activity>
         <!-- 认证买手详情 -->
-        <activity android:name="com.shenma.yueba.baijia.activity.ApproveBuyerDetailsActivity" ></activity>
-        <!-- 聊天界面-->
-        <activity android:name="com.shenma.yueba.ChatActivity" ></activity>
-        
+        <activity
+            android:name="com.shenma.yueba.baijia.activity.ApproveBuyerDetailsActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <!-- 聊天界面 -->
+        <activity
+            android:name="com.shenma.yueba.ChatActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <!-- 店铺介绍界面 -->
+        <activity
+            android:name="com.shenma.yueba.yangjia.activity.StoreIntroduceActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <!-- 社交界面 -->
+        <activity
+            android:name="com.shenma.yueba.yangjia.activity.SocialManagerActivity"
+            android:screenOrientation="portrait" >
+        </activity>
         <!-- 网络状态变化的广播 -->
         <receiver
             android:name="com.shenma.yueba.receiver.ConnectionChangeReceiver"
