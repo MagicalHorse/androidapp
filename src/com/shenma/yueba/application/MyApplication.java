@@ -13,6 +13,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.graphics.Bitmap.CompressFormat;
 import android.widget.Toast;
 
@@ -59,6 +60,7 @@ public class MyApplication extends Application {
 	private String cccc;
 	private DisplayImageOptions optionsForRound;
     private UserRequestBean userRequestBean;
+	private Typeface tf;
 
 	
 	@Override
@@ -80,6 +82,17 @@ public class MyApplication extends Application {
 		}
 		return instance;
 	}
+	
+	public Typeface getTypeface(){
+		if(tf == null){
+			tf = Typeface.createFromAsset(this.getAssets(),
+					"fonts/youyuan.ttf");
+			return tf;
+		}else {
+			return tf;
+		}
+	}
+	
 
 	/**
 	 * 将acitivity加入到堆栈

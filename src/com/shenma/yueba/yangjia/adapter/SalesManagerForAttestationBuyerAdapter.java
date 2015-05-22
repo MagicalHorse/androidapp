@@ -66,9 +66,9 @@ public class SalesManagerForAttestationBuyerAdapter extends BaseAdapterWithUtil 
 			holder.tv_description = (TextView) convertView.findViewById(R.id.tv_description);
 			holder.tv_same_product_count = (TextView) convertView.findViewById(R.id.tv_same_product_count);
 			holder.tv_size = (TextView) convertView.findViewById(R.id.tv_size);
-//			FontManager.changeFonts(ctx, holder.tv_order_number,holder.tv_waiting_for_send,holder.tv_more_show,
-//					holder.tv_product_count,holder.tv_money_payed,holder.tv_product_name,holder.tv_price,holder.tv_description,
-//					holder.tv_same_product_count,holder.tv_size);
+			FontManager.changeFonts(ctx, holder.tv_order_number,holder.tv_waiting_for_send,holder.tv_more_show,
+					holder.tv_product_count,holder.tv_money_payed,holder.tv_product_name,holder.tv_price,holder.tv_description,
+					holder.tv_same_product_count,holder.tv_size);
 			convertView.setTag(holder);
 		}else{
 			holder = (Holder) convertView.getTag();

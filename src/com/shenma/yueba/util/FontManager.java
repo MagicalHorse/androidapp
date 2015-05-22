@@ -1,5 +1,7 @@
 package com.shenma.yueba.util;
 
+import com.shenma.yueba.application.MyApplication;
+
 import android.content.Context;
 import android.graphics.Typeface;
 import android.view.View;
@@ -16,8 +18,7 @@ import android.widget.TextView;
  */
 public class FontManager {
 	public static void changeFonts(Context ctx, View... views) {
-		Typeface tf = Typeface.createFromAsset(ctx.getAssets(),
-				"fonts/youyuan.ttf");
+		Typeface tf = MyApplication.getInstance().getTypeface();
 		for (int i = 0; i < views.length; i++) {
 			if (views[i] instanceof TextView) {
 				((TextView) views[i]).setTypeface(tf);
