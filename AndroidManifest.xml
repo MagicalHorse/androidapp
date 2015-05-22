@@ -269,7 +269,7 @@
         
         <!-- 网络状态变化的广播 -->
         <receiver
-            android:name="com.blackboard.androidtest.receiver.ConnectionChangeReceiver"
+            android:name="com.shenma.yueba.receiver.ConnectionChangeReceiver"
             android:label="NetworkConnection" >
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
