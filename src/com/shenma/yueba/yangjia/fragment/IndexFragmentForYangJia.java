@@ -104,11 +104,11 @@ public class IndexFragmentForYangJia extends BaseFragment implements
 	private TextView tv_all_share_title;
 	private TextView tv_all_share_count;
 	
-	private RelativeLayout rl_sales;
-	private RelativeLayout rl_earnings;
-	private RelativeLayout rl_share;
-	private RelativeLayout rl_products;
-	private RelativeLayout rl_fans;
+	private RelativeLayout rl_sales;//销售管理
+	private RelativeLayout rl_earnings;//收益管理
+	private RelativeLayout rl_share;//分享管理---暂无
+	private RelativeLayout rl_products;//商品管理
+	private RelativeLayout rl_social;//社交管理
 	
 	private PullToRefreshScrollView mPullRefreshScrollView;
 
@@ -222,13 +222,13 @@ public class IndexFragmentForYangJia extends BaseFragment implements
 		rl_share = (RelativeLayout) view.findViewById(R.id.rl_share);
 		rl_products = (RelativeLayout) view
 				.findViewById(R.id.rl_products);
-		rl_fans = (RelativeLayout) view.findViewById(R.id.rl_fans);
+		rl_social = (RelativeLayout) view.findViewById(R.id.rl_social);
 
 		rl_sales.setOnClickListener(this);
 		rl_earnings.setOnClickListener(this);
 		rl_share.setOnClickListener(this);
 		rl_products.setOnClickListener(this);
-		rl_fans.setOnClickListener(this);
+		rl_social.setOnClickListener(this);
 		
 		FontManager.changeFonts(getActivity(), tv_top_title, tv_earnings_title,
 				tv_today_earnings_title, tv_today_earnings_money,
@@ -327,7 +327,9 @@ public class IndexFragmentForYangJia extends BaseFragment implements
 			Intent intentProductManager = new Intent(getActivity(), ProductManagerActivity.class);
 			startActivity(intentProductManager);
 			break;
-		case R.id.rl_fans://粉丝管理
+		case R.id.rl_social://粉丝管理
+			Intent intentSocialManager = new Intent(getActivity(), ProductManagerActivity.class);
+			startActivity(intentSocialManager);
 			break;
 		case R.id.bt_top_right:
 			SocicalShareUtil shareUtil = new SocicalShareUtil(getActivity());
