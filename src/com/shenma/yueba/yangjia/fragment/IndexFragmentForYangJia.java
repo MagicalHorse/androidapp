@@ -61,6 +61,8 @@ public class IndexFragmentForYangJia extends BaseFragment implements
 	private ArrayList<Fragment> fragmentList = new ArrayList<Fragment>();
 	private CircleFragmentPagerAdapter myFragmentPagerAdapter;
 
+	private Income income;
+	
 	private BitmapUtils bitmapUtils;
 	
 	private ImageView iv_qr_code;
@@ -315,7 +317,9 @@ public class IndexFragmentForYangJia extends BaseFragment implements
 			break;
 		case R.id.rl_earnings://收益管理
 			Intent intentEarning = new Intent(getActivity(), EarningManagerActivity.class);
+			intentEarning.putExtra("earningData", income);
 			startActivity(intentEarning);
+			
 			break;
 		case R.id.rl_share://分享管理
 			break;
@@ -369,7 +373,7 @@ public class IndexFragmentForYangJia extends BaseFragment implements
 				tv_today_sales_count.setText(ToolsUtil.nullToString(order!=null?order.getTodayorder():""));
 				tv_all_sales_count.setText(ToolsUtil.nullToString(order!=null?order.getAllorder():""));
 				
-				Income income = data.getIncome();//收益管理
+				income = data.getIncome();
 				tv_today_earnings_money.setText(ToolsUtil.nullToString(income!=null?income.getToday_income():""));
 				tv_all_earnings_money.setText(ToolsUtil.nullToString(income!=null?income.getTotal_income():""));
 				

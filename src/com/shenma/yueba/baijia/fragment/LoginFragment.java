@@ -93,48 +93,48 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
 			startActivity(intent);
 			break;
 		case R.id.bt_login:// 登录
-//			if (TextUtils.isEmpty(et_mobile.getText().toString())) {
-//				Toast.makeText(getActivity(), "手机号不能为空", 1000).show();
-//				et_mobile.startAnimation(AnimationUtils.loadAnimation(
-//						getActivity(), R.anim.shake));
-//			} else if (!ToolsUtil.checkPhone(et_mobile.getText().toString())) {
-//				Toast.makeText(getActivity(), "手机号格式不正确", 1000).show();
-//			} else if (TextUtils.isEmpty(et_password.getText().toString())) {
-//				Toast.makeText(getActivity(), "密码不能为空", 1000).show();
-//				et_password.startAnimation(AnimationUtils.loadAnimation(
-//						getActivity(), R.anim.shake));
-//			} else {
-//				final HttpControl httpControl = new HttpControl();
-//				httpControl.userLogin(et_mobile.getText().toString().trim(),
-//						et_password.getText().toString().trim(),
-//						new HttpCallBackInterface() {
-//
-//							@Override
-//							public void http_Success(Object obj) {
-//
-//								if (obj != null
-//										&& obj instanceof UserRequestBean) {
-//									UserRequestBean bean = (UserRequestBean) obj;
-//									httpControl.setLoginInfo(getActivity(), bean);
-//									Intent intent = new Intent(getActivity(),
-//											MainActivityForYangJia.class);
-//									intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//									startActivity(intent);
-//									getActivity().finish();
-//								}
-//							}
-//
-//							@Override
-//							public void http_Fails(int error, String msg) {
-//
-//								MyApplication.getInstance().showMessage(
-//										getActivity(), msg);
-//							}
-//						}, getActivity());
-//			}
+			if (TextUtils.isEmpty(et_mobile.getText().toString())) {
+				Toast.makeText(getActivity(), "手机号不能为空", 1000).show();
+				et_mobile.startAnimation(AnimationUtils.loadAnimation(
+						getActivity(), R.anim.shake));
+			} else if (!ToolsUtil.checkPhone(et_mobile.getText().toString())) {
+				Toast.makeText(getActivity(), "手机号格式不正确", 1000).show();
+			} else if (TextUtils.isEmpty(et_password.getText().toString())) {
+				Toast.makeText(getActivity(), "密码不能为空", 1000).show();
+				et_password.startAnimation(AnimationUtils.loadAnimation(
+						getActivity(), R.anim.shake));
+			} else {
+				final HttpControl httpControl = new HttpControl();
+				httpControl.userLogin(et_mobile.getText().toString().trim(),
+						et_password.getText().toString().trim(),
+						new HttpCallBackInterface() {
+
+							@Override
+							public void http_Success(Object obj) {
+
+								if (obj != null
+										&& obj instanceof UserRequestBean) {
+									UserRequestBean bean = (UserRequestBean) obj;
+									httpControl.setLoginInfo(getActivity(), bean);
+									Intent intent = new Intent(getActivity(),
+											MainActivityForYangJia.class);
+									intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+									startActivity(intent);
+									getActivity().finish();
+								}
+							}
+
+							@Override
+							public void http_Fails(int error, String msg) {
+
+								MyApplication.getInstance().showMessage(
+										getActivity(), msg);
+							}
+						}, getActivity());
+			}
 			
-			Intent intent2 = new Intent(getActivity(), ChatActivity.class);
-			startActivity(intent2);
+//			Intent intent2 = new Intent(getActivity(), ChatActivity.class);
+//			startActivity(intent2);
 			break;
 		case R.id.tv_wechat:// 微信登录
 			initWeiChatLogin();
