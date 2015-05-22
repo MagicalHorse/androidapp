@@ -13,12 +13,13 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.R.id;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.yangjia.fragment.ItemCustomerFragment;
-import com.viewpagerindicator.TabPageIndicator;
 
 /**
  * 销售管理---认证买手
@@ -27,11 +28,23 @@ import com.viewpagerindicator.TabPageIndicator;
  * 
  */
 
-public class SalesManagerForBuyerActivity extends FragmentActivity implements OnClickListener {
+public class SalesManagerForBuyerActivity extends FragmentActivity implements
+		OnClickListener {
 	private static final String[] TITLE = new String[] { "全部订单", "待发货", "待收货",
 			"专柜自提" };
 	private List<ItemCustomerFragment> fragmentList = new ArrayList<ItemCustomerFragment>();
 	private TextView tv_top_left, tv_top_title;
+	private ImageView iv_cursor_left;
+	private ImageView iv_cursor_left2;
+	private ImageView iv_cursor_right2;
+	private ImageView iv_cursor_right;
+	private TextView tv_all_order;
+	private TextView tv_wating_for_pay;
+	private TextView tv_get_byself;
+	private TextView tv_help;
+	private ViewPager sales_manager_pager;
+	private ArrayList<ImageView> cursorImageList = new ArrayList<ImageView>();
+	private ArrayList<TextView> titleTextList = new ArrayList<TextView>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,38 +52,9 @@ public class SalesManagerForBuyerActivity extends FragmentActivity implements On
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.sales_manager_layout_for_buyer);
 		super.onCreate(savedInstanceState);
-		initView();
 		setFragmentList();
-		FragmentPagerAdapter adapter = new TabPageIndicatorAdapter(getSupportFragmentManager());
-        ViewPager pager = (ViewPager)findViewById(R.id.pager);
-        pager.setAdapter(adapter);
-        //实例化TabPageIndicator然后设置ViewPager与之关联
-        TabPageIndicator indicator = (TabPageIndicator)findViewById(R.id.indicator);
-        indicator.setViewPager(pager);
-        
-        //如果我们要对ViewPager设置监听，用indicator设置就行了
-        indicator.setOnPageChangeListener(new OnPageChangeListener() {
-			
-			@Override
-			public void onPageSelected(int arg0) {
-			}
-			
-			@Override
-			public void onPageScrolled(int arg0, float arg1, int arg2) {
-				
-			}
-			
-			@Override
-			public void onPageScrollStateChanged(int arg0) {
-				
-			}
-		});
-        
-	
-		
-		
-		
-		
+		initView();
+		initViewPager();
 	}
 
 	private void initView() {
@@ -80,10 +64,72 @@ public class SalesManagerForBuyerActivity extends FragmentActivity implements On
 		tv_top_title.setVisibility(View.VISIBLE);
 		tv_top_title.setText("销售管理");
 		tv_top_left.setOnClickListener(this);
+		iv_cursor_left = (ImageView) findViewById(R.id.iv_cursor_left);
+		iv_cursor_left2 = (ImageView) findViewById(R.id.iv_cursor_left2);
+		iv_cursor_right2 = (ImageView) findViewById(R.id.iv_cursor_right2);
+		iv_cursor_right = (ImageView) findViewById(R.id.iv_cursor_right);
+		cursorImageList.add(iv_cursor_left);
+		cursorImageList.add(iv_cursor_left2);
+		cursorImageList.add(iv_cursor_right2);
+		cursorImageList.add(iv_cursor_right);
+		iv_cursor_left.setVisibility(View.VISIBLE);
+		tv_all_order = (TextView) findViewById(R.id.tv_all_order);
+		tv_wating_for_pay = (TextView) findViewById(R.id.tv_wating_for_pay);
+		tv_get_byself = (TextView) findViewById(R.id.tv_get_byself);
+		tv_help = (TextView) findViewById(R.id.tv_help);
+
+		titleTextList.add(tv_all_order);
+		titleTextList.add(tv_wating_for_pay);
+		titleTextList.add(tv_get_byself);
+		titleTextList.add(tv_help);
+		tv_all_order.setOnClickListener(this);
+		tv_wating_for_pay.setOnClickListener(this);
+		tv_get_byself.setOnClickListener(this);
+		tv_help.setOnClickListener(this);
+
+		sales_manager_pager = (ViewPager) findViewById(R.id.sales_manager_pager);
 	}
 
-	
-	
+	private void initViewPager() {
+		sales_manager_pager.setAdapter(new TabPageIndicatorAdapter(
+				getSupportFragmentManager()));
+		sales_manager_pager.setCurrentItem(0);
+		sales_manager_pager.setOnPageChangeListener(new OnPageChangeListener() {
+			public void onPageScrolled(int arg0, float arg1, int arg2) {
+			}
+
+			/*
+			 * 页面跳转完成后调用的方法
+			 */
+			public void onPageSelected(int arg0) {
+				setCursorAndText(arg0);
+			}
+
+			private void setCursorAndText(int index) {
+				for (int i = 0; i < cursorImageList.size(); i++) {
+					if (i != index) {
+						cursorImageList.get(i).setVisibility(View.INVISIBLE);
+					} else {
+						cursorImageList.get(i).setVisibility(View.VISIBLE);
+					}
+				}
+				for (int j = 0; j < titleTextList.size(); j++) {
+					if (j != index) {
+						titleTextList.get(j).setTextSize(17);
+					} else {
+						titleTextList.get(j).setTextSize(20);
+					}
+				}
+			}
+
+			@Override
+			public void onPageScrollStateChanged(int arg0) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+	}
+
 	/**
 	 * 初始化ItemFragment3
 	 */
@@ -92,7 +138,6 @@ public class SalesManagerForBuyerActivity extends FragmentActivity implements On
 			fragmentList.add(new ItemCustomerFragment());
 		}
 	}
-
 
 	/**
 	 * ViewPager适配器
@@ -111,26 +156,37 @@ public class SalesManagerForBuyerActivity extends FragmentActivity implements On
 		}
 
 		@Override
-		public CharSequence getPageTitle(int position) {
-			return TITLE[position % TITLE.length];
+		public int getCount() {
+			return fragmentList.size();
 		}
 
 		@Override
-		public int getCount() {
-			return TITLE.length;
+		public int getItemPosition(Object object) {
+			return super.getItemPosition(object);
 		}
 	}
 
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.tv_top_left://返回
+		case R.id.tv_top_left:// 返回
 			SalesManagerForBuyerActivity.this.finish();
 			break;
-
+		case R.id.tv_all_order:// 全部订单
+			sales_manager_pager.setCurrentItem(0);
+			break;
+		case R.id.tv_wating_for_pay:// 代付款
+			sales_manager_pager.setCurrentItem(1);
+			break;
+		case R.id.tv_get_byself:// 专柜自提
+			sales_manager_pager.setCurrentItem(2);
+			break;
+		case R.id.tv_help:// 售后服务
+			sales_manager_pager.setCurrentItem(3);
+			break;
 		default:
 			break;
 		}
-		
+
 	}
 }

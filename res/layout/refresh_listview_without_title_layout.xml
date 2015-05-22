@@ -18,9 +18,5 @@
         android:headerDividersEnabled="false"
         android:smoothScrollbar="true" />
 
-    <include
-        android:id="@+id/showloading_layout_view"
-        android:layout_centerInParent="true"
-        layout="@layout/showloading_layout" />
 
 </RelativeLayout>
