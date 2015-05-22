@@ -73,6 +73,8 @@ public class ProductManagerFragmentForOnLineAdapter extends BaseAdapterWithUtil 
 			holder.tv_offline_share = (TextView) convertView.findViewById(R.id.tv_offline_share);
 			holder.tv_delete = (TextView) convertView.findViewById(R.id.tv_delete);
 			
+			holder.ll_offline = (LinearLayout) convertView.findViewById(R.id.ll_offline);
+			holder.ll_online = (LinearLayout) convertView.findViewById(R.id.ll_online);
 			
 			holder.tv_down.setOnClickListener(this);
 			holder.tv_online_copy.setOnClickListener(this);
