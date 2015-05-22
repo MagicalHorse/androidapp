@@ -260,7 +260,13 @@
         <activity android:name="com.shenma.yueba.baijia.activity.NewProduceListActivity" ></activity>
         <!-- 圈子-->
         <activity android:name="com.shenma.yueba.baijia.activity.CircleListActivity" ></activity>
-
+        <!-- 我的收藏-->
+        <activity android:name="com.shenma.yueba.baijia.activity.MyCollectionActivity" ></activity>
+        <!-- 认证买手详情 -->
+        <activity android:name="com.shenma.yueba.baijia.activity.ApproveBuyerDetailsActivity" ></activity>
+ 		<!-- 聊天界面-->
+        <activity android:name="com.shenma.yueba.ChatActivity" ></activity>
+        
         <!-- 网络状态变化的广播 -->
         <receiver
             android:name="com.blackboard.androidtest.receiver.ConnectionChangeReceiver"
