@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:zhy="http://schemas.android.com/apk/res/com.shenma.yueba"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <include
+        android:id="@+id/title_include"
+        android:layout_alignParentTop="true"
+        layout="@layout/title_for_common" />
+
+    <ScrollView
+        android:id="@+id/approvebuyerdetails_srcollview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/approvebuyerdetails_footer"
+        android:layout_below="@id/title_include"
+        android:layout_marginTop="@dimen/shop_main_width2_dimen"
+        android:visibility="gone" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:id="@+id/approvebuyerdetails_head_relativelayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <!-- 头像 -->
+
+                <com.shenma.yueba.view.imageshow.CustomImageView
+                    android:id="@+id/approvebuyerdetails_icon_imageview"
+                    android:layout_width="@dimen/shop_main_iconwidth80_dimen"
+                    android:layout_height="@dimen/shop_main_iconwidth80_dimen"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/shop_main_width3_dimen"
+                    zhy:src="@drawable/user_config_icon"
+                    zhy:type="circle" />
+                <!-- 店名 -->
+
+                <TextView
+                    android:id="@+id/approvebuyerdetails_name_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/approvebuyerdetails_icon_imageview"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/shop_main_marginleft30_dimen"
+                    android:text="名字" />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/margin_left_and_right" >
+
+                    <TextView
+                        android:id="@+id/appprovebuyerdetails_text1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="成交:  " />
+
+                    <TextView
+                        android:id="@+id/appprovebuyerdetails_textvalue1_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/appprovebuyerdetails_text1"
+                        android:text="152" />
+
+                    <TextView
+                        android:id="@+id/appprovebuyerdetails_text2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/appprovebuyerdetails_text1"
+                        android:text="好评:  " />
+
+                    <TextView
+                        android:id="@+id/appprovebuyerdetails_text2value_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/appprovebuyerdetails_text1"
+                        android:layout_toRightOf="@id/appprovebuyerdetails_text2"
+                        android:text="96%"
+                        android:textColor="@color/red" />
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/appprovebuyer_viewpager_relativelayout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/shop_main_width300_dimen"
+                android:layout_below="@id/approvebuyerdetails_head_relativelayout" >
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/appprovebuyer_viewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <LinearLayout
+                    android:id="@+id/appprovebuyer_viewpager_footer_linerlayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="@dimen/shop_main_width5_dimen"
+                    android:gravity="center"
+                    android:orientation="horizontal" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/approvebuyerdetails_price_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/appprovebuyer_viewpager_relativelayout"
+                android:hint="￥0"
+                android:paddingLeft="@dimen/margin_left_and_right"
+                android:textColor="@color/red"
+                android:textColorHint="@color/red" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/appprovebuyer_viewpager_relativelayout"
+                android:layout_marginRight="@dimen/margin_left_and_right"
+                android:text="*商品只支持商城自提"
+                android:textColor="@color/red"
+                android:textSize="12dip" />
+
+            <TextView
+                android:id="@+id/approvebuyerdetails_producename_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/approvebuyerdetails_price_textview"
+                android:hint="[卷儿]"
+                android:paddingLeft="@dimen/margin_left_and_right" />
+
+            <TextView
+                android:id="@+id/approvebuyerdetails_address_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/approvebuyerdetails_producename_textview"
+                android:hint="自提地点:"
+                android:paddingLeft="@dimen/margin_left_and_right" />
+
+            <TextView
+                android:id="@+id/approvebuyerdetails_addressvalue_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/approvebuyerdetails_producename_textview"
+                android:layout_toRightOf="@id/approvebuyerdetails_address_textview"
+                android:hint="北京市人民大学" />
+
+            <LinearLayout
+                android:id="@+id/approvebuyerdetails_attention_linerlayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/approvebuyerdetails_addressvalue_textview"
+                android:gravity="center_vertical"
+                android:padding="@dimen/margin_left_and_right" >
+
+                <TextView
+                    android:id="@+id/approvebuyerdetails_attention_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/zan"
+                    android:gravity="center"
+                    android:hint="558" />
+
+                <LinearLayout
+                    android:id="@+id/approvebuyerdetails_attentionvalue_linerlayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/shop_main_width5_dimen"
+                    android:orientation="horizontal" />
+            </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
+
+    <include
+        android:id="@+id/showloading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/title_include"
+        layout="@layout/showloading_layout" />
+
+    <RelativeLayout
+        android:id="@+id/approvebuyerdetails_footer"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:visibility="visible" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/shop_main_width25_dimen"
+            android:layout_toLeftOf="@+id/footer_right_linerlayout"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/shop_main_width5_dimen" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:layout_weight="1"
+                    android:src="@drawable/msg" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="top"
+                    android:textSize="13dip"
+                    android:text="私聊" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/shop_main_width5_dimen" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:layout_weight="1"
+                    android:src="@drawable/msg" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="top"
+                    android:textSize="13dip"
+                    android:text="收藏" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/footer_right_linerlayout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true" >
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/addcart_background"
+                android:paddingLeft="@dimen/shop_main_lineheight10_dimen"
+                android:paddingRight="@dimen/shop_main_lineheight10_dimen"
+                android:text="加入购物车"
+                android:textSize="18dip" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/nowbuy_background"
+                android:padding="@dimen/shop_main_lineheight10_dimen"
+                android:paddingLeft="@dimen/shop_main_lineheight10_dimen"
+                android:paddingRight="@dimen/shop_main_lineheight10_dimen"
+                android:text="立即购买"
+                android:textSize="18dip" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</RelativeLayout>
