@@ -59,7 +59,7 @@
                 style="@style/style_horizontal_line" />
 
             <include
-                android:id="@+id/rl_fans"
+                android:id="@+id/rl_social"
                 layout="@layout/fans_manager_item" />
         </LinearLayout>
     </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
