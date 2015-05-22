@@ -1,8 +1,12 @@
 package com.shenma.yueba.application;
 
 import java.io.File;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+
+import roboguice.RoboGuice;
 
 import android.app.Activity;
 import android.app.Application;
@@ -31,6 +35,7 @@ import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.activity.LoginAndRegisterActivity;
 import com.shenma.yueba.baijia.modle.UserRequestBean;
 import com.shenma.yueba.constants.Constants;
+import com.shenma.yueba.db.DBHelper;
 import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.util.ToolsUtil;
 
@@ -41,8 +46,8 @@ public class MyApplication extends Application {
 	private BitmapUtils bitmapUtils;
 	public BitmapDisplayConfig bigPicDisplayConfig;
 	
-	
-	
+	private Map<String, Integer> mFaceMap = new LinkedHashMap<String, Integer>();
+	private static DBHelper dbHelper;//数据库帮助类
 	/**
 	 * /** 初始化图片加载类MyApplication123
 	 */
@@ -64,7 +69,9 @@ public class MyApplication extends Application {
 		initImageLoader(getApplicationContext());
 		initDisplayImageOptions();
 		initRoundDisplayImageOptions();
-
+        initFaceMap();
+        dbHelper = RoboGuice.getBaseApplicationInjector(this).getInstance(
+				DBHelper.class);
 	}
 
 	public static MyApplication getInstance() {
@@ -264,4 +271,106 @@ public class MyApplication extends Application {
 		Constants.SCREENHEITH = width;
 	}
 
+	
+	
+	
+	
+	public Map<String, Integer> getFaceMap() {
+		if (!mFaceMap.isEmpty())
+			return mFaceMap;
+		return null;
+	}
+	/**
+	 * 初始化表情
+	 */
+	private void initFaceMap() {
+		// TODO Auto-generated method stub
+		mFaceMap.put("[微笑]", R.drawable.biaoqing001);
+		mFaceMap.put("[色色]", R.drawable.biaoqing002);
+		mFaceMap.put("[嘻嘻]", R.drawable.biaoqing003);
+		mFaceMap.put("[偷笑]", R.drawable.biaoqing004);
+		mFaceMap.put("[害羞]", R.drawable.biaoqing005);
+		mFaceMap.put("[大哭]", R.drawable.biaoqing006);
+		mFaceMap.put("[流泪]", R.drawable.biaoqing007);
+		mFaceMap.put("[耍酷]", R.drawable.biaoqing008);
+		mFaceMap.put("[发怒]", R.drawable.biaoqing009);
+		mFaceMap.put("[吃惊]", R.drawable.biaoqing010);
+		mFaceMap.put("[疑问]", R.drawable.biaoqing011);
+		mFaceMap.put("[好衰]", R.drawable.biaoqing012);
+		mFaceMap.put("[吐舌]", R.drawable.biaoqing013);
+		mFaceMap.put("[调皮]", R.drawable.biaoqing014);
+		mFaceMap.put("[惊恐]", R.drawable.biaoqing015);
+		mFaceMap.put("[睡觉]", R.drawable.biaoqing016);
+		mFaceMap.put("[困乏]", R.drawable.biaoqing017);
+		mFaceMap.put("[不屑]", R.drawable.biaoqing018);
+		mFaceMap.put("[晕晕]", R.drawable.biaoqing019);
+		mFaceMap.put("[悠闲]", R.drawable.biaoqing020);
+		mFaceMap.put("[尴尬]", R.drawable.biaoqing021);
+		mFaceMap.put("[脸红]", R.drawable.biaoqing022);
+		mFaceMap.put("[安慰]", R.drawable.biaoqing023);
+		mFaceMap.put("[闭嘴]", R.drawable.biaoqing024);
+		mFaceMap.put("[狂吐]", R.drawable.biaoqing025);
+		mFaceMap.put("[饥饿]", R.drawable.biaoqing026);
+		mFaceMap.put("[鄙视]", R.drawable.biaoqing027);
+		mFaceMap.put("[不爽]", R.drawable.biaoqing028);
+		mFaceMap.put("[强大]", R.drawable.biaoqing029);
+		mFaceMap.put("[胜利]", R.drawable.biaoqing030);
+		mFaceMap.put("[弱爆]", R.drawable.biaoqing031);
+		mFaceMap.put("[握手]", R.drawable.biaoqing032);
+		mFaceMap.put("[勾引]", R.drawable.biaoqing033);
+		mFaceMap.put("[爱你]", R.drawable.biaoqing034);
+		mFaceMap.put("[抱拳]", R.drawable.biaoqing035);
+		mFaceMap.put("[OK]", R.drawable.biaoqing036);
+		mFaceMap.put("[便便]", R.drawable.biaoqing037);
+		mFaceMap.put("[吃饭]", R.drawable.biaoqing038);
+		mFaceMap.put("[爱心]", R.drawable.biaoqing039);
+		mFaceMap.put("[心碎]", R.drawable.biaoqing040);
+		mFaceMap.put("[咖啡]", R.drawable.biaoqing041);
+		mFaceMap.put("[钱币]", R.drawable.biaoqing042);
+		mFaceMap.put("[西瓜]", R.drawable.biaoqing043);
+		mFaceMap.put("[吃药]", R.drawable.biaoqing044);
+		mFaceMap.put("[内裤]", R.drawable.biaoqing045);
+		mFaceMap.put("[内衣]", R.drawable.biaoqing046);
+		mFaceMap.put("[强壮]", R.drawable.biaoqing047);
+		mFaceMap.put("[猪头]", R.drawable.biaoqing048);
+		mFaceMap.put("[玫瑰]", R.drawable.biaoqing049);
+		mFaceMap.put("[凋谢]", R.drawable.biaoqing050);
+		mFaceMap.put("[蛋糕]", R.drawable.biaoqing051);
+		mFaceMap.put("[流汗]", R.drawable.biaoqing052);
+		mFaceMap.put("[围观]", R.drawable.biaoqing053);
+		mFaceMap.put("[夜晚]", R.drawable.biaoqing054);
+		mFaceMap.put("[亲亲]", R.drawable.biaoqing055);
+		mFaceMap.put("[礼物]", R.drawable.biaoqing056);
+		mFaceMap.put("[憨笑]", R.drawable.biaoqing057);
+		mFaceMap.put("[咧嘴]", R.drawable.biaoqing058);
+		mFaceMap.put("[可爱]", R.drawable.biaoqing059);
+		mFaceMap.put("[阴笑]", R.drawable.biaoqing060);
+		mFaceMap.put("[捂嘴]", R.drawable.biaoqing061);
+		mFaceMap.put("[气炸]", R.drawable.biaoqing062);
+		mFaceMap.put("[呜呜]", R.drawable.biaoqing063);
+		mFaceMap.put("[狂暴]", R.drawable.biaoqing064);
+		mFaceMap.put("[好囧]", R.drawable.biaoqing065);
+		mFaceMap.put("[惊吓]", R.drawable.biaoqing066);
+		mFaceMap.put("[好色]", R.drawable.biaoqing067);
+		mFaceMap.put("[飞吻]", R.drawable.biaoqing068);
+		mFaceMap.put("[坏坏]", R.drawable.biaoqing069);
+		mFaceMap.put("[捂眼]", R.drawable.biaoqing070);
+		mFaceMap.put("[可怜]", R.drawable.biaoqing071);
+		mFaceMap.put("[发呆]", R.drawable.biaoqing072);
+		mFaceMap.put("[封嘴]", R.drawable.biaoqing073);
+		mFaceMap.put("[叹气]", R.drawable.biaoqing074);
+		mFaceMap.put("[鬼脸]", R.drawable.biaoqing075);
+		mFaceMap.put("[委屈]", R.drawable.biaoqing076);
+		mFaceMap.put("[抠鼻]", R.drawable.biaoqing077);
+		mFaceMap.put("[吓尿]", R.drawable.biaoqing078);
+		mFaceMap.put("[斜视]", R.drawable.biaoqing079);
+		mFaceMap.put("[鄙视]", R.drawable.biaoqing080);
+		mFaceMap.put("[敲打]", R.drawable.biaoqing081);
+		mFaceMap.put("[晕乎]", R.drawable.biaoqing082);
+		mFaceMap.put("[恶心]", R.drawable.biaoqing083);
+		mFaceMap.put("[鼓掌]", R.drawable.biaoqing084);
+	}
+	
+	
+	
 }

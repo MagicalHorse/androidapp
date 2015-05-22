@@ -33,7 +33,6 @@ import android.widget.Toast;
 import com.google.inject.Inject;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
-import com.shenma.yueba.util.DbHelper;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.yangjia.fragment.CartFragment;
 import com.shenma.yueba.yangjia.fragment.IndexFragmentForYangJia;
@@ -58,7 +57,6 @@ public final class MainActivityForYangJia extends FragmentActivity {
 	private LinkedList<String> mListItems;
 	private ArrayAdapter<String> mAdapter;
 	
-	@Inject private DbHelper dbHelper;//数据库帮助类对象
 	private FragmentTabHost mTabHost;
 //	// 定义数组来存放按钮图片
 	private int mImageViewArray[] = { R.drawable.tab_index_selector,
