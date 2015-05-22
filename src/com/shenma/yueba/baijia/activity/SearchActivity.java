@@ -117,41 +117,6 @@ public class SearchActivity extends FragmentActivity implements OnClickListener 
 		viewpager_search.setCurrentItem(0);
 		viewpager_search.setOnPageChangeListener(new OnPageChangeListener() {
 
-			// private boolean isScrolled = false;
-
-			// public void onPageScrollStateChanged(int arg0) {
-			// /*
-			// * 页卡正常滑动时，会经历 1-2-0的三个阶段；
-			// *
-			// * 页卡在最后一页向右滑，或者第一页向左滑经历 1-0-2-0的阶段；
-			// *
-			// * 直接调用 setCurrentItem则只是经历 2-0的阶段
-			// */
-			// switch (arg0) {
-			// /*
-			// * 每一次的滑动arg0都会经历1-2-0的阶段，但是在最后一个页面向右滑，或者第一个页面向左滑时会经历 1-0-2-0的阶段
-			// * 例如： 最后页面右滑时
-			// * ，刚刚开始会是1，这时isScrolled为false，但是没有下一页面，所以此时的页面还是最后一个页面，满足if条件
-			// */
-			// case 0:
-			//
-			// if (viewPager.getCurrentItem() == viewPager.getAdapter()
-			// .getCount() - 1 && !isScrolled)
-			// viewPager.setCurrentItem(0);
-			// else if (viewPager.getCurrentItem() == 0 && !isScrolled) {
-			// viewPager.setCurrentItem(viewPager.getAdapter()
-			// .getCount() - 1);
-			// }
-			// break;
-			// case 1:
-			// isScrolled = false;
-			// break;
-			// case 2:
-			// isScrolled = true;
-			// break;
-			// }
-			// }
-
 			public void onPageScrolled(int arg0, float arg1, int arg2) {
 			}
 
@@ -179,36 +144,10 @@ public class SearchActivity extends FragmentActivity implements OnClickListener 
 
 			@Override
 			public void onPageScrollStateChanged(int arg0) {
-				// TODO Auto-generated method stub
+				
 
 			}
 		});
-
-		// viewpager_circle.setOnPageChangeListener(new OnPageChangeListener() {
-		// @Override
-		// public void onPageSelected(int arg0) {
-		// if (arg0 == 1) {
-		// iv_cursor_right.setVisibility(View.VISIBLE);
-		// iv_cursor_left.setVisibility(View.INVISIBLE);
-		// }
-		// if (arg0 == 0) {
-		// iv_cursor_right.setVisibility(View.INVISIBLE);
-		// iv_cursor_left.setVisibility(View.VISIBLE);
-		// }
-		// }
-		//
-		// @Override
-		// public void onPageScrolled(int arg0, float arg1, int arg2) {
-		//
-		//
-		// }
-		//
-		// @Override
-		// public void onPageScrollStateChanged(int arg0) {
-		// // TODO Auto-generated method stub
-		//
-		// }
-		// });
 
 	}
 	

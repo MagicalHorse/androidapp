@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="user_config_iconwidth60_dimen">60dp</dimen>
+    <dimen name="user_config_iconwidth50_dimen">50dp</dimen>
     <dimen name="shop_main_iconwidth80_dimen">80dp</dimen>
     <dimen name="shop_main_lineheight10_dimen">10dp</dimen>
     <dimen name="shop_main_lineheight8_dimen">8dp</dimen>
