@@ -64,6 +64,8 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
 			bt_login = (Button) view.findViewById(R.id.bt_login);
 			et_mobile = (EditText) view.findViewById(R.id.et_mobile);
 			et_password = (EditText) view.findViewById(R.id.et_password);
+			et_mobile.setText("15501166664");
+			et_password.setText("20052008");
 			tv_forget = (TextView) view.findViewById(R.id.tv_forget);
 			tv_other = (TextView) view.findViewById(R.id.tv_other);
 			tv_wechat = (TextView) view.findViewById(R.id.tv_wechat);
