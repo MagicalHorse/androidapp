@@ -47,6 +47,7 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
 	private Button bt_login;
 	private View view;
 	private UMSocialService mController;
+	
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
