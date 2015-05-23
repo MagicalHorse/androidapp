@@ -151,6 +151,18 @@ public class HttpConstants {
 	 * 获取商品被喜欢的用户列表
 	 */
 	public static String METHOD_PRODUCTMANAGER_DETAIL = PRODUCT + "Detail";
+	
+	/**
+	 * 上传商品信息(买手)
+	 */
+	public static String METHOD_PRODUCTMANAGER_CREATE = PRODUCT + "Create";
+	
+	/**
+	 * 上传商品信息(买手)
+	 */
+	public static String METHOD_PRODUCTMANAGER_UPDATE = PRODUCT + "Update";
+	
+	
 	/**
 	 * 获取买手在线商品列表（买手）
 	 */

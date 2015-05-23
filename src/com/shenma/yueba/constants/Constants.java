@@ -32,6 +32,7 @@ public class Constants {
 	public static final String BRANDID = "BrandId";//品牌编号
 	public static final String TYPE = "Type";//品牌编号
 	public static final String REFRESHTS = "Refreshts";//品牌编号
+	public static final String PRODUCTID = "productId";//商品编号
 	
 	
 	

@@ -27,6 +27,8 @@ import com.shenma.yueba.baijia.modle.BrandDetailInfoBean;
 import com.shenma.yueba.baijia.modle.BuyerIndexInfoBean;
 import com.shenma.yueba.baijia.modle.CityListRequestBean;
 import com.shenma.yueba.baijia.modle.ProvinceCityListBeanRequest;
+import com.shenma.yueba.baijia.modle.RequestUploadProductInfoBean;
+import com.shenma.yueba.baijia.modle.ResponseUploadProductInfoBean;
 import com.shenma.yueba.baijia.modle.UserInfo;
 import com.shenma.yueba.baijia.modle.UserRequestBean;
 import com.shenma.yueba.constants.Constants;
@@ -212,7 +214,7 @@ public class HttpControl {
         String responsejsonstr=BaseGsonUtils.getObjectToJson(responsebrean);
 		if(responsejsonstr==null)
 		{
-			httpCallBack.http_Fails(500, "数据错误");
+			httpCallBack.http_Fails(500, "发送数据错误");
 		}
 		basehttpSendToJson(responsejsonstr, null, context, HttpConstants.METHOD_ADDRESSCREATE, httpCallBack, ContactsAddressRequestBean.class, true, true);
 	}
@@ -267,7 +269,7 @@ public class HttpControl {
 		String responsejsonstr=BaseGsonUtils.getObjectToJson(bean);
 		if(responsejsonstr==null)
 		{
-			httpCallBack.http_Fails(500, "数据错误");
+			httpCallBack.http_Fails(500, "发送数据错误");
 		}
 		basehttpSendToJson(responsejsonstr, null, context, HttpConstants.METHOD_ADDRESSCREATE_UPDATE, httpCallBack, ContactsAddressRequestListBean.class, true, true);
 	}
@@ -446,6 +448,168 @@ public class HttpControl {
 	
 	
 	
+	
+	
+	/**************************商品信息***********************************/
+	/**
+	 * 设置收藏商品
+	 * @param httpCallBack  HttpCallBackInterface 回调接口
+	 * @param context  Context
+	 * @param productId int 商品编号
+	 * @return void
+	 * **/
+	public void setFavor(int productId,final HttpCallBackInterface httpCallBack,Context context) {
+		Map<String, String> map=new HashMap<String, String>();
+		map.put(Constants.PRODUCTID, Integer.toString(productId));
+		BasehttpSend(map, context, HttpConstants.METHOD_PRODUCTMANAGER_FAVOR, httpCallBack, BaseRequest.class, true, true);
+	}
+	
+	
+	/**
+	 * 设置取消收藏商品
+	 * @param httpCallBack  HttpCallBackInterface 回调接口
+	 * @param context  Context
+	 * @param productId int 商品编号
+	 * @return void
+	 * **/
+	public void setUnFavor(int productId,final HttpCallBackInterface httpCallBack,Context context) {
+		Map<String, String> map=new HashMap<String, String>();
+		map.put(Constants.PRODUCTID, Integer.toString(productId));
+		BasehttpSend(map, context, HttpConstants.METHOD_PRODUCTMANAGER_UNFAVOR, httpCallBack, BaseRequest.class, true, true);
+	}
+	
+	
+	/**
+	 * 设置喜欢的商品
+	 * @param httpCallBack  HttpCallBackInterface 回调接口
+	 * @param context  Context
+	 * @param productId int 商品编号
+	 * @return void
+	 * **/
+	public void setLike(int productId,final HttpCallBackInterface httpCallBack,Context context) {
+		Map<String, String> map=new HashMap<String, String>();
+		map.put(Constants.PRODUCTID, Integer.toString(productId));
+		BasehttpSend(map, context, HttpConstants.METHOD_PRODUCTMANAGER_LIKE, httpCallBack, BaseRequest.class, true, true);
+	}
+	
+	
+	/**
+	 * 设置取消喜欢的商品
+	 * @param httpCallBack  HttpCallBackInterface 回调接口
+	 * @param context  Context
+	 * @param productId int 商品编号
+	 * @return void
+	 * **/
+	public void setUnLike(int productId,final HttpCallBackInterface httpCallBack,Context context) {
+		Map<String, String> map=new HashMap<String, String>();
+		map.put(Constants.PRODUCTID, Integer.toString(productId));
+		BasehttpSend(map, context, HttpConstants.METHOD_PRODUCTMANAGER_UNLIKE, httpCallBack, BaseRequest.class, true, true);
+	}
+	
+	
+	/**
+	 * 获取主页商品列表
+	 * @param httpCallBack  HttpCallBackInterface 回调接口
+	 * @param context  Context
+	 * @param page int 请求页
+	 * @param pagesize int 每页显示的条数
+	 * @return void
+	 * **/
+	public void getProduceListData(int page,int pagesize,final HttpCallBackInterface httpCallBack,Context context) {
+		Map<String, String> map=new HashMap<String, String>();
+		map.put(Constants.PAGE, Integer.toString(page));
+		map.put(Constants.PAGESIZE, Integer.toString(pagesize));
+		BasehttpSend(map, context, HttpConstants.METHOD_PRODUCTMANAGER_HOMELIST, httpCallBack, BaseRequest.class, true, true);
+	}
+	
+	
+	
+	
+	/**
+	 * 获取商品被喜欢的用户列表
+	 * @param httpCallBack  HttpCallBackInterface 回调接口
+	 * @param context  Context
+	 * @param productId int 商品编号
+     * @param page int第几页
+     * @param pagesize int每页显示的条数
+	 * @return void
+	 * **/
+	public void setLikedUsers(int productId,int page,int pagesize,final HttpCallBackInterface httpCallBack,Context context) {
+		Map<String, String> map=new HashMap<String, String>();
+		map.put(Constants.PRODUCTID, Integer.toString(productId));
+		map.put(Constants.PAGE, Integer.toString(page));
+		map.put(Constants.PAGESIZE, Integer.toString(pagesize));
+		BasehttpSend(map, context, HttpConstants.METHOD_PRODUCTMANAGER_LIKEDUSERS, httpCallBack, BaseRequest.class, true, true);
+	}
+	
+	
+	/**
+	 * 获取我收藏的买手的商品列表
+	 * @param httpCallBack  HttpCallBackInterface 回调接口
+	 * @param context  Context
+	 * @param page int第几页
+     * @param pagesize int每页显示的条数
+	 * @return void
+	 * **/
+	public void getMyBuyerProductList(int page,int pagesize,final HttpCallBackInterface httpCallBack,Context context) {
+		Map<String, String> map=new HashMap<String, String>();
+		map.put(Constants.PAGE, Integer.toString(page));
+		map.put(Constants.PAGESIZE, Integer.toString(pagesize));
+		BasehttpSend(map, context, HttpConstants.METHOD_PRODUCTMANAGER_MYBUYERPRODUCTLIST, httpCallBack, BaseRequest.class, true, true);
+	}
+	
+	
+	
+	/**
+	 * 获取商品信息详情
+	 * @param httpCallBack  HttpCallBackInterface 回调接口
+	 * @param context  Context
+	 * @param ProductId  int商品编号
+     * @param  ReadType  int商品读取操作类型 可为空 1：记录本商品点击数
+	 * @return void
+	 * **/
+	public void getMyBuyerProductDetails(int ProductId,int ReadType,final HttpCallBackInterface httpCallBack,Context context) {
+		Map<String, String> map=new HashMap<String, String>();
+		map.put("ProductId", Integer.toString(ProductId));
+		map.put("ReadType", Integer.toString(ReadType));
+		BasehttpSend(map, context, HttpConstants.METHOD_PRODUCTMANAGER_DETAIL, httpCallBack, BaseRequest.class, true, true);
+	}
+	
+	
+	/**
+	 * 上传商品信息(买手)
+	 * @param httpCallBack  HttpCallBackInterface 回调接口
+	 * @param context  Context
+	 * @param ProductId  int商品编号
+     * @param  ReadType  int商品读取操作类型 可为空 1：记录本商品点击数
+	 * @return void
+	 * **/
+	public void createBuyerProductInfo(ResponseUploadProductInfoBean bean,final HttpCallBackInterface httpCallBack,Context context) {
+		String responsejsonstr=BaseGsonUtils.getObjectToJson(bean);
+		if(responsejsonstr==null)
+		{
+			httpCallBack.http_Fails(500, "发送数据错误");
+		}
+		basehttpSendToJson(responsejsonstr, null, context, HttpConstants.METHOD_PRODUCTMANAGER_CREATE, httpCallBack, RequestUploadProductInfoBean.class, true, true);
+	}
+	
+	
+	/**
+	 * 修改商品信息(买手)
+	 * @param httpCallBack  HttpCallBackInterface 回调接口
+	 * @param context  Context
+	 * @param ProductId  int商品编号
+     * @param  ReadType  int商品读取操作类型 可为空 1：记录本商品点击数
+	 * @return void
+	 * **/
+	public void updateBuyerProductInfo(ResponseUploadProductInfoBean bean,final HttpCallBackInterface httpCallBack,Context context) {
+		String responsejsonstr=BaseGsonUtils.getObjectToJson(bean);
+		if(responsejsonstr==null)
+		{
+			httpCallBack.http_Fails(500, "发送数据错误");
+		}
+		basehttpSendToJson(responsejsonstr, null, context, HttpConstants.METHOD_PRODUCTMANAGER_UPDATE, httpCallBack, RequestUploadProductInfoBean.class, true, true);
+	}
 	
 	
 	
@@ -692,7 +856,7 @@ public class HttpControl {
 					try {
 						BaseRequest bean = BaseGsonUtils.getJsonToObject(classzz,responseInfo.result);
 						if (bean == null) {
-							httpCallBack.http_Fails(0,"数据不存在");
+							httpCallBack.http_Fails(0,"数据解析异常");
 
 						}else if(bean.getStatusCode() != 200)
 						{
