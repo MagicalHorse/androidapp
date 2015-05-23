@@ -291,6 +291,11 @@
             android:name="com.shenma.yueba.yangjia.activity.SocialManagerActivity"
             android:screenOrientation="portrait" >
         </activity>
+        <!-- 订单详情 -->
+        <activity
+            android:name="com.shenma.yueba.yangjia.activity.OrderDetailActivity"
+            android:screenOrientation="portrait" >
+        </activity>
         <!-- 网络状态变化的广播 -->
         <receiver
             android:name="com.shenma.yueba.receiver.ConnectionChangeReceiver"

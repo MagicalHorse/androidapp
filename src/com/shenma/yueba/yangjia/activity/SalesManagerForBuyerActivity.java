@@ -78,6 +78,7 @@ public class SalesManagerForBuyerActivity extends BaseFragmentActivity implement
 		tv_get_byself = (TextView) findViewById(R.id.tv_get_byself);
 		tv_help = (TextView) findViewById(R.id.tv_help);
 		tv_all_order.setTextSize(20);
+		tv_all_order.setTextColor(getResources().getColor(R.color.main_color));
 		FontManager.changeFonts(getApplicationContext(), tv_top_title,
 				tv_all_order, tv_wating_for_pay, tv_get_byself, tv_help);
 		titleTextList.add(tv_all_order);

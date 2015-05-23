@@ -22,7 +22,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="全部订单"
-                android:textColor="@color/main_color"
+                android:textColor="@color/text_gray_color"
                 android:textSize="@dimen/title_text_size" />
 
             <ImageView
@@ -48,7 +48,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="待付款"
-                android:textColor="@color/main_color"
+                android:textColor="@color/text_gray_color"
                 android:textSize="@dimen/title_text_size" />
 
             <ImageView
@@ -74,7 +74,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="专柜自提"
-                android:textColor="@color/main_color"
+                android:textColor="@color/text_gray_color"
                 android:textSize="@dimen/title_text_size" />
 
             <ImageView
@@ -100,7 +100,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="售后中心"
-                android:textColor="@color/main_color"
+                android:textColor="@color/text_gray_color"
                 android:textSize="@dimen/title_text_size" />
 
             <ImageView

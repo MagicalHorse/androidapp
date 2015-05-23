@@ -38,8 +38,10 @@ public class BaseFragmentActivity extends FragmentActivity{
 		for (int j = 0; j < titleTextList.size(); j++) {
 			if (j != index) {
 				titleTextList.get(j).setTextSize(17);
+				titleTextList.get(j).setTextColor(getResources().getColor(R.color.text_gray_color));
 			} else {
 				titleTextList.get(j).setTextSize(20);
+				titleTextList.get(j).setTextColor(getResources().getColor(R.color.main_color));
 			}
 		}
 	}

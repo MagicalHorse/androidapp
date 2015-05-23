@@ -17,6 +17,9 @@ import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.adapter.CircleFragmentPagerAdapter;
 import com.shenma.yueba.util.FontManager;
+import com.shenma.yueba.yangjia.adapter.MyAttentionAndFansForSocialAdapter;
+import com.shenma.yueba.yangjia.fragment.MyAttentionAndFansForSocialFragment;
+import com.shenma.yueba.yangjia.fragment.MyCircleForSocialFragment;
 import com.shenma.yueba.yangjia.fragment.ProductManagerFragmentForOnLine;
 
 /**
@@ -26,16 +29,13 @@ import com.shenma.yueba.yangjia.fragment.ProductManagerFragmentForOnLine;
  */
 public class SocialManagerActivity extends BaseFragmentActivity implements
 		OnClickListener {
-	private TextView tv_product_online;
-	private TextView tv_product_will_down;
-	private TextView tv_product_has_down;
 	private ArrayList<ImageView> cursorImageList = new ArrayList<ImageView>();
 	private ArrayList<TextView> titleTextList = new ArrayList<TextView>();
 	private ImageView iv_cursor_left, iv_cursor_center, iv_cursor_right;
 	private ViewPager viewpager_main;
-	private ProductManagerFragmentForOnLine productManagerFragmentForOnLine;// 买手街
-	private ProductManagerFragmentForOnLine productManagerFragmentForOnLine2;// 他们说
-	private ProductManagerFragmentForOnLine productManagerFragmentForOnLine3;// 我的买手
+	private MyCircleForSocialFragment myCircleForSocialFragment;// 买手街
+	private MyAttentionAndFansForSocialFragment myAttentionFragment;//我的关注
+	private MyAttentionAndFansForSocialFragment myFansFragment;// 我的粉丝
 	private ArrayList<Fragment> fragmentList = new ArrayList<Fragment>();
 	private CircleFragmentPagerAdapter myFragmentPagerAdapter;
 	private TextView tv_top_left;
@@ -49,23 +49,21 @@ public class SocialManagerActivity extends BaseFragmentActivity implements
 	protected void onCreate(Bundle arg0) {
 		MyApplication.getInstance().addActivity(this);//加入回退栈
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.soical_manager_title);
+		setContentView(R.layout.social_manager_layout);
 		initView();
 		initFragment();
 		initViewPager();
-		productManagerFragmentForOnLine.getData(0,SocialManagerActivity.this);
 		super.onCreate(arg0);
 	}
 
 	
 
 	private void initView() {
-
 		tv_top_left = (TextView) findViewById(R.id.tv_top_left);
 		tv_top_title = (TextView) findViewById(R.id.tv_top_title);
 		tv_top_left.setVisibility(View.VISIBLE);
 		tv_top_title.setVisibility(View.VISIBLE);
-		tv_top_title.setText("商品管理");
+		tv_top_title.setText("社交管理");
 		tv_top_left.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -76,7 +74,8 @@ public class SocialManagerActivity extends BaseFragmentActivity implements
 		tv_my_circle = (TextView) findViewById(R.id.tv_my_circle);
 		tv_my_attetion = (TextView) findViewById(R.id.tv_my_attetion);
 		tv_my_fans = (TextView) findViewById(R.id.tv_my_fans);
-		
+		tv_my_circle.setTextSize(20);
+		tv_my_circle.setTextColor(getResources().getColor(R.color.main_color));
 		tv_my_circle.setOnClickListener(this);
 		tv_my_attetion.setOnClickListener(this);
 		tv_my_fans.setOnClickListener(this);
@@ -92,17 +91,17 @@ public class SocialManagerActivity extends BaseFragmentActivity implements
 		cursorImageList.add(iv_cursor_center);
 		cursorImageList.add(iv_cursor_right);
 		viewpager_main = (ViewPager) findViewById(R.id.viewpager_main);
-		FontManager.changeFonts(this, tv_product_online, tv_product_will_down,
-				tv_product_has_down,tv_top_left,tv_top_title);
+		FontManager.changeFonts(this, tv_my_circle, tv_my_attetion,
+				tv_my_fans,tv_top_left,tv_top_title);
 	}
 
 	private void initFragment() {
-		productManagerFragmentForOnLine = new ProductManagerFragmentForOnLine(0);
-		productManagerFragmentForOnLine2 = new ProductManagerFragmentForOnLine(1);
-		productManagerFragmentForOnLine3 = new ProductManagerFragmentForOnLine(2);
-		fragmentList.add(productManagerFragmentForOnLine);
-		fragmentList.add(productManagerFragmentForOnLine2);
-		fragmentList.add(productManagerFragmentForOnLine3);
+	    myCircleForSocialFragment= new MyCircleForSocialFragment();
+		myAttentionFragment = new MyAttentionAndFansForSocialFragment();
+		myFansFragment = new MyAttentionAndFansForSocialFragment();
+		fragmentList.add(myCircleForSocialFragment);
+		fragmentList.add(myAttentionFragment);
+		fragmentList.add(myFansFragment);
 		myFragmentPagerAdapter = new CircleFragmentPagerAdapter(
 				getSupportFragmentManager(), fragmentList);
 
@@ -122,19 +121,19 @@ public class SocialManagerActivity extends BaseFragmentActivity implements
 			public void onPageSelected(int arg0) {
 				setCursorAndText(arg0, cursorImageList, titleTextList);
 				index = arg0;
-				switch (index) {
-				case 0:
-					productManagerFragmentForOnLine.getData(index,SocialManagerActivity.this);
-					break;
-				case 1:
-					productManagerFragmentForOnLine2.getData(index,SocialManagerActivity.this);
-					break;
-				case 2 :
-					productManagerFragmentForOnLine3.getData(index,SocialManagerActivity.this);
-					break;
-				default:
-					break;
-				}
+//				switch (index) {
+//				case 0:
+//					productManagerFragmentForOnLine.getData(index,SocialManagerActivity.this);
+//					break;
+//				case 1:
+//					productManagerFragmentForOnLine2.getData(index,SocialManagerActivity.this);
+//					break;
+//				case 2 :
+//					productManagerFragmentForOnLine3.getData(index,SocialManagerActivity.this);
+//					break;
+//				default:
+//					break;
+//				}
 
 			}
 

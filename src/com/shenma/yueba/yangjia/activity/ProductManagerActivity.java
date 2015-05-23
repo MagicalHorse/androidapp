@@ -74,6 +74,7 @@ public class ProductManagerActivity extends BaseFragmentActivity implements
 		tv_product_will_down = (TextView) findViewById(R.id.tv_product_will_down);
 		tv_product_has_down = (TextView) findViewById(R.id.tv_product_has_down);
 		tv_product_online.setTextSize(20);
+		tv_product_online.setTextColor(getResources().getColor(R.color.main_color));
 		tv_product_online.setOnClickListener(this);
 		tv_product_will_down.setOnClickListener(this);
 		tv_product_has_down.setOnClickListener(this);

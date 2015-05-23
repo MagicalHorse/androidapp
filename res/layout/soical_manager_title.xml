@@ -5,6 +5,7 @@
     android:background="@color/main_bg"
     android:orientation="vertical" >
 
+    
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/top_title_height"
@@ -26,7 +27,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="我的圈子"
-                android:textColor="@color/main_color"
+                android:textColor="@color/text_gray_color"
                 android:textSize="@dimen/title_text_size" />
 
             <ImageView
@@ -52,7 +53,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="我的关注"
-                android:textColor="@color/main_color"
+                android:textColor="@color/text_gray_color"
                 android:textSize="@dimen/title_text_size" />
 
             <ImageView
@@ -78,7 +79,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="我的粉丝"
-                android:textColor="@color/main_color"
+                android:textColor="@color/text_gray_color"
                 android:textSize="@dimen/title_text_size" />
 
             <ImageView

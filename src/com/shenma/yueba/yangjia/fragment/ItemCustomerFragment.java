@@ -3,16 +3,20 @@ package com.shenma.yueba.yangjia.fragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.adapter.BrandAdapter;
 import com.shenma.yueba.baijia.fragment.BaseFragment;
+import com.shenma.yueba.yangjia.activity.OrderDetailActivity;
 import com.shenma.yueba.yangjia.adapter.SalesManagerForAttestationBuyerAdapter;
 import com.shenma.yueba.yangjia.modle.SalesManagerForAttestationBuyerListBean;
 
@@ -31,6 +35,15 @@ public class ItemCustomerFragment extends BaseFragment{
 			rlv = (PullToRefreshListView) rootView.findViewById(R.id.pull_refresh_list);
 			rlv.setMode(Mode.BOTH);
 			rlv.setAdapter(new SalesManagerForAttestationBuyerAdapter(getActivity(), mList));
+			rlv.setOnItemClickListener(new OnItemClickListener() {
+				@Override
+				public void onItemClick(AdapterView<?> arg0, View arg1,
+						int arg2, long arg3) {
+					Intent intent = new Intent(getActivity(), OrderDetailActivity.class);
+					startActivity(intent);
+					
+				}
+			});
 		}
 		// 缓存的rootView需要判断是否已经被加过parent，如果有parent需要从parent删除，要不然会发生这个rootview已经有parent的错误。
 		ViewGroup parent = (ViewGroup) rootView.getParent();

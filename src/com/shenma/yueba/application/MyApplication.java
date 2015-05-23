@@ -245,7 +245,7 @@ public class MyApplication extends Application {
 				.showImageForEmptyUri(R.drawable.defalt_pic)
 				.showImageOnFail(R.drawable.defalt_pic)
 				.resetViewBeforeLoading(false).cacheOnDisc(true)
-				.cacheInMemory(true).displayer(new RoundedBitmapDisplayer(55))
+				.cacheInMemory(true).displayer(new RoundedBitmapDisplayer(15))
 				.imageScaleType(ImageScaleType.EXACTLY)
 				.bitmapConfig(Bitmap.Config.RGB_565).build();
 	}

@@ -1,12 +1,15 @@
 package com.shenma.yueba.baijia.modle;
 
-public class MyCircleBean {
+import java.io.Serializable;
+
+public class MyCircleBean implements Serializable{
 
 	private String imageUrl;
 	private String productName;
 	private String msg;
 	private String time;
 	private String msgCount;
+	private String attetionCount;
 	public String getImageUrl() {
 		return imageUrl;
 	}
@@ -36,6 +39,12 @@ public class MyCircleBean {
 	}
 	public void setMsgCount(String msgCount) {
 		this.msgCount = msgCount;
+	}
+	public String getAttetionCount() {
+		return attetionCount;
+	}
+	public void setAttetionCount(String attetionCount) {
+		this.attetionCount = attetionCount;
 	}
 
 	
