@@ -7,8 +7,9 @@
 
     <com.shenma.yueba.view.RoundImageView
         android:id="@+id/riv_head"
-        android:layout_width="40dip"
-        android:layout_height="40dip"
+        android:layout_width="50dip"
+        android:layout_height="50dip"
+        android:scaleType="fitXY"
         android:layout_gravity="center_vertical"
         android:src="@drawable/defalt_pic" />
 

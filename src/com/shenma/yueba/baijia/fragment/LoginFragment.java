@@ -74,8 +74,8 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
 			bt_login.setOnClickListener(this);
 			tv_wechat.setOnClickListener(this);
 			tv_qq.setOnClickListener(this);
-			FontManager.changeFonts(getActivity(), tv_mobile_title, et_mobile,
-					et_password, tv_forget, tv_other, tv_wechat, bt_login);
+			FontManager.changeFonts(getActivity(), tv_mobile_title,
+					 tv_forget, tv_other, tv_wechat, bt_login);
 		}
 		// 缓存的rootView需要判断是否已经被加过parent，如果有parent需要从parent删除，要不然会发生这个rootview已经有parent的错误。
 		ViewGroup parent = (ViewGroup) view.getParent();

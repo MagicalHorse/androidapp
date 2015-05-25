@@ -294,6 +294,15 @@
         <!-- 订单详情 -->
         <activity
             android:name="com.shenma.yueba.yangjia.activity.OrderDetailActivity"
+            android:screenOrientation="portrait" />
+        <!-- 收入明细-->
+        <activity
+            android:name="com.shenma.yueba.yangjia.activity.IncomeDetailActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <!-- 提现历史-->
+        <activity
+            android:name="com.shenma.yueba.yangjia.activity.WithdrawHistoryActivity"
             android:screenOrientation="portrait" >
         </activity>
         <!-- 网络状态变化的广播 -->

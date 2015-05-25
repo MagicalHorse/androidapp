@@ -20,9 +20,19 @@ import com.shenma.yueba.util.ToolsUtil;
  * @author a
  *
  */
-public class EarningManagerActivity extends BaseActivityWithTopView {
+public class EarningManagerActivity extends BaseActivityWithTopView implements OnClickListener {
 
 	private Income income;//收益数据
+	private TextView tv_earnings_today_title;
+	private ImageView iv_help;
+	private TextView tv_today_income;
+	private TextView tv_withdraw_cash_title;
+	private TextView tv_withdraw_cash_money;
+	private TextView tv_withdraw_cash_history;
+	private TextView tv_apply_withdraw;
+	private TextView tv_total_income_title;
+	private TextView tv_total_income_money;
+	private TextView tv_income_detail;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -53,22 +63,38 @@ public class EarningManagerActivity extends BaseActivityWithTopView {
 		
 		
 		
-		TextView tv_earnings_today_title = getView(R.id.tv_earnings_today_title);
-		ImageView iv_help = getView(R.id.iv_help);
-		TextView tv_today_income = getView(R.id.tv_today_income);
-		TextView tv_withdraw_cash_title = getView(R.id.tv_withdraw_cash_title);
-		TextView tv_withdraw_cash_money = getView(R.id.tv_withdraw_cash_money);
-		TextView tv_withdraw_cash_history = getView(R.id.tv_withdraw_cash_history);
-		TextView tv_apply_withdraw = getView(R.id.tv_apply_withdraw);
-		TextView tv_total_income_title = getView(R.id.tv_total_income_title);
-		TextView tv_total_income_money = getView(R.id.tv_total_income_money);
-		
+		tv_earnings_today_title = getView(R.id.tv_earnings_today_title);
+		iv_help = getView(R.id.iv_help);
+		tv_today_income = getView(R.id.tv_today_income);
+		tv_withdraw_cash_title = getView(R.id.tv_withdraw_cash_title);
+		tv_withdraw_cash_money = getView(R.id.tv_withdraw_cash_money);
+		tv_withdraw_cash_history = getView(R.id.tv_withdraw_cash_history);
+		tv_apply_withdraw = getView(R.id.tv_apply_withdraw);
+		tv_total_income_title = getView(R.id.tv_total_income_title);
+		tv_total_income_money = getView(R.id.tv_total_income_money);
+		tv_income_detail = getView(R.id.tv_income_detail);
 		tv_today_income.setText(income!=null?ToolsUtil.nullToString(income.getToday_income()):"");
 		tv_total_income_money.setText(income!=null?ToolsUtil.nullToString(income.getTotal_income()):"");
 		tv_withdraw_cash_money.setText(income!=null?ToolsUtil.nullToString(income.getRequest_amount()):"");
-		
+		tv_income_detail.setOnClickListener(this);
+		tv_withdraw_cash_history.setOnClickListener(this);
 		FontManager.changeFonts(mContext, tv_top_title,tv_earnings_today_title,tv_today_income,tv_withdraw_cash_title,
 				tv_withdraw_cash_money,tv_withdraw_cash_history,tv_apply_withdraw,tv_total_income_title
 				,tv_total_income_money);
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.tv_income_detail://收入明细
+			skip(IncomeDetailActivity.class, true);
+			break;
+		case R.id.tv_withdraw_cash_history://提现历史
+			skip(WithdrawHistoryActivity.class, true);
+			break;
+		
+		default:
+			break;
+		}
 	}
 }
