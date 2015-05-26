@@ -70,6 +70,7 @@ public class ItemCustomerFragment extends BaseFragment{
 				public void onItemClick(AdapterView<?> arg0, View arg1,
 						int arg2, long arg3) {
 					Intent intent = new Intent(getActivity(), OrderDetailActivity.class);
+					intent.putExtra("orderId", mList.get(arg2).getOrderNo());
 					startActivity(intent);
 					
 				}
@@ -112,7 +113,8 @@ public class ItemCustomerFragment extends BaseFragment{
 				if(isRefresh){
 					mList.clear();
 					mList.addAll(bean.getData().getOrderlist());
-					rlv.setAdapter(new SalesManagerForAttestationBuyerAdapter(getActivity(), mList,0));
+					adapter=new SalesManagerForAttestationBuyerAdapter(getActivity(), mList,0);
+					rlv.setAdapter(adapter);
 				}else{
 					mList.addAll(bean.getData().getOrderlist());
 					adapter.notifyDataSetChanged();
