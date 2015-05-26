@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.adapter.MyCircleInfoAdapter;
+import com.shenma.yueba.baijia.dialog.QRCodeShareDialog;
 import com.shenma.yueba.baijia.modle.GridVIewItemBean;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.view.MyGridView;
@@ -102,15 +103,17 @@ public class CircleInfoActivity extends BaseActivityWithTopView implements OnCli
 			startActivity(modifyCircleNameIntent);
 			break;
 		case R.id.rl_qrcode://二维码查看
-			ArrayList<String> urlList = new ArrayList<String>();
+			/*ArrayList<String> urlList = new ArrayList<String>();
 			if(urlList.size() == 0){
 				Toast.makeText(mContext, "暂无大图展示", 1000).show();
 				return ;
-			}
-			Intent imageShowIntent = new Intent(mContext, ImageShowActivity.class);
+			}*/
+			QRCodeShareDialog dialog=new QRCodeShareDialog(CircleInfoActivity.this, null);
+			dialog.show();
+			/*Intent imageShowIntent = new Intent(mContext, ImageShowActivity.class);
 			imageShowIntent.putStringArrayListExtra(ImageShowActivity.BIGIMAGES,urlList);
 			imageShowIntent.putExtra(ImageShowActivity.IMAGE_INDEX, 0);
-			startActivity(imageShowIntent);
+			startActivity(imageShowIntent);*/
 			break;
 			
 		default:
