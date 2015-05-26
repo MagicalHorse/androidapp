@@ -10,7 +10,9 @@ public class HttpConstants {
 	private static String PRODUCT = baseUrl + "Product/";// 商品管理
 	private static String ASSISTANT = baseUrl + "Assistant/";// 买手相关的接口
 	private static String BUYER = baseUrl + "Buyer/";// 买手相关的接口
-
+	private static String Order = baseUrl + "Order/";// 订单相关的接口
+	
+	
 	
 	
 	/**
@@ -317,9 +319,12 @@ public class HttpConstants {
 	
 	
 	
+	/**
+	 * 获取订单列表
+	 */
 	
-	
-	
+	public static String METHOD_ORDER_GETALLORDERFORBUYER = Order
+			+ "GetOrderList";
 	
 	
 	

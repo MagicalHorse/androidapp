@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
+
     <com.handmark.pulltorefresh.library.PullToRefreshListView
         android:id="@+id/pull_refresh_list"
         android:layout_width="fill_parent"
@@ -19,6 +20,7 @@
         android:smoothScrollbar="true" />
 <include 
     android:id="@+id/showloading_layout_view"
+    android:visibility="gone"
     layout="@layout/showloading_layout"/>
 
 </RelativeLayout>

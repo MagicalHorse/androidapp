@@ -37,6 +37,8 @@ import com.shenma.yueba.yangjia.modle.BuyerProductManagerListBean;
 import com.shenma.yueba.yangjia.modle.ContactsAddressRequestBean;
 import com.shenma.yueba.yangjia.modle.ContactsAddressRequestListBean;
 import com.shenma.yueba.yangjia.modle.ContactsAddressResponseBean;
+import com.shenma.yueba.yangjia.modle.OrderListBackBean;
+
 
 /**
  * @author gyj
@@ -616,6 +618,18 @@ public class HttpControl {
 	
 	
 	
+	/**
+	 * 获取订单列表
+	 * @return void
+	 * **/
+	public void getOrderList(int Page,String Pagesize,String OrderProductType,String Status,final HttpCallBackInterface httpCallBack,Context context) {
+		Map<String, String> map=new HashMap<String, String>();
+		map.put("Page", Integer.toString(Page));
+		map.put("Pagesize", Pagesize);
+		map.put("OrderProductType", OrderProductType);
+		map.put("Status", Status);
+		BasehttpSend(map, context, HttpConstants.METHOD_ORDER_GETALLORDERFORBUYER, httpCallBack, OrderListBackBean.class, true, true);
+	}
 	
 	
 	
@@ -866,6 +880,7 @@ public class HttpControl {
 							httpCallBack.http_Success(bean);
 						}
 					} catch (Exception e) {
+						e.printStackTrace();
 						httpCallBack.http_Fails(0, "数据不存在");
 					}
 

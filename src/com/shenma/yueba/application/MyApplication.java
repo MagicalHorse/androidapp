@@ -85,8 +85,12 @@ public class MyApplication extends Application {
 	
 	public Typeface getTypeface(){
 		if(tf == null){
+//			tf = Typeface.createFromAsset(this.getAssets(),
+//					"fonts/youyuan.ttf");
+//			tf = Typeface.createFromAsset(this.getAssets(),
+//					"fonts/dongqing.otf");
 			tf = Typeface.createFromAsset(this.getAssets(),
-					"fonts/youyuan.ttf");
+					"fonts/hanyi.ttf");
 			return tf;
 		}else {
 			return tf;
@@ -105,6 +109,7 @@ public class MyApplication extends Application {
 		}
 	}
 
+	
 	/**
 	 * 移除某个activity
 	 * 
