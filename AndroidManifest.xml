@@ -248,6 +248,12 @@
             android:name="com.shenma.yueba.yangjia.activity.PublishProductsActivity"
             android:screenOrientation="portrait" >
         </activity>
+         <!-- 邀请好友-->
+        <activity
+            android:name="com.shenma.yueba.baijia.activity.InvitationFriendActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        
         <!-- 修改圈子名称-->
         <activity
             android:name="com.shenma.yueba.yangjia.activity.ModifyCircleNameActivity"
