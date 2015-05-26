@@ -7,15 +7,21 @@ import android.view.Window;
 import android.widget.TextView;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.BaseActivityWithTopView;
 import com.shenma.yueba.util.FontManager;
+import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
+import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.RoundImageView;
-
+import com.shenma.yueba.yangjia.modle.OrderDetailBackBean;
+import com.shenma.yueba.yangjia.modle.OrderDetailBean;
 
 /**
  * 订单详情
+ * 
  * @author a
- *
+ * 
  */
 
 public class OrderDetailActivity extends BaseActivityWithTopView {
@@ -39,12 +45,14 @@ public class OrderDetailActivity extends BaseActivityWithTopView {
 	private TextView tv_get_address_title;
 	private TextView tv_get_address_content;
 	private TextView tv_connection;
+	private String orderId;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.order_detail);
 		super.onCreate(savedInstanceState);
+		orderId = getIntent().getStringExtra("orderId");
 		initView();
 	}
 
@@ -75,13 +83,45 @@ public class OrderDetailActivity extends BaseActivityWithTopView {
 		tv_get_address_title = (TextView) findViewById(R.id.tv_get_address_title);
 		tv_get_address_content = (TextView) findViewById(R.id.tv_get_address_content);
 		tv_connection = (TextView) findViewById(R.id.tv_connection);
-		FontManager.changeFonts(mContext, order_no_title,order_no_content,order_wating_title,
-				order_wating_content,order_money_title,order_money_count,tv_shifu,
-				order_commission_title,order_commission_count,order_date_title,
-				order_date_count,customer_account_title,customer_account_content,riv_customer_head,
-				tv_customer_phone_title,tv_customer_phone_content,tv_get_address_title,
-				tv_get_address_content,tv_connection);
-				
+		FontManager.changeFonts(mContext, order_no_title, order_no_content,
+				order_wating_title, order_wating_content, order_money_title,
+				order_money_count, tv_shifu, order_commission_title,
+				order_commission_count, order_date_title, order_date_count,
+				customer_account_title, customer_account_content,
+				riv_customer_head, tv_customer_phone_title,
+				tv_customer_phone_content, tv_get_address_title,
+				tv_get_address_content, tv_connection);
+
 	}
-	
+
+	/**
+	 * 联网获取数据
+	 * 
+	 * @param isRefresh
+	 */
+	public void getData() {
+		HttpControl hControl = new HttpControl();
+		hControl.getOrderDetail(orderId, new HttpCallBackInterface() {
+			@Override
+			public void http_Success(Object obj) {
+				OrderDetailBackBean bean = (OrderDetailBackBean) obj;
+				OrderDetailBean orderDetail = bean.getData();
+				order_no_content.setText(ToolsUtil.nullToString(orderDetail.getOrderNo()));
+				order_wating_content.setText(ToolsUtil.nullToString(orderDetail.getStatusName()));
+				order_money_count.setText(ToolsUtil.nullToString(orderDetail.getRecAmount()));
+				order_commission_count.setText(ToolsUtil.nullToString(orderDetail.getInCome()));
+				order_date_count.setText(ToolsUtil.nullToString(orderDetail.getCreateTime()));
+				customer_account_content.setText(ToolsUtil.nullToString(orderDetail.getCustomerName()));
+				tv_customer_phone_content.setText(ToolsUtil.nullToString(orderDetail.getCustomerMobile()));
+				tv_get_address_content.setText(ToolsUtil.nullToString(orderDetail.getCustomerAddress()));
+				MyApplication.getInstance().getImageLoader().displayImage(orderDetail.getCustomerLogo(), riv_customer_head);
+			}
+
+			@Override
+			public void http_Fails(int error, String msg) {
+
+			}
+		}, mContext);
+	}
+
 }

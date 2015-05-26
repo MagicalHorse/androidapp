@@ -37,6 +37,7 @@ import com.shenma.yueba.yangjia.modle.BuyerProductManagerListBean;
 import com.shenma.yueba.yangjia.modle.ContactsAddressRequestBean;
 import com.shenma.yueba.yangjia.modle.ContactsAddressRequestListBean;
 import com.shenma.yueba.yangjia.modle.ContactsAddressResponseBean;
+import com.shenma.yueba.yangjia.modle.OrderDetailBackBean;
 import com.shenma.yueba.yangjia.modle.OrderListBackBean;
 
 
@@ -624,11 +625,21 @@ public class HttpControl {
 	 * **/
 	public void getOrderList(int Page,String Pagesize,String OrderProductType,String Status,final HttpCallBackInterface httpCallBack,Context context) {
 		Map<String, String> map=new HashMap<String, String>();
-		map.put("Page", Integer.toString(Page));
-		map.put("Pagesize", Pagesize);
-		map.put("OrderProductType", OrderProductType);
-		map.put("Status", Status);
+		map.put(Constants.PAGE, Integer.toString(Page));
+		map.put(Constants.PAGESIZE, Pagesize);
+		map.put(Constants.OrderProductType, OrderProductType);
+		map.put(Constants.STATUS, Status);
 		BasehttpSend(map, context, HttpConstants.METHOD_ORDER_GETALLORDERFORBUYER, httpCallBack, OrderListBackBean.class, true, true);
+	}
+	
+	/**
+	 * 获取订单详情
+	 * @return void
+	 * **/
+	public void getOrderDetail(String orderNo,final HttpCallBackInterface httpCallBack,Context context) {
+		Map<String, String> map=new HashMap<String, String>();
+		map.put(Constants.ORDER_NO, orderNo);
+		BasehttpSend(map, context, HttpConstants.METHOD_ORDER_GETORDERDETAIL, httpCallBack, OrderDetailBackBean.class, true, true);
 	}
 	
 	
