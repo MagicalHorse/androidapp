@@ -9,7 +9,7 @@
         android:id="@+id/riv_head"
         android:layout_width="45dip"
         android:layout_height="45dip"
-        android:src="@drawable/defalt_pic" />
+        android:src="@drawable/default_pic" />
 
     <RelativeLayout
         android:layout_width="0dip"

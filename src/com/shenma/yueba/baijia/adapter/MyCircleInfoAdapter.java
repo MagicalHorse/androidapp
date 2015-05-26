@@ -4,19 +4,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.lidroid.xutils.BitmapUtils;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.modle.GridVIewItemBean;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.view.RoundImageView;
+import com.shenma.yueba.yangjia.activity.CircleInvitectivity;
 
 public class MyCircleInfoAdapter extends BaseAdapterWithUtil{
 	private Context ctx;
+	private boolean showDelete;
 	private List<GridVIewItemBean> mList = new ArrayList<GridVIewItemBean>();
 	public MyCircleInfoAdapter(Context ctx,List<GridVIewItemBean> mList) {
 		super(ctx);
@@ -43,37 +48,71 @@ public class MyCircleInfoAdapter extends BaseAdapterWithUtil{
 	}
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
-		Holder holder;
+	public View getView(final int position, View convertView, ViewGroup parent) {
+		final Holder holder;
 		if(convertView == null){
 			holder = new Holder();
 			convertView = View.inflate(ctx, R.layout.grid_item, null);
 			holder.riv_head = (RoundImageView) convertView.findViewById(R.id.riv_head);
 			holder.tv_text = (TextView) convertView.findViewById(R.id.tv_text);
+			holder.iv_delete = (ImageView) convertView.findViewById(R.id.iv_delete);
 			FontManager.changeFonts(ctx, holder.tv_text);
 			convertView.setTag(holder);
 		}else{
 			holder = (Holder) convertView.getTag();
 		}
-		if(position == 0){
-			holder.riv_head.setBackgroundResource(R.drawable.ic_launcher);
+		if(position == mList.size()-2){
+			holder.riv_head.setBackgroundResource(R.drawable.plus);
 			holder.tv_text.setText("邀请好友");
-			return convertView;
-		}else if(position == 1){
-			holder.riv_head.setBackgroundResource(R.drawable.ic_launcher);
+			
+		}else if(position == mList.size()-1){
+			holder.riv_head.setBackgroundResource(R.drawable.reduce);
 			holder.tv_text.setText("删除成员");
-			return convertView;
 		}else{
+			if(showDelete){
+				holder.iv_delete.setVisibility(View.VISIBLE);
+			}else{
+				holder.iv_delete.setVisibility(View.GONE);
+			}
 			holder.tv_text.setText(mList.get(position).getName());
 			MyApplication.getInstance().getImageLoader().displayImage(mList.get(position).getHead(), holder.riv_head);
-			return convertView;
 		}
-		
+		holder.iv_delete.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				//删除成员
+				
+			}
+		});
+		holder.riv_head.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+
+				//踢出圈子
+				if(position == mList.size()-1){
+					if(showDelete == true){
+						showDelete = false;
+						notifyDataSetChanged();
+					}else{
+						showDelete = true;
+						notifyDataSetChanged();
+					}
+				}
+				if(position == mList.size()-2){
+					//邀请加入圈子
+					Intent intent = new Intent(ctx,CircleInvitectivity.class);
+					ctx.startActivity(intent);
+				}
+			}
+		});
+		return convertView;
 	}
 	
 	class Holder{
 		RoundImageView riv_head;
 		TextView tv_text;
+		ImageView iv_delete;
 	}
 
 }

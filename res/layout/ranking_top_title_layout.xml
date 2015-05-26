@@ -62,6 +62,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:src="@drawable/defalt_pic" />
+        android:src="@drawable/default_pic" />
 
 </RelativeLayout>

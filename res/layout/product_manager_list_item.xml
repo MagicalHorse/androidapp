@@ -20,7 +20,7 @@
             android:layout_height="60dip"
             android:layout_centerVertical="true"
             android:scaleType="fitXY"
-            android:src="@drawable/defalt_pic" />
+            android:src="@drawable/default_pic" />
 
         <TextView
             android:id="@+id/tv_product_name"

@@ -203,7 +203,7 @@
                         android:layout_width="25dip"
                         android:layout_height="25dip"
                         android:layout_gravity="center_vertical"
-                        android:src="@drawable/defalt_pic" />
+                        android:src="@drawable/default_pic" />
                 </LinearLayout>
 
                 <View

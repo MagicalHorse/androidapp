@@ -45,7 +45,7 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="10dp"
-        android:src="@drawable/defalt_pic"
+        android:src="@drawable/default_pic"
         android:gravity="center"
         android:visibility="visible" />
 

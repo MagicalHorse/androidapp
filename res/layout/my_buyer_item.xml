@@ -13,7 +13,7 @@
             android:id="@+id/iv_head"
             android:layout_width="60dip"
             android:layout_height="60dip"
-            android:src="@drawable/defalt_pic" />
+            android:src="@drawable/default_pic" />
 
         <TextView
             android:id="@+id/tv_buyer_name"
@@ -47,7 +47,7 @@
     
     <ImageView 
         android:id="@+id/iv_big_image"
-        android:src="@drawable/defalt_pic"
+        android:src="@drawable/default_pic"
         android:layout_height="200dip"
         android:scaleType="fitXY"
         android:layout_width="fill_parent"

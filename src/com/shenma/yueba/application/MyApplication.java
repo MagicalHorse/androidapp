@@ -231,9 +231,9 @@ public class MyApplication extends Application {
 
 	public void initDisplayImageOptions() {
 		options = new DisplayImageOptions.Builder()
-				.showImageOnLoading(R.drawable.defalt_pic)
-				.showImageForEmptyUri(R.drawable.defalt_pic)
-				.showImageOnFail(R.drawable.defalt_pic)
+				.showImageOnLoading(R.drawable.default_pic)
+				.showImageForEmptyUri(R.drawable.default_pic)
+				.showImageOnFail(R.drawable.default_pic)
 				.resetViewBeforeLoading(false).cacheOnDisc(true)
 				.cacheInMemory(true).imageScaleType(ImageScaleType.EXACTLY)
 				.bitmapConfig(Bitmap.Config.RGB_565).build();
@@ -241,9 +241,9 @@ public class MyApplication extends Application {
 
 	public void initRoundDisplayImageOptions() {
 		optionsForRound = new DisplayImageOptions.Builder()
-				.showImageOnLoading(R.drawable.defalt_pic)
-				.showImageForEmptyUri(R.drawable.defalt_pic)
-				.showImageOnFail(R.drawable.defalt_pic)
+				.showImageOnLoading(R.drawable.default_pic)
+				.showImageForEmptyUri(R.drawable.default_pic)
+				.showImageOnFail(R.drawable.default_pic)
 				.resetViewBeforeLoading(false).cacheOnDisc(true)
 				.cacheInMemory(true).displayer(new RoundedBitmapDisplayer(15))
 				.imageScaleType(ImageScaleType.EXACTLY)

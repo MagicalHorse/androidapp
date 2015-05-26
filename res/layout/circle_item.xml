@@ -14,7 +14,7 @@
             android:layout_centerInParent="true"
             android:layout_width="110dip"
             android:layout_height="110dip"
-            android:src="@drawable/defalt_pic" />
+            android:src="@drawable/default_pic" />
 
         <View
             android:layout_width="110dip"

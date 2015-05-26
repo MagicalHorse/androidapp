@@ -216,6 +216,10 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
+            android:name="com.shenma.yueba.yangjia.activity.CircleInvitectivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
             android:name="com.shenma.yueba.yangjia.activity.ProductManagerActivity"
             android:screenOrientation="portrait" >
         </activity>
@@ -242,6 +246,11 @@
         </activity>
         <activity
             android:name="com.shenma.yueba.yangjia.activity.PublishProductsActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <!-- 修改圈子名称-->
+        <activity
+            android:name="com.shenma.yueba.yangjia.activity.ModifyCircleNameActivity"
             android:screenOrientation="portrait" >
         </activity>
         <!-- 重置密码 -->

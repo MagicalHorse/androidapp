@@ -13,7 +13,7 @@
         android:layout_width="fill_parent"
         android:layout_height="200dip"
         android:scaleType="fitXY"
-        android:src="@drawable/defalt_pic" />
+        android:src="@drawable/default_pic" />
 
     <TextView
         android:id="@+id/tv_introduce"
