@@ -14,6 +14,5 @@ public class OrderListBackBean extends BaseRequest{
 		this.data = data;
 	}
 
-
 	
 }

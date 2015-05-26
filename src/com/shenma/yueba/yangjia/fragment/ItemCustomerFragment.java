@@ -33,6 +33,7 @@ public class ItemCustomerFragment extends BaseFragment{
 	private PullToRefreshListView rlv;
 	private List<OrderItem> mList = new ArrayList<OrderItem>();
 	private SalesManagerForAttestationBuyerAdapter adapter;
+	
 	private  int page = 1;
 	private int tag = 0;
 	private String orderProductType;

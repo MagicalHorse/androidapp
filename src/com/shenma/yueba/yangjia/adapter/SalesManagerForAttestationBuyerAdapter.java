@@ -30,6 +30,7 @@ public class SalesManagerForAttestationBuyerAdapter extends BaseAdapterWithUtil 
 		return mList.size();
 	}
 
+	
 	@Override
 	public Object getItem(int position) {
 		// TODO Auto-generated method stub

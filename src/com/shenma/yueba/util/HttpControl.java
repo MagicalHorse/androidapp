@@ -39,6 +39,7 @@ import com.shenma.yueba.yangjia.modle.ContactsAddressRequestListBean;
 import com.shenma.yueba.yangjia.modle.ContactsAddressResponseBean;
 import com.shenma.yueba.yangjia.modle.OrderListBackBean;
 
+
 /**
  * @author gyj
  * @version 创建时间：2015-5-10 下午4:29:03 程序的简单说明:本类定义 Http控制类 用于各种Http访问的的方法处理

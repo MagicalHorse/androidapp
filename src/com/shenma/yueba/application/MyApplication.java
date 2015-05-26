@@ -109,6 +109,7 @@ public class MyApplication extends Application {
 		}
 	}
 
+	
 	/**
 	 * 移除某个activity
 	 * 
