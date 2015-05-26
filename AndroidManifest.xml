@@ -250,7 +250,7 @@
         </activity>
          <!-- 邀请好友-->
         <activity
-            android:name="com.shenma.yueba.yangjia.activity.InvitationFriendActivity"
+            android:name="com.shenma.yueba.baijia.activity.InvitationFriendActivity"
             android:screenOrientation="portrait" >
         </activity>
         
