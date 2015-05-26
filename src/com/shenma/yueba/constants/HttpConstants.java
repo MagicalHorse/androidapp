@@ -326,6 +326,15 @@ public class HttpConstants {
 	public static String METHOD_ORDER_GETALLORDERFORBUYER = Order
 			+ "GetOrderList";
 	
+	/**
+	 * 获取订单详情
+	 */
+	
+	public static String METHOD_ORDER_GETORDERDETAIL = Order
+			+ "GetOrderDetail";
+	
+	
+	
 	
 	
 	/**

@@ -70,6 +70,7 @@ public class ItemCustomerFragment extends BaseFragment{
 				public void onItemClick(AdapterView<?> arg0, View arg1,
 						int arg2, long arg3) {
 					Intent intent = new Intent(getActivity(), OrderDetailActivity.class);
+					intent.putExtra("orderId", mList.get(arg2).getOrderNo());
 					startActivity(intent);
 					
 				}

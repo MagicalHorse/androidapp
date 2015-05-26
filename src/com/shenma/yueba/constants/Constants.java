@@ -22,10 +22,13 @@ public class Constants {
 	public static final String SIGN="sign";//MD5加密
 	public static final String UUID="uid";//随机数
 	public static final String TOKEN="token";//随机数
-	public static final String PAGE="page";//第几页，页码
-	public static final String PAGESIZE="pagesize";//页size
+	public static final String PAGE="Page";//第几页，页码
+	public static final String PAGESIZE="Pagesize";//页size
 	public static final String ID="id";
 	
+	public static final String ORDER_NO="OrderNo";
+	public static final String OrderProductType="OrderProductType";
+	public static final String STATUS="Status";
 	
 	
 	
