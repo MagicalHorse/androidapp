@@ -44,18 +44,21 @@ public class SetNewPasswordActivity extends BaseActivityWithTopView implements O
 				SetNewPasswordActivity.this.finish();
 			}
 		});
+		tv_top_right.setText("完成");
+		tv_top_right.setVisibility(View.VISIBLE);
+		tv_top_right.setOnClickListener(this);
 		et_old_password=(EditText)findViewById(R.id.et_old_password);
 		et_new_password = (EditText) findViewById(R.id.et_new_password);
 		et_new_repassword = (EditText) findViewById(R.id.et_new_repassword);
-		bt_sure = (Button) findViewById(R.id.bt_sure);
-		bt_sure.setOnClickListener(this);
+		//bt_sure = (Button) findViewById(R.id.bt_sure);
+		//bt_sure.setOnClickListener(this);
 		FontManager.changeFonts(mContext, et_new_password,et_new_repassword,bt_sure,tv_top_title,et_old_password);
 	}
 
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.bt_sure://找回
+		case R.id.tv_top_right://找回
 			//判断用户是否登录
 			if(!(MyApplication.getInstance().isUserLogin(SetNewPasswordActivity.this)))
 			{

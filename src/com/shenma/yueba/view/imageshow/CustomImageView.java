@@ -102,12 +102,28 @@ public class CustomImageView extends View
 
 	/*****
 	 * 设置显示的图片 即显示的样式
+	 * @param type int 0圆形
+	 * @param  image int图片的id
 	 * ***/
 	public void setSrc(Context context,int image,int type)
 	{
 		this.type=type;
 		BitmapDrawable db=(BitmapDrawable)context.getResources().getDrawable(image);
 		mSrc=db.getBitmap();
+		invalidate();
+	}
+	
+	
+	/*****
+	 * 设置显示的图片 即显示的样式
+	 * @param context Context
+	 * @param bitmap Bitmap
+	 * @param type int 0圆形
+	 * ***/
+	public void setSrc(Context context,Bitmap bitmap,int type)
+	{
+		this.type=type;
+		mSrc=bitmap;
 		invalidate();
 	}
 	

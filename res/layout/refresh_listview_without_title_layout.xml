@@ -17,6 +17,8 @@
         android:footerDividersEnabled="false"
         android:headerDividersEnabled="false"
         android:smoothScrollbar="true" />
-
+<include 
+    android:id="@+id/showloading_layout_view"
+    layout="@layout/showloading_layout"/>
 
 </RelativeLayout>

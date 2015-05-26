@@ -8,7 +8,7 @@ import java.util.List;
  * 品牌详细信息
  * 
  * @author gyj
- * @date 2015-5-9
+ * @date 2015-5-9  商品分类详情
  * ***/
 public class BrandDetailInfoItem implements Serializable {
 	private String id;
