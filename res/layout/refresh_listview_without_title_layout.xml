@@ -19,6 +19,7 @@
         android:smoothScrollbar="true" />
 <include 
     android:id="@+id/showloading_layout_view"
+    android:visibility="gone"
     layout="@layout/showloading_layout"/>
 
 </RelativeLayout>

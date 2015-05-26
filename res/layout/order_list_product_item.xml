@@ -54,12 +54,20 @@
             android:textSize="12sp" />
 
         <TextView
-            android:id="@+id/tv_size"
+            android:id="@+id/tv_huohao"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@id/tv_product_name"
             android:layout_below="@id/tv_description"
             android:text="货号：34size"
+            android:textColor="@color/text_gray_color" />
+        <TextView
+            android:id="@+id/tv_guige"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/tv_description"
+            android:text="规格：34size"
             android:textColor="@color/text_gray_color" />
 
         <TextView

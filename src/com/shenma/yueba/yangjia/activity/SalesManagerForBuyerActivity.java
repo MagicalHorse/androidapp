@@ -18,7 +18,10 @@ import android.widget.TextView;
 import com.shenma.yueba.BaseFragmentActivity;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.activity.FindPasswordActivity;
 import com.shenma.yueba.util.FontManager;
+import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.yangjia.fragment.ItemCustomerFragment;
 
 /**
@@ -121,7 +124,7 @@ public class SalesManagerForBuyerActivity extends BaseFragmentActivity implement
 	 */
 	private void setFragmentList() {
 		for (int i = 0; i < TITLE.length; i++) {
-			fragmentList.add(new ItemCustomerFragment());
+			fragmentList.add(new ItemCustomerFragment(i));
 		}
 	}
 
@@ -175,4 +178,5 @@ public class SalesManagerForBuyerActivity extends BaseFragmentActivity implement
 		}
 
 	}
+	
 }
