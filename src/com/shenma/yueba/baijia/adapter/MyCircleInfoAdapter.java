@@ -61,6 +61,7 @@ public class MyCircleInfoAdapter extends BaseAdapterWithUtil{
 		}else{
 			holder = (Holder) convertView.getTag();
 		}
+		
 		if(position == mList.size()-2){
 			holder.riv_head.setBackgroundResource(R.drawable.plus);
 			holder.tv_text.setText("邀请好友");
