@@ -113,8 +113,7 @@ public class ItemCustomerFragment extends BaseFragment{
 				if(isRefresh){
 					mList.clear();
 					mList.addAll(bean.getData().getOrderlist());
-					adapter=new SalesManagerForAttestationBuyerAdapter(getActivity(), mList,0);
-					rlv.setAdapter(adapter);
+					rlv.setAdapter(new SalesManagerForAttestationBuyerAdapter(getActivity(), mList,0));
 				}else{
 					mList.addAll(bean.getData().getOrderlist());
 					adapter.notifyDataSetChanged();
