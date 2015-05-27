@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.UUID;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.UserConfigActivity.ShowMenu;
 import com.shenma.yueba.util.FileUtils;
 import com.shenma.yueba.util.FontManager;
@@ -21,12 +22,15 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.ContactsContract.CommonDataKinds.Relation;
+import android.text.TextUtils;
+import android.view.TextureView;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * 身份认证
@@ -37,18 +41,21 @@ import android.widget.TextView;
 public class BuyerCertificationActivity extends BaseActivityWithTopView
 		implements OnClickListener {
 
-	private boolean isPositive = true;
+	private int tag = 0;//0身份证正面，1身份证反面，2证件照片
 	private TextView tv_idcard_title;// 身份证信息头
 	private TextView tv_get_point;// 自提点
 	private EditText et_info;// 信息
 	private TextView tv_retain;// 剩余字数
-	private TextView tv_commit;// 提交
+	private TextView tv_next;// 提交
 	private RelativeLayout rl_idcard_positive;
 	private RelativeLayout rl_idcard_reverse;
 	private ImageView iv_idcard_positive;
 	private ImageView iv_idcard_reverse;
 	private String littlePicPath;// 小图路径
 	private String littlePicPath_cache;// 裁剪后图片存储的路径
+	private String pic1,pic2,pic3;
+	private RelativeLayout rl_work_card;
+	private ImageView iv_work_card;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +65,13 @@ public class BuyerCertificationActivity extends BaseActivityWithTopView
 	}
 
 	private void initView() {
+		setTitle("身份认证材料");
+		setLeftTextView(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				finish();
+			}
+		});
 		tv_idcard_title = (TextView) findViewById(R.id.tv_idcard_title);
 		tv_get_point = (TextView) findViewById(R.id.tv_get_point);
 		et_info = (EditText) findViewById(R.id.et_info);
@@ -65,23 +79,45 @@ public class BuyerCertificationActivity extends BaseActivityWithTopView
 		rl_idcard_positive = (RelativeLayout) findViewById(R.id.rl_idcard_positive);
 		rl_idcard_reverse = (RelativeLayout) findViewById(R.id.rl_idcard_reverse);
 		iv_idcard_positive = (ImageView) findViewById(R.id.iv_idcard_positive);
+		rl_work_card = (RelativeLayout) findViewById(R.id.rl_work_card);
+		iv_work_card = (ImageView) findViewById(R.id.iv_work_card);
+		tv_next = (TextView) findViewById(R.id.tv_next);
+		tv_next.setOnClickListener(this);
 		iv_idcard_reverse = (ImageView) findViewById(R.id.iv_idcard_reverse);
+		rl_work_card.setOnClickListener(this);
 		rl_idcard_positive.setOnClickListener(this);
 		rl_idcard_reverse.setOnClickListener(this);
 		FontManager.changeFonts(mContext, tv_idcard_title, tv_get_point,
-				et_info, tv_retain, tv_commit);
+				et_info, tv_retain, tv_next);
+		MyApplication.getInstance().kuanggaobi = (float) 1.76;
 	}
 
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.rl_idcard_positive:// 正面
-			isPositive = true;
+			tag = 0;
 			showBottomDialog();
 			break;
 		case R.id.rl_idcard_reverse:// 反面
-			isPositive = false;
+			tag = 1;
 			showBottomDialog();
+			break;
+		case R.id.rl_work_card:// 工牌
+			tag = 2;
+			showBottomDialog();
+			break;
+		case R.id.tv_next://下一步
+			if(TextUtils.isEmpty(pic1)){
+				Toast.makeText(mContext, "身份证正面图片不能为空", 1000).show();
+				return ;
+			}if(TextUtils.isEmpty(pic2)){
+				Toast.makeText(mContext, "身份证反面面图片不能为空", 1000).show();
+				return ;
+			}if(TextUtils.isEmpty(pic3)){
+				Toast.makeText(mContext, "证件图片不能为空", 1000).show();
+				return ;
+			}
 			break;
 		default:
 			break;
@@ -158,7 +194,7 @@ public class BuyerCertificationActivity extends BaseActivityWithTopView
 						startActivityForResult(PhotoUtils.getZoomIntent(Uri
 								.fromFile(new File(littlePicPath)), Uri
 								.fromFile(FileUtils
-										.createNewFile(littlePicPath_cache))),
+										.createNewFile(littlePicPath_cache)),5,8),
 								PhotoUtils.INTENT_REQUEST_CODE_CROP);
 					}
 				}
@@ -171,10 +207,15 @@ public class BuyerCertificationActivity extends BaseActivityWithTopView
 				// iv_pic.setImageBitmap(bm);
 				// iv_pic.setVisibility(View.VISIBLE);
 				// icon_imageview.setImageBitmap(bm);
-				if (isPositive) {
+				if (0  == tag) {
+					pic1 = littlePicPath_cache;
 					iv_idcard_positive.setImageBitmap(bm);
-				} else {
+				} else if(1  == tag){
+					pic2 = littlePicPath_cache;
 					iv_idcard_reverse.setImageBitmap(bm);
+				}else if(2  == tag){
+					pic3 = littlePicPath_cache;
+					iv_work_card.setImageBitmap(bm);
 				}
 			}
 		}

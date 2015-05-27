@@ -4,15 +4,30 @@
     android:layout_height="match_parent"
     android:id="@+id/parent"
     android:background="@color/main_bg" >
-
-    
     
     <include 
         android:id="@+id/title"
         layout="@layout/title_for_common"/>
-    <ScrollView
+   
+
+    <TextView
+        android:id="@+id/tv_next"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="15dip"
+        android:background="@color/white"
+        android:gravity="center"
+        android:padding="15dip"
+        android:text="下一步"
+        android:textColor="@color/blue"
+        android:textSize="17sp" />
+
+    
+     <ScrollView
         android:layout_below="@id/title"
         android:id="@+id/sv"
+        android:layout_above="@id/tv_next"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" >
 
@@ -49,6 +64,8 @@
                         android:id="@+id/iv_idcard_positive"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/shape_linearlayout10"
                         />
 
                     <TextView
@@ -68,6 +85,7 @@
                         android:id="@+id/iv_idcard_reverse"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
+                          android:scaleType="fitXY"
                         android:src="@drawable/shape_linearlayout10" />
 
                     <TextView
@@ -76,9 +94,36 @@
                         android:layout_centerInParent="true"
                         android:text="+反面" />
                 </RelativeLayout>
+                
+                 <View
+                    style="@style/style_horizontal_line"
+                    android:layout_margin="10dip" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_work_card"
+                    android:layout_width="fill_parent"
+                    android:layout_height="200dip"
+                    android:padding="10dip" >
+
+                    <ImageView
+                        android:id="@+id/iv_work_card"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                          android:scaleType="fitXY"
+                        android:src="@drawable/shape_linearlayout10"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="+工牌照片" />
+                </RelativeLayout>
+                
             </LinearLayout>
 
             <LinearLayout
+                android:visibility="gone"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
@@ -124,18 +169,4 @@
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
-
-    <TextView
-        android:id="@+id/tv_commit"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="15dip"
-        android:background="@color/white"
-        android:gravity="center"
-        android:padding="15dip"
-        android:text="确认提交"
-        android:textColor="@color/black"
-        android:textSize="17sp" />
-
 </RelativeLayout>

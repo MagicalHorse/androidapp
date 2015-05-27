@@ -1,6 +1,9 @@
 package com.shenma.yueba.util;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -10,6 +13,7 @@ import java.util.regex.Pattern;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -389,4 +393,20 @@ public class ToolsUtil {
 		return "<font color=\"#C60606\">" + redStr + "</font>";
 	}
 
+	
+	public static void saveBitmap(Bitmap bitmap, String path) {
+		File file = new File(path);
+		FileOutputStream out;
+		try {
+			out = new FileOutputStream(file);
+			if (bitmap.compress(Bitmap.CompressFormat.JPEG, 30, out)) {
+				out.flush();
+				out.close();
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }

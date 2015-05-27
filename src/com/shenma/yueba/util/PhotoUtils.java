@@ -3,6 +3,7 @@ package com.shenma.yueba.util;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -19,6 +20,7 @@ import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Paint.FontMetrics;
 import android.graphics.PorterDuff.Mode;
@@ -34,6 +36,7 @@ import android.provider.MediaStore;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 
+import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.constants.Constants;
 
 public class PhotoUtils {
@@ -41,7 +44,7 @@ public class PhotoUtils {
 	private static final String IMAGE_PATH = Environment
 			.getExternalStorageDirectory().toString()
 			+ File.separator
-			+ Constants.PROJECT_NAME + File.separator + "Images" + File.separator;
+			+ "GameChating" + File.separator + "Images" + File.separator;
 	// 相册的RequestCode
 	public static final int INTENT_REQUEST_CODE_ALBUM = 0;
 	// 照相的RequestCode
@@ -111,19 +114,78 @@ public class PhotoUtils {
 		Intent intent = new Intent("com.android.camera.action.CROP");
 		intent.setDataAndType(uri, "image/*");
 		intent.putExtra("crop", "true");// 下面这个crop=true是设置在开启的Intent中设置显示的VIEW可裁剪
-		intent.putExtra("aspectX", 2);// aspectX aspectY 是宽高的比例
-		intent.putExtra("aspectY", 2);
-		intent.putExtra("outputX", Constants.SCREENHEITH);// outputX outputY 是裁剪图片宽高
-		intent.putExtra("outputY", Constants.SCREENHEITH);
+		intent.putExtra("aspectX", 8);// aspectX aspectY 是宽高的比例
+		intent.putExtra("aspectY",5);;
+		intent.putExtra("outputX", 800);// outputX outputY 是裁剪图片宽高
+		intent.putExtra("outputY", 800);
 		intent.putExtra("scale", true);
 		intent.putExtra("scaleUpIfNeeded", true);
+		intent.putExtra("scale", false);// 黑边
+		intent.putExtra("scaleUpIfNeeded", false);// 黑边
 		intent.putExtra(MediaStore.EXTRA_OUTPUT, uri_cache);
 		intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
 		// intent.putExtra("noFaceDetection", true); // no face detection
 		intent.putExtra("return-data", false);
 		return intent;
 	}
-
+	
+	
+	/**
+	 * 裁剪图片
+	 * 
+	 * @param context
+	 * @param activity
+	 * @param path
+	 *            需要裁剪的图片路径
+	 */
+	public static Intent getZoomIntent(Uri uri, Uri uri_cache,int aspectX,int aspectY) {
+		Intent intent = new Intent("com.android.camera.action.CROP");
+		intent.setDataAndType(uri, "image/*");
+		intent.putExtra("crop", "true");// 下面这个crop=true是设置在开启的Intent中设置显示的VIEW可裁剪
+		intent.putExtra("aspectX", aspectX);// aspectX aspectY 是宽高的比例
+		intent.putExtra("aspectY",aspectY);
+		intent.putExtra("outputX", 800);// outputX outputY 是裁剪图片宽高
+		intent.putExtra("outputY", 800);
+		intent.putExtra("scale", true);
+		intent.putExtra("scaleUpIfNeeded", true);
+		intent.putExtra("scale", false);// 黑边
+		intent.putExtra("scaleUpIfNeeded", false);// 黑边
+		intent.putExtra(MediaStore.EXTRA_OUTPUT, uri_cache);
+		intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+		// intent.putExtra("noFaceDetection", true); // no face detection
+		intent.putExtra("return-data", false);
+		return intent;
+	}
+	
+//
+//	/**
+//	 * 裁剪图片
+//	 * 
+//	 * @param context
+//	 * @param activity
+//	 * @param path
+//	 *            需要裁剪的图片路径
+//	 */
+//	public static Intent getZoomIntent(Uri uri, Uri uri_cache) {
+//		Intent intent = new Intent("com.android.camera.action.CROP");
+//		intent.setDataAndType(uri, "image/*");
+//		intent.putExtra("crop", "true");// 下面这个crop=true是设置在开启的Intent中设置显示的VIEW可裁剪
+//		intent.putExtra("aspectX", 1);// aspectX aspectY 是宽高的比例
+//		intent.putExtra("aspectY",1.6);;
+//		intent.putExtra("outputX", ToolsUtil.getDisplayWidth(cx));// outputX outputY 是裁剪图片宽高
+//		intent.putExtra("outputY", 480);
+//		intent.putExtra("scale", true);
+//		intent.putExtra("scaleUpIfNeeded", true);
+//		intent.putExtra("scale", false);// 黑边
+//		intent.putExtra("scaleUpIfNeeded", false);// 黑边
+//		intent.putExtra(MediaStore.EXTRA_OUTPUT, uri_cache);
+//		intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+//		// intent.putExtra("noFaceDetection", true); // no face detection
+//		intent.putExtra("return-data", false);
+//		return intent;
+//	}
+//
+//	
 	/**
 	 * 删除图片缓存目录
 	 */
@@ -233,6 +295,64 @@ public class PhotoUtils {
 		newOpts.inTempStorage = new byte[12 * 1024];
 
 		return newOpts;
+	}
+
+	/**
+	 * 根据宽度和长度进行缩放图片
+	 * 
+	 */
+	public static Bitmap createBitmap(String path, String path2, int w, int h) {
+		try {
+			BitmapFactory.Options opts = new BitmapFactory.Options();
+			opts.inJustDecodeBounds = true;
+			// 这里是整个方法的关键，inJustDecodeBounds设为true时将不为图片分配内存。
+			BitmapFactory.decodeFile(path, opts);
+			int srcWidth = opts.outWidth;// 获取图片的原始宽度
+			int srcHeight = opts.outHeight;// 获取图片原始高度
+			int destWidth = 0;
+			int destHeight = 0;
+			// 缩放的比例
+			double ratio = 0.0;
+			if (srcWidth < w || srcHeight < h) {
+				ratio = 0.0;
+				destWidth = srcWidth;
+				destHeight = srcHeight;
+			} else if (srcWidth > srcHeight) {// 按比例计算缩放后的图片大小，maxLength是长或宽允许的最大长度
+				ratio = (double) srcWidth / w;
+				destWidth = w;
+				destHeight = (int) (srcHeight / ratio);
+			} else {
+				ratio = (double) srcHeight / h;
+				destHeight = h;
+				destWidth = (int) (srcWidth / ratio);
+			}
+			BitmapFactory.Options newOpts = new BitmapFactory.Options();
+			// 缩放的比例，缩放是很难按准备的比例进行缩放的，目前我只发现只能通过inSampleSize来进行缩放，其值表明缩放的倍数，SDK中建议其值是2的指数值
+			newOpts.inSampleSize = (int) ratio + 1;
+			// inJustDecodeBounds设为false表示把图片读进内存中
+			newOpts.inJustDecodeBounds = false;
+			// 设置大小，这个一般是不准确的，是以inSampleSize的为准，但是如果不设置却不能缩放
+			newOpts.outHeight = destHeight;
+			newOpts.outWidth = destWidth;
+			newOpts.inDither = false;
+			newOpts.inPurgeable = true;
+			newOpts.inTempStorage = new byte[12 * 1024];
+
+			// 这种方式获得Bitmap不容易内存溢出
+			FileDescriptor fd = new FileInputStream(new File(path)).getFD();
+			Bitmap bitmap = BitmapFactory.decodeFileDescriptor(fd, null,
+					newOpts);
+
+			// 把图片的质量压缩一下并保存到path2的路径上
+			ToolsUtil.saveBitmap(bitmap, path2);
+
+			// 返回path2路径上的Bitmap
+			return BitmapFactory.decodeFileDescriptor(new FileInputStream(
+					new File(path2)).getFD(), null, null);
+		} catch (Exception e) {
+			// TODO: handle exception
+			return null;
+		}
 	}
 
 	/***
@@ -364,6 +484,36 @@ public class PhotoUtils {
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * 根据比例缩放图片
+	 * 
+	 * @param screenWidth
+	 *            手机屏幕的宽度
+	 * @param filePath
+	 *            图片的路径
+	 * @param ratio
+	 *            缩放比例
+	 * @return
+	 */
+	public static Bitmap CompressionPhoto(int screenWidth, int screenHeight,
+			String filePath, String filePath2, int ratio) {
+		// Bitmap bitmap = PhotoUtils.getBitmapFromFile(filePath);
+		Bitmap bitmap = PhotoUtils.createBitmap(filePath, filePath2,
+				screenWidth, screenHeight);
+		Bitmap compressionBitmap = null;
+		float scaleWidth = screenWidth / (bitmap.getWidth() * ratio);
+		float scaleHeight = screenWidth / (bitmap.getHeight() * ratio);
+		Matrix matrix = new Matrix();
+		matrix.postScale(scaleWidth, scaleHeight);
+		try {
+			compressionBitmap = Bitmap.createBitmap(bitmap, 0, 0,
+					bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+		} catch (Exception e) {
+			return bitmap;
+		}
+		return compressionBitmap;
 	}
 
 	public static Bitmap getimage(int ww, int hh, String srcPath) {
@@ -648,6 +798,4 @@ public class PhotoUtils {
 				round, paint);
 		return bitmap;
 	}
-	
-
 }
