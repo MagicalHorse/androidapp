@@ -47,6 +47,8 @@
                 </RelativeLayout>
 
                 <TextView
+                    android:id="@+id/buyersteet_newtextview"
+                    style="@style/text_title_style"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:text="最新上新" />

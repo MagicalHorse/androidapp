@@ -10,6 +10,14 @@ import java.io.Serializable;
 
 public class RequestProductListInfoBean implements Serializable{
 	ProductListInfoBean data=new ProductListInfoBean();
+
+	public ProductListInfoBean getData() {
+		return data;
+	}
+
+	public void setData(ProductListInfoBean data) {
+		this.data = data;
+	}
 	
 	
 }

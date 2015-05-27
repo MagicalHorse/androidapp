@@ -43,6 +43,7 @@ import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.ShopMainActivity;
 import com.shenma.yueba.baijia.modle.FragmentBean;
 import com.shenma.yueba.baijia.modle.ImageStringBean;
+import com.shenma.yueba.baijia.modle.RequestProductListInfoBean;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.ListViewUtils;
@@ -71,7 +72,6 @@ public class BuyerStreetFragment extends Fragment {
 	HttpControl httpContril=new HttpControl();
 	int page=1;
 	int pagesize=1;
-	BitmapUtils bitmapUtils=new BitmapUtils(getActivity());
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -327,7 +327,11 @@ public class BuyerStreetFragment extends Fragment {
 			
 			@Override
 			public void http_Success(Object obj) {
-				
+				if(obj!=null && obj instanceof RequestProductListInfoBean)
+				{
+					RequestProductListInfoBean bean=(RequestProductListInfoBean)obj;
+					
+				}
 				/*if(obj!=null && obj instanceof RequestProduceListInfoBean)
 				{
 					
