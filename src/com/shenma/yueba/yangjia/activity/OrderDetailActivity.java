@@ -54,6 +54,7 @@ public class OrderDetailActivity extends BaseActivityWithTopView {
 		super.onCreate(savedInstanceState);
 		orderId = getIntent().getStringExtra("orderId");
 		initView();
+		getData();
 	}
 
 	private void initView() {

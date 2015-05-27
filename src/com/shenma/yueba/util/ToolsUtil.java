@@ -15,11 +15,13 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Environment;
 import android.os.StatFs;
+import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shenma.yueba.application.MyApplication;
@@ -309,4 +311,82 @@ public class ToolsUtil {
 		String dateString = formatter.format(dateDate);
 		return dateString;
 	}
+	
+	
+	/**
+	 * 设置textView字体颜色
+	 * 
+	 * @param tv
+	 *            textView控件
+	 * @param str1
+	 *            第一个字段
+	 * @param color1
+	 *            第一个字段颜色
+	 * @param str2
+	 *            第二个字段
+	 * @param color2
+	 *            第二个字段颜色
+	 */
+	public static void setTextColor(TextView tv, String str1, String color1,
+			String str2, String color2) {
+		tv.setText(Html.fromHtml("<font color=\"" + color1 + "\">" + str1
+				+ "</font>" + "<font color=\"" + color2 + "\">" + str2
+				+ "</font>"));
+	}
+
+	/**
+	 * 设置红色字在前，黑色字在后
+	 * 
+	 * @param tv
+	 *            TextView控件
+	 * @param redStr
+	 *            红颜色字
+	 * @param normalStr
+	 *            黑颜色字
+	 */
+	public static void setTextColorRedAndBlack(TextView tv, String redStr,
+			String normalStr) {
+		tv.setText(Html.fromHtml("<font color=\"#C60606\">" + redStr
+				+ "</font>" + "<font color=\"#000000\">" + normalStr
+				+ "</font>"));
+	}
+
+	/**
+	 * 设置黑色字在前，红色字在后
+	 * 
+	 * @param tv
+	 * @param normalStr
+	 *            黑颜色字
+	 * @param redStr
+	 *            红颜色字
+	 */
+	public static void setTextColorBlackAndRed(TextView tv, String normalStr,
+			String redStr) {
+		tv.setText(Html.fromHtml("<font color=\"#000000\">" + normalStr
+				+ "</font>" + "<font color=\"#C60606\">" + redStr + "</font>"));
+	}
+
+	/** 
+	 * 设置字体颜色为红色
+	 * 
+	 * @param tv
+	 * @param redSt
+	 *            红颜色字
+	 */
+	public static void setTextColorRed(TextView tv, String redStr) {
+		tv.setText(Html.fromHtml("<font color=\"#C60606\">" + redStr
+				+ "</font>"));
+	}
+
+	/**
+	 * 获取红色的字体
+	 * 
+	 * @param tv
+	 * @param redStr
+	 *            红颜色字
+	 */
+	public static String getTextColorRed(String redStr) {
+		return "<font color=\"#C60606\">" + redStr + "</font>";
+	}
+
 }

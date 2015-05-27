@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.adapter.BaseAdapterWithUtil;
 import com.shenma.yueba.util.FontManager;
+import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.yangjia.modle.OrderItem;
 import com.shenma.yueba.yangjia.modle.ProductItemBean;
 
@@ -63,7 +64,7 @@ public class SalesManagerForAttestationBuyerAdapter extends BaseAdapterWithUtil 
 			holder.tv_guige = (TextView) convertView.findViewById(R.id.tv_guige);
 			FontManager.changeFonts(ctx, holder.tv_order_number,holder.tv_order_status,
 					holder.tv_money_payed,holder.tv_product_name,holder.tv_price,holder.tv_description,
-					holder.tv_same_product_count,holder.tv_huohao);
+					holder.tv_same_product_count,holder.tv_huohao,holder.tv_guige,holder.tv_commission);
 			convertView.setTag(holder);
 		}else{
 			holder = (Holder) convertView.getTag();
@@ -72,19 +73,19 @@ public class SalesManagerForAttestationBuyerAdapter extends BaseAdapterWithUtil 
 		if(item!=null){
 			holder.tv_order_number.setText(TextUtils.isEmpty(item.getOrderNo())?"":"订单号："+item.getOrderNo());
 			holder.tv_order_status.setText(TextUtils.isEmpty(item.getStatusName())?"":item.getStatusName());
-			holder.tv_commission.setText(TextUtils.isEmpty(item.getInCome())?"":item.getInCome());
-			holder.tv_money_payed.setText(TextUtils.isEmpty(item.getAmount())?"":item.getAmount());
+			holder.tv_commission.setText(TextUtils.isEmpty(item.getInCome())?"":"佣金：￥"+item.getInCome());
+			ToolsUtil.setTextColorBlackAndRed(holder.tv_money_payed, "实付：￥", ToolsUtil.getTextColorRed(item.getAmount()));
 			if(item.getProducts()!=null && item.getProducts().size()>0){//说明有商品
 				List<ProductItemBean>  products = item.getProducts();
 				ProductItemBean productItme = products.get(0);
 				if(!TextUtils.isEmpty(productItme.getPicture())){
 					bitmapUtils.display(holder.iv_product, productItme.getPicture());
-					holder.tv_price.setText(TextUtils.isEmpty(productItme.getPrice())?"":productItme.getPrice());
+					holder.tv_price.setText(TextUtils.isEmpty(productItme.getPrice())?"":productItme.getPrice()+"￥");
 					holder.tv_product_name.setText(TextUtils.isEmpty(productItme.getBrandName())?"":productItme.getBrandName());
 					holder.tv_description.setText(TextUtils.isEmpty(productItme.getName())?"":productItme.getName());
-					holder.tv_same_product_count.setText(TextUtils.isEmpty(productItme.getCount())?"":productItme.getCount());
-					holder.tv_huohao.setText(TextUtils.isEmpty(productItme.getStoreItemNo())?"":productItme.getStoreItemNo());
-					holder.tv_guige.setText(TextUtils.isEmpty(productItme.getSizeName())?"":productItme.getSizeName());
+					holder.tv_same_product_count.setText(TextUtils.isEmpty(productItme.getCount())?"":""+productItme.getCount());
+					holder.tv_huohao.setText(TextUtils.isEmpty(productItme.getStoreItemNo())?"X":"货号："+productItme.getStoreItemNo());
+					holder.tv_guige.setText(TextUtils.isEmpty(productItme.getSizeName())?"":"规格："+productItme.getSizeName());
 				}
 			}
 			

@@ -26,8 +26,8 @@ public abstract class BaseAdapterWithUtil extends BaseAdapter {
 	    bigPicDisplayConfig.setBitmapConfig(Bitmap.Config.RGB_565);
 	    bigPicDisplayConfig.setBitmapMaxSize(BitmapCommonUtils.getScreenSize(ctx));
 		bitmapUtils = new BitmapUtils(ctx);
-		bitmapUtils.configDefaultLoadingImage(R.drawable.ic_launcher);//
-		bitmapUtils.configDefaultLoadFailedImage(R.drawable.ic_launcher);//
+		bitmapUtils.configDefaultLoadingImage(R.drawable.default_pic);//
+		bitmapUtils.configDefaultLoadFailedImage(R.drawable.default_pic);//
 		bitmapUtils.configDefaultBitmapConfig(Bitmap.Config.RGB_565);//
 	}
 }
