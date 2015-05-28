@@ -165,6 +165,7 @@ public class HttpConstants {
 	public static String METHOD_PRODUCTMANAGER_UPDATE = PRODUCT + "Update";
 	
 	
+	
 	/**
 	 * 商品管理列表
 	 */
