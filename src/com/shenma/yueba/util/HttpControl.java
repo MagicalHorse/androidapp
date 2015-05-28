@@ -493,15 +493,13 @@ public class HttpControl {
 	 * @param context  Context
 	 * @param page int 请求页
 	 * @param pagesize int 每页显示的条数
-	 * @param isshowDialog boolean 是否显示对话框
-	 * @param isEnableCancell boolean  返回键是否可用
 	 * @return void
 	 * **/
-	public void getProduceHomeListData(int page,int pagesize,final HttpCallBackInterface httpCallBack,Context context,boolean isshowDialog,boolean isEnableCancell) {
+	public void getProduceHomeListData(int page,int pagesize,final HttpCallBackInterface httpCallBack,Context context) {
 		Map<String, String> map=new HashMap<String, String>();
 		map.put(Constants.PAGE, Integer.toString(page));
 		map.put(Constants.PAGESIZE, Integer.toString(pagesize));
-		BasehttpSend(map, context, HttpConstants.METHOD_PRODUCTMANAGER_HOMELIST, httpCallBack, RequestProductListInfoBean.class, isshowDialog, isEnableCancell);
+		BasehttpSend(map, context, HttpConstants.METHOD_PRODUCTMANAGER_HOMELIST, httpCallBack, RequestProductListInfoBean.class, false, false);
 	}
 	
 	
