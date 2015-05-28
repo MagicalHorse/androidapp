@@ -92,25 +92,29 @@ public class ProductManagerFragmentForOnLineAdapter extends BaseAdapterWithUtil
 			holder = (Holder) convertView.getTag();
 		}
 
-		if (flag == 0) {// 在线商品
+		if (flag == 1) {// 在线商品
 			holder.tv_button1.setText("下架");
 			holder.tv_button2.setText("复制");
 			holder.tv_button3.setText("分享");
 			holder.tv_button4.setText("修改");
-		} else if (flag == 1) {// 即将下线
+		} else if (flag == 2) {// 即将下线
 			holder.tv_button1.setText("下架");
 			holder.tv_button2.setText("复制");
 			holder.tv_button3.setText("分享");
 			holder.tv_button4.setText("修改");
-		} else if (flag == 2) {// 下线商品
+		} else if (flag == 0) {// 下线商品
 			holder.tv_button1.setText("上架");
 			holder.tv_button2.setText("复制");
 			holder.tv_button3.setText("分享");
 			holder.tv_button4.setText("删除");
 		}
 
-		bitmapUtils.display(holder.iv_product,
-				ToolsUtil.getImage(mList.get(position).getPic(), 80, 80));
+		if(TextUtils.isEmpty(mList.get(position).getPic())){
+			bitmapUtils.display(holder.iv_product,"aaa");
+		}else{
+			bitmapUtils.display(holder.iv_product,
+					ToolsUtil.getImage(mList.get(position).getPic(), 120, 0));
+		}
 		holder.tv_brand_name.setText(ToolsUtil.nullToString(mList.get(position)
 				.getBrandName()));
 		holder.tv_date.setText(ToolsUtil.nullToString(mList.get(position)

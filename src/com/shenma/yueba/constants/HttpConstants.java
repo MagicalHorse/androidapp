@@ -173,15 +173,11 @@ public class HttpConstants {
 	
 	
 	/**
-	 * 商品上线（买手）
+	 * 商品上线、下线（买手）
 	 */
 	public static String METHOD_PRODUCTMANAGER_ONLINE = PRODUCT + "OnLine";
 	
 	
-	/**
-	 * 商品下线（买手）
-	 */
-	public static String METHOD_PRODUCTMANAGER_OFFLINE = PRODUCT + "DownLine";
 	/**
 	 * ---------------------------------买手相关接口----------------------------------
 	 * ---------

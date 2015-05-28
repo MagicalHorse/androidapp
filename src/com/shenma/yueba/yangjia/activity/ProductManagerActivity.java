@@ -50,7 +50,7 @@ public class ProductManagerActivity extends BaseFragmentActivity implements
 		initView();
 		initFragment();
 		initViewPager();
-		productManagerFragmentForOnLine.getData(0,ProductManagerActivity.this);
+		productManagerFragmentForOnLine.getData(1,ProductManagerActivity.this);
 		super.onCreate(arg0);
 	}
 
@@ -93,9 +93,9 @@ public class ProductManagerActivity extends BaseFragmentActivity implements
 	}
 
 	private void initFragment() {
-		productManagerFragmentForOnLine = new ProductManagerFragmentForOnLine(0);
-		productManagerFragmentForOnLine2 = new ProductManagerFragmentForOnLine(1);
-		productManagerFragmentForOnLine3 = new ProductManagerFragmentForOnLine(2);
+		productManagerFragmentForOnLine = new ProductManagerFragmentForOnLine(1);
+		productManagerFragmentForOnLine2 = new ProductManagerFragmentForOnLine(2);
+		productManagerFragmentForOnLine3 = new ProductManagerFragmentForOnLine(0);
 		fragmentList.add(productManagerFragmentForOnLine);
 		fragmentList.add(productManagerFragmentForOnLine2);
 		fragmentList.add(productManagerFragmentForOnLine3);

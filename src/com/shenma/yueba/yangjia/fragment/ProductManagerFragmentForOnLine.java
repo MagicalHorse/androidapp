@@ -34,7 +34,7 @@ import com.shenma.yueba.yangjia.modle.BuyerProductManagerListBean;
  */
 @SuppressLint("ValidFragment")
 public class ProductManagerFragmentForOnLine extends BaseFragment {
-	private int type;// 0表示在线，1表示即将下线，2表示已经下线
+	private int type;// 1表示在线，2表示即将下线，0表示已经下线
 
 	@SuppressLint("ValidFragment")
 	public ProductManagerFragmentForOnLine(int type) {
