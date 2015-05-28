@@ -18,7 +18,7 @@
         android:layout_above="@+id/approvebuyerdetails_footer"
         android:layout_below="@id/title_include"
         android:layout_marginTop="@dimen/shop_main_width2_dimen"
-        android:visibility="gone" >
+        android:visibility="visible" >
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -155,29 +155,12 @@
                 android:layout_toRightOf="@id/approvebuyerdetails_address_textview"
                 android:hint="北京市人民大学" />
 
-            <LinearLayout
-                android:id="@+id/approvebuyerdetails_attention_linerlayout"
+            <include 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/approvebuyerdetails_addressvalue_textview"
-                android:gravity="center_vertical"
-                android:padding="@dimen/margin_left_and_right" >
-
-                <TextView
-                    android:id="@+id/approvebuyerdetails_attention_textview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/zan"
-                    android:gravity="center"
-                    android:hint="558" />
-
-                <LinearLayout
-                    android:id="@+id/approvebuyerdetails_attentionvalue_linerlayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/shop_main_width5_dimen"
-                    android:orientation="horizontal" />
-            </LinearLayout>
+                android:id="@+id/approvebuyerdetails_attention_linerlayout"
+                layout="@layout/attentionpeople_layout"/>
         </RelativeLayout>
     </ScrollView>
 

@@ -5,28 +5,30 @@ import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 
 public class ImageStringBean {
-String iconurl="";
+BannersInfoBean bean;
 ImageView iv;
 
-public ImageStringBean(Activity activity,String iconurl)
-{
-	this.iconurl=iconurl;
-	this.iv=new ImageView(activity);
-	iv.setScaleType(ScaleType.FIT_XY);
-	this.iv.setTag(iconurl);
+public BannersInfoBean getBean() {
+	return bean;
 }
 
-public String getIconurl() {
-	return iconurl;
+public void setBean(BannersInfoBean bean) {
+	this.bean = bean;
 }
-public void setIconurl(String iconurl) {
-	this.iconurl = iconurl;
-}
+
 public ImageView getIv() {
 	return iv;
 }
+
 public void setIv(ImageView iv) {
 	this.iv = iv;
 }
 
+public ImageStringBean(Activity activity,BannersInfoBean bean)
+{
+	this.bean=bean;
+	this.iv=new ImageView(activity);
+	iv.setScaleType(ScaleType.FIT_XY);
+	this.iv.setTag(bean);
+}
 }

@@ -138,7 +138,7 @@ public class HttpConstants {
 	/**
 	 * 获取主页商品列表
 	 */
-	public static String METHOD_PRODUCTMANAGER_HOMELIST = PRODUCT + "HomeList";
+	public static String METHOD_PRODUCTMANAGER_HOMELIST = PRODUCT + "Index";
 	/**
 	 * 获取商品被喜欢的用户列表
 	 */

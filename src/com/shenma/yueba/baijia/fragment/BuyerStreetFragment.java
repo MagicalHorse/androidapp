@@ -19,12 +19,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -41,13 +43,21 @@ import com.lidroid.xutils.BitmapUtils;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.ShopMainActivity;
+import com.shenma.yueba.baijia.modle.BannersInfoBean;
 import com.shenma.yueba.baijia.modle.FragmentBean;
+import com.shenma.yueba.baijia.modle.HomeProductListInfoBean;
 import com.shenma.yueba.baijia.modle.ImageStringBean;
+import com.shenma.yueba.baijia.modle.LikeUsersInfoBean;
+import com.shenma.yueba.baijia.modle.ProductListInfoBean;
+import com.shenma.yueba.baijia.modle.ProductPicInfoBean;
+import com.shenma.yueba.baijia.modle.ProductsInfoBean;
 import com.shenma.yueba.baijia.modle.RequestProductListInfoBean;
+import com.shenma.yueba.baijia.modle.UsersInfoBean;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.ListViewUtils;
 import com.shenma.yueba.view.FixedSpeedScroller;
+import com.shenma.yueba.view.RoundImageView;
 import com.shenma.yueba.view.imageshow.CustomImageView;
 
 public class BuyerStreetFragment extends Fragment {
@@ -64,20 +74,28 @@ public class BuyerStreetFragment extends Fragment {
 	PullToRefreshScrollView pulltorefreshscrollview;
 	ViewPager baijia_head_viewpager;
 	List<ImageStringBean> icon_list = new ArrayList<ImageStringBean>();
-	List<Object> obj_list = new ArrayList<Object>();
 	LayoutInflater inflater;
 	LinearLayout showloading_layout_view;
 	Timer timer;
 	CustomPagerAdapter pagerAdapter;
-	HttpControl httpContril=new HttpControl();
-	int page=1;
-	int pagesize=1;
+	HttpControl httpContril = new HttpControl();
+	// 当前页
+	int currpage = 1;
+	// 每页显示的条数
+	int pagesize = 10;
+	int maxcount = 8;
+	List<BannersInfoBean> Banners = new ArrayList<BannersInfoBean>();
+	// 商品信息列表
+	List<ProductsInfoBean> Products = new ArrayList<ProductsInfoBean>();
+	BitmapUtils bitmapUtils;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		this.inflater = inflater;
 		if (v == null) {
 			v = inflater.inflate(R.layout.buyersteetfragment_layout, null);
+			bitmapUtils = new BitmapUtils(getActivity());
 			initPullView();
 			initView(v);
 			requestFalshData();
@@ -86,7 +104,6 @@ public class BuyerStreetFragment extends Fragment {
 		if (vp != null) {
 			vp.removeView(v);
 		}
-		// return super.onCreateView(inflater, container, savedInstanceState);
 		focus_textview.setFocusable(true);
 		focus_textview.setFocusableInTouchMode(true);
 		pulltorefreshscrollview.setFocusable(false);
@@ -103,11 +120,13 @@ public class BuyerStreetFragment extends Fragment {
 	}
 
 	void initPullView() {
-		pulltorefreshscrollview = (PullToRefreshScrollView) v.findViewById(R.id.pulltorefreshscrollview);
+		pulltorefreshscrollview = (PullToRefreshScrollView) v
+				.findViewById(R.id.pulltorefreshscrollview);
 		// 设置标签显示的内容
 		// pulltorefreshscrollview.getLoadingLayoutProxy().setLastUpdatedLabel("lastUpdateLabel");
 		pulltorefreshscrollview.getLoadingLayoutProxy().setPullLabel("下拉刷新");
-		pulltorefreshscrollview.getLoadingLayoutProxy().setRefreshingLabel("刷新中。。。");
+		pulltorefreshscrollview.getLoadingLayoutProxy().setRefreshingLabel(
+				"刷新中。。。");
 		pulltorefreshscrollview.getLoadingLayoutProxy().setReleaseLabel("松开刷新");
 		pulltorefreshscrollview.setMode(Mode.BOTH);
 		pulltorefreshscrollview
@@ -221,7 +240,7 @@ public class BuyerStreetFragment extends Fragment {
 	void getImageView(ImageStringBean bean) {
 		BitmapUtils bitmapUtils = new BitmapUtils(getActivity());
 		bitmapUtils.configDefaultLoadFailedImage(R.drawable.ic_launcher);
-		bitmapUtils.display(bean.getIv(), bean.getIconurl());
+		bitmapUtils.display(bean.getIv(), bean.getBean().getPic());
 
 	}
 
@@ -230,7 +249,7 @@ public class BuyerStreetFragment extends Fragment {
 		@Override
 		public int getCount() {
 
-			return obj_list.size();
+			return Products.size();
 		}
 
 		@Override
@@ -251,48 +270,108 @@ public class BuyerStreetFragment extends Fragment {
 			Holder holder;
 			if (convertView == null) {
 				holder = new Holder();
-				convertView = inflater.inflate(R.layout.buyersteetfragment_item, null);
+				convertView = inflater.inflate(
+						R.layout.buyersteetfragment_item, null);
 				holder.v = convertView;
-				holder.customImage=(CustomImageView)v.findViewById(R.id.baijia_tab1_item_icon_imageview);
-				holder.baijia_tab1_item_productname_textview=(TextView)v.findViewById(R.id.baijia_tab1_item_productname_textview);
-				holder.baijia_tab1_item_productaddress_textview=(TextView)v.findViewById(R.id.baijia_tab1_item_productaddress_textview);
-				holder.baijia_tab1_item_time_textview=(TextView)v.findViewById(R.id.baijia_tab1_item_time_textview);
-				holder.baijia_tab1_item_productcontent_imageview=(ImageView)v.findViewById(R.id.baijia_tab1_item_productcontent_imageview);
+				holder.customImage = (RoundImageView) v
+						.findViewById(R.id.baijia_tab1_item_icon_imageview);
+				holder.baijia_tab1_item_productname_textview = (TextView) v
+						.findViewById(R.id.baijia_tab1_item_productname_textview);
+				holder.baijia_tab1_item_productaddress_textview = (TextView) v
+						.findViewById(R.id.baijia_tab1_item_productaddress_textview);
+				holder.baijia_tab1_item_time_textview = (TextView) v
+						.findViewById(R.id.baijia_tab1_item_time_textview);
+				holder.baijia_tab1_item_productcontent_imageview = (ImageView) v
+						.findViewById(R.id.baijia_tab1_item_productcontent_imageview);
+				holder.buyersteetfragmeng_item_price_textview = (TextView) v
+						.findViewById(R.id.buyersteetfragmeng_item_price_textview);
+				holder.approvebuyerdetails_attentionvalue_linerlayout = (LinearLayout) v
+						.findViewById(R.id.approvebuyerdetails_attentionvalue_linerlayout);
+				holder.buyersteetfragmeng_item_siliao_button = (Button) v
+						.findViewById(R.id.buyersteetfragmeng_item_siliao_button);
+				//私聊按键
+				holder.buyersteetfragmeng_item_siliao_button
+						.setOnClickListener(new OnClickListener() {
+
+							@Override
+							public void onClick(View v) {
+
+							}
+						});
+				
+				holder.buyersteetfragmeng_item_share_button = (Button) v
+						.findViewById(R.id.buyersteetfragmeng_item_share_button);
+				//分享按键
+				holder.buyersteetfragmeng_item_share_button
+						.setOnClickListener(new OnClickListener() {
+
+							@Override
+							public void onClick(View v) {
+								
+
+							}
+						});
+
 				convertView.setTag(holder);
 			} else {
 				holder = (Holder) convertView.getTag();
 
 			}
+			ProductsInfoBean productsInfoBean = Products.get(position);
+			holder.buyersteetfragmeng_item_siliao_button
+					.setTag(productsInfoBean);
+			holder.buyersteetfragmeng_item_share_button
+					.setTag(productsInfoBean);
+
+			holder.baijia_tab1_item_productname_textview
+					.setText(productsInfoBean.getBuyerName());
+			holder.baijia_tab1_item_productaddress_textview
+					.setText(productsInfoBean.getBuyerAddress());
+			holder.buyersteetfragmeng_item_price_textview.setText(Double
+					.toString(productsInfoBean.getPrice()));
+			String url=productsInfoBean.getBuyerLogo()+"640x0.jpg";
+			holder.customImage.setTag(productsInfoBean.getBuyerLogo());
+			initPic(productsInfoBean.getBuyerLogo(), holder.customImage,R.drawable.test002);
+			addIconView(holder.approvebuyerdetails_attentionvalue_linerlayout,
+					productsInfoBean);
+			ProductPicInfoBean productPicInfoBean = productsInfoBean
+					.getProductPic();
+			String picturd_src = productPicInfoBean.getName();
 			holder.baijia_tab1_item_productname_textview.setText("");
 			return convertView;
 		}
 
 	};
 
-	
-	void setImageView(String url,Bitmap bitmap)
-	{
-		View v=baijia_contact_listview.findViewWithTag(url);
-		if(v!=null && v instanceof CustomImageView)
-		{
-			if(bitmap==null)
-			{
-				BitmapDrawable drawable=(BitmapDrawable)getActivity().getResources().getDrawable(R.drawable.test002);
-				bitmap=drawable.getBitmap();
+	void setImageView(String url, Bitmap bitmap) {
+		View v = baijia_contact_listview.findViewWithTag(url);
+		if (v != null && v instanceof CustomImageView) {
+			if (bitmap == null) {
+				BitmapDrawable drawable = (BitmapDrawable) getActivity()
+						.getResources().getDrawable(R.drawable.test002);
+				bitmap = drawable.getBitmap();
 			}
-			((CustomImageView)v).setSrc(getActivity(), bitmap, 0);
+			((CustomImageView) v).setSrc(getActivity(), bitmap, 0);
 		}
 	}
-	
-	
+
 	class Holder {
 		View v;
-		CustomImageView customImage;
-		TextView baijia_tab1_item_productname_textview,baijia_tab1_item_productaddress_textview,baijia_tab1_item_time_textview;
+		RoundImageView customImage;
+		TextView baijia_tab1_item_productname_textview // 商品名称
+				,
+				baijia_tab1_item_productaddress_textview// 地址
+				, baijia_tab1_item_time_textview// 时间
+				, buyersteetfragmeng_item_price_textview;// 价格
+		// 商品描述
 		ImageView baijia_tab1_item_productcontent_imageview;
+		// 私聊 与 分享按钮
+		Button buyersteetfragmeng_item_siliao_button,
+				buyersteetfragmeng_item_share_button;
+		// 关注人列表
+		LinearLayout approvebuyerdetails_attentionvalue_linerlayout;
 	}
 
-	
 	/******
 	 * 上啦加载数据
 	 * ***/
@@ -301,82 +380,79 @@ public class BuyerStreetFragment extends Fragment {
 		sendRequestData(1);
 	}
 
-	
 	/******
 	 * 下拉刷新数据
 	 * ***/
 	void requestFalshData() {
 		pulltorefreshscrollview.setRefreshing();
 		stopTimerToViewPager();
-		page=1;
-		currid=-1;
-		obj_list.clear();
+		currpage = 1;
+		currid = -1;
 		icon_list.clear();
 		sendRequestData(0);
-		
+
 	}
 
-	
 	/******
 	 * 与网络通信请求数据
-	 * @param type int 0 刷新  1 加载
+	 * 
+	 * @param type
+	 *            int 0 刷新 1 加载
 	 * ***/
-	void sendRequestData(final int type)
-	{
-          httpContril.getProduceHomeListData(page, pagesize, new HttpCallBackInterface() {
-			
-			@Override
-			public void http_Success(Object obj) {
-				if(obj!=null && obj instanceof RequestProductListInfoBean)
-				{
-					RequestProductListInfoBean bean=(RequestProductListInfoBean)obj;
-					
-				}
-				/*if(obj!=null && obj instanceof RequestProduceListInfoBean)
-				{
-					
-					if(data!=null)
-					{
-						int totalPager=data.getTotalpaged();
-						int currPager=data.getPageindex();
-						if(currPager>=totalPager)
-						{
-							pulltorefreshscrollview.setMode(Mode.PULL_FROM_START);
-						}else
-						{
-							pulltorefreshscrollview.setMode(Mode.BOTH);
+	void sendRequestData(final int type) {
+		httpContril.getProduceHomeListData(currpage, pagesize,
+				new HttpCallBackInterface() {
+
+					@Override
+					public void http_Success(Object obj) {
+						if (obj != null
+								&& obj instanceof RequestProductListInfoBean) {
+							RequestProductListInfoBean bean = (RequestProductListInfoBean) obj;
+							HomeProductListInfoBean data = bean.getData();
+							if (data != null) {
+								int totalPage = data.getTotalpaged();
+								if (currpage >= totalPage) {
+									pulltorefreshscrollview
+											.setMode(Mode.PULL_FROM_START);
+								} else {
+									pulltorefreshscrollview.setMode(Mode.BOTH);
+								}
+								switch (type) {
+								case 0:
+									falshData(data);
+									break;
+								case 1:
+									addData(data);
+									break;
+								}
+							} else {
+								MyApplication.getInstance().showMessage(
+										getActivity(), "没有任何数据");
+							}
+
 						}
-			            switch(type)
-			            {
-			            case 0:
-			            	falshData(data);
-			            	break;
-			            case 1:
-			            	addData(data);
-			            	break;
-			            }
-						
-					}else
-					{
-						MyApplication.getInstance().showMessage(getActivity(), "没有任何数据");
 					}
-				}*/
-			}
-			
-			@Override
-			public void http_Fails(int error, String msg) {
-				
-				MyApplication.getInstance().showMessage(getActivity(), msg);
-			}
-		}, getActivity());
+
+					@Override
+					public void http_Fails(int error, String msg) {
+
+						MyApplication.getInstance().showMessage(getActivity(),
+								msg);
+					}
+				}, getActivity());
 	}
-	
+
 	/***
 	 * 加载数据
 	 * **/
-	void addData(Object data) {
+	void addData(HomeProductListInfoBean data) {
 		showloading_layout_view.setVisibility(View.GONE);
-		//addProduceInfoData(data.getProducts());
+		// addProduceInfoData(data.getProducts());
+		ProductListInfoBean item = data.getItems();
+		if(item.getProducts()!=null)
+		{
+			Products.addAll(item.getProducts());
+		}
 		baseAdapter.notifyDataSetChanged();
 		ListViewUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
 		pulltorefreshscrollview.onRefreshComplete();
@@ -385,37 +461,38 @@ public class BuyerStreetFragment extends Fragment {
 	/***
 	 * 刷新viewpager数据
 	 * ***/
-	void falshData(Object data) {
+	void falshData(HomeProductListInfoBean data) {
 		showloading_layout_view.setVisibility(View.GONE);
-		//viewpager
-		currid=-1;
+		currid = -1;
+		ProductListInfoBean item = data.getItems();
+		Banners.clear();
+		icon_list.clear();
+		Products.clear();
+		// 获取活动列表
+		if (item != null && item.getBanners() != null) {
+			Banners = item.getBanners();
+			for (int i = 0; i < Banners.size(); i++) {
+				BannersInfoBean bean = Banners.get(i);
+				icon_list.add(new ImageStringBean(getActivity(), bean));
+			}
+			// Banners.addAll(item.getBanners());
+		}
 		pagerAdapter = new CustomPagerAdapter();
 		baijia_head_viewpager.setAdapter(pagerAdapter);
-		if(icon_list.size()>0)
-		{
+		if (icon_list.size() > 0) {
 			setcurrItem(0);
 		}
 		pagerAdapter.notifyDataSetChanged();
-        startTimeToViewPager();
-		//baseAdapter.notifyDataSetChanged();
-        ListViewUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
-		pulltorefreshscrollview.onRefreshComplete();
+		startTimeToViewPager();
 		
-		
-	}
-	
-	/****
-	 * 数据负值
-	 * **/
-	void addProduceInfoData(Object beanlist)
-	{
-		/*if(beanlist!=null)
+		if(item.getProducts()!=null)
 		{
-			for(int i=0;i<beanlist.size();i++)
-			{
-				obj_list.add(beanlist.get(i));
-			}
-		}*/
+			Products=item.getProducts();
+		}
+		// baseAdapter.notifyDataSetChanged();
+		ListViewUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
+		pulltorefreshscrollview.onRefreshComplete();
+
 	}
 
 	@Override
@@ -449,10 +526,12 @@ public class BuyerStreetFragment extends Fragment {
 			v.setBackgroundResource(R.drawable.tabround_background);
 			int width = (int) getActivity().getResources().getDimension(
 					R.dimen.shop_main_lineheight8_dimen);
-			LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width, width);
-			params.leftMargin = (int) getActivity().getResources().getDimension(R.dimen.shop_main_width3_dimen);
+			LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+					width, width);
+			params.leftMargin = (int) getActivity().getResources()
+					.getDimension(R.dimen.shop_main_width3_dimen);
 			baijia_head_layout.addView(v, params);
-			if (i == value%size) {
+			if (i == value % size) {
 				v.setSelected(true);
 			} else {
 				v.setSelected(false);
@@ -473,8 +552,7 @@ public class BuyerStreetFragment extends Fragment {
 	 * **/
 	void startTimeToViewPager() {
 		stopTimerToViewPager();
-		if(icon_list==null || icon_list.size()<=1)
-		{
+		if (icon_list == null || icon_list.size() <= 1) {
 			return;
 		}
 		timer = new Timer();
@@ -507,7 +585,6 @@ public class BuyerStreetFragment extends Fragment {
 	}
 
 	class CustomPagerAdapter extends PagerAdapter {
-
 		@Override
 		public boolean isViewFromObject(View arg0, Object arg1) {
 
@@ -517,26 +594,25 @@ public class BuyerStreetFragment extends Fragment {
 		@Override
 		public int getCount() {
 
-			if(icon_list.size()<1)
-			{
+			if (Banners.size() < 1) {
 				return 0;
-			}
-		    else if(icon_list.size()==1)
-			{
+			} else if (Banners.size() == 1) {
 				return 1;
-			}else
-			{
+			} else {
 				return Integer.MAX_VALUE;
 			}
 		}
 
 		@Override
 		public Object instantiateItem(ViewGroup container, int position) {
-			ImageStringBean imageStringBean = icon_list.get(position%icon_list.size());
+			BannersInfoBean bean = Banners.get(position % Banners.size());
+			String addpic = bean.getPic();
+
+			ImageStringBean imageStringBean = icon_list.get(position
+					% icon_list.size());
 			View v = imageStringBean.getIv();
-			if(v.getParent()!=null)
-			{
-				((ViewGroup)v.getParent()).removeView(v);
+			if (v.getParent() != null) {
+				((ViewGroup) v.getParent()).removeView(v);
 			}
 			container.addView(v, 0, new ViewGroup.LayoutParams(
 					ViewGroup.LayoutParams.MATCH_PARENT,
@@ -548,7 +624,8 @@ public class BuyerStreetFragment extends Fragment {
 
 		@Override
 		public void destroyItem(ViewGroup container, int position, Object object) {
-			ImageStringBean imageStringBean = icon_list.get(position%icon_list.size());
+			ImageStringBean imageStringBean = icon_list.get(position
+					% icon_list.size());
 			View v = imageStringBean.getIv();
 			container.removeView(v);
 			// super.destroyItem(container, position, object);
@@ -568,5 +645,55 @@ public class BuyerStreetFragment extends Fragment {
 			scroller.setmDuration(value);
 		} catch (Exception e) {
 		}
+	}
+
+	/***
+	 * 添加关注人头像
+	 * ***/
+	void addIconView(
+			LinearLayout approvebuyerdetails_attentionvalue_linerlayout,
+			ProductsInfoBean productsInfoBean) {
+		int parentwidth = approvebuyerdetails_attentionvalue_linerlayout
+				.getWidth();
+		approvebuyerdetails_attentionvalue_linerlayout.removeAllViews();
+		int size = 0;
+		LikeUsersInfoBean likeUsersInfoBean = productsInfoBean.getLikeUsers();
+		if (likeUsersInfoBean == null || likeUsersInfoBean.getUsers() == null
+				|| likeUsersInfoBean.getUsers().size() < 1) {
+			return;
+		}
+		List<UsersInfoBean> userlist = likeUsersInfoBean.getUsers();
+		if (userlist.size() > maxcount) {
+			size = maxcount;
+		} else {
+			size = userlist.size();
+		}
+		for (int i = 0; i < size; i++) {
+			LinearLayout ll = new LinearLayout(getActivity());
+			ll.setTag(userlist.get(i));
+			RoundImageView civ = new RoundImageView(getActivity());
+			ll.addView(civ, new LinearLayout.LayoutParams(
+					LinearLayout.LayoutParams.WRAP_CONTENT,
+					LinearLayout.LayoutParams.WRAP_CONTENT));
+			if (i == maxcount - 1) {
+				civ.setImageResource(R.drawable.test003);
+			} else {
+				String url=userlist.get(i).getLogo();
+				civ.setTag(url);
+				initPic(url, civ,R.drawable.test002);
+			}
+			int childWidth = (parentwidth) / maxcount;
+			LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+					childWidth, childWidth);
+			params.leftMargin = 2;
+			approvebuyerdetails_attentionvalue_linerlayout.addView(ll, params);
+		}
+	}
+
+	/****
+	 * 加载图片
+	 * */
+	void initPic(final String url, final ImageView iv, final int image) {
+		MyApplication.getInstance().getImageLoader().displayImage(url, iv, MyApplication.getInstance().getDisplayImageOptions());
 	}
 }
