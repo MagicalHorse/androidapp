@@ -27,6 +27,7 @@ import com.shenma.yueba.baijia.modle.BrandDetailInfoBean;
 import com.shenma.yueba.baijia.modle.BuyerIndexInfoBean;
 import com.shenma.yueba.baijia.modle.CityListRequestBean;
 import com.shenma.yueba.baijia.modle.ProvinceCityListBeanRequest;
+import com.shenma.yueba.baijia.modle.RequestProductListInfoBean;
 import com.shenma.yueba.baijia.modle.RequestUploadProductInfoBean;
 import com.shenma.yueba.baijia.modle.ResponseUploadProductInfoBean;
 import com.shenma.yueba.baijia.modle.UserInfo;
@@ -522,7 +523,7 @@ public class HttpControl {
 		Map<String, String> map=new HashMap<String, String>();
 		map.put(Constants.PAGE, Integer.toString(page));
 		map.put(Constants.PAGESIZE, Integer.toString(pagesize));
-		BasehttpSend(map, context, HttpConstants.METHOD_PRODUCTMANAGER_HOMELIST, httpCallBack, BaseRequest.class, false, false);
+		BasehttpSend(map, context, HttpConstants.METHOD_PRODUCTMANAGER_HOMELIST, httpCallBack, RequestProductListInfoBean.class, false, false);
 	}
 	
 	
@@ -878,23 +879,17 @@ public class HttpControl {
 			public void onSuccess(ResponseInfo<String> responseInfo) {
 
 				if (httpCallBack != null) {
-					try {
-						BaseRequest bean = BaseGsonUtils.getJsonToObject(classzz,responseInfo.result);
-						if (bean == null) {
-							httpCallBack.http_Fails(0,"数据解析异常");
+					BaseRequest bean = BaseGsonUtils.getJsonToObject(classzz,responseInfo.result);
+					if (bean == null) {
+						httpCallBack.http_Fails(0,"数据解析异常");
 
-						}else if(bean.getStatusCode() != 200)
-						{
-							httpCallBack.http_Fails(bean.getStatusCode(), bean.getMessage());
-						}
-						else {
-							httpCallBack.http_Success(bean);
-						}
-					} catch (Exception e) {
-						e.printStackTrace();
-						httpCallBack.http_Fails(0, "数据不存在");
+					}else if(bean.getStatusCode() != 200)
+					{
+						httpCallBack.http_Fails(bean.getStatusCode(), bean.getMessage());
 					}
-
+					else {
+						httpCallBack.http_Success(bean);
+					}
 				}
 				progressDialog.cancel();
 			}
