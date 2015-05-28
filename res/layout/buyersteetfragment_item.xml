@@ -15,25 +15,18 @@
             android:layout_height="60dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            />
-        
-       <!--  <com.shenma.yueba.view.imageshow.CustomImageView
-            android:id="@+id/baijia_tab1_item_icon_imageview"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:scaleType="fitCenter"
-            zzy:src="@drawable/test002"
-            zzy:type="circle" /> -->
+            android:src="@drawable/default_pic" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/shop_main_lineheight8_dimen"
             android:layout_toRightOf="@id/baijia_tab1_item_icon_imageview"
             android:orientation="vertical" >
 
             <TextView
+                android:layout_margin="0dp"
+                android:padding="0dp"
                 android:id="@+id/baijia_tab1_item_productname_textview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -42,24 +35,37 @@
                 android:text="北京物美" />
 
             <RelativeLayout
+                android:layout_margin="3dp"
+                android:padding="0dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:weightSum="1" >
 
+                <ImageView
+                    android:id="@+id/baijia_tab1_item_productaddress_imageview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/address"
+                    />
+
                 <TextView
+                    android:padding="0dp"
                     android:id="@+id/baijia_tab1_item_productaddress_textview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/shop_main_width2_dimen"
                     android:layout_toLeftOf="@+id/baijia_tab1_item_time_textview"
-                    android:gravity="top"
+                    android:layout_toRightOf="@id/baijia_tab1_item_productaddress_imageview"
+                    android:gravity="top|left"
                     android:text="清河店" />
 
                 <TextView
                     android:id="@+id/baijia_tab1_item_time_textview"
-                    android:layout_width="50dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
+                    android:layout_marginLeft="@dimen/shop_main_width15_dimen"
                     android:text="5分钟" />
             </RelativeLayout>
         </LinearLayout>
@@ -69,50 +75,46 @@
         android:id="@+id/baijia_tab1_item_productcontent_imageview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scaleType="fitXY"
-        android:src="@drawable/icon11" />
+        android:scaleType="fitXY"/>
 
     <TextView
-        android:layout_marginTop="@dimen/shop_main_width5_dimen"
         android:id="@+id/buyersteetfragmeng_item_desc_textview"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        />
-    <RelativeLayout 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
+        android:layout_marginTop="@dimen/shop_main_width5_dimen" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
         <TextView
-            android:layout_centerVertical="true"
             android:id="@+id/buyersteetfragmeng_item_price_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/red"
-            />
-        
-        <Button
-            android:background="@color/color_lightgrey"
             android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
+            android:textColor="@color/red" />
+
+        <Button
             android:id="@+id/buyersteetfragmeng_item_share_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="分享"
-            />
-        
-        <Button
-            android:background="@color/color_lightgrey"
-            android:layout_marginRight="@dimen/shop_main_width5_dimen"
-            android:layout_toLeftOf="@id/buyersteetfragmeng_item_share_button"
+            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:background="@color/color_lightgrey"
+            android:text="分享" />
+
+        <Button
             android:id="@+id/buyersteetfragmeng_item_siliao_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="私聊"
-            />
-        
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/shop_main_width5_dimen"
+            android:layout_toLeftOf="@id/buyersteetfragmeng_item_share_button"
+            android:background="@color/color_lightgrey"
+            android:text="私聊" />
     </RelativeLayout>
+
     <include
         android:id="@+id/approvebuyerdetails_attention_linerlayout"
         layout="@layout/attentionpeople_layout" />

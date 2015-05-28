@@ -19,6 +19,7 @@
             android:id="@+id/pulltorefreshscrollview"
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
+            ss
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -27,15 +28,14 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" 
-                    android:minHeight="100dp">
+                    android:layout_height="wrap_content"
+                    android:minHeight="100dp" >
 
                     <android.support.v4.view.ViewPager
                         android:id="@+id/baijia_head_viewpager"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" 
-                        android:minHeight="100dp"
-                        />
+                        android:layout_height="match_parent"
+                        android:minHeight="100dp" />
 
                     <LinearLayout
                         android:id="@+id/baijia_head_layout"
@@ -51,13 +51,19 @@
                     android:id="@+id/buyersteet_newtextview"
                     style="@style/text_title_style"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="@dimen/shop_main_width5_dimen"
+                    android:layout_marginRight="@dimen/shop_main_width5_dimen"
                     android:text="最新上新" />
+
+                <View style="@style/style_horizontal_line" />
 
                 <ListView
                     android:id="@+id/baijia_contact_listview"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/shop_main_width5_dimen"
+                    android:layout_marginRight="@dimen/shop_main_width5_dimen" />
             </LinearLayout>
         </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
 

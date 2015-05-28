@@ -27,6 +27,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -53,6 +54,7 @@ import com.shenma.yueba.baijia.modle.ProductPicInfoBean;
 import com.shenma.yueba.baijia.modle.ProductsInfoBean;
 import com.shenma.yueba.baijia.modle.RequestProductListInfoBean;
 import com.shenma.yueba.baijia.modle.UsersInfoBean;
+import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.ListViewUtils;
@@ -84,16 +86,20 @@ public class BuyerStreetFragment extends Fragment {
 	// 每页显示的条数
 	int pagesize = 10;
 	int maxcount = 8;
+	//是否显示进度条
+	boolean ishow=false;
 	List<BannersInfoBean> Banners = new ArrayList<BannersInfoBean>();
 	// 商品信息列表
 	List<ProductsInfoBean> Products = new ArrayList<ProductsInfoBean>();
 	BitmapUtils bitmapUtils;
-
+    
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		this.inflater = inflater;
 		if (v == null) {
+			ishow=true;
 			v = inflater.inflate(R.layout.buyersteetfragment_layout, null);
 			bitmapUtils = new BitmapUtils(getActivity());
 			initPullView();
@@ -181,6 +187,7 @@ public class BuyerStreetFragment extends Fragment {
 		focus_textview = (TextView) v.findViewById(R.id.focus_textview);
 		showloading_layout_view = (LinearLayout) v
 				.findViewById(R.id.showloading_layout_view);
+		showloading_layout_view.setVisibility(View.GONE);
 		baijia_contact_listview = (ListView) v
 				.findViewById(R.id.baijia_contact_listview);
 		baijia_contact_listview.setAdapter(baseAdapter);
@@ -273,21 +280,23 @@ public class BuyerStreetFragment extends Fragment {
 				convertView = inflater.inflate(
 						R.layout.buyersteetfragment_item, null);
 				holder.v = convertView;
-				holder.customImage = (RoundImageView) v
+				holder.customImage = (RoundImageView) convertView
 						.findViewById(R.id.baijia_tab1_item_icon_imageview);
-				holder.baijia_tab1_item_productname_textview = (TextView) v
+				holder.baijia_tab1_item_productname_textview = (TextView)convertView
 						.findViewById(R.id.baijia_tab1_item_productname_textview);
-				holder.baijia_tab1_item_productaddress_textview = (TextView) v
+				holder.baijia_tab1_item_productaddress_textview = (TextView) convertView
 						.findViewById(R.id.baijia_tab1_item_productaddress_textview);
-				holder.baijia_tab1_item_time_textview = (TextView) v
+				holder.baijia_tab1_item_time_textview = (TextView) convertView
 						.findViewById(R.id.baijia_tab1_item_time_textview);
-				holder.baijia_tab1_item_productcontent_imageview = (ImageView) v
+				holder.baijia_tab1_item_productcontent_imageview = (ImageView) convertView
 						.findViewById(R.id.baijia_tab1_item_productcontent_imageview);
-				holder.buyersteetfragmeng_item_price_textview = (TextView) v
+				holder.buyersteetfragmeng_item_price_textview = (TextView) convertView
 						.findViewById(R.id.buyersteetfragmeng_item_price_textview);
-				holder.approvebuyerdetails_attentionvalue_linerlayout = (LinearLayout) v
+				holder.buyersteetfragmeng_item_desc_textview=(TextView) convertView
+						.findViewById(R.id.buyersteetfragmeng_item_desc_textview);
+				holder.approvebuyerdetails_attentionvalue_linerlayout = (LinearLayout) convertView
 						.findViewById(R.id.approvebuyerdetails_attentionvalue_linerlayout);
-				holder.buyersteetfragmeng_item_siliao_button = (Button) v
+				holder.buyersteetfragmeng_item_siliao_button = (Button) convertView
 						.findViewById(R.id.buyersteetfragmeng_item_siliao_button);
 				//私聊按键
 				holder.buyersteetfragmeng_item_siliao_button
@@ -299,7 +308,7 @@ public class BuyerStreetFragment extends Fragment {
 							}
 						});
 				
-				holder.buyersteetfragmeng_item_share_button = (Button) v
+				holder.buyersteetfragmeng_item_share_button = (Button) convertView
 						.findViewById(R.id.buyersteetfragmeng_item_share_button);
 				//分享按键
 				holder.buyersteetfragmeng_item_share_button
@@ -313,46 +322,101 @@ public class BuyerStreetFragment extends Fragment {
 						});
 
 				convertView.setTag(holder);
+				holder.approvebuyerdetails_attentionvalue_gridview=(GridView)convertView.findViewById(R.id.approvebuyerdetails_attentionvalue_gridview);
 			} else {
 				holder = (Holder) convertView.getTag();
 
 			}
-			ProductsInfoBean productsInfoBean = Products.get(position);
-			holder.buyersteetfragmeng_item_siliao_button
-					.setTag(productsInfoBean);
-			holder.buyersteetfragmeng_item_share_button
-					.setTag(productsInfoBean);
-
-			holder.baijia_tab1_item_productname_textview
-					.setText(productsInfoBean.getBuyerName());
-			holder.baijia_tab1_item_productaddress_textview
-					.setText(productsInfoBean.getBuyerAddress());
-			holder.buyersteetfragmeng_item_price_textview.setText(Double
-					.toString(productsInfoBean.getPrice()));
-			String url=productsInfoBean.getBuyerLogo()+"640x0.jpg";
-			holder.customImage.setTag(productsInfoBean.getBuyerLogo());
-			initPic(productsInfoBean.getBuyerLogo(), holder.customImage,R.drawable.test002);
-			addIconView(holder.approvebuyerdetails_attentionvalue_linerlayout,
-					productsInfoBean);
-			ProductPicInfoBean productPicInfoBean = productsInfoBean
-					.getProductPic();
-			String picturd_src = productPicInfoBean.getName();
-			holder.baijia_tab1_item_productname_textview.setText("");
+			
+			initValue(holder, Products.get(position));
 			return convertView;
 		}
 
 	};
 
-	void setImageView(String url, Bitmap bitmap) {
-		View v = baijia_contact_listview.findViewWithTag(url);
-		if (v != null && v instanceof CustomImageView) {
-			if (bitmap == null) {
-				BitmapDrawable drawable = (BitmapDrawable) getActivity()
-						.getResources().getDrawable(R.drawable.test002);
-				bitmap = drawable.getBitmap();
+	/****
+	 * 加载数据
+	 * **/
+	
+	void initValue(Holder holder,ProductsInfoBean productsInfoBean)
+	{
+		holder.buyersteetfragmeng_item_siliao_button
+				.setTag(productsInfoBean);
+		holder.buyersteetfragmeng_item_share_button
+				.setTag(productsInfoBean);
+
+		holder.baijia_tab1_item_productname_textview
+				.setText(productsInfoBean.getBuyerName());
+		holder.baijia_tab1_item_productaddress_textview
+				.setText(productsInfoBean.getBuyerAddress());
+		holder.buyersteetfragmeng_item_price_textview.setText("￥"+Double
+				.toString(productsInfoBean.getPrice()));
+		String url=productsInfoBean.getBuyerLogo()+"640x0.jpg";
+		holder.customImage.setTag(productsInfoBean.getBuyerLogo());
+		holder.customImage.setImageResource(R.drawable.default_pic);
+		initPic(productsInfoBean.getBuyerLogo(), holder.customImage,R.drawable.test002);
+		addIconView(holder.approvebuyerdetails_attentionvalue_linerlayout,
+				productsInfoBean);
+		ProductPicInfoBean productPicInfoBean = productsInfoBean.getProductPic();
+		String picturd_src = productPicInfoBean.getName();
+		
+		holder.buyersteetfragmeng_item_desc_textview.setText(productsInfoBean.getProductName());
+		//holder.baijia_tab1_item_productcontent_imageview.setImageResource(R.drawable.default_pic);
+		holder.baijia_tab1_item_productcontent_imageview.setTag(productPicInfoBean);
+		
+		initPic(productPicInfoBean.getName(), holder.baijia_tab1_item_productcontent_imageview, R.drawable.default_pic);
+		//ProductName
+		FontManager.changeFonts(getActivity(), holder.baijia_tab1_item_productname_textview,holder.baijia_tab1_item_productaddress_textview,holder.baijia_tab1_item_time_textview,holder.buyersteetfragmeng_item_price_textview,holder.buyersteetfragmeng_item_desc_textview);
+		LikeUsersInfoBean userinfo=productsInfoBean.getLikeUsers();
+		if(userinfo!=null && userinfo.getUsers()!=null && userinfo.getUsers().size()>0)
+		{
+			int showcount=maxcount;
+			int size=userinfo.getUsers().size();
+			if(size<maxcount)
+			{
+				showcount=size;
 			}
-			((CustomImageView) v).setSrc(getActivity(), bitmap, 0);
+			holder.approvebuyerdetails_attentionvalue_gridview.setAdapter(new CustomIconAdapter(userinfo.getUsers()));
 		}
+		
+	}
+	
+
+	class CustomIconAdapter extends BaseAdapter
+	{
+		List<UsersInfoBean> bean=null;
+		CustomIconAdapter(List<UsersInfoBean> bean)
+		{
+			this.bean=bean;
+		}
+		@Override
+		public int getCount() {
+			// TODO Auto-generated method stub
+			return bean.size();
+		}
+
+		@Override
+		public Object getItem(int position) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public long getItemId(int position) {
+			// TODO Auto-generated method stub
+			return 0;
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			// TODO Auto-generated method stub
+			UsersInfoBean usersInfoBean=bean.get(position);
+			RoundImageView riv=new RoundImageView(getActivity());
+			riv.setImageResource(R.drawable.default_pic);
+			initPic(usersInfoBean.getLogo(), riv, R.drawable.default_pic);
+			return riv;
+		}
+		
 	}
 
 	class Holder {
@@ -362,7 +426,9 @@ public class BuyerStreetFragment extends Fragment {
 				,
 				baijia_tab1_item_productaddress_textview// 地址
 				, baijia_tab1_item_time_textview// 时间
-				, buyersteetfragmeng_item_price_textview;// 价格
+				, buyersteetfragmeng_item_price_textview,
+				buyersteetfragmeng_item_desc_textview//描述
+				;// 价格
 		// 商品描述
 		ImageView baijia_tab1_item_productcontent_imageview;
 		// 私聊 与 分享按钮
@@ -370,6 +436,8 @@ public class BuyerStreetFragment extends Fragment {
 				buyersteetfragmeng_item_share_button;
 		// 关注人列表
 		LinearLayout approvebuyerdetails_attentionvalue_linerlayout;
+		GridView approvebuyerdetails_attentionvalue_gridview;
+		
 	}
 
 	/******
@@ -400,8 +468,7 @@ public class BuyerStreetFragment extends Fragment {
 	 *            int 0 刷新 1 加载
 	 * ***/
 	void sendRequestData(final int type) {
-		httpContril.getProduceHomeListData(currpage, pagesize,
-				new HttpCallBackInterface() {
+		httpContril.getProduceHomeListData(currpage, pagesize,new HttpCallBackInterface() {
 
 					@Override
 					public void http_Success(Object obj) {
@@ -439,13 +506,14 @@ public class BuyerStreetFragment extends Fragment {
 						MyApplication.getInstance().showMessage(getActivity(),
 								msg);
 					}
-				}, getActivity());
+				}, getActivity(),ishow,true);
 	}
 
 	/***
 	 * 加载数据
 	 * **/
 	void addData(HomeProductListInfoBean data) {
+		ishow=false;
 		showloading_layout_view.setVisibility(View.GONE);
 		// addProduceInfoData(data.getProducts());
 		ProductListInfoBean item = data.getItems();
@@ -462,6 +530,7 @@ public class BuyerStreetFragment extends Fragment {
 	 * 刷新viewpager数据
 	 * ***/
 	void falshData(HomeProductListInfoBean data) {
+		ishow=false;
 		showloading_layout_view.setVisibility(View.GONE);
 		currid = -1;
 		ProductListInfoBean item = data.getItems();
@@ -680,6 +749,7 @@ public class BuyerStreetFragment extends Fragment {
 			} else {
 				String url=userlist.get(i).getLogo();
 				civ.setTag(url);
+				civ.setImageResource(R.drawable.default_pic);
 				initPic(url, civ,R.drawable.test002);
 			}
 			int childWidth = (parentwidth) / maxcount;

@@ -3,7 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
-    android:padding="@dimen/margin_left_and_right" >
+    android:padding="@dimen/margin_left_and_right" 
+    android:orientation="horizontal"
+    >
 
     <TextView
         android:id="@+id/approvebuyerdetails_attention_textview"
@@ -13,6 +15,12 @@
         android:gravity="center"
         android:hint="558" />
 
+    <GridView 
+        android:id="@+id/approvebuyerdetails_attentionvalue_gridview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/shop_main_width5_dimen"
+        />
     <LinearLayout
         android:id="@+id/approvebuyerdetails_attentionvalue_linerlayout"
         android:layout_width="match_parent"
