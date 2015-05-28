@@ -9,14 +9,23 @@
         android:layout_width="match_parent"
         android:layout_height="80dp" >
 
-        <com.shenma.yueba.view.imageshow.CustomImageView
+        <com.shenma.yueba.view.RoundImageView
+            android:id="@+id/baijia_tab1_item_icon_imageview"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            />
+        
+       <!--  <com.shenma.yueba.view.imageshow.CustomImageView
             android:id="@+id/baijia_tab1_item_icon_imageview"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:scaleType="fitCenter"
-            zzy:type="circle"/>
+            zzy:src="@drawable/test002"
+            zzy:type="circle" /> -->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -33,16 +42,16 @@
                 android:text="北京物美" />
 
             <RelativeLayout
-                android:layout_weight="1"
-                android:weightSum="1"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" >
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:weightSum="1" >
 
                 <TextView
                     android:id="@+id/baijia_tab1_item_productaddress_textview"
-                    android:layout_toLeftOf="@+id/baijia_tab1_item_time_textview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_toLeftOf="@+id/baijia_tab1_item_time_textview"
                     android:gravity="top"
                     android:text="清河店" />
 
@@ -55,12 +64,57 @@
             </RelativeLayout>
         </LinearLayout>
     </RelativeLayout>
+
     <ImageView
         android:id="@+id/baijia_tab1_item_productcontent_imageview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/icon11"
         android:scaleType="fitXY"
+        android:src="@drawable/icon11" />
+
+    <TextView
+        android:layout_marginTop="@dimen/shop_main_width5_dimen"
+        android:id="@+id/buyersteetfragmeng_item_desc_textview"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
         />
+    <RelativeLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:layout_centerVertical="true"
+            android:id="@+id/buyersteetfragmeng_item_price_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/red"
+            />
+        
+        <Button
+            android:background="@color/color_lightgrey"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:id="@+id/buyersteetfragmeng_item_share_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="分享"
+            />
+        
+        <Button
+            android:background="@color/color_lightgrey"
+            android:layout_marginRight="@dimen/shop_main_width5_dimen"
+            android:layout_toLeftOf="@id/buyersteetfragmeng_item_share_button"
+            android:layout_centerVertical="true"
+            android:id="@+id/buyersteetfragmeng_item_siliao_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="私聊"
+            />
+        
+    </RelativeLayout>
+    <include
+        android:id="@+id/approvebuyerdetails_attention_linerlayout"
+        layout="@layout/attentionpeople_layout" />
 
 </LinearLayout>

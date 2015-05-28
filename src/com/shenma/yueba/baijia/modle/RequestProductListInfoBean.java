@@ -8,16 +8,14 @@ import java.io.Serializable;
  * 程序的简单说明   请求主页商品列表信息
  */
 
-public class RequestProductListInfoBean implements Serializable{
-	ProductListInfoBean data=new ProductListInfoBean();
+public class RequestProductListInfoBean extends BaseRequest{
+	HomeProductListInfoBean data=new HomeProductListInfoBean();
 
-	public ProductListInfoBean getData() {
+	public HomeProductListInfoBean getData() {
 		return data;
 	}
 
-	public void setData(ProductListInfoBean data) {
+	public void setData(HomeProductListInfoBean data) {
 		this.data = data;
 	}
-	
-	
 }
