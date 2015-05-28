@@ -47,6 +47,8 @@ public class MyApplication extends Application {
 	private BitmapUtils bitmapUtils;
 	public BitmapDisplayConfig bigPicDisplayConfig;
 	
+	public float kuanggaobi =  (float) 1.0;//相册截图的宽高比
+	
 	private Map<String, Integer> mFaceMap = new LinkedHashMap<String, Integer>();
 	private static DBHelper dbHelper;//数据库帮助类
 	/**

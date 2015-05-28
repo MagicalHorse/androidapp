@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.FindPasswordActivity;
+import com.shenma.yueba.baijia.activity.MainActivityForBaiJia;
 import com.shenma.yueba.baijia.modle.UserRequestBean;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
@@ -118,7 +119,7 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
 									UserRequestBean bean = (UserRequestBean) obj;
 									httpControl.setLoginInfo(getActivity(), bean);
 									Intent intent = new Intent(getActivity(),
-											MainActivityForYangJia.class);
+											MainActivityForBaiJia.class);
 									intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 									startActivity(intent);
 									getActivity().finish();

@@ -151,10 +151,9 @@ public class UserConfigActivity extends BaseActivityWithTopView {
 				break;
 			case R.id.user_config_icon_include:
 				showBottomDialog();
-				Intent intent2 = new Intent(UserConfigActivity.this,
-						PublishProductsActivity.class);
-				startActivity(intent2);
-				
+//				Intent intent2 = new Intent(UserConfigActivity.this,
+//						PublishProductsActivity.class);
+//				startActivity(intent2);
 				break;
 			case R.id.user_config_collect_include:
 				Intent intent3 = new Intent(UserConfigActivity.this,
