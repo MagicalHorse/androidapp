@@ -429,7 +429,7 @@ public class ToolsUtil {
 			Log.w("ImageWarn", "图片高度为空！");
 			return "";
 		}else{
-			return sb.append(url).append("_").append(with).append("x").append(height).toString();
+			return sb.append(url).append("_").append(with).append("x").append(height).toString()+".jpg";
 		}
 	}
 }
