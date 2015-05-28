@@ -138,7 +138,7 @@ public class HttpConstants {
 	/**
 	 * 获取主页商品列表
 	 */
-	public static String METHOD_PRODUCTMANAGER_HOMELIST = PRODUCT + "HomeList";
+	public static String METHOD_PRODUCTMANAGER_HOMELIST = PRODUCT + "Index";
 	/**
 	 * 获取商品被喜欢的用户列表
 	 */
@@ -166,18 +166,10 @@ public class HttpConstants {
 	
 	
 	/**
-	 * 获取买手在线商品列表（买手）
+	 * 商品管理列表
 	 */
-	public static String METHOD_PRODUCTMANAGER_ONLINEPRODUCTS = PRODUCT + "OnLineProducts";
-	/**
-	 * 获取买手即将下线商品列表（买手）
-	 */
-	public static String METHOD_PRODUCTMANAGER_WILLOFFLINE = PRODUCT + "SoonDownProducts";
-	/**
-	 * 获取买手已经下线商品列表（买手）
-	 */
-	public static String METHOD_PRODUCTMANAGER_HASOFFLINE = PRODUCT + "DownLineProducts";
-
+	public static String METHOD_PRODUCTLIST = PRODUCT+"GetBuyerProductList";
+	
 	
 	/**
 	 * 商品上线（买手）
