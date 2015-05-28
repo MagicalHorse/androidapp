@@ -962,6 +962,7 @@ public class HttpControl {
 				}
 			}
 		};
+		
 		//启动线程进行数据请求
 		new Thread()
 		{
