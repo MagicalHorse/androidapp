@@ -119,7 +119,7 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
 									UserRequestBean bean = (UserRequestBean) obj;
 									httpControl.setLoginInfo(getActivity(), bean);
 									Intent intent = new Intent(getActivity(),
-											MainActivityForBaiJia.class);
+											MainActivityForYangJia.class);
 									intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 									startActivity(intent);
 									getActivity().finish();

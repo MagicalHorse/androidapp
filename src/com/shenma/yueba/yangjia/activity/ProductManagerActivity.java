@@ -54,8 +54,6 @@ public class ProductManagerActivity extends BaseFragmentActivity implements
 		super.onCreate(arg0);
 	}
 
-	
-
 	private void initView() {
 
 		tv_top_left = (TextView) findViewById(R.id.tv_top_left);
@@ -122,6 +120,13 @@ public class ProductManagerActivity extends BaseFragmentActivity implements
 			 */
 			public void onPageSelected(int arg0) {
 				setCursorAndText(arg0,cursorImageList,titleTextList);
+				if(arg0 == 0){//全部在线商品
+					productManagerFragmentForOnLine.getData(arg0, ProductManagerActivity.this);
+				}else if(arg0 == 1){//即将下线商品
+					productManagerFragmentForOnLine2.getData(arg0, ProductManagerActivity.this);
+				}else if(arg0 == 2){//已经下线
+					productManagerFragmentForOnLine3.getData(arg0, ProductManagerActivity.this);
+				}
 			}
 
 			@Override

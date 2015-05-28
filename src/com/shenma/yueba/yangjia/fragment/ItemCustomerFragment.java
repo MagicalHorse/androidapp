@@ -123,6 +123,7 @@ public class ItemCustomerFragment extends BaseFragment{
 			
 			@Override
 			public void http_Fails(int error, String msg) {
+				rlv.onRefreshComplete();
 				Toast.makeText(getActivity(), msg, 1000).show();
 			}
 		}, getActivity());

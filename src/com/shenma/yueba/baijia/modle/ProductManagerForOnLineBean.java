@@ -1,47 +1,62 @@
 package com.shenma.yueba.baijia.modle;
 
 public class ProductManagerForOnLineBean {
-	private String productImage;//商品图片
-	private String productName;//商品名称
-	private String date;//日期
-	private String introduce;//介绍
-	private String productCode;//商品货号
-	private String price;//价格
-	public String getProductImage() {
-		return productImage;
+	private String Pic;//商品图片
+	private String ProductName;//商品名称
+	private String ProductId;//商品编号
+	private String BrandName;//品牌名
+	private String BrandId;//品牌ID
+	private String ExpireTime;//下架时间
+	private String StoreItemNo;//货号
+	private String Price;//价格
+
+	public String getPic() {
+		return Pic;
 	}
-	public void setProductImage(String productImage) {
-		this.productImage = productImage;
+	public void setPic(String pic) {
+		Pic = pic;
 	}
 	public String getProductName() {
-		return productName;
+		return ProductName;
 	}
 	public void setProductName(String productName) {
-		this.productName = productName;
+		ProductName = productName;
 	}
-	public String getDate() {
-		return date;
+	public String getProductId() {
+		return ProductId;
 	}
-	public void setDate(String date) {
-		this.date = date;
+	public void setProductId(String productId) {
+		ProductId = productId;
 	}
-	public String getIntroduce() {
-		return introduce;
+	public String getBrandName() {
+		return BrandName;
 	}
-	public void setIntroduce(String introduce) {
-		this.introduce = introduce;
+	public void setBrandName(String brandName) {
+		BrandName = brandName;
 	}
-	public String getProductCode() {
-		return productCode;
+	public String getBrandId() {
+		return BrandId;
 	}
-	public void setProductCode(String productCode) {
-		this.productCode = productCode;
+	public void setBrandId(String brandId) {
+		BrandId = brandId;
+	}
+	public String getExpireTime() {
+		return ExpireTime;
+	}
+	public void setExpireTime(String expireTime) {
+		ExpireTime = expireTime;
+	}
+	public String getStoreItemNo() {
+		return StoreItemNo;
+	}
+	public void setStoreItemNo(String storeItemNo) {
+		StoreItemNo = storeItemNo;
 	}
 	public String getPrice() {
-		return price;
+		return Price;
 	}
 	public void setPrice(String price) {
-		this.price = price;
+		Price = price;
 	}
 	
 	
