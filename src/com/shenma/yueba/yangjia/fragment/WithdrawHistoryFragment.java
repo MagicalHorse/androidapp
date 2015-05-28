@@ -93,17 +93,17 @@ public class WithdrawHistoryFragment extends BaseFragment {
 		switch (index) {
 		case 0:// 在线
 			if (mList.size() == 0) {
-				getProductListForOnLine(index,ctx);
+				//getProductListForOnLine(index,ctx);
 			}
 			break;
 		case 1:// 即将下线
 			if (mList.size() == 0) {
-				getProductListForWillOffLine(index);
+				//getProductListForWillOffLine(index);
 			}
 			break;
 		case 2:// 已经下线
 			if (mList.size() == 0) {
-				getProductListForHasOffLine(index);
+				//getProductListForHasOffLine(index);
 			}
 			break;
 		default:
@@ -111,71 +111,5 @@ public class WithdrawHistoryFragment extends BaseFragment {
 		}
 	}
 
-	/**
-	 * 获取在线商品
-	 */
-	private void getProductListForOnLine(int page,Context ctx) {
-		HttpControl httpControl = new HttpControl();
-		httpControl.getBuyerProductListForOnLine(page + "", Constants.PageSize,
-				new HttpCallBackInterface() {
-					@Override
-					public void http_Success(Object obj) {
-						BuyerProductManagerListBean bean = (BuyerProductManagerListBean)obj;
-						bean.getItems();
-						Toast.makeText(getActivity(),"在线成功", 1000).show();
-					}
-
-					@Override
-					public void http_Fails(int error, String msg) {
-						Toast.makeText(getActivity(),"在线失败", 1000).show();
-
-					}
-				}, ctx, true, true);
-
-	}
-
-	/**
-	 * 获取即将下线商品
-	 */
-	private void getProductListForWillOffLine(int page) {
-		HttpControl httpControl = new HttpControl();
-		httpControl.getBuyerProductListForWillOffLine(page + "",
-				Constants.PageSize, new HttpCallBackInterface() {
-					@Override
-					public void http_Success(Object obj) {
-						Toast.makeText(getActivity(),"即将下线成功", 1000).show();
-
-					}
-
-					@Override
-					public void http_Fails(int error, String msg) {
-						Toast.makeText(getActivity(),"即将下线失败", 1000).show();
-
-					}
-				}, getActivity(), true, true);
-
-	}
-
-	/**
-	 * 获取已经下线商品
-	 */
-	private void getProductListForHasOffLine(int page) {
-		HttpControl httpControl = new HttpControl();
-		httpControl.getBuyerProductListForHasOffLine(page + "",
-				Constants.PageSize, new HttpCallBackInterface() {
-					@Override
-					public void http_Success(Object obj) {
-						Toast.makeText(getActivity(),"已经下线成功", 1000).show();
-
-					}
-
-					@Override
-					public void http_Fails(int error, String msg) {
-						Toast.makeText(getActivity(),"已经下线失败", 1000).show();
-
-					}
-				}, getActivity(), true, true);
-
-	}
 
 }

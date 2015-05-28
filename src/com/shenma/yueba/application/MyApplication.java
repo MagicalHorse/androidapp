@@ -7,16 +7,23 @@ import java.util.List;
 import java.util.Map;
 
 import roboguice.RoboGuice;
-
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Typeface;
 import android.graphics.Bitmap.CompressFormat;
+import android.graphics.Typeface;
+import android.os.StrictMode;
 import android.widget.Toast;
 
+import com.alibaba.sdk.android.oss.OSSService;
+import com.alibaba.sdk.android.oss.OSSServiceProvider;
+import com.alibaba.sdk.android.oss.model.AccessControlList;
+import com.alibaba.sdk.android.oss.model.ClientConfiguration;
+import com.alibaba.sdk.android.oss.model.TokenGenerator;
+import com.alibaba.sdk.android.oss.util.OSSToolKit;
 import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.bitmap.BitmapCommonUtils;
 import com.lidroid.xutils.bitmap.BitmapDisplayConfig;
@@ -46,25 +53,29 @@ public class MyApplication extends Application {
 	private static MyApplication instance;
 	private BitmapUtils bitmapUtils;
 	public BitmapDisplayConfig bigPicDisplayConfig;
-	
-	public float kuanggaobi =  (float) 1.0;//相册截图的宽高比
-	
+
+	public float kuanggaobi = (float) 1.0;// 相册截图的宽高比
+
 	private Map<String, Integer> mFaceMap = new LinkedHashMap<String, Integer>();
-	private static DBHelper dbHelper;//数据库帮助类
+	private static DBHelper dbHelper;// 数据库帮助类
 	/**
 	 * /** 初始化图片加载类MyApplication123
 	 */
 	private ImageLoader ivL;
 	private DisplayImageOptions options;
-	
+
 	private String text;
 	private String ddddddd;
 	private String cccc;
 	private DisplayImageOptions optionsForRound;
-    private UserRequestBean userRequestBean;
+	private UserRequestBean userRequestBean;
 	private Typeface tf;
 
-	
+	static final String accessKey = "***********"; // 测试代码没有考虑AK/SK的安全性
+	static final String screctKey = "***********";
+
+	public static OSSService ossService = OSSServiceProvider.getService();
+
 	@Override
 	public void onCreate() {
 		super.onCreate();
@@ -73,9 +84,43 @@ public class MyApplication extends Application {
 		initImageLoader(getApplicationContext());
 		initDisplayImageOptions();
 		initRoundDisplayImageOptions();
-        initFaceMap();
-        dbHelper = RoboGuice.getBaseApplicationInjector(this).getInstance(
+		initFaceMap();
+		dbHelper = RoboGuice.getBaseApplicationInjector(this).getInstance(
 				DBHelper.class);
+		initAliOSS();
+	}
+
+	@SuppressLint("NewApi")
+	private void initAliOSS() {
+		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+				.permitAll().build();
+		StrictMode.setThreadPolicy(policy);
+		// 初始化设置
+		ossService.setApplicationContext(this.getApplicationContext());
+		ossService.setGlobalDefaultTokenGenerator(new TokenGenerator() { // 设置全局默认加签器
+					@Override
+					public String generateToken(String httpMethod, String md5,
+							String type, String date, String ossHeaders,
+							String resource) {
+
+						String content = httpMethod + "\n" + md5 + "\n" + type
+								+ "\n" + date + "\n" + ossHeaders + resource;
+
+						return OSSToolKit.generateToken(accessKey, screctKey,
+								content);
+					}
+				});
+		ossService.setGlobalDefaultHostId("oss-cn-hangzhou.aliyuncs.com");
+		ossService
+				.setCustomStandardTimeWithEpochSec(System.currentTimeMillis() / 1000);
+		ossService.setGlobalDefaultACL(AccessControlList.PUBLIC_READ); // 默认为private
+
+		ClientConfiguration conf = new ClientConfiguration();
+		conf.setConnectTimeout(15 * 1000); // 设置全局网络连接超时时间，默认30s
+		conf.setSocketTimeout(15 * 1000); // 设置全局socket超时时间，默认30s
+		conf.setMaxConnections(50); // 设置全局最大并发网络链接数, 默认50
+		ossService.setClientConfiguration(conf);
+
 	}
 
 	public static MyApplication getInstance() {
@@ -84,21 +129,19 @@ public class MyApplication extends Application {
 		}
 		return instance;
 	}
-	
-	public Typeface getTypeface(){
-		if(tf == null){
-//			tf = Typeface.createFromAsset(this.getAssets(),
-//					"fonts/youyuan.ttf");
-//			tf = Typeface.createFromAsset(this.getAssets(),
-//					"fonts/dongqing.otf");
-			tf = Typeface.createFromAsset(this.getAssets(),
-					"fonts/hanyi.ttf");
+
+	public Typeface getTypeface() {
+		if (tf == null) {
+			// tf = Typeface.createFromAsset(this.getAssets(),
+			// "fonts/youyuan.ttf");
+			// tf = Typeface.createFromAsset(this.getAssets(),
+			// "fonts/dongqing.otf");
+			tf = Typeface.createFromAsset(this.getAssets(), "fonts/hanyi.ttf");
 			return tf;
-		}else {
+		} else {
 			return tf;
 		}
 	}
-	
 
 	/**
 	 * 将acitivity加入到堆栈
@@ -111,7 +154,6 @@ public class MyApplication extends Application {
 		}
 	}
 
-	
 	/**
 	 * 移除某个activity
 	 * 
@@ -256,50 +298,47 @@ public class MyApplication extends Application {
 				.imageScaleType(ImageScaleType.EXACTLY)
 				.bitmapConfig(Bitmap.Config.RGB_565).build();
 	}
-	
+
 	/******
 	 * 显示提示信息
-	 * @param Context context
-	 * @param String msg 提示的消息
+	 * 
+	 * @param Context
+	 *            context
+	 * @param String
+	 *            msg 提示的消息
 	 * ***/
-	public void showMessage(Context context,String msg)
-	{
+	public void showMessage(Context context, String msg) {
 		Toast.makeText(context, msg, 1000).show();
 	}
-	
+
 	/*****
 	 * 判断用户是否已经登录
 	 * ***/
-	public boolean isUserLogin(Activity activity)
-	{
-		boolean status=SharedUtil.getBooleanPerfernece(this.getApplicationContext(), SharedUtil.user_loginstatus);
-		if(status)
-		{
+	public boolean isUserLogin(Activity activity) {
+		boolean status = SharedUtil.getBooleanPerfernece(
+				this.getApplicationContext(), SharedUtil.user_loginstatus);
+		if (status) {
 			return true;
-		}else
-		{
+		} else {
 			showMessage(activity, "请先登录");
-			Intent intent=new Intent(activity,LoginAndRegisterActivity.class);
+			Intent intent = new Intent(activity, LoginAndRegisterActivity.class);
 			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(intent);
 			return false;
 		}
 	}
-	
+
 	private void initScreenWithAndHeight() {
 		int width = ToolsUtil.getDisplayHeight(getApplicationContext());
 		Constants.SCREENHEITH = width;
 	}
 
-	
-	
-	
-	
 	public Map<String, Integer> getFaceMap() {
 		if (!mFaceMap.isEmpty())
 			return mFaceMap;
 		return null;
 	}
+
 	/**
 	 * 初始化表情
 	 */
@@ -390,7 +429,5 @@ public class MyApplication extends Application {
 		mFaceMap.put("[恶心]", R.drawable.biaoqing083);
 		mFaceMap.put("[鼓掌]", R.drawable.biaoqing084);
 	}
-	
-	
-	
+
 }

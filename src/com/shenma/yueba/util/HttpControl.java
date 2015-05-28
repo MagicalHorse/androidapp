@@ -34,6 +34,7 @@ import com.shenma.yueba.baijia.modle.UserInfo;
 import com.shenma.yueba.baijia.modle.UserRequestBean;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.constants.HttpConstants;
+import com.shenma.yueba.yangjia.modle.BuyerProductManagerListBack;
 import com.shenma.yueba.yangjia.modle.BuyerProductManagerListBean;
 import com.shenma.yueba.yangjia.modle.ContactsAddressRequestBean;
 import com.shenma.yueba.yangjia.modle.ContactsAddressRequestListBean;
@@ -385,41 +386,16 @@ public class HttpControl {
 	 * @param Id  int
 	 * @return void
 	 * **/
-	public void getBuyerProductListForOnLine(String page,String pageSize,final HttpCallBackInterface httpCallBack,Context context,boolean refresh,boolean canCancle) {
+	public void getBuyerProductListForOnLine(String page,String pageSize,int status,final HttpCallBackInterface httpCallBack,Context context,boolean refresh,boolean canCancle) {
 		Map<String, String> map=new HashMap<String, String>();
          map.put(Constants.PAGE, page);
 		 map.put(Constants.PAGESIZE, pageSize);
-		BasehttpSend(map, context, HttpConstants.METHOD_PRODUCTMANAGER_ONLINEPRODUCTS, httpCallBack, BuyerProductManagerListBean.class, refresh,canCancle);
+		 map.put(Constants.STATUS, status+"");
+		 BasehttpSend(map, context, HttpConstants.METHOD_PRODUCTLIST, httpCallBack, BuyerProductManagerListBack.class, refresh,canCancle);
 	}
 	
 	
-	/**
-	 *   获取买手即将下线的商品列表（买手）
-	 * @param httpCallBack HttpCallBackInterface 回调接口
-	 * @param context  Context
-	 * @param Id  int
-	 * @return void
-	 * **/
-	public void getBuyerProductListForWillOffLine(String page,String pageSize,final HttpCallBackInterface httpCallBack,Context context,boolean refresh,boolean canCancle) {
-		Map<String, String> map=new HashMap<String, String>();
-		map.put(Constants.PAGE, page);
-		map.put(Constants.PAGESIZE, pageSize);
-		BasehttpSend(map, context, HttpConstants.METHOD_PRODUCTMANAGER_WILLOFFLINE, httpCallBack, BuyerProductManagerListBean.class, refresh,canCancle);
-	}
 	
-	/**
-	 *   获取买手已下线的商品列表（买手）
-	 * @param httpCallBack HttpCallBackInterface 回调接口
-	 * @param context  Context
-	 * @param Id  int
-	 * @return void
-	 * **/
-	public void getBuyerProductListForHasOffLine(String page,String pageSize,final HttpCallBackInterface httpCallBack,Context context,boolean refresh,boolean canCancle) {
-		Map<String, String> map=new HashMap<String, String>();
-		map.put(Constants.PAGE, page);
-		map.put(Constants.PAGESIZE, pageSize);
-		BasehttpSend(map, context, HttpConstants.METHOD_PRODUCTMANAGER_HASOFFLINE, httpCallBack, BuyerProductManagerListBean.class, refresh,canCancle);
-	}
 	
 	/**
 	 *   上线商品（买手）

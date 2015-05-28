@@ -27,7 +27,7 @@ public class ProductManagerFragmentForOnLineAdapter extends BaseAdapterWithUtil 
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return 10;
+		return mList.size();
 	}
 
 	@Override
@@ -105,6 +105,11 @@ public class ProductManagerFragmentForOnLineAdapter extends BaseAdapterWithUtil 
 		} else {
 			holder = (Holder) convertView.getTag();
 		}
+		
+		bitmapUtils.display(holder.iv_product,mList.get(position).getPic());
+		
+		
+		
 		return convertView;
 	}
 
