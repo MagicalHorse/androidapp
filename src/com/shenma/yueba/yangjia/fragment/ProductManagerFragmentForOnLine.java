@@ -51,13 +51,7 @@ public class ProductManagerFragmentForOnLine extends BaseFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		if (type == 0) {// 在线
-			Log.i("productstatus", type + "-------");
-		} else if (type == 1) {// 即将下线
-			Log.i("productstatus", type + "-------");
-		} else if (type == 2) {// 已经下线
-			Log.i("productstatus", type + "-------");
-		}
+		Log.i("fragment111", "oncreate");
 	}
 
 	@Override
@@ -80,7 +74,7 @@ public class ProductManagerFragmentForOnLine extends BaseFragment {
 					.findViewById(R.id.pull_refresh_list);
 			pull_refresh_list.setMode(Mode.BOTH);
 			adapter = new ProductManagerFragmentForOnLineAdapter(getActivity(),
-					mList, 0);
+					mList, type);
 			pull_refresh_list.setAdapter(adapter);
 			pull_refresh_list.setOnRefreshListener(new OnRefreshListener2() {
 
@@ -147,6 +141,9 @@ public class ProductManagerFragmentForOnLine extends BaseFragment {
 							mList.clear();
 							mList.addAll(bean.getData().getItems());
 						} else {
+							if(bean.getData().getItems().size()==0){
+								Toast.makeText(getActivity(), "没有更多数据了...", 1000).show();							
+							}
 							mList.addAll(bean.getData().getItems());
 						}
 						adapter.notifyDataSetChanged();
@@ -158,7 +155,7 @@ public class ProductManagerFragmentForOnLine extends BaseFragment {
 						Toast.makeText(getActivity(), msg, 1000).show();
 
 					}
-				}, ctx, true, true);
+				}, ctx, isRefresh, true);
 
 	}
 

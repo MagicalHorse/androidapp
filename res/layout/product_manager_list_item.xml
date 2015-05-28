@@ -16,8 +16,8 @@
 
         <ImageView
             android:id="@+id/iv_product"
-            android:layout_width="60dip"
-            android:layout_height="60dip"
+            android:layout_width="70dip"
+            android:layout_height="70dip"
             android:layout_centerVertical="true"
             android:scaleType="fitXY"
             android:src="@drawable/default_pic" />
@@ -45,6 +45,7 @@
         <TextView
             android:id="@+id/tv_description"
             android:layout_width="wrap_content"
+            android:layout_marginTop="3dip"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@id/tv_brand_name"
             android:layout_below="@id/tv_brand_name"
@@ -53,19 +54,20 @@
             android:ellipsize="end"
             android:lineSpacingExtra="1dip"
             android:maxLines="2"
-            android:text=",这是一双好鞋，穿起来舒服这是一双好鞋，穿起来舒服这是一双好鞋，穿起来舒服"
+            android:minLines="2"
+            android:text="@null"
             android:textColor="@color/text_gray_color"
             android:textSize="10sp" />
 
         <TextView
+            android:layout_alignBottom="@id/iv_product"
             android:id="@+id/tv_size"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@id/tv_brand_name"
-            android:layout_below="@id/tv_description"
             android:text="货号：34size"
             android:textColor="@color/text_gray_color"
-            android:textSize="10sp" />
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/tv_price"
@@ -75,7 +77,7 @@
             android:layout_toRightOf="@id/tv_size"
             android:gravity="right"
             android:text="￥567.00"
-            android:textSize="10sp" />
+            android:textSize="12sp" />
     </RelativeLayout>
 
     <View style="@style/style_horizontal_line" />
@@ -93,7 +95,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:padding="5dip"
+            android:padding="8dip"
             android:text="@null" />
 
         <View style="@style/style_vertical_line" />
@@ -104,7 +106,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:padding="5dip"
+            android:padding="8dip"
             android:text="@null" />
 
         <View style="@style/style_vertical_line" />
@@ -115,7 +117,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:padding="5dip"
+            android:padding="8dip"
             android:text="@null" />
 
         <View style="@style/style_vertical_line" />
@@ -126,7 +128,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:padding="5dip"
+            android:padding="8dip"
             android:text="@null" />
     </LinearLayout>
 

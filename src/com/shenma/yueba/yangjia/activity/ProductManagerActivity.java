@@ -54,8 +54,6 @@ public class ProductManagerActivity extends BaseFragmentActivity implements
 		super.onCreate(arg0);
 	}
 
-	
-
 	private void initView() {
 
 		tv_top_left = (TextView) findViewById(R.id.tv_top_left);

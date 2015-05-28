@@ -46,6 +46,10 @@ public class ProductManagerFragmentForOnLineAdapter extends BaseAdapterWithUtil
 		return position;
 	}
 
+	public void setFlag(int flag) {
+		this.flag = flag;
+	}
+
 	@SuppressWarnings("null")
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
@@ -68,35 +72,18 @@ public class ProductManagerFragmentForOnLineAdapter extends BaseAdapterWithUtil
 			holder.tv_button1 = (TextView) convertView
 					.findViewById(R.id.tv_button1);
 			holder.tv_button2 = (TextView) convertView
-					.findViewById(R.id.tv_button1);
+					.findViewById(R.id.tv_button2);
 			holder.tv_button3 = (TextView) convertView
 					.findViewById(R.id.tv_button3);
 			holder.tv_button4 = (TextView) convertView
 					.findViewById(R.id.tv_button4);
 
-			if (flag == 0) {// 在线商品
-				holder.tv_button1.setText("下架");
-				holder.tv_button2.setText("复制");
-				holder.tv_button3.setText("分享");
-				holder.tv_button4.setText("修改");
-			} else if (flag == 1) {// 即将下线
-				holder.tv_button1.setText("下架");
-				holder.tv_button2.setText("复制");
-				holder.tv_button3.setText("分享");
-				holder.tv_button4.setText("修改");
-			} else if (flag == 2) {// 下线商品
-				holder.tv_button1.setText("上架");
-				holder.tv_button2.setText("复制");
-				holder.tv_button3.setText("分享");
-				holder.tv_button4.setText("删除");
-			}
 			holder.tv_button1.setOnClickListener(this);
 			holder.tv_button2.setOnClickListener(this);
 			holder.tv_button3.setOnClickListener(this);
 			holder.tv_button4.setOnClickListener(this);
 
-			FontManager.changeFonts(ctx,
-					holder.tv_brand_name, holder.tv_price,
+			FontManager.changeFonts(ctx, holder.tv_brand_name, holder.tv_price,
 					holder.tv_description, holder.tv_size, holder.tv_price,
 					holder.tv_button1, holder.tv_button2, holder.tv_button3,
 					holder.tv_button4);
@@ -105,12 +92,36 @@ public class ProductManagerFragmentForOnLineAdapter extends BaseAdapterWithUtil
 			holder = (Holder) convertView.getTag();
 		}
 
-		bitmapUtils.display(holder.iv_product, mList.get(position).getPic());
-		holder.tv_brand_name.setText(ToolsUtil.nullToString(mList.get(position).getBrandName()));
-		holder.tv_date.setText(ToolsUtil.nullToString(mList.get(position).getExpireTime()));
-		holder.tv_description.setText(ToolsUtil.nullToString(mList.get(position).getProductName()));
-		holder.tv_size.setText(ToolsUtil.nullToString(TextUtils.isEmpty(mList.get(position).getStoreItemNo())?"":"货号："+mList.get(position).getStoreItemNo()));
-		holder.tv_price.setText(ToolsUtil.nullToString(ToolsUtil.nullToString(mList.get(position).getPrice())));
+		if (flag == 0) {// 在线商品
+			holder.tv_button1.setText("下架");
+			holder.tv_button2.setText("复制");
+			holder.tv_button3.setText("分享");
+			holder.tv_button4.setText("修改");
+		} else if (flag == 1) {// 即将下线
+			holder.tv_button1.setText("下架");
+			holder.tv_button2.setText("复制");
+			holder.tv_button3.setText("分享");
+			holder.tv_button4.setText("修改");
+		} else if (flag == 2) {// 下线商品
+			holder.tv_button1.setText("上架");
+			holder.tv_button2.setText("复制");
+			holder.tv_button3.setText("分享");
+			holder.tv_button4.setText("删除");
+		}
+
+		bitmapUtils.display(holder.iv_product,
+				ToolsUtil.getImage(mList.get(position).getPic(), 80, 80));
+		holder.tv_brand_name.setText(ToolsUtil.nullToString(mList.get(position)
+				.getBrandName()));
+		holder.tv_date.setText(ToolsUtil.nullToString(mList.get(position)
+				.getExpireTime()));
+		holder.tv_description.setText(ToolsUtil.nullToString(mList
+				.get(position).getProductName()));
+		holder.tv_size.setText(ToolsUtil.nullToString(TextUtils.isEmpty(mList
+				.get(position).getStoreItemNo()) ? "" : "货号："
+				+ mList.get(position).getStoreItemNo()));
+		holder.tv_price.setText("￥"
+				+ ToolsUtil.nullToString(mList.get(position).getPrice()));
 		return convertView;
 	}
 

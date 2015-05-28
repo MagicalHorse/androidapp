@@ -417,15 +417,15 @@ public class ToolsUtil {
 	 * 传入大小获取网络图片
 	 * @return
 	 */
-	public String getImage(String url,String with,String height){
+	public static String getImage(String url,int with,int height){
 		StringBuffer sb = new StringBuffer();
 		if(TextUtils.isEmpty(url)){
 			Log.w("ImageWarn", "图片url为空！");
 			return "";
-		}else if(TextUtils.isEmpty(with)){
+		}else if(TextUtils.isEmpty(with+"")){
 			Log.w("ImageWarn", "图片宽度为空！");
 			return "";
-		}else if(TextUtils.isEmpty(height)){
+		}else if(TextUtils.isEmpty(height+"")){
 			Log.w("ImageWarn", "图片高度为空！");
 			return "";
 		}else{
