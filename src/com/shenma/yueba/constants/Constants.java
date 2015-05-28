@@ -24,7 +24,7 @@ public class Constants {
 	public static final String TOKEN="token";//随机数
 	public static final String PAGE="Page";//第几页，页码
 	public static final String PAGESIZE="Pagesize";//页size
-	public static final String ID="id";
+	public static final String ID="Id";
 	
 	public static final String ORDER_NO="OrderNo";
 	public static final String OrderProductType="OrderProductType";
@@ -36,7 +36,6 @@ public class Constants {
 	public static final String TYPE = "Type";//品牌编号
 	public static final String REFRESHTS = "Refreshts";//品牌编号
 	public static final String PRODUCTID = "productId";//商品编号
-	
 	
 	
 	
@@ -118,7 +117,6 @@ public class Constants {
 	public static String USER_HEAD_IMAGE = "user_head_image";//用户头像
 	public static String USER_ADDRESS = "user_address";//用户地址
 	public static String USER_MOBILE = "user_mobile";//用户电话
-	public static String ORDERID = "orderid";//订单Id
 	public static String STOREENVIRO = "store_enviro";//店名环境
 	public static String TELEPHONENUM = "telephoneNum";//电话号码
 	public static String LEVEL = "level";//用户id

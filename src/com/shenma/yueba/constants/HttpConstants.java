@@ -177,6 +177,12 @@ public class HttpConstants {
 	 */
 	public static String METHOD_PRODUCTMANAGER_ONLINE = PRODUCT + "OnLine";
 	
+
+	/**
+	 * 删除商品
+	 */
+	public static String METHOD_PRODUCTMANAGER_DELETE = PRODUCT + "Delete";
+	
 	
 	/**
 	 * ---------------------------------买手相关接口----------------------------------

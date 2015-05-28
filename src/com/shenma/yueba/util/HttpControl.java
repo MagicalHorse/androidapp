@@ -404,24 +404,25 @@ public class HttpControl {
 	 * @param Id  int
 	 * @return void
 	 * **/
-	public void setProductOnLine(String id,String pageSize,final HttpCallBackInterface httpCallBack,Context context,boolean refresh,boolean canCancle) {
+	public void setProductOnLineOrOffLine(String id,int status,final HttpCallBackInterface httpCallBack,Context context,boolean refresh,boolean canCancle) {
 		Map<String, String> map=new HashMap<String, String>();
 		map.put(Constants.ID, id);
+		map.put(Constants.STATUS, status+"");
 		BasehttpSend(map, context, HttpConstants.METHOD_PRODUCTMANAGER_ONLINE, httpCallBack, BaseRequest.class, refresh,canCancle);
 	}
 	 
-
+	
 	/**
-	 *   上线商品（买手）
+	 *   删除商品（买手）
 	 * @param httpCallBack HttpCallBackInterface 回调接口
 	 * @param context  Context
 	 * @param Id  int
 	 * @return void
 	 * **/
-	public void setProductOffLine(String id,String pageSize,final HttpCallBackInterface httpCallBack,Context context,boolean refresh,boolean canCancle) {
+	public void deleteProduct(String id,final HttpCallBackInterface httpCallBack,Context context,boolean refresh,boolean canCancle) {
 		Map<String, String> map=new HashMap<String, String>();
 		map.put(Constants.ID, id);
-		BasehttpSend(map, context, HttpConstants.METHOD_PRODUCTMANAGER_OFFLINE, httpCallBack, BaseRequest.class, refresh,canCancle);
+		BasehttpSend(map, context, HttpConstants.METHOD_PRODUCTMANAGER_DELETE, httpCallBack, BaseRequest.class, refresh,canCancle);
 	}
 	
 	

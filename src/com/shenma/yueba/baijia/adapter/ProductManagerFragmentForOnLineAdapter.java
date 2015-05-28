@@ -8,13 +8,16 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.modle.ProductManagerForOnLineBean;
 import com.shenma.yueba.util.FontManager;
+import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.ToolsUtil;
+import com.shenma.yueba.yangjia.fragment.ProductManagerFragmentForOnLine;
 
 public class ProductManagerFragmentForOnLineAdapter extends BaseAdapterWithUtil
 		implements OnClickListener {
@@ -52,7 +55,7 @@ public class ProductManagerFragmentForOnLineAdapter extends BaseAdapterWithUtil
 
 	@SuppressWarnings("null")
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public View getView(final int position, View convertView, ViewGroup parent) {
 		Holder holder;
 		if (convertView == null) {
 			holder = new Holder();
@@ -77,11 +80,30 @@ public class ProductManagerFragmentForOnLineAdapter extends BaseAdapterWithUtil
 					.findViewById(R.id.tv_button3);
 			holder.tv_button4 = (TextView) convertView
 					.findViewById(R.id.tv_button4);
+			holder.tv_button1.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					if (flag == 1 || flag == 2) {// 上架
+						setOnLineOrOffLine(position,mList.get(position).getProductId(), 1);
+					} else if (flag == 0) {// 下架
+						setOnLineOrOffLine(position,mList.get(position).getProductId(), 0);
+					}
+				}
+			});
+			
+			holder.tv_button4.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
 
-			holder.tv_button1.setOnClickListener(this);
-			holder.tv_button2.setOnClickListener(this);
-			holder.tv_button3.setOnClickListener(this);
-			holder.tv_button4.setOnClickListener(this);
+					if (flag == 1 || flag == 2) {// 修改
+						
+					} else if (flag == 0) {// 删除
+						deleteProduct(position, mList.get(position).getProductId());
+					}
+				}
+			});
 
 			FontManager.changeFonts(ctx, holder.tv_brand_name, holder.tv_price,
 					holder.tv_description, holder.tv_size, holder.tv_price,
@@ -147,11 +169,7 @@ public class ProductManagerFragmentForOnLineAdapter extends BaseAdapterWithUtil
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.tv_button1:
-			if (flag == 0 || flag == 1) {// 上架
-
-			} else if (flag == 2) {// 下架
-
-			}
+			
 			break;
 		case R.id.tv_button2:// 复制
 
@@ -174,4 +192,63 @@ public class ProductManagerFragmentForOnLineAdapter extends BaseAdapterWithUtil
 		}
 
 	}
+	
+	
+	
+	
+	/**
+	 * 上线/下线接口
+	 * @param orderId
+	 * @param status
+	 */
+	private void setOnLineOrOffLine(final int position,String id,final int status){
+		HttpControl httpControl = new HttpControl();
+		httpControl.setProductOnLineOrOffLine(id, status, new HttpCallBackInterface() {
+			
+			@Override
+			public void http_Success(Object obj) {
+				Toast.makeText(ctx, status ==1?"上线成功":"下线成功", 1000).show();
+				mList.remove(position);
+				notifyDataSetChanged();
+			}
+			
+			@Override
+			public void http_Fails(int error, String msg) {
+				// TODO Auto-generated method stub
+				
+			}
+		}, ctx, true, true);
+		
+		
+	}
+	
+	
+	
+	/**
+	 * 删除商品接口
+	 * @param orderId
+	 * @param status
+	 */
+	private void deleteProduct(final int position,String id){
+		HttpControl httpControl = new HttpControl();
+		httpControl.deleteProduct(id, new HttpCallBackInterface() {
+			
+			@Override
+			public void http_Success(Object obj) {
+				Toast.makeText(ctx, "删除成功", 1000).show();
+				mList.remove(position);
+				notifyDataSetChanged();
+			}
+			
+			@Override
+			public void http_Fails(int error, String msg) {
+				// TODO Auto-generated method stub
+				
+			}
+		}, ctx, true, true);
+		
+		
+	}
+	
+	
 }

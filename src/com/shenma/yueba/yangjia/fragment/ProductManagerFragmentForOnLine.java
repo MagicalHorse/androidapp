@@ -81,7 +81,7 @@ public class ProductManagerFragmentForOnLine extends BaseFragment {
 				@Override
 				public void onPullDownToRefresh(PullToRefreshBase refreshView) {
 					page = 1;
-					isRefresh = true;
+					isRefresh = false;
 					getProductListForOnLine(isRefresh, page, getActivity(),
 							type);
 				}
@@ -103,6 +103,8 @@ public class ProductManagerFragmentForOnLine extends BaseFragment {
 		return view;
 	}
 
+	
+	
 	public void getData(int index, Context ctx) {
 		switch (index) {
 		case 0:// 在线
