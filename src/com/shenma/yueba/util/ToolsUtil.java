@@ -22,8 +22,10 @@ import android.os.StatFs;
 import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.TextUtils;
 import android.text.style.ImageSpan;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -407,6 +409,27 @@ public class ToolsUtil {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	
+	/**
+	 * 传入大小获取网络图片
+	 * @return
+	 */
+	public String getImage(String url,String with,String height){
+		StringBuffer sb = new StringBuffer();
+		if(TextUtils.isEmpty(url)){
+			Log.w("ImageWarn", "图片url为空！");
+			return "";
+		}else if(TextUtils.isEmpty(with)){
+			Log.w("ImageWarn", "图片宽度为空！");
+			return "";
+		}else if(TextUtils.isEmpty(height)){
+			Log.w("ImageWarn", "图片高度为空！");
+			return "";
+		}else{
+			return sb.append(url).append("_").append(with).append("x").append(height).toString();
 		}
 	}
 }
