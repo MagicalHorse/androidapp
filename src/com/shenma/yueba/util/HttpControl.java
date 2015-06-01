@@ -38,6 +38,7 @@ import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.constants.HttpConstants;
 import com.shenma.yueba.yangjia.modle.AliYunKeyBackBean;
 import com.shenma.yueba.yangjia.modle.BuyerProductManagerListBack;
+import com.shenma.yueba.yangjia.modle.CircleListBackBean;
 import com.shenma.yueba.yangjia.modle.ContactsAddressRequestBean;
 import com.shenma.yueba.yangjia.modle.ContactsAddressRequestListBean;
 import com.shenma.yueba.yangjia.modle.ContactsAddressResponseBean;
@@ -686,6 +687,18 @@ public class HttpControl {
 		BasehttpSend(map, context, HttpConstants.METHOD_ORDER_GETORDERDETAIL, httpCallBack, OrderDetailBackBean.class, true, true);
 	}
 	
+	
+	
+	/**
+	 * 获取圈子列表
+	 * @return void
+	 * **/
+	public void getCircleList(String page,final HttpCallBackInterface httpCallBack,Context context) {
+		Map<String, String> map=new HashMap<String, String>();
+		map.put(Constants.PAGE, page);
+		map.put(Constants.PAGESIZE, Constants.PageSize);
+		BasehttpSend(map, context, HttpConstants.METHOD_CIRCLE_GETBUYERGROUPS, httpCallBack, CircleListBackBean.class, true, true);
+	}
 	
 	
 	
