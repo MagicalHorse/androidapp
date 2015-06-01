@@ -27,6 +27,7 @@ import android.text.TextUtils;
 import android.text.style.ImageSpan;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -476,5 +477,25 @@ public class ToolsUtil {
 			e.printStackTrace();
 		}
 		return "";
+	}
+	
+	/******
+	 * 设置字体样式
+	 *@param context Context
+	 * @param v View 父视图
+	 * @param id int 视图的资源id(为TextVIEW本身及子类)
+	 * @param str String 值  可以传NULL（null 时不负值）
+	 * ****/
+	public static void setFontStyle(Context context,View v,int id,String str)
+	{
+		View textview=v.findViewById(id);
+		if(textview!=null && textview instanceof TextView)
+		{
+			FontManager.changeFonts(context, textview);
+			if(str!=null)
+			{
+				((TextView)textview).setText(str);
+			}
+		}
 	}
 }
