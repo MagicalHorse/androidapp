@@ -264,6 +264,7 @@
             android:name="com.shenma.yueba.yangjia.activity.PublishProductsActivity"
             android:screenOrientation="portrait" >
         </activity>
+        
         <!-- 败家订单确认页面 -->
         <activity
             android:name="com.shenma.yueba.baijia.activity.AffirmOrderActivity"
