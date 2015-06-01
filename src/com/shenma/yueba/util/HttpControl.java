@@ -36,6 +36,7 @@ import com.shenma.yueba.baijia.modle.UserInfo;
 import com.shenma.yueba.baijia.modle.UserRequestBean;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.constants.HttpConstants;
+import com.shenma.yueba.yangjia.modle.AliYunKeyBackBean;
 import com.shenma.yueba.yangjia.modle.BuyerProductManagerListBack;
 import com.shenma.yueba.yangjia.modle.ContactsAddressRequestBean;
 import com.shenma.yueba.yangjia.modle.ContactsAddressRequestListBean;
@@ -125,6 +126,17 @@ public class HttpControl {
 		BasehttpSend(null, context, HttpConstants.METHOD_GETCITYLIST, httpCallBack, CityListRequestBean.class, true, true);
 	}
 	
+	
+	/**
+	 * 获取阿里云key
+	 * 
+	 * @param httpCallBack HttpCallBackInterface 回调接口
+	 * @param context Context
+	 * @return void
+	 * **/
+	public void getALiYunKey(final HttpCallBackInterface httpCallBack,Context context) {
+		BasehttpSend(null, context, HttpConstants.METHOD_GETALIYUNKEY, httpCallBack, AliYunKeyBackBean.class, true, true);
+	}
 	
 	/**
 	 * 获取省市地区所有数据

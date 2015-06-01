@@ -30,6 +30,11 @@ public class HttpConstants {
 	 */
 	public static String METHOD_GETCITYLIST = COMMONURL + "GetCityList";
 	/**
+	/**
+	 * 获取阿里云key
+	 */
+	public static String METHOD_GETALIYUNKEY = COMMONURL + "GetALiYunAccessKey";
+	/**
 	 * 所有城市列表包含省
 	 */
 	public static String METHOD_ALLGETCITYLIST = COMMONURL + "GetAllCity";
