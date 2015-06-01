@@ -35,6 +35,7 @@ import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.yangjia.adapter.CityListAdapter;
 
+
 /**
  * 身份认证
  * 
