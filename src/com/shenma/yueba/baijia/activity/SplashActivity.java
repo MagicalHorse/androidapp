@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.view.Window;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.util.ToolsUtil;
 
 /**
  * 程序刚启动的时候，加载页面
@@ -23,9 +24,10 @@ public class SplashActivity extends BaseActivity {
 		handler.postDelayed(new Runnable() {
 			@Override
 			public void run() {
-				skip(GuideActivity.class, true);
+				skip(LoginAndRegisterActivity.class, true);
 			}
 		}, 2500);
+		ToolsUtil.getKeyAndSignFromNetSetToLocal(mContext);
 //		TaskManagerFactory.createDataTaskManager().addTask(new ITask() {
 //			@Override
 //			public void onTaskNumChanged(int taskNum) {

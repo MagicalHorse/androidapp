@@ -81,7 +81,7 @@ public class ProductManagerFragmentForOnLine extends BaseFragment {
 				@Override
 				public void onPullDownToRefresh(PullToRefreshBase refreshView) {
 					page = 1;
-					isRefresh = false;
+					isRefresh = true;
 					getProductListForOnLine(isRefresh, page, getActivity(),
 							type);
 				}

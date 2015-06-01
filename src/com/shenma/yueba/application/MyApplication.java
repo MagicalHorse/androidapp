@@ -71,8 +71,8 @@ public class MyApplication extends Application {
 	private UserRequestBean userRequestBean;
 	private Typeface tf;
 
-	static final String accessKey = "***********"; // 测试代码没有考虑AK/SK的安全性
-	static final String screctKey = "***********";
+	static final String accessKey = "9mtpdwiywiF5yYwV"; // 测试代码没有考虑AK/SK的安全性
+	static final String screctKey = "IfGB5txNXBv0vv7Z5qERPH1Bp4DLtn";
 
 	public static OSSService ossService = OSSServiceProvider.getService();
 

@@ -59,6 +59,7 @@ public class SalesManagerForBuyerActivity extends BaseFragmentActivity implement
 		setFragmentList();
 		initView();
 		initViewPager();
+		fragmentList.get(0).getData(0,SalesManagerForBuyerActivity.this);
 	}
 
 	private void initView() {
@@ -109,6 +110,7 @@ public class SalesManagerForBuyerActivity extends BaseFragmentActivity implement
 			 * 页面跳转完成后调用的方法
 			 */
 			public void onPageSelected(int arg0) {
+				fragmentList.get(arg0).getData(arg0,SalesManagerForBuyerActivity.this);
 				setCursorAndText(arg0,cursorImageList,titleTextList);
 			}
 

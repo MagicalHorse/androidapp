@@ -135,7 +135,7 @@ public class HttpControl {
 	 * @return void
 	 * **/
 	public void getALiYunKey(final HttpCallBackInterface httpCallBack,Context context) {
-		BasehttpSend(null, context, HttpConstants.METHOD_GETALIYUNKEY, httpCallBack, AliYunKeyBackBean.class, true, true);
+		BasehttpSend(null, context, HttpConstants.METHOD_GETALIYUNKEY, httpCallBack, AliYunKeyBackBean.class, false, false);
 	}
 	
 	/**
@@ -667,13 +667,13 @@ public class HttpControl {
 	 * 获取订单列表
 	 * @return void
 	 * **/
-	public void getOrderList(int Page,String Pagesize,String OrderProductType,String Status,final HttpCallBackInterface httpCallBack,Context context) {
+	public void getOrderList(int Page,String Pagesize,String OrderProductType,String Status,final HttpCallBackInterface httpCallBack,Context context,boolean showDialog) {
 		Map<String, String> map=new HashMap<String, String>();
 		map.put(Constants.PAGE, Integer.toString(Page));
 		map.put(Constants.PAGESIZE, Pagesize);
 		map.put(Constants.OrderProductType, OrderProductType);
 		map.put(Constants.STATUS, Status);
-		BasehttpSend(map, context, HttpConstants.METHOD_ORDER_GETALLORDERFORBUYER, httpCallBack, OrderListBackBean.class, true, true);
+		BasehttpSend(map, context, HttpConstants.METHOD_ORDER_GETALLORDERFORBUYER, httpCallBack, OrderListBackBean.class, showDialog, true);
 	}
 	
 	/**
