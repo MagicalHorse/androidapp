@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.shenma.yueba.R;
-import com.shenma.yueba.baijia.activity.BuyerCertificationActivity;
+import com.shenma.yueba.baijia.activity.BuyerCertificationActivity1;
 import com.shenma.yueba.baijia.activity.MyCollectionActivity;
 import com.shenma.yueba.baijia.activity.UserConfigActivity;
 import com.shenma.yueba.baijia.adapter.CircleFragmentPagerAdapter;
@@ -125,7 +125,7 @@ public class MeFragmentForBaiJia extends BaseFragment implements OnClickListener
 		case R.id.tv_buyer://申请买手或者我是买手
 			break;
 		case R.id.tv_will_yangjia://我要养家
-			Intent buyerCertificaitonIntent = new Intent(getActivity(),BuyerCertificationActivity.class);
+			Intent buyerCertificaitonIntent = new Intent(getActivity(),BuyerCertificationActivity1.class);
 			startActivity(buyerCertificaitonIntent);
 			break;
 		case R.id.tv_my_collection://我的收藏

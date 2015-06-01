@@ -38,7 +38,7 @@ import android.widget.Toast;
  * @author a
  * 
  */
-public class BuyerCertificationActivity extends BaseActivityWithTopView
+public class BuyerCertificationActivity1 extends BaseActivityWithTopView
 		implements OnClickListener {
 
 	private int tag = 0;//0身份证正面，1身份证反面，2证件照片
@@ -108,16 +108,18 @@ public class BuyerCertificationActivity extends BaseActivityWithTopView
 			showBottomDialog();
 			break;
 		case R.id.tv_next://下一步
-			if(TextUtils.isEmpty(pic1)){
-				Toast.makeText(mContext, "身份证正面图片不能为空", 1000).show();
-				return ;
-			}if(TextUtils.isEmpty(pic2)){
-				Toast.makeText(mContext, "身份证反面面图片不能为空", 1000).show();
-				return ;
-			}if(TextUtils.isEmpty(pic3)){
-				Toast.makeText(mContext, "证件图片不能为空", 1000).show();
-				return ;
-			}
+//			if(TextUtils.isEmpty(pic1)){
+//				Toast.makeText(mContext, "身份证正面图片不能为空", 1000).show();
+//				return ;
+//			}if(TextUtils.isEmpty(pic2)){
+//				Toast.makeText(mContext, "身份证反面面图片不能为空", 1000).show();
+//				return ;
+//			}if(TextUtils.isEmpty(pic3)){
+//				Toast.makeText(mContext, "证件图片不能为空", 1000).show();
+//				return ;
+//			}
+			Intent intent = new Intent(mContext,BuyerCertificationActivity2.class);
+			startActivity(intent);
 			break;
 		default:
 			break;
@@ -129,7 +131,7 @@ public class BuyerCertificationActivity extends BaseActivityWithTopView
 	 * 弹出底部菜单(相机和图库)
 	 */
 	protected void showBottomDialog() {
-		ToolsUtil.hideSoftInputKeyBoard(BuyerCertificationActivity.this);
+		ToolsUtil.hideSoftInputKeyBoard(BuyerCertificationActivity1.this);
 		ShowMenu showMenu = new ShowMenu(mContext, findViewById(R.id.parent),
 				R.layout.camera_pic_popwindow);
 		showMenu.createView();
