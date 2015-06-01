@@ -211,6 +211,10 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
+            android:name="com.shenma.yueba.yangjia.activity.HuoKuanManagerActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
             android:name="com.shenma.yueba.yangjia.activity.SalesManagerForSupperManActivity"
             android:screenOrientation="portrait" >
         </activity>

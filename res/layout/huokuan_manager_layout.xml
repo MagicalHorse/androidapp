@@ -25,10 +25,10 @@
                 android:padding="10dip" >
 
                 <TextView
-                    android:id="@+id/tv_earnings_today_title"
+                    android:id="@+id/tv_huokuan_today_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="今日收益（元）"
+                    android:text="今日货款（元）"
                     android:textColor="@color/white"
                     android:textSize="18sp" />
 
@@ -59,10 +59,12 @@
                 android:padding="10dip" >
 
                 <TextView
+                    android:textSize="23sp" 
                     android:id="@+id/tv_total_income_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="总收益（元）" />
+                    android:textColor="@color/text_gray_color"
+                    android:text="总货款（元）" />
 
                 <TextView
                     android:layout_width="fill_parent"
@@ -91,7 +93,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:padding="10dip"
-                    android:text="收入明细"
+                    android:text="货款明细"
                     android:textSize="20sp" />
             </LinearLayout>
             <LinearLayout
@@ -108,7 +110,7 @@
                     android:id="@+id/tv_withdraw_cash_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="可提现收益（元	）"
+                    android:text="可提现货款（元	）"
                     android:textColor="@color/text_gray_color"
                     android:textSize="23sp" />
 

@@ -26,6 +26,14 @@
             <View style="@style/style_horizontal_line" />
 
             <include
+                android:id="@+id/rl_huokuan"
+                layout="@layout/hk_manager_item" />
+
+            <View style="@style/style_horizontal_line" 
+                  android:layout_marginLeft="15dip"
+                />
+            
+              <include
                 android:id="@+id/rl_earnings"
                 layout="@layout/earnings_manager_item" />
 

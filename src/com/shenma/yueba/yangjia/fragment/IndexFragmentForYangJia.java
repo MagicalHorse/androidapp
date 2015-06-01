@@ -40,6 +40,7 @@ import com.shenma.yueba.util.SocicalShareUtil;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.imageshow.ImageShowActivity;
 import com.shenma.yueba.yangjia.activity.EarningManagerActivity;
+import com.shenma.yueba.yangjia.activity.HuoKuanManagerActivity;
 import com.shenma.yueba.yangjia.activity.ProductManagerActivity;
 import com.shenma.yueba.yangjia.activity.SalesManagerForBuyerActivity;
 import com.shenma.yueba.yangjia.activity.SocialManagerActivity;
@@ -69,6 +70,14 @@ public class IndexFragmentForYangJia extends BaseFragment implements
 	private TextView tv_qr_name;
 	
 	private ArrayList<String> urlList = new ArrayList<String>();
+	
+	private TextView tv_huokuan_title;
+	private TextView tv_today_huokuan_title;
+	private TextView tv_today_huokuan_money;
+	private TextView tv_today_huokuan_yuan;
+	private TextView tv_all_huokuan_title;
+	private TextView tv_all_huokuan_money;
+	private TextView tv_all_huokuan_yuan;
 	
 	private TextView tv_earnings_title;
 	private TextView tv_today_earnings_title;
@@ -105,6 +114,7 @@ public class IndexFragmentForYangJia extends BaseFragment implements
 	private TextView tv_all_share_count;
 	
 	private RelativeLayout rl_sales;//销售管理
+	private RelativeLayout rl_huokuan;//货款管理
 	private RelativeLayout rl_earnings;//收益管理
 	private RelativeLayout rl_share;//分享管理---暂无
 	private RelativeLayout rl_products;//商品管理
@@ -162,6 +172,25 @@ public class IndexFragmentForYangJia extends BaseFragment implements
 		iv_qr_code = (ImageView) view.findViewById(R.id.iv_qr_code);
 		iv_qr_code.setOnClickListener(this);
 		
+		tv_huokuan_title = (TextView) view
+				.findViewById(R.id.tv_huokuan_title);
+		tv_today_huokuan_title = (TextView) view
+				.findViewById(R.id.tv_today_huokuan_title);
+		tv_today_huokuan_money = (TextView) view
+				.findViewById(R.id.tv_today_huokuan_money);
+		tv_today_huokuan_yuan = (TextView) view
+				.findViewById(R.id.tv_today_huokuan_yuan);
+		tv_all_huokuan_title = (TextView) view
+				.findViewById(R.id.tv_all_huokuan_title);
+		tv_all_huokuan_money = (TextView) view
+				.findViewById(R.id.tv_all_huokuan);
+		tv_all_huokuan_yuan = (TextView) view
+				.findViewById(R.id.tv_all_huokuan_yuan);
+		
+		
+		
+		
+		
 		tv_earnings_title = (TextView) view
 				.findViewById(R.id.tv_earnings_title);
 		tv_today_earnings_title = (TextView) view
@@ -176,6 +205,8 @@ public class IndexFragmentForYangJia extends BaseFragment implements
 				.findViewById(R.id.tv_all_earnings_money);
 		tv_all_earnings_yuan = (TextView) view
 				.findViewById(R.id.tv_all_earnings_yuan);
+		
+		
 
 		tv_society_title = (TextView) view.findViewById(R.id.tv_society_title);
 		tv_my_society_title = (TextView) view.findViewById(R.id.tv_my_society_title);
@@ -216,6 +247,7 @@ public class IndexFragmentForYangJia extends BaseFragment implements
 		tv_all_share_count = (TextView) view
 				.findViewById(R.id.tv_all_share_count);
 
+		rl_huokuan = (RelativeLayout) view.findViewById(R.id.rl_huokuan);
 		rl_sales = (RelativeLayout) view.findViewById(R.id.rl_sales);
 		rl_earnings = (RelativeLayout) view
 				.findViewById(R.id.rl_earnings);
@@ -229,6 +261,7 @@ public class IndexFragmentForYangJia extends BaseFragment implements
 		rl_share.setOnClickListener(this);
 		rl_products.setOnClickListener(this);
 		rl_social.setOnClickListener(this);
+		rl_huokuan.setOnClickListener(this);
 		
 		FontManager.changeFonts(getActivity(), tv_top_title, tv_earnings_title,
 				tv_today_earnings_title, tv_today_earnings_money,
@@ -241,7 +274,9 @@ public class IndexFragmentForYangJia extends BaseFragment implements
 				tv_sales_title, tv_today_sales_title, tv_today_sales_count,
 				tv_all_sales_title, tv_all_sales_count, tv_share_title,
 				tv_online_share_title, tv_online_share_count,
-				tv_all_share_title, tv_all_share_count);
+				tv_all_share_title, tv_all_share_count,
+				tv_huokuan_title,tv_today_huokuan_title,tv_today_huokuan_money,tv_today_huokuan_yuan,
+				tv_all_huokuan_title,tv_all_huokuan_money,tv_all_huokuan_yuan);
 	}
 
 	private void initFragment() {
@@ -303,6 +338,14 @@ public class IndexFragmentForYangJia extends BaseFragment implements
 			imageShowIntent.putStringArrayListExtra(ImageShowActivity.BIGIMAGES,urlList);
 			imageShowIntent.putExtra(ImageShowActivity.IMAGE_INDEX, 0);
 			getActivity().startActivity(imageShowIntent);
+			break;
+		case R.id.rl_huokuan:// 货款管理
+			
+			Intent intentHuoKuan = new Intent(getActivity(), HuoKuanManagerActivity.class);
+			startActivity(intentHuoKuan);
+			
+//			Intent intentSales = new Intent(getActivity(), SalesManagerForSupperManActivity.class);
+//			startActivity(intentSales);
 			break;
 		case R.id.rl_sales:// 销售管理
 			
