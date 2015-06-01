@@ -220,6 +220,7 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView {
 		}, ApproveBuyerDetailsActivity.this);
 	}
 	
+	
 	/*****
 	 * 设置数据
 	 * ****/
