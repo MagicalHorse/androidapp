@@ -40,7 +40,8 @@ public class SharedUtil {
 	private static final String weixin_friends = "weixin_friends";
 	private static final String headImage = "headImage";// 用户头像
 	private static final String session_id = "session_id";
-	
+	private static final String key = "key";// 阿里云需要的key 
+	private static final String sign = "sign";//阿里云需要的sign
 	
 	public static String getStringPerfernece(Context context,String str) {
 		return getSharedPreferences(context).getString(str, "");
@@ -143,6 +144,10 @@ public class SharedUtil {
 					.putString(user_password, userPassword).commit();
 		}
 	}
+	
+	
+	
+	
 
 	public static boolean getWeiboSina(Context context) {
 		return getSharedPreferences(context).getBoolean(weibo_sina, true);
@@ -247,6 +252,30 @@ public class SharedUtil {
 		}
 	}
 
+	
+	public static String getAliYunKey(Context context) {
+		return getSharedPreferences(context).getString(key, null);
+	}
+
+	public static void setAliYunKey(Context context, String userPassword) {
+		if (userPassword != null) {
+			getSharedPreferences(context).edit()
+					.putString(key, userPassword).commit();
+		}
+	}
+	
+	public static String getAliYunSign(Context context) {
+		return getSharedPreferences(context).getString(sign, null);
+	}
+	
+	public static void setAliYunSign(Context context, String userPassword) {
+		if (userPassword != null) {
+			getSharedPreferences(context).edit()
+			.putString(sign, userPassword).commit();
+		}
+	}
+	
+	
 	// 保存用户信息
 	public static void setUserInfo(Context mContext, UserBean user,
 			String username, String password) {

@@ -15,6 +15,10 @@ public class Constants {
 	public static final String PRIVATEKEY="97CCE28B-345C-4C83-ACE3-C2E349BF53D7";//私钥
 	public static final String PageSize = "10";
 	
+	
+	
+	
+	public static final String KEY="key";//阿里云上传图片需要的key
 	public static final String MOBILE="mobile";//手机号
 	public static final String CODE="code";//验证码
 	public static final String NAME="name";//用户名

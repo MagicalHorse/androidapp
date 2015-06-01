@@ -21,8 +21,13 @@ import android.widget.TextView;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.adapter.GuideAdapter;
+import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.ToolsUtil;
+import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.yangjia.activity.MainActivityForYangJia;
+import com.shenma.yueba.yangjia.modle.AliYunKeyBackBean;
+import com.shenma.yueba.yangjia.modle.AliYunKeyBean;
 
 /***
  * 引导页，如果是程序第一次安装，就会进入此界面
@@ -161,4 +166,43 @@ public class GuideActivity extends BaseActivity  {
 
 	public void onPause() {
 	}
+	
+	
+	
+	
+	
+	/**
+	 * 获取阿里云需要的key和sign
+	 */
+	public void getKeyAndSign(){
+		HttpControl httpControl = new HttpControl();
+		httpControl.getALiYunKey(new HttpCallBackInterface() {
+			@Override
+			public void http_Success(Object obj) {
+				AliYunKeyBackBean bean = (AliYunKeyBackBean) obj;
+				if(bean!=null && bean.getData()!=null){
+					if(bean.getData()!=null){
+						AliYunKeyBean data = bean.getData();
+						String[] keyAndSign = data.getKey().split("||");
+						if(keyAndSign!=null && keyAndSign.length==2){
+							String[] keyArr = keyAndSign[0].split("=");
+							String[] signArr = keyAndSign[1].split("=");
+							if(keyArr!=null && keyArr.length == 2){
+								SharedUtil.setAliYunKey(GuideActivity.this, ToolsUtil.nullToString(keyArr[1]));
+							}
+							if(signArr!=null && signArr.length == 2){
+								SharedUtil.setAliYunSign(GuideActivity.this, ToolsUtil.nullToString(signArr[1]));
+							}
+						}
+					}
+				}
+			}
+			@Override
+			public void http_Fails(int error, String msg) {
+				// TODO Auto-generated method stub
+				
+			}
+		}, GuideActivity.this);
+	}
+	
 }
