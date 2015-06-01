@@ -4,6 +4,9 @@ package com.shenma.yueba.constants;
 import android.os.Environment;
 
 public class Constants {
+	//常量字段
+	public static final int CURRPAGE_VALUE=1;//当前页
+	public static final int PAGESIZE_VALUE=10;//没有显示的个数
 	
 	
 	//网络请求的字段
@@ -37,6 +40,7 @@ public class Constants {
 	public static final String TYPE = "Type";//品牌编号
 	public static final String REFRESHTS = "Refreshts";//品牌编号
 	public static final String PRODUCTID = "productId";//商品编号
+	public static final String PRODUCTI_USERID = "UserId";//当前登录的用户id
 	
 	
 	

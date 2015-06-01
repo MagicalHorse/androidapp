@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:zhy="http://schemas.android.com/apk/res/com.shenma.yueba"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -32,15 +31,15 @@
 
                 <!-- 头像 -->
 
-                <com.shenma.yueba.view.imageshow.CustomImageView
+                <com.shenma.yueba.view.RoundImageView
                     android:id="@+id/approvebuyerdetails_icon_imageview"
                     android:layout_width="@dimen/shop_main_iconwidth80_dimen"
                     android:layout_height="@dimen/shop_main_iconwidth80_dimen"
                     android:layout_centerInParent="true"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="@dimen/shop_main_width3_dimen"
-                    zhy:src="@drawable/user_config_icon"
-                    zhy:type="circle" />
+                    android:src="@drawable/default_pic"
+                    />
                 <!-- 店名 -->
 
                 <TextView
@@ -80,6 +79,7 @@
                         android:text="好评:  " />
 
                     <TextView
+                        android:layout_alignTop="@id/appprovebuyerdetails_text2"
                         android:id="@+id/appprovebuyerdetails_text2value_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -122,6 +122,7 @@
                 android:textColorHint="@color/red" />
 
             <TextView
+                android:id="@+id/approvebuyerdatails_layout_desc1_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -165,6 +166,7 @@
     </ScrollView>
 
     <include
+        android:visibility="gone"
         android:id="@+id/showloading"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -186,6 +188,7 @@
             android:orientation="horizontal" >
 
             <LinearLayout
+                android:id="@+id/approvebuyerdetails_layout_siliao_linerlayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -201,6 +204,7 @@
                     android:src="@drawable/msg" />
 
                 <TextView
+                    android:id="@+id/approvebuyerdetails_layout_siliao_linerlayout_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -210,6 +214,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/approvebuyerdetails_layout_shoucang_linerlayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -225,6 +230,7 @@
                     android:src="@drawable/msg" />
 
                 <TextView
+                    android:id="@+id/approvebuyerdetails_layout_shoucang_linerlayout_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"

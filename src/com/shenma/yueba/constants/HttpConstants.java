@@ -140,9 +140,15 @@ public class HttpConstants {
 	 */
 	public static String METHOD_PRODUCTMANAGER_UNLIKE = PRODUCT + "UnLike";
 	/**
-	 * 获取主页商品列表
+	 * 获取主页商品列表(买手街)
 	 */
 	public static String METHOD_PRODUCTMANAGER_HOMELIST = PRODUCT + "Index";
+	
+	/**
+	 * 我的买手
+	 */
+	public static String METHOD_PRODUCTMANAGER_MYBUYER = PRODUCT + "MyBuyer";
+	
 	/**
 	 * 获取商品被喜欢的用户列表
 	 */
@@ -154,9 +160,9 @@ public class HttpConstants {
 	public static String METHOD_PRODUCTMANAGER_MYBUYERPRODUCTLIST = PRODUCT
 			+ "MyBuyerProductList";
 	/**
-	 * 获取商品被喜欢的用户列表
+	 * 获取商品详情(败家)
 	 */
-	public static String METHOD_PRODUCTMANAGER_DETAIL = PRODUCT + "Detail";
+	public static String METHOD_PRODUCTMANAGER_DETAIL = PRODUCT + "GetProductDetail";
 	
 	/**
 	 * 上传商品信息(买手)
