@@ -208,6 +208,7 @@
             android:screenOrientation="portrait" >
         </activity>
         
+        
         <activity
             android:name="com.shenma.yueba.baijia.activity.LoginAndRegisterActivity"
             android:screenOrientation="portrait" >
