@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-
     <com.handmark.pulltorefresh.library.PullToRefreshListView
         android:id="@+id/pull_refresh_list"
         android:layout_width="fill_parent"
@@ -18,9 +17,20 @@
         android:footerDividersEnabled="false"
         android:headerDividersEnabled="false"
         android:smoothScrollbar="true" />
-<include 
-    android:id="@+id/showloading_layout_view"
-    android:visibility="gone"
-    layout="@layout/showloading_layout"/>
+
+    <TextView
+        android:id="@+id/tv_nodata"
+        android:visibility="gone"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        android:text="神马都没有..."
+        android:textColor="@color/text_gray_color"
+        android:textSize="18sp" />
+
+    <include
+        android:id="@+id/showloading_layout_view"
+        layout="@layout/showloading_layout"
+        android:visibility="gone" />
 
 </RelativeLayout>

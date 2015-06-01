@@ -1,11 +1,14 @@
 package com.shenma.yueba.yangjia.modle;
 
-public class cirlceItemBean {
+public class CirlceItemBean {
 
 	private String Id;
 	private String Name;
 	private String UserCount;
 	private String UpdateTime;
+	private String Logo;
+	
+
 	public String getId() {
 		return Id;
 	}
@@ -29,6 +32,12 @@ public class cirlceItemBean {
 	}
 	public void setUpdateTime(String updateTime) {
 		UpdateTime = updateTime;
+	}
+	public String getLogo() {
+		return Logo;
+	}
+	public void setLogo(String logo) {
+		Logo = logo;
 	}
 	
 	

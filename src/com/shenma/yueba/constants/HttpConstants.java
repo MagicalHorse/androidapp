@@ -60,6 +60,10 @@ public class HttpConstants {
 	 */
 	public static String METHOD_RESETPASSWORD = USERURL + "ResetPassword";
 	/**
+	 * 我关注的人/我的粉丝
+	 */
+	public static String METHOD_GETUSERFAVOITE = USERURL + "GetUserFavoite";
+	/**
 	 * 常见联系人地址
 	 */
 	public static String METHOD_ADDRESSCREATE = ADDRESS + "Create";

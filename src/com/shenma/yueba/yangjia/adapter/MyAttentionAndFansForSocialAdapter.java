@@ -6,18 +6,18 @@ import android.content.Context;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.adapter.BaseAdapterWithUtil;
-import com.shenma.yueba.baijia.modle.MyAttentionAndFansForSocialBean;
 import com.shenma.yueba.view.RoundImageView;
+import com.shenma.yueba.yangjia.modle.AttationAndFansItemBean;
 
 public class MyAttentionAndFansForSocialAdapter extends BaseAdapterWithUtil {
-	private List<MyAttentionAndFansForSocialBean> mList;
+	private List<AttationAndFansItemBean> mList;
 
-	public MyAttentionAndFansForSocialAdapter(Context ctx, List<MyAttentionAndFansForSocialBean> mList) {
+	public MyAttentionAndFansForSocialAdapter(Context ctx, List<AttationAndFansItemBean> mList) {
 		super(ctx);
 		this.mList = mList;
 	}
@@ -25,7 +25,7 @@ public class MyAttentionAndFansForSocialAdapter extends BaseAdapterWithUtil {
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return 10;
+		return mList.size();
 	}
 
 	@Override
@@ -73,6 +73,11 @@ public class MyAttentionAndFansForSocialAdapter extends BaseAdapterWithUtil {
 		} else {
 			holder = (Holder) convertView.getTag();
 		}
+		
+		MyApplication.getInstance().getImageLoader().displayImage(mList.get(position).getUserLogo(), holder.riv_head);
+		holder.tv_attention.setText(mList.get(position).getFavoiteCount());
+//		holder.tv_fans_count.setText(mList.get(position).getFansCount());
+//		holder.tv_attention.setText(mList.get(position).getFavoiteCount());
 		return convertView;
 	}
 
