@@ -5,238 +5,265 @@
     android:layout_height="match_parent"
     android:background="@color/main_bg" >
 
-    <include
-        android:id="@+id/title"
-        layout="@layout/title_for_common" />
-
-    <TextView
-        android:id="@+id/tv_confirm"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="15dip"
-        android:background="@color/white"
-        android:gravity="center"
-        android:padding="15dip"
-        android:text="确认提交"
-        android:textColor="@color/blue"
-        android:textSize="17sp" />
-
-    <View
-        android:id="@+id/view_title"
-        style="@style/style_horizontal_line"
-        android:layout_below="@id/title" />
-
-    <ScrollView
-        android:id="@+id/sv"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/tv_next"
-        android:layout_below="@id/view_title" >
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:orientation="vertical"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dip"
-                android:paddingTop="15dip" >
-
-                <TextView
-                    android:id="@+id/tv_store_info_title"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:text="商城专柜信息"
-                    android:textSize="18sp" />
-
-                <View
-                    style="@style/style_horizontal_line"
-                    android:layout_marginTop="10dip" />
-
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingBottom="3dip"
-                    android:paddingTop="3dip" >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:drawableLeft="@drawable/star"
-                        android:gravity="center_vertical"
-                        android:text="商场名称"
-                        android:textColor="@color/text_gray_color" />
-
-                    <EditText
-                        android:id="@+id/et_store_name"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@null" />
-                </LinearLayout>
-
-                <View style="@style/style_horizontal_line" />
-
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingBottom="3dip"
-                    android:paddingTop="3dip" >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:drawableLeft="@drawable/star"
-                        android:gravity="center_vertical"
-                        android:text="专柜名称"
-                        android:textColor="@color/text_gray_color" />
-
-                    <EditText
-                        android:id="@+id/et_store_name"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@null" />
-                </LinearLayout>
-
-                <View style="@style/style_horizontal_line" />
-
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingBottom="3dip"
-                    android:paddingTop="3dip" >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:drawableLeft="@drawable/star"
-                        android:gravity="center_vertical"
-                        android:text="专柜位置（楼层，区号）"
-                        android:textColor="@color/text_gray_color" />
-
-                    <EditText
-                        android:id="@+id/et_store_name"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@null" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <View style="@style/style_horizontal_line" />
-
-            <View
-                style="@style/style_horizontal_line"
-                android:layout_marginTop="15dip" />
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:orientation="vertical"
-                android:paddingLeft="15dip"
-                android:paddingRight="15dip"
-                android:paddingTop="10dip" >
-
-                <TextView
-                    android:id="@+id/tv_store_info_title"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:text="商品自提点"
-                    android:textSize="18sp" />
-
-                <View
-                    style="@style/style_horizontal_line"
-                    android:layout_marginTop="10dip" />
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/star"
-                    android:drawableRight="@drawable/arrow_right"
-                    android:gravity="center_vertical"
-                    android:paddingBottom="5dip"
-                    android:paddingTop="5dip"
-                    android:text="请选择省份"
-                    android:textColor="@color/text_gray_color" />
-
-                <View style="@style/style_horizontal_line" />
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/star"
-                    android:drawableRight="@drawable/arrow_right"
-                    android:gravity="center_vertical"
-                    android:paddingBottom="5dip"
-                    android:paddingTop="5dip"
-                    android:text="请选择城市"
-                    android:textColor="@color/text_gray_color" />
-
-                <View style="@style/style_horizontal_line" />
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/star"
-                    android:drawableRight="@drawable/arrow_right"
-                    android:gravity="center_vertical"
-                    android:paddingBottom="5dip"
-                    android:paddingTop="5dip"
-                    android:text="请选择区县"
-                    android:textColor="@color/text_gray_color" />
-
-                <View style="@style/style_horizontal_line" />
-
-                <EditText
-                    android:id="@+id/et_street"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dip"
-                    android:layout_marginTop="10dip"
-                    android:background="@drawable/shape_linearlayout10"
-                    android:gravity="top"
-                    android:hint="请填写详细地址(顾客支付后到专柜提货的地址，请务必正确填写，否则会影响收款确认)"
-                    android:lines="3"
-                    android:paddingLeft="5dip"
-                    android:paddingTop="3dip" />
-            </LinearLayout>
-
-            <View style="@style/style_horizontal_line" />
-        </LinearLayout>
-    </ScrollView>
-
     <android.support.v4.widget.DrawerLayout
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
-        <FrameLayout
-            android:id="@+id/content_frame"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent" >
+
+            <include
+                android:id="@+id/title"
+                layout="@layout/title_for_common" />
+
+            <TextView
+                android:id="@+id/tv_confirm"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="15dip"
+                android:background="@color/white"
+                android:gravity="center"
+                android:padding="15dip"
+                android:text="确认提交"
+                android:textColor="@color/blue"
+                android:textSize="17sp" />
+
+            <View
+                android:id="@+id/view_title"
+                style="@style/style_horizontal_line"
+                android:layout_below="@id/title" />
+
+            <ScrollView
+                android:id="@+id/sv"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/tv_next"
+                android:layout_below="@id/view_title" >
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:orientation="vertical"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dip"
+                        android:paddingTop="15dip" >
+
+                        <TextView
+                            android:id="@+id/tv_store_info_title"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:text="商城专柜信息"
+                            android:textSize="18sp" />
+
+                        <View
+                            style="@style/style_horizontal_line"
+                            android:layout_marginTop="10dip" />
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="40dip"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal" >
+
+                            <TextView
+                                android:id="@+id/tv_store_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableLeft="@drawable/star"
+                                android:gravity="center_vertical"
+                                android:text="商场名称"
+                                android:textColor="@color/text_gray_color"
+                                android:textSize="16sp" />
+
+                            <EditText
+                                android:id="@+id/et_store_name"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@null" />
+                        </LinearLayout>
+
+                        <View style="@style/style_horizontal_line" />
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="40dip"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal" >
+
+                            <TextView
+                                android:id="@+id/tv_zhuangui_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableLeft="@drawable/star"
+                                android:gravity="center_vertical"
+                                android:text="专柜名称"
+                                android:textColor="@color/text_gray_color"
+                                android:textSize="16sp" />
+
+                            <EditText
+                                android:id="@+id/et_zhuangui_name"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@null" />
+                        </LinearLayout>
+
+                        <View style="@style/style_horizontal_line" />
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="40dip"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal" >
+
+                            <TextView
+                                android:id="@+id/tv_number_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableLeft="@drawable/star"
+                                android:gravity="center_vertical"
+                                android:text="专柜位置（楼层，区号）"
+                                android:textColor="@color/text_gray_color"
+                                android:textSize="16sp" />
+
+                            <EditText
+                                android:id="@+id/et_number_name"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@null" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View style="@style/style_horizontal_line" />
+
+                    <View
+                        style="@style/style_horizontal_line"
+                        android:layout_marginTop="15dip" />
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:orientation="vertical"
+                        android:paddingLeft="15dip"
+                        android:paddingRight="15dip"
+                        android:paddingTop="10dip" >
+
+                        <TextView
+                            android:id="@+id/tv_self_get_point_title"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:text="商品自提点"
+                            android:textSize="18sp" />
+
+                        <View
+                            style="@style/style_horizontal_line"
+                            android:layout_marginTop="10dip" />
+
+                        <TextView
+                            android:id="@+id/tv_province"
+                            android:layout_width="fill_parent"
+                            android:layout_height="40dip"
+                            android:drawableLeft="@drawable/star"
+                            android:drawableRight="@drawable/arrow_right"
+                            android:gravity="center_vertical"
+                            android:text="请选择省份"
+                            android:textColor="@color/text_gray_color"
+                            android:textSize="16sp" />
+
+                        <View style="@style/style_horizontal_line" />
+
+                        <TextView
+                            android:id="@+id/tv_city"
+                            android:layout_width="fill_parent"
+                            android:layout_height="40dip"
+                            android:drawableLeft="@drawable/star"
+                            android:drawableRight="@drawable/arrow_right"
+                            android:gravity="center_vertical"
+                            android:text="请选择城市"
+                            android:textColor="@color/text_gray_color"
+                            android:textSize="16sp" />
+
+                        <View style="@style/style_horizontal_line" />
+
+                        <TextView
+                            android:id="@+id/tv_county_town"
+                            android:layout_width="fill_parent"
+                            android:layout_height="40dip"
+                            android:drawableLeft="@drawable/star"
+                            android:drawableRight="@drawable/arrow_right"
+                            android:gravity="center_vertical"
+                            android:text="请选择区县"
+                            android:textColor="@color/text_gray_color"
+                            android:textSize="16sp" />
+
+                        <View style="@style/style_horizontal_line" />
+
+                        <EditText
+                            android:id="@+id/et_street"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dip"
+                            android:layout_marginTop="10dip"
+                            android:background="@drawable/shape_linearlayout10"
+                            android:gravity="top"
+                            android:hint="请填写详细地址(顾客支付后到专柜提货的地址，请务必正确填写，否则会影响收款确认)"
+                            android:lines="3"
+                            android:padding="5dip" />
+                    </LinearLayout>
+
+                    <View style="@style/style_horizontal_line" />
+                </LinearLayout>
+            </ScrollView>
+
+            <android.support.v4.widget.DrawerLayout
+                android:id="@+id/drawer_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone" >
+
+                <FrameLayout
+                    android:id="@+id/content_frame"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <RelativeLayout
+                    android:id="@+id/right_drawer"
+                    android:layout_width="220dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="end"
+                    android:background="#111"
+                    android:gravity="center_horizontal" >
+
+                    <ListView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" >
+                    </ListView>
+                </RelativeLayout>
+            </android.support.v4.widget.DrawerLayout>
+        </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/right_drawer"
             android:layout_width="220dp"
             android:layout_height="match_parent"
             android:layout_gravity="end"
-            android:background="#111"
+            android:background="#222222"
             android:gravity="center_horizontal" >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="这是右边栏"
-                android:textColor="@android:color/white"
-                android:textSize="24sp" />
+            <ListView
+                android:id="@+id/lv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+            </ListView>
         </RelativeLayout>
     </android.support.v4.widget.DrawerLayout>
 

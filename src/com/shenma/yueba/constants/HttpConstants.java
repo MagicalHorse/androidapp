@@ -34,6 +34,10 @@ public class HttpConstants {
 	 */
 	public static String METHOD_ALLGETCITYLIST = COMMONURL + "GetAllCity";
 	/**
+	 * 不论省市 只需要传编号，就可以获取到下一级的数据。获取省列表parentId=0
+	 */
+	public static String METHOD_COMMON_GETCITYLISYBYPARENTID = COMMONURL + "GetCityListByParentId";
+	/**
 	 * 注册用户信息
 	 */
 	public static String METHOD_REGISTER = USERURL + "Register";

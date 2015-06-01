@@ -25,6 +25,7 @@ import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.shenma.yueba.baijia.modle.BaseRequest;
 import com.shenma.yueba.baijia.modle.BrandDetailInfoBean;
 import com.shenma.yueba.baijia.modle.BuyerIndexInfoBean;
+import com.shenma.yueba.baijia.modle.CityListBackBean;
 import com.shenma.yueba.baijia.modle.CityListRequestBean;
 import com.shenma.yueba.baijia.modle.ProvinceCityListBeanRequest;
 import com.shenma.yueba.baijia.modle.RequestProductListInfoBean;
@@ -35,7 +36,6 @@ import com.shenma.yueba.baijia.modle.UserRequestBean;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.constants.HttpConstants;
 import com.shenma.yueba.yangjia.modle.BuyerProductManagerListBack;
-import com.shenma.yueba.yangjia.modle.BuyerProductManagerListBean;
 import com.shenma.yueba.yangjia.modle.ContactsAddressRequestBean;
 import com.shenma.yueba.yangjia.modle.ContactsAddressRequestListBean;
 import com.shenma.yueba.yangjia.modle.ContactsAddressResponseBean;
@@ -133,6 +133,19 @@ public class HttpControl {
 	 * **/
 	public void getAllCityList(final HttpCallBackInterface httpCallBack,Context context) {
 		BasehttpSend(null, context, HttpConstants.METHOD_ALLGETCITYLIST, httpCallBack, ProvinceCityListBeanRequest.class, true, true);
+	}
+	
+	
+	/**
+	 * 根据ID获取地区列表
+	 * @param httpCallBack HttpCallBackInterface 回调接口
+	 * @param context Context
+	 * @return void
+	 * **/
+	public void getCityListById(String parentId,final HttpCallBackInterface httpCallBack,Context context) {
+		Map<String, String> map=new HashMap<String, String>();
+		map.put(Constants.PARENTID, parentId);
+		BasehttpSend(map, context, HttpConstants.METHOD_COMMON_GETCITYLISYBYPARENTID, httpCallBack, CityListBackBean.class, true, true);
 	}
 
 	/**
