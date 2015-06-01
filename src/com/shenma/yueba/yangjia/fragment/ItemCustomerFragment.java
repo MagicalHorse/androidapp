@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -28,51 +29,57 @@ import com.shenma.yueba.yangjia.modle.OrderItem;
 import com.shenma.yueba.yangjia.modle.OrderListBackBean;
 
 @SuppressLint("ValidFragment")
-public class ItemCustomerFragment extends BaseFragment{
+public class ItemCustomerFragment extends BaseFragment {
 	private View rootView;// 缓存Fragment view
 	private PullToRefreshListView rlv;
 	private List<OrderItem> mList = new ArrayList<OrderItem>();
 	private SalesManagerForAttestationBuyerAdapter adapter;
-	
-	private  int page = 1;
+	private boolean isRefresh = true;
+	private int page = 1;
 	private int tag = 0;
 	private String orderProductType;
 	private String status;
-	
+
 	@SuppressLint("ValidFragment")
-	public ItemCustomerFragment(int tag){
+	public ItemCustomerFragment(int tag) {
 		this.tag = tag;
 	}
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		if (rootView == null) {
-			rootView = inflater.inflate(R.layout.refresh_listview_without_title_layout,
-					container, false);
-			rlv = (PullToRefreshListView) rootView.findViewById(R.id.pull_refresh_list);
+			rootView = inflater.inflate(
+					R.layout.refresh_listview_without_title_layout, container,
+					false);
+			rlv = (PullToRefreshListView) rootView
+					.findViewById(R.id.pull_refresh_list);
 			rlv.setMode(Mode.BOTH);
 			rlv.setOnRefreshListener(new OnRefreshListener2() {
 
 				@Override
 				public void onPullDownToRefresh(PullToRefreshBase refreshView) {
-					page =1;
-					getData(true);
+					page = 1;
+					isRefresh = true;
+					getDataFromNet(false,getActivity());
 				}
 
 				@Override
 				public void onPullUpToRefresh(PullToRefreshBase refreshView) {
 					page++;
-					getData(false);
+					isRefresh = false;
+					getDataFromNet(false,getActivity());
 				}
 			});
 			rlv.setOnItemClickListener(new OnItemClickListener() {
 				@Override
 				public void onItemClick(AdapterView<?> arg0, View arg1,
 						int arg2, long arg3) {
-					Intent intent = new Intent(getActivity(), OrderDetailActivity.class);
+					Intent intent = new Intent(getActivity(),
+							OrderDetailActivity.class);
 					intent.putExtra("orderId", mList.get(arg2).getOrderNo());
 					startActivity(intent);
-					
+
 				}
 			});
 		}
@@ -81,52 +88,72 @@ public class ItemCustomerFragment extends BaseFragment{
 		if (parent != null) {
 			parent.removeView(rootView);
 		}
-		if(mList.size() == 0){
-			getData(true);
-		}
 		return rootView;
 	}
-	
-	
-	
-	public void getData(final boolean isRefresh){
-		HttpControl hControl=new HttpControl();
-		if(tag == 0){//全部订单
+
+	public void getData(int tag, Context ctx) {
+		this.tag = tag;
+		if (tag == 0) {// 全部订单
 			orderProductType = "";
 			status = "";
-		}else if(tag == 1){//待付款
+			if(mList.size() != 0){
+				return;
+			}
+		} else if (tag == 1) {// 待付款
 			status = "0";
 			orderProductType = "";
-		}else if(tag == 3){//专柜自提
+			if(mList.size() != 0){
+				return;
+			}
+		} else if (tag == 2) {// 专柜自提
 			orderProductType = "4";
-			status ="";
-		}else if(tag == 4){
+			status = "";
+			if(mList.size()!= 0){
+				return;
+			}
+		} else if (tag == 3) {
 			status = "3";
 			orderProductType = "";
+			if(mList.size() != 0){
+				return;
+			}
 		}
-		hControl.getOrderList(page, Constants.PageSize, orderProductType, status, new HttpCallBackInterface() {
-			
-			@Override
-			public void http_Success(Object obj) {
-				rlv.onRefreshComplete();
-				OrderListBackBean bean = (OrderListBackBean) obj;
-				if(isRefresh){
-					mList.clear();
-					mList.addAll(bean.getData().getOrderlist());
-					adapter=new SalesManagerForAttestationBuyerAdapter(getActivity(), mList,0);
-					rlv.setAdapter(adapter);
-				}else{
-					mList.addAll(bean.getData().getOrderlist());
-					adapter.notifyDataSetChanged();
-				}
-			}
-			
-			@Override
-			public void http_Fails(int error, String msg) {
-				rlv.onRefreshComplete();
-				Toast.makeText(getActivity(), msg, 1000).show();
-			}
-		}, getActivity());
+		getDataFromNet(true,ctx);
 	}
 
+	
+	
+	private void getDataFromNet(boolean showDialog,Context ctx){
+		HttpControl hControl = new HttpControl();
+		hControl.getOrderList(page, Constants.PageSize, orderProductType,
+				status, new HttpCallBackInterface() {
+
+					@Override
+					public void http_Success(Object obj) {
+						rlv.onRefreshComplete();
+						OrderListBackBean bean = (OrderListBackBean) obj;
+						if (isRefresh) {
+							mList.clear();
+							mList.addAll(bean.getData().getOrderlist());
+							adapter = new SalesManagerForAttestationBuyerAdapter(
+									getActivity(), mList, 0);
+							rlv.setAdapter(adapter);
+						} else {
+							if(bean.getData().getOrderlist()!=null && bean.getData().getOrderlist().size()>0){
+								mList.addAll(bean.getData().getOrderlist());
+							}else{
+								Toast.makeText(getActivity(), "没有更多数据了...", 1000).show();
+							}
+							
+							adapter.notifyDataSetChanged();
+						}
+					}
+
+					@Override
+					public void http_Fails(int error, String msg) {
+						rlv.onRefreshComplete();
+						Toast.makeText(getActivity(), msg, 1000).show();
+					}
+				}, ctx,showDialog);
+	}
 }

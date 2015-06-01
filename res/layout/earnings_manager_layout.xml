@@ -154,8 +154,9 @@
                     android:textSize="20sp" />
             </LinearLayout>
 
- 
+ <View style="@style/style_horizontal_line" />
         </LinearLayout>
+        
     </ScrollView>
 
 </LinearLayout>

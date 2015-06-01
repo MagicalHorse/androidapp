@@ -11,6 +11,7 @@ public class HttpConstants {
 	private static String ASSISTANT = baseUrl + "Assistant/";// 买手相关的接口
 	private static String BUYER = baseUrl + "Buyer/";// 买手相关的接口
 	private static String Order = baseUrl + "Order/";// 订单相关的接口
+	private static String Circle = baseUrl + "Community/";// 圈子相关的接口
 	
 	
 	
@@ -342,6 +343,13 @@ public class HttpConstants {
 	
 	public static String METHOD_ORDER_GETORDERDETAIL = Order
 			+ "GetOrderDetail";
+	
+	/**
+	 * 社交管理--获取圈子列表
+	 */
+	
+	public static String METHOD_CIRCLE_GETBUYERGROUPS = Circle
+			+ "GetBuyerGroups";
 	
 	
 	

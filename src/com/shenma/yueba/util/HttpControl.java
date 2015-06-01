@@ -38,6 +38,7 @@ import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.constants.HttpConstants;
 import com.shenma.yueba.yangjia.modle.AliYunKeyBackBean;
 import com.shenma.yueba.yangjia.modle.BuyerProductManagerListBack;
+import com.shenma.yueba.yangjia.modle.CircleListBackBean;
 import com.shenma.yueba.yangjia.modle.ContactsAddressRequestBean;
 import com.shenma.yueba.yangjia.modle.ContactsAddressRequestListBean;
 import com.shenma.yueba.yangjia.modle.ContactsAddressResponseBean;
@@ -135,7 +136,7 @@ public class HttpControl {
 	 * @return void
 	 * **/
 	public void getALiYunKey(final HttpCallBackInterface httpCallBack,Context context) {
-		BasehttpSend(null, context, HttpConstants.METHOD_GETALIYUNKEY, httpCallBack, AliYunKeyBackBean.class, true, true);
+		BasehttpSend(null, context, HttpConstants.METHOD_GETALIYUNKEY, httpCallBack, AliYunKeyBackBean.class, false, false);
 	}
 	
 	/**
@@ -667,13 +668,13 @@ public class HttpControl {
 	 * 获取订单列表
 	 * @return void
 	 * **/
-	public void getOrderList(int Page,String Pagesize,String OrderProductType,String Status,final HttpCallBackInterface httpCallBack,Context context) {
+	public void getOrderList(int Page,String Pagesize,String OrderProductType,String Status,final HttpCallBackInterface httpCallBack,Context context,boolean showDialog) {
 		Map<String, String> map=new HashMap<String, String>();
 		map.put(Constants.PAGE, Integer.toString(Page));
 		map.put(Constants.PAGESIZE, Pagesize);
 		map.put(Constants.OrderProductType, OrderProductType);
 		map.put(Constants.STATUS, Status);
-		BasehttpSend(map, context, HttpConstants.METHOD_ORDER_GETALLORDERFORBUYER, httpCallBack, OrderListBackBean.class, true, true);
+		BasehttpSend(map, context, HttpConstants.METHOD_ORDER_GETALLORDERFORBUYER, httpCallBack, OrderListBackBean.class, showDialog, true);
 	}
 	
 	/**
@@ -686,6 +687,18 @@ public class HttpControl {
 		BasehttpSend(map, context, HttpConstants.METHOD_ORDER_GETORDERDETAIL, httpCallBack, OrderDetailBackBean.class, true, true);
 	}
 	
+	
+	
+	/**
+	 * 获取圈子列表
+	 * @return void
+	 * **/
+	public void getCircleList(String page,final HttpCallBackInterface httpCallBack,Context context) {
+		Map<String, String> map=new HashMap<String, String>();
+		map.put(Constants.PAGE, page);
+		map.put(Constants.PAGESIZE, Constants.PageSize);
+		BasehttpSend(map, context, HttpConstants.METHOD_CIRCLE_GETBUYERGROUPS, httpCallBack, CircleListBackBean.class, true, true);
+	}
 	
 	
 	

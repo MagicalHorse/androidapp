@@ -33,6 +33,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.activity.GuideActivity;
+import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
+import com.shenma.yueba.yangjia.modle.AliYunKeyBackBean;
+import com.shenma.yueba.yangjia.modle.AliYunKeyBean;
 
 public class ToolsUtil {
 
@@ -498,4 +502,45 @@ public class ToolsUtil {
 			}
 		}
 	}
+	
+	
+	
+	
+
+	/**
+	 * 获取阿里云需要的key和sign
+	 */
+	public static void getKeyAndSignFromNetSetToLocal(final Context ctx){
+			HttpControl httpControl = new HttpControl();
+			httpControl.getALiYunKey(new HttpCallBackInterface() {
+				@Override
+				public void http_Success(Object obj) {
+					AliYunKeyBackBean bean = (AliYunKeyBackBean) obj;
+					if(bean!=null && bean.getData()!=null){
+							AliYunKeyBean data = bean.getData();
+							if(data!=null && data.getKey()!=null){
+								String[] keyAndSign = data.getKey().split("||");
+								if(keyAndSign!=null && keyAndSign.length==2){
+									String[] keyArr = keyAndSign[0].split("=");
+									String[] signArr = keyAndSign[1].split("=");
+									if(keyArr!=null && keyArr.length == 2){
+										SharedUtil.setAliYunKey(ctx, ToolsUtil.nullToString(keyArr[1]));
+									}
+									if(signArr!=null && signArr.length == 2){
+										SharedUtil.setAliYunSign(ctx, ToolsUtil.nullToString(signArr[1]));
+									}
+							}
+						}else{
+							Toast.makeText(ctx, "阿里云key获取失败", 1000).show();
+						}
+					}
+				}
+				@Override
+				public void http_Fails(int error, String msg) {
+					// TODO Auto-generated method stub
+					
+				}
+			}, ctx);
+		}
+		
 }
