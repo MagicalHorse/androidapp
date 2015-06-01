@@ -19,8 +19,7 @@
             android:id="@+id/pulltorefreshscrollview"
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
-            ss
-
+            
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -32,10 +31,10 @@
                     android:minHeight="100dp" >
 
                     <android.support.v4.view.ViewPager
-                        android:id="@+id/baijia_head_viewpager"
+                        android:id="@+id/baijiasteetfragmnet_layout_head_viewpager"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:minHeight="100dp" />
+                        android:minHeight="100dp"/>
 
                     <LinearLayout
                         android:id="@+id/baijia_head_layout"

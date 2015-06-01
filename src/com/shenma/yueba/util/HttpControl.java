@@ -27,6 +27,7 @@ import com.shenma.yueba.baijia.modle.BrandDetailInfoBean;
 import com.shenma.yueba.baijia.modle.BuyerIndexInfoBean;
 import com.shenma.yueba.baijia.modle.CityListRequestBean;
 import com.shenma.yueba.baijia.modle.ProvinceCityListBeanRequest;
+import com.shenma.yueba.baijia.modle.RequestProductDetailsInfoBean;
 import com.shenma.yueba.baijia.modle.RequestProductListInfoBean;
 import com.shenma.yueba.baijia.modle.RequestUploadProductInfoBean;
 import com.shenma.yueba.baijia.modle.ResponseUploadProductInfoBean;
@@ -489,7 +490,7 @@ public class HttpControl {
 	
 	
 	/**
-	 * 获取主页商品列表
+	 * 获取主页商品列表(首页买手街列表（败家)
 	 * @param httpCallBack  HttpCallBackInterface 回调接口
 	 * @param context  Context
 	 * @param page int 请求页
@@ -502,8 +503,48 @@ public class HttpControl {
 		Map<String, String> map=new HashMap<String, String>();
 		map.put(Constants.PAGE, Integer.toString(page));
 		map.put(Constants.PAGESIZE, Integer.toString(pagesize));
+		String userid=SharedUtil.getStringPerfernece(context, SharedUtil.user_id);
+		if(userid.equals(""))
+		{
+			map.put(Constants.PRODUCTI_USERID,"0");
+		}else
+		{
+			map.put(Constants.PRODUCTI_USERID,userid);
+		}
+		
 		BasehttpSend(map, context, HttpConstants.METHOD_PRODUCTMANAGER_HOMELIST, httpCallBack, RequestProductListInfoBean.class, isshowDialog, isEnableCancell);
 	}
+	
+	
+	/**
+	 * 获取我的买手数据(我的买手（败家)
+	 * @param httpCallBack  HttpCallBackInterface 回调接口
+	 * @param context  Context
+	 * @param page int 请求页
+	 * @param pagesize int 每页显示的条数
+	 * @param isshowDialog boolean 是否显示对话框
+	 * @param isEnableCancell boolean  返回键是否可用
+	 * @return void
+	 * **/
+	public void getMyBuyerListData(int page,int pagesize,final HttpCallBackInterface httpCallBack,Context context,boolean isshowDialog,boolean isEnableCancell) {
+		Map<String, String> map=new HashMap<String, String>();
+		map.put(Constants.PAGE, Integer.toString(page));
+		map.put(Constants.PAGESIZE, Integer.toString(pagesize));
+		/*String userid=SharedUtil.getStringPerfernece(context, SharedUtil.user_id);
+		if(userid.equals(""))
+		{
+			map.put(Constants.PRODUCTI_USERID,"0");
+		}else
+		{
+			map.put(Constants.PRODUCTI_USERID,userid);
+		}
+		*/
+		BasehttpSend(map, context, HttpConstants.METHOD_PRODUCTMANAGER_MYBUYER, httpCallBack, RequestProductListInfoBean.class, isshowDialog, isEnableCancell);
+	}
+	
+	
+	
+	
 	
 	
 	
@@ -544,18 +585,16 @@ public class HttpControl {
 	
 	
 	/**
-	 * 获取商品信息详情
+	 * 获取商品信息详情(获取商品详情(败家))
 	 * @param httpCallBack  HttpCallBackInterface 回调接口
 	 * @param context  Context
 	 * @param ProductId  int商品编号
-     * @param  ReadType  int商品读取操作类型 可为空 1：记录本商品点击数
 	 * @return void
 	 * **/
-	public void getMyBuyerProductDetails(int ProductId,int ReadType,final HttpCallBackInterface httpCallBack,Context context) {
+	public void getMyBuyerProductDetails(int ProductId,final HttpCallBackInterface httpCallBack,Context context) {
 		Map<String, String> map=new HashMap<String, String>();
-		map.put("ProductId", Integer.toString(ProductId));
-		map.put("ReadType", Integer.toString(ReadType));
-		BasehttpSend(map, context, HttpConstants.METHOD_PRODUCTMANAGER_DETAIL, httpCallBack, BaseRequest.class, true, true);
+		map.put("productId", Integer.toString(ProductId));
+		BasehttpSend(map, context, HttpConstants.METHOD_PRODUCTMANAGER_DETAIL, httpCallBack, RequestProductDetailsInfoBean.class, true, true);
 	}
 	
 	

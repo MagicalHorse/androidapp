@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.modle.FragmentBean;
+import com.shenma.yueba.util.FontManager;
 /******
  * @author gyj
  * @date 2015-05-19
@@ -73,13 +74,14 @@ public class IndexFragmentForBaiJia extends Fragment{
 		Fragment theySayFragment=new TheySayFragment();
 		Fragment myBuyerFragment=new MyBuyerFragment();
 		fragment_list.add(new FragmentBean("买手街", -1, buyerStreetFragment));
-		fragment_list.add(new FragmentBean("TA们说", -1, theySayFragment));
+		//fragment_list.add(new FragmentBean("TA们说", -1, theySayFragment));
 		fragment_list.add(new FragmentBean("我的买手", -1, myBuyerFragment));
 		baijia_fragment_tab1_head_linearlayout=(LinearLayout)v.findViewById(R.id.baijia_fragment_tab1_head_linearlayout);
 		for(int i=0;i<fragment_list.size();i++)
 		{
 			RelativeLayout rl=(RelativeLayout)RelativeLayout.inflate(getActivity(), R.layout.tab_line_layout, null);
 			TextView tv=(TextView)rl.findViewById(R.id.tab_line_textview);
+			FontManager.changeFonts(getActivity(), tv);
 			rl.setTag(i);
 			rl.setOnClickListener(new OnClickListener() {
 				
@@ -121,6 +123,7 @@ public class IndexFragmentForBaiJia extends Fragment{
 			
 			@Override
 			public void onPageSelected(int arg0) {
+				currid=arg0;
 				setTextColor(arg0);
 			}
 			

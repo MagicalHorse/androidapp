@@ -21,6 +21,7 @@ import com.shenma.yueba.baijia.fragment.IndexFragmentForBaiJia;
 import com.shenma.yueba.baijia.fragment.MeFragmentForBaiJia;
 import com.shenma.yueba.baijia.fragment.MessageFragment;
 import com.shenma.yueba.baijia.modle.FragmentBean;
+import com.shenma.yueba.util.FontManager;
 
 public class MainActivityForBaiJia extends FragmentActivity {
 FrameLayout baijia_main_framelayout;
@@ -70,6 +71,7 @@ FragmentManager fragmentManager;
 			imageview.setImageResource(fragment_list.get(i).getIcon());
 			TextView tv1=(TextView)ll.findViewById(R.id.tv1);
 			tv1.setText(fragment_list.get(i).getName());
+			FontManager.changeFonts(getApplication(), tv1);
 			LinearLayout.LayoutParams param=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
 			param.weight=1;
 			baijia_main_foot_linearlayout.addView(ll,param);
