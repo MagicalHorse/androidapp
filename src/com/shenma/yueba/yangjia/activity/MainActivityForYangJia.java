@@ -18,19 +18,25 @@ package com.shenma.yueba.yangjia.activity;
 
 import java.util.LinkedList;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
+import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.Window;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.inject.Inject;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.util.FontManager;
@@ -87,6 +93,24 @@ public final class MainActivityForYangJia extends FragmentActivity {
 	 * 初始化组件
 	 */
 	private void initView() {
+		TextView tv_center = (TextView) findViewById(R.id.tv_center);
+		tv_center.setOnTouchListener(new OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				if(event.getAction() == MotionEvent.ACTION_UP){//当手抬起的时候出发事件
+					showDialog();
+				}
+				return true;
+			}
+		});
+		
+		tv_center.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Toast.makeText(MainActivityForYangJia.this, "click", 1000).show();
+			}
+		});
 		// 实例化TabHost对象，得到TabHost
 		mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
 		mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
@@ -125,5 +149,39 @@ private View getTabItemView(int index) {
 }
 
 
+private void showDialog() {
+	final AlertDialog dialog = new AlertDialog.Builder(MainActivityForYangJia.this)
+			.create();
+	dialog.show();
+	Window window = dialog.getWindow();
+	// 设置布局
+	window.setContentView(R.layout.alertdialog);
+	// 设置宽高
+	window.setLayout(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
+	
+	window.setGravity(Gravity.BOTTOM);
+	// 设置弹出的动画效果
+	window.setWindowAnimations(R.style.AnimBottom);
+	// 设置监听
+	Button bt_kxp = (Button) window.findViewById(R.id.bt_kxp);
+	Button bt_publish = (Button) window.findViewById(R.id.bt_publish);
+	bt_kxp.setOnClickListener(new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			// 跳转到开下票的界面
+			dialog.cancel();
+		}
+	});
+	bt_publish.setOnClickListener(new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			// 跳转到到自定义相机
+			dialog.cancel();
+		}
+	});
+	// 因为我们用的是windows的方法，所以不管ok活cancel都要加上“dialog.cancel()”这句话，
+	// 不然有程序崩溃的可能，仅仅是一种可能，但我们还是要排除这一点，对吧？
+	// 用AlertDialog的两个Button，即使监听里什么也不写，点击后也是会吧dialog关掉的，不信的同学可以去试下
+}
 
 }

@@ -1,20 +1,17 @@
 package com.shenma.yueba.baijia.activity;
 
-import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.inputmethodservice.Keyboard.Key;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.DrawerLayout.DrawerListener;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnFocusChangeListener;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -23,16 +20,15 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.modle.ApplyAuthBuyerBean;
+import com.shenma.yueba.baijia.modle.CardBean;
 import com.shenma.yueba.baijia.modle.CityListBackBean;
 import com.shenma.yueba.baijia.modle.CityListItembean;
-import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
-import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.yangjia.adapter.CityListAdapter;
 
 
@@ -66,12 +62,14 @@ public class BuyerCertificationActivity2 extends BaseActivityWithTopView impleme
 	private String town_id;
 	private int tag = 1;//1表示省份，2表示城市，3表示区县
 	private List<CityListItembean> mList = new ArrayList<CityListItembean>();
+	private ApplyAuthBuyerBean bean;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.buyer_certification_layout2);
 		super.onCreate(savedInstanceState);
 		initView();
+		getIntentData();
 		drawer_layout.setDrawerShadow(R.drawable.gray_round_bg, GravityCompat.START);  
 		drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED); //关闭手势滑动
 //		drawer_layout.setDrawerListener(new DrawerListener() {
@@ -111,6 +109,20 @@ public class BuyerCertificationActivity2 extends BaseActivityWithTopView impleme
 //				drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED); //关闭手势滑动
 //			}
 //		});
+	}
+
+	private void getIntentData() {
+		bean = new ApplyAuthBuyerBean();
+		CardBean cardFrontBean = new CardBean();
+		CardBean cardBackBean = new CardBean();
+		CardBean workBackBean = new CardBean();
+		Intent intent = getIntent();
+		cardFrontBean.setKey(intent.getStringExtra("pic1"));
+		cardBackBean.setKey(intent.getStringExtra("pic2"));
+		workBackBean.setKey(intent.getStringExtra("pic3"));
+		bean.setWorkCard(workBackBean);
+		bean.setCardFront(cardFrontBean);
+		bean.setCardBack(cardBackBean);
 	}
 
 	private void initView() {
@@ -156,7 +168,7 @@ public class BuyerCertificationActivity2 extends BaseActivityWithTopView impleme
 		tv_number_title = getView(R.id.tv_number_title);
 		et_number_name = getView(R.id.et_number_name);
 		tv_confirm = getView(R.id.tv_confirm);
-		
+		tv_confirm.setOnClickListener(this);
 		et_street = getView(R.id.et_street);
 		
 		tv_county_town = getView(R.id.tv_county_town);
@@ -242,6 +254,35 @@ public class BuyerCertificationActivity2 extends BaseActivityWithTopView impleme
 			break;
 		case R.id.tv_confirm://提交申请
 			
+			if(TextUtils.isEmpty(et_store_name.getText().toString().trim())){//
+				Toast.makeText(mContext, "请填写商场名称", 1000).show();
+				return ;
+			}
+			if(TextUtils.isEmpty(et_zhuangui_name.getText().toString().trim())){//
+				Toast.makeText(mContext, "请填写专柜名称", 1000).show();
+				return ;
+			}
+			if(TextUtils.isEmpty(et_number_name.getText().toString().trim())){//
+				Toast.makeText(mContext, "请填写专柜位置", 1000).show();
+				return ;
+			}
+			if(TextUtils.isEmpty(province_id)){//
+				Toast.makeText(mContext, "请选择省份", 1000).show();
+				return ;
+			}
+			if(TextUtils.isEmpty(city_id)){//
+				Toast.makeText(mContext, "请选择城市", 1000).show();
+				return ;
+			}
+			if(TextUtils.isEmpty(town_id)){//
+				Toast.makeText(mContext, "请选择区县", 1000).show();
+				return ;
+			}
+			if(TextUtils.isEmpty(et_street.getText().toString().trim())){//
+				Toast.makeText(mContext, "请填写详细地址", 1000).show();
+				return ;
+			}
+			uploadData();
 			break;
 		default:
 			break;
@@ -262,6 +303,38 @@ public class BuyerCertificationActivity2 extends BaseActivityWithTopView impleme
 		return super.onKeyDown(keyCode, event);
 	}
 	
+
+
+
+private void setData(){
+	bean.setStoreName(et_store_name.getText().toString().trim());
+	bean.setSectionName(et_zhuangui_name.getText().toString().trim());
+	bean.setSectionLocate(et_number_name.getText().toString().trim());
+	bean.setAddress(et_street.getText().toString().trim());
+	bean.setProvinceId(province_id);
+	bean.setCityId(city_id);
+	bean.setDistrictId(town_id);
+}
+
+	private void uploadData(){
+		setData();
+		HttpControl httpControl = new HttpControl();
+		httpControl.getAppliyAuthBuyer(bean, new HttpCallBackInterface() {
+			
+			@Override
+			public void http_Success(Object obj) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void http_Fails(int error, String msg) {
+				// TODO Auto-generated method stub
+				
+			}
+		}, BuyerCertificationActivity2.this);
+		
 	}
 
+		 }
 

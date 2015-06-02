@@ -20,7 +20,6 @@ import android.os.Message;
 import com.alibaba.sdk.android.oss.OSSService;
 import com.alibaba.sdk.android.oss.OSSServiceProvider;
 import com.alibaba.sdk.android.oss.callback.SaveCallback;
-import com.alibaba.sdk.android.oss.model.OSSException;
 import com.alibaba.sdk.android.oss.storage.OSSBucket;
 import com.alibaba.sdk.android.oss.storage.OSSFile;
 import com.lidroid.xutils.HttpUtils;
@@ -29,6 +28,7 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
+import com.shenma.yueba.baijia.modle.ApplyAuthBuyerBean;
 import com.shenma.yueba.baijia.modle.BaseRequest;
 import com.shenma.yueba.baijia.modle.BrandDetailInfoBean;
 import com.shenma.yueba.baijia.modle.BuyerIndexInfoBean;
@@ -430,6 +430,24 @@ public class HttpControl {
 	public void getBuyerIndexInfo(final HttpCallBackInterface httpCallBack,Context context,boolean refresh,boolean canCancle) {
 		Map<String, String> map=new HashMap<String, String>();
 		BasehttpSend(map, context, HttpConstants.METHOD_BUYER_INDEX, httpCallBack, BuyerIndexInfoBean.class, refresh,canCancle);
+	}
+	
+	
+
+	/**
+	 *  申请认证买手的接口
+	 * @param httpCallBack HttpCallBackInterface 回调接口
+	 * @param context  Context
+	 * @param Id  int
+	 * @return void
+	 * **/
+	public void getAppliyAuthBuyer(ApplyAuthBuyerBean bean,final HttpCallBackInterface httpCallBack,Context context) {
+		String responsejsonstr=BaseGsonUtils.getObjectToJson(bean);
+		if(responsejsonstr==null)
+		{
+			httpCallBack.http_Fails(500, "发送数据错误");
+		}
+		basehttpSendToJson(responsejsonstr, null, context, HttpConstants.METHOD_BUYER_CREATE_AUTH_BUYER, httpCallBack, BaseRequest.class, true, true);
 	}
 	
 	/**
@@ -1076,8 +1094,8 @@ public class HttpControl {
 					{
 						sb.append(new String(buffer, 0, count, "UTF-8"));
 					}
-					String returnValue=URLDecoder.decode(sb.toString(), sb.toString().trim());
-					handler.sendSucess(returnValue);
+//					String returnValue=URLDecoder.decode(sb.toString(), sb.toString().trim());
+					handler.sendSucess(sb.toString());
 				}else
 				{
 					handler.sendError("连接失败");

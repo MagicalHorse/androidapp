@@ -88,7 +88,8 @@
                                 android:id="@+id/et_store_name"
                                 android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
-                                android:background="@null" />
+                                android:background="@null"
+                                android:paddingLeft="10dip" />
                         </LinearLayout>
 
                         <View style="@style/style_horizontal_line" />
@@ -113,7 +114,8 @@
                                 android:id="@+id/et_zhuangui_name"
                                 android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
-                                android:background="@null" />
+                                android:background="@null"
+                                android:paddingLeft="10dip" />
                         </LinearLayout>
 
                         <View style="@style/style_horizontal_line" />
@@ -138,7 +140,8 @@
                                 android:id="@+id/et_number_name"
                                 android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
-                                android:background="@null" />
+                                android:background="@null"
+                                android:paddingLeft="10dip" />
                         </LinearLayout>
                     </LinearLayout>
 

@@ -288,6 +288,9 @@ public class BuyerCertificationActivity1 extends BaseActivityWithTopView
 						progressDialog.dismiss();
 					}
 					Intent intent = new Intent(mContext,BuyerCertificationActivity2.class);
+					intent.putExtra("pic1", pic1.substring(pic1.lastIndexOf("/")+1,pic1.length()));
+					intent.putExtra("pic2", pic2.substring(pic2.lastIndexOf("/")+1,pic2.length()));
+					intent.putExtra("pic3", pic3.substring(pic3.lastIndexOf("/")+1,pic3.length()));
 					startActivity(intent);
 				default:
 					break;

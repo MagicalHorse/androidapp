@@ -366,6 +366,13 @@ public class HttpConstants {
 	/**
 	 * 买手首页统计信息
 	 */
+	public static String METHOD_BUYER_CREATE_AUTH_BUYER = BUYER
+			+ "CreateAuthBuyer";
+	
+	
+	/**
+	 * 买手首页统计信息
+	 */
 	public static String METHOD_BUYER_INDEX = BUYER
 			+ "Index";
 }
