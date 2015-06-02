@@ -37,6 +37,7 @@ import com.shenma.yueba.baijia.modle.UserRequestBean;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.constants.HttpConstants;
 import com.shenma.yueba.yangjia.modle.AliYunKeyBackBean;
+import com.shenma.yueba.yangjia.modle.AttationAndFansListBackBean;
 import com.shenma.yueba.yangjia.modle.BuyerProductManagerListBack;
 import com.shenma.yueba.yangjia.modle.CircleListBackBean;
 import com.shenma.yueba.yangjia.modle.ContactsAddressRequestBean;
@@ -233,6 +234,24 @@ public class HttpControl {
 		BasehttpSend(map, context, HttpConstants.METHOD_RESETPASSWORD, httpCallBack, BaseRequest.class, true, true);
 	}
 
+	
+	/**
+	 * 获取我关注的人和我的粉丝的列表
+	 * 
+	 * @param phone           String手机号码
+	 * @param password        String 密码
+	 * @param httpCallBack HttpCallBackInterface回调接口
+	 * @param context Context
+	 * @return void
+	 * **/
+	public void getAttationOrFansList (String status,int page,final HttpCallBackInterface httpCallBack, Context context,boolean showDialog) {
+		Map<String, String> map=new HashMap<String, String>();
+		map.put(Constants.STATUS, status);
+		map.put(Constants.PAGE, page+"");
+		BasehttpSend(map, context, HttpConstants.METHOD_GETUSERFAVOITE, httpCallBack, AttationAndFansListBackBean.class, showDialog, true);
+	}
+
+	
 	
 	
 	/**
@@ -693,11 +712,11 @@ public class HttpControl {
 	 * 获取圈子列表
 	 * @return void
 	 * **/
-	public void getCircleList(String page,final HttpCallBackInterface httpCallBack,Context context) {
+	public void getCircleList(int page,boolean showDialog,final HttpCallBackInterface httpCallBack,Context context) {
 		Map<String, String> map=new HashMap<String, String>();
-		map.put(Constants.PAGE, page);
+		map.put(Constants.PAGE, page+"");
 		map.put(Constants.PAGESIZE, Constants.PageSize);
-		BasehttpSend(map, context, HttpConstants.METHOD_CIRCLE_GETBUYERGROUPS, httpCallBack, CircleListBackBean.class, true, true);
+		BasehttpSend(map, context, HttpConstants.METHOD_CIRCLE_GETBUYERGROUPS, httpCallBack, CircleListBackBean.class, showDialog, true);
 	}
 	
 	

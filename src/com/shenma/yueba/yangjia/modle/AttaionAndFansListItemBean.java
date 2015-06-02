@@ -2,7 +2,7 @@ package com.shenma.yueba.yangjia.modle;
 
 import java.util.List;
 
-public class CircleListItemBean {
+public class AttaionAndFansListItemBean {
 
 	
 	private String pageindex;
@@ -10,7 +10,7 @@ public class CircleListItemBean {
 	private String totalcount;
 	private String totalpaged;
 	private String ispaged;
-	private List<CirlceItemBean> items;
+	private List<AttationAndFansItemBean> items;
 	public String getPageindex() {
 		return pageindex;
 	}
@@ -41,16 +41,13 @@ public class CircleListItemBean {
 	public void setIspaged(String ispaged) {
 		this.ispaged = ispaged;
 	}
-	public List<CirlceItemBean> getItems() {
+	public List<AttationAndFansItemBean> getItems() {
 		return items;
 	}
-	public void setItems(List<CirlceItemBean> items) {
+	public void setItems(List<AttationAndFansItemBean> items) {
 		this.items = items;
 	}
-	
-	
-	
-	
+
 	
 	
 }

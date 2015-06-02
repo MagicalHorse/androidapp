@@ -53,6 +53,7 @@ public class SocialManagerActivity extends BaseFragmentActivity implements
 		initView();
 		initFragment();
 		initViewPager();
+		myCircleForSocialFragment.getCircleListFromNet(SocialManagerActivity.this,true, true);
 		super.onCreate(arg0);
 	}
 
@@ -121,19 +122,19 @@ public class SocialManagerActivity extends BaseFragmentActivity implements
 			public void onPageSelected(int arg0) {
 				setCursorAndText(arg0, cursorImageList, titleTextList);
 				index = arg0;
-//				switch (index) {
-//				case 0:
-//					productManagerFragmentForOnLine.getData(index,SocialManagerActivity.this);
-//					break;
-//				case 1:
-//					productManagerFragmentForOnLine2.getData(index,SocialManagerActivity.this);
-//					break;
-//				case 2 :
-//					productManagerFragmentForOnLine3.getData(index,SocialManagerActivity.this);
-//					break;
-//				default:
-//					break;
-//				}
+				switch (index) {
+				case 0:
+					myCircleForSocialFragment.getData(SocialManagerActivity.this, true, true);
+					break;
+				case 1:
+					myAttentionFragment.getData("0", SocialManagerActivity.this,true);// 0表示我关注的人   1表示我的粉丝
+					break;
+				case 2 :
+					myFansFragment.getData("1", SocialManagerActivity.this,true);// 0表示我关注的人   1表示我的粉丝
+					break;
+				default:
+					break;
+				}
 
 			}
 
