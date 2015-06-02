@@ -110,7 +110,7 @@ public class MyApplication extends Application {
 								content);
 					}
 				});
-		ossService.setGlobalDefaultHostId("oss-cn-hangzhou.aliyuncs.com");
+		ossService.setGlobalDefaultHostId("oss-cn-beijing.aliyuncs.com");
 		ossService
 				.setCustomStandardTimeWithEpochSec(System.currentTimeMillis() / 1000);
 		ossService.setGlobalDefaultACL(AccessControlList.PUBLIC_READ); // 默认为private

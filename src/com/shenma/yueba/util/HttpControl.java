@@ -1,5 +1,6 @@
 package com.shenma.yueba.util;
 
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -16,6 +17,12 @@ import android.content.pm.PackageInfo;
 import android.os.Handler;
 import android.os.Message;
 
+import com.alibaba.sdk.android.oss.OSSService;
+import com.alibaba.sdk.android.oss.OSSServiceProvider;
+import com.alibaba.sdk.android.oss.callback.SaveCallback;
+import com.alibaba.sdk.android.oss.model.OSSException;
+import com.alibaba.sdk.android.oss.storage.OSSBucket;
+import com.alibaba.sdk.android.oss.storage.OSSFile;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -1197,4 +1204,22 @@ public class HttpControl {
 		 * */
 		void httpRequestDataInterface_Fails(String msg);
 	}
+	
+	
+	private OSSService ossService;
+	private OSSBucket bucket;
+	 // 同步上传数据
+    public void syncUpload(final int tag,String imageLocalPath,SaveCallback callBack) {
+    	ossService = OSSServiceProvider.getService();
+		bucket = ossService.getOssBucket("apprss");
+		OSSFile bigfFile = ossService.getOssFile(bucket, imageLocalPath.substring(imageLocalPath.lastIndexOf("/")+1,imageLocalPath.length()));
+		try {
+			bigfFile.setUploadFilePath(imageLocalPath, "image/*");
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		bigfFile.ResumableUploadInBackground(callBack);
+    }
+	
 }
