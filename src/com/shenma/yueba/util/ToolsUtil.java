@@ -503,6 +503,25 @@ public class ToolsUtil {
 		}
 	}
 	
+	/******
+	 * 设置字体样式
+	 *@param context Context
+	 * @param v View 父视图
+	 * @param id int 视图的资源id(为TextVIEW本身及子类)泛型
+	 * ****/
+	public static void setFontStyle(Context context,View v,int ...id)
+	{
+		for(int i=0;i<id.length;i++)
+		{
+			View textview=v.findViewById(id[i]);
+			if(textview!=null && textview instanceof TextView)
+			{
+				FontManager.changeFonts(context, textview);
+			}
+		}
+		
+	}
+	
 	
 	
 	
