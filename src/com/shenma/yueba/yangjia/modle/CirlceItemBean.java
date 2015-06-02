@@ -9,6 +9,7 @@ public class CirlceItemBean {
 	private String Logo;
 	
 
+	
 	public String getId() {
 		return Id;
 	}
