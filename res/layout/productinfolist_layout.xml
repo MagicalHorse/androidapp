@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_marginTop="@dimen/shop_main_width5_dimen"
+        android:layout_marginBottom="@dimen/shop_main_width5_dimen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_marginRight="@dimen/shop_main_lineheight10_dimen"
+            android:id="@+id/affirmorder_item_icon_imageview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/default_pic" />
+        
+        <TextView
+            android:id="@+id/affirmorder_item_productname_textview"
+            android:layout_toRightOf="@id/affirmorder_item_icon_imageview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="名称"
+            />
+        
+        <TextView
+            android:layout_below="@id/affirmorder_item_productname_textview"
+            android:id="@+id/affirmorder_item_productsize_textview"
+            android:layout_toRightOf="@id/affirmorder_item_icon_imageview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="尺寸"
+            />
+        
+        <TextView
+            android:layout_below="@id/affirmorder_item_productsize_textview"
+            android:id="@+id/affirmorder_item_productcount_textview"
+            android:layout_toRightOf="@id/affirmorder_item_icon_imageview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="数量"
+            />
+        
+        <TextView
+            android:gravity="right"
+            android:layout_toRightOf="@id/affirmorder_item_productcount_textview"
+            android:layout_below="@id/affirmorder_item_productsize_textview"
+            android:id="@+id/affirmorder_item_productprice_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="￥0"
+            />
+    </RelativeLayout>

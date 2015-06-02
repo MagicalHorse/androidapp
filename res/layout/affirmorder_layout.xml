@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <include
+        android:id="@+id/affirmorder_layout_head"
+        layout="@layout/title_for_common" />
+
+    <ScrollView
+        android:layout_marginTop="@dimen/shop_main_lineheight10_dimen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/affrimorder_layout_footer_relativelayout"
+        android:layout_below="@id/affirmorder_layout_head"
+        android:scrollbars="none" >
+
+        <LinearLayout
+            android:paddingBottom="@dimen/shop_main_lineheight10_dimen"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" 
+            >
+
+            <RelativeLayout
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="@dimen/shop_main_iconwidth80_dimen"
+                android:padding="@dimen/margin_left_and_right" >
+
+                <TextView
+                    android:id="@+id/affirmorder_layout_no_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:text="买手账号:" />
+
+                <TextView
+                    android:id="@+id/affirmorder_layout_novalue_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/shop_main_lineheight10_dimen"
+                    android:layout_toLeftOf="@+id/affirmorder_layout_icon_roundimageview"
+                    android:layout_toRightOf="@+id/affirmorder_layout_no_textview"
+                    android:text="买手账号" />
+
+                <com.shenma.yueba.view.RoundImageView
+                    android:id="@+id/affirmorder_layout_icon_roundimageview"
+                    android:layout_width="@dimen/user_config_iconwidth40_dimen"
+                    android:layout_height="@dimen/user_config_iconwidth40_dimen"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/default_pic" />
+            </RelativeLayout>
+
+            <TextView
+                style="@style/style_horizontal_line"
+                android:layout_marginLeft="@dimen/margin_left_and_right"
+                android:layout_marginRight="@dimen/margin_left_and_right" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:minHeight="@dimen/shop_main_iconwidth80_dimen"
+                android:padding="@dimen/margin_left_and_right" >
+
+                <TextView
+                    android:id="@+id/affirmorder_layout_phone_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:text="买手电话:" />
+
+                <TextView
+                    android:id="@+id/affirmorder_layout_phonevalue_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/shop_main_lineheight10_dimen"
+                    android:layout_toLeftOf="@+id/affirmorder_layout_icon_imageview"
+                    android:layout_toRightOf="@+id/affirmorder_layout_phone_textview"
+                    android:text="1111" />
+
+                <ImageView
+                    android:id="@+id/affirmorder_layout_icon_imageview"
+                    android:layout_width="@dimen/shop_main_marginleft30_dimen"
+                    android:layout_height="@dimen/shop_main_marginleft30_dimen"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/phon_icon" />
+            </RelativeLayout>
+
+            <TextView
+                style="@style/style_horizontal_line"
+                android:layout_marginLeft="@dimen/margin_left_and_right"
+                android:layout_marginRight="@dimen/margin_left_and_right" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:minHeight="@dimen/shop_main_iconwidth80_dimen"
+                android:padding="@dimen/margin_left_and_right" >
+
+                <TextView
+                    android:id="@+id/affirmorder_layout_pickup_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:text="提货地址:" />
+
+                <TextView
+                    android:id="@+id/affirmorder_layout_pickupvalue_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/shop_main_lineheight10_dimen"
+                    android:layout_toRightOf="@+id/affirmorder_layout_pickup_textview"
+                    android:text="1111" />
+            </RelativeLayout>
+
+
+            <ListView
+                android:background="@color/white"
+                android:id="@+id/affirmorder_layout_product_listview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/shop_main_lineheight10_dimen" />
+
+            <RelativeLayout
+                android:padding="@dimen/margin_left_and_right"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/affirmorder_item_allcount_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="共0件商品 " />
+
+                <TextView
+                    android:id="@+id/affirmorder_item_price_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@+id/affirmorder_item_pricevalue_textview"
+                    android:text="实付:￥" />
+
+                <TextView
+                    android:id="@+id/affirmorder_item_pricevalue_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:gravity="right"
+                    android:text="0" />
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <RelativeLayout
+        android:padding="@dimen/shop_main_width2_dimen"
+        android:background="@color/white"
+        android:id="@+id/affrimorder_layout_footer_relativelayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:id="@+id/affrimorder_layout_footer_countpricename_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/affrimorder_layout_footer_countprice_textview"
+            android:gravity="right"
+            android:text="合计:￥"
+            android:textColor="@color/red" />
+
+        <TextView
+            android:id="@+id/affrimorder_layout_footer_countprice_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/affrimorder_layout_footer_sumit_button"
+            android:gravity="right"
+            android:text="0"
+            android:textColor="@color/red" />
+
+        <Button
+            android:id="@+id/affrimorder_layout_footer_sumit_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/shop_main_lineheight10_dimen"
+            android:layout_marginRight="@dimen/shop_main_lineheight10_dimen"
+            android:background="@drawable/affirmbutton_background"
+            android:text="确认" />
+    </RelativeLayout>
+
+</RelativeLayout>

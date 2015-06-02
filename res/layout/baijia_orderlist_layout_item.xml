@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:padding="@dimen/margin_left_and_right" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/shop_main_width5_dimen"
+        android:paddingTop="@dimen/shop_main_width5_dimen" >
+
+        <TextView
+            android:id="@+id/baijia_orderlayout_item_nickname_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="小天使" />
+
+        <TextView
+            android:id="@+id/baijia_orderlayout_item_status_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="未提货" />
+    </RelativeLayout>
+
+    <View style="@style/style_horizontal_line" />
+
+    <include layout="@layout/productinfolist_layout" />
+
+    <View style="@style/style_horizontal_line" />
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/shop_main_width5_dimen"
+        android:paddingTop="@dimen/shop_main_width5_dimen" >
+
+        <TextView
+            android:id="@+id/baijia_orderlayout_item_producecount_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="共2件商品" />
+
+        <TextView
+            android:id="@+id/baijia_orderlayout_item_price_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/baijia_orderlayout_item_pricevalue_textview"
+            android:text="实付:￥" />
+        <TextView
+            android:id="@+id/baijia_orderlayout_item_pricevalue_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="2000" />
+    </RelativeLayout>
+    
+    <View style="@style/style_horizontal_line" />
+    
+    <RelativeLayout
+        android:id="@+id/baijia_orderdetails_layout_footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:minHeight="@dimen/shop_main_marginleft30_dimen"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/shop_main_lineheight8_dimen"
+        android:paddingBottom="@dimen/shop_main_lineheight8_dimen">
+
+        <TextView
+            android:gravity="left|center_vertical"
+            android:id="@+id/baijia_orderdetails_lianxibuyer_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/textsize13sp"
+            android:layout_toLeftOf="@+id/baijiaorder_layout_item_status1"
+            android:text="联系买手" />
+
+        <LinearLayout
+            android:id="@+id/baijiaorder_layout_item_status1"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/baijia_orderdetails_sqtk_button"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                 android:background="@drawable/applyrefund_background"
+                android:text="申请退款"
+                android:textSize="@dimen/textsize13sp" />
+
+            <Button
+                android:layout_marginRight="@dimen/shop_main_width3_dimen"
+                android:id="@+id/baijia_orderdetails_ziti_button"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="@dimen/shop_main_width5_dimen"
+                android:background="@drawable/yeollow_background"
+                android:text="确认提货"
+                android:textSize="@dimen/textsize13sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/baijia_orderdetails_cancellreimburse_button"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:background="@drawable/applyrefund_background"
+                android:text="撤销退款"
+                android:textSize="@dimen/textsize13sp"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/baijia_orderdetails_pay_button"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="@dimen/shop_main_width5_dimen"
+                android:background="@drawable/yeollow_background"
+                android:text="付款"
+                android:textSize="@dimen/textsize13sp"
+                android:visibility="gone" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>
