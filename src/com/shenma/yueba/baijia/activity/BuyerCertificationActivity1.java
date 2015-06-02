@@ -1,16 +1,8 @@
 package com.shenma.yueba.baijia.activity;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.UUID;
-
-import com.shenma.yueba.R;
-import com.shenma.yueba.application.MyApplication;
-import com.shenma.yueba.baijia.activity.UserConfigActivity.ShowMenu;
-import com.shenma.yueba.util.FileUtils;
-import com.shenma.yueba.util.FontManager;
-import com.shenma.yueba.util.PhotoUtils;
-import com.shenma.yueba.util.ToolsUtil;
-import com.shenma.yueba.view.SelectePhotoType;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -21,16 +13,33 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.provider.ContactsContract.CommonDataKinds.Relation;
 import android.text.TextUtils;
-import android.view.TextureView;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.alibaba.sdk.android.oss.OSSService;
+import com.alibaba.sdk.android.oss.OSSServiceProvider;
+import com.alibaba.sdk.android.oss.callback.OSSCallback;
+import com.alibaba.sdk.android.oss.callback.SaveCallback;
+import com.alibaba.sdk.android.oss.model.OSSException;
+import com.alibaba.sdk.android.oss.storage.OSSBucket;
+import com.alibaba.sdk.android.oss.storage.OSSFile;
+import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.util.CustomProgressDialog;
+import com.shenma.yueba.util.FileUtils;
+import com.shenma.yueba.util.FontManager;
+import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.PhotoUtils;
+import com.shenma.yueba.util.ToolsUtil;
+import com.shenma.yueba.view.SelectePhotoType;
 
 /**
  * 身份认证
@@ -56,9 +65,10 @@ public class BuyerCertificationActivity1 extends BaseActivityWithTopView
 	private String pic1,pic2,pic3;
 	private RelativeLayout rl_work_card;
 	private ImageView iv_work_card;
-
+	private CustomProgressDialog progressDialog;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.buyer_certification_layout);
 		super.onCreate(savedInstanceState);
 		initView();
@@ -90,6 +100,7 @@ public class BuyerCertificationActivity1 extends BaseActivityWithTopView
 		FontManager.changeFonts(mContext, tv_idcard_title, tv_get_point,
 				et_info, tv_retain, tv_next);
 		MyApplication.getInstance().kuanggaobi = (float) 1.76;
+		progressDialog = CustomProgressDialog.createDialog(this);
 	}
 
 	@Override
@@ -108,18 +119,17 @@ public class BuyerCertificationActivity1 extends BaseActivityWithTopView
 			showBottomDialog();
 			break;
 		case R.id.tv_next://下一步
-//			if(TextUtils.isEmpty(pic1)){
-//				Toast.makeText(mContext, "身份证正面图片不能为空", 1000).show();
-//				return ;
-//			}if(TextUtils.isEmpty(pic2)){
-//				Toast.makeText(mContext, "身份证反面面图片不能为空", 1000).show();
-//				return ;
-//			}if(TextUtils.isEmpty(pic3)){
-//				Toast.makeText(mContext, "证件图片不能为空", 1000).show();
-//				return ;
-//			}
-			Intent intent = new Intent(mContext,BuyerCertificationActivity2.class);
-			startActivity(intent);
+			if(TextUtils.isEmpty(pic1)){
+				Toast.makeText(mContext, "身份证正面图片不能为空", 1000).show();
+				return ;
+			}if(TextUtils.isEmpty(pic2)){
+				Toast.makeText(mContext, "身份证反面面图片不能为空", 1000).show();
+				return ;
+			}if(TextUtils.isEmpty(pic3)){
+				Toast.makeText(mContext, "证件图片不能为空", 1000).show();
+				return ;
+			}
+			uploadImage(0, pic1);//开始上传图片
 			break;
 		default:
 			break;
@@ -241,5 +251,49 @@ public class BuyerCertificationActivity1 extends BaseActivityWithTopView
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 
+	}
+
+	
+	
+	private void uploadImage(final int upPicProgress,String imagePath){
+		if(!progressDialog.isShowing()){
+			progressDialog.show();
+		}
+		HttpControl httpControl = new HttpControl();
+		httpControl.syncUpload(upPicProgress, pic1, new SaveCallback() {
+			
+			@Override
+			public void onProgress(String arg0, int arg1, int arg2) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onFailure(String arg0, OSSException arg1) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onSuccess(String arg0) {
+				switch (upPicProgress) {
+				case 0://第一张图片上传完毕
+					uploadImage(1, pic2);
+					break;
+				case 1://第二张上传完毕
+					uploadImage(2, pic3);
+					break;
+				case 2://第三张上传完毕
+					if(progressDialog.isShowing()){
+						progressDialog.dismiss();
+					}
+					Intent intent = new Intent(mContext,BuyerCertificationActivity2.class);
+					startActivity(intent);
+				default:
+					break;
+				}
+				
+			}
+		});
 	}
 }
