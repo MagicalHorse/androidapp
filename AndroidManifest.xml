@@ -265,6 +265,12 @@
             android:screenOrientation="portrait" >
         </activity>
         
+        <!-- 败家订单列表页面 -->
+        <activity
+            android:name="com.shenma.yueba.baijia.activity.BaiJiaOrderListActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        
         <!-- 败家订单确认页面 -->
         <activity
             android:name="com.shenma.yueba.baijia.activity.AffirmOrderActivity"
