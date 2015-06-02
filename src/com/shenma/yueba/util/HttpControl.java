@@ -35,6 +35,7 @@ import com.shenma.yueba.baijia.modle.BuyerIndexInfoBean;
 import com.shenma.yueba.baijia.modle.CityListBackBean;
 import com.shenma.yueba.baijia.modle.CityListRequestBean;
 import com.shenma.yueba.baijia.modle.ProvinceCityListBeanRequest;
+import com.shenma.yueba.baijia.modle.RequestBaiJiaOrderListInfoBean;
 import com.shenma.yueba.baijia.modle.RequestProductDetailsInfoBean;
 import com.shenma.yueba.baijia.modle.RequestProductListInfoBean;
 import com.shenma.yueba.baijia.modle.RequestUploadProductInfoBean;
@@ -744,6 +745,20 @@ public class HttpControl {
 		BasehttpSend(map, context, HttpConstants.METHOD_CIRCLE_GETBUYERGROUPS, httpCallBack, CircleListBackBean.class, showDialog, true);
 	}
 	
+	/**
+	 * 获取败家订单列表
+	 * @param currPage int 当前页
+	 * @param pageSize int 条数
+	 * @param State int 全部订单 0，待付款 1， 专柜自提 2， 售后 3
+     * @return void
+	 * **/
+	public void getBaijiaOrderList(int currPage,int pageSize,int State,boolean showDialog,final HttpCallBackInterface httpCallBack,Context context) {
+		Map<String, String> map=new HashMap<String, String>();
+		map.put(Constants.PAGE, currPage+"");
+		map.put(Constants.PAGESIZE, pageSize+"");
+		BasehttpSend(map, context, HttpConstants.GETORDERLIST, httpCallBack, RequestBaiJiaOrderListInfoBean.class, showDialog, true);
+	}
+	
 	
 	
 	
@@ -965,10 +980,7 @@ public class HttpControl {
 	 * ***/
 	<T extends BaseRequest> void BasehttpSend(final Map<String, String> map, final Context context,final String method,final HttpCallBackInterface httpCallBack,final Class<T> classzz,boolean isshwoDialog,boolean isDialogCancell) {
 		final CustomProgressDialog progressDialog = CustomProgressDialog.createDialog(context);
-		if(isDialogCancell)
-		{
-			progressDialog.setCancelable(false);
-		}
+		progressDialog.setCancelable(isDialogCancell);
 		if(isshwoDialog)
 		{
 			progressDialog.show();
@@ -1139,7 +1151,7 @@ public class HttpControl {
 	{
 		if(bean!=null)
 		{
-		  UserInfo userInfo=bean.getData();
+		   UserInfo userInfo=bean.getData();
 		   SharedUtil.setStringPerfernece(context, SharedUtil.user_id, Integer.toString(userInfo.getId()));
 		   SharedUtil.setStringPerfernece(context, SharedUtil.user_name, userInfo.getName());
 		   SharedUtil.setStringPerfernece(context, SharedUtil.user_names, userInfo.getNickname());
@@ -1150,6 +1162,7 @@ public class HttpControl {
 		   SharedUtil.setStringPerfernece(context, SharedUtil.user_mobile, userInfo.getMobile());
 		   SharedUtil.setStringPerfernece(context, SharedUtil.user_token, userInfo.getToken());
 		   SharedUtil.setBooleanPerfernece(context, SharedUtil.user_loginstatus, true);
+		   SharedUtil.setStringPerfernece(context, SharedUtil.user_AuditStatus, userInfo.getAuditStatus());
 		}
 	}
 	
