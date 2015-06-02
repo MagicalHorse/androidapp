@@ -1139,7 +1139,7 @@ public class HttpControl {
 	{
 		if(bean!=null)
 		{
-		  UserInfo userInfo=bean.getData();
+		   UserInfo userInfo=bean.getData();
 		   SharedUtil.setStringPerfernece(context, SharedUtil.user_id, Integer.toString(userInfo.getId()));
 		   SharedUtil.setStringPerfernece(context, SharedUtil.user_name, userInfo.getName());
 		   SharedUtil.setStringPerfernece(context, SharedUtil.user_names, userInfo.getNickname());
@@ -1150,6 +1150,7 @@ public class HttpControl {
 		   SharedUtil.setStringPerfernece(context, SharedUtil.user_mobile, userInfo.getMobile());
 		   SharedUtil.setStringPerfernece(context, SharedUtil.user_token, userInfo.getToken());
 		   SharedUtil.setBooleanPerfernece(context, SharedUtil.user_loginstatus, true);
+		   SharedUtil.setStringPerfernece(context, SharedUtil.user_AuditStatus, userInfo.getAuditStatus());
 		}
 	}
 	

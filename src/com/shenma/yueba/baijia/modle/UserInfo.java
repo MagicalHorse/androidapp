@@ -8,6 +8,7 @@ import java.io.Serializable;
  */
 
 public class UserInfo implements Serializable {
+	private String AuditStatus;//审核状态
 	boolean isbuyer=false;
 	int operate_right ;// null,
 	int template_id ;// null,
@@ -168,6 +169,12 @@ public class UserInfo implements Serializable {
 	}
 	public void setBuyer(UserBuyerBean buyer) {
 		this.buyer = buyer;
+	}
+	public String getAuditStatus() {
+		return AuditStatus;
+	}
+	public void setAuditStatus(String auditStatus) {
+		AuditStatus = auditStatus;
 	}
 	
 

@@ -24,6 +24,10 @@ public class SharedUtil {
 	public static final String user_logobg = "user_logobg";///登录用户背景
 	public static final String user_token = "user_token";///登录用户令牌
 	public static final String user_loginstatus = "user_loginstatus";//用户登录状态
+	/**
+	 * -2表示还没有申请过认证买手  ，-1表示身亲被拒绝  ，0表示正在申请中，1表示申请通过
+	 */
+	public static final String user_AuditStatus = "AuditStatus";//用户审核状态
 	
 	
 	
@@ -275,6 +279,16 @@ public class SharedUtil {
 		}
 	}
 	
+	public static String getAuditStatus(Context context) {
+		return getSharedPreferences(context).getString(user_AuditStatus, "");
+	}
+	
+	public static void setAuditStatus(Context context, String userPassword) {
+		if (userPassword != null) {
+			getSharedPreferences(context).edit()
+			.putString(user_AuditStatus, userPassword).commit();
+		}
+	}
 	
 	// 保存用户信息
 	public static void setUserInfo(Context mContext, UserBean user,

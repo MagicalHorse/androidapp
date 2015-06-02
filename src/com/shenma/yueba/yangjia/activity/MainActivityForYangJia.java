@@ -19,6 +19,7 @@ package com.shenma.yueba.yangjia.activity;
 import java.util.LinkedList;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
@@ -39,6 +40,7 @@ import android.widget.Toast;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.camera.CameraAty;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.yangjia.fragment.CartFragment;
 import com.shenma.yueba.yangjia.fragment.IndexFragmentForYangJia;
@@ -176,6 +178,8 @@ private void showDialog() {
 		@Override
 		public void onClick(View v) {
 			// 跳转到到自定义相机
+			Intent intentCamera = new Intent(MainActivityForYangJia.this,CameraAty.class);
+			startActivity(intentCamera);
 			dialog.cancel();
 		}
 	});
