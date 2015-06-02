@@ -67,15 +67,26 @@ public BaiJiaOrderListAdapter(List<Object> object_list,Context context)
 			holder.affirmorder_item_productprice_textview=(TextView)arg1.findViewById(R.id.affirmorder_item_productprice_textview);
 			holder.baijia_orderlayout_item_producecount_textview=(TextView)arg1.findViewById(R.id.baijia_orderlayout_item_producecount_textview);
 			holder.baijia_orderlayout_item_pricevalue_textview=(TextView)arg1.findViewById(R.id.baijia_orderlayout_item_pricevalue_textview);
+			holder.baijia_orderlayout_item_price_textview=(TextView)arg1.findViewById(R.id.baijia_orderlayout_item_price_textview);
+			holder.baijia_orderdetails_lianxibuyer_textview=(TextView)arg1.findViewById(R.id.baijia_orderdetails_lianxibuyer_textview);
 			
 			holder.baijia_orderdetails_sqtk_button=(Button)arg1.findViewById(R.id.baijia_orderdetails_sqtk_button);
 			holder.baijia_orderdetails_sqtk_button.setOnClickListener(onclickListener);
 			holder.baijia_orderdetails_ziti_button=(Button)arg1.findViewById(R.id.baijia_orderdetails_ziti_button);
+			holder.baijia_orderdetails_ziti_button.setOnClickListener(onclickListener);
 			holder.baijia_orderdetails_pay_button=(Button)arg1.findViewById(R.id.baijia_orderdetails_pay_button);
+			holder.baijia_orderdetails_pay_button.setOnClickListener(onclickListener);
 			holder.baijia_orderdetails_cancellreimburse_button=(Button)arg1.findViewById(R.id.baijia_orderdetails_cancellreimburse_button);
+			holder.baijia_orderdetails_cancellreimburse_button.setOnClickListener(onclickListener);
+			
 		}
+		setValue(arg0);
+		return arg1;
+	}
+	
+	void setValue(int i)
+	{
 		
-		return null;
 	}
 
 	class  Holder
@@ -89,6 +100,8 @@ public BaiJiaOrderListAdapter(List<Object> object_list,Context context)
 		TextView affirmorder_item_productprice_textview;//产品单价
 		TextView baijia_orderlayout_item_producecount_textview;//产品件数
 		TextView baijia_orderlayout_item_pricevalue_textview;//产品总计
+		TextView baijia_orderlayout_item_price_textview;//实付提示
+		TextView baijia_orderdetails_lianxibuyer_textview;//店名
 		
 		Button baijia_orderdetails_sqtk_button;//申请退款
 		Button baijia_orderdetails_ziti_button;//确认提货
@@ -101,7 +114,7 @@ public BaiJiaOrderListAdapter(List<Object> object_list,Context context)
 	 * **/
 	void setFont(View v)
 	{
-		ToolsUtil.setFontStyle(context, v, R.id.baijia_orderlayout_item_nickname_textview,R.id.baijia_orderlayout_item_status_textview,R.id.affirmorder_item_productname_textview,R.id.affirmorder_item_productsize_textview,R.id.affirmorder_item_productcount_textview,R.id.affirmorder_item_productprice_textview,R.id.baijia_orderlayout_item_producecount_textview,R.id.baijia_orderlayout_item_pricevalue_textview);
+		ToolsUtil.setFontStyle(context, v, R.id.baijia_orderdetails_lianxibuyer_textview,R.id.baijia_orderdetails_cancellreimburse_button,R.id.baijia_orderdetails_pay_button,R.id.baijia_orderdetails_ziti_button,R.id.baijia_orderdetails_sqtk_button,R.id.baijia_orderlayout_item_price_textview,R.id.baijia_orderlayout_item_nickname_textview,R.id.baijia_orderlayout_item_status_textview,R.id.affirmorder_item_productname_textview,R.id.affirmorder_item_productsize_textview,R.id.affirmorder_item_productcount_textview,R.id.affirmorder_item_productprice_textview,R.id.baijia_orderlayout_item_producecount_textview,R.id.baijia_orderlayout_item_pricevalue_textview);
 	}
 	
 	OnClickListener onclickListener=new OnClickListener() {

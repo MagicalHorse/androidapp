@@ -6,10 +6,13 @@ import java.util.List;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
@@ -18,8 +21,15 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.State;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.adapter.BaiJiaOrderListAdapter;
+import com.shenma.yueba.baijia.fragment.BuyerStreetFragment.CustomPagerAdapter;
+import com.shenma.yueba.baijia.modle.HomeProductListInfoBean;
+import com.shenma.yueba.baijia.modle.ProductListInfoBean;
+import com.shenma.yueba.baijia.modle.RequestProductListInfoBean;
 import com.shenma.yueba.constants.Constants;
+import com.shenma.yueba.util.ListViewUtils;
+import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 
 /**
  * @author gyj
@@ -56,7 +66,11 @@ public class BaiJiaOrderListFragment extends Fragment {
 			initView();
 			requestFalshData();
 		}
-		//return super.onCreateView(inflater, container, savedInstanceState);
+		ViewGroup vp=(ViewGroup)parentView.getParent();
+		if(vp!=null)
+		{
+			vp.removeView(parentView);
+		}
 		return parentView;
 	}
 	
@@ -67,7 +81,6 @@ public class BaiJiaOrderListFragment extends Fragment {
 		pull_refresh_list.setMode(Mode.BOTH);
 		baiJiaOrderListAdapter=new BaiJiaOrderListAdapter(object_list,getActivity());
 		pull_refresh_list.setAdapter(baiJiaOrderListAdapter);
-		
 		
 		pull_refresh_list.setOnPullEventListener(new OnPullEventListener<ListView>() {
 
@@ -110,11 +123,9 @@ public class BaiJiaOrderListFragment extends Fragment {
 	 * ***/
 	void requestData()
 	{
-		object_list.add(null);
-		if(baiJiaOrderListAdapter!=null)
-		{
-			baiJiaOrderListAdapter.notifyDataSetChanged();
-		}
+		pull_refresh_list.setRefreshing();
+		
+		sendRequestData(1);
 	}
 	
 	/*****
@@ -122,6 +133,41 @@ public class BaiJiaOrderListFragment extends Fragment {
 	 * ***/
 	void requestFalshData()
 	{
+		pull_refresh_list.setRefreshing();
+		
+		sendRequestData(0);
+	}
+	
+	/******
+	 * 与网络通信请求数据
+	 * 
+	 * @param type
+	 *            int 0 刷新 1 加载
+	 * ***/
+	void sendRequestData(final int type) {
+		falshData(null);
+	}
+	
+	/***
+	 * 刷新viewpager数据
+	 * ***/
+	void falshData(HomeProductListInfoBean data) {
+		
+		pull_refresh_list.onRefreshComplete();
+		object_list.add(null);
+		if(baiJiaOrderListAdapter!=null)
+		{
+			baiJiaOrderListAdapter.notifyDataSetChanged();
+		}
+	}
+	
+	
+	/***
+	 * 加载数据
+	 * **/
+	void addData(HomeProductListInfoBean data) {
+		
+		pull_refresh_list.onRefreshComplete();
 		object_list.add(null);
 		if(baiJiaOrderListAdapter!=null)
 		{

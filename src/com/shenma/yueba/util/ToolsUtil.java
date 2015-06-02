@@ -29,6 +29,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -514,7 +515,7 @@ public class ToolsUtil {
 		for(int i=0;i<id.length;i++)
 		{
 			View textview=v.findViewById(id[i]);
-			if(textview!=null && textview instanceof TextView)
+			if(textview!=null && textview instanceof TextView || textview!=null && textview instanceof Button)
 			{
 				FontManager.changeFonts(context, textview);
 			}

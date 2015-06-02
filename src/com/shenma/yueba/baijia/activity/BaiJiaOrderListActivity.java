@@ -4,14 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.annotation.SuppressLint;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.shenma.yueba.R;
@@ -25,10 +27,10 @@ import com.shenma.yueba.util.FontManager;
  * 程序的简单说明  我的订单主页
  */
 
-public class BaiJiaOrderListActivity extends BaseActivityWithTopView{
+public class BaiJiaOrderListActivity extends FragmentActivity{
 FragmentManager fragmentManager;
 FrameLayout baijia_main_framelayout;
-LinearLayout baijia_main_foot_linearlayout;
+LinearLayout baijia_fragment_tab1_head_linearlayout;
 List<FragmentBean> fragment_list=new ArrayList<FragmentBean>();
 List<View> footer_list=new ArrayList<View>();
 int currid=-1;
@@ -39,23 +41,28 @@ int currid=-1;
 		super.onCreate(savedInstanceState);
 		initView();
 		initaddFooterView();
+		setCurrView(0);
 		
 	}
 	
-	@SuppressLint("NewApi")
 	void initView()
 	{
-		setTitle("我的订单");
-		setLeftTextView(new OnClickListener() {
+		TextView tv_top_title=(TextView)findViewById(R.id.tv_top_title);
+		FontManager.changeFonts(this, tv_top_title);
+		tv_top_title.setVisibility(View.VISIBLE);
+		tv_top_title.setText("我的订单");
+		TextView tv_top_left=(TextView)findViewById(R.id.tv_top_left);
+		tv_top_left.setVisibility(View.VISIBLE);
+		tv_top_left.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				BaiJiaOrderListActivity.this.finish();
 			}
 		});
-		fragmentManager=this.getFragmentManager();
+		fragmentManager=this.getSupportFragmentManager();
 		baijia_main_framelayout=(FrameLayout)findViewById(R.id.baijia_main_framelayout);
-		baijia_main_foot_linearlayout=(LinearLayout)findViewById(R.id.baijia_main_foot_linearlayout);
+		baijia_fragment_tab1_head_linearlayout=(LinearLayout)findViewById(R.id.baijia_fragment_tab1_head_linearlayout);
 		
 		BaiJiaOrderListFragment allorder= new BaiJiaOrderListFragment(0);
 		BaiJiaOrderListFragment waitpayorder= new BaiJiaOrderListFragment(0);
@@ -70,20 +77,14 @@ int currid=-1;
 	
 	void initaddFooterView()
 	{
+		
 		for(int i=0;i<fragment_list.size();i++)
 		{
-			LinearLayout ll=(LinearLayout)LinearLayout.inflate(this, R.layout.tab_image_textview_layout, null);
-			ImageView imageview=(ImageView)ll.findViewById(R.id.imageview);
-			imageview.setImageResource(fragment_list.get(i).getIcon());
-			TextView tv1=(TextView)ll.findViewById(R.id.tv1);
-			tv1.setText(fragment_list.get(i).getName());
-			FontManager.changeFonts(getApplication(), tv1);
-			LinearLayout.LayoutParams param=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-			param.weight=1;
-			baijia_main_foot_linearlayout.addView(ll,param);
-			footer_list.add(ll);
-			ll.setTag(i);
-			ll.setOnClickListener(new OnClickListener() {
+			RelativeLayout rl=(RelativeLayout)RelativeLayout.inflate(BaiJiaOrderListActivity.this, R.layout.tab_line_layout, null);
+			TextView tv=(TextView)rl.findViewById(R.id.tab_line_textview);
+			FontManager.changeFonts(BaiJiaOrderListActivity.this, tv);
+			rl.setTag(i);
+			rl.setOnClickListener(new OnClickListener() {
 				
 				@Override
 				public void onClick(View v) {
@@ -91,16 +92,22 @@ int currid=-1;
 					setCurrView(i);
 				}
 			});
+			tv.setGravity(Gravity.CENTER);
+			tv.setText(fragment_list.get(i).getName());
+			LinearLayout.LayoutParams param=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+			param.weight=1;
+			param.gravity=Gravity.CENTER;
+			baijia_fragment_tab1_head_linearlayout.addView(rl,param);
+			footer_list.add(rl);
 		}
 	}
 	
 	
-	@SuppressLint("NewApi")
 	void setCurrView(int i)
 	{
 		if(currid==-1 && i==0)
 		{
-			fragmentManager.beginTransaction().add(R.id.baijia_main_framelayout, (Fragment) fragment_list.get(i).getFragment()).commit();
+			fragmentManager.beginTransaction().add(R.id.baijia_main_framelayout,(Fragment) fragment_list.get(i).getFragment()).commit();
 		}
 	    else if(currid==i)
 		{
@@ -112,24 +119,25 @@ int currid=-1;
 		
 	}
 	
+	/*****
+	 * 设置字体颜色及选中后显示的图片
+	 * ***/
 	void setTextColor(int value)
 	{
 		for(int i=0;i<footer_list.size();i++)
 		{
-			LinearLayout ll =(LinearLayout)footer_list.get(i);
-			ImageView iv=(ImageView)ll.findViewById(R.id.imageview);
-			TextView tv=(TextView)ll.findViewById(R.id.tv1);
+			RelativeLayout rl=(RelativeLayout)footer_list.get(i);
+			TextView tv=(TextView)rl.findViewById(R.id.tab_line_textview);
+			View v=(View)rl.findViewById(R.id.tab_line_view);
 			if(i==value)
 			{
 			  tv.setTextColor(this.getResources().getColor(R.color.color_deeoyellow));
-			  iv.setSelected(true);
-				
+		      v.setVisibility(View.VISIBLE);
 			}else
 			{
 				tv.setTextColor(this.getResources().getColor(R.color.black));
-				iv.setSelected(false);
+				v.setVisibility(View.INVISIBLE);
 			}
-			
 			
 		}
 	}

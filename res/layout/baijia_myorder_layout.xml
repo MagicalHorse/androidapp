@@ -6,26 +6,23 @@
 
     <include layout="@layout/title_for_common" />
 
-    <RelativeLayout
+    <View
+        style="@style/style_horizontal_line"
+        />
+    <LinearLayout
+        android:background="@color/white"
+        android:id="@+id/baijia_fragment_tab1_head_linearlayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:padding="@dimen/shop_main_width5_dimen" >
+    </LinearLayout>
 
-        <FrameLayout
-            android:id="@+id/baijia_main_framelayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/baijia_main_foot_linearlayout"
-            android:layout_marginBottom="1dp" />
-
-        <LinearLayout
-            android:id="@+id/baijia_main_foot_linearlayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:minHeight="50dp"
-            android:orientation="horizontal"
-            android:padding="@dimen/shop_main_width5_dimen" >
-        </LinearLayout>
-    </RelativeLayout>
+    <FrameLayout
+        android:layout_marginTop="@dimen/shop_main_width15_dimen"
+        android:id="@+id/baijia_main_framelayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="1dp" />
 
 </LinearLayout>
