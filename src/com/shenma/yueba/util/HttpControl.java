@@ -16,6 +16,7 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 
 import com.alibaba.sdk.android.oss.OSSService;
 import com.alibaba.sdk.android.oss.OSSServiceProvider;
@@ -991,6 +992,7 @@ public class HttpControl {
 			public void onSuccess(ResponseInfo<String> responseInfo) {
 
 				if (httpCallBack != null) {
+					Log.i("result", responseInfo.result);
 					BaseRequest bean = BaseGsonUtils.getJsonToObject(classzz,responseInfo.result);
 					if (bean == null) {
 						httpCallBack.http_Fails(0,"数据解析异常");

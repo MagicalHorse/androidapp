@@ -103,9 +103,9 @@ public class MeFragmentForYangJia extends BaseFragment implements
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.iv_setting:// 设置
-			// Intent userConfigIntent = new
-			// Intent(getActivity(),UserConfigActivity.class);
-			// startActivity(userConfigIntent);
+			 Intent userConfigIntent = new
+			 Intent(getActivity(),UserConfigActivity.class);
+			 startActivity(userConfigIntent);
 			break;
 		case R.id.tv_store:// 店铺首页
 			break;
