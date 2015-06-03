@@ -6,13 +6,10 @@ import java.util.List;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
@@ -23,12 +20,11 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.adapter.BaiJiaOrderListAdapter;
-import com.shenma.yueba.baijia.fragment.BuyerStreetFragment.CustomPagerAdapter;
-import com.shenma.yueba.baijia.modle.HomeProductListInfoBean;
-import com.shenma.yueba.baijia.modle.ProductListInfoBean;
-import com.shenma.yueba.baijia.modle.RequestProductListInfoBean;
+import com.shenma.yueba.baijia.modle.BaiJiaOrderListInfo;
+import com.shenma.yueba.baijia.modle.BaiJiaOrderListInfoBean;
+import com.shenma.yueba.baijia.modle.RequestBaiJiaOrderListInfoBean;
 import com.shenma.yueba.constants.Constants;
-import com.shenma.yueba.util.ListViewUtils;
+import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 
 /**
@@ -41,11 +37,13 @@ public class BaiJiaOrderListFragment extends Fragment {
 	View parentView;
 	PullToRefreshListView pull_refresh_list;
 	BaiJiaOrderListAdapter baiJiaOrderListAdapter;
-	List<Object> object_list=new ArrayList<Object>();
+	List<BaiJiaOrderListInfo> object_list=new ArrayList<BaiJiaOrderListInfo>();
 	int currpage=Constants.CURRPAGE_VALUE;
 	int pagersize=Constants.PAGESIZE_VALUE;
 	int type=-1;//订单类型 -1 全部
-	
+	HttpControl httpControl=new HttpControl();
+	RequestBaiJiaOrderListInfoBean requestBaiJiaOrderListInfoBean;
+	boolean ishow=true;
 	public BaiJiaOrderListFragment(int type)
 	{
 		this.type=type;
@@ -124,7 +122,6 @@ public class BaiJiaOrderListFragment extends Fragment {
 	void requestData()
 	{
 		pull_refresh_list.setRefreshing();
-		
 		sendRequestData(1);
 	}
 	
@@ -134,7 +131,6 @@ public class BaiJiaOrderListFragment extends Fragment {
 	void requestFalshData()
 	{
 		pull_refresh_list.setRefreshing();
-		
 		sendRequestData(0);
 	}
 	
@@ -145,28 +141,83 @@ public class BaiJiaOrderListFragment extends Fragment {
 	 *            int 0 刷新 1 加载
 	 * ***/
 	void sendRequestData(final int type) {
-		falshData(null);
+		
+		httpControl.getBaijiaOrderList(currpage, pagersize, type, ishow, new HttpCallBackInterface() {
+			
+			@Override
+			public void http_Success(Object obj) {
+				if(obj!=null && obj instanceof RequestBaiJiaOrderListInfoBean)
+				{
+					requestBaiJiaOrderListInfoBean=(RequestBaiJiaOrderListInfoBean)obj;
+					BaiJiaOrderListInfoBean bean=requestBaiJiaOrderListInfoBean.getData();
+					
+					if (bean != null) {
+						int totalPage = bean.getTotalpaged();
+						if (currpage >= totalPage) {
+							pull_refresh_list.setMode(Mode.PULL_FROM_START);
+						} else {
+							pull_refresh_list.setMode(Mode.BOTH);
+						}
+						switch (type) {
+						case 0:
+							falshData(bean);
+							break;
+						case 1:
+							addData(bean);
+							break;
+						}
+					} else {
+						MyApplication.getInstance().showMessage(
+								getActivity(), "没有任何数据");
+					}
+				}
+				
+			}
+			
+			@Override
+			public void http_Fails(int error, String msg) {
+				MyApplication.getInstance().showMessage(getActivity(), msg);
+			}
+		}, getActivity());
+		
 	}
 	
 	/***
 	 * 刷新viewpager数据
 	 * ***/
-	void falshData(HomeProductListInfoBean data) {
-		
+	void falshData(BaiJiaOrderListInfoBean bean) {
+		if(bean==null)
+		{
+			return;
+		}
+		List<BaiJiaOrderListInfo> item=bean.getItems();
+		if(item!=null)
+		{
+			object_list.clear();
+			object_list.addAll(item);
+		}
 		pull_refresh_list.onRefreshComplete();
-		object_list.add(null);
 		if(baiJiaOrderListAdapter!=null)
 		{
 			baiJiaOrderListAdapter.notifyDataSetChanged();
 		}
+		ishow=false;
 	}
 	
 	
 	/***
 	 * 加载数据
 	 * **/
-	void addData(HomeProductListInfoBean data) {
-		
+	void addData(BaiJiaOrderListInfoBean bean) {
+		if(bean==null)
+		{
+			return;
+		}
+		List<BaiJiaOrderListInfo> item=bean.getItems();
+		if(item!=null)
+		{
+			object_list.addAll(item);
+		}
 		pull_refresh_list.onRefreshComplete();
 		object_list.add(null);
 		if(baiJiaOrderListAdapter!=null)

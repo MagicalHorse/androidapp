@@ -63,11 +63,12 @@ int currid=-1;
 		fragmentManager=this.getSupportFragmentManager();
 		baijia_main_framelayout=(FrameLayout)findViewById(R.id.baijia_main_framelayout);
 		baijia_fragment_tab1_head_linearlayout=(LinearLayout)findViewById(R.id.baijia_fragment_tab1_head_linearlayout);
-		
+		 //全部订单 0，待付款 1，专柜自提 2，售后 3
+
 		BaiJiaOrderListFragment allorder= new BaiJiaOrderListFragment(0);
-		BaiJiaOrderListFragment waitpayorder= new BaiJiaOrderListFragment(0);
-		BaiJiaOrderListFragment zitiorder= new BaiJiaOrderListFragment(0);
-		BaiJiaOrderListFragment afterorder= new BaiJiaOrderListFragment(0);
+		BaiJiaOrderListFragment waitpayorder= new BaiJiaOrderListFragment(1);
+		BaiJiaOrderListFragment zitiorder= new BaiJiaOrderListFragment(2);
+		BaiJiaOrderListFragment afterorder= new BaiJiaOrderListFragment(3);
 		
 		fragment_list.add(new FragmentBean("全部",-1,allorder));
 		fragment_list.add(new FragmentBean("待付款",-1,waitpayorder));

@@ -375,4 +375,11 @@ public class HttpConstants {
 	 */
 	public static String METHOD_BUYER_INDEX = BUYER
 			+ "Index";
+	
+	
+	/**
+	 * 败家 -获取订单列表
+	 */
+	
+	public static String GETORDERLIST = Order+ "GetOrderListByState";
 }

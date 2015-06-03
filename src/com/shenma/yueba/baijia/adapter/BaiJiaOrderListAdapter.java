@@ -14,6 +14,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.baijia.modle.BaiJiaOrderListInfo;
+import com.shenma.yueba.baijia.modle.ProductInfoBean;
 import com.shenma.yueba.util.ToolsUtil;
 
 /**  
@@ -23,10 +25,10 @@ import com.shenma.yueba.util.ToolsUtil;
  */
 
 public class BaiJiaOrderListAdapter extends BaseAdapter{
-List<Object> object_list=new ArrayList<Object>();
+List<BaiJiaOrderListInfo> object_list=new ArrayList<BaiJiaOrderListInfo>();
 Context context;
 
-public BaiJiaOrderListAdapter(List<Object> object_list,Context context)
+public BaiJiaOrderListAdapter(List<BaiJiaOrderListInfo> object_list,Context context)
 {
 	this.object_list=object_list;
 	this.context=context;
@@ -79,14 +81,26 @@ public BaiJiaOrderListAdapter(List<Object> object_list,Context context)
 			holder.baijia_orderdetails_cancellreimburse_button=(Button)arg1.findViewById(R.id.baijia_orderdetails_cancellreimburse_button);
 			holder.baijia_orderdetails_cancellreimburse_button.setOnClickListener(onclickListener);
 			
+		}else
+		{
+			holder=(Holder)arg1.getTag();
 		}
-		setValue(arg0);
+		setValue(arg0,holder);
 		return arg1;
 	}
 	
-	void setValue(int i)
+	void setValue(int i,Holder holder)
 	{
-		
+		BaiJiaOrderListInfo bean=object_list.get(i);
+		String address=bean.getAddress();
+		double price=bean.getAmount();
+		String date=bean.getCreateDate();
+		String orderno=Long.toString(bean.getOrderNo());
+		int productType=bean.getOrderProductType();
+		int orderStatus= bean.getOrderStatus();
+		int productCount=bean.getOrderProductCount();
+		ProductInfoBean productInfoBean=bean.getProduct();
+		holder.baijia_orderlayout_item_nickname_textview.setText("");
 	}
 
 	class  Holder
