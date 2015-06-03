@@ -19,7 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.shenma.yueba.R;
-import com.shenma.yueba.baijia.adapter.CircleFragmentPagerAdapter;
+import com.shenma.yueba.baijia.adapter.MyFragmentPagerAdapter;
 import com.shenma.yueba.baijia.fragment.BaseFragment;
 import com.shenma.yueba.util.FontManager;
 
@@ -39,7 +39,7 @@ public class CartFragment extends BaseFragment implements OnClickListener {
 	private Button bt_search, bt_msg;
 	private RelativeLayout rl_my_circle;
 	private View view;
-	private CircleFragmentPagerAdapter myFragmentPagerAdapter;
+	private MyFragmentPagerAdapter myFragmentPagerAdapter;
 	private TextView tv_msg;
 	private TextView tv_dynamic;
 
@@ -165,7 +165,7 @@ public class CartFragment extends BaseFragment implements OnClickListener {
 		dynamicFragment = new DynamicListFragment();
 		fragmentList.add(msgListFragment);
 		fragmentList.add(dynamicFragment);
-		myFragmentPagerAdapter = new CircleFragmentPagerAdapter(
+		myFragmentPagerAdapter = new MyFragmentPagerAdapter(
 				getChildFragmentManager(), fragmentList);
 
 	}

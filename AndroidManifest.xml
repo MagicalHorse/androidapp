@@ -351,12 +351,17 @@
             android:screenOrientation="portrait" />
         <!-- 收入明细-->
         <activity
-            android:name="com.shenma.yueba.yangjia.activity.IncomeDetailActivity"
+            android:name="com.shenma.yueba.yangjia.activity.IncomeDetailActivity2"
             android:screenOrientation="portrait" >
         </activity>
         <!-- 提现历史-->
         <activity
             android:name="com.shenma.yueba.yangjia.activity.WithdrawHistoryActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <!-- 添加圈子 -->
+        <activity
+            android:name="com.shenma.yueba.yangjia.activity.AddCircleActivity"
             android:screenOrientation="portrait" >
         </activity>
         <!-- 自定义相机-->

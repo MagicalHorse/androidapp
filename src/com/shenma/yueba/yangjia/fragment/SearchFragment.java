@@ -20,7 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.shenma.yueba.R;
-import com.shenma.yueba.baijia.adapter.CircleFragmentPagerAdapter;
+import com.shenma.yueba.baijia.adapter.MyFragmentPagerAdapter;
 import com.shenma.yueba.baijia.fragment.BaseFragment;
 import com.shenma.yueba.baijia.fragment.BrandFragment;
 import com.shenma.yueba.util.FontManager;
@@ -43,7 +43,7 @@ public class SearchFragment extends BaseFragment implements OnClickListener {
 	private TextView tv_recommended_circle;
 	private RelativeLayout rl_my_circle;
 	private View view;
-	private CircleFragmentPagerAdapter myFragmentPagerAdapter;
+	private MyFragmentPagerAdapter myFragmentPagerAdapter;
 	private EditText et_search;
 	private TextView tv_brand;//品牌
 	private TextView tv_tag;//标签
@@ -180,7 +180,7 @@ public class SearchFragment extends BaseFragment implements OnClickListener {
 		fragmentList.add(brandFragment);
 		fragmentList.add(tagFragment);
 		fragmentList.add(buyerFragment);
-		myFragmentPagerAdapter = new CircleFragmentPagerAdapter(
+		myFragmentPagerAdapter = new MyFragmentPagerAdapter(
 				getChildFragmentManager(), fragmentList);
 
 	}

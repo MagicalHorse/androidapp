@@ -17,7 +17,7 @@ import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.activity.BuyerCertificationActivity1;
 import com.shenma.yueba.baijia.activity.MyCollectionActivity;
 import com.shenma.yueba.baijia.activity.UserConfigActivity;
-import com.shenma.yueba.baijia.adapter.CircleFragmentPagerAdapter;
+import com.shenma.yueba.baijia.adapter.MyFragmentPagerAdapter;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.yangjia.activity.MainActivityForYangJia;

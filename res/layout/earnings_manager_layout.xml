@@ -91,7 +91,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:padding="10dip"
-                    android:text="收入明细"
+                    android:text="收益明细"
                     android:textSize="20sp" />
             </LinearLayout>
             <LinearLayout

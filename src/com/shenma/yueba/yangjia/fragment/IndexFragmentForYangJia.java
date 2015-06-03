@@ -23,7 +23,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.lidroid.xutils.BitmapUtils;
 import com.shenma.yueba.R;
-import com.shenma.yueba.baijia.adapter.CircleFragmentPagerAdapter;
+import com.shenma.yueba.baijia.adapter.MyFragmentPagerAdapter;
 import com.shenma.yueba.baijia.fragment.BaseFragment;
 import com.shenma.yueba.baijia.fragment.MyBuyerFragment;
 import com.shenma.yueba.baijia.fragment.TheySayFragment;
@@ -60,7 +60,7 @@ public class IndexFragmentForYangJia extends BaseFragment implements
 	private TheySayFragment theySayFragment;// 他们说
 	private MyBuyerFragment myBuyerFragment;// 我的买手
 	private ArrayList<Fragment> fragmentList = new ArrayList<Fragment>();
-	private CircleFragmentPagerAdapter myFragmentPagerAdapter;
+	private MyFragmentPagerAdapter myFragmentPagerAdapter;
 
 	private Income income;
 	
@@ -286,7 +286,7 @@ public class IndexFragmentForYangJia extends BaseFragment implements
 		fragmentList.add(buyerStreetFragment);
 		fragmentList.add(theySayFragment);
 		fragmentList.add(myBuyerFragment);
-		myFragmentPagerAdapter = new CircleFragmentPagerAdapter(
+		myFragmentPagerAdapter = new MyFragmentPagerAdapter(
 				getChildFragmentManager(), fragmentList);
 
 	}

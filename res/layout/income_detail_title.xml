@@ -5,7 +5,6 @@
     android:background="@color/main_bg"
     android:orientation="vertical" >
 
-    
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/top_title_height"
@@ -21,12 +20,12 @@
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/tv_my_circle"
+                android:id="@+id/tv_can_getmoney"
                 android:layout_width="fill_parent"
                 android:layout_height="0dip"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="我的圈子"
+                android:text="可提现"
                 android:textColor="@color/text_gray_color"
                 android:textSize="@dimen/title_text_size" />
 
@@ -41,19 +40,18 @@
         </LinearLayout>
 
         <LinearLayout
-            android:visibility="gone"
             android:layout_width="0dip"
             android:layout_height="fill_parent"
             android:layout_weight="1"
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/tv_my_attetion"
+                android:id="@+id/tv_freezing"
                 android:layout_width="fill_parent"
                 android:layout_height="0dip"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="我的关注"
+                android:text="冻结中"
                 android:textColor="@color/text_gray_color"
                 android:textSize="@dimen/title_text_size" />
 
@@ -74,12 +72,12 @@
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/tv_my_fans"
+                android:id="@+id/tv_disabled"
                 android:layout_width="fill_parent"
                 android:layout_height="0dip"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="我的粉丝"
+                android:text="无效"
                 android:textColor="@color/text_gray_color"
                 android:textSize="@dimen/title_text_size" />
 

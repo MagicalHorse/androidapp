@@ -87,10 +87,10 @@ public class EarningManagerActivity extends BaseActivityWithTopView implements O
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.tv_income_detail://收入明细
-			skip(IncomeDetailActivity.class, true);
+			skip(IncomeDetailActivity2.class, false);
 			break;
 		case R.id.tv_withdraw_cash_history://提现历史
-			skip(WithdrawHistoryActivity.class, true);
+			skip(WithdrawHistoryActivity.class, false);
 			break;
 		
 		default:
