@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
@@ -17,23 +18,23 @@ import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.adapter.MyFragmentPagerAdapter;
 import com.shenma.yueba.util.FontManager;
-import com.shenma.yueba.yangjia.fragment.ProductManagerFragmentForOnLine;
+import com.shenma.yueba.yangjia.fragment.IncomeDetailFragment;
+import com.shenma.yueba.yangjia.fragment.WithdrawHistoryFragment;
 
 /**
- * 商品管理
- * 
+ * 收入明细 
  * @author a
  */
-public class ProductManagerActivity extends BaseFragmentActivity implements
+public class IncomeDetailActivity2 extends BaseFragmentActivity implements
 		OnClickListener {
-	private TextView tv_product_online;
-	private TextView tv_product_will_down;
-	private TextView tv_product_has_down;
+	private TextView tv_can_getmoney;
+	private TextView tv_freezing;
+	private TextView tv_disabled;
 	private ImageView iv_cursor_left, iv_cursor_center, iv_cursor_right;
 	private ViewPager viewpager_main;
-	private ProductManagerFragmentForOnLine productManagerFragmentForOnLine;// 买手街
-	private ProductManagerFragmentForOnLine productManagerFragmentForOnLine2;// 他们说
-	private ProductManagerFragmentForOnLine productManagerFragmentForOnLine3;// 我的买手
+	private IncomeDetailFragment incomeDetailFragment;// 可提现
+	private IncomeDetailFragment incomeDetailFragment2;// 冻结中
+	private IncomeDetailFragment incomeDetailFragment3;// 失效
 	private ArrayList<Fragment> fragmentList = new ArrayList<Fragment>();
 	private MyFragmentPagerAdapter myFragmentPagerAdapter;
 	private TextView tv_top_left;
@@ -46,13 +47,15 @@ public class ProductManagerActivity extends BaseFragmentActivity implements
 	protected void onCreate(Bundle arg0) {
 		MyApplication.getInstance().addActivity(this);//加入回退栈
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.product_manager_layout);
+		setContentView(R.layout.income_detail_layout2);
 		initView();
 		initFragment();
 		initViewPager();
-		productManagerFragmentForOnLine.getData(1,ProductManagerActivity.this);
+		//productManagerFragmentForOnLine.getData(0,WithdrawHistoryActivity.this);
 		super.onCreate(arg0);
 	}
+
+	
 
 	private void initView() {
 
@@ -60,25 +63,25 @@ public class ProductManagerActivity extends BaseFragmentActivity implements
 		tv_top_title = (TextView) findViewById(R.id.tv_top_title);
 		tv_top_left.setVisibility(View.VISIBLE);
 		tv_top_title.setVisibility(View.VISIBLE);
-		tv_top_title.setText("商品管理");
+		tv_top_title.setText("收益明細");
 		tv_top_left.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				ProductManagerActivity.this.finish();
+				IncomeDetailActivity2.this.finish();
 			}
 		});
 		
-		tv_product_online = (TextView) findViewById(R.id.tv_product_online);
-		tv_product_will_down = (TextView) findViewById(R.id.tv_product_will_down);
-		tv_product_has_down = (TextView) findViewById(R.id.tv_product_has_down);
-		tv_product_online.setTextSize(20);
-		tv_product_online.setTextColor(getResources().getColor(R.color.main_color));
-		tv_product_online.setOnClickListener(this);
-		tv_product_will_down.setOnClickListener(this);
-		tv_product_has_down.setOnClickListener(this);
-		titleTextList.add(tv_product_online);
-		titleTextList.add(tv_product_will_down);
-		titleTextList.add(tv_product_has_down);
+		tv_can_getmoney = (TextView) findViewById(R.id.tv_can_getmoney);
+		tv_freezing = (TextView) findViewById(R.id.tv_freezing);
+		tv_disabled = (TextView) findViewById(R.id.tv_disabled);
+		tv_can_getmoney.setTextSize(20);
+		tv_can_getmoney.setTextColor(getResources().getColor(R.color.main_color));
+		tv_can_getmoney.setOnClickListener(this);
+		tv_freezing.setOnClickListener(this);
+		tv_disabled.setOnClickListener(this);
+		titleTextList.add(tv_can_getmoney);
+		titleTextList.add(tv_freezing);
+		titleTextList.add(tv_disabled);
 		
 		iv_cursor_left = (ImageView) findViewById(R.id.iv_cursor_left);
 		iv_cursor_left.setVisibility(View.VISIBLE);
@@ -88,17 +91,17 @@ public class ProductManagerActivity extends BaseFragmentActivity implements
 		cursorImageList.add(iv_cursor_center);
 		cursorImageList.add(iv_cursor_right);
 		viewpager_main = (ViewPager) findViewById(R.id.viewpager_main);
-		FontManager.changeFonts(this, tv_product_online, tv_product_will_down,
-				tv_product_has_down,tv_top_left,tv_top_title);
+		FontManager.changeFonts(this, tv_can_getmoney, tv_freezing,
+				tv_disabled,tv_top_left,tv_top_title);
 	}
 
 	private void initFragment() {
-		productManagerFragmentForOnLine = new ProductManagerFragmentForOnLine(1);
-		productManagerFragmentForOnLine2 = new ProductManagerFragmentForOnLine(2);
-		productManagerFragmentForOnLine3 = new ProductManagerFragmentForOnLine(0);
-		fragmentList.add(productManagerFragmentForOnLine);
-		fragmentList.add(productManagerFragmentForOnLine2);
-		fragmentList.add(productManagerFragmentForOnLine3);
+		incomeDetailFragment = new IncomeDetailFragment(0);
+		incomeDetailFragment2 = new IncomeDetailFragment(1);
+		incomeDetailFragment3 = new IncomeDetailFragment(2);
+		fragmentList.add(incomeDetailFragment);
+		fragmentList.add(incomeDetailFragment2);
+		fragmentList.add(incomeDetailFragment3);
 		myFragmentPagerAdapter = new MyFragmentPagerAdapter(
 				getSupportFragmentManager(), fragmentList);
 
@@ -120,13 +123,6 @@ public class ProductManagerActivity extends BaseFragmentActivity implements
 			 */
 			public void onPageSelected(int arg0) {
 				setCursorAndText(arg0,cursorImageList,titleTextList);
-				if(arg0 == 0){//全部在线商品
-					productManagerFragmentForOnLine.getData(arg0, ProductManagerActivity.this);
-				}else if(arg0 == 1){//即将下线商品
-					productManagerFragmentForOnLine2.getData(arg0, ProductManagerActivity.this);
-				}else if(arg0 == 2){//已经下线
-					productManagerFragmentForOnLine3.getData(arg0, ProductManagerActivity.this);
-				}
 			}
 
 			@Override

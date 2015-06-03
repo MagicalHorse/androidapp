@@ -16,7 +16,7 @@ import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.MainActivityForBaiJia;
 import com.shenma.yueba.baijia.activity.UserConfigActivity;
-import com.shenma.yueba.baijia.adapter.CircleFragmentPagerAdapter;
+import com.shenma.yueba.baijia.adapter.MyFragmentPagerAdapter;
 import com.shenma.yueba.baijia.fragment.BaseFragment;
 import com.shenma.yueba.util.CustomProgressDialog;
 import com.shenma.yueba.util.DialogUtils;

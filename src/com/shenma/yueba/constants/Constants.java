@@ -8,6 +8,9 @@ public class Constants {
 	public static final int CURRPAGE_VALUE=1;//当前页
 	public static final int PAGESIZE_VALUE=10;//没有显示的个数
 	
+	public static final int REQUESTCODE = 100;
+	public static final int RESULTCODE = 101;
+	
 	
 	//网络请求的字段
 	public static final String HTTPCHANNEL="channel";//附加参数

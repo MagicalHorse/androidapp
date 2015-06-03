@@ -2,6 +2,7 @@ package com.shenma.yueba.yangjia.activity;
 
 import java.util.ArrayList;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -15,7 +16,8 @@ import android.widget.TextView;
 import com.shenma.yueba.BaseFragmentActivity;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
-import com.shenma.yueba.baijia.adapter.CircleFragmentPagerAdapter;
+import com.shenma.yueba.baijia.adapter.MyFragmentPagerAdapter;
+import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.yangjia.adapter.MyAttentionAndFansForSocialAdapter;
 import com.shenma.yueba.yangjia.fragment.MyAttentionAndFansForSocialFragment;
@@ -38,7 +40,7 @@ public class SocialManagerActivity extends BaseFragmentActivity implements
 	//private MyAttentionAndFansForSocialFragment myAttentionFragment;//我的关注
 	private MyAttentionAndFansForSocialFragment myFansFragment;// 我的粉丝
 	private ArrayList<Fragment> fragmentList = new ArrayList<Fragment>();
-	private CircleFragmentPagerAdapter myFragmentPagerAdapter;
+	private MyFragmentPagerAdapter myFragmentPagerAdapter;
 	private TextView tv_top_left;
 	private TextView tv_top_title;
 	private int page =1;
@@ -111,7 +113,7 @@ public class SocialManagerActivity extends BaseFragmentActivity implements
 		fragmentList.add(myCircleForSocialFragment);
 		//fragmentList.add(myAttentionFragment);
 		fragmentList.add(myFansFragment);
-		myFragmentPagerAdapter = new CircleFragmentPagerAdapter(
+		myFragmentPagerAdapter = new MyFragmentPagerAdapter(
 				getSupportFragmentManager(), fragmentList);
 
 	}
@@ -168,7 +170,8 @@ public class SocialManagerActivity extends BaseFragmentActivity implements
 			viewpager_main.setCurrentItem(1);
 			break;
 		case R.id.tv_top_right://添加圈子
-			
+			Intent intent = new Intent(SocialManagerActivity.this, AddCircleActivity.class);
+			startActivityForResult(intent, Constants.REQUESTCODE);
 			break;
 		default:
 			break;
@@ -176,4 +179,11 @@ public class SocialManagerActivity extends BaseFragmentActivity implements
 
 	}
 
+	
+	
+	@Override
+	protected void onActivityResult(int arg0, int arg1, Intent arg2) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(arg0, arg1, arg2);
+	}
 }

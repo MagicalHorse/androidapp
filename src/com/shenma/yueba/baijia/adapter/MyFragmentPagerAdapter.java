@@ -11,16 +11,16 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
 
-public class CircleFragmentPagerAdapter extends FragmentPagerAdapter {
+public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
 	private ArrayList<Fragment> listFragments;
 
-	public CircleFragmentPagerAdapter(FragmentManager fm,
+	public MyFragmentPagerAdapter(FragmentManager fm,
 			ArrayList<Fragment> al) {
 		super(fm);
 		listFragments = al;
 	}
 
-	public CircleFragmentPagerAdapter(FragmentManager fm) {
+	public MyFragmentPagerAdapter(FragmentManager fm) {
 		super(fm);
 	}
 

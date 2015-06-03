@@ -19,7 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.shenma.yueba.R;
-import com.shenma.yueba.baijia.adapter.CircleFragmentPagerAdapter;
+import com.shenma.yueba.baijia.adapter.MyFragmentPagerAdapter;
 import com.shenma.yueba.baijia.fragment.MyCircleFragment;
 import com.shenma.yueba.util.FontManager;
 
@@ -40,7 +40,7 @@ public class CircleFragmentForYangJia extends Fragment implements OnClickListene
 	private TextView tv_recommended_circle;
 	private RelativeLayout rl_my_circle;
 	private View view;
-	private CircleFragmentPagerAdapter myFragmentPagerAdapter;
+	private MyFragmentPagerAdapter myFragmentPagerAdapter;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		Log.i("CircleFragment", "oncreate");
@@ -165,7 +165,7 @@ public class CircleFragmentForYangJia extends Fragment implements OnClickListene
 		myCircleFragment = new MyCircleFragment();
 		fragmentList.add(recommendedCircleFragment);
 		fragmentList.add(myCircleFragment);
-		myFragmentPagerAdapter = new CircleFragmentPagerAdapter(
+		myFragmentPagerAdapter = new MyFragmentPagerAdapter(
 				getChildFragmentManager(), fragmentList);
 
 	}

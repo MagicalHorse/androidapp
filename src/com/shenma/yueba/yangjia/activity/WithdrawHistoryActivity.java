@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.shenma.yueba.BaseFragmentActivity;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
-import com.shenma.yueba.baijia.adapter.CircleFragmentPagerAdapter;
+import com.shenma.yueba.baijia.adapter.MyFragmentPagerAdapter;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.yangjia.fragment.ProductManagerFragmentForOnLine;
 import com.shenma.yueba.yangjia.fragment.WithdrawHistoryFragment;
@@ -36,7 +36,7 @@ public class WithdrawHistoryActivity extends BaseFragmentActivity implements
 	private WithdrawHistoryFragment withdrawHistoryFragment2;// 申请完成
 	private WithdrawHistoryFragment withdrawHistoryFragment3;// 申请时效
 	private ArrayList<Fragment> fragmentList = new ArrayList<Fragment>();
-	private CircleFragmentPagerAdapter myFragmentPagerAdapter;
+	private MyFragmentPagerAdapter myFragmentPagerAdapter;
 	private TextView tv_top_left;
 	private TextView tv_top_title;
 	private ArrayList<ImageView> cursorImageList = new ArrayList<ImageView>();
@@ -102,7 +102,7 @@ public class WithdrawHistoryActivity extends BaseFragmentActivity implements
 		fragmentList.add(withdrawHistoryFragment);
 		fragmentList.add(withdrawHistoryFragment2);
 		fragmentList.add(withdrawHistoryFragment3);
-		myFragmentPagerAdapter = new CircleFragmentPagerAdapter(
+		myFragmentPagerAdapter = new MyFragmentPagerAdapter(
 				getSupportFragmentManager(), fragmentList);
 
 	}
