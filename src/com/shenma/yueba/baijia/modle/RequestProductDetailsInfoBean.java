@@ -6,13 +6,15 @@ package com.shenma.yueba.baijia.modle;
  */
 
 public class RequestProductDetailsInfoBean extends BaseRequest{
-	ProductsInfoBean Data=new ProductsInfoBean();
+	ProductsDetailsInfoBean data=new ProductsDetailsInfoBean();
 
-	public ProductsInfoBean getData() {
-		return Data;
+	public ProductsDetailsInfoBean getData() {
+		return data;
 	}
 
-	public void setData(ProductsInfoBean data) {
-		Data = data;
+	public void setData(ProductsDetailsInfoBean data) {
+		this.data = data;
 	}
+
+	
 }
