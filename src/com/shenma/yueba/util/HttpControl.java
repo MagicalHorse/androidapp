@@ -1237,6 +1237,7 @@ public class HttpControl {
 	}
 	
 	
+	
 	private OSSService ossService;
 	private OSSBucket bucket;
 	 // 同步上传数据
