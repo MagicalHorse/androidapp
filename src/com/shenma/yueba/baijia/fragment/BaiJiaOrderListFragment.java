@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.provider.ContactsContract.Contacts;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -79,7 +80,7 @@ public class BaiJiaOrderListFragment extends Fragment {
 		pull_refresh_list.setMode(Mode.BOTH);
 		baiJiaOrderListAdapter=new BaiJiaOrderListAdapter(object_list,getActivity());
 		pull_refresh_list.setAdapter(baiJiaOrderListAdapter);
-		
+		pull_refresh_list.setMode(Mode.PULL_FROM_START);
 		pull_refresh_list.setOnPullEventListener(new OnPullEventListener<ListView>() {
 
 			@Override
@@ -130,6 +131,7 @@ public class BaiJiaOrderListFragment extends Fragment {
 	 * ***/
 	void requestFalshData()
 	{
+		currpage=Constants.CURRPAGE_VALUE;
 		pull_refresh_list.setRefreshing();
 		sendRequestData(0);
 	}
@@ -196,6 +198,7 @@ public class BaiJiaOrderListFragment extends Fragment {
 	 * 刷新viewpager数据
 	 * ***/
 	void falshData(BaiJiaOrderListInfoBean bean) {
+		currpage++;
 		if(bean==null)
 		{
 			return;
@@ -219,6 +222,7 @@ public class BaiJiaOrderListFragment extends Fragment {
 	 * 加载数据
 	 * **/
 	void addData(BaiJiaOrderListInfoBean bean) {
+		currpage++;
 		if(bean==null)
 		{
 			return;
