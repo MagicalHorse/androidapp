@@ -30,11 +30,11 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shenma.yueba.application.MyApplication;
-import com.shenma.yueba.baijia.activity.GuideActivity;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.yangjia.modle.AliYunKeyBackBean;
 import com.shenma.yueba.yangjia.modle.AliYunKeyBean;
@@ -515,7 +515,7 @@ public class ToolsUtil {
 		for(int i=0;i<id.length;i++)
 		{
 			View textview=v.findViewById(id[i]);
-			if(textview!=null && textview instanceof TextView || textview!=null && textview instanceof Button)
+			if(textview!=null && textview instanceof TextView || textview!=null && textview instanceof Button || textview!=null && textview instanceof EditText)
 			{
 				FontManager.changeFonts(context, textview);
 			}
