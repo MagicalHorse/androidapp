@@ -146,12 +146,21 @@ public class BaiJiaOrderListFragment extends Fragment {
 			
 			@Override
 			public void http_Success(Object obj) {
+				pull_refresh_list.onRefreshComplete();
 				if(obj!=null && obj instanceof RequestBaiJiaOrderListInfoBean)
 				{
 					requestBaiJiaOrderListInfoBean=(RequestBaiJiaOrderListInfoBean)obj;
 					BaiJiaOrderListInfoBean bean=requestBaiJiaOrderListInfoBean.getData();
 					
 					if (bean != null) {
+						if(currpage==1)
+						{
+							if(bean.getItems()==null || bean.getItems().size()==0)
+						   {
+								MyApplication.getInstance().showMessage(getActivity(), "还没有订单");
+								return;
+						   }
+						}
 						int totalPage = bean.getTotalpaged();
 						if (currpage >= totalPage) {
 							pull_refresh_list.setMode(Mode.PULL_FROM_START);
@@ -177,6 +186,7 @@ public class BaiJiaOrderListFragment extends Fragment {
 			@Override
 			public void http_Fails(int error, String msg) {
 				MyApplication.getInstance().showMessage(getActivity(), msg);
+				pull_refresh_list.onRefreshComplete();
 			}
 		}, getActivity());
 		

@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
@@ -31,6 +32,7 @@ import com.shenma.yueba.baijia.modle.UsersInfoBean;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
+import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.MyGridView;
 import com.shenma.yueba.view.RoundImageView;
 
@@ -66,6 +68,10 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView {
 	LinearLayout approvebuyerdetails_layout_siliao_linerlayout;
 	//收藏
 	LinearLayout approvebuyerdetails_layout_shoucang_linerlayout;
+	//加入购物车
+	Button approvebuyer_addcartbutton;
+	//直接购买
+	Button approvebuyerbuybutton;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -81,6 +87,7 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView {
 		productID=productPicInfoBean.getId();
 		initViews();
 		initData();
+		setFont();
 	}
 	
 	@SuppressLint("NewApi")
@@ -136,6 +143,9 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView {
 		
 		approvebuyerdetails_layout_siliao_linerlayout=(LinearLayout)findViewById(R.id.approvebuyerdetails_layout_siliao_linerlayout);
 		approvebuyerdetails_layout_shoucang_linerlayout=(LinearLayout)findViewById(R.id.approvebuyerdetails_layout_shoucang_linerlayout);
+		
+		approvebuyer_addcartbutton=(Button)findViewById(R.id.approvebuyer_addcartbutton);
+		approvebuyerbuybutton=(Button)findViewById(R.id.approvebuyerbuybutton);
 	}
 
 	/***
@@ -242,31 +252,11 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView {
 		//商品描述
 		String desc=Data.getProductName();
 		initPic(usericon, approvebuyerdetails_icon_imageview);
-		
-		//设置昵称
 		setdataValue(R.id.approvebuyerdetails_name_textview,username);
-		//成交
-		setdataValue(R.id.appprovebuyerdetails_text1, null);
-		//成交额
-		setdataValue(R.id.appprovebuyerdetails_textvalue1_textview, "");
-		//好评
-		setdataValue(R.id.appprovebuyerdetails_text2, null);
-		//好评值
-		setdataValue(R.id.appprovebuyerdetails_textvalue1_textview, "");
 		//金额
 		setdataValue(R.id.approvebuyerdetails_price_textview, "￥"+Double.toString(price));
 		//商品名称
 		setdataValue(R.id.approvebuyerdetails_producename_textview,desc);
-		//提货提醒
-		setdataValue(R.id.approvebuyerdatails_layout_desc1_textview,null);
-		//自提地点
-		setdataValue(R.id.approvebuyerdetails_address_textview,null);
-		//自提地址
-		setdataValue(R.id.approvebuyerdetails_addressvalue_textview,null);
-		//收藏
-		setdataValue(R.id.approvebuyerdetails_layout_shoucang_linerlayout_textview,null);
-		//私聊
-		setdataValue(R.id.approvebuyerdetails_layout_siliao_linerlayout_textview,null);
 	}
 	
 	
@@ -312,5 +302,36 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView {
 	void initPic(final String url, final ImageView iv) {
 		Log.i("TAG", "URL:"+url);
 		MyApplication.getInstance().getImageLoader().displayImage(url, iv, MyApplication.getInstance().getDisplayImageOptions());
+	}
+	
+	void setFont()
+	{
+		//设置昵称
+				setdataValue(R.id.approvebuyerdetails_name_textview,null);
+				//成交
+				setdataValue(R.id.appprovebuyerdetails_text1, null);
+				//成交额
+				setdataValue(R.id.appprovebuyerdetails_textvalue1_textview, "");
+				//好评
+				setdataValue(R.id.appprovebuyerdetails_text2, null);
+				//好评值
+				setdataValue(R.id.appprovebuyerdetails_textvalue1_textview, "");
+				//金额
+				setdataValue(R.id.approvebuyerdetails_price_textview, null);
+				//商品名称
+				setdataValue(R.id.approvebuyerdetails_producename_textview,null);
+				//提货提醒
+				setdataValue(R.id.approvebuyerdatails_layout_desc1_textview,null);
+				//自提地点
+				setdataValue(R.id.approvebuyerdetails_address_textview,null);
+				//自提地址
+				setdataValue(R.id.approvebuyerdetails_addressvalue_textview,null);
+				//收藏
+				setdataValue(R.id.approvebuyerdetails_layout_shoucang_linerlayout_textview,null);
+				//私聊
+				setdataValue(R.id.approvebuyerdetails_layout_siliao_linerlayout_textview,null);
+				FontManager.changeFonts(this, approvebuyer_addcartbutton);
+				FontManager.changeFonts(this, approvebuyerbuybutton);
+				
 	}
 }

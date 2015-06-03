@@ -9,14 +9,30 @@ import java.io.Serializable;
  */
 
 public class BaiJiaOrderListInfo implements Serializable{
+	String BuyerName="";//买手昵称"
 	long OrderNo;//订单编号"
     int OrderProductType;//订单类型
     int OrderStatus;// 状态值
-    int OrderProductCount;//商品数量
+    String OrderStatusStr="";// 状态描述字符串
+	int OrderProductCount;//商品数量
     double Amount;//收益
     String CreateDate="";// 创建时间
     String Address="";//地址
     ProductInfoBean Product=new ProductInfoBean();//商品详情
+    
+    public String getBuyerName() {
+		return BuyerName;
+	}
+	public void setBuyerName(String buyerName) {
+		BuyerName = buyerName;
+	}
+	public String getOrderStatusStr() {
+		return OrderStatusStr;
+	}
+	public void setOrderStatusStr(String orderStatusStr) {
+		OrderStatusStr = orderStatusStr;
+	}
+    
 	public long getOrderNo() {
 		return OrderNo;
 	}

@@ -352,6 +352,7 @@ public class MyBuyerFragment extends Fragment {
 
 					@Override
 					public void http_Success(Object obj) {
+						pulltorefreshscrollview.onRefreshComplete();
 						if (obj != null
 								&& obj instanceof RequestProductListInfoBean) {
 							RequestProductListInfoBean bean = (RequestProductListInfoBean) obj;
@@ -382,7 +383,7 @@ public class MyBuyerFragment extends Fragment {
 
 					@Override
 					public void http_Fails(int error, String msg) {
-
+						pulltorefreshscrollview.onRefreshComplete();
 						MyApplication.getInstance().showMessage(getActivity(),
 								msg);
 					}

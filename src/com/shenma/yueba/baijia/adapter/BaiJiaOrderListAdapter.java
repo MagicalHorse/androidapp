@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.modle.BaiJiaOrderListInfo;
 import com.shenma.yueba.baijia.modle.ProductInfoBean;
 import com.shenma.yueba.util.ToolsUtil;
@@ -80,7 +81,7 @@ public BaiJiaOrderListAdapter(List<BaiJiaOrderListInfo> object_list,Context cont
 			holder.baijia_orderdetails_pay_button.setOnClickListener(onclickListener);
 			holder.baijia_orderdetails_cancellreimburse_button=(Button)arg1.findViewById(R.id.baijia_orderdetails_cancellreimburse_button);
 			holder.baijia_orderdetails_cancellreimburse_button.setOnClickListener(onclickListener);
-			
+			arg1.setTag(holder);
 		}else
 		{
 			holder=(Holder)arg1.getTag();
@@ -100,7 +101,22 @@ public BaiJiaOrderListAdapter(List<BaiJiaOrderListInfo> object_list,Context cont
 		int orderStatus= bean.getOrderStatus();
 		int productCount=bean.getOrderProductCount();
 		ProductInfoBean productInfoBean=bean.getProduct();
-		holder.baijia_orderlayout_item_nickname_textview.setText("");
+		holder.baijia_orderlayout_item_nickname_textview.setText(bean.getBuyerName());
+		holder.baijia_orderlayout_item_status_textview.setText(bean.getOrderStatusStr());
+		holder.affirmorder_item_productname_textview.setText(productInfoBean.getName());
+		holder.affirmorder_item_productsize_textview.setText(productInfoBean.getProductdesc());
+		holder.affirmorder_item_productcount_textview.setText("x"+productInfoBean.getProductCount());
+		holder.affirmorder_item_productprice_textview.setText("x"+productInfoBean.getPrice());
+		holder.baijia_orderdetails_lianxibuyer_textview.setText("x"+bean.getAddress());
+		holder.baijia_orderlayout_item_pricevalue_textview.setText("共"+bean.getOrderProductCount()+"件商品");
+		holder.baijia_orderlayout_item_price_textview.setText(bean.getAmount()+"");
+		holder.affirmorder_item_icon_imageview.setTag(productInfoBean.getProductId());
+		initPic(holder.affirmorder_item_icon_imageview,ToolsUtil.getImage(productInfoBean.getImage(), 320, 0));
+		
+		holder.baijia_orderdetails_sqtk_button.setTag(bean);
+		holder.baijia_orderdetails_ziti_button.setTag(bean);
+		holder.baijia_orderdetails_pay_button.setTag(bean);
+		holder.baijia_orderdetails_cancellreimburse_button.setTag(bean);
 	}
 
 	class  Holder
@@ -115,7 +131,7 @@ public BaiJiaOrderListAdapter(List<BaiJiaOrderListInfo> object_list,Context cont
 		TextView baijia_orderlayout_item_producecount_textview;//产品件数
 		TextView baijia_orderlayout_item_pricevalue_textview;//产品总计
 		TextView baijia_orderlayout_item_price_textview;//实付提示
-		TextView baijia_orderdetails_lianxibuyer_textview;//店名
+		TextView baijia_orderdetails_lianxibuyer_textview;//地址
 		
 		Button baijia_orderdetails_sqtk_button;//申请退款
 		Button baijia_orderdetails_ziti_button;//确认提货
@@ -148,4 +164,9 @@ public BaiJiaOrderListAdapter(List<BaiJiaOrderListInfo> object_list,Context cont
 			}
 		}
 	};
+	
+	void initPic(ImageView iv,String url)
+	{
+		MyApplication.getInstance().getImageLoader().displayImage(url, iv);
+	}
 }
