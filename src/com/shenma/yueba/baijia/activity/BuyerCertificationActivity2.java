@@ -323,13 +323,13 @@ private void setData(){
 			
 			@Override
 			public void http_Success(Object obj) {
-				// TODO Auto-generated method stub
-				
+				MyApplication.getInstance().removeAllActivity();
+				Intent intent = new Intent(mContext, MainActivityForBaiJia.class);
+				startActivity(intent);
 			}
 			
 			@Override
 			public void http_Fails(int error, String msg) {
-				// TODO Auto-generated method stub
 				
 			}
 		}, BuyerCertificationActivity2.this);
