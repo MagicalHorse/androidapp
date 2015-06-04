@@ -194,7 +194,7 @@ public class BuyerStreetFragment extends Fragment {
 					@Override
 					public void onPageSelected(int arg0) {
 						currid = arg0;
-						setcurrItem(arg0);
+						//setcurrItem(arg0);
 					}
 
 					@Override
@@ -524,6 +524,7 @@ public class BuyerStreetFragment extends Fragment {
 			for (int i = 0; i < Banners.size(); i++) {
 				ImageView imageView =new ImageView(getActivity());
 				imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+				imageView.setImageResource(R.drawable.default_pic);
 				imageViewlist.add(imageView);
 			}
 		}
@@ -607,7 +608,7 @@ public class BuyerStreetFragment extends Fragment {
 	 * **/
 	void startTimeToViewPager() {
 		stopTimerToViewPager();
-		if (imageViewlist == null || imageViewlist.size() <= 1) {
+		if (imageViewlist == null || imageViewlist.size() <= 2) {
 			return;
 		}
 		timer = new Timer();
@@ -651,8 +652,8 @@ public class BuyerStreetFragment extends Fragment {
 
 			if (imageViewlist.size() < 1) {
 				return 0;
-			} else if (imageViewlist.size() == 1) {
-				return 1;
+			} else if (imageViewlist.size() <=2) {
+				return 2;
 			} else {
 				return Integer.MAX_VALUE;
 			}
@@ -660,11 +661,13 @@ public class BuyerStreetFragment extends Fragment {
 
 		@Override
 		public Object instantiateItem(ViewGroup container, int position) {
-			ImageView imageview=imageViewlist.get(position%imageViewlist.size());
+			int a=position%imageViewlist.size();
+			Log.i("TAG", "A:"+a);
+			ImageView imageview=imageViewlist.get(a);
 			if (imageview.getParent() != null) {
 				((ViewGroup) imageview.getParent()).removeView(imageview);
 			}
-			imageview.setImageResource(R.drawable.default_pic);
+			//imageview.setImageResource(R.drawable.default_pic);
 			imageview.setScaleType(ScaleType.FIT_XY);
 			imageview.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT));
 			container.addView(imageview, 0);

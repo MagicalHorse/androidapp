@@ -21,5 +21,9 @@
     <dimen name="shop_main_width300_dimen">300dp</dimen>
     <dimen name="size90">90dp</dimen>
     <dimen name="textsize20">20dip</dimen>
+    <dimen name="textsize12sp">12sp</dimen>
     <dimen name="textsize13sp">13sp</dimen>
+    <dimen name="textsize15sp">15sp</dimen>
+    <dimen name="textsize18sp">18sp</dimen>
+    <dimen name="textsize20sp">20sp</dimen>
 </resources>

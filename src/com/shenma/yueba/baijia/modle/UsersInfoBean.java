@@ -11,7 +11,13 @@ import java.io.Serializable;
 public class UsersInfoBean implements Serializable{
 	int UserId;//用户id
 	String Logo;//用户头像
-	String likeTime;//时间
+	String LikeTime;//时间
+	public String getLikeTime() {
+		return LikeTime;
+	}
+	public void setLikeTime(String likeTime) {
+		LikeTime = likeTime;
+	}
 	public int getUserId() {
 		return UserId;
 	}
@@ -23,12 +29,6 @@ public class UsersInfoBean implements Serializable{
 	}
 	public void setLogo(String logo) {
 		Logo = logo;
-	}
-	public String getLikeTime() {
-		return likeTime;
-	}
-	public void setLikeTime(String likeTime) {
-		this.likeTime = likeTime;
 	}
 
 }

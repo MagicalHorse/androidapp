@@ -102,11 +102,12 @@
             android:paddingRight="@dimen/shop_main_lineheight10_dimen"
             android:id="@+id/buyersteetfragmeng_item_share_button"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/shop_main_marginleft30_dimen"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:background="@color/color_lightgrey"
             android:drawableLeft="@drawable/share"
+            android:textSize="@dimen/textsize13sp"
             android:text="分享" />
 
         <Button
@@ -116,12 +117,13 @@
             android:paddingRight="@dimen/shop_main_lineheight10_dimen"
             android:id="@+id/buyersteetfragmeng_item_siliao_button"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/shop_main_marginleft30_dimen"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/shop_main_width5_dimen"
             android:layout_toLeftOf="@id/buyersteetfragmeng_item_share_button"
             android:background="@color/color_lightgrey"
             android:drawableLeft="@drawable/circle_default"
+            android:textSize="@dimen/textsize13sp"
             android:text="私聊" />
     </RelativeLayout>
 
