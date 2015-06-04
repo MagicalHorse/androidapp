@@ -113,16 +113,16 @@ public class BuyerCertificationActivity2 extends BaseActivityWithTopView impleme
 
 	private void getIntentData() {
 		bean = new ApplyAuthBuyerBean();
-		CardBean cardFrontBean = new CardBean();
-		CardBean cardBackBean = new CardBean();
-		CardBean workBackBean = new CardBean();
+//		CardBean cardFrontBean = new CardBean();
+//		CardBean cardBackBean = new CardBean();
+//		CardBean workBackBean = new CardBean();
 		Intent intent = getIntent();
-		cardFrontBean.setKey(intent.getStringExtra("pic1"));
-		cardBackBean.setKey(intent.getStringExtra("pic2"));
-		workBackBean.setKey(intent.getStringExtra("pic3"));
-		bean.setWorkCard(workBackBean);
-		bean.setCardFront(cardFrontBean);
-		bean.setCardBack(cardBackBean);
+//		cardFrontBean.setKey(intent.getStringExtra("pic1"));
+//		cardBackBean.setKey(intent.getStringExtra("pic2"));
+//		workBackBean.setKey(intent.getStringExtra("pic3"));
+		bean.setWorkCard(intent.getStringExtra("pic3"));
+		bean.setCardFront(intent.getStringExtra("pic1"));
+		bean.setCardBack(intent.getStringExtra("pic2"));
 	}
 
 	private void initView() {

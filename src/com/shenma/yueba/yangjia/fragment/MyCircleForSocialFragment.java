@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 
@@ -38,6 +39,7 @@ public class MyCircleForSocialFragment extends BaseFragment {
 	private PullToRefreshListView pull_refresh_list;
 	private MyCircleForSocialAdapter adapter;
 	private List<CirlceItemBean> mList = new ArrayList<CirlceItemBean>();
+	public TextView tv_nodata;
 	private int page = 1;
 	private boolean isRefresh = true;
 	@Override
@@ -50,6 +52,7 @@ public class MyCircleForSocialFragment extends BaseFragment {
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(
 				R.layout.refresh_listview_without_title_layout, null);
+		tv_nodata = (TextView) view.findViewById(R.id.tv_nodata);
 		pull_refresh_list = (PullToRefreshListView) view.findViewById(R.id.pull_refresh_list);
 		pull_refresh_list.setAdapter(adapter);
 		pull_refresh_list.setOnItemClickListener(new OnItemClickListener() {
@@ -95,11 +98,14 @@ public class MyCircleForSocialFragment extends BaseFragment {
 				pull_refresh_list.onRefreshComplete();
 				CircleListBackBean bean = (CircleListBackBean) obj;
 				if (isRefresh) {
-					if(bean!=null && bean.getData()!=null && bean.getData().getItems()!=null){
+					if(bean!=null && bean.getData()!=null && bean.getData().getItems()!=null&& bean.getData().getItems().size()>0){
+						tv_nodata.setVisibility(View.GONE);
 						mList.clear();
 						mList.addAll(bean.getData().getItems());
 						adapter = new MyCircleForSocialAdapter(getActivity(), mList);
 						pull_refresh_list.setAdapter(adapter);
+					}else{
+						tv_nodata.setVisibility(View.VISIBLE);
 					}
 				} else {
 					if(bean!=null && bean.getData()!=null && bean.getData().getItems()!=null){
@@ -113,7 +119,7 @@ public class MyCircleForSocialFragment extends BaseFragment {
 			
 			@Override
 			public void http_Fails(int error, String msg) {
-				// TODO Auto-generated method stub
+				Toast.makeText(getActivity(),msg, 1000).show();
 				
 			}
 		}, ctx);

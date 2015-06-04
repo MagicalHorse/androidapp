@@ -1,11 +1,12 @@
 package com.shenma.yueba.camera;
 
-
 import java.io.File;
 import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.FeatureInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
@@ -26,16 +27,17 @@ import com.linj.camera.view.CameraContainer.TakePictureListener;
 import com.linj.camera.view.CameraView.FlashMode;
 import com.shenma.yueba.R;
 
-/** 
- * @ClassName: CameraAty 
- * @Description:  自定义照相机类
+/**
+ * @ClassName: CameraAty
+ * @Description: 自定义照相机类
  * @author LinJ
- * @date 2014-12-31 上午9:44:25 
- *  
+ * @date 2014-12-31 上午9:44:25
+ * 
  */
-public class CameraAty extends Activity implements View.OnClickListener,TakePictureListener{
-	public final static String TAG="CameraAty";
-	private boolean mIsRecordMode=false;
+public class CameraAty extends Activity implements View.OnClickListener,
+		TakePictureListener {
+	public final static String TAG = "CameraAty";
+	private boolean mIsRecordMode = false;
 	private String mSaveRoot;
 	private CameraContainer mContainer;
 	private FilterImageView mThumbView;
@@ -44,10 +46,11 @@ public class CameraAty extends Activity implements View.OnClickListener,TakePict
 	private TextView mFlashView;
 	private ImageButton mSwitchModeButton;
 	private TextView mSwitchCameraView;
-	//private ImageView mSettingView;
+	// private ImageView mSettingView;
 	private ImageView mVideoIconView;
 	private View mHeaderBar;
-	private boolean isRecording=false;
+	private boolean isRecording = false;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -56,11 +59,11 @@ public class CameraAty extends Activity implements View.OnClickListener,TakePict
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.camera);
 
-		mHeaderBar=findViewById(R.id.camera_header_bar);
-		mContainer=(CameraContainer)findViewById(R.id.container);
-		mThumbView=(FilterImageView)findViewById(R.id.btn_thumbnail);
-		mVideoIconView=(ImageView)findViewById(R.id.videoicon);
-		mCameraShutterButton=(ImageButton)findViewById(R.id.btn_shutter_camera);
+		mHeaderBar = findViewById(R.id.camera_header_bar);
+		mContainer = (CameraContainer) findViewById(R.id.container);
+		mThumbView = (FilterImageView) findViewById(R.id.btn_thumbnail);
+		mVideoIconView = (ImageView) findViewById(R.id.videoicon);
+		mCameraShutterButton = (ImageButton) findViewById(R.id.btn_shutter_camera);
 		mCameraShutterButton.setOnLongClickListener(new OnLongClickListener() {
 			@Override
 			public boolean onLongClick(View v) {
@@ -68,12 +71,11 @@ public class CameraAty extends Activity implements View.OnClickListener,TakePict
 				return false;
 			}
 		});
-		mRecordShutterButton=(ImageButton)findViewById(R.id.btn_shutter_record);
-		mSwitchCameraView=(TextView)findViewById(R.id.btn_switch_camera);
-		mFlashView=(TextView)findViewById(R.id.btn_flash_mode);
-		mSwitchModeButton=(ImageButton)findViewById(R.id.btn_switch_mode);
-//		mSettingView=(ImageView)findViewById(R.id.btn_other_setting);
-
+		mRecordShutterButton = (ImageButton) findViewById(R.id.btn_shutter_record);
+		mSwitchCameraView = (TextView) findViewById(R.id.btn_switch_camera);
+		mFlashView = (TextView) findViewById(R.id.btn_flash_mode);
+		mSwitchModeButton = (ImageButton) findViewById(R.id.btn_switch_mode);
+		// mSettingView=(ImageView)findViewById(R.id.btn_other_setting);
 
 		mThumbView.setOnClickListener(this);
 		mCameraShutterButton.setOnClickListener(this);
@@ -81,32 +83,33 @@ public class CameraAty extends Activity implements View.OnClickListener,TakePict
 		mFlashView.setOnClickListener(this);
 		mSwitchModeButton.setOnClickListener(this);
 		mSwitchCameraView.setOnClickListener(this);
-//		mSettingView.setOnClickListener(this);
+		// mSettingView.setOnClickListener(this);
 
-		mSaveRoot="test";
+		mSaveRoot = "test";
 		mContainer.setRootPath(mSaveRoot);
 		initThumbnail();
 	}
-
 
 	/**
 	 * 加载缩略图
 	 */
 	private void initThumbnail() {
-		String thumbFolder=FileOperateUtil.getFolderPath(this, FileOperateUtil.TYPE_THUMBNAIL, mSaveRoot);
-		List<File> files=FileOperateUtil.listFiles(thumbFolder, ".jpg");
-		if(files!=null&&files.size()>0){
-			Bitmap thumbBitmap=BitmapFactory.decodeFile(files.get(0).getAbsolutePath());
-			if(thumbBitmap!=null){
+		String thumbFolder = FileOperateUtil.getFolderPath(this,
+				FileOperateUtil.TYPE_THUMBNAIL, mSaveRoot);
+		List<File> files = FileOperateUtil.listFiles(thumbFolder, ".jpg");
+		if (files != null && files.size() > 0) {
+			Bitmap thumbBitmap = BitmapFactory.decodeFile(files.get(0)
+					.getAbsolutePath());
+			if (thumbBitmap != null) {
 				mThumbView.setImageBitmap(thumbBitmap);
-				//视频缩略图显示播放图案
-				if(files.get(0).getAbsolutePath().contains("video")){
+				// 视频缩略图显示播放图案
+				if (files.get(0).getAbsolutePath().contains("video")) {
 					mVideoIconView.setVisibility(View.VISIBLE);
-				}else {
+				} else {
 					mVideoIconView.setVisibility(View.GONE);
 				}
 			}
-		}else {
+		} else {
 			mThumbView.setImageBitmap(null);
 			mVideoIconView.setVisibility(View.VISIBLE);
 		}
@@ -122,98 +125,115 @@ public class CameraAty extends Activity implements View.OnClickListener,TakePict
 			mContainer.takePicture(this);
 			break;
 		case R.id.btn_thumbnail:
-			startActivity(new Intent(this,AlbumAty.class));
+			startActivity(new Intent(this, AlbumAty.class));
 			break;
 		case R.id.btn_flash_mode:
-			if(mContainer.getFlashMode()==FlashMode.ON){
-				mContainer.setFlashMode(FlashMode.OFF);
-				Drawable drawable= getResources().getDrawable(R.drawable.btn_flash_off);  
-				drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());  
-				mFlashView.setCompoundDrawables(drawable,null,null,null); 
-				mFlashView.setText("关闭");
-			}else if (mContainer.getFlashMode()==FlashMode.OFF) {
-				mContainer.setFlashMode(FlashMode.AUTO);
-				Drawable drawable= getResources().getDrawable(R.drawable.btn_flash_auto);  
-				drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());  
-				mFlashView.setCompoundDrawables(drawable,null,null,null); 
-				mFlashView.setText("自动");
-			}
-			else if (mContainer.getFlashMode()==FlashMode.AUTO) {
-				mContainer.setFlashMode(FlashMode.TORCH);
-				Drawable drawable= getResources().getDrawable(R.drawable.btn_flash_torch);  
-				drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());  
-				mFlashView.setCompoundDrawables(drawable,null,null,null); 
-				mFlashView.setText("长亮");
-			}
-			else if (mContainer.getFlashMode()==FlashMode.TORCH) {
-				mContainer.setFlashMode(FlashMode.ON);
-				Drawable drawable= getResources().getDrawable(R.drawable.btn_flash_on);  
-				drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());  
-				mFlashView.setCompoundDrawables(drawable,null,null,null); 
-				mFlashView.setText("开启");
+			PackageManager pm = getPackageManager();
+			FeatureInfo[] features = pm.getSystemAvailableFeatures();
+			for (FeatureInfo f : features) {
+				if (PackageManager.FEATURE_CAMERA_FLASH.equals(f.name)) // 判断设备是否支持闪光灯
+				{
+					if (mContainer.getFlashMode() == FlashMode.ON) {
+						mContainer.setFlashMode(FlashMode.OFF);
+						Drawable drawable = getResources().getDrawable(
+								R.drawable.btn_flash_off);
+						drawable.setBounds(0, 0, drawable.getMinimumWidth(),
+								drawable.getMinimumHeight());
+						mFlashView.setCompoundDrawables(drawable, null, null,
+								null);
+						mFlashView.setText("关闭");
+					} else if (mContainer.getFlashMode() == FlashMode.OFF) {
+						mContainer.setFlashMode(FlashMode.AUTO);
+						Drawable drawable = getResources().getDrawable(
+								R.drawable.btn_flash_auto);
+						drawable.setBounds(0, 0, drawable.getMinimumWidth(),
+								drawable.getMinimumHeight());
+						mFlashView.setCompoundDrawables(drawable, null, null,
+								null);
+						mFlashView.setText("自动");
+					} else if (mContainer.getFlashMode() == FlashMode.AUTO) {
+						mContainer.setFlashMode(FlashMode.TORCH);
+						Drawable drawable = getResources().getDrawable(
+								R.drawable.btn_flash_torch);
+						drawable.setBounds(0, 0, drawable.getMinimumWidth(),
+								drawable.getMinimumHeight());
+						mFlashView.setCompoundDrawables(drawable, null, null,
+								null);
+						mFlashView.setText("长亮");
+					} else if (mContainer.getFlashMode() == FlashMode.TORCH) {
+						mContainer.setFlashMode(FlashMode.ON);
+						Drawable drawable = getResources().getDrawable(
+								R.drawable.btn_flash_on);
+						drawable.setBounds(0, 0, drawable.getMinimumWidth(),
+								drawable.getMinimumHeight());
+						mFlashView.setCompoundDrawables(drawable, null, null,
+								null);
+						mFlashView.setText("开启");
+					}
+				}
 			}
 			break;
 		case R.id.btn_switch_mode:
-			if(mIsRecordMode){
+			if (mIsRecordMode) {
 				mSwitchModeButton.setImageResource(R.drawable.ic_switch_camera);
 				mCameraShutterButton.setVisibility(View.VISIBLE);
 				mRecordShutterButton.setVisibility(View.GONE);
-				//拍照模式下显示顶部菜单
+				// 拍照模式下显示顶部菜单
 				mHeaderBar.setVisibility(View.VISIBLE);
-				mIsRecordMode=false;
+				mIsRecordMode = false;
 				mContainer.switchMode(0);
 				stopRecord();
-			}
-			else {
+			} else {
 				mSwitchModeButton.setImageResource(R.drawable.ic_switch_video);
 				mCameraShutterButton.setVisibility(View.GONE);
 				mRecordShutterButton.setVisibility(View.VISIBLE);
-				//录像模式下隐藏顶部菜单 
+				// 录像模式下隐藏顶部菜单
 				mHeaderBar.setVisibility(View.GONE);
-				mIsRecordMode=true;
+				mIsRecordMode = true;
 				mContainer.switchMode(5);
 			}
 			break;
 		case R.id.btn_shutter_record:
-			if(!isRecording){
-				isRecording=mContainer.startRecord();
+			if (!isRecording) {
+				isRecording = mContainer.startRecord();
 				if (isRecording) {
-					mRecordShutterButton.setBackgroundResource(R.drawable.btn_shutter_recording);
+					mRecordShutterButton
+							.setBackgroundResource(R.drawable.btn_shutter_recording);
 				}
-			}else {
-				stopRecord();	
+			} else {
+				stopRecord();
 			}
 			break;
 		case R.id.btn_switch_camera:
 			mContainer.switchCamera();
 			break;
-//		case R.id.btn_other_setting:
-//			mContainer.setWaterMark();
-//			break;
+		// case R.id.btn_other_setting:
+		// mContainer.setWaterMark();
+		// break;
 		default:
 			break;
 		}
 	}
 
-
 	private void stopRecord() {
 		mContainer.stopRecord(this);
-		isRecording=false;
-		mRecordShutterButton.setBackgroundResource(R.drawable.btn_shutter_record);
-	}
-	
-	@Override
-	public void onTakePictureEnd(Bitmap thumBitmap) {
-		mCameraShutterButton.setClickable(true);	
+		isRecording = false;
+		mRecordShutterButton
+				.setBackgroundResource(R.drawable.btn_shutter_record);
 	}
 
 	@Override
-	public void onAnimtionEnd(Bitmap bm,boolean isVideo) {
-		if(bm!=null){
-			//生成缩略图
-			Bitmap thumbnail=ThumbnailUtils.extractThumbnail(bm, 213, 213);
+	public void onTakePictureEnd(Bitmap thumBitmap) {
+		mCameraShutterButton.setClickable(true);
+	}
+
+	@Override
+	public void onAnimtionEnd(Bitmap bm, boolean isVideo) {
+		if (bm != null) {
+			// 生成缩略图
+			Bitmap thumbnail = ThumbnailUtils.extractThumbnail(bm, 213, 213);
 			mThumbView.setImageBitmap(thumbnail);
-			if(isVideo)
+			if (isVideo)
 				mVideoIconView.setVisibility(View.VISIBLE);
 			else {
 				mVideoIconView.setVisibility(View.GONE);
@@ -222,7 +242,7 @@ public class CameraAty extends Activity implements View.OnClickListener,TakePict
 	}
 
 	@Override
-	protected void onResume() {		
+	protected void onResume() {
 		super.onResume();
 	}
 }

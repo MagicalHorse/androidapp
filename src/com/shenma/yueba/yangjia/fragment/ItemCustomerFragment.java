@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -39,6 +40,7 @@ public class ItemCustomerFragment extends BaseFragment {
 	private int tag = 0;
 	private String orderProductType;
 	private String status;
+	public TextView tv_nodata;
 
 	@SuppressLint("ValidFragment")
 	public ItemCustomerFragment(int tag) {
@@ -52,6 +54,7 @@ public class ItemCustomerFragment extends BaseFragment {
 			rootView = inflater.inflate(
 					R.layout.refresh_listview_without_title_layout, container,
 					false);
+			tv_nodata = (TextView) rootView.findViewById(R.id.tv_nodata);
 			rlv = (PullToRefreshListView) rootView
 					.findViewById(R.id.pull_refresh_list);
 			rlv.setMode(Mode.BOTH);
@@ -133,11 +136,17 @@ public class ItemCustomerFragment extends BaseFragment {
 						rlv.onRefreshComplete();
 						OrderListBackBean bean = (OrderListBackBean) obj;
 						if (isRefresh) {
-							mList.clear();
-							mList.addAll(bean.getData().getOrderlist());
-							adapter = new SalesManagerForAttestationBuyerAdapter(
-									getActivity(), mList, 0);
-							rlv.setAdapter(adapter);
+							if(bean.getData()!=null && bean.getData().getOrderlist()!=null && bean.getData().getOrderlist().size()>0){
+								tv_nodata.setVisibility(View.GONE);
+								mList.clear();
+								mList.addAll(bean.getData().getOrderlist());
+								adapter = new SalesManagerForAttestationBuyerAdapter(
+										getActivity(), mList, 0);
+								rlv.setAdapter(adapter);
+							}else{
+								tv_nodata.setVisibility(View.VISIBLE);
+							}
+							
 						} else {
 							if(bean.getData().getOrderlist()!=null && bean.getData().getOrderlist().size()>0){
 								mList.addAll(bean.getData().getOrderlist());
