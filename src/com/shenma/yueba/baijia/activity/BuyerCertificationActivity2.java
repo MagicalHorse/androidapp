@@ -323,8 +323,7 @@ private void setData(){
 			
 			@Override
 			public void http_Success(Object obj) {
-				MyApplication.getInstance().removeAllActivity();
-				Intent intent = new Intent(mContext, MainActivityForBaiJia.class);
+				Intent intent = new Intent(mContext, ApplyResultActivity.class);
 				startActivity(intent);
 			}
 			

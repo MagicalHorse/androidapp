@@ -122,11 +122,11 @@ public class ProductManagerActivity extends BaseFragmentActivity implements
 				setCursorAndText(arg0,cursorImageList,titleTextList);
 				if(arg0 == 0){//全部在线商品
 					productManagerFragmentForOnLine2.tv_nodata.setVisibility(View.GONE);
-					productManagerFragmentForOnLine3.tv_nodata.setVisibility(View.GONE);
+//					productManagerFragmentForOnLine3.tv_nodata.setVisibility(View.GONE);
 					productManagerFragmentForOnLine.getData(arg0, ProductManagerActivity.this);
 				}else if(arg0 == 1){//即将下线商品
 					productManagerFragmentForOnLine.tv_nodata.setVisibility(View.GONE);
-					productManagerFragmentForOnLine3.tv_nodata.setVisibility(View.GONE);
+//					productManagerFragmentForOnLine3.tv_nodata.setVisibility(View.GONE);
 					productManagerFragmentForOnLine2.getData(arg0, ProductManagerActivity.this);
 				}else if(arg0 == 2){//已经下线
 					productManagerFragmentForOnLine2.tv_nodata.setVisibility(View.GONE);
