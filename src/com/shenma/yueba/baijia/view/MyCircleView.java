@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
-import android.os.SystemClock;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,9 +17,14 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.State;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.shenma.yueba.R;
-import com.shenma.yueba.baijia.adapter.MyCircleAdapter;
-import com.shenma.yueba.baijia.modle.MyBuyerBean;
-import com.shenma.yueba.baijia.modle.MyCircleBean;
+import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.adapter.BaiJiaMyCircleAdapter;
+import com.shenma.yueba.baijia.modle.MyCircleInfo;
+import com.shenma.yueba.baijia.modle.MyCircleInfoBean;
+import com.shenma.yueba.baijia.modle.RequestMyCircleInfoBean;
+import com.shenma.yueba.constants.Constants;
+import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 
 /**
  * 我的买手
@@ -30,14 +34,18 @@ import com.shenma.yueba.baijia.modle.MyCircleBean;
  */
 
 public class MyCircleView {
-	private List<MyCircleBean> mList = new ArrayList<MyCircleBean>();
 	private View view;
 	private PullToRefreshListView pull_refresh_list;
 	LinearLayout showloading_layout_view;
 	static MyCircleView myCircleView;
 	Activity activity;
 	LayoutInflater inflater;
-	MyCircleAdapter myCircleAdapter;
+	BaiJiaMyCircleAdapter myCircleAdapter;
+	int currPage=Constants.CURRPAGE_VALUE;
+	int pageSize=Constants.PAGESIZE_VALUE;
+	boolean showDialog=true;
+	HttpControl httpCntrol=new HttpControl();
+	List<MyCircleInfo> items=new ArrayList<MyCircleInfo>();
 	public static MyCircleView the()
 	{
 		if(myCircleView==null)
@@ -72,7 +80,7 @@ public class MyCircleView {
 	{
 		pull_refresh_list=(PullToRefreshListView)view.findViewById(R.id.pull_refresh_list);
 		showloading_layout_view=(LinearLayout)view.findViewById(R.id.showloading_layout_view);
-		pull_refresh_list.setMode(Mode.BOTH);
+		pull_refresh_list.setMode(Mode.PULL_FROM_START);
 		 
 		pull_refresh_list.setOnPullEventListener(new OnPullEventListener<ListView>() {
 
@@ -114,7 +122,7 @@ public class MyCircleView {
 				requestData();
 			}
 		});
-		myCircleAdapter=new MyCircleAdapter(activity, mList);
+		myCircleAdapter=new BaiJiaMyCircleAdapter(activity, items);
 		pull_refresh_list.setAdapter(myCircleAdapter);
 	}
 	
@@ -122,68 +130,92 @@ public class MyCircleView {
 	void requestData()
 	{
 		pull_refresh_list.setRefreshing();
-		new Thread()
-		{
-			public void run() {
-				SystemClock.sleep(100);
-				activity.runOnUiThread(new Runnable() {
-					
-					@Override
-					public void run() {
-						
-						addData();
-					}
-				});
-			};
-		}.start();
+		sendHttp(1);
 	}
 	
 	void requestFalshData()
 	{
+		currPage=Constants.CURRPAGE_VALUE;
 		pull_refresh_list.setRefreshing();
-		new Thread()
+		sendHttp(0);
+	}
+	
+	
+	void addData(MyCircleInfoBean bean)
+	{
+		currPage++;
+		if(bean.getItems()!=null)
 		{
-			public void run() {
-				SystemClock.sleep(100);
-				activity.runOnUiThread(new Runnable() {
-					
-					@Override
-					public void run() {
-						
-						falshData();
+			items.addAll(bean.getItems());
+		}
+		showloading_layout_view.setVisibility(View.GONE);
+		myCircleAdapter.notifyDataSetChanged();
+		//ListUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
+		pull_refresh_list.onRefreshComplete();
+	}
+	
+	void falshData(MyCircleInfoBean bean)
+	{
+		currPage++;
+		items.clear();
+		if(bean.getItems()!=null)
+		{
+			items.addAll(bean.getItems());
+		}
+		showloading_layout_view.setVisibility(View.GONE);
+		myCircleAdapter.notifyDataSetChanged();
+		
+		//ListUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
+		pull_refresh_list.onRefreshComplete();
+		
+	}
+	
+	
+	void sendHttp(final int type)
+	{
+		httpCntrol.getMyCircle(currPage, pageSize, showDialog, new HttpCallBackInterface() {
+			
+			@Override
+			public void http_Success(Object obj) {
+				showDialog=false;
+				if(obj!=null && obj instanceof RequestMyCircleInfoBean)
+				{
+					RequestMyCircleInfoBean bean=(RequestMyCircleInfoBean)obj;
+					if (bean != null) {
+						if(currPage==1)
+						{
+							if(bean.getData()==null)
+						   {
+								MyApplication.getInstance().showMessage(activity, "还没有订单");
+								return;
+						   }
+						}
+						int totalPage = bean.getTotalpaged();
+						if (currPage >= totalPage) {
+							pull_refresh_list.setMode(Mode.PULL_FROM_START);
+						} else {
+							pull_refresh_list.setMode(Mode.BOTH);
+						}
+						switch (type) {
+						case 0:
+							falshData(bean.getData());
+							break;
+						case 1:
+							addData(bean.getData());
+							break;
+						}
+					} else {
+						MyApplication.getInstance().showMessage(
+								activity, "没有任何数据");
 					}
-				});
-			};
-		}.start();
-	}
-	
-	
-	void addData()
-	{
-		for(int i=0;i<10;i++)
-		{
-			mList.add(new MyCircleBean());
+				}
+				
+			}
 			
-		}
-		showloading_layout_view.setVisibility(View.GONE);
-		myCircleAdapter.notifyDataSetChanged();
-		//ListUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
-		pull_refresh_list.onRefreshComplete();
-	}
-	
-	void falshData()
-	{
-		mList.clear();
-		for(int i=0;i<10;i++)
-		{
-			mList.add(new MyCircleBean());
-			
-		}
-		showloading_layout_view.setVisibility(View.GONE);
-		myCircleAdapter.notifyDataSetChanged();
-		
-		//ListUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
-		pull_refresh_list.onRefreshComplete();
-		
+			@Override
+			public void http_Fails(int error, String msg) {
+				MyApplication.getInstance().showMessage(activity, msg);
+			}
+		},activity );
 	}
 }

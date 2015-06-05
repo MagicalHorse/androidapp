@@ -1,11 +1,14 @@
 package com.shenma.yueba.baijia.modle;
+
+import java.io.Serializable;
+
 /**  
  * @author gyj  
  * @version 创建时间：2015-6-3 下午4:43:18  
  * 程序的简单说明  
  */
 
-public class ProductsDetailsInfoBean {
+public class ProductsDetailsInfoBean implements Serializable{
 	int BuyerId;//买手id
 	String BuyerName="";// 买手名字
 	String CreateTime="";//创建时间
@@ -15,6 +18,14 @@ public class ProductsDetailsInfoBean {
 	double Price;//价格
 	String ProductName="";// 产品名字
 	int ProductId; //产品编号
+	String BuyerMobile="";//手机号
+	
+	public String getBuyerMobile() {
+		return BuyerMobile;
+	}
+	public void setBuyerMobile(String buyerMobile) {
+		BuyerMobile = buyerMobile;
+	}
 	//关注的人
 	LikeUsersInfoBean LikeUsers=new LikeUsersInfoBean();
 	//买手推荐商品信息

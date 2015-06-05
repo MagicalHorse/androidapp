@@ -37,6 +37,8 @@ import com.shenma.yueba.baijia.modle.CityListBackBean;
 import com.shenma.yueba.baijia.modle.CityListRequestBean;
 import com.shenma.yueba.baijia.modle.ProvinceCityListBeanRequest;
 import com.shenma.yueba.baijia.modle.RequestBaiJiaOrderListInfoBean;
+import com.shenma.yueba.baijia.modle.RequestBrandInfoBean;
+import com.shenma.yueba.baijia.modle.RequestMyCircleInfoBean;
 import com.shenma.yueba.baijia.modle.RequestProductDetailsInfoBean;
 import com.shenma.yueba.baijia.modle.RequestProductListInfoBean;
 import com.shenma.yueba.baijia.modle.RequestUploadProductInfoBean;
@@ -761,6 +763,46 @@ public class HttpControl {
 	}
 	
 	
+	
+	
+	/**
+	 * 获取败家我的圈子
+	 * @param currPage int 当前页
+	 * @param pageSize int 条数
+     * @return void
+	 * **/
+	public void getMyCircle(int currPage,int pageSize,boolean showDialog,final HttpCallBackInterface httpCallBack,Context context) {
+		Map<String, String> map=new HashMap<String, String>();
+		map.put(Constants.PAGE, currPage+"");
+		map.put(Constants.PAGESIZE, pageSize+"");
+		BasehttpSend(map, context, HttpConstants.GETMYCIRCLE, httpCallBack, RequestMyCircleInfoBean.class, showDialog, true);
+	}
+	
+	/**
+	 * 获取败家推荐的圈子
+	 * @param currPage int 当前页
+	 * @param pageSize int 条数
+     * @return void
+	 * **/
+	public void getRecommendGroup(int currPage,int pageSize,boolean showDialog,final HttpCallBackInterface httpCallBack,Context context) {
+		Map<String, String> map=new HashMap<String, String>();
+		map.put(Constants.PAGE, currPage+"");
+		map.put(Constants.PAGESIZE, pageSize+"");
+		BasehttpSend(map, context, HttpConstants.GETRECOMMENDGROUP, httpCallBack, RequestMyCircleInfoBean.class, showDialog, true);
+	}
+	
+	/**
+	 * 获取败家获取按品牌划分的商品列表（发现→品牌界面）(败家)
+	 * @param currPage int 当前页
+	 * @param pageSize int 条数
+     * @return void
+	 * **/
+	public void getBrandProductList(int currPage,int pageSize,boolean showDialog,final HttpCallBackInterface httpCallBack,Context context) {
+		Map<String, String> map=new HashMap<String, String>();
+		map.put(Constants.PAGE, currPage+"");
+		map.put(Constants.PAGESIZE, pageSize+"");
+		BasehttpSend(map, context, HttpConstants.GETBRANDPRODUCTLIST, httpCallBack, RequestBrandInfoBean.class, showDialog, true);
+	}
 	
 	
 	

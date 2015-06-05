@@ -45,15 +45,21 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.inject.Inject;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.activity.AffirmOrderActivity;
 import com.shenma.yueba.baijia.adapter.ChattingListViewAdapter;
 import com.shenma.yueba.baijia.modle.MyMessage;
+import com.shenma.yueba.baijia.modle.ProductsDetailsInfoBean;
+import com.shenma.yueba.baijia.modle.RequestProductDetailsInfoBean;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.db.DBHelper;
+import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.MyPreference;
 import com.shenma.yueba.util.NetUtils;
 import com.shenma.yueba.util.SoftKeyboardUtil;
@@ -66,8 +72,7 @@ import com.shenma.yueba.view.faceview.FaceView.OnChickCallback;
  * 聊天页面
  * 
  */
-public class ChatActivity extends RoboActivity implements OnClickListener,
-		OnChickCallback {
+public class ChatActivity extends RoboActivity implements OnClickListener,OnChickCallback {
 	private static final int REQUEST_CODE_EMPTY_HISTORY = 2;
 	public static final int REQUEST_CODE_CONTEXT_MENU = 3;
 	private static final int REQUEST_CODE_MAP = 4;
@@ -111,7 +116,8 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 	private int position;
 	private ClipboardManager clipboard;
 	private InputMethodManager manager;
-	@Inject DBHelper dbhelper;//数据库帮助类对象
+	@Inject
+	DBHelper dbhelper;// 数据库帮助类对象
 	private int chatType;
 	public static ChatActivity activityInstance = null;
 	// 给谁发送消息
@@ -127,7 +133,8 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 	private Button btnMore;
 	private FaceView fView;
 	private PullToRefreshListView chat_list;
-	private ChattingListViewAdapter chatAdapter;//聊天列表adapter
+	private ChattingListViewAdapter chatAdapter;// 聊天列表adapter
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -137,51 +144,46 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 		initDataFromHistory();
 	}
 
-	
-	
-	
-	
-	
 	/**
 	 * 初始化历史数据
 	 */
 	private void initDataFromHistory() {
-//		String userId = MyPreference
-//				.getStringValue(ChatActivity.this,Constants.USERID);
-//		String friendMobile = PublicMethod.spitJidBeforeAt(jid);
-//		
-//		if (dbhelper.selectAllMsgByUserIdAndMyId(userId, friendMobile) != null) {
-//			listData = dbhelper.selectAllMsgByUserIdAndMyId(userId,
-//					friendMobile);
-//		}
+		// String userId = MyPreference
+		// .getStringValue(ChatActivity.this,Constants.USERID);
+		// String friendMobile = PublicMethod.spitJidBeforeAt(jid);
+		//
+		// if (dbhelper.selectAllMsgByUserIdAndMyId(userId, friendMobile) !=
+		// null) {
+		// listData = dbhelper.selectAllMsgByUserIdAndMyId(userId,
+		// friendMobile);
+		// }
 		chatAdapter = new ChattingListViewAdapter(mList, this);
-//		FriendListBean bean = dbhelper.selectFriendInfoById(jid);// 查询聊天的好友信息
-//		MyMessage msg = dbhelper.getChatUserInfoById(PublicMethod
-//				.spitJidBeforeAt(jid));// 查询非好友聊天的顾客信息
-//		if (bean != null) {
-//			tv_theme.setText((bean.getFriend_nickName() != null) ? bean
-//					.getFriend_nickName() : PublicMethod
-//					.nullToString(PublicMethod.spitJidBeforeAt(jid)));// 设置标题
-//			chatAdapter.setImageForOther(bean.getFriend_headImage());// 设置头像
-//		} else if (msg != null) {
-//			tv_theme.setText((msg.getNickname() != null) ? msg.getNickname()
-//					: PublicMethod.nullToString(PublicMethod
-//							.spitJidBeforeAt(jid)));// 设置标题
-//			chatAdapter.setImageForOther(msg.getHeadImg());// 设置头像
-//		} else {
-//			tv_theme.setText(PublicMethod.spitJidBeforeAt(jid));
-//		}
+		// FriendListBean bean = dbhelper.selectFriendInfoById(jid);// 查询聊天的好友信息
+		// MyMessage msg = dbhelper.getChatUserInfoById(PublicMethod
+		// .spitJidBeforeAt(jid));// 查询非好友聊天的顾客信息
+		// if (bean != null) {
+		// tv_theme.setText((bean.getFriend_nickName() != null) ? bean
+		// .getFriend_nickName() : PublicMethod
+		// .nullToString(PublicMethod.spitJidBeforeAt(jid)));// 设置标题
+		// chatAdapter.setImageForOther(bean.getFriend_headImage());// 设置头像
+		// } else if (msg != null) {
+		// tv_theme.setText((msg.getNickname() != null) ? msg.getNickname()
+		// : PublicMethod.nullToString(PublicMethod
+		// .spitJidBeforeAt(jid)));// 设置标题
+		// chatAdapter.setImageForOther(msg.getHeadImg());// 设置头像
+		// } else {
+		// tv_theme.setText(PublicMethod.spitJidBeforeAt(jid));
+		// }
 		chat_list.setAdapter(chatAdapter);
-//		chatList.setSelection(listData.size());
+		// chatList.setSelection(listData.size());
 	}
 
-	
-	
-	
 	/**
 	 * initView
 	 */
 	protected void initView() {
+		setProduct();
+
 		manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 		getWindow().setSoftInputMode(
 				WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -363,7 +365,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 		if (btnContainer.getVisibility() != View.VISIBLE
 				&& fView.getVisibility() != View.VISIBLE) {
 			super.onBackPressed();
-		}else{
+		} else {
 			if (btnContainer.getVisibility() == View.VISIBLE) {
 				btnContainer.setVisibility(View.GONE);
 			}
@@ -457,40 +459,34 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 		case R.id.iv_emoticons_normal:// 点击显示表情框
 			showOrHideIMM();
 			break;
-		case R.id.btn_send://发送消息
+		case R.id.btn_send:// 发送消息
 			String content = mEditTextContent.getText().toString().trim();
 			if ("".equals(content)) {
-				Toast.makeText(ChatActivity.this,  "发送消息不能为空", 1000).show();
+				Toast.makeText(ChatActivity.this, "发送消息不能为空", 1000).show();
 				return;
 			}
-			if(!NetUtils.isNetworkConnected(this)){
-				Toast.makeText(ChatActivity.this,  "网络不可用", 1000).show();
+			if (!NetUtils.isNetworkConnected(this)) {
+				Toast.makeText(ChatActivity.this, "网络不可用", 1000).show();
 				return;
 			}
-			dbhelper.saveTextMsg(
-					MyPreference.getStringValue(ChatActivity.this,Constants.USERID),
-					"", content, "false",
-					"true", Constants.NORMAL, ToolsUtil.getCurrentTime());
-//			dbhelper.saveLastMsg(
-//					MyPreference.getStringValue(ChatActivity.this,Constants.USERID),
-//					PublicMethod.spitJidBeforeAt(jid), content, "false",
-//					"true", Constants.NORMAL, PublicMethod.getCurrentTime());
-		//	xmppservice.sendMsg(jid, content);
-			setListDate(MyPreference.getStringValue(ChatActivity.this,Constants.USERID),
-					"111", content, "false", "true",
+			dbhelper.saveTextMsg(MyPreference.getStringValue(ChatActivity.this,
+					Constants.USERID), "", content, "false", "true",
+					Constants.NORMAL, ToolsUtil.getCurrentTime());
+			// dbhelper.saveLastMsg(
+			// MyPreference.getStringValue(ChatActivity.this,Constants.USERID),
+			// PublicMethod.spitJidBeforeAt(jid), content, "false",
+			// "true", Constants.NORMAL, PublicMethod.getCurrentTime());
+			// xmppservice.sendMsg(jid, content);
+			setListDate(MyPreference.getStringValue(ChatActivity.this,
+					Constants.USERID), "111", content, "false", "true",
 					ToolsUtil.getCurrentTime());
-			        mEditTextContent.setText("");
+			mEditTextContent.setText("");
 		default:
 			break;
 		}
-		
-		
-		
-		
+
 	}
 
-	
-	
 	/**
 	 * 将自己发送的普通文字消息刷新到listview上
 	 */
@@ -503,10 +499,9 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 		myMsg2.setMsgTime(msgTime);
 		mList.add(myMsg2);
 		chatAdapter.notifyDataSetChanged();
-//		chat_list.setSelection(mList.size());
+		// chat_list.setSelection(mList.size());
 	}
-	
-	
+
 	/**
 	 * 显示表情
 	 */
@@ -574,5 +569,59 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 		ss.setSpan(span, 0, arg2.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 		mEditTextContent.getText().insert(mEditTextContent.getSelectionStart(),
 				ss);
+	}
+
+	/*****
+	 * 设置商品信息
+	 * ***/
+	void setProduct() {
+		// 产品图片
+		ImageView chat_product_head_layout_imageview = (ImageView) findViewById(R.id.chat_product_head_layout_imageview);
+		// 产品名称
+		TextView chat_product_head_layout_name_textview = (TextView) findViewById(R.id.chat_product_head_layout_name_textview);
+		// 价格
+		TextView chat_product_head_layout_price_textview = (TextView) findViewById(R.id.chat_product_head_layout_price_textview);
+		// 立即购买
+		Button chat_product_head_layout_button = (Button) findViewById(R.id.chat_product_head_layout_button);
+		chat_product_head_layout_button.setEnabled(false);
+		chat_product_head_layout_button.setOnClickListener(new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						Intent intent = new Intent(ChatActivity.this,AffirmOrderActivity.class);
+						intent.putExtra("DATA", (RequestProductDetailsInfoBean)v.getTag());
+						startActivity(intent);
+					}
+				});
+		Object obj = this.getIntent().getSerializableExtra("DATA");
+		if (obj != null && obj instanceof RequestProductDetailsInfoBean) {
+			RequestProductDetailsInfoBean bean = (RequestProductDetailsInfoBean) obj;
+			ProductsDetailsInfoBean productsDetailsInfoBean = bean.getData();
+			if (productsDetailsInfoBean != null) {
+				String[] pic_array = productsDetailsInfoBean.getProductPic();
+				chat_product_head_layout_button.setTag(bean);
+				if (pic_array != null && pic_array.length > 0) {
+					MyApplication
+							.getInstance()
+							.getImageLoader()
+							.displayImage(
+									ToolsUtil.nullToString(ToolsUtil.getImage(
+											pic_array[0], 320, 0)),
+									chat_product_head_layout_imageview);
+				}
+
+				chat_product_head_layout_name_textview
+						.setText(ToolsUtil.nullToString(productsDetailsInfoBean
+								.getProductName()));
+				chat_product_head_layout_price_textview
+						.setText(ToolsUtil.nullToString("￥"
+								+ productsDetailsInfoBean.getPrice()));
+				chat_product_head_layout_button.setEnabled(true);
+			}
+
+		} else {
+			chat_product_head_layout_button.setEnabled(false);
+		}
+         FontManager.changeFonts(this, chat_product_head_layout_name_textview,chat_product_head_layout_name_textview,chat_product_head_layout_price_textview,chat_product_head_layout_button);
 	}
 }
