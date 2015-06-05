@@ -37,6 +37,7 @@ import com.shenma.yueba.baijia.modle.CityListBackBean;
 import com.shenma.yueba.baijia.modle.CityListRequestBean;
 import com.shenma.yueba.baijia.modle.ProvinceCityListBeanRequest;
 import com.shenma.yueba.baijia.modle.RequestBaiJiaOrderListInfoBean;
+import com.shenma.yueba.baijia.modle.RequestBrandCityWideInfoBean;
 import com.shenma.yueba.baijia.modle.RequestBrandInfoBean;
 import com.shenma.yueba.baijia.modle.RequestMyCircleInfoBean;
 import com.shenma.yueba.baijia.modle.RequestProductDetailsInfoBean;
@@ -743,7 +744,7 @@ public class HttpControl {
 	 * **/
 	public void getCircleList(int page,boolean showDialog,final HttpCallBackInterface httpCallBack,Context context) {
 		Map<String, String> map=new HashMap<String, String>();
-		map.put(Constants.PAGE, page+"");
+		map.put(Constants.PAGE, Integer.toString(page));
 		map.put(Constants.PAGESIZE, Constants.PageSize);
 		BasehttpSend(map, context, HttpConstants.METHOD_CIRCLE_GETBUYERGROUPS, httpCallBack, CircleListBackBean.class, showDialog, true);
 	}
@@ -755,7 +756,7 @@ public class HttpControl {
 		Map<String, String> map=new HashMap<String, String>();
 		map.put(Constants.NAME, name);
 		map.put(Constants.LOGO, logo);
-		BasehttpSend(map, context, HttpConstants.METHOD_CIRCLE_GETBUYERGROUPS, httpCallBack, CircleListBackBean.class, showDialog, true);
+		BasehttpSend(map, context, HttpConstants.METHOD_CIRCLE_GETBUYERGROUPS, httpCallBack, BaseRequest.class, showDialog, true);
 	}
 	
 	/**
@@ -767,8 +768,8 @@ public class HttpControl {
 	 * **/
 	public void getBaijiaOrderList(int currPage,int pageSize,int State,boolean showDialog,final HttpCallBackInterface httpCallBack,Context context) {
 		Map<String, String> map=new HashMap<String, String>();
-		map.put(Constants.PAGE, currPage+"");
-		map.put(Constants.PAGESIZE, pageSize+"");
+		map.put(Constants.PAGE, Integer.toString(currPage));
+		map.put(Constants.PAGESIZE, Integer.toString(pageSize));
 		BasehttpSend(map, context, HttpConstants.GETORDERLIST, httpCallBack, RequestBaiJiaOrderListInfoBean.class, showDialog, true);
 	}
 	
@@ -783,8 +784,8 @@ public class HttpControl {
 	 * **/
 	public void getMyCircle(int currPage,int pageSize,boolean showDialog,final HttpCallBackInterface httpCallBack,Context context) {
 		Map<String, String> map=new HashMap<String, String>();
-		map.put(Constants.PAGE, currPage+"");
-		map.put(Constants.PAGESIZE, pageSize+"");
+		map.put(Constants.PAGE, Integer.toString(currPage));
+		map.put(Constants.PAGESIZE, Integer.toString(pageSize));
 		BasehttpSend(map, context, HttpConstants.GETMYCIRCLE, httpCallBack, RequestMyCircleInfoBean.class, showDialog, true);
 	}
 	
@@ -796,8 +797,8 @@ public class HttpControl {
 	 * **/
 	public void getRecommendGroup(int currPage,int pageSize,boolean showDialog,final HttpCallBackInterface httpCallBack,Context context) {
 		Map<String, String> map=new HashMap<String, String>();
-		map.put(Constants.PAGE, currPage+"");
-		map.put(Constants.PAGESIZE, pageSize+"");
+		map.put(Constants.PAGE, Integer.toString(currPage));
+		map.put(Constants.PAGESIZE, Integer.toString(pageSize));
 		BasehttpSend(map, context, HttpConstants.GETRECOMMENDGROUP, httpCallBack, RequestMyCircleInfoBean.class, showDialog, true);
 	}
 	
@@ -809,9 +810,24 @@ public class HttpControl {
 	 * **/
 	public void getBrandProductList(int currPage,int pageSize,boolean showDialog,final HttpCallBackInterface httpCallBack,Context context) {
 		Map<String, String> map=new HashMap<String, String>();
-		map.put(Constants.PAGE, currPage+"");
-		map.put(Constants.PAGESIZE, pageSize+"");
+		map.put(Constants.PAGE, Integer.toString(currPage));
+		map.put(Constants.PAGESIZE, Integer.toString(pageSize));
 		BasehttpSend(map, context, HttpConstants.GETBRANDPRODUCTLIST, httpCallBack, RequestBrandInfoBean.class, showDialog, true);
+	}
+	
+	/**
+	 * 获取同城用户的商品列表（发现→同城界面）(败家
+	 * @param currPage int 当前页
+	 * @param pageSize int 条数
+	 * @param CityId  int  城市编号 int 条数
+     * @return void
+	 * **/
+	public void getBrandCity_Wide(int currPage,int pageSize,int CityId,boolean showDialog,final HttpCallBackInterface httpCallBack,Context context) {
+		Map<String, String> map=new HashMap<String, String>();
+		map.put(Constants.PAGE, Integer.toString(currPage));
+		map.put(Constants.PAGESIZE, Integer.toString(pageSize));
+		map.put("CityId", Integer.toString(CityId));
+		BasehttpSend(map, context, HttpConstants.GETBRANDPRODUCTLIST, httpCallBack, RequestBrandCityWideInfoBean.class, showDialog, true);
 	}
 	
 	
