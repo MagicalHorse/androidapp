@@ -17,6 +17,7 @@ public class BuyerIndexInfo extends BaseRequest implements Serializable {
 	private Favorite favorite;
 	private Order order;
 	private Income income;
+	private Goodsamount goodsamount;
 	public Product getProduct() {
 		return product;
 	}
@@ -55,6 +56,12 @@ public class BuyerIndexInfo extends BaseRequest implements Serializable {
 	}
 	public void setShopname(String shopname) {
 		this.shopname = shopname;
+	}
+	public Goodsamount getGoodsamount() {
+		return goodsamount;
+	}
+	public void setGoodsamount(Goodsamount goodsamount) {
+		this.goodsamount = goodsamount;
 	}
 
 
