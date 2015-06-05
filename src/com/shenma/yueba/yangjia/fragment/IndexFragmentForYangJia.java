@@ -30,6 +30,7 @@ import com.shenma.yueba.baijia.fragment.TheySayFragment;
 import com.shenma.yueba.baijia.modle.BuyerIndexInfo;
 import com.shenma.yueba.baijia.modle.BuyerIndexInfoBean;
 import com.shenma.yueba.baijia.modle.Favorite;
+import com.shenma.yueba.baijia.modle.Goodsamount;
 import com.shenma.yueba.baijia.modle.Income;
 import com.shenma.yueba.baijia.modle.Order;
 import com.shenma.yueba.baijia.modle.Product;
@@ -399,8 +400,13 @@ public class IndexFragmentForYangJia extends BaseFragment implements
 				BuyerIndexInfo data = bean.getData();
 				
 				
+				
 				String codeUrl = data.getBarcode();
 				String shopName = data.getShopname();
+				Goodsamount goodsamount = data.getGoodsamount();
+				tv_today_huokuan_money.setText(ToolsUtil.nullToString(goodsamount.getTodaygoodsamount()));
+				tv_all_huokuan_money.setText(ToolsUtil.nullToString(goodsamount.getTotalgoodsamount()));
+				
 				bitmapUtils.display(iv_qr_code, codeUrl);
 				urlList.add(codeUrl);
 				tv_qr_name.setText(ToolsUtil.nullToString(shopName));

@@ -1311,7 +1311,7 @@ public class HttpControl {
 	private OSSService ossService;
 	private OSSBucket bucket;
 	 // 同步上传数据
-    public void syncUpload(final int tag,String imageLocalPath,SaveCallback callBack) {
+    public void syncUpload(String imageLocalPath,SaveCallback callBack) {
     	ossService = OSSServiceProvider.getService();
 		bucket = ossService.getOssBucket("apprss");
 		OSSFile bigfFile = ossService.getOssFile(bucket, imageLocalPath.substring(imageLocalPath.lastIndexOf("/")+1,imageLocalPath.length()));

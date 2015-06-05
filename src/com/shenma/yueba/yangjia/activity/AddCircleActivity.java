@@ -70,7 +70,7 @@ public class AddCircleActivity extends BaseActivityWithTopView implements OnClic
 		setTopRightTextView("完成", new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				uploadImage(progressDialog, littlePicPath_cache);
+				uploadImage(littlePicPath_cache);
 			}
 		});
 		tv_cirlce_head_title = getView(R.id.tv_cirlce_head_title);
