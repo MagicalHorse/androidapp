@@ -54,6 +54,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.AffirmOrderActivity;
 import com.shenma.yueba.baijia.adapter.ChattingListViewAdapter;
+import com.shenma.yueba.baijia.dialog.CreateOrderDialog;
 import com.shenma.yueba.baijia.modle.MyMessage;
 import com.shenma.yueba.baijia.modle.ProductsDetailsInfoBean;
 import com.shenma.yueba.baijia.modle.RequestProductDetailsInfoBean;
@@ -134,7 +135,8 @@ public class ChatActivity extends RoboActivity implements OnClickListener,OnChic
 	private FaceView fView;
 	private PullToRefreshListView chat_list;
 	private ChattingListViewAdapter chatAdapter;// 聊天列表adapter
-	
+	RequestProductDetailsInfoBean bean;
+	CreateOrderDialog createOrderDialog;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -588,14 +590,17 @@ public class ChatActivity extends RoboActivity implements OnClickListener,OnChic
 
 					@Override
 					public void onClick(View v) {
-						Intent intent = new Intent(ChatActivity.this,AffirmOrderActivity.class);
-						intent.putExtra("DATA", (RequestProductDetailsInfoBean)v.getTag());
-						startActivity(intent);
+						if(createOrderDialog!=null)
+						{
+							createOrderDialog.cancel();
+						}
+						createOrderDialog=new CreateOrderDialog(ChatActivity.this, (RequestProductDetailsInfoBean)v.getTag());
+						createOrderDialog.show();
 					}
 				});
 		Object obj = this.getIntent().getSerializableExtra("DATA");
 		if (obj != null && obj instanceof RequestProductDetailsInfoBean) {
-			RequestProductDetailsInfoBean bean = (RequestProductDetailsInfoBean) obj;
+			bean = (RequestProductDetailsInfoBean) obj;
 			ProductsDetailsInfoBean productsDetailsInfoBean = bean.getData();
 			if (productsDetailsInfoBean != null) {
 				String[] pic_array = productsDetailsInfoBean.getProductPic();

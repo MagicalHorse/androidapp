@@ -16,6 +16,7 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.ContactsContract.Contacts;
 import android.util.Log;
 
 import com.alibaba.sdk.android.oss.OSSService;
@@ -29,6 +30,7 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
+import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.modle.ApplyAuthBuyerBean;
 import com.shenma.yueba.baijia.modle.BaseRequest;
 import com.shenma.yueba.baijia.modle.BrandDetailInfoBean;
@@ -669,6 +671,7 @@ public class HttpControl {
 	public void getMyBuyerProductDetails(int ProductId,final HttpCallBackInterface httpCallBack,Context context) {
 		Map<String, String> map=new HashMap<String, String>();
 		map.put("productId", Integer.toString(ProductId));
+		map.put("UserId",ToolsUtil.nullToString(SharedUtil.getStringPerfernece(context,SharedUtil.user_id)));
 		BasehttpSend(map, context, HttpConstants.METHOD_PRODUCTMANAGER_DETAIL, httpCallBack, RequestProductDetailsInfoBean.class, true, true);
 	}
 	

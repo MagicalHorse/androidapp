@@ -1,6 +1,8 @@
 package com.shenma.yueba.baijia.modle;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**  
  * @author gyj  
@@ -19,7 +21,21 @@ public class ProductsDetailsInfoBean implements Serializable{
 	String ProductName="";// 产品名字
 	int ProductId; //产品编号
 	String BuyerMobile="";//手机号
+	boolean IsFavorite=false;//是否收藏
+	List<PrioductSizesInfoBean> Sizes=new ArrayList<PrioductSizesInfoBean>();
 	
+	public boolean isIsFavorite() {
+		return IsFavorite;
+	}
+	public void setIsFavorite(boolean isFavorite) {
+		IsFavorite = isFavorite;
+	}
+	public List<PrioductSizesInfoBean> getSizes() {
+		return Sizes;
+	}
+	public void setSizes(List<PrioductSizesInfoBean> sizes) {
+		Sizes = sizes;
+	}
 	public String getBuyerMobile() {
 		return BuyerMobile;
 	}
