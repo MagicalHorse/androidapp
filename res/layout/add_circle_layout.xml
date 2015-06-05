@@ -9,34 +9,7 @@
         android:background="@color/main_bg"
         android:orientation="vertical" >
 
-        <include layout="@layout/title_for_common"/>
-        
-        <TextView
-            android:id="@+id/tv_circle_title"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:padding="10dip"
-            android:text="圈子成员"
-            android:textColor="@color/text_gray_color"
-            android:textSize="18sp" />
-
-        <View style="@style/style_horizontal_line" />
-
-        <com.shenma.yueba.view.MyGridView
-            android:id="@+id/gv_circle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:cacheColorHint="#00000000"
-            android:columnWidth="65dp"
-            android:gravity="center"
-            android:horizontalSpacing="10dip"
-            android:listSelector="@color/transparent"
-            android:numColumns="auto_fit"
-            android:padding="10dp"
-            android:stretchMode="columnWidth"
-            android:verticalSpacing="10dp" />
+        <include layout="@layout/title_for_common" />
 
         <View style="@style/style_horizontal_line" />
 
@@ -45,34 +18,6 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:orientation="vertical" >
-
-            <RelativeLayout
-                android:id="@+id/rl_qrcode"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="5dip"
-                android:paddingTop="5dip" >
-
-                <TextView
-                    android:id="@+id/tv_cirlce_qrcode_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:padding="10dip"
-                    android:text="圈子二维码"
-                    android:textColor="@color/text_gray_color"
-                    android:textSize="18sp" />
-
-                <ImageView
-                    android:id="@+id/iv_qrcode"
-                    android:layout_width="30dip"
-                    android:layout_height="30dip"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="22dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/default_pic" />
-            </RelativeLayout>
 
             <View
                 style="@style/style_horizontal_line"
@@ -95,23 +40,16 @@
                     android:textColor="@color/text_gray_color"
                     android:textSize="18sp" />
 
-                <ImageView
-                    android:id="@+id/imageView1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/arrow_right" />
-
-                <TextView
-                    android:id="@+id/tv_circle_name"
+                <EditText
+                    android:id="@+id/et_circle_name"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="22dp"
-                    android:layout_toLeftOf="@+id/imageView1"
                     android:layout_toRightOf="@id/tv_cirlce_name_title"
-                    android:gravity="right"
+                    android:background="@drawable/shape_linearlayout10"
+                    android:gravity="left"
+                    android:padding="10dip"
                     android:text="躲猫猫" />
             </RelativeLayout>
 

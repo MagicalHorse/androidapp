@@ -78,12 +78,11 @@
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    
+
     <!-- renren sso Permission for Unit Test -->
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.SET_DEBUG_APP" />
@@ -198,8 +197,7 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
+            </intent-filter>
             -->
         </activity>
         <activity
@@ -267,33 +265,32 @@
             android:name="com.shenma.yueba.yangjia.activity.PublishProductsActivity"
             android:screenOrientation="portrait" >
         </activity>
-        
+
         <!-- 败家订单列表页面 -->
         <activity
             android:name="com.shenma.yueba.baijia.activity.BaiJiaOrderListActivity"
             android:screenOrientation="portrait" >
         </activity>
-        
+
         <!-- 败家订单确认页面 -->
         <activity
             android:name="com.shenma.yueba.baijia.activity.AffirmOrderActivity"
             android:screenOrientation="portrait" >
         </activity>
-        
-        
+
         <!-- 败家订单详细页面 -->
         <activity
             android:name="com.shenma.yueba.baijia.activity.BaiJiaOrderDetailsActivity"
             android:screenOrientation="portrait" >
         </activity>
-        
-         <!-- 邀请好友-->
+
+        <!-- 邀请好友 -->
         <activity
             android:name="com.shenma.yueba.baijia.activity.InvitationFriendActivity"
             android:screenOrientation="portrait" >
         </activity>
-        
-        <!-- 修改圈子名称-->
+
+        <!-- 修改圈子名称 -->
         <activity
             android:name="com.shenma.yueba.yangjia.activity.ModifyCircleNameActivity"
             android:screenOrientation="portrait" >
@@ -352,12 +349,16 @@
         <activity
             android:name="com.shenma.yueba.yangjia.activity.OrderDetailActivity"
             android:screenOrientation="portrait" />
-        <!-- 收入明细-->
+        <!-- 订单详情 -->
+        <activity
+            android:name="com.shenma.yueba.yangjia.activity.PublishProductForRenZhenActivity"
+            android:screenOrientation="portrait" />
+        <!-- 收入明细 -->
         <activity
             android:name="com.shenma.yueba.yangjia.activity.IncomeDetailActivity2"
             android:screenOrientation="portrait" >
         </activity>
-        <!-- 提现历史-->
+        <!-- 提现历史 -->
         <activity
             android:name="com.shenma.yueba.yangjia.activity.WithdrawHistoryActivity"
             android:screenOrientation="portrait" >
@@ -367,17 +368,17 @@
             android:name="com.shenma.yueba.yangjia.activity.AddCircleActivity"
             android:screenOrientation="portrait" >
         </activity>
-        <!-- 自定义相机-->
+        <!-- 自定义相机 -->
         <activity
             android:name="com.shenma.yueba.camera.CameraAty"
             android:screenOrientation="portrait" >
         </activity>
-        <!-- 自定义相机-->
+        <!-- 自定义相机 -->
         <activity
             android:name="com.shenma.yueba.camera.AlbumAty"
             android:screenOrientation="portrait" >
         </activity>
-        <!-- 自定义相机-->
+        <!-- 自定义相机 -->
         <activity
             android:name="com.shenma.yueba.camera.AlbumItemAty"
             android:screenOrientation="portrait" >
