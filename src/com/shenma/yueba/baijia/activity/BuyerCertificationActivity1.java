@@ -66,6 +66,7 @@ public class BuyerCertificationActivity1 extends BaseActivityWithTopView
 	private RelativeLayout rl_work_card;
 	private ImageView iv_work_card;
 	private CustomProgressDialog progressDialog;
+	private int upPicProgress = 0;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -129,7 +130,7 @@ public class BuyerCertificationActivity1 extends BaseActivityWithTopView
 				Toast.makeText(mContext, "证件图片不能为空", 1000).show();
 				return ;
 			}
-			uploadImage(0, pic1);//开始上传图片
+			uploadImage(pic1);//开始上传图片
 			break;
 		default:
 			break;
@@ -255,12 +256,12 @@ public class BuyerCertificationActivity1 extends BaseActivityWithTopView
 
 	
 	
-	private void uploadImage(final int upPicProgress,String imagePath){
+	private void uploadImage(String imagePath){
 		if(!progressDialog.isShowing()){
 			progressDialog.show();
 		}
 		HttpControl httpControl = new HttpControl();
-		httpControl.syncUpload(upPicProgress, pic1, new SaveCallback() {
+		httpControl.syncUpload(pic1, new SaveCallback() {
 			
 			@Override
 			public void onProgress(String arg0, int arg1, int arg2) {
@@ -278,10 +279,12 @@ public class BuyerCertificationActivity1 extends BaseActivityWithTopView
 			public void onSuccess(String arg0) {
 				switch (upPicProgress) {
 				case 0://第一张图片上传完毕
-					uploadImage(1, pic2);
+					upPicProgress = 1;
+					uploadImage(pic2);
 					break;
 				case 1://第二张上传完毕
-					uploadImage(2, pic3);
+					upPicProgress = 2;
+					uploadImage(pic3);
 					break;
 				case 2://第三张上传完毕
 					if(progressDialog.isShowing()){
