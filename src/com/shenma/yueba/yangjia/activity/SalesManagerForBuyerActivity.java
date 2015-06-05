@@ -111,7 +111,13 @@ public class SalesManagerForBuyerActivity extends BaseFragmentActivity implement
 			 */
 			public void onPageSelected(int arg0) {
 				fragmentList.get(arg0).getData(arg0,SalesManagerForBuyerActivity.this);
+				for (int i = 0; i < fragmentList.size(); i++) {
+					if(arg0 != i){
+						fragmentList.get(arg0).tv_nodata.setVisibility(View.GONE);
+					}
+				}
 				setCursorAndText(arg0,cursorImageList,titleTextList);
+				
 			}
 
 			@Override

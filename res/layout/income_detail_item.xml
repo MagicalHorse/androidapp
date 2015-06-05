@@ -4,33 +4,54 @@
     android:layout_height="match_parent"
     android:padding="15dip" >
 
-    <TextView
-        android:id="@+id/tv_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="2014-02-33"
-        android:textColor="@color/text_gray_color"
-        android:textSize="18sp" />
-
-    <TextView
-        android:id="@+id/tv_money_tag"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-         android:textColor="@color/text_gray_color"
-        android:textSize="18sp" 
-        android:layout_marginLeft="5dip"
-        android:text="￥" />
-
-    <TextView
-        android:id="@+id/tv_money"
+    <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_toLeftOf="@id/tv_money_tag"
-         android:textColor="@color/text_gray_color"
-        android:textSize="18sp" 
-        android:layout_toRightOf="@id/tv_date"
-        android:gravity="right"
-        android:text="23.00" />
+        android:layout_height="wrap_content" >
 
+        <TextView
+            android:id="@+id/tv_order_number_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="订单编号："
+            android:textColor="@color/text_gray_color"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tv_order_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/tv_order_number_title"
+            android:text="24312432"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tv_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="已退款"
+            android:textColor="@color/red_text_color"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/tv_order_money_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="订单编号："
+            android:textColor="@color/text_gray_color"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tv_order_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/tv_order_money_title"
+            android:text="24312432"
+            android:textSize="18sp" />
+    </RelativeLayout>
 </RelativeLayout>

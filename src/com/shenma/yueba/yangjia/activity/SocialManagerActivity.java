@@ -134,10 +134,12 @@ public class SocialManagerActivity extends BaseFragmentActivity implements
 				index = arg0;
 				switch (index) {
 				case 0:
+					myFansFragment.tv_nodata.setVisibility(View.GONE);
 					tv_top_right.setVisibility(View.VISIBLE);
 					myCircleForSocialFragment.getData(SocialManagerActivity.this, true, true);
 					break;
 				case 1:
+					myCircleForSocialFragment.tv_nodata.setVisibility(View.GONE);
 					tv_top_right.setVisibility(View.GONE);
 					myFansFragment.getData("1", SocialManagerActivity.this,true);// 0表示我关注的人   1表示我的粉丝
 					break;

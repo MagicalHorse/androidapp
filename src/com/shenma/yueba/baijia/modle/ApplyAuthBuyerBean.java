@@ -21,9 +21,12 @@ public class ApplyAuthBuyerBean implements Serializable{
 	private String StoreName;//门店名称
 	private String SectionName;// 专柜名称
 	private String SectionLocate;//专柜地址
-	private CardBean WorkCard;//工牌
-	private CardBean CardBack;//身份证背面
-	private CardBean CardFront;//身份证正面
+	private String WorkCard;//工牌
+	private String CardBack;//身份证背面
+	private String CardFront;//身份证正面
+//	private CardBean WorkCard;//工牌
+//	private CardBean CardBack;//身份证背面
+//	private CardBean CardFront;//身份证正面
 	public String getProvinceId() {
 		return ProvinceId;
 	}
@@ -84,24 +87,25 @@ public class ApplyAuthBuyerBean implements Serializable{
 	public void setSectionLocate(String sectionLocate) {
 		SectionLocate = sectionLocate;
 	}
-	public CardBean getWorkCard() {
+	public String getWorkCard() {
 		return WorkCard;
 	}
-	public void setWorkCard(CardBean workCard) {
+	public void setWorkCard(String workCard) {
 		WorkCard = workCard;
 	}
-	public CardBean getCardBack() {
+	public String getCardBack() {
 		return CardBack;
 	}
-	public void setCardBack(CardBean cardBack) {
+	public void setCardBack(String cardBack) {
 		CardBack = cardBack;
 	}
-	public CardBean getCardFront() {
+	public String getCardFront() {
 		return CardFront;
 	}
-	public void setCardFront(CardBean cardFront) {
+	public void setCardFront(String cardFront) {
 		CardFront = cardFront;
 	}
-      
+
+	
 	
 }

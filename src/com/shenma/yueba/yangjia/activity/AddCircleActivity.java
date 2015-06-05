@@ -7,7 +7,7 @@ import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.activity.BaseActivityWithTopView;
 
 /**
- * 圈子管理
+ * 新增圈子
  * @author a
  *
  */

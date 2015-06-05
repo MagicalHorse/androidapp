@@ -38,7 +38,7 @@ public class MyAttentionAndFansForSocialFragment extends BaseFragment {
 	private int page = 1;
 	private boolean isRefresh = true;
 	private String status;// 0表示我关注的人   1表示我的粉丝
-	private TextView tv_nodata;
+	public TextView tv_nodata;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -105,7 +105,6 @@ public class MyAttentionAndFansForSocialFragment extends BaseFragment {
 						pull_refresh_list.setAdapter(adapter);
 					}else{
 						tv_nodata.setVisibility(View.VISIBLE);
-						Toast.makeText(getActivity(), "暂无数据", 1000).show();
 					}
 				} else {
 					if(bean!=null && bean.getData()!=null && bean.getData().getItems()!=null&& bean.getData().getItems().size()>0){
@@ -119,8 +118,7 @@ public class MyAttentionAndFansForSocialFragment extends BaseFragment {
 			
 			@Override
 			public void http_Fails(int error, String msg) {
-				// TODO Auto-generated method stub
-				
+				Toast.makeText(getActivity(),msg, 1000).show();
 			}
 		}, ctx,showDialog);
 	}

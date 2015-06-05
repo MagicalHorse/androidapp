@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -24,7 +25,6 @@ import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.yangjia.modle.BuyerProductManagerListBack;
-import com.shenma.yueba.yangjia.modle.BuyerProductManagerListBean;
 
 /**
  * 动态列表的Fragment
@@ -47,6 +47,7 @@ public class ProductManagerFragmentForOnLine extends BaseFragment {
 	private View view;
 	private PullToRefreshListView pull_refresh_list;
 	private int page = 1;
+	public TextView tv_nodata;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -70,6 +71,7 @@ public class ProductManagerFragmentForOnLine extends BaseFragment {
 		if (view == null) {
 			view = inflater.inflate(
 					R.layout.refresh_listview_without_title_layout, null);
+			tv_nodata = (TextView) view.findViewById(R.id.tv_nodata);
 			pull_refresh_list = (PullToRefreshListView) view
 					.findViewById(R.id.pull_refresh_list);
 			pull_refresh_list.setMode(Mode.BOTH);
@@ -140,8 +142,12 @@ public class ProductManagerFragmentForOnLine extends BaseFragment {
 						pull_refresh_list.onRefreshComplete();
 						BuyerProductManagerListBack bean = (BuyerProductManagerListBack) obj;
 						if (isRefresh) {
-							mList.clear();
-							mList.addAll(bean.getData().getItems());
+							if(bean.getData().getItems()!=null && bean.getData().getItems().size()>0){
+								mList.clear();
+								mList.addAll(bean.getData().getItems());
+							}else{
+								tv_nodata.setVisibility(View.VISIBLE);
+							}
 						} else {
 							if(bean.getData().getItems().size()==0){
 								Toast.makeText(getActivity(), "没有更多数据了...", 1000).show();							
