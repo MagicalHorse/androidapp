@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -27,6 +28,7 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.shenma.yueba.ChatActivity;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.adapter.UserIconAdapter;
@@ -48,7 +50,7 @@ import com.shenma.yueba.view.RoundImageView;
  * @version 创建时间：2015-5-20 下午6:02:36 程序的简单说明 定义认证买手 商品详情页
  */
 
-public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView {
+public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView implements OnClickListener{
 	// 当前选中的id （ViewPager选中的id）
 	int currid = -1;
 	// 滚动图片
@@ -82,7 +84,7 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView {
 	Button approvebuyerbuybutton;
 	List<View> viewlist = new ArrayList<View>();
 	Timer timer;
-
+	RequestProductDetailsInfoBean bean;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -103,7 +105,7 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView {
 	}
 
 	private void initViews() {
-		setTitle("店铺商品详情");
+		setTitle("");
 		setLeftTextView(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -172,12 +174,22 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView {
 				});
 
 		approvebuyerdetails_layout_siliao_linerlayout = (LinearLayout) findViewById(R.id.approvebuyerdetails_layout_siliao_linerlayout);
+		approvebuyerdetails_layout_siliao_linerlayout.setOnClickListener(this);
 		approvebuyerdetails_layout_shoucang_linerlayout = (LinearLayout) findViewById(R.id.approvebuyerdetails_layout_shoucang_linerlayout);
 
 		approvebuyer_addcartbutton = (Button) findViewById(R.id.approvebuyer_addcartbutton);
 		approvebuyerbuybutton = (Button) findViewById(R.id.approvebuyerbuybutton);
+		approvebuyerbuybutton.setOnClickListener(this);
 	}
 
+	
+	void startActivity()
+	{
+		Intent intent=new Intent(ApproveBuyerDetailsActivity.this,ChatActivity.class);
+		intent.putExtra("DATA", bean);
+		startActivity(intent);
+	}
+	
 	/***
 	 * 设置文本值
 	 * 
@@ -251,7 +263,7 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView {
 					public void http_Success(Object obj) {
 						if (obj != null
 								&& obj instanceof RequestProductDetailsInfoBean) {
-							RequestProductDetailsInfoBean bean = (RequestProductDetailsInfoBean) obj;
+							bean = (RequestProductDetailsInfoBean) obj;
 							if (bean.getData() == null) {
 								http_Fails(500, "数据异常null");
 								ApproveBuyerDetailsActivity.this.finish();
@@ -488,5 +500,19 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView {
 			scroller.setmDuration(value);
 		} catch (Exception e) {
 		}
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch(v.getId())
+		{
+		case R.id.approvebuyerdetails_layout_siliao_linerlayout:
+			startActivity();
+			break;
+		case R.id.approvebuyerbuybutton:
+			startActivity();
+			break;
+		}
+		
 	}
 }

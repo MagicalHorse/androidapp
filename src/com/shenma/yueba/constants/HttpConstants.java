@@ -382,4 +382,25 @@ public class HttpConstants {
 	 */
 	
 	public static String GETORDERLIST = Order+ "GetOrderListByState";
+	
+	/**
+	 * 败家 -我的圈子
+	 */
+	
+	public static String GETMYCIRCLE = Circle+ "GetMyGroup";
+	
+	
+	/**
+	 * 败家 -我的圈子
+	 */
+	
+	public static String GETRECOMMENDGROUP = Circle+ "GetRecommendGroup";
+	
+	/**
+	 * 获取按品牌划分的商品列表（发现→品牌界面）(败家)
+	 */
+	
+	public static String GETBRANDPRODUCTLIST = PRODUCT+ "GetBrandProductList";
+	
+	
 }

@@ -25,6 +25,7 @@
 
     <include
         android:id="@+id/showloading_layout_view"
+        android:visibility="gone"
         android:layout_centerInParent="true"
         layout="@layout/showloading_layout" />
 

@@ -23,6 +23,7 @@ import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.modle.FragmentBean;
 import com.shenma.yueba.baijia.view.CircleView;
 import com.shenma.yueba.baijia.view.MyCircleView;
+import com.shenma.yueba.util.FontManager;
 
 public class CircleFragment extends Fragment{
 	List<View> footer_list=new ArrayList<View>();
@@ -84,6 +85,7 @@ public class CircleFragment extends Fragment{
 		{
 			RelativeLayout rl=(RelativeLayout)RelativeLayout.inflate(getActivity(), R.layout.tab_line_layout, null);
 			TextView tv=(TextView)rl.findViewById(R.id.tab_line_textview);
+			FontManager.changeFonts(getActivity(),tv);
 			rl.setTag(i);
 			rl.setOnClickListener(new OnClickListener() {
 				

@@ -14,6 +14,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
@@ -22,7 +23,16 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.State;
 import com.handmark.pulltorefresh.library.PullToRefreshGridView;
 import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.modle.FragmentBean;
+import com.shenma.yueba.baijia.modle.MyCircleInfo;
+import com.shenma.yueba.baijia.modle.MyCircleInfoBean;
+import com.shenma.yueba.baijia.modle.RequestMyCircleInfoBean;
+import com.shenma.yueba.constants.Constants;
+import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
+import com.shenma.yueba.util.ToolsUtil;
+import com.shenma.yueba.view.RoundImageView;
 
 public class CircleView {
 	static CircleView quanziControlView;
@@ -34,9 +44,12 @@ public class CircleView {
 	View v;
 	PullToRefreshGridView baijia_quanzi_layout_tanb1_gridbview;
 	LinearLayout showloading_layout_view;
-	List<Object> obj_list=new ArrayList<Object>();
+	List<MyCircleInfo> items=new ArrayList<MyCircleInfo>();
 	LayoutInflater inflater;
-	
+	int currPage=Constants.CURRPAGE_VALUE;
+	int pageSize=Constants.PAGESIZE_VALUE;
+	boolean showDialog=true;
+	HttpControl httpCntrol=new HttpControl();
 	public static CircleView the()
 	{
 		if(quanziControlView==null)
@@ -71,7 +84,7 @@ public class CircleView {
 		 /*pulltorefreshscrollview.getLoadingLayoutProxy().setPullLabel("下拉刷新");  
 		 pulltorefreshscrollview.getLoadingLayoutProxy().setRefreshingLabel("刷新中。。。");  
 		 pulltorefreshscrollview.getLoadingLayoutProxy().setReleaseLabel("松开刷新");*/
-		baijia_quanzi_layout_tanb1_gridbview.setMode(Mode.BOTH);
+		baijia_quanzi_layout_tanb1_gridbview.setMode(Mode.PULL_FROM_START);
 		 
 		baijia_quanzi_layout_tanb1_gridbview.setOnPullEventListener(new OnPullEventListener<GridView>() {
 
@@ -140,7 +153,7 @@ public class CircleView {
 		@Override
 		public int getCount() {
 			
-			return obj_list.size();
+			return items.size();
 		}
 
 		@Override
@@ -164,13 +177,22 @@ public class CircleView {
 				holder=new Holder();
 				convertView=inflater.inflate(R.layout.circle_item, null);
 				holder.v=convertView;
+				holder.riv=(RoundImageView)convertView.findViewById(R.id.riv);
+				holder.tv_circle_name=(TextView)convertView.findViewById(R.id.tv_circle_name);
+				holder.tv_count=(TextView)convertView.findViewById(R.id.tv_count);
+				holder.tv_address=(TextView)convertView.findViewById(R.id.tv_address);
 				convertView.setTag(holder);
+				ToolsUtil.setFontStyle(activity, convertView, R.id.tv_circle_name,R.id.tv_count,R.id.tv_address);
 			}else
 			{
 				holder=(Holder)convertView.getTag();
 				
 			}
-			
+			MyCircleInfo myCircleInfo=items.get(position);
+			MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.nullToString(myCircleInfo.getLogo()), holder.riv);
+			holder.tv_circle_name.setText(ToolsUtil.nullToString(myCircleInfo.getName()));
+			holder.tv_count.setText(myCircleInfo.getMemberCount()+"");
+			holder.tv_address.setText(ToolsUtil.nullToString(myCircleInfo.getAddress()));
 			return convertView;
 		}
 		
@@ -179,74 +201,100 @@ public class CircleView {
 	class Holder
 	{
 		View v;
+		RoundImageView riv;
+		TextView tv_circle_name;
+		TextView tv_count;
+		TextView tv_address;
 	}
 	
 	void requestData()
 	{
 		baijia_quanzi_layout_tanb1_gridbview.setRefreshing();
-		new Thread()
-		{
-			public void run() {
-				SystemClock.sleep(100);
-				activity.runOnUiThread(new Runnable() {
-					
-					@Override
-					public void run() {
-						
-						addData();
-					}
-				});
-			};
-		}.start();
+		sendHttp(1);
 	}
 	
 	void requestFalshData()
 	{
 		baijia_quanzi_layout_tanb1_gridbview.setRefreshing();
-		new Thread()
+		currPage=Constants.CURRPAGE_VALUE;
+		sendHttp(0);
+	}
+	
+	
+	void addData(MyCircleInfoBean bean)
+	{
+		currPage++;
+		if(bean.getItems()!=null)
 		{
-			public void run() {
-				SystemClock.sleep(100);
-				activity.runOnUiThread(new Runnable() {
-					
-					@Override
-					public void run() {
-						
-						falshData();
+			items.addAll(bean.getItems());
+		}
+		showloading_layout_view.setVisibility(View.GONE);
+		baseAdapter.notifyDataSetChanged();
+		//ListUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
+		baijia_quanzi_layout_tanb1_gridbview.onRefreshComplete();
+	}
+	
+	void falshData(MyCircleInfoBean bean)
+	{
+		currPage++;
+		items.clear();
+		if(bean.getItems()!=null)
+		{
+			items.addAll(bean.getItems());
+		}
+		showloading_layout_view.setVisibility(View.GONE);
+		baseAdapter.notifyDataSetChanged();
+		
+		//ListUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
+		baijia_quanzi_layout_tanb1_gridbview.onRefreshComplete();
+		
+	}
+	
+	
+	void sendHttp(final int type)
+	{
+		httpCntrol.getRecommendGroup(currPage, pageSize, showDialog, new HttpCallBackInterface() {
+			
+			@Override
+			public void http_Success(Object obj) {
+				if(obj!=null && obj instanceof RequestMyCircleInfoBean)
+				{
+					RequestMyCircleInfoBean bean=(RequestMyCircleInfoBean)obj;
+					if (bean != null) {
+						if(currPage==1)
+						{
+							if(bean.getData()==null)
+						   {
+								MyApplication.getInstance().showMessage(activity, "还没有信息");
+								return;
+						   }
+						}
+						int totalPage = bean.getTotalpaged();
+						if (currPage >= totalPage) {
+							baijia_quanzi_layout_tanb1_gridbview.setMode(Mode.PULL_FROM_START);
+						} else {
+							baijia_quanzi_layout_tanb1_gridbview.setMode(Mode.BOTH);
+						}
+						switch (type) {
+						case 0:
+							falshData(bean.getData());
+							break;
+						case 1:
+							addData(bean.getData());
+							break;
+						}
+					} else {
+						MyApplication.getInstance().showMessage(
+								activity, "没有任何数据");
 					}
-				});
-			};
-		}.start();
-	}
-	
-	
-	void addData()
-	{
-		for(int i=0;i<10;i++)
-		{
-			obj_list.add(null);
+				}
+				
+			}
 			
-		}
-		showloading_layout_view.setVisibility(View.GONE);
-		baseAdapter.notifyDataSetChanged();
-		//ListUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
-		baijia_quanzi_layout_tanb1_gridbview.onRefreshComplete();
+			@Override
+			public void http_Fails(int error, String msg) {
+				MyApplication.getInstance().showMessage(activity, msg);
+			}
+		},activity );
 	}
-	
-	void falshData()
-	{
-		obj_list.clear();
-		for(int i=0;i<10;i++)
-		{
-			obj_list.add(null);
-			
-		}
-		showloading_layout_view.setVisibility(View.GONE);
-		baseAdapter.notifyDataSetChanged();
-		
-		//ListUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
-		baijia_quanzi_layout_tanb1_gridbview.onRefreshComplete();
-		
-	}
-	
 }

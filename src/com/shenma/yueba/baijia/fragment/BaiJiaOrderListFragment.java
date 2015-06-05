@@ -77,7 +77,6 @@ public class BaiJiaOrderListFragment extends Fragment {
 	{
 		pull_refresh_list=(PullToRefreshListView)parentView.findViewById(R.id.pull_refresh_list);
 		 //设置标签显示的内容
-		pull_refresh_list.setMode(Mode.BOTH);
 		baiJiaOrderListAdapter=new BaiJiaOrderListAdapter(object_list,getActivity());
 		pull_refresh_list.setAdapter(baiJiaOrderListAdapter);
 		pull_refresh_list.setMode(Mode.PULL_FROM_START);

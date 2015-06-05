@@ -3,6 +3,8 @@ package com.shenma.yueba.baijia.activity;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -11,7 +13,10 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.adapter.AffirmAdapter;
+import com.shenma.yueba.baijia.modle.ProductsDetailsInfoBean;
+import com.shenma.yueba.baijia.modle.RequestProductDetailsInfoBean;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.ListViewUtils;
 import com.shenma.yueba.util.ToolsUtil;
@@ -34,13 +39,32 @@ ListView affirmorder_layout_product_listview;
 Button affrimorder_layout_footer_sumit_button;
 HttpControl httpControl=new HttpControl();
 List<Object> productlist=new ArrayList<Object>();
+ProductsDetailsInfoBean productsDetailsInfoBean;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		parentview=this.getLayoutInflater().inflate(R.layout.affirmorder_layout, null);
 		requestWindowFeature(getWindow().FEATURE_NO_TITLE);
 		setContentView(parentview);
 		super.onCreate(savedInstanceState);
-		initView();
+		if(this.getIntent().getSerializableExtra("DATA")!=null && this.getIntent().getSerializableExtra("DATA") instanceof RequestProductDetailsInfoBean)
+		{
+			RequestProductDetailsInfoBean bean=(RequestProductDetailsInfoBean)this.getIntent().getSerializableExtra("DATA");
+			ProductsDetailsInfoBean productsDetailsInfoBean=bean.getData();
+			if(productsDetailsInfoBean!=null)
+			{
+				initView();
+			}else
+			{
+				MyApplication.getInstance().showMessage(this, "数据错误");
+				finish();
+			}
+			
+		}else
+		{
+			MyApplication.getInstance().showMessage(this, "数据错误");
+			finish();
+		}
+		
 	}
 	
 	void initView()
@@ -55,13 +79,23 @@ List<Object> productlist=new ArrayList<Object>();
 			}
 		});
 		affirmorder_layout_icon_roundimageview=(RoundImageView)findViewById(R.id.affirmorder_layout_icon_roundimageview);
+		MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.nullToString(productsDetailsInfoBean.getBuyerLogo()), affirmorder_layout_icon_roundimageview);
 		affirmorder_layout_icon_imageview=(ImageView)findViewById(R.id.affirmorder_layout_icon_imageview);
-		//头像监听
+		//设置联系电话
+		affirmorder_layout_icon_imageview.setTag("");
+		//电话
 		affirmorder_layout_icon_imageview.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				
+				String phoneNo=(String)v.getTag();
+				if(!phoneNo.equals(""))
+				{
+					//调用拨号键
+					Uri telUri = Uri.parse("tel:+phoneNo+");
+					Intent intent= new Intent(Intent.ACTION_DIAL, telUri);
+					startActivity(intent); 
+				}
 				
 			}
 		});
@@ -81,7 +115,7 @@ List<Object> productlist=new ArrayList<Object>();
 		//需要负值的
 		ToolsUtil.setFontStyle(this, parentview, R.id.affirmorder_layout_novalue_textview, null);
 		ToolsUtil.setFontStyle(this, parentview, R.id.affirmorder_layout_phonevalue_textview, null);
-		ToolsUtil.setFontStyle(this, parentview, R.id.affirmorder_layout_pickupvalue_textview, null);
+		ToolsUtil.setFontStyle(this, parentview, R.id.affirmorder_layout_pickupvalue_textview, ToolsUtil.nullToString(productsDetailsInfoBean.getPickAddress()));
 		ToolsUtil.setFontStyle(this, parentview, R.id.affrimorder_layout_footer_countprice_textview, null);
 		ToolsUtil.setFontStyle(this, parentview, R.id.affirmorder_item_allcount_textview, null);
 		ToolsUtil.setFontStyle(this, parentview, R.id.affirmorder_item_price_textview, null);
