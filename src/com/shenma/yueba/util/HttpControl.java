@@ -756,7 +756,7 @@ public class HttpControl {
 		Map<String, String> map=new HashMap<String, String>();
 		map.put(Constants.NAME, name);
 		map.put(Constants.LOGO, logo);
-		BasehttpSend(map, context, HttpConstants.METHOD_CIRCLE_GETBUYERGROUPS, httpCallBack, BaseRequest.class, showDialog, true);
+		BasehttpSend(map, context, HttpConstants.METHOD_CIRCLE_GETBUYERGROUPS, httpCallBack, CircleListBackBean.class, showDialog, true);
 	}
 	
 	/**
