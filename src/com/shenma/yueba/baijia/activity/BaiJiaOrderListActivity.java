@@ -47,6 +47,7 @@ int currid=-1;
 		
 	}
 	
+	
 	void initView()
 	{
 		TextView tv_top_title=(TextView)findViewById(R.id.tv_top_title);
