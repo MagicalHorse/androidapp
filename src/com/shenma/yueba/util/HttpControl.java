@@ -747,6 +747,16 @@ public class HttpControl {
 		map.put(Constants.PAGESIZE, Constants.PageSize);
 		BasehttpSend(map, context, HttpConstants.METHOD_CIRCLE_GETBUYERGROUPS, httpCallBack, CircleListBackBean.class, showDialog, true);
 	}
+	/**
+	 * 新建圈子
+	 * @return void
+	 * **/
+	public void createCircle(String name,String logo,boolean showDialog,final HttpCallBackInterface httpCallBack,Context context) {
+		Map<String, String> map=new HashMap<String, String>();
+		map.put(Constants.NAME, name);
+		map.put(Constants.LOGO, logo);
+		BasehttpSend(map, context, HttpConstants.METHOD_CIRCLE_GETBUYERGROUPS, httpCallBack, CircleListBackBean.class, showDialog, true);
+	}
 	
 	/**
 	 * 获取败家订单列表

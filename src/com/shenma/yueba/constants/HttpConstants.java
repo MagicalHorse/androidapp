@@ -355,7 +355,12 @@ public class HttpConstants {
 	public static String METHOD_CIRCLE_GETBUYERGROUPS = Circle
 			+ "GetBuyerGroups";
 	
+	/**
+	 * 社交管理--新建圈子
+	 */
 	
+	public static String METHOD_CIRCLE_CREATEGROUP = Circle
+			+ "CreateGroup";
 	
 	
 	

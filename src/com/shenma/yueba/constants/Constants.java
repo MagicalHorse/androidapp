@@ -25,6 +25,7 @@ public class Constants {
 	public static final String MOBILE="mobile";//手机号
 	public static final String CODE="code";//验证码
 	public static final String NAME="name";//用户名
+	public static final String LOGO="logo";//头像
 	public static final String PARENTID="parentId";//父ID
 	public static final String _PASSWORD="password";//密码
 	public static final String _OLDPASSWORD="oldpassword";//密码
