@@ -6,57 +6,14 @@ package com.shenma.yueba.baijia.modle;
  */
 
 public class RequestBrandInfoBean extends BaseRequest{
-	BrandInfoBean Data=new BrandInfoBean();
-	int pageindex;
-    int pagesize;
-    int totalcount;
-    int totalpaged;
-    boolean ispaged=false;
-	public int getPageindex() {
-		return pageindex;
-	}
-
-	public void setPageindex(int pageindex) {
-		this.pageindex = pageindex;
-	}
-
-	public int getPagesize() {
-		return pagesize;
-	}
-
-	public void setPagesize(int pagesize) {
-		this.pagesize = pagesize;
-	}
-
-	public int getTotalcount() {
-		return totalcount;
-	}
-
-	public void setTotalcount(int totalcount) {
-		this.totalcount = totalcount;
-	}
-
-	public int getTotalpaged() {
-		return totalpaged;
-	}
-
-	public void setTotalpaged(int totalpaged) {
-		this.totalpaged = totalpaged;
-	}
-
-	public boolean isIspaged() {
-		return ispaged;
-	}
-
-	public void setIspaged(boolean ispaged) {
-		this.ispaged = ispaged;
-	}
+	BrandInfoBean data=new BrandInfoBean();
 
 	public BrandInfoBean getData() {
-		return Data;
+		return data;
 	}
 
 	public void setData(BrandInfoBean data) {
-		Data = data;
+		this.data = data;
 	}
+	
 }

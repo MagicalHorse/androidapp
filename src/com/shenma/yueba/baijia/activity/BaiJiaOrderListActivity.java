@@ -41,7 +41,9 @@ int currid=-1;
 		super.onCreate(savedInstanceState);
 		initView();
 		initaddFooterView();
-		setCurrView(0);
+		//获取 显示的视图
+		int currview=this.getIntent().getIntExtra("CURRID", 0);
+		setCurrView(currview);
 		
 	}
 	

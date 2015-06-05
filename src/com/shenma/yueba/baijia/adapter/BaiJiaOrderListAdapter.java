@@ -197,9 +197,9 @@ public class BaiJiaOrderListAdapter extends BaseAdapter {
 		switch (orderStatus) {
 		case -10://取消
 			holder.baijia_orderdetails_sqtk_button.setVisibility(View.GONE);
-			holder.baijia_orderdetails_ziti_button.setVisibility(View.VISIBLE);
+			holder.baijia_orderdetails_ziti_button.setVisibility(View.GONE);
 			holder.baijia_orderdetails_pay_button.setVisibility(View.GONE);
-			holder.baijia_orderdetails_cancellreimburse_button.setVisibility(View.VISIBLE);
+			holder.baijia_orderdetails_cancellreimburse_button.setVisibility(View.GONE);
 			break;
 		case 0://待付款
 			holder.baijia_orderdetails_sqtk_button.setVisibility(View.GONE);
@@ -213,7 +213,11 @@ public class BaiJiaOrderListAdapter extends BaseAdapter {
 			holder.baijia_orderdetails_pay_button.setVisibility(View.GONE);
 			holder.baijia_orderdetails_cancellreimburse_button.setVisibility(View.GONE);
 			break;
-		case 2:
+		case 15:
+			holder.baijia_orderdetails_sqtk_button.setVisibility(View.VISIBLE);
+			holder.baijia_orderdetails_ziti_button.setVisibility(View.GONE);
+			holder.baijia_orderdetails_pay_button.setVisibility(View.GONE);
+			holder.baijia_orderdetails_cancellreimburse_button.setVisibility(View.GONE);
 			break;
 		case 3://退货处理中
 			holder.baijia_orderdetails_sqtk_button.setVisibility(View.GONE);

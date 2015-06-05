@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.baijia.activity.BaiJiaOrderListActivity;
 import com.shenma.yueba.baijia.activity.BuyerCertificationActivity1;
 import com.shenma.yueba.baijia.activity.MyCollectionActivity;
 import com.shenma.yueba.baijia.activity.UserConfigActivity;
@@ -118,12 +119,24 @@ public class MeFragmentForBaiJia extends BaseFragment implements OnClickListener
 			startActivity(userConfigIntent);
 			break;
 		case R.id.tv_all_order://全部
+			Intent intent1=new Intent(getActivity(),BaiJiaOrderListActivity.class);
+			intent1.putExtra("CURRID", 0);
+			startActivity(intent1);
 			break;
-		case R.id.tv_waiting_for_send://待发货
+		case R.id.tv_waiting_for_send://待付款
+			Intent intent2=new Intent(getActivity(),BaiJiaOrderListActivity.class);
+			intent2.putExtra("CURRID", 1);
+			startActivity(intent2);
 			break;
-		case R.id.tv_waiting_for_recieve://待收货
+		case R.id.tv_waiting_for_recieve://专柜自提
+			Intent intent3=new Intent(getActivity(),BaiJiaOrderListActivity.class);
+			intent3.putExtra("CURRID", 2);
+			startActivity(intent3);
 			break;
-		case R.id.tv_pick_by_myself://自提
+		case R.id.tv_pick_by_myself://售后
+			Intent intent4=new Intent(getActivity(),BaiJiaOrderListActivity.class);
+			intent4.putExtra("CURRID", 3);
+			startActivity(intent4);
 			break;
 		case R.id.tv_buyer://申请买手或者我是买手
 			break;
@@ -143,8 +156,8 @@ public class MeFragmentForBaiJia extends BaseFragment implements OnClickListener
 			}
 			break;
 		case R.id.tv_my_collection://我的收藏
-			Intent intent3 = new Intent(getActivity(),MyCollectionActivity.class);
-			startActivity(intent3);
+			Intent intent5 = new Intent(getActivity(),MyCollectionActivity.class);
+			startActivity(intent5);
 			break;
 		default:
 			break;

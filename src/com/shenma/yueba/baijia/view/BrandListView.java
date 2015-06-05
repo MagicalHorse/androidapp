@@ -178,7 +178,8 @@ public class BrandListView {
 				if(obj!=null && obj instanceof RequestBrandInfoBean)
 				{
 					RequestBrandInfoBean bean=(RequestBrandInfoBean)obj;
-					if (bean != null) {
+					if (bean != null && bean.getData()!=null) {
+						BrandInfoBean brandInfoBean=bean.getData();
 						if(currPage==1)
 						{
 							if(bean.getData()==null)
@@ -187,7 +188,8 @@ public class BrandListView {
 								return;
 						   }
 						}
-						int totalPage = bean.getTotalpaged();
+						
+						int totalPage = brandInfoBean.getTotalpaged();
 						if (currPage >= totalPage) {
 							pull_refresh_list.setMode(Mode.PULL_FROM_START);
 						} else {

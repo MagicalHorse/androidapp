@@ -10,28 +10,29 @@ import android.widget.TextView;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.modle.BrandCityWideInfo;
 import com.shenma.yueba.baijia.modle.BrandListBean;
 import com.shenma.yueba.baijia.modle.MyCircleBean;
 import com.shenma.yueba.baijia.modle.SameCityBean;
 import com.shenma.yueba.util.FontManager;
 
 public class SameCityAdapter extends BaseAdapterWithUtil {
-	private List<SameCityBean> mList;
-	public SameCityAdapter(Context ctx,List<SameCityBean> mList) {
+	private List<BrandCityWideInfo> items;
+	public SameCityAdapter(Context ctx,List<BrandCityWideInfo> items) {
 		super(ctx);
-		this.mList = mList;
+		this.items = items;
 	}
 
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return 10;
+		return items.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
 		// TODO Auto-generated method stub
-		return mList.get(position);
+		return items.get(position);
 	}
 
 	@Override
