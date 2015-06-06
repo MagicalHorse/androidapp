@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -16,7 +15,6 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.ContactsContract.Contacts;
 import android.util.Log;
 
 import com.alibaba.sdk.android.oss.OSSService;
@@ -30,7 +28,6 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
-import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.modle.ApplyAuthBuyerBean;
 import com.shenma.yueba.baijia.modle.BaseRequest;
 import com.shenma.yueba.baijia.modle.BrandDetailInfoBean;
@@ -46,6 +43,7 @@ import com.shenma.yueba.baijia.modle.RequestProductDetailsInfoBean;
 import com.shenma.yueba.baijia.modle.RequestProductListInfoBean;
 import com.shenma.yueba.baijia.modle.RequestUploadProductInfoBean;
 import com.shenma.yueba.baijia.modle.ResponseUploadProductInfoBean;
+import com.shenma.yueba.baijia.modle.StoreListBackBean;
 import com.shenma.yueba.baijia.modle.UserInfo;
 import com.shenma.yueba.baijia.modle.UserRequestBean;
 import com.shenma.yueba.constants.Constants;
@@ -561,6 +559,20 @@ public class HttpControl {
 				httpCallBack, BuyerIndexInfoBean.class, refresh, canCancle);
 	}
 
+	
+	
+	/**
+	 * 获取门店列表
+	 * @param bean
+	 * @param httpCallBack
+	 * @param context
+	 */
+	public void getStoreList(
+			final HttpCallBackInterface httpCallBack, Context context,boolean refresh,boolean canCancle) {
+		Map<String, String> map = new HashMap<String, String>();
+		BasehttpSend(map, context, HttpConstants.METHOD_BUYER_GET_STORE_LIST,
+				httpCallBack, StoreListBackBean.class, refresh, canCancle);
+	}
 	/**
 	 * 申请认证买手的接口
 	 * 

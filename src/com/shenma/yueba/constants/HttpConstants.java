@@ -368,6 +368,15 @@ public class HttpConstants {
 	 * buyer相关的接口
 	 */
 	
+	
+	
+	
+	/**
+	 * 获取门店列表 （养家）
+	 */
+	public static String METHOD_BUYER_GET_STORE_LIST = BUYER
+	+ "GetStoreList";
+	
 	/**
 	 * 买手首页统计信息
 	 */
