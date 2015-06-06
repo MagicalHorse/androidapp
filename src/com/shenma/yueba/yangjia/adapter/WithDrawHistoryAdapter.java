@@ -47,7 +47,7 @@ public class WithDrawHistoryAdapter extends BaseAdapterWithUtil {
 		Holder holder;
 		if(convertView == null){
 			holder = new Holder();
-			convertView = View.inflate(ctx, R.layout.income_detail_item, null);
+			convertView = View.inflate(ctx, R.layout.withdraw_history_item, null);
 			holder.tv_date = (TextView) convertView.findViewById(R.id.tv_date);
 			holder.tv_money = (TextView) convertView.findViewById(R.id.tv_money);
 			convertView.setTag(holder);

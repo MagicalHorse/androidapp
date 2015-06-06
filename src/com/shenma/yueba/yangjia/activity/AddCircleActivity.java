@@ -157,7 +157,8 @@ public class AddCircleActivity extends BaseActivityWithTopView implements
 
 					@Override
 					public void http_Fails(int error, String msg) {
-						// TODO Auto-generated method stub
+					
+						Toast.makeText(mContext, msg, 1000).show();
 
 					}
 				}, mContext.getApplicationContext());
@@ -287,7 +288,7 @@ public class AddCircleActivity extends BaseActivityWithTopView implements
 
 			@Override
 			public void onSuccess(String arg0) {
-				createCircle2();
+				createCircle();
 			}
 
 		});
