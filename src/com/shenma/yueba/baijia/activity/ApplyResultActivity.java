@@ -24,11 +24,30 @@ public class ApplyResultActivity extends BaseActivityWithTopView implements OnCl
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.apply_result_layout);
+		super.onCreate(savedInstanceState);
+		initView();
+		getIntentData();
+	}
+	private void initView() {
 		tv_content = getView(R.id.tv_content);
 		tv_comment = getView(R.id.tv_comment);
 		tv_confirm = getView(R.id.tv_confirm);
+		setTitle("结果详情");
+		setLeftTextView(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				ApplyResultActivity.this.finish();
+			}
+		});
 		tv_confirm.setOnClickListener(this);
-		super.onCreate(savedInstanceState);
+	}
+	private void getIntentData() {
+		String flag = getIntent().getStringExtra("flag");
+		if("applaywithdraw".equals(flag)){//申请提现
+			tv_content.setText("提现申请已提交，请等待处理");
+			tv_comment.setText("预计到账时间XXX");
+		}
+		
 	}
 	@Override
 	public void onClick(View v) {

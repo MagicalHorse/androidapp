@@ -6,6 +6,7 @@ import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.shenma.yueba.baijia.modle.BaseRequest;
 import com.shenma.yueba.baijia.modle.LoginBackBean;
 import com.shenma.yueba.baijia.modle.PhoneCodeBean;
 
@@ -20,18 +21,18 @@ public class ParserJson {
 	/**
 	 * 解析便利宝所需要的数据
 	 */
-//	public static BianLiBaoBackBean parserBianLiBao(String jsonData) {
-//		BianLiBaoBackBean bean = null;
-//		try {
-//			Type type = new TypeToken<BianLiBaoBackBean>() {
-//			}.getType();
-//			Gson gson = new Gson();
-//			bean = gson.fromJson(jsonData, type);
-//		} catch (Exception ex) {
-//			ex.printStackTrace();
-//		}
-//		return bean;
-//	}
+	public static BaseRequest parserBase(String jsonData) {
+		BaseRequest bean = null;
+		try {
+			Type type = new TypeToken<BaseRequest>() {
+			}.getType();
+			Gson gson = new Gson();
+			bean = gson.fromJson(jsonData, type);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return bean;
+	}
 	
 	
 	/**

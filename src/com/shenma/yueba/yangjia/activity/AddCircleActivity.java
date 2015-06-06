@@ -18,17 +18,27 @@ import android.view.Window;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.sdk.android.oss.callback.SaveCallback;
 import com.alibaba.sdk.android.oss.model.OSSException;
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.activity.BaseActivityWithTopView;
-import com.shenma.yueba.baijia.activity.BuyerCertificationActivity2;
+import com.shenma.yueba.baijia.modle.BaseRequest;
+import com.shenma.yueba.constants.Constants;
+import com.shenma.yueba.constants.HttpConstants;
 import com.shenma.yueba.util.CustomProgressDialog;
 import com.shenma.yueba.util.FileUtils;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
+import com.shenma.yueba.util.ParserJson;
 import com.shenma.yueba.util.PhotoUtils;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.RoundImageView;
@@ -36,11 +46,13 @@ import com.shenma.yueba.view.SelectePhotoType;
 
 /**
  * 新增圈子
+ * 
  * @author a
- *
+ * 
  */
-public class AddCircleActivity extends BaseActivityWithTopView implements OnClickListener{
-	
+public class AddCircleActivity extends BaseActivityWithTopView implements
+		OnClickListener {
+
 	private TextView tv_cirlce_head_title;
 	private TextView tv_cirlce_name_title;
 	private EditText et_circle_name;
@@ -49,16 +61,16 @@ public class AddCircleActivity extends BaseActivityWithTopView implements OnClic
 	private String littlePicPath;// 小图路径
 	private String littlePicPath_cache;// 裁剪后图片存储的路径
 	private CustomProgressDialog progressDialog;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.add_circle_layout);
+		super.onCreate(savedInstanceState);
 		initView();
 		progressDialog = CustomProgressDialog.createDialog(this);
-		super.onCreate(savedInstanceState);
 	}
-	
-	
+
 	private void initView() {
 		setTitle("新建圈子");
 		setLeftTextView(new OnClickListener() {
@@ -79,45 +91,78 @@ public class AddCircleActivity extends BaseActivityWithTopView implements OnClic
 		riv_circle_head = getView(R.id.riv_circle_head);
 		rl_head = getView(R.id.rl_head);
 		rl_head.setOnClickListener(this);
-		FontManager.changeFonts(mContext, tv_cirlce_head_title,tv_cirlce_name_title,
-				et_circle_name,riv_circle_head,rl_head);
+		FontManager.changeFonts(mContext, tv_cirlce_head_title,
+				tv_cirlce_name_title, et_circle_name, riv_circle_head, rl_head);
 	}
-
 
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.rl_head://提交头像
+		case R.id.rl_head:// 提交头像
+			ToolsUtil.hideSoftKeyboard(mContext, rl_head);
 			showBottomDialog();
 			break;
 
 		default:
 			break;
 		}
-		
+
+	}
+
+	
+	public void createCircle2(){
+		HttpUtils httpUtils = new HttpUtils();
+		RequestParams map = new RequestParams();
+		HttpControl httpControl = new HttpControl();
+		map.addBodyParameter(Constants.NAME, et_circle_name.getText().toString().trim());
+		map.addBodyParameter(Constants.LOGO, littlePicPath_cache.substring(
+				littlePicPath_cache.lastIndexOf("/") + 1,
+				littlePicPath_cache.length()));
+		httpUtils.send(HttpMethod.POST, HttpConstants.METHOD_CIRCLE_GETBUYERGROUPS, map,new RequestCallBack<String>() {
+			@Override
+			public void onSuccess(ResponseInfo<String> responseInfo) {
+				progressDialog.dismiss();
+				BaseRequest resultBean = ParserJson.parserBase(responseInfo.result);
+				if(200 == resultBean.getStatusCode()){//返回成功
+					Toast.makeText(mContext, "创建成功", 1000).show();
+					setResult(Constants.RESULTCODE);
+					AddCircleActivity.this.finish();
+				}else{
+					Toast.makeText(mContext, resultBean.getMessage(), 1000).show();
+				}
+			}
+
+			@Override
+			public void onFailure(HttpException error, String msg) {
+				progressDialog.dismiss();
+				Toast.makeText(mContext, "创建失败！", 1000).show();
+			}
+		});
 	}
 	
-	
-	
-	public void createCircle(){
+	public void createCircle() {
 		HttpControl httpContorl = new HttpControl();
-		httpContorl.createCircle(et_circle_name.getText().toString().trim(),littlePicPath_cache.substring(littlePicPath_cache.lastIndexOf("/")+1,littlePicPath_cache.length()), true, new HttpCallBackInterface() {
-			
-			@Override
-			public void http_Success(Object obj) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void http_Fails(int error, String msg) {
-				// TODO Auto-generated method stub
-				
-			}
-		}, AddCircleActivity.this);
+		httpContorl.createCircle(et_circle_name.getText().toString().trim(),
+				littlePicPath_cache.substring(
+						littlePicPath_cache.lastIndexOf("/") + 1,
+						littlePicPath_cache.length()), false,
+				new HttpCallBackInterface() {
+
+					@Override
+					public void http_Success(Object obj) {
+						Toast.makeText(mContext, "创建成功", 1000).show();
+						setResult(Constants.RESULTCODE);
+						AddCircleActivity.this.finish();
+					}
+
+					@Override
+					public void http_Fails(int error, String msg) {
+						// TODO Auto-generated method stub
+
+					}
+				}, mContext.getApplicationContext());
 	}
-	
-	
+
 	/**
 	 * 弹出底部菜单(相机和图库)
 	 */
@@ -187,8 +232,8 @@ public class AddCircleActivity extends BaseActivityWithTopView implements OnClic
 						startActivityForResult(PhotoUtils.getZoomIntent(Uri
 								.fromFile(new File(littlePicPath)), Uri
 								.fromFile(FileUtils
-										.createNewFile(littlePicPath_cache)),5,8),
-								PhotoUtils.INTENT_REQUEST_CODE_CROP);
+										.createNewFile(littlePicPath_cache)),
+								5, 8), PhotoUtils.INTENT_REQUEST_CODE_CROP);
 					}
 				}
 			}
@@ -221,33 +266,31 @@ public class AddCircleActivity extends BaseActivityWithTopView implements OnClic
 
 	}
 
-	
-	
-	private void uploadImage(String imagePath){
-		if(!progressDialog.isShowing()){
-			progressDialog.show();
-		}
+	private void uploadImage(String imagePath) {
+		 if(!progressDialog.isShowing()){
+		 progressDialog.show();
+		 }
 		HttpControl httpControl = new HttpControl();
 		httpControl.syncUpload(littlePicPath_cache, new SaveCallback() {
-			
+
 			@Override
 			public void onProgress(String arg0, int arg1, int arg2) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void onFailure(String arg0, OSSException arg1) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void onSuccess(String arg0) {
-				createCircle();
-				}
-				
+				createCircle2();
+			}
+
 		});
 	}
-	
+
 }

@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.adapter.BaseAdapterWithUtil;
+import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.yangjia.modle.IncomeDetailListBean;
 
 public class IncomeDetailAdapter extends BaseAdapterWithUtil {
@@ -49,8 +50,18 @@ public class IncomeDetailAdapter extends BaseAdapterWithUtil {
 		if(convertView == null){
 			holder = new Holder();
 			convertView = View.inflate(ctx, R.layout.income_detail_item, null);
+			holder.tv_earning_money_title = (TextView) convertView.findViewById(R.id.tv_earning_money_title);
+			holder.tv_earning_money = (TextView) convertView.findViewById(R.id.tv_earning_money);
+			holder.tv_from = (TextView) convertView.findViewById(R.id.tv_from);
+			holder.tv_order_money_title = (TextView) convertView.findViewById(R.id.tv_order_money_title);
+			holder.tv_money_number = (TextView) convertView.findViewById(R.id.tv_money_number);
 			holder.tv_date = (TextView) convertView.findViewById(R.id.tv_date);
-			holder.tv_money = (TextView) convertView.findViewById(R.id.tv_money);
+			holder.tv_order_number_title = (TextView) convertView.findViewById(R.id.tv_order_number_title);
+			holder.tv_order_number = (TextView) convertView.findViewById(R.id.tv_order_number);
+			holder.tv_status = (TextView) convertView.findViewById(R.id.tv_status);
+			FontManager.changeFonts(ctx, holder.tv_earning_money_title,holder.tv_earning_money,holder.tv_from,
+					holder.tv_order_money_title,holder.tv_money_number,holder.tv_date,
+					holder.tv_order_number_title,holder.tv_order_number,holder.tv_status);
 			convertView.setTag(holder);
 		}else{
 			holder = (Holder) convertView.getTag();
@@ -60,8 +71,15 @@ public class IncomeDetailAdapter extends BaseAdapterWithUtil {
 	
 	
 	class Holder{
+		TextView tv_earning_money_title;
+		TextView tv_earning_money;
+		TextView tv_from;
+		TextView tv_order_money_title;
+		TextView tv_money_number;
 		TextView tv_date;
-		TextView tv_money;
+		TextView tv_order_number_title;
+		TextView tv_order_number;
+		TextView tv_status;
 	}
 
 }

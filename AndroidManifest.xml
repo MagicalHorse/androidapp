@@ -368,6 +368,11 @@
             android:name="com.shenma.yueba.yangjia.activity.AddCircleActivity"
             android:screenOrientation="portrait" >
         </activity>
+        <!-- 申请提现 -->
+        <activity
+            android:name="com.shenma.yueba.yangjia.activity.ApplyWithdrawActivity"
+            android:screenOrientation="portrait" >
+        </activity>
         <!-- 自定义相机 -->
         <activity
             android:name="com.shenma.yueba.camera.CameraAty"
