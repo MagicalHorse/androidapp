@@ -11,8 +11,7 @@ import java.util.List;
  */
 
 public class BrandCityWideInfoBean implements Serializable{
-
-	
+    
 	int pageindex;
     int pagesize;
     int totalcount;
