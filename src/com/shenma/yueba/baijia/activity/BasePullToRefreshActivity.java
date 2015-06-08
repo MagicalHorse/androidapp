@@ -20,6 +20,8 @@ import com.shenma.yueba.R;
  * @author a
  * 
  */
+
+
 public abstract class BasePullToRefreshActivity extends BaseActivityWithTopView {
 	protected PullToRefreshListView pull_refresh_list;
 	protected LinearLayout ll_top;
