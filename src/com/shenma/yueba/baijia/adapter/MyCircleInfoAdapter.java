@@ -18,12 +18,13 @@ import com.shenma.yueba.baijia.modle.GridVIewItemBean;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.view.RoundImageView;
 import com.shenma.yueba.yangjia.activity.CircleInvitectivity;
+import com.shenma.yueba.yangjia.modle.Users;
 
 public class MyCircleInfoAdapter extends BaseAdapterWithUtil{
 	private Context ctx;
 	private boolean showDelete;
-	private List<GridVIewItemBean> mList = new ArrayList<GridVIewItemBean>();
-	public MyCircleInfoAdapter(Context ctx,List<GridVIewItemBean> mList) {
+	private List<Users> mList = new ArrayList<Users>();
+	public MyCircleInfoAdapter(Context ctx,List<Users> mList) {
 		super(ctx);
 		this.mList = mList;
 		this.ctx = ctx;
@@ -71,12 +72,16 @@ public class MyCircleInfoAdapter extends BaseAdapterWithUtil{
 			holder.tv_text.setText("删除成员");
 		}else{
 			if(showDelete){
-				holder.iv_delete.setVisibility(View.VISIBLE);
+				if(position == 0){
+					holder.iv_delete.setVisibility(View.GONE);
+				}else{
+					holder.iv_delete.setVisibility(View.VISIBLE);
+				}
 			}else{
 				holder.iv_delete.setVisibility(View.GONE);
 			}
-			holder.tv_text.setText(mList.get(position).getName());
-			MyApplication.getInstance().getImageLoader().displayImage(mList.get(position).getHead(), holder.riv_head);
+			holder.tv_text.setText(mList.get(position).getNickName());
+			MyApplication.getInstance().getImageLoader().displayImage(mList.get(position).getLogo(), holder.riv_head);
 		}
 		holder.iv_delete.setOnClickListener(new OnClickListener() {
 			@Override

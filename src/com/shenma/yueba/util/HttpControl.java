@@ -51,6 +51,7 @@ import com.shenma.yueba.constants.HttpConstants;
 import com.shenma.yueba.yangjia.modle.AliYunKeyBackBean;
 import com.shenma.yueba.yangjia.modle.AttationAndFansListBackBean;
 import com.shenma.yueba.yangjia.modle.BuyerProductManagerListBack;
+import com.shenma.yueba.yangjia.modle.CircleDetailBackBean;
 import com.shenma.yueba.yangjia.modle.CircleListBackBean;
 import com.shenma.yueba.yangjia.modle.ContactsAddressRequestBean;
 import com.shenma.yueba.yangjia.modle.ContactsAddressRequestListBean;
@@ -559,20 +560,20 @@ public class HttpControl {
 				httpCallBack, BuyerIndexInfoBean.class, refresh, canCancle);
 	}
 
-	
-	
 	/**
 	 * 获取门店列表
+	 * 
 	 * @param bean
 	 * @param httpCallBack
 	 * @param context
 	 */
-	public void getStoreList(
-			final HttpCallBackInterface httpCallBack, Context context,boolean refresh,boolean canCancle) {
+	public void getStoreList(final HttpCallBackInterface httpCallBack,
+			Context context, boolean refresh, boolean canCancle) {
 		Map<String, String> map = new HashMap<String, String>();
 		BasehttpSend(map, context, HttpConstants.METHOD_BUYER_GET_STORE_LIST,
 				httpCallBack, StoreListBackBean.class, refresh, canCancle);
 	}
+
 	/**
 	 * 申请认证买手的接口
 	 * 
@@ -971,6 +972,35 @@ public class HttpControl {
 	}
 
 	/**
+	 * 获取圈子详情
+	 * 
+	 * @return void
+	 * **/
+	public void getCircleDetail(String groupid, boolean showDialog,
+			final HttpCallBackInterface httpCallBack, Context context) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put(Constants.GROUPID, groupid);
+		BasehttpSend(map, context,
+				HttpConstants.METHOD_CIRCLE_GETBUYERGROUPDETAIL, httpCallBack,
+				CircleDetailBackBean.class, showDialog, true);
+	}
+
+	/**
+	 * 修改圈子名称
+	 * 
+	 * @return void
+	 * **/
+	public void renameGroup(String groupid, String name,
+			boolean showDialog, final HttpCallBackInterface httpCallBack,
+			Context context) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put(Constants.GROUPID, groupid);
+		map.put(Constants.NAME, name);
+		BasehttpSend(map, context, HttpConstants.METHOD_CIRCLE_RENAMEGROUP,
+				httpCallBack, BaseRequest.class, showDialog, true);
+	}
+
+	/**
 	 * 新建圈子
 	 * 
 	 * @return void
@@ -1281,10 +1311,10 @@ public class HttpControl {
 			final Context context, final String method,
 			final HttpCallBackInterface httpCallBack, final Class<T> classzz,
 			boolean isshwoDialog, boolean isDialogCancell) {
-//		final CustomProgressDialog progressDialog = CustomProgressDialog
-//				.createDialog(context);
-//		progressDialog.setCancelable(isDialogCancell);
-//		progressDialog.show();
+		// final CustomProgressDialog progressDialog = CustomProgressDialog
+		// .createDialog(context);
+		// progressDialog.setCancelable(isDialogCancell);
+		// progressDialog.show();
 		httpUtils.send(HttpMethod.POST, method.trim(),
 				setBaseRequestParams(map, context),
 				new RequestCallBack<String>() {
@@ -1306,7 +1336,7 @@ public class HttpControl {
 								httpCallBack.http_Success(bean);
 							}
 						}
-//						progressDialog.cancel();
+						// progressDialog.cancel();
 					}
 
 					@Override
@@ -1315,7 +1345,7 @@ public class HttpControl {
 						if (httpCallBack != null) {
 							httpCallBack.http_Fails(0, msg);
 						}
-//						progressDialog.cancel();
+						// progressDialog.cancel();
 					}
 				});
 	}

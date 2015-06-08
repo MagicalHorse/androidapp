@@ -356,6 +356,19 @@ public class HttpConstants {
 			+ "GetBuyerGroups";
 	
 	/**
+	 * 社交管理--修改圈子名称
+	 */
+	public static String METHOD_CIRCLE_RENAMEGROUP = Circle
+			+ "RenameGroup";
+	
+	/**
+	 * 社交管理--获取圈子详情
+	 */
+	
+	public static String METHOD_CIRCLE_GETBUYERGROUPDETAIL = Circle
+			+ "GetBuyerGroupDetail";
+	
+	/**
 	 * 社交管理--新建圈子
 	 */
 	

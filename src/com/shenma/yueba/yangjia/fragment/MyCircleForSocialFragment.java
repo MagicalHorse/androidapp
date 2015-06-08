@@ -57,9 +57,10 @@ public class MyCircleForSocialFragment extends BaseFragment {
 		pull_refresh_list.setAdapter(adapter);
 		pull_refresh_list.setOnItemClickListener(new OnItemClickListener() {
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+			public void onItemClick(AdapterView<?> arg0, View arg1, int pos,
 					long arg3) {
 				Intent intent = new Intent(getActivity(),CircleInfoActivity.class);
+				intent.putExtra("circleId", mList.get(pos-1).getId());
 				startActivity(intent);
 			}
 		});

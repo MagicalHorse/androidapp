@@ -47,6 +47,7 @@
             android:orientation="vertical" >
 
             <RelativeLayout
+                android:visibility="gone"
                 android:id="@+id/rl_qrcode"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -75,6 +76,7 @@
             </RelativeLayout>
 
             <View
+                android:visibility="gone"
                 style="@style/style_horizontal_line"
                 android:layout_marginLeft="10dip" />
 
