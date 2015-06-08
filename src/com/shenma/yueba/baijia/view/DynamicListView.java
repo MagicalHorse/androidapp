@@ -49,7 +49,7 @@ public class DynamicListView {
 	boolean showDialog=true;
 	HttpControl httpCntrol=new HttpControl();
 	List<BrandCityWideInfo> items=new ArrayList<BrandCityWideInfo>();
-	int CityId;//当前城市id
+	int CityId=0;//当前城市id
 	public static DynamicListView the()
 	{
 		if(msgListView==null)
@@ -178,6 +178,7 @@ public class DynamicListView {
 			
 			@Override
 			public void http_Success(Object obj) {
+				pull_refresh_list.onRefreshComplete();
 				showDialog=false;
 				if(obj!=null && obj instanceof RequestBrandInfoBean)
 				{
@@ -217,7 +218,7 @@ public class DynamicListView {
 			
 			@Override
 			public void http_Fails(int error, String msg) {
-				
+				pull_refresh_list.onRefreshComplete();
 				MyApplication.getInstance().showMessage(activity, msg);
 			}
 		},activity );
