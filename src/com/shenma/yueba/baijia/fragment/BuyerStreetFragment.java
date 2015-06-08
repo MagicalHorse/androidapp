@@ -97,6 +97,7 @@ public class BuyerStreetFragment extends Fragment {
 	BitmapUtils bitmapUtils;
     List<ImageView> imageViewlist=new ArrayList<ImageView>();
 	
+    
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
