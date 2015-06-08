@@ -61,5 +61,19 @@
         android:singleLine="true"
         android:visibility="gone"
          />
-
+<TextView
+        android:id="@+id/tv_top_title_below"
+        style="@style/title_text_style"
+        android:textSize="14sp"
+        android:textColor="@color/text_gray_color"
+        android:layout_below="@id/tv_top_title"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="15dip"
+        android:layout_marginRight="15dip"
+        android:ellipsize="end"
+        android:text="aaaa"
+        android:ems="10"
+        android:gravity="center"
+        android:singleLine="true"
+         />
 </RelativeLayout>

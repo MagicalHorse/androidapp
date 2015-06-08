@@ -361,6 +361,12 @@ public class HttpConstants {
 	public static String METHOD_CIRCLE_RENAMEGROUP = Circle
 			+ "RenameGroup";
 	
+	
+	/**
+	 * 社交管理--删除圈子成员
+	 */
+	public static String METHOD_CIRCLE_REMOVEGROUPMEMBER = Circle
+			+ "RemoveGroupMember";
 	/**
 	 * 社交管理--获取圈子详情
 	 */

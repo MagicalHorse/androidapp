@@ -1002,6 +1002,20 @@ public class HttpControl {
 	}
 
 	/**
+	 * 删除圈子成员
+	 * 
+	 * @return void
+	 * **/
+	public void removeCircleMember(String groupid, String userId,
+			boolean showDialog, final HttpCallBackInterface httpCallBack,
+			Context context) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put(Constants.GROUPID, groupid);
+		map.put(Constants.USERID, userId);
+		BasehttpSend(map, context, HttpConstants.METHOD_CIRCLE_REMOVEGROUPMEMBER,
+				httpCallBack, BaseRequest.class, showDialog, true);
+	}
+	/**
 	 * 新建圈子
 	 * 
 	 * @return void
