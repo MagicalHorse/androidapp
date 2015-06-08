@@ -121,7 +121,7 @@ public class BaiJiaOrderListAdapter extends BaseAdapter {
 		double allPrice = 0.0;// 总金额
 		String productUrl = "";// 产品图片地址
 
-		ProductInfoBean productInfoBean = new ProductInfoBean();
+		ProductInfoBean productInfoBean = bean.getProduct();
 		if (bean != null) {
 			if (productInfoBean == null) {
 				productInfoBean = new ProductInfoBean();
@@ -161,8 +161,7 @@ public class BaiJiaOrderListAdapter extends BaseAdapter {
 				.setImageResource(R.drawable.default_pic);
 		holder.affirmorder_item_icon_imageview.setTag(productInfoBean
 				.getProductId());
-		initPic(holder.affirmorder_item_icon_imageview,
-				ToolsUtil.getImage(productUrl, 320, 0));
+		initPic(holder.affirmorder_item_icon_imageview,ToolsUtil.getImage(productUrl, 320, 0));
 
 		holder.baijia_orderdetails_sqtk_button.setTag(bean);
 		holder.baijia_orderdetails_ziti_button.setTag(bean);
@@ -273,6 +272,6 @@ public class BaiJiaOrderListAdapter extends BaseAdapter {
 	};
 
 	void initPic(ImageView iv, String url) {
-		MyApplication.getInstance().getImageLoader().displayImage(url, iv);
+		MyApplication.getInstance().getImageLoader().displayImage(url, iv,MyApplication.getInstance().getDisplayImageOptions());
 	}
 }

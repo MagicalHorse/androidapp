@@ -21,6 +21,7 @@ import com.shenma.yueba.baijia.activity.UserConfigActivity;
 import com.shenma.yueba.baijia.adapter.MyFragmentPagerAdapter;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.SharedUtil;
+import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.yangjia.activity.MainActivityForYangJia;
 
 /**
@@ -37,11 +38,8 @@ public class MeFragmentForBaiJia extends BaseFragment implements OnClickListener
 	private TextView tv_nickname;
 	private TextView tv_style;
 	private TextView tv_attention_count;
-	private TextView tv_attention_title;
 	private TextView tv_fans_count;
 	private TextView tv_fans_title;
-	private TextView tv_collection_count;
-	private TextView tv_collection_title;
 	private TextView tv_all_order;
 	private TextView tv_waiting_for_send;
 	private TextView tv_waiting_for_recieve;
@@ -76,16 +74,22 @@ public class MeFragmentForBaiJia extends BaseFragment implements OnClickListener
 	 */
 	private void initViews(LayoutInflater inflater) {
 		view = inflater.inflate(R.layout.me_fragment_for_baijia, null);
+		ToolsUtil.setFontStyle(getActivity(), view, R.id.tv_nickname,R.id.tv_nickname,R.id.shop_main_attentionvalue_textview,R.id.shop_main_attention_textview,R.id.shop_main_fansvalue_textview,R.id.shop_main_fans_textview,R.id.shop_main_praisevalue_textview,R.id.shop_main_praise_textview,R.id.tv_all_order,R.id.tv_waiting_for_send,R.id.tv_waiting_for_recieve,R.id.tv_pick_by_myself,R.id.tv_my_collection,R.id.tv_will_yangjia);
 		iv_setting = (ImageView) view.findViewById(R.id.iv_setting);
 		iv_icon = (ImageView) view.findViewById(R.id.iv_icon);
+		//买手名称
 		tv_nickname = (TextView) view.findViewById(R.id.tv_nickname);
+		//类型 养家模式
 		tv_style = (TextView) view.findViewById(R.id.tv_style);
 		tv_attention_count = (TextView) view.findViewById(R.id.tv_attention_count);
-		tv_attention_title = (TextView) view.findViewById(R.id.tv_attention_title);
+		//关注
+		TextView shop_main_attentionvalue_textview = (TextView) view.findViewById(R.id.shop_main_attentionvalue_textview);
+		//粉丝
+		TextView shop_main_fansvalue_textview = (TextView) view.findViewById(R.id.shop_main_fansvalue_textview);
+		//收藏
+		TextView shop_main_praisevalue_textview = (TextView) view.findViewById(R.id.shop_main_praisevalue_textview);
+		
 		tv_fans_count = (TextView) view.findViewById(R.id.tv_fans_count);
-		tv_fans_title = (TextView) view.findViewById(R.id.tv_fans_title);
-		tv_collection_count = (TextView) view.findViewById(R.id.tv_collection_count);
-		tv_collection_title = (TextView) view.findViewById(R.id.tv_collection_title);
 		tv_all_order = (TextView) view.findViewById(R.id.tv_all_order);
 		tv_waiting_for_send = (TextView) view.findViewById(R.id.tv_waiting_for_send);
 		tv_waiting_for_recieve = (TextView) view.findViewById(R.id.tv_waiting_for_recieve);

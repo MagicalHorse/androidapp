@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 public class MyCircleInfo implements Serializable{
 
-	long Id;
+	int Id;
 	String Name="";
 	String Logo="";//圈子头像
 	int MemberCount;//人数",
@@ -34,10 +34,10 @@ public class MyCircleInfo implements Serializable{
 	public void setLogo(String logo) {
 		Logo = logo;
 	}
-	public long getId() {
+	public int getId() {
 		return Id;
 	}
-	public void setId(long id) {
+	public void setId(int id) {
 		Id = id;
 	}
 	public String getName() {

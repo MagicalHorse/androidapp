@@ -110,7 +110,7 @@ public class SameCityAdapter extends BaseAdapterWithUtil {
 			holder.tv_attention.setText("取消关注");
 		}else
 		{
-			holder.tv_attention.setText("关注");
+			holder.tv_attention.setText("关    注");
 		}
 		
 		String[] pic_array=brandCityWideInfo.getPic();
@@ -162,7 +162,7 @@ public class SameCityAdapter extends BaseAdapterWithUtil {
 			case R.id.brandlist_item_imageview2:
 			case R.id.brandlist_item_imageview3:
 				Intent intent=new Intent(ctx,ApproveBuyerDetailsActivity.class);
-				intent.putExtra("productID", (Long)v.getTag());
+				intent.putExtra("productID",(Integer)v.getTag());
 				ctx.startActivity(intent);
 				break;
 			}
@@ -186,7 +186,7 @@ public class SameCityAdapter extends BaseAdapterWithUtil {
 					switch(Status)
 					{
 					case 0:
-						((TextView)v).setText("关注");
+						((TextView)v).setText("关    注");
 						brandCityWideInfo.setIsFavorite(false);
 						break;
 					case 1:

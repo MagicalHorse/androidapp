@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 public class BaiJiaOrderListInfo implements Serializable{
 	String BuyerName="";//买手昵称"
-	long OrderNo;//订单编号"
+	String OrderNo;//订单编号"
     int OrderProductType;//订单类型
     int OrderStatus;// 状态值
     String OrderStatusStr="";// 状态描述字符串
@@ -33,10 +33,10 @@ public class BaiJiaOrderListInfo implements Serializable{
 		OrderStatusStr = orderStatusStr;
 	}
     
-	public long getOrderNo() {
+	public String getOrderNo() {
 		return OrderNo;
 	}
-	public void setOrderNo(long orderNo) {
+	public void setOrderNo(String orderNo) {
 		OrderNo = orderNo;
 	}
 	public int getOrderProductType() {

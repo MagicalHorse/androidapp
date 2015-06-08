@@ -9,13 +9,13 @@ import java.io.Serializable;
  */
 
 public class CreatOrderInfoBean implements Serializable{
-	long orderno;//" : 订单号 "115012080504",
+	int orderno;//" : 订单号 "115012080504",
     double totalamount;//订单金额 101.00,
     double discountamount;//":优惠的金额
-	public long getOrderno() {
+	public int getOrderno() {
 		return orderno;
 	}
-	public void setOrderno(long orderno) {
+	public void setOrderno(int orderno) {
 		this.orderno = orderno;
 	}
 	public double getTotalamount() {

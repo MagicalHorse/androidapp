@@ -90,7 +90,7 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView impleme
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.approvebuyerdetails_layout);
 		super.onCreate(savedInstanceState);
-		this.getIntent().getLongExtra("productID", -1);
+		productID=this.getIntent().getIntExtra("productID", -1);
 		if(productID<0)
 		{
 			MyApplication.getInstance().showMessage(this, "数据错误,请重试");

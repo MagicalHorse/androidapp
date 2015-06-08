@@ -9,13 +9,13 @@ import java.io.Serializable;
  */ 
 
 public class PrioductSizesInfoBean implements Serializable{
-	long SizeId;//规格id
+	int SizeId;//规格id
     String Size="";//L/M/XL/XXL/XXXL   规格名字
     int Inventory;//库存
-	public long getSizeId() {
+	public int getSizeId() {
 		return SizeId;
 	}
-	public void setSizeId(long sizeId) {
+	public void setSizeId(int sizeId) {
 		SizeId = sizeId;
 	}
 	public String getSize() {

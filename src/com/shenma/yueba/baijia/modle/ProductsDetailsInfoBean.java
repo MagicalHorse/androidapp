@@ -23,7 +23,7 @@ public class ProductsDetailsInfoBean implements Serializable{
 	String BuyerMobile="";//手机号
 	boolean IsFavorite=false;//是否收藏
 	String StoreName="";//商店名字
-    long StoreId  ;//店铺id
+	int StoreId  ;//店铺id
 	
 	public String getStoreName() {
 		return StoreName;
@@ -31,10 +31,10 @@ public class ProductsDetailsInfoBean implements Serializable{
 	public void setStoreName(String storeName) {
 		StoreName = storeName;
 	}
-	public long getStoreId() {
+	public int getStoreId() {
 		return StoreId;
 	}
-	public void setStoreId(long storeId) {
+	public void setStoreId(int storeId) {
 		StoreId = storeId;
 	}
 	List<PrioductSizesInfoBean> Sizes=new ArrayList<PrioductSizesInfoBean>();

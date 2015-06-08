@@ -9,20 +9,20 @@ import java.io.Serializable;
  */
 
 public class BrandCityWideInfo implements Serializable{
-	long UserId;//买手的用户编号",
+	int UserId;//买手的用户编号",
     String UserName="";//买手的用户昵称",
     boolean IsFavorite=false;// 是否已关注(true:已关注, false:未关注)
     String BuyerLogo="";//http://123.57.52.187:9550/customerportrait/default_100x100.jpg",  买手头像
-    long AssociateId;//买手编号",
+    int AssociateId;//买手编号",
     String Address="";//地址",
-    long ProductId;//商品编号",
+    int ProductId;//商品编号",
     String ProductName;//商品名称",
     String CreateTime="";//商品的创建时间",
     String[] Pic=null;
-	public long getUserId() {
+	public int getUserId() {
 		return UserId;
 	}
-	public void setUserId(long userId) {
+	public void setUserId(int userId) {
 		UserId = userId;
 	}
 	public String getUserName() {
@@ -43,10 +43,10 @@ public class BrandCityWideInfo implements Serializable{
 	public void setBuyerLogo(String buyerLogo) {
 		BuyerLogo = buyerLogo;
 	}
-	public long getAssociateId() {
+	public int getAssociateId() {
 		return AssociateId;
 	}
-	public void setAssociateId(long associateId) {
+	public void setAssociateId(int associateId) {
 		AssociateId = associateId;
 	}
 	public String getAddress() {
@@ -55,10 +55,10 @@ public class BrandCityWideInfo implements Serializable{
 	public void setAddress(String address) {
 		Address = address;
 	}
-	public long getProductId() {
+	public int getProductId() {
 		return ProductId;
 	}
-	public void setProductId(long productId) {
+	public void setProductId(int productId) {
 		ProductId = productId;
 	}
 	public String getProductName() {

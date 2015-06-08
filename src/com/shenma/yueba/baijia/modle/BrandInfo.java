@@ -11,14 +11,14 @@ import java.util.List;
  */
 
 public class BrandInfo implements Serializable{
-	long BrandId;//品牌编号",
+	int BrandId;//品牌编号",
     String BrandName="";//品牌名称",
     String BrandLogo="";//品牌Logo",
     List<ProductInFo> Product=new ArrayList<ProductInFo>();
-	public long getBrandId() {
+	public int getBrandId() {
 		return BrandId;
 	}
-	public void setBrandId(long brandId) {
+	public void setBrandId(int brandId) {
 		BrandId = brandId;
 	}
 	public String getBrandName() {

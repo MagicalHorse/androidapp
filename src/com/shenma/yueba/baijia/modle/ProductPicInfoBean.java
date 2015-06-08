@@ -12,7 +12,7 @@ import java.util.List;
 
 public class ProductPicInfoBean implements Serializable{
 	int Id;//图片id,
-	long SourceId;//产品id
+	int SourceId;//产品id
 	String Name="";// 图片地址,
 	//标签列表
 	List<ProductTagsInfoBean> Tags=new ArrayList<ProductTagsInfoBean>();
@@ -22,10 +22,10 @@ public class ProductPicInfoBean implements Serializable{
 	public void setId(int id) {
 		Id = id;
 	}
-	public long getSourceId() {
+	public int getSourceId() {
 		return SourceId;
 	}
-	public void setSourceId(long sourceId) {
+	public void setSourceId(int sourceId) {
 		SourceId = sourceId;
 	}
 	public String getName() {

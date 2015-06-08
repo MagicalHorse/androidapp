@@ -33,6 +33,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.lidroid.xutils.BitmapUtils;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.activity.ApproveBuyerDetailsActivity;
 import com.shenma.yueba.baijia.activity.ShopMainActivity;
 import com.shenma.yueba.baijia.adapter.UserIconAdapter;
 import com.shenma.yueba.baijia.modle.BannersInfoBean;
@@ -209,6 +210,7 @@ public class MyBuyerFragment extends Fragment {
 				holder.v = convertView;
 				holder.customImage = (RoundImageView) convertView
 						.findViewById(R.id.baijia_tab1_item_icon_imageview);
+				setOnclickListener(holder.customImage);
 				holder.baijia_tab1_item_productname_textview = (TextView)convertView
 						.findViewById(R.id.baijia_tab1_item_productname_textview);
 				holder.baijia_tab1_item_productaddress_textview = (TextView) convertView
@@ -283,7 +285,7 @@ public class MyBuyerFragment extends Fragment {
 		holder.buyersteetfragmeng_item_price_textview.setText("￥"+Double
 				.toString(productsInfoBean.getPrice()));
 		String url=productsInfoBean.getBuyerLogo()+"640x0.jpg";
-		holder.customImage.setTag(productsInfoBean.getBuyerLogo());
+		holder.customImage.setTag(productsInfoBean);
 		holder.customImage.setImageResource(R.drawable.default_pic);
 		initPic(productsInfoBean.getBuyerLogo(), holder.customImage,R.drawable.test002);
 		ProductPicInfoBean productPicInfoBean = productsInfoBean.getProductPic();
@@ -437,5 +439,31 @@ public class MyBuyerFragment extends Fragment {
 	void initPic(final String url, final ImageView iv, final int image) {
 		Log.i("TAG", "URL:"+url);
 		MyApplication.getInstance().getImageLoader().displayImage(url, iv, MyApplication.getInstance().getDisplayImageOptions());
+	}
+	
+	/****
+	 * 设置点击事件
+	 * **/
+	void setOnclickListener(View v)
+	{
+		v.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				switch(v.getId())
+				{
+				case R.id.baijia_tab1_item_productcontent_imageview:
+					if(v.getTag()!=null && v.getTag() instanceof ProductsInfoBean)
+					{
+						ProductsInfoBean productPicInfoBean=(ProductsInfoBean)v.getTag();
+						Intent intent=new Intent(getActivity(),ApproveBuyerDetailsActivity.class);
+						intent.putExtra("productID", productPicInfoBean.getProductId());
+						startActivity(intent);
+					}
+					break;
+				}
+				
+			}
+		});
 	}
 }

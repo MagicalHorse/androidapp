@@ -9,14 +9,14 @@ import java.io.Serializable;
  */
 
 public class ProductInFo implements Serializable{
-    long ProductId;//商品编号",
+	int ProductId;//商品编号",
     String ProductName="";//商品名称",
-    long StoreItemNo;//商店编号",
+    int StoreItemNo;//商店编号",
     String Pic="";//图片"
-	public long getProductId() {
+	public int getProductId() {
 		return ProductId;
 	}
-	public void setProductId(long productId) {
+	public void setProductId(int productId) {
 		ProductId = productId;
 	}
 	public String getProductName() {
@@ -25,10 +25,10 @@ public class ProductInFo implements Serializable{
 	public void setProductName(String productName) {
 		ProductName = productName;
 	}
-	public long getStoreItemNo() {
+	public int getStoreItemNo() {
 		return StoreItemNo;
 	}
-	public void setStoreItemNo(long storeItemNo) {
+	public void setStoreItemNo(int storeItemNo) {
 		StoreItemNo = storeItemNo;
 	}
 	public String getPic() {
