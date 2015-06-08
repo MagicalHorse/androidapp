@@ -7,13 +7,18 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.view.RoundImageView;
+import com.shenma.yueba.yangjia.activity.CircleInvitectivity;
 import com.shenma.yueba.yangjia.modle.AttationAndFansItemBean;
 
 public class FriendSortAdapter extends BaseAdapter implements SectionIndexer{
@@ -78,7 +83,23 @@ public class FriendSortAdapter extends BaseAdapter implements SectionIndexer{
 		}
 	
 		viewHolder.tvTitle.setText(this.list.get(position).getUserName());
+		MyApplication.getInstance().getImageLoader().displayImage(list.get(position).getUserLogo(), viewHolder.riv_head);
 		
+		
+		viewHolder.cb.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				if(isChecked){
+					((CircleInvitectivity)mContext).setIdToList(list.get(position).getUserId());
+				//	list.get(position).setChecked(true);
+				}else{
+					((CircleInvitectivity)mContext).removeIdFromList(list.get(position).getUserId());
+					//list.get(position).setChecked(false);
+				}
+			//	notifyDataSetChanged();
+			}
+		});
+		viewHolder.cb.setChecked(list.get(position).isChecked());
 		return view;
 
 	}

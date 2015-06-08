@@ -37,7 +37,7 @@ public class Constants {
 	public static final String PAGE="Page";//第几页，页码
 	public static final String PAGESIZE="Pagesize";//页size
 	public static final String ID="Id";
-	
+	public static final String USERIDSTR="useridstr";
 	public static final String ORDER_NO="OrderNo";
 	public static final String OrderProductType="OrderProductType";
 	public static final String STATUS="Status";
