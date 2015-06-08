@@ -11,24 +11,51 @@ import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.modle.BaseRequest;
 import com.shenma.yueba.baijia.modle.GridVIewItemBean;
+import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.FontManager;
+import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.view.RoundImageView;
 import com.shenma.yueba.yangjia.activity.CircleInvitectivity;
+import com.shenma.yueba.yangjia.activity.ModifyCircleNameActivity;
 import com.shenma.yueba.yangjia.modle.Users;
 
 public class MyCircleInfoAdapter extends BaseAdapterWithUtil{
 	private Context ctx;
 	private boolean showDelete;
 	private List<Users> mList = new ArrayList<Users>();
+	private String circleId;
 	public MyCircleInfoAdapter(Context ctx,List<Users> mList) {
 		super(ctx);
 		this.mList = mList;
 		this.ctx = ctx;
 	}
+
+	
+	
+	
+	
+	public String getCircleId() {
+		return circleId;
+	}
+
+
+
+
+
+	public void setCircleId(String circleId) {
+		this.circleId = circleId;
+	}
+
+
+
+
 
 	@Override
 	public int getCount() {
@@ -87,7 +114,7 @@ public class MyCircleInfoAdapter extends BaseAdapterWithUtil{
 			@Override
 			public void onClick(View v) {
 				//删除成员
-				
+				renameCircleName(circleId, mList.get(position).getUserId(), ctx, true);
 			}
 		});
 		holder.riv_head.setOnClickListener(new OnClickListener() {
@@ -121,4 +148,27 @@ public class MyCircleInfoAdapter extends BaseAdapterWithUtil{
 		ImageView iv_delete;
 	}
 
+	
+	
+	public void renameCircleName(String circleId, final String userId, final Context ctx,
+			boolean showDialog) {
+		HttpControl httpControl = new HttpControl();
+		httpControl.removeCircleMember(circleId, userId, showDialog, new HttpCallBackInterface() {
+			
+			@Override
+			public void http_Success(Object obj) {
+
+				BaseRequest result = (BaseRequest) obj;
+				if (200 == result.getStatusCode()) {// 修改成功
+					Toast.makeText(ctx, "删除成功", 1000).show();
+				}
+			}
+			
+			@Override
+			public void http_Fails(int error, String msg) {
+				Toast.makeText(ctx, msg, 1000).show();
+				
+			}
+		}, ctx);
+}
 }

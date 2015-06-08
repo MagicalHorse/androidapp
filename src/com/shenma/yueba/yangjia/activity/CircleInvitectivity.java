@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -41,6 +42,8 @@ import com.shenma.yueba.util.sore.SideBar;
 import com.shenma.yueba.util.sore.SideBar.OnTouchingLetterChangedListener;
 import com.shenma.yueba.util.sore.SortAdapter;
 import com.shenma.yueba.util.sore.SortModel;
+import com.shenma.yueba.yangjia.adapter.MyAttentionAndFansForSocialAdapter;
+import com.shenma.yueba.yangjia.modle.AttationAndFansListBackBean;
 
 /**
  * 邀请好友加入圈子
@@ -311,4 +314,42 @@ public class CircleInvitectivity extends BaseActivityWithTopView implements OnCl
 		
 	}
 	
+	
+	/**
+	 * 获取关注列表和fans列表
+	 */
+//	public void getAttationOrFansList(String status,Context ctx,boolean showDialog){
+//		HttpControl httpControl = new HttpControl();
+//		httpControl.getAttationOrFansList(status, page, new HttpCallBackInterface() {
+//			
+//			@Override
+//			public void http_Success(Object obj) {
+//				pull_refresh_list.onRefreshComplete();
+//				AttationAndFansListBackBean bean = (AttationAndFansListBackBean) obj;
+//				if (isRefresh) {
+//					if(bean!=null && bean.getData()!=null && bean.getData().getItems()!=null && bean.getData().getItems().size()>0){
+//						mList.clear();
+//						mList.addAll(bean.getData().getItems());
+//						tv_nodata.setVisibility(View.GONE);
+//						adapter = new MyAttentionAndFansForSocialAdapter(getActivity(), mList);
+//						pull_refresh_list.setAdapter(adapter);
+//					}else{
+//						tv_nodata.setVisibility(View.VISIBLE);
+//					}
+//				} else {
+//					if(bean!=null && bean.getData()!=null && bean.getData().getItems()!=null&& bean.getData().getItems().size()>0){
+//						mList.addAll(bean.getData().getItems());
+//						adapter.notifyDataSetChanged();
+//					}else{
+//						Toast.makeText(getActivity(), "没有更多数据了...", 1000).show();
+//					}
+//				}
+//			}
+//			
+//			@Override
+//			public void http_Fails(int error, String msg) {
+//				Toast.makeText(getActivity(),msg, 1000).show();
+//			}
+//		}, ctx,showDialog);
+//	}
 }
