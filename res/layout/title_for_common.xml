@@ -64,7 +64,7 @@
 <TextView
         android:id="@+id/tv_top_title_below"
         style="@style/title_text_style"
-        android:textSize="14sp"
+        android:textSize="10sp"
         android:textColor="@color/text_gray_color"
         android:layout_below="@id/tv_top_title"
         android:layout_centerInParent="true"

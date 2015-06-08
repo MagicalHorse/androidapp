@@ -14,12 +14,13 @@ import android.widget.TextView;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.view.RoundImageView;
+import com.shenma.yueba.yangjia.modle.AttationAndFansItemBean;
 
 public class FriendSortAdapter extends BaseAdapter implements SectionIndexer{
-	private List<SortModel> list = null;
+	private List<AttationAndFansItemBean> list = null;
 	private Context mContext;
 	
-	public FriendSortAdapter(Context mContext, List<SortModel> list) {
+	public FriendSortAdapter(Context mContext, List<AttationAndFansItemBean> list) {
 		this.mContext = mContext;
 		this.list = list;
 	}
@@ -28,12 +29,12 @@ public class FriendSortAdapter extends BaseAdapter implements SectionIndexer{
 	 * 当ListView数据发生变化时,调用此方法来更新ListView
 	 * @param list
 	 */
-	public void updateListView(List<SortModel> list){
+	public void updateListView(List<AttationAndFansItemBean> list){
 		this.list = list;
 		notifyDataSetChanged();
 	}
 
-	public List<SortModel>  getListData()
+	public List<AttationAndFansItemBean>  getListData()
 	{
 		return list;
 	}
@@ -52,7 +53,7 @@ public class FriendSortAdapter extends BaseAdapter implements SectionIndexer{
 
 	public View getView(final int position, View view, ViewGroup arg2) {
 		ViewHolder viewHolder = null;
-		final SortModel mContent = list.get(position);
+		final AttationAndFansItemBean mContent = list.get(position);
 		if (view == null) {
 			viewHolder = new ViewHolder();
 			view = LayoutInflater.from(mContext).inflate(R.layout.invite_to_circle_item, null);
@@ -76,7 +77,7 @@ public class FriendSortAdapter extends BaseAdapter implements SectionIndexer{
 			viewHolder.tvLetter.setVisibility(View.GONE);
 		}
 	
-		viewHolder.tvTitle.setText(this.list.get(position).getName());
+		viewHolder.tvTitle.setText(this.list.get(position).getUserName());
 		
 		return view;
 

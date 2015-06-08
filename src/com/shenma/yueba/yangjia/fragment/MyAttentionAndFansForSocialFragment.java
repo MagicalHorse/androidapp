@@ -16,6 +16,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.fragment.BaseFragment;
+import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.yangjia.adapter.MyAttentionAndFansForSocialAdapter;
@@ -90,7 +91,7 @@ public class MyAttentionAndFansForSocialFragment extends BaseFragment {
 	 */
 	public void getAttationOrFansList(String status,Context ctx,boolean showDialog){
 		HttpControl httpControl = new HttpControl();
-		httpControl.getAttationOrFansList(status, page, new HttpCallBackInterface() {
+		httpControl.getAttationOrFansList(status, page, Constants.PAGESIZE,new HttpCallBackInterface() {
 			
 			@Override
 			public void http_Success(Object obj) {

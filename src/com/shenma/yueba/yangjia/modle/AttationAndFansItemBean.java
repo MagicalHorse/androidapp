@@ -1,6 +1,8 @@
 package com.shenma.yueba.yangjia.modle;
 
-public class AttationAndFansItemBean {
+import com.shenma.yueba.util.sore.SortModel;
+
+public class AttationAndFansItemBean extends SortModel{
 
 	private String UserLogo;//用户头像,
 	private String UserName;// 用户昵称

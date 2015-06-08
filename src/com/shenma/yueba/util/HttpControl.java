@@ -316,12 +316,13 @@ public class HttpControl {
 	 *            Context
 	 * @return void
 	 * **/
-	public void getAttationOrFansList(String status, int page,
+	public void getAttationOrFansList(String status, int page,String pageSize,
 			final HttpCallBackInterface httpCallBack, Context context,
 			boolean showDialog) {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put(Constants.STATUS, status);
 		map.put(Constants.PAGE, page + "");
+		map.put(Constants.PAGESIZE, pageSize);
 		BasehttpSend(map, context, HttpConstants.METHOD_GETUSERFAVOITE,
 				httpCallBack, AttationAndFansListBackBean.class, showDialog,
 				true);

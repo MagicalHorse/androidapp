@@ -40,9 +40,7 @@ import com.shenma.yueba.util.sore.FriendSortAdapter;
 import com.shenma.yueba.util.sore.PinyinComparator;
 import com.shenma.yueba.util.sore.SideBar;
 import com.shenma.yueba.util.sore.SideBar.OnTouchingLetterChangedListener;
-import com.shenma.yueba.util.sore.SortAdapter;
-import com.shenma.yueba.util.sore.SortModel;
-import com.shenma.yueba.yangjia.adapter.MyAttentionAndFansForSocialAdapter;
+import com.shenma.yueba.yangjia.modle.AttationAndFansItemBean;
 import com.shenma.yueba.yangjia.modle.AttationAndFansListBackBean;
 
 /**
@@ -61,7 +59,7 @@ public class CircleInvitectivity extends BaseActivityWithTopView implements OnCl
 	 * 汉字转换成拼音的类
 	 */
 	private CharacterParser characterParser;
-	private List<SortModel> sourceDateList;
+	private List<AttationAndFansItemBean> sourceDateList;
 	//城市列表map  string--城市名称    Integer--对应城市的id
 	Map<String, Integer> citymap=new HashMap<String, Integer>();
 	List<String> city_list=new ArrayList<String>();
@@ -129,12 +127,12 @@ public class CircleInvitectivity extends BaseActivityWithTopView implements OnCl
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				//这里要利用adapter.getItem(position)来获取当前position所对应的对象
-				Toast.makeText(getApplication(), ((SortModel)adapter.getItem(position)).getName(), Toast.LENGTH_SHORT).show();
-				List<SortModel> sortmodel=adapter.getListData();
-				if(sortmodel!=null)
+				Toast.makeText(getApplication(), ((AttationAndFansItemBean)adapter.getItem(position)).getUserName(), Toast.LENGTH_SHORT).show();
+				List<AttationAndFansItemBean> AttationAndFansItemBean=adapter.getListData();
+				if(AttationAndFansItemBean!=null)
 				{
-					SortModel sortModel=sortmodel.get(position);
-					String name=sortModel.getName();
+					AttationAndFansItemBean attationAndFansItemBean=AttationAndFansItemBean.get(position);
+					String name=attationAndFansItemBean.getUserName();
 					if(citymap.containsKey(name))
 					{
 						int value=citymap.get(name);
@@ -148,19 +146,11 @@ public class CircleInvitectivity extends BaseActivityWithTopView implements OnCl
 				finish();
 			}
 		});
-		sourceDateList=new ArrayList<SortModel>();
+		sourceDateList=new ArrayList<AttationAndFansItemBean>();
 		//SourceDateList = filledData(getResources().getStringArray(R.array.date));
 		adapter = new FriendSortAdapter(this, sourceDateList);
 		sortListView.setAdapter(adapter);
 		//如果从在 城市列表数据 则直接设置 否则 从网络获取
-		if(cityBeanList!=null && cityBeanList.getData().size()>0)
-		{
-			setCityList(cityBeanList);
-		}else
-		{
-			getCityList();
-		}
-		
 		
 		mClearEditText = (ClearEditText) findViewById(R.id.filter_edit);
 		
@@ -183,122 +173,27 @@ public class CircleInvitectivity extends BaseActivityWithTopView implements OnCl
 			public void afterTextChanged(Editable s) {
 			}
 		});
+		
+		getAttationOrFansList("1", CircleInvitectivity.this, true);
 	}
 
-	/*****
-	 * 访问网络获取城市列表
-	 * **/
-	void getCityList()
-	{
-		HttpControl httpControl=new HttpControl();
-		httpControl.getCityList(new HttpCallBackInterface() {
-			
-			@Override
-			public void http_Success(Object obj) {
-				
-				setCityList(obj);
-			}
-			
-			@Override
-			public void http_Fails(int error, String msg) {
-				
-				Toast.makeText(CircleInvitectivity.this, msg, 1000).show();
-				
-			}
-		}, this);
-		
-	}
-
-	/*****
-	 * 根据 城市列表对象 获取列表信息
-	 * ***/
-	void setCityList(Object obj)
-	{
-		if(obj!=null && obj instanceof CityListRequestBean)
-		{
-			cityBeanList=(CityListRequestBean)obj;
-			List<CityBeanList> list=cityBeanList.getData();
-			if(list!=null && list.size()>0 )
-			{
-				sourceDateList.clear();
-				citymap.clear();
-				for(int i=0;i<list.size();i++)
-				{
-					CityBeanList citybeanlsit=list.get(i);
-					List<CityBean>  citybean_array=citybeanlsit.getCities();
-					for(int j=0;j<citybean_array.size();j++)
-					{
-						CityBean cityBean=citybean_array.get(j);
-						citymap.put(cityBean.getName(), cityBean.getId());
-						city_list.add(cityBean.getName());
-					}
-					
-					//CityBean cityBean=list.get(i);
-					
-				}
-				
-			}
-			
-		}
-        setShowCityList();
-	}
 	
-	
-	void setShowCityList()
-	{
-		sourceDateList.clear();
-		//将汉子转化为拼音
-		sourceDateList=filledData(city_list);
-		// 根据a-z进行排序源数据
-	    Collections.sort(sourceDateList, pinyinComparator);
-	    adapter.updateListView(sourceDateList);
-	    adapter.notifyDataSetChanged();
-	}
-	
-	
-	/**
-	 * 为ListView填充数据
-	 * @param date
-	 * @return
-	 */
-	private List<SortModel> filledData(List<String> city_array){
-		List<SortModel> mSortList = new ArrayList<SortModel>();
-		
-		for(int i=0; i<city_array.size(); i++){
-			SortModel sortModel = new SortModel();
-			sortModel.setName(city_array.get(i));
-			//汉字转换成拼音
-			String pinyin = characterParser.getSelling(city_array.get(i));
-			String sortString = pinyin.substring(0, 1).toUpperCase();
-			
-			// 正则表达式，判断首字母是否是英文字母
-			if(sortString.matches("[A-Z]")){
-				sortModel.setSortLetters(sortString.toUpperCase());
-			}else{
-				sortModel.setSortLetters("#");
-			}
-			
-			mSortList.add(sortModel);
-		}
-		return mSortList;
-		
-	}
 	
 	/**
 	 * 根据输入框中的值来过滤数据并更新ListView
 	 * @param filterStr
 	 */
 	private void filterData(String filterStr){
-		List<SortModel> filterDateList = new ArrayList<SortModel>();
+		List<AttationAndFansItemBean> filterDateList = new ArrayList<AttationAndFansItemBean>();
 		
 		if(TextUtils.isEmpty(filterStr)){
 			filterDateList = sourceDateList;
 		}else{
 			filterDateList.clear();
-			for(SortModel sortModel : sourceDateList){
-				String name = sortModel.getName();
+			for(AttationAndFansItemBean AttationAndFansItemBean : sourceDateList){
+				String name = AttationAndFansItemBean.getUserName();
 				if(name.indexOf(filterStr.toString()) != -1 || characterParser.getSelling(name).startsWith(filterStr.toString())){
-					filterDateList.add(sortModel);
+					filterDateList.add(AttationAndFansItemBean);
 				}
 			}
 		}
@@ -318,38 +213,25 @@ public class CircleInvitectivity extends BaseActivityWithTopView implements OnCl
 	/**
 	 * 获取关注列表和fans列表
 	 */
-//	public void getAttationOrFansList(String status,Context ctx,boolean showDialog){
-//		HttpControl httpControl = new HttpControl();
-//		httpControl.getAttationOrFansList(status, page, new HttpCallBackInterface() {
-//			
-//			@Override
-//			public void http_Success(Object obj) {
-//				pull_refresh_list.onRefreshComplete();
-//				AttationAndFansListBackBean bean = (AttationAndFansListBackBean) obj;
-//				if (isRefresh) {
-//					if(bean!=null && bean.getData()!=null && bean.getData().getItems()!=null && bean.getData().getItems().size()>0){
-//						mList.clear();
-//						mList.addAll(bean.getData().getItems());
-//						tv_nodata.setVisibility(View.GONE);
-//						adapter = new MyAttentionAndFansForSocialAdapter(getActivity(), mList);
-//						pull_refresh_list.setAdapter(adapter);
-//					}else{
-//						tv_nodata.setVisibility(View.VISIBLE);
-//					}
-//				} else {
-//					if(bean!=null && bean.getData()!=null && bean.getData().getItems()!=null&& bean.getData().getItems().size()>0){
-//						mList.addAll(bean.getData().getItems());
-//						adapter.notifyDataSetChanged();
-//					}else{
-//						Toast.makeText(getActivity(), "没有更多数据了...", 1000).show();
-//					}
-//				}
-//			}
-//			
-//			@Override
-//			public void http_Fails(int error, String msg) {
-//				Toast.makeText(getActivity(),msg, 1000).show();
-//			}
-//		}, ctx,showDialog);
-//	}
+	public void getAttationOrFansList(String status,Context ctx,boolean showDialog){
+		HttpControl httpControl = new HttpControl();
+		httpControl.getAttationOrFansList(status, 1, "1000",new HttpCallBackInterface() {
+			
+			@Override
+			public void http_Success(Object obj) {
+				AttationAndFansListBackBean bean = (AttationAndFansListBackBean) obj;
+					if(bean!=null && bean.getData()!=null && bean.getData().getItems()!=null && bean.getData().getItems().size()>0){
+						sourceDateList.addAll(bean.getData().getItems());
+						adapter.notifyDataSetChanged();
+				} else {
+						Toast.makeText(CircleInvitectivity.this, "暂无粉丝", 1000).show();
+				}
+			}
+			
+			@Override
+			public void http_Fails(int error, String msg) {
+				Toast.makeText(CircleInvitectivity.this,msg, 1000).show();
+			}
+		}, ctx,showDialog);
+	}
 }
