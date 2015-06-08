@@ -18,6 +18,7 @@ import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.adapter.AffirmAdapter;
 import com.shenma.yueba.baijia.modle.PrioductSizesInfoBean;
 import com.shenma.yueba.baijia.modle.ProductsDetailsInfoBean;
+import com.shenma.yueba.baijia.modle.RequestCreatOrderInfoBean;
 import com.shenma.yueba.baijia.modle.RequestProductDetailsInfoBean;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
@@ -85,7 +86,6 @@ PrioductSizesInfoBean currCheckedFouce=null;//选择的尺寸数据
 	
 	void initView()
 	{
-		productlist.add(null);
 		setTitle("确认订单");
 		setLeftTextView(new OnClickListener() {
 			
@@ -162,14 +162,16 @@ PrioductSizesInfoBean currCheckedFouce=null;//选择的尺寸数据
 			
 			@Override
 			public void http_Success(Object obj) {
-				// TODO Auto-generated method stub
-				
+		      if(obj !=null && obj instanceof RequestCreatOrderInfoBean)
+		      {
+		    	  MyApplication.getInstance().showMessage(AffirmOrderActivity.this, "下单成功");
+		    	  finish();
+		      }
 			}
 			
 			@Override
 			public void http_Fails(int error, String msg) {
-				// TODO Auto-generated method stub
-				
+				MyApplication.getInstance().showMessage(AffirmOrderActivity.this, msg);
 			}
 		}, AffirmOrderActivity.this);
 	}

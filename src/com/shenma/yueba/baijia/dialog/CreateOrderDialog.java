@@ -45,7 +45,7 @@ public class CreateOrderDialog extends Dialog implements android.view.View.OnCli
 	RequestProductDetailsInfoBean bean;
 	ProductsDetailsInfoBean productsDetailsInfoBean;
 	//库存最大值
-	int maxValue=1;
+	int maxValue=0;
 	//当前选中的尺寸对象
 	PrioductSizesInfoBean currCheckedFouce=null;
 	Button createorder_dialog_layout_submit_button;
@@ -108,6 +108,7 @@ public class CreateOrderDialog extends Dialog implements android.view.View.OnCli
 		create_dialog_jian_button.setOnClickListener(this);
 		//加
 		Button create_dialog_jia_button=(Button)ll.findViewById(R.id.create_dialog_jia_button);
+		create_dialog_jia_button.setOnClickListener(this);
 		//提交
 		createorder_dialog_layout_submit_button=(Button)ll.findViewById(R.id.createorder_dialog_layout_submit_button);
 		createorder_dialog_layout_submit_button.setOnClickListener(this);
@@ -175,15 +176,25 @@ public class CreateOrderDialog extends Dialog implements android.view.View.OnCli
 		switch(v.getId())
 		{
 		case R.id.create_dialog_jian_button://减
+			if(currCheckedFouce==null)
+			{
+				MyApplication.getInstance().showMessage(context, "请先选择商品规格");
+				return;
+			}
 			int value=Integer.parseInt(createorder_dialog_layout_countvalue_edittext.getText().toString());
 			value--;
 			if(value<=0)
 			{
-				value=1;
+				value=0;
 			}
 			createorder_dialog_layout_countvalue_edittext.setText(Integer.toString(value));
 			break;
 		case R.id.create_dialog_jia_button://加
+			if(currCheckedFouce==null)
+			{
+				MyApplication.getInstance().showMessage(context, "请先选择商品规格");
+				return;
+			}
 			int values=Integer.parseInt(createorder_dialog_layout_countvalue_edittext.getText().toString());
 			values++;
 			if(values>=maxValue)
@@ -196,7 +207,7 @@ public class CreateOrderDialog extends Dialog implements android.view.View.OnCli
 			CreateOrderDialog.this.cancel();
 			break;
 		case R.id.createorder_dialog_layout_submit_button://提交
-			int count=Integer.parseInt(createorder_dialog_layout_repertoryvalue_textview.getText().toString().trim());
+			int count=Integer.parseInt(createorder_dialog_layout_countvalue_edittext.getText().toString().trim());
 			if(count<=0)
 			{
 				//商品数量必须大于零
@@ -237,9 +248,10 @@ public class CreateOrderDialog extends Dialog implements android.view.View.OnCli
 				
 				@Override
 				public void onClick(View v) {
+					currCheckedFouce=(PrioductSizesInfoBean)v.getTag();
 					setCheckFouse();
 					v.setSelected(true);
-					currCheckedFouce=(PrioductSizesInfoBean)v.getTag();
+					
 				}
 			});
 			if(!view_array.contains(btn))
@@ -291,7 +303,7 @@ public class CreateOrderDialog extends Dialog implements android.view.View.OnCli
 			int currvalue=Integer.parseInt(createorder_dialog_layout_countvalue_edittext.getText().toString().trim());
 			if(currvalue>maxValue)
 			{
-				createorder_dialog_layout_repertoryvalue_textview.setText(Integer.toString(maxValue));
+				createorder_dialog_layout_countvalue_edittext.setText(Integer.toString(maxValue));
 			}
 		}
 	}

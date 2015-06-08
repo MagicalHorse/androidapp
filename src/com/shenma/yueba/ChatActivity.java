@@ -328,7 +328,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,OnChic
 
 	@Override
 	protected void onDestroy() {
-
+             super.onDestroy();
 	}
 
 	@Override
