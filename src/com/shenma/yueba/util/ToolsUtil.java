@@ -29,6 +29,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -563,4 +564,25 @@ public class ToolsUtil {
 			}, ctx);
 		}
 		
+	
+	
+	public static void hideSoftKeyboard(Context context, View view) {
+		// 隐藏软键盘
+		InputMethodManager imm = (InputMethodManager) context
+				.getSystemService(context.INPUT_METHOD_SERVICE);
+		if (imm.isActive()) {
+			imm.hideSoftInputFromWindow(view.getApplicationWindowToken(), 0);
+		}
+	}
+
+	public static void showSoftKeyboard(Context context, View view) {
+		// 打开软键盘
+		InputMethodManager imm = (InputMethodManager) context
+				.getSystemService(context.INPUT_METHOD_SERVICE);
+		if (imm.isActive()) {
+			imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT,
+					InputMethodManager.HIDE_NOT_ALWAYS);
+		}
+	}
+
 }

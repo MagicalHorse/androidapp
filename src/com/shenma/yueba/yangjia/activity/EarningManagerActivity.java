@@ -77,6 +77,7 @@ public class EarningManagerActivity extends BaseActivityWithTopView implements O
 		tv_total_income_money.setText(income!=null?ToolsUtil.nullToString(income.getTotal_income()):"");
 		tv_withdraw_cash_money.setText(income!=null?ToolsUtil.nullToString(income.getRequest_amount()):"");
 		tv_income_detail.setOnClickListener(this);
+		tv_apply_withdraw.setOnClickListener(this);
 		tv_withdraw_cash_history.setOnClickListener(this);
 		FontManager.changeFonts(mContext, tv_top_title,tv_earnings_today_title,tv_today_income,tv_withdraw_cash_title,
 				tv_withdraw_cash_money,tv_withdraw_cash_history,tv_apply_withdraw,tv_total_income_title
@@ -87,12 +88,15 @@ public class EarningManagerActivity extends BaseActivityWithTopView implements O
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.tv_income_detail://收入明细
-			skip(IncomeDetailActivity2.class, false);
+			skip(IncomeDetailActivity.class, false);
 			break;
 		case R.id.tv_withdraw_cash_history://提现历史
 			skip(WithdrawHistoryActivity.class, false);
 			break;
-		
+		case R.id.tv_apply_withdraw://申请提现
+			Intent intent = new Intent(this,ApplyWithdrawActivity.class);
+			intent.putExtra("money", tv_withdraw_cash_money.getText().toString().trim());
+			startActivity(intent);
 		default:
 			break;
 		}

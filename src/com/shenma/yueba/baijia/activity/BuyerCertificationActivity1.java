@@ -33,12 +33,14 @@ import com.alibaba.sdk.android.oss.storage.OSSBucket;
 import com.alibaba.sdk.android.oss.storage.OSSFile;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.modle.StoreListBackBean;
 import com.shenma.yueba.util.CustomProgressDialog;
 import com.shenma.yueba.util.FileUtils;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.PhotoUtils;
 import com.shenma.yueba.util.ToolsUtil;
+import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.view.SelectePhotoType;
 
 /**
@@ -50,7 +52,7 @@ import com.shenma.yueba.view.SelectePhotoType;
 public class BuyerCertificationActivity1 extends BaseActivityWithTopView
 		implements OnClickListener {
 
-	private int tag = 0;//0身份证正面，1身份证反面，2证件照片
+	private int tag = 0;// 0身份证正面，1身份证反面，2证件照片
 	private TextView tv_idcard_title;// 身份证信息头
 	private TextView tv_get_point;// 自提点
 	private EditText et_info;// 信息
@@ -62,11 +64,12 @@ public class BuyerCertificationActivity1 extends BaseActivityWithTopView
 	private ImageView iv_idcard_reverse;
 	private String littlePicPath;// 小图路径
 	private String littlePicPath_cache;// 裁剪后图片存储的路径
-	private String pic1,pic2,pic3;
+	private String pic1, pic2, pic3;
 	private RelativeLayout rl_work_card;
 	private ImageView iv_work_card;
 	private CustomProgressDialog progressDialog;
 	private int upPicProgress = 0;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -119,18 +122,20 @@ public class BuyerCertificationActivity1 extends BaseActivityWithTopView
 			tag = 2;
 			showBottomDialog();
 			break;
-		case R.id.tv_next://下一步
-			if(TextUtils.isEmpty(pic1)){
+		case R.id.tv_next:// 下一步
+			if (TextUtils.isEmpty(pic1)) {
 				Toast.makeText(mContext, "身份证正面图片不能为空", 1000).show();
-				return ;
-			}if(TextUtils.isEmpty(pic2)){
-				Toast.makeText(mContext, "身份证反面面图片不能为空", 1000).show();
-				return ;
-			}if(TextUtils.isEmpty(pic3)){
-				Toast.makeText(mContext, "证件图片不能为空", 1000).show();
-				return ;
+				return;
 			}
-			uploadImage(pic1);//开始上传图片
+			if (TextUtils.isEmpty(pic2)) {
+				Toast.makeText(mContext, "身份证反面面图片不能为空", 1000).show();
+				return;
+			}
+			if (TextUtils.isEmpty(pic3)) {
+				Toast.makeText(mContext, "证件图片不能为空", 1000).show();
+				return;
+			}
+			uploadImage(pic1);// 开始上传图片
 			break;
 		default:
 			break;
@@ -207,8 +212,8 @@ public class BuyerCertificationActivity1 extends BaseActivityWithTopView
 						startActivityForResult(PhotoUtils.getZoomIntent(Uri
 								.fromFile(new File(littlePicPath)), Uri
 								.fromFile(FileUtils
-										.createNewFile(littlePicPath_cache)),5,8),
-								PhotoUtils.INTENT_REQUEST_CODE_CROP);
+										.createNewFile(littlePicPath_cache)),
+								5, 8), PhotoUtils.INTENT_REQUEST_CODE_CROP);
 					}
 				}
 			}
@@ -220,13 +225,13 @@ public class BuyerCertificationActivity1 extends BaseActivityWithTopView
 				// iv_pic.setImageBitmap(bm);
 				// iv_pic.setVisibility(View.VISIBLE);
 				// icon_imageview.setImageBitmap(bm);
-				if (0  == tag) {
+				if (0 == tag) {
 					pic1 = littlePicPath_cache;
 					iv_idcard_positive.setImageBitmap(bm);
-				} else if(1  == tag){
+				} else if (1 == tag) {
 					pic2 = littlePicPath_cache;
 					iv_idcard_reverse.setImageBitmap(bm);
-				}else if(2  == tag){
+				} else if (2 == tag) {
 					pic3 = littlePicPath_cache;
 					iv_work_card.setImageBitmap(bm);
 				}
@@ -254,52 +259,62 @@ public class BuyerCertificationActivity1 extends BaseActivityWithTopView
 
 	}
 
-	
-	
-	private void uploadImage(String imagePath){
-		if(!progressDialog.isShowing()){
+	private void uploadImage(String imagePath) {
+		if (!progressDialog.isShowing()) {
 			progressDialog.show();
 		}
 		HttpControl httpControl = new HttpControl();
 		httpControl.syncUpload(pic1, new SaveCallback() {
-			
+
 			@Override
 			public void onProgress(String arg0, int arg1, int arg2) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void onFailure(String arg0, OSSException arg1) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void onSuccess(String arg0) {
 				switch (upPicProgress) {
-				case 0://第一张图片上传完毕
+				case 0:// 第一张图片上传完毕
 					upPicProgress = 1;
 					uploadImage(pic2);
 					break;
-				case 1://第二张上传完毕
+				case 1:// 第二张上传完毕
 					upPicProgress = 2;
 					uploadImage(pic3);
 					break;
-				case 2://第三张上传完毕
-					if(progressDialog.isShowing()){
+				case 2:// 第三张上传完毕
+					if (progressDialog.isShowing()) {
 						progressDialog.dismiss();
 					}
-					Intent intent = new Intent(mContext,BuyerCertificationActivity2.class);
-					intent.putExtra("pic1", pic1.substring(pic1.lastIndexOf("/")+1,pic1.length()));
-					intent.putExtra("pic2", pic2.substring(pic2.lastIndexOf("/")+1,pic2.length()));
-					intent.putExtra("pic3", pic3.substring(pic3.lastIndexOf("/")+1,pic3.length()));
+					Intent intent = new Intent(mContext,
+							BuyerCertificationActivity2.class);
+					intent.putExtra(
+							"pic1",
+							pic1.substring(pic1.lastIndexOf("/") + 1,
+									pic1.length()));
+					intent.putExtra(
+							"pic2",
+							pic2.substring(pic2.lastIndexOf("/") + 1,
+									pic2.length()));
+					intent.putExtra(
+							"pic3",
+							pic3.substring(pic3.lastIndexOf("/") + 1,
+									pic3.length()));
 					startActivity(intent);
 				default:
 					break;
 				}
-				
+
 			}
 		});
 	}
+
+
 }

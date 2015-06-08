@@ -355,7 +355,7 @@
             android:screenOrientation="portrait" />
         <!-- 收入明细 -->
         <activity
-            android:name="com.shenma.yueba.yangjia.activity.IncomeDetailActivity2"
+            android:name="com.shenma.yueba.yangjia.activity.IncomeDetailActivity"
             android:screenOrientation="portrait" >
         </activity>
         <!-- 提现历史 -->
@@ -366,6 +366,11 @@
         <!-- 添加圈子 -->
         <activity
             android:name="com.shenma.yueba.yangjia.activity.AddCircleActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <!-- 申请提现 -->
+        <activity
+            android:name="com.shenma.yueba.yangjia.activity.ApplyWithdrawActivity"
             android:screenOrientation="portrait" >
         </activity>
         <!-- 自定义相机 -->

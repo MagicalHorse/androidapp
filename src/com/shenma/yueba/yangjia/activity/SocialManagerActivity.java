@@ -184,8 +184,10 @@ public class SocialManagerActivity extends BaseFragmentActivity implements
 	
 	
 	@Override
-	protected void onActivityResult(int arg0, int arg1, Intent arg2) {
-		// TODO Auto-generated method stub
-		super.onActivityResult(arg0, arg1, arg2);
+	protected void onActivityResult(int request, int result, Intent arg2) {
+		if(request == Constants.REQUESTCODE && result == Constants.RESULTCODE){
+			myCircleForSocialFragment.getCircleListFromNet(SocialManagerActivity.this,true, true);
+		}
+		super.onActivityResult(request, result, arg2);
 	}
 }
