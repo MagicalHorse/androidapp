@@ -664,79 +664,34 @@ public class HttpControl {
 
 	/************************** 商品信息 ***********************************/
 	/**
-	 * 设置收藏商品
+	 * 设置收藏或取消收藏商品
 	 * 
-	 * @param httpCallBack
-	 *            HttpCallBackInterface 回调接口
-	 * @param context
-	 *            Context
-	 * @param productId
-	 *            int 商品编号
+	 * @param httpCallBack   HttpCallBackInterface 回调接口
+	 * @param context  Context
+	 * @param productId int 商品编号
+	 * @param Status int 商品编号 0表示取消收藏   1表示收藏
 	 * @return void
 	 * **/
-	public void setFavor(int productId,
-			final HttpCallBackInterface httpCallBack, Context context) {
+	public void setFavor(long productId,int Status,final HttpCallBackInterface httpCallBack, Context context) {
 		Map<String, String> map = new HashMap<String, String>();
-		map.put(Constants.PRODUCTID, Integer.toString(productId));
-		BasehttpSend(map, context, HttpConstants.METHOD_PRODUCTMANAGER_FAVOR,
-				httpCallBack, BaseRequest.class, true, true);
+		map.put("Id", Long.toString(productId));
+		BasehttpSend(map, context, HttpConstants.METHOD_PRODUCTMANAGER_FAVOR,httpCallBack, BaseRequest.class, true, true);
 	}
 
-	/**
-	 * 设置取消收藏商品
-	 * 
-	 * @param httpCallBack
-	 *            HttpCallBackInterface 回调接口
-	 * @param context
-	 *            Context
-	 * @param productId
-	 *            int 商品编号
-	 * @return void
-	 * **/
-	public void setUnFavor(int productId,
-			final HttpCallBackInterface httpCallBack, Context context) {
-		Map<String, String> map = new HashMap<String, String>();
-		map.put(Constants.PRODUCTID, Integer.toString(productId));
-		BasehttpSend(map, context, HttpConstants.METHOD_PRODUCTMANAGER_UNFAVOR,
-				httpCallBack, BaseRequest.class, true, true);
-	}
 
 	/**
 	 * 设置喜欢的商品
 	 * 
-	 * @param httpCallBack
-	 *            HttpCallBackInterface 回调接口
-	 * @param context
-	 *            Context
-	 * @param productId
-	 *            int 商品编号
+	 * @param httpCallBack HttpCallBackInterface 回调接口
+	 * @param context  Context
+	 * @param productId  int 商品编号
+	 * @param Status  int 0表示取消喜欢   1表示喜欢
 	 * @return void
 	 * **/
-	public void setLike(int productId,
-			final HttpCallBackInterface httpCallBack, Context context) {
+	public void setLike(int productId,int Status,final HttpCallBackInterface httpCallBack, Context context) {
 		Map<String, String> map = new HashMap<String, String>();
-		map.put(Constants.PRODUCTID, Integer.toString(productId));
-		BasehttpSend(map, context, HttpConstants.METHOD_PRODUCTMANAGER_LIKE,
-				httpCallBack, BaseRequest.class, true, true);
-	}
-
-	/**
-	 * 设置取消喜欢的商品
-	 * 
-	 * @param httpCallBack
-	 *            HttpCallBackInterface 回调接口
-	 * @param context
-	 *            Context
-	 * @param productId
-	 *            int 商品编号
-	 * @return void
-	 * **/
-	public void setUnLike(int productId,
-			final HttpCallBackInterface httpCallBack, Context context) {
-		Map<String, String> map = new HashMap<String, String>();
-		map.put(Constants.PRODUCTID, Integer.toString(productId));
-		BasehttpSend(map, context, HttpConstants.METHOD_PRODUCTMANAGER_UNLIKE,
-				httpCallBack, BaseRequest.class, true, true);
+		map.put("Id", Integer.toString(productId));
+		BasehttpSend(map, context, HttpConstants.METHOD_PRODUCTMANAGER_LIKE,httpCallBack, BaseRequest.class, true, true);
 	}
 
 	/**
@@ -1035,7 +990,6 @@ public class HttpControl {
 	/**
 	 * @param ProductId 商品id
 	 * @param Count  int 购买数量
-	 * @param SizeId  int规格编号
 	 * @return void
 	 * **/
 	public void createProductOrder(int ProductId, int Count, long SizeId,boolean showDialog, final HttpCallBackInterface httpCallBack,Context context) {
@@ -1148,6 +1102,10 @@ public class HttpControl {
 				httpCallBack, RequestBrandCityWideInfoBean.class, showDialog,
 				true);
 	}
+	
+	
+	
+	
 
 	/********
 	 * 基础Http传递json数据通用类

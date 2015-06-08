@@ -134,21 +134,13 @@ public class HttpConstants {
 	 */
 
 	/**
-	 * 收藏商品
+	 * 收藏或取消商品
 	 */
-	public static String METHOD_PRODUCTMANAGER_FAVOR = PRODUCT + "Favor";
+	public static String METHOD_PRODUCTMANAGER_FAVOR = PRODUCT + "Favorite";
 	/**
-	 * 取消收藏商品
-	 */
-	public static String METHOD_PRODUCTMANAGER_UNFAVOR = PRODUCT + "Unfavor";
-	/**
-	 * 喜欢商品
+	 * 喜欢或取消喜欢商品
 	 */
 	public static String METHOD_PRODUCTMANAGER_LIKE = PRODUCT + "Like";
-	/**
-	 * 取消喜欢商品
-	 */
-	public static String METHOD_PRODUCTMANAGER_UNLIKE = PRODUCT + "UnLike";
 	/**
 	 * 获取主页商品列表(买手街)
 	 */
@@ -372,7 +364,7 @@ public class HttpConstants {
 	 */
 	
 	public static String METHOD_CIRCLE_GETBUYERGROUPDETAIL = Circle
-			+ "GetBuyerGroupDetail";
+			+ "GetGroupDetail";
 	
 	/**
 	 * 社交管理--新建圈子

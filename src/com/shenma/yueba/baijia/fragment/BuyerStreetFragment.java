@@ -347,7 +347,7 @@ public class BuyerStreetFragment extends Fragment {
 					{
 						ProductPicInfoBean productPicInfoBean=(ProductPicInfoBean)v.getTag();
 						Intent intent=new Intent(getActivity(),ApproveBuyerDetailsActivity.class);
-						intent.putExtra("data", productPicInfoBean);
+						intent.putExtra("productID", productPicInfoBean.getId());
 						startActivity(intent);
 					}
 					break;

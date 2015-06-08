@@ -90,14 +90,13 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView impleme
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.approvebuyerdetails_layout);
 		super.onCreate(savedInstanceState);
-		if (this.getIntent().getSerializableExtra("data") == null) {
+		this.getIntent().getLongExtra("productID", -1);
+		if(productID<0)
+		{
 			MyApplication.getInstance().showMessage(this, "数据错误,请重试");
 			this.finish();
 			return;
 		}
-		ProductPicInfoBean productPicInfoBean = (ProductPicInfoBean) this
-				.getIntent().getSerializableExtra("data");
-		productID = productPicInfoBean.getId();
 		productID = 12947;
 		initViews();
 		initData();

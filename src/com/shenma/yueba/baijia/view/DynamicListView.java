@@ -123,7 +123,7 @@ public class DynamicListView {
 				requestData();
 			}
 		});
-		msgAdapter=new SameCityAdapter(activity, items);
+		msgAdapter=new SameCityAdapter(activity, items,pull_refresh_list);
 		pull_refresh_list.setAdapter(msgAdapter);
 	}
 	
@@ -174,13 +174,13 @@ public class DynamicListView {
 	
 	void sendHttp(final int type)
 	{
-		httpCntrol.getBrandCity_Wide(type, type, CityId, showDialog,new HttpCallBackInterface() {
+		httpCntrol.getBrandCity_Wide(currPage, pageSize, CityId, showDialog,new HttpCallBackInterface() {
 			
 			@Override
 			public void http_Success(Object obj) {
 				pull_refresh_list.onRefreshComplete();
 				showDialog=false;
-				if(obj!=null && obj instanceof RequestBrandInfoBean)
+				if(obj!=null && obj instanceof RequestBrandCityWideInfoBean)
 				{
 					RequestBrandCityWideInfoBean bean=(RequestBrandCityWideInfoBean)obj;
 					if (bean != null && bean.getData()!=null) {

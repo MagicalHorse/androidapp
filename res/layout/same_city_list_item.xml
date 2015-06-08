@@ -9,7 +9,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" >
 
-        <ImageView
+        <com.shenma.yueba.view.RoundImageView
             android:id="@+id/iv_head"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -62,23 +62,25 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:scaleType="fitXY"
-            android:src="@drawable/test001"
+            android:src="@drawable/default_pic"
             />
           <ImageView
+            android:layout_marginLeft="@dimen/shop_main_width2_dimen"
             android:id="@+id/brandlist_item_imageview2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:scaleType="fitXY"
-            android:src="@drawable/test001"
+            android:src="@drawable/default_pic"
             />
            <ImageView
+            android:layout_marginLeft="@dimen/shop_main_width2_dimen"
             android:id="@+id/brandlist_item_imageview3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:scaleType="fitXY"
-            android:src="@drawable/test001"
+            android:src="@drawable/default_pic"
             />
         
     </LinearLayout>

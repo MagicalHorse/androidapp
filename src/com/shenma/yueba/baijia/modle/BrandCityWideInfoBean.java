@@ -12,17 +12,18 @@ import java.util.List;
 
 public class BrandCityWideInfoBean implements Serializable{
 
-	List<BrandCityWideInfo> Items=new ArrayList<BrandCityWideInfo>();
+	
 	int pageindex;
     int pagesize;
     int totalcount;
     int totalpaged;
     boolean ispaged=false;
+    List<BrandCityWideInfo> items=new ArrayList<BrandCityWideInfo>();
 	public List<BrandCityWideInfo> getItems() {
-		return Items;
+		return items;
 	}
 	public void setItems(List<BrandCityWideInfo> items) {
-		Items = items;
+		this.items = items;
 	}
 	public int getPageindex() {
 		return pageindex;
