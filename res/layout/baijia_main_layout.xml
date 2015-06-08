@@ -11,6 +11,7 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/baijia_main_foot_linearlayout" />
 
+
     <LinearLayout
         android:padding="@dimen/shop_main_width5_dimen"
         android:id="@+id/baijia_main_foot_linearlayout"
