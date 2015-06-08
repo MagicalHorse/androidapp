@@ -14,8 +14,10 @@ import android.widget.Toast;
 import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.activity.BaseActivityWithTopView;
 import com.shenma.yueba.baijia.modle.BaseRequest;
+import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 
 /**
@@ -52,6 +54,7 @@ public class ModifyCircleNameActivity extends BaseActivityWithTopView {
 			}
 		});
 		et_modify_circle_name = (EditText) findViewById(R.id.et_modify_circle_name);
+		et_modify_circle_name.setText(ToolsUtil.nullToString(name));
 		setTopRightTextView("完成", new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -76,7 +79,7 @@ public class ModifyCircleNameActivity extends BaseActivityWithTopView {
 	 * @param isRefresh
 	 * @param showDialog
 	 */
-	public void renameCircleName(String circleId, String name, Context ctx,
+	public void renameCircleName(String circleId, final String name, Context ctx,
 			boolean showDialog) {
 		HttpControl httpControl = new HttpControl();
 		httpControl.renameGroup(circleId, name, showDialog,
@@ -86,6 +89,9 @@ public class ModifyCircleNameActivity extends BaseActivityWithTopView {
 						BaseRequest result = (BaseRequest) obj;
 						if (200 == result.getStatusCode()) {// 修改成功
 							Toast.makeText(mContext, "修改成功", 1000).show();
+							Intent intent = new Intent();
+							intent.putExtra("newName", name);
+							setResult(Constants.RESULTCODE,intent);
 							ModifyCircleNameActivity.this.finish();
 						}
 					}
