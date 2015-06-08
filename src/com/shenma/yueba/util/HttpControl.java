@@ -675,6 +675,7 @@ public class HttpControl {
 	public void setFavor(long productId,int Status,final HttpCallBackInterface httpCallBack, Context context) {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("Id", Long.toString(productId));
+		map.put("Status", Integer.toString(Status));
 		BasehttpSend(map, context, HttpConstants.METHOD_PRODUCTMANAGER_FAVOR,httpCallBack, BaseRequest.class, true, true);
 	}
 
@@ -691,6 +692,7 @@ public class HttpControl {
 	public void setLike(int productId,int Status,final HttpCallBackInterface httpCallBack, Context context) {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("Id", Integer.toString(productId));
+		map.put("Status", Integer.toString(Status));
 		BasehttpSend(map, context, HttpConstants.METHOD_PRODUCTMANAGER_LIKE,httpCallBack, BaseRequest.class, true, true);
 	}
 

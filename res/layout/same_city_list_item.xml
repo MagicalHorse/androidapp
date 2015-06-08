@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="10dip" >
 
@@ -10,30 +10,39 @@
         android:layout_height="wrap_content" >
 
         <com.shenma.yueba.view.RoundImageView
+            android:layout_centerVertical="true"
             android:id="@+id/iv_head"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/user_config_iconwidth60_dimen"
+            android:layout_height="@dimen/user_config_iconwidth60_dimen"
             android:src="@drawable/default_pic" />
 
-        <TextView
-            android:id="@+id/tv_nick_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <LinearLayout
             android:layout_marginLeft="5dip"
-            android:layout_toRightOf="@id/iv_head"
-            android:text="小猫猫"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/tv_belong"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/iv_head"
-            android:layout_alignLeft="@+id/tv_nick_name"
+            android:layout_toLeftOf="@+id/tv_attention"
             android:layout_toRightOf="@+id/iv_head"
-            android:text="王府井百货--GIVN"
-            android:textColor="@color/text_gray_color"
-            android:textSize="15sp" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" 
+            android:layout_centerVertical="true"
+            android:orientation="vertical"
+            android:gravity="left|center_vertical"
+            >
+
+            <TextView
+                android:id="@+id/tv_nick_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="小猫猫"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_marginTop="@dimen/shop_main_width2_dimen"
+                android:id="@+id/tv_belong"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="王府井百货--GIVN"
+                android:textColor="@color/text_gray_color"
+                android:textSize="15sp" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_attention"
@@ -50,38 +59,37 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:layout_marginTop="2dp"
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:orientation="horizontal"
         android:id="@+id/ll_images"
-        >
-         <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:orientation="horizontal" >
+
+        <ImageView
             android:id="@+id/brandlist_item_imageview1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:scaleType="fitXY"
-            android:src="@drawable/default_pic"
-            />
-          <ImageView
-            android:layout_marginLeft="@dimen/shop_main_width2_dimen"
+            android:src="@drawable/default_pic" />
+
+        <ImageView
             android:id="@+id/brandlist_item_imageview2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/shop_main_width2_dimen"
             android:layout_weight="1"
             android:scaleType="fitXY"
-            android:src="@drawable/default_pic"
-            />
-           <ImageView
-            android:layout_marginLeft="@dimen/shop_main_width2_dimen"
+            android:src="@drawable/default_pic" />
+
+        <ImageView
             android:id="@+id/brandlist_item_imageview3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/shop_main_width2_dimen"
             android:layout_weight="1"
             android:scaleType="fitXY"
-            android:src="@drawable/default_pic"
-            />
-        
+            android:src="@drawable/default_pic" />
     </LinearLayout>
+
 </LinearLayout>

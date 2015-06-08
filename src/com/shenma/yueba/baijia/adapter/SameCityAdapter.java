@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.content.Context;
 import android.content.Intent;
+import android.sax.StartElementListener;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -98,8 +99,9 @@ public class SameCityAdapter extends BaseAdapterWithUtil {
 		}else{
 			holder = (Holder) convertView.getTag();
 		}
+		
 		BrandCityWideInfo brandCityWideInfo=items.get(position);
-		MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.nullToString(ToolsUtil.getImage(brandCityWideInfo.getBuyerLogo(), 320, 0)), holder.iv_head, MyApplication.getInstance().getDisplayImageOptions());
+		MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.nullToString(brandCityWideInfo.getBuyerLogo()), holder.iv_head, MyApplication.getInstance().getDisplayImageOptions());
 		holder.nick_name.setText(ToolsUtil.nullToString(brandCityWideInfo.getUserName()));
 		holder.tv_belong.setText(ToolsUtil.nullToString(brandCityWideInfo.getAddress()));
 		holder.tv_attention.setTag(brandCityWideInfo);
@@ -161,6 +163,7 @@ public class SameCityAdapter extends BaseAdapterWithUtil {
 			case R.id.brandlist_item_imageview3:
 				Intent intent=new Intent(ctx,ApproveBuyerDetailsActivity.class);
 				intent.putExtra("productID", (Long)v.getTag());
+				ctx.startActivity(intent);
 				break;
 			}
 		}
@@ -168,7 +171,7 @@ public class SameCityAdapter extends BaseAdapterWithUtil {
 	
 	/****
 	 * 提交收藏与取消收藏商品
-	 * @param type int  0：添加 1：取消
+	 * @param type int   0表示取消收藏   1表示收藏
 	 * @param brandCityWideInfo BrandCityWideInfo  商品对象
 	 * **/
 	void submitAttention(final int Status,final BrandCityWideInfo brandCityWideInfo)
@@ -183,12 +186,12 @@ public class SameCityAdapter extends BaseAdapterWithUtil {
 					switch(Status)
 					{
 					case 0:
-						((TextView)v).setText("取消关注");
-						brandCityWideInfo.setIsFavorite(true);
-						break;
-					case 1:
 						((TextView)v).setText("关注");
 						brandCityWideInfo.setIsFavorite(false);
+						break;
+					case 1:
+						((TextView)v).setText("取消关注");
+						brandCityWideInfo.setIsFavorite(true);
 						break;
 					}
 					
