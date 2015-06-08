@@ -66,6 +66,7 @@ public class CircleInfoActivity extends BaseActivityWithTopView implements
 	private String cricleId;
 	private String littlePicPath;//小图路径
 	private String littlePicPath_cache;//裁剪后图片存储的路径
+	private TextView tv_top_title_below;//标题下面的人数
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -91,6 +92,7 @@ public class CircleInfoActivity extends BaseActivityWithTopView implements
 		});
 		gv_circle = getView(R.id.gv_circle);
 		riv_circle_head = getView(R.id.riv_circle_head);
+		tv_top_title_below = getView(R.id.tv_top_title_below);
 		tv_cirlce_head_title = getView(R.id.tv_cirlce_head_title);
 		tv_cirlce_name_title = getView(R.id.tv_cirlce_name_title);
 		tv_circle_title = getView(R.id.tv_circle_title);
@@ -165,6 +167,7 @@ public class CircleInfoActivity extends BaseActivityWithTopView implements
 						CircleDetailBackBean result = (CircleDetailBackBean) obj;
 						CircleDetailBean bean = result.getData();
 						if (bean != null) {
+							tv_top_title_below.setText("人数（"+bean.getMemberCount()+"）");
 							tv_circle_name.setText(ToolsUtil.nullToString(bean
 									.getGroupName()));
 							MyApplication
