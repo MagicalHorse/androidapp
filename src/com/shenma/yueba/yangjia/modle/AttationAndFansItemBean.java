@@ -11,6 +11,7 @@ public class AttationAndFansItemBean extends SortModel{
 	private String UserId;//他关注的人数
 	private String isFavorite;//我是否已经关注
 	private String CreateTime;// 创建时间
+	private boolean isChecked;//是否选择
 	public String getUserLogo() {
 		return UserLogo;
 	}
@@ -52,6 +53,12 @@ public class AttationAndFansItemBean extends SortModel{
 	}
 	public void setCreateTime(String createTime) {
 		CreateTime = createTime;
+	}
+	public boolean isChecked() {
+		return isChecked;
+	}
+	public void setChecked(boolean isChecked) {
+		this.isChecked = isChecked;
 	}
 	
 

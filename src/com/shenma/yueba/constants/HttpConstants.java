@@ -365,7 +365,12 @@ public class HttpConstants {
 	
 	public static String METHOD_CIRCLE_GETBUYERGROUPDETAIL = Circle
 			+ "GetGroupDetail";
+	/**
+	 * 社交管理--邀请粉丝加入圈子
+	 */
 	
+	public static String METHOD_CIRCLE_ADDFANSTOGROUP = Circle
+			+ "AddFansToGroup";
 	/**
 	 * 社交管理--新建圈子
 	 */

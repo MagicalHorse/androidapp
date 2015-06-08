@@ -135,6 +135,7 @@ public class MyCircleInfoAdapter extends BaseAdapterWithUtil{
 				if(position == mList.size()-2){
 					//邀请加入圈子
 					Intent intent = new Intent(ctx,CircleInvitectivity.class);
+					intent.putExtra("circleId", circleId);
 					ctx.startActivity(intent);
 				}
 			}

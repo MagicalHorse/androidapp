@@ -945,6 +945,21 @@ public class HttpControl {
 	}
 
 	/**
+	 * 邀请粉丝加入圈子
+	 * 
+	 * @return void
+	 * **/
+	public void addFansToCircle(String groupid,String ids, boolean showDialog,
+			final HttpCallBackInterface httpCallBack, Context context) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put(Constants.GROUPID, groupid);
+		map.put(Constants.USERIDSTR, ids);
+		BasehttpSend(map, context,
+				HttpConstants.METHOD_CIRCLE_ADDFANSTOGROUP, httpCallBack,
+				BaseRequest.class, showDialog, true);
+	}
+	
+	/**
 	 * 修改圈子名称
 	 * 
 	 * @return void
