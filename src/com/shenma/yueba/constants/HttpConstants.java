@@ -411,6 +411,12 @@ public class HttpConstants {
 	public static String GETORDERLIST = Order+ "GetOrderListByState";
 	
 	/**
+	 * 败家 -创建订单（生成订单 （败家）-新）
+	 */
+	
+	public static String CREATEORDER = Order+ "CreateOrder";
+	
+	/**
 	 * 败家 -我的圈子
 	 */
 	

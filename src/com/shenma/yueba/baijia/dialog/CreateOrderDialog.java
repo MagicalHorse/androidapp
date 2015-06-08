@@ -12,7 +12,6 @@ import android.text.Editable;
 import android.text.Selection;
 import android.text.Spannable;
 import android.text.TextWatcher;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -45,6 +44,13 @@ public class CreateOrderDialog extends Dialog implements android.view.View.OnCli
 	EditText createorder_dialog_layout_countvalue_edittext;
 	RequestProductDetailsInfoBean bean;
 	ProductsDetailsInfoBean productsDetailsInfoBean;
+	//库存最大值
+	int maxValue=1;
+	//当前选中的尺寸对象
+	PrioductSizesInfoBean currCheckedFouce=null;
+	Button createorder_dialog_layout_submit_button;
+	List<View> view_array=new ArrayList<View>();
+	TextView createorder_dialog_layout_repertoryvalue_textview;
 	List<PrioductSizesInfoBean> size_list=new ArrayList<PrioductSizesInfoBean>();
 	public CreateOrderDialog(Context context,RequestProductDetailsInfoBean bean) {
 		super(context, R.style.MyDialog);
@@ -102,15 +108,14 @@ public class CreateOrderDialog extends Dialog implements android.view.View.OnCli
 		create_dialog_jian_button.setOnClickListener(this);
 		//加
 		Button create_dialog_jia_button=(Button)ll.findViewById(R.id.create_dialog_jia_button);
-		create_dialog_jia_button.setOnClickListener(this);
 		//提交
-		Button createorder_dialog_layout_submit_button=(Button)ll.findViewById(R.id.createorder_dialog_layout_submit_button);
+		createorder_dialog_layout_submit_button=(Button)ll.findViewById(R.id.createorder_dialog_layout_submit_button);
 		createorder_dialog_layout_submit_button.setOnClickListener(this);
 		//取消
 		Button createorder_dialog_layout_cancell_button=(Button)ll.findViewById(R.id.createorder_dialog_layout_cancell_button);
 		createorder_dialog_layout_cancell_button.setOnClickListener(this);
 		//库存
-		TextView createorder_dialog_layout_repertoryvalue_textview=(TextView)ll.findViewById(R.id.createorder_dialog_layout_repertoryvalue_textview);
+		createorder_dialog_layout_repertoryvalue_textview=(TextView)ll.findViewById(R.id.createorder_dialog_layout_repertoryvalue_textview);
 		
 		//数量
 		createorder_dialog_layout_countvalue_edittext=(EditText)ll.findViewById(R.id.createorder_dialog_layout_countvalue_edittext);
@@ -132,10 +137,13 @@ public class CreateOrderDialog extends Dialog implements android.view.View.OnCli
 				if(value<0)
 				{
 					createorder_dialog_layout_countvalue_edittext.setText(0+"");
-				}else if(value>10)
+					createorder_dialog_layout_submit_button.setEnabled(false);
+				}else if(value>maxValue)
 				{
-					createorder_dialog_layout_countvalue_edittext.setText(10+"");
+					createorder_dialog_layout_countvalue_edittext.setText(Integer.toString(maxValue));
+					createorder_dialog_layout_submit_button.setEnabled(true);
 				}
+				
 			}
 			
 			@Override
@@ -178,9 +186,9 @@ public class CreateOrderDialog extends Dialog implements android.view.View.OnCli
 		case R.id.create_dialog_jia_button://加
 			int values=Integer.parseInt(createorder_dialog_layout_countvalue_edittext.getText().toString());
 			values++;
-			if(values>=10)
+			if(values>=maxValue)
 			{
-				values=10;
+				values=maxValue;
 			}
 			createorder_dialog_layout_countvalue_edittext.setText(Integer.toString(values));
 			break;
@@ -188,7 +196,22 @@ public class CreateOrderDialog extends Dialog implements android.view.View.OnCli
 			CreateOrderDialog.this.cancel();
 			break;
 		case R.id.createorder_dialog_layout_submit_button://提交
+			int count=Integer.parseInt(createorder_dialog_layout_repertoryvalue_textview.getText().toString().trim());
+			if(count<=0)
+			{
+				//商品数量必须大于零
+				MyApplication.getInstance().showMessage(context, "商品数量必须大于零");
+				return;
+			}else if(currCheckedFouce==null)
+			{
+				MyApplication.getInstance().showMessage(context, "请选择商品规格");
+				return;
+			}
+			
 			Intent intent=new Intent(context,AffirmOrderActivity.class);
+			intent.putExtra("COUNT", count);//购买数量
+			intent.putExtra("CHECKEDPrioductSizes", currCheckedFouce);//选择的规格尺寸
+			intent.putExtra("DATA", bean);//商品信息
 			context.startActivity(intent);
 			CreateOrderDialog.this.cancel();
 			break;
@@ -209,6 +232,21 @@ public class CreateOrderDialog extends Dialog implements android.view.View.OnCli
 			btn.setBackgroundResource(R.drawable.gridviewitem_background);
 			btn.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, (int)context.getResources().getDimension(R.dimen.shop_main_marginleft30_dimen)));
 			//btn.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, AbsListView.LayoutParams.WRAP_CONTENT));
+			btn.setTag(prioductSizesInfoBean);
+			btn.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					setCheckFouse();
+					v.setSelected(true);
+					currCheckedFouce=(PrioductSizesInfoBean)v.getTag();
+				}
+			});
+			if(!view_array.contains(btn))
+			{
+				view_array.add(btn);
+			}
+			setCheckFouse();
 			return btn;
 		}
 		
@@ -230,4 +268,31 @@ public class CreateOrderDialog extends Dialog implements android.view.View.OnCli
 			return size_list.size();
 		}
 	};
+	
+	/******
+	 * 设置当前选中的尺寸样式
+	 * ***/
+	void setCheckFouse()
+	{
+		for(int i=0;i<view_array.size();i++)
+		{
+			view_array.get(i).setSelected(false);
+		}
+		//根据currCheckedFouce 值设置 库存组大值
+		if(currCheckedFouce!=null)
+		{
+			int inventory=currCheckedFouce.getInventory();//库存
+			if(inventory<0)
+			{
+				inventory=0;
+			}
+			maxValue=inventory;
+			createorder_dialog_layout_repertoryvalue_textview.setText(Integer.toString(inventory));
+			int currvalue=Integer.parseInt(createorder_dialog_layout_countvalue_edittext.getText().toString().trim());
+			if(currvalue>maxValue)
+			{
+				createorder_dialog_layout_repertoryvalue_textview.setText(Integer.toString(maxValue));
+			}
+		}
+	}
 }

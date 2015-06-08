@@ -12,7 +12,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.modle.PrioductSizesInfoBean;
+import com.shenma.yueba.baijia.modle.ProductsDetailsInfoBean;
 import com.shenma.yueba.util.FontManager;
+import com.shenma.yueba.util.ToolsUtil;
 
 /**  
  * @author gyj  
@@ -22,11 +26,16 @@ import com.shenma.yueba.util.FontManager;
 
 public class AffirmAdapter extends BaseAdapter{
 Context context;
-List<Object> obj_list=new ArrayList<Object>();
-	public AffirmAdapter(Context context,List<Object> obj_list)
+List<ProductsDetailsInfoBean> obj_list=new ArrayList<ProductsDetailsInfoBean>();
+PrioductSizesInfoBean prioductSizesInfoBean;
+int buyCount=0;
+
+	public AffirmAdapter(Context context,List<ProductsDetailsInfoBean> obj_list,PrioductSizesInfoBean prioductSizesInfoBean,int buyCount)
 	{
 		this.context=context;
 		this.obj_list=obj_list;
+		this.prioductSizesInfoBean=prioductSizesInfoBean;
+		this.buyCount=buyCount;
 	}
 	
 	@Override
@@ -67,7 +76,7 @@ List<Object> obj_list=new ArrayList<Object>();
 		{
 			holder=(Holder)convertView.getTag();
 		}
-		setValue(position);
+		setValue(holder,position);
 		return convertView;
 	}
 
@@ -82,8 +91,19 @@ List<Object> obj_list=new ArrayList<Object>();
 	 TextView affirmorder_item_productprice_textview;//单价
  }
  
- void setValue(int position)
+ void setValue(Holder holder,int position)
  {
+	 ProductsDetailsInfoBean productsDetailsInfoBean=obj_list.get(position);
+	 holder.affirmorder_item_username_textview.setText(ToolsUtil.nullToString(productsDetailsInfoBean.getBuyerName()));
+	 holder.affirmorder_item_name_textview.setText(ToolsUtil.nullToString(productsDetailsInfoBean.getStoreName()));
+	 if(productsDetailsInfoBean.getProductPic()!=null && productsDetailsInfoBean.getProductPic().length>0)
+	 {
+		 MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.getImage(productsDetailsInfoBean.getProductPic()[0], 320, 0), holder.affirmorder_item_icon_imageview, MyApplication.getInstance().getDisplayImageOptions());
+	 }
+	 holder.affirmorder_item_productname_textview.setText(ToolsUtil.nullToString(productsDetailsInfoBean.getProductName()));
+	 holder.affirmorder_item_productsize_textview.setText(prioductSizesInfoBean.getSize());
+	 holder.affirmorder_item_productcount_textview.setText(buyCount+"");
+	 holder.affirmorder_item_productprice_textview.setText("￥"+productsDetailsInfoBean.getPrice());
 	 
  }
  

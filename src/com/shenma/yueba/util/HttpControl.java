@@ -38,6 +38,7 @@ import com.shenma.yueba.baijia.modle.ProvinceCityListBeanRequest;
 import com.shenma.yueba.baijia.modle.RequestBaiJiaOrderListInfoBean;
 import com.shenma.yueba.baijia.modle.RequestBrandCityWideInfoBean;
 import com.shenma.yueba.baijia.modle.RequestBrandInfoBean;
+import com.shenma.yueba.baijia.modle.RequestCreatOrderInfoBean;
 import com.shenma.yueba.baijia.modle.RequestMyCircleInfoBean;
 import com.shenma.yueba.baijia.modle.RequestProductDetailsInfoBean;
 import com.shenma.yueba.baijia.modle.RequestProductListInfoBean;
@@ -1014,6 +1015,24 @@ public class HttpControl {
 				httpCallBack, BaseRequest.class, showDialog, false);
 	}
 
+	
+	
+	/**
+	 * @param ProductId 商品id
+	 * @param Count  int 购买数量
+	 * @param SizeId  int规格编号
+	 * @return void
+	 * **/
+	public void createProductOrder(int ProductId, int Count, long SizeId,boolean showDialog, final HttpCallBackInterface httpCallBack,Context context) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("ProductId", Integer.toString(ProductId));
+		map.put("Count", Integer.toString(Count));
+		map.put("SizeId", Long.toString(SizeId));
+		BasehttpSend(map, context, HttpConstants.CREATEORDER, httpCallBack,RequestCreatOrderInfoBean.class, showDialog, false);
+	}
+	
+	
+	
 	/**
 	 * 获取败家订单列表
 	 * 
@@ -1031,6 +1050,7 @@ public class HttpControl {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put(Constants.PAGE, Integer.toString(currPage));
 		map.put(Constants.PAGESIZE, Integer.toString(pageSize));
+		map.put("State", Integer.toString(State));
 		BasehttpSend(map, context, HttpConstants.GETORDERLIST, httpCallBack,
 				RequestBaiJiaOrderListInfoBean.class, showDialog, true);
 	}

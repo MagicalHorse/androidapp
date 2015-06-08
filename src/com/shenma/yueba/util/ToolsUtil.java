@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -585,4 +586,14 @@ public class ToolsUtil {
 		}
 	}
 
+	/*******
+	 * 返回带小数点后两位的值
+	 * @param d double 数据
+	 * @return String
+	 * **/
+	public static String DounbleToString_2(double d)
+	{
+		DecimalFormat df = new DecimalFormat("0.00");
+		return df.format(d);
+	}
 }
