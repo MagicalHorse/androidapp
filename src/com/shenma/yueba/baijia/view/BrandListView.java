@@ -175,6 +175,7 @@ public class BrandListView {
 			
 			@Override
 			public void http_Success(Object obj) {
+				pull_refresh_list.onRefreshComplete();
 				if(obj!=null && obj instanceof RequestBrandInfoBean)
 				{
 					RequestBrandInfoBean bean=(RequestBrandInfoBean)obj;
@@ -204,8 +205,7 @@ public class BrandListView {
 							break;
 						}
 					} else {
-						MyApplication.getInstance().showMessage(
-								activity, "没有任何数据");
+						MyApplication.getInstance().showMessage(activity, "没有任何数据");
 					}
 				}
 				
@@ -213,7 +213,7 @@ public class BrandListView {
 			
 			@Override
 			public void http_Fails(int error, String msg) {
-				
+				pull_refresh_list.onRefreshComplete();
 				MyApplication.getInstance().showMessage(activity, msg);
 			}
 		},activity );

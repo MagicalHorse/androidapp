@@ -1143,7 +1143,7 @@ public class HttpControl {
 		map.put(Constants.PAGE, Integer.toString(currPage));
 		map.put(Constants.PAGESIZE, Integer.toString(pageSize));
 		map.put("CityId", Integer.toString(CityId));
-		BasehttpSend(map, context, HttpConstants.GETBRANDPRODUCTLIST,
+		BasehttpSend(map, context, HttpConstants.GETCITYPRODUCTLIST,
 				httpCallBack, RequestBrandCityWideInfoBean.class, showDialog,
 				true);
 	}

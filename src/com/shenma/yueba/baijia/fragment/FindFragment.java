@@ -26,6 +26,7 @@ import com.shenma.yueba.baijia.activity.SearchActivity;
 import com.shenma.yueba.baijia.modle.FragmentBean;
 import com.shenma.yueba.baijia.view.BrandListView;
 import com.shenma.yueba.baijia.view.DynamicListView;
+import com.shenma.yueba.util.FontManager;
 
 public class FindFragment extends Fragment{
 	List<FragmentBean> fragment_list=new ArrayList<FragmentBean>();
@@ -96,6 +97,7 @@ public class FindFragment extends Fragment{
 		{
 			RelativeLayout rl=(RelativeLayout)RelativeLayout.inflate(getActivity(), R.layout.tab_line_layout, null);
 			TextView tv=(TextView)rl.findViewById(R.id.tab_line_textview);
+			FontManager.changeFonts(getActivity(), tv);
 			rl.setTag(i);
 			rl.setOnClickListener(new OnClickListener() {
 				

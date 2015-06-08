@@ -45,6 +45,7 @@ import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.ApproveBuyerDetailsActivity;
 import com.shenma.yueba.baijia.activity.ShopMainActivity;
+import com.shenma.yueba.baijia.activity.WebActivity;
 import com.shenma.yueba.baijia.adapter.UserIconAdapter;
 import com.shenma.yueba.baijia.modle.BannersInfoBean;
 import com.shenma.yueba.baijia.modle.FragmentBean;
@@ -131,8 +132,7 @@ public class BuyerStreetFragment extends Fragment {
 		pulltorefreshscrollview = (PullToRefreshScrollView)parentview.findViewById(R.id.pulltorefreshscrollview);
 		// 设置标签显示的内容
 		pulltorefreshscrollview.getLoadingLayoutProxy().setPullLabel("下拉刷新");
-		pulltorefreshscrollview.getLoadingLayoutProxy().setRefreshingLabel(
-				"刷新中。。。");
+		pulltorefreshscrollview.getLoadingLayoutProxy().setRefreshingLabel("刷新中。。。");
 		pulltorefreshscrollview.getLoadingLayoutProxy().setReleaseLabel("松开刷新");
 		pulltorefreshscrollview.setMode(Mode.BOTH);
 		pulltorefreshscrollview
@@ -194,7 +194,7 @@ public class BuyerStreetFragment extends Fragment {
 					@Override
 					public void onPageSelected(int arg0) {
 						currid = arg0;
-						//setcurrItem(arg0);
+						setcurrItem(arg0);
 					}
 
 					@Override
@@ -224,7 +224,7 @@ public class BuyerStreetFragment extends Fragment {
 				return false;
 			}
 		});
-
+		
 		baijia_contact_listview
 				.setOnItemClickListener(new OnItemClickListener() {
 
@@ -282,6 +282,10 @@ public class BuyerStreetFragment extends Fragment {
 						.findViewById(R.id.baijia_tab1_item_time_textview);
 				holder.baijia_tab1_item_productcontent_imageview = (ImageView) convertView
 						.findViewById(R.id.baijia_tab1_item_productcontent_imageview);
+				DisplayMetrics displayMetrics=new DisplayMetrics();
+				getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+				int height=(displayMetrics.widthPixels/2);
+				holder.baijia_tab1_item_productcontent_imageview.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height));
 				setOnclickListener(holder.baijia_tab1_item_productcontent_imageview);
 				holder.buyersteetfragmeng_item_price_textview = (TextView) convertView
 						.findViewById(R.id.buyersteetfragmeng_item_price_textview);
@@ -525,7 +529,19 @@ public class BuyerStreetFragment extends Fragment {
 				ImageView imageView =new ImageView(getActivity());
 				imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 				imageView.setImageResource(R.drawable.default_pic);
+				imageView.setTag(Banners.get(i));
+				initPic(ToolsUtil.nullToString(ToolsUtil.getImage(Banners.get(i).getPic(), 320, 0)), imageView,-1);
 				imageViewlist.add(imageView);
+				imageView.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						BannersInfoBean bannersInfoBean=(BannersInfoBean)v.getTag();
+						Intent intent=new Intent(getActivity(),WebActivity.class);
+						intent.putExtra("url", bannersInfoBean.getLink());
+						startActivity(intent);
+					}
+				});
 			}
 		}
 		pagerAdapter = new CustomPagerAdapter();
@@ -653,7 +669,7 @@ public class BuyerStreetFragment extends Fragment {
 			if (imageViewlist.size() < 1) {
 				return 0;
 			} else if (imageViewlist.size() <=2) {
-				return 2;
+				return imageViewlist.size();
 			} else {
 				return Integer.MAX_VALUE;
 			}

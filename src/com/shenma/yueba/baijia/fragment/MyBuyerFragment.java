@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -216,6 +217,11 @@ public class MyBuyerFragment extends Fragment {
 						.findViewById(R.id.baijia_tab1_item_time_textview);
 				holder.baijia_tab1_item_productcontent_imageview = (ImageView) convertView
 						.findViewById(R.id.baijia_tab1_item_productcontent_imageview);
+				DisplayMetrics displayMetrics=new DisplayMetrics();
+				getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+				int height=(displayMetrics.widthPixels/2);
+				holder.baijia_tab1_item_productcontent_imageview.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height));
+				
 				holder.buyersteetfragmeng_item_price_textview = (TextView) convertView
 						.findViewById(R.id.buyersteetfragmeng_item_price_textview);
 				holder.approvebuyerdetails_attention_textview=(TextView)convertView.findViewById(R.id.approvebuyerdetails_attention_textview);
