@@ -3,8 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" 
-    android:paddingLeft="@dimen/shop_main_width2_dimen"
-    android:paddingRight="@dimen/shop_main_width2_dimen"
     >
     <ImageView
         android:id="@+id/pubuliu_item_layout_imageview"
@@ -40,6 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="123"
+            android:textColor="@color/red"
             />
         
         <TextView

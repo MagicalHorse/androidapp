@@ -25,7 +25,7 @@ import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.activity.SearchActivity;
 import com.shenma.yueba.baijia.modle.FragmentBean;
 import com.shenma.yueba.baijia.view.BrandListView;
-import com.shenma.yueba.baijia.view.DynamicListView;
+import com.shenma.yueba.baijia.view.CityWideListView;
 import com.shenma.yueba.util.FontManager;
 
 public class FindFragment extends Fragment{
@@ -90,7 +90,7 @@ public class FindFragment extends Fragment{
 			}
 		});
 		fragment_list.add(new FragmentBean("品牌", -1, BrandListView.the().getView(getActivity())));
-		fragment_list.add(new FragmentBean("同城", -1, DynamicListView.the().getView(getActivity())));
+		fragment_list.add(new FragmentBean("同城", -1, CityWideListView.the().getView(getActivity())));
 		
 		baijia_fragment_tab1_head_linearlayout=(LinearLayout)v.findViewById(R.id.baijia_fragment_tab1_head_linearlayout);
 		for(int i=0;i<fragment_list.size();i++)

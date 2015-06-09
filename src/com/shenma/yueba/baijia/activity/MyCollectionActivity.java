@@ -15,6 +15,7 @@ import com.shenma.yueba.baijia.modle.MyFavoriteProductListInfoBean;
 import com.shenma.yueba.baijia.modle.RequestMyFavoriteProductListInfoBean;
 import com.shenma.yueba.baijia.view.PubuliuManager;
 import com.shenma.yueba.constants.Constants;
+import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 
@@ -47,11 +48,20 @@ public class MyCollectionActivity extends BaseActivityWithTopView{
 	void initView()
 	{
 		setTitle("收藏");
+		FontManager.changeFonts(MyCollectionActivity.this,tv_top_title);
 		setLeftTextView(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				
+				MyCollectionActivity.this.finish();
+			}
+		});
+		
+		setLeftTextView(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
 				MyCollectionActivity.this.finish();
 			}
 		});

@@ -12,11 +12,14 @@ import android.widget.TextView;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.modle.BrandCityWideInfo;
 import com.shenma.yueba.baijia.modle.MyFavoriteProductListInfo;
 import com.shenma.yueba.baijia.modle.MyFavoriteProductListLikeUser;
 import com.shenma.yueba.baijia.modle.MyFavoriteProductListPic;
 import com.shenma.yueba.util.FontManager;
+import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.ToolsUtil;
+import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.umeng.socialize.utils.Log;
 
 /**  
@@ -32,6 +35,7 @@ public class PubuliuManager {
 	LinearLayout pubuliy_left_linearlayout,pubuliy_right_linearlayout;
 	int leftHeight;//左侧高度
 	int rightHeight;//右侧高度
+	HttpControl httpControl=new HttpControl();
 	public PubuliuManager(Context context,View parent)
 	{
 		this.context=context;
@@ -85,7 +89,6 @@ public class PubuliuManager {
     			int witdh=pubuliy_left_linearlayout.getWidth();
     			MyFavoriteProductListPic myFavoriteProductListPic=bean.getPic();
     			int height=(int)(witdh*myFavoriteProductListPic.getRatio());
-    			Log.i("TAG", "height="+height +" witdh="+witdh   +"ration="+myFavoriteProductListPic.getRatio());
     			View parentview=LinearLayout.inflate(context, R.layout.pubuliu_item_layout, null);
     			//价格
     			TextView pubuliu_item_layout_pricevalue_textview=(TextView)parentview.findViewById(R.id.pubuliu_item_layout_pricevalue_textview);
@@ -95,13 +98,27 @@ public class PubuliuManager {
     			pubuliu_item_layout_name_textview.setText(bean.getName());
     			//喜欢
     			TextView pubuliu_item_layout_like_textview=(TextView)parentview.findViewById(R.id.pubuliu_item_layout_like_textview);
+    			pubuliu_item_layout_like_textview.setOnClickListener(onClickListener);
     			if(bean.getLikeUser()!=null)
     			{
     				MyFavoriteProductListLikeUser likeuser=bean.getLikeUser();
+    				pubuliu_item_layout_like_textview.setSelected(likeuser.isIsLike());
     				pubuliu_item_layout_like_textview.setText(likeuser.getCount()+"");
+    				pubuliu_item_layout_like_textview.setTag(bean);
     			}
     			ImageView iv=(ImageView)parentview.findViewById(R.id.pubuliu_item_layout_imageview);
-    			iv.getLayoutParams().height=height;
+    			if(height>0)
+    			{
+    				Log.i("TAG", "height="+height +" witdh="+witdh   +"ration="+myFavoriteProductListPic.getRatio());
+        			
+    				iv.getLayoutParams().height=height;
+    			}else
+    			{
+    				height=witdh;
+    				Log.i("TAG", "height="+height +" witdh="+witdh   +"ration="+myFavoriteProductListPic.getRatio());
+        			
+    				iv.getLayoutParams().height=height;
+    			}
     			iv.setBackgroundResource(R.color.color_blue);
     			iv.setTag(bean);
     			iv.setOnClickListener(new OnClickListener() {
@@ -129,4 +146,69 @@ public class PubuliuManager {
     		}
     	}
     }
+    
+    OnClickListener onClickListener=new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			switch(v.getId())
+			{
+			case R.id.pubuliu_item_layout_like_textview:
+				if(v.getTag()!=null && v.getTag() instanceof MyFavoriteProductListInfo)
+				{
+					MyFavoriteProductListInfo  bean=(MyFavoriteProductListInfo)v.getTag();
+					MyFavoriteProductListLikeUser myFavoriteProductListLikeUser=bean.getLikeUser();
+					if(myFavoriteProductListLikeUser.isIsLike())
+					{
+						submitAttention(0,bean,v);
+					}else
+					{
+						submitAttention(1,bean,v);
+					}
+					
+				}
+				break;
+			}
+		}
+	};
+	
+	/****
+	 * 提交收藏与取消收藏商品
+	 * @param type int   0表示取消收藏   1表示收藏
+	 * @param brandCityWideInfo BrandCityWideInfo  商品对象
+	 * @param v View  商品对象
+	 * **/
+	void submitAttention(final int Status,final MyFavoriteProductListInfo  bean,final View v)
+	{
+		httpControl.setFavor(bean.getId(), Status, new HttpCallBackInterface() {
+			
+			@Override
+			public void http_Success(Object obj) {
+				if(v!=null && v instanceof TextView)
+				{
+					MyFavoriteProductListLikeUser myFavoriteProductListLikeUser=bean.getLikeUser();
+					if(myFavoriteProductListLikeUser!=null)
+					{
+						switch(Status)
+						{
+						case 0:
+							v.setSelected(false);
+							myFavoriteProductListLikeUser.setIsLike(false);
+							break;
+						case 1:
+							v.setSelected(true);
+							myFavoriteProductListLikeUser.setIsLike(true);
+							break;
+						}
+					}
+					
+				}
+			}
+			
+			@Override
+			public void http_Fails(int error, String msg) {
+				MyApplication.getInstance().showMessage(context, msg);
+			}
+		}, context);
+	}
 }

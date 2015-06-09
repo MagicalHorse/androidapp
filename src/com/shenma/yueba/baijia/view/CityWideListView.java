@@ -18,8 +18,16 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.State;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.shenma.yueba.R;
-import com.shenma.yueba.baijia.adapter.MsgAdapter;
-import com.shenma.yueba.baijia.modle.MsgBean;
+import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.adapter.SameCityAdapter;
+import com.shenma.yueba.baijia.modle.BrandCityWideInfo;
+import com.shenma.yueba.baijia.modle.BrandCityWideInfoBean;
+import com.shenma.yueba.baijia.modle.RequestBrandCityWideInfoBean;
+import com.shenma.yueba.baijia.modle.RequestBrandInfoBean;
+import com.shenma.yueba.baijia.modle.SameCityBean;
+import com.shenma.yueba.constants.Constants;
+import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 
 /**  
  * @author gyj  
@@ -27,21 +35,26 @@ import com.shenma.yueba.baijia.modle.MsgBean;
  * 程序的简单说明  
  */
 
-public class DynamicListView {
-	static DynamicListView msgListView;
+public class CityWideListView {
+	static CityWideListView msgListView;
 	Activity activity;
 	LayoutInflater layoutInflater;
 	
-	private List<MsgBean> mList = new ArrayList<MsgBean>();
+	private SameCityAdapter msgAdapter;
 	private View view;
 	private PullToRefreshListView pull_refresh_list;
 	LinearLayout showloading_layout_view;
-	MsgAdapter msgAdapter;
-	public static DynamicListView the()
+	int currPage=Constants.CURRPAGE_VALUE;
+	int pageSize=Constants.PAGESIZE_VALUE;
+	boolean showDialog=true;
+	HttpControl httpCntrol=new HttpControl();
+	List<BrandCityWideInfo> items=new ArrayList<BrandCityWideInfo>();
+	int CityId=0;//当前城市id
+	public static CityWideListView the()
 	{
 		if(msgListView==null)
 		{
-			msgListView=new DynamicListView();
+			msgListView=new CityWideListView();
 		}
 		return msgListView;
 	}
@@ -68,7 +81,7 @@ public class DynamicListView {
 	{
 		pull_refresh_list=(PullToRefreshListView)view.findViewById(R.id.pull_refresh_list);
 		showloading_layout_view=(LinearLayout)view.findViewById(R.id.showloading_layout_view);
-		pull_refresh_list.setMode(Mode.BOTH);
+		pull_refresh_list.setMode(Mode.PULL_FROM_START);
 		 
 		pull_refresh_list.setOnPullEventListener(new OnPullEventListener<ListView>() {
 
@@ -96,7 +109,7 @@ public class DynamicListView {
 			@Override
 			public void onPullDownToRefresh(PullToRefreshBase refreshView) {
 				
-				//SystemClock.sleep(100);
+				//SystemClock.sleep(myCircleAdapter);
 				Log.i("TAG", "onPullDownToRefresh");
 				//pulltorefreshscrollview.setRefreshing();
 				requestFalshData();
@@ -104,13 +117,13 @@ public class DynamicListView {
 
 			@Override
 			public void onPullUpToRefresh(PullToRefreshBase refreshView) {
-				//SystemClock.sleep(100);
+				//SystemClock.sleep(myCircleAdapter);
 				//pulltorefreshscrollview.setRefreshing();
 				Log.i("TAG", "onPullUpToRefresh");
 				requestData();
 			}
 		});
-		msgAdapter=new MsgAdapter(activity, mList);
+		msgAdapter=new SameCityAdapter(activity, items,pull_refresh_list);
 		pull_refresh_list.setAdapter(msgAdapter);
 	}
 	
@@ -118,68 +131,96 @@ public class DynamicListView {
 	void requestData()
 	{
 		pull_refresh_list.setRefreshing();
-		new Thread()
-		{
-			public void run() {
-				SystemClock.sleep(100);
-				activity.runOnUiThread(new Runnable() {
-					
-					@Override
-					public void run() {
-						
-						addData();
-					}
-				});
-			};
-		}.start();
+		sendHttp(1);
 	}
 	
 	void requestFalshData()
 	{
 		pull_refresh_list.setRefreshing();
-		new Thread()
+		currPage=Constants.CURRPAGE_VALUE;
+		sendHttp(0);
+	}
+	
+	
+	void addData(BrandCityWideInfoBean brandCityWideInfoBean)
+	{
+		currPage++;
+		if(brandCityWideInfoBean.getItems()!=null)
 		{
-			public void run() {
-				SystemClock.sleep(100);
-				activity.runOnUiThread(new Runnable() {
-					
-					@Override
-					public void run() {
+			items.addAll(brandCityWideInfoBean.getItems());
+		}
+		showloading_layout_view.setVisibility(View.GONE);
+		msgAdapter.notifyDataSetChanged();
+		//ListUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
+		pull_refresh_list.onRefreshComplete();
+	}
+	
+	void falshData(BrandCityWideInfoBean brandCityWideInfoBean)
+	{
+		currPage++;
+		items.clear();
+		if(brandCityWideInfoBean.getItems()!=null)
+		{
+			items.addAll(brandCityWideInfoBean.getItems());
+		}
+		showloading_layout_view.setVisibility(View.GONE);
+		msgAdapter.notifyDataSetChanged();
+		
+		//ListUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
+		pull_refresh_list.onRefreshComplete();
+		
+	}
+	
+	
+	void sendHttp(final int type)
+	{
+		httpCntrol.getBrandCity_Wide(currPage, pageSize, CityId, showDialog,new HttpCallBackInterface() {
+			
+			@Override
+			public void http_Success(Object obj) {
+				pull_refresh_list.onRefreshComplete();
+				showDialog=false;
+				if(obj!=null && obj instanceof RequestBrandCityWideInfoBean)
+				{
+					RequestBrandCityWideInfoBean bean=(RequestBrandCityWideInfoBean)obj;
+					if (bean != null && bean.getData()!=null) {
+						BrandCityWideInfoBean brandCityWideInfoBean=bean.getData();
+						if(currPage==1)
+						{
+							if(bean.getData()==null)
+						   {
+								MyApplication.getInstance().showMessage(activity, "还没有信息");
+								return;
+						   }
+						}
 						
-						falshData();
+						int totalPage = brandCityWideInfoBean.getTotalpaged();
+						if (currPage >= totalPage) {
+							pull_refresh_list.setMode(Mode.PULL_FROM_START);
+						} else {
+							pull_refresh_list.setMode(Mode.BOTH);
+						}
+						switch (type) {
+						case 0:
+							falshData(bean.getData());
+							break;
+						case 1:
+							addData(bean.getData());
+							break;
+						}
+					} else {
+						MyApplication.getInstance().showMessage(
+								activity, "没有任何数据");
 					}
-				});
-			};
-		}.start();
-	}
-	
-	
-	void addData()
-	{
-		for(int i=0;i<10;i++)
-		{
-			mList.add(new MsgBean());
+				}
+				
+			}
 			
-		}
-		showloading_layout_view.setVisibility(View.GONE);
-		msgAdapter.notifyDataSetChanged();
-		//ListUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
-		pull_refresh_list.onRefreshComplete();
-	}
-	
-	void falshData()
-	{
-		mList.clear();
-		for(int i=0;i<10;i++)
-		{
-			mList.add(new MsgBean());
-			
-		}
-		showloading_layout_view.setVisibility(View.GONE);
-		msgAdapter.notifyDataSetChanged();
-		
-		//ListUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
-		pull_refresh_list.onRefreshComplete();
-		
+			@Override
+			public void http_Fails(int error, String msg) {
+				pull_refresh_list.onRefreshComplete();
+				MyApplication.getInstance().showMessage(activity, msg);
+			}
+		},activity );
 	}
 }

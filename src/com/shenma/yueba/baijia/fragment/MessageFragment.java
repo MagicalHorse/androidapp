@@ -21,10 +21,8 @@ import android.widget.TextView;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.modle.FragmentBean;
-import com.shenma.yueba.baijia.view.CircleView;
 import com.shenma.yueba.baijia.view.DynamicListView;
 import com.shenma.yueba.baijia.view.MsgListView;
-import com.shenma.yueba.baijia.view.MyCircleView;
 
 public class MessageFragment extends Fragment{
 	List<FragmentBean> fragment_list=new ArrayList<FragmentBean>();
