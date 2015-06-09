@@ -40,6 +40,7 @@ import com.shenma.yueba.baijia.modle.RequestBrandCityWideInfoBean;
 import com.shenma.yueba.baijia.modle.RequestBrandInfoBean;
 import com.shenma.yueba.baijia.modle.RequestCreatOrderInfoBean;
 import com.shenma.yueba.baijia.modle.RequestMyCircleInfoBean;
+import com.shenma.yueba.baijia.modle.RequestMyFavoriteProductListInfoBean;
 import com.shenma.yueba.baijia.modle.RequestProductDetailsInfoBean;
 import com.shenma.yueba.baijia.modle.RequestProductListInfoBean;
 import com.shenma.yueba.baijia.modle.RequestUploadProductInfoBean;
@@ -1119,6 +1120,26 @@ public class HttpControl {
 				httpCallBack, RequestBrandCityWideInfoBean.class, showDialog,
 				true);
 	}
+	
+	/**
+	 * 获取我收藏的商品列表-败家(新)
+	 * 
+	 * @param currPage
+	 *            int 当前页
+	 * @param pageSize
+	 *            int 条数
+	 * @param CityId
+	 *            int 城市编号 int 条数
+	 * @return void
+	 * **/
+	public void getMyFavoriteProductList(int currPage, int pageSize,boolean showDialog, final HttpCallBackInterface httpCallBack,Context context) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put(Constants.PAGE, Integer.toString(currPage));
+		map.put(Constants.PAGESIZE, Integer.toString(pageSize));
+		BasehttpSend(map, context, HttpConstants.GETMYFAVORITEPRODUCTLIST,httpCallBack, RequestMyFavoriteProductListInfoBean.class, showDialog,true);
+	}
+	
+	
 	
 	
 	

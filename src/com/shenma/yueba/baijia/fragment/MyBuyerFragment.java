@@ -210,7 +210,7 @@ public class MyBuyerFragment extends Fragment {
 				holder.v = convertView;
 				holder.customImage = (RoundImageView) convertView
 						.findViewById(R.id.baijia_tab1_item_icon_imageview);
-				setOnclickListener(holder.customImage);
+				
 				holder.baijia_tab1_item_productname_textview = (TextView)convertView
 						.findViewById(R.id.baijia_tab1_item_productname_textview);
 				holder.baijia_tab1_item_productaddress_textview = (TextView) convertView
@@ -294,6 +294,7 @@ public class MyBuyerFragment extends Fragment {
 		holder.buyersteetfragmeng_item_desc_textview.setText(productsInfoBean.getProductName());
 		//holder.baijia_tab1_item_productcontent_imageview.setImageResource(R.drawable.default_pic);
 		holder.baijia_tab1_item_productcontent_imageview.setTag(productPicInfoBean);
+		setOnclickListener(holder.baijia_tab1_item_productcontent_imageview);
 		initPic(ToolsUtil.getImage(productPicInfoBean.getName(), 640, 0), holder.baijia_tab1_item_productcontent_imageview, R.drawable.default_pic);
 		//ProductName
 		FontManager.changeFonts(getActivity(), holder.baijia_tab1_item_productname_textview,holder.baijia_tab1_item_productaddress_textview,holder.baijia_tab1_item_time_textview,holder.buyersteetfragmeng_item_price_textview,holder.buyersteetfragmeng_item_desc_textview,holder.buyersteetfragmeng_item_share_button,holder.buyersteetfragmeng_item_siliao_button,holder.approvebuyerdetails_attention_textview);
@@ -453,11 +454,11 @@ public class MyBuyerFragment extends Fragment {
 				switch(v.getId())
 				{
 				case R.id.baijia_tab1_item_productcontent_imageview:
-					if(v.getTag()!=null && v.getTag() instanceof ProductsInfoBean)
+					if(v.getTag()!=null && v.getTag() instanceof ProductPicInfoBean )
 					{
-						ProductsInfoBean productPicInfoBean=(ProductsInfoBean)v.getTag();
+						ProductPicInfoBean productPicInfoBean=(ProductPicInfoBean)v.getTag();
 						Intent intent=new Intent(getActivity(),ApproveBuyerDetailsActivity.class);
-						intent.putExtra("productID", productPicInfoBean.getProductId());
+						intent.putExtra("productID", productPicInfoBean.getSourceId());
 						startActivity(intent);
 					}
 					break;

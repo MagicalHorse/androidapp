@@ -157,7 +157,7 @@ public class UserConfigActivity extends BaseActivityWithTopView {
 				break;
 			case R.id.user_config_collect_include:
 				Intent intent3 = new Intent(UserConfigActivity.this,
-						MyCollectionActivity.class);
+						MyCollectionActivitybak.class);
 				startActivity(intent3);
 			default:
 				break;

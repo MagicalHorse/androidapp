@@ -62,10 +62,11 @@
         android:id="@+id/ll_images"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="@dimen/shop_main_width5_dimen"
         android:orientation="horizontal" >
 
         <ImageView
+            android:layout_marginLeft="@dimen/shop_main_width2_dimen"
             android:id="@+id/brandlist_item_imageview1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

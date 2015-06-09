@@ -191,37 +191,38 @@
         <activity
             android:name="com.shenma.yueba.baijia.activity.MainActivityForBaiJia"
             android:screenOrientation="portrait" >
-
-            <!--
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            -->
         </activity>
         <activity
             android:name="com.shenma.yueba.baijia.activity.FillPersonDataActivity"
             android:screenOrientation="portrait" >
         </activity>
+          <!-- 找回密码 -->
         <activity
             android:name="com.shenma.yueba.baijia.activity.FindPasswordActivity"
             android:screenOrientation="portrait" >
         </activity>
+          <!-- 登录注册 -->
         <activity
             android:name="com.shenma.yueba.baijia.activity.LoginAndRegisterActivity"
             android:screenOrientation="portrait" >
         </activity>
+          <!-- 设置新密码 -->
         <activity
             android:name="com.shenma.yueba.baijia.activity.SetNewPasswordActivity"
             android:screenOrientation="portrait" >
         </activity>
+           <!-- 收益管理 -->
         <activity
             android:name="com.shenma.yueba.yangjia.activity.EarningManagerActivity"
             android:screenOrientation="portrait" >
         </activity>
+        <!-- 货款收支 -->
         <activity
-            android:name="com.shenma.yueba.yangjia.activity.HuoKuanManagerActivity"
+            android:name="com.shenma.yueba.yangjia.activity.HuoKuanIncomingAndOutgoingsActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.shenma.yueba.yangjia.activity.HuoKuanManagerActivity2"
             android:screenOrientation="portrait" >
         </activity>
         <activity

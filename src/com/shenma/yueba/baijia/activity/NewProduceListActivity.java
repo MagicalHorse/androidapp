@@ -108,13 +108,13 @@ public class NewProduceListActivity extends BaseActivityWithTopView{
         protected void onPostExecute(List<DuitangInfo> result) {
             if (mType == 1) {
 
-                mAdapter.addItemTop(result);
+                mAdapter.addItemTop(null);
                 mAdapter.notifyDataSetChanged();
                 xListView.stopRefresh();
 
             } else if (mType == 2) {
             	xListView.stopLoadMore();
-                mAdapter.addItemLast(result);
+                mAdapter.addItemLast(null);
                 mAdapter.notifyDataSetChanged();
             }
 

@@ -71,8 +71,9 @@
         android:layout_marginLeft="15dip"
         android:layout_marginRight="15dip"
         android:ellipsize="end"
-        android:text="aaaa"
+        android:text="@null"
         android:ems="10"
+        android:visibility="gone"
         android:gravity="center"
         android:singleLine="true"
          />

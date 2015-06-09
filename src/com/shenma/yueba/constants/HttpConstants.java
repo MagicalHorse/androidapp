@@ -443,4 +443,12 @@ public class HttpConstants {
 	 */
 	
 	public static String GETCITYPRODUCTLIST = PRODUCT+ "GetCityProductList";
+	
+	/**
+	 * 获取我收藏的商品列表-败家(新)
+	 */
+	
+	public static String GETMYFAVORITEPRODUCTLIST = PRODUCT+ "GetMyFavoriteProductList";
+	
+	
 }

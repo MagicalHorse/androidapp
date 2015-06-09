@@ -16,7 +16,7 @@ import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.ToolsUtil;
 
 /**
- * 货款管理
+ * 货款管理--废弃
  * @author a
  *
  */

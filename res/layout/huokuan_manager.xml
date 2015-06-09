@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/main_bg" >
+    <include
+        android:id="@+id/title"
+        layout="@layout/title_for_common" />
+
+    <View
+        android:id="@+id/view_line_top"
+        style="@style/style_horizontal_line"
+        android:layout_below="@id/title" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/view_line_top"
+        android:orientation="vertical" >
+
+        <View
+            style="@style/style_horizontal_line"
+            android:layout_marginTop="10dip" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:paddingTop="10dip" >
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal" >
+
+                <TextView
+                    android:id="@+id/tv_tatal_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="bottom"
+                    android:text="总货款"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_tatal_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dip"
+                    android:layout_toRightOf="@id/tv_tatal_title"
+                    android:text="@null"
+                    android:textSize="20sp" />
+            </RelativeLayout>
+
+            <View
+                style="@style/style_horizontal_line"
+                android:layout_marginLeft="10dip"
+                android:layout_marginTop="10dip" />
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dip" >
+
+                <TextView
+                    android:id="@+id/tv_had_withdraw_ratio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@null"
+                    android:textColor="@color/text_gray_color"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_had_withdraw_money"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/tv_had_withdraw_ratio"
+                    android:gravity="right"
+                    android:text="@null" />
+
+                <com.shenma.yueba.view.progressbar.NumberProgressBar
+                    android:id="@+id/numberbar_had_withdraw"
+                    style="@style/NumberProgressBar_Default"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_had_withdraw_ratio"
+                    android:layout_marginTop="5dip"
+                    android:padding="20dp" />
+            </RelativeLayout>
+
+            <View
+                style="@style/style_horizontal_line"
+                android:layout_marginLeft="10dip" />
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dip" >
+
+                <TextView
+                    android:id="@+id/tv_can_withdraw_ratio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@null"
+                    android:textColor="@color/text_gray_color"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_can_withdraw_money"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/tv_can_withdraw_ratio"
+                    android:gravity="right"
+                    android:text="@null" />
+
+                <com.shenma.yueba.view.progressbar.NumberProgressBar
+                    android:id="@+id/numberbar_can_withdraw"
+                    style="@style/NumberProgressBar_Default"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_can_withdraw_ratio"
+                    android:layout_marginTop="5dip"
+                    android:padding="20dp" />
+            </RelativeLayout>
+
+            <View
+                style="@style/style_horizontal_line"
+                android:layout_marginLeft="10dip" />
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dip" >
+
+                <TextView
+                    android:id="@+id/tv_freeze_ratio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@null"
+                    android:textColor="@color/text_gray_color"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_freeze_money"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/tv_freeze_ratio"
+                    android:gravity="right"
+                    android:text="@null" />
+
+                <com.shenma.yueba.view.progressbar.NumberProgressBar
+                    android:id="@+id/numberbar_freeze"
+                    style="@style/NumberProgressBar_Default"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_freeze_ratio"
+                    android:layout_marginTop="5dip"
+                    android:padding="20dp" />
+            </RelativeLayout>
+
+            <View
+                style="@style/style_horizontal_line"
+                android:layout_marginLeft="10dip" />
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dip" >
+
+                <TextView
+                    android:id="@+id/tv_back_ratio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@null"
+                    android:textColor="@color/text_gray_color"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_back_money"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/tv_back_ratio"
+                    android:gravity="right"
+                    android:text="@null" />
+
+                <com.shenma.yueba.view.progressbar.NumberProgressBar
+                    android:id="@+id/numberbar_back"
+                    style="@style/NumberProgressBar_Default"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_back_ratio"
+                    android:layout_marginTop="5dip"
+                    android:padding="20dp" />
+            </RelativeLayout>
+
+            <View
+                style="@style/style_horizontal_line"
+                android:layout_marginLeft="10dip" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_in_and_out"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:gravity="center"
+        android:padding="15dip"
+        android:text="货款收支"
+        android:textColor="@color/main_color"
+        android:textSize="22sp" />
+
+</RelativeLayout>

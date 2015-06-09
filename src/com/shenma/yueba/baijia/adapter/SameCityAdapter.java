@@ -2,13 +2,17 @@ package com.shenma.yueba.baijia.adapter;
 
 import java.util.List;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.sax.StartElementListener;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
@@ -16,10 +20,6 @@ import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.ApproveBuyerDetailsActivity;
 import com.shenma.yueba.baijia.modle.BrandCityWideInfo;
-import com.shenma.yueba.baijia.modle.BrandListBean;
-import com.shenma.yueba.baijia.modle.MyCircleBean;
-import com.shenma.yueba.baijia.modle.SameCityBean;
-import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.ToolsUtil;
@@ -70,6 +70,19 @@ public class SameCityAdapter extends BaseAdapterWithUtil {
 			holder.brandlist_item_imageview1=(ImageView)convertView.findViewById(R.id.brandlist_item_imageview1);
 			holder.brandlist_item_imageview2=(ImageView)convertView.findViewById(R.id.brandlist_item_imageview2);
 			holder.brandlist_item_imageview3=(ImageView)convertView.findViewById(R.id.brandlist_item_imageview3);
+		    DisplayMetrics dm=new DisplayMetrics();
+			((Activity)ctx).getWindowManager().getDefaultDisplay().getMetrics(dm);
+			int imgwidth=dm.widthPixels/3;
+			if(imgwidth>0)
+			{
+				int imhheight=imgwidth/2;
+				Log.i("TAG", "imhheight="+imhheight);
+				LayoutParams  layoutParams =(LayoutParams) holder.brandlist_item_imageview1.getLayoutParams();
+				layoutParams.height=imhheight;
+				holder.brandlist_item_imageview1.setLayoutParams(layoutParams);
+				holder.brandlist_item_imageview2.setLayoutParams(layoutParams);
+				holder.brandlist_item_imageview3.setLayoutParams(layoutParams);
+			}
 			holder.tv_attention.setOnClickListener(new OnClickListener() {
 				
 				@Override
@@ -196,7 +209,7 @@ public class SameCityAdapter extends BaseAdapterWithUtil {
 					}
 					
 				}
-				SameCityAdapter.this.notifyDataSetChanged();
+				//SameCityAdapter.this.notifyDataSetChanged();
 			}
 			
 			@Override

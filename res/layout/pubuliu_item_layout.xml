@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <ImageView
+        android:id="@+id/pubuliu_item_layout_imageview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/default_pic"
+        android:scaleType="fitXY"
+        />
+
+    <TextView
+        android:id="@+id/pubuliu_item_layout_name_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+    <RelativeLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <TextView 
+            android:id="@+id/pubuliu_item_layout_price_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="￥"
+            />
+        
+        <TextView 
+            android:layout_toRightOf="@+id/pubuliu_item_layout_price_textview"
+            android:id="@+id/pubuliu_item_layout_pricevalue_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="123"
+            />
+        
+        <TextView
+            android:id="@+id/pubuliu_item_layout_like_textview"
+            android:gravity="center"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="200"
+            android:drawableLeft="@drawable/redheart_backgroud"
+            />
+    </RelativeLayout>
+</LinearLayout>

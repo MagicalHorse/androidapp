@@ -11,10 +11,12 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.dodola.model.DuitangInfo;
 import com.dodowaterfall.widget.ScaleImageView;
 import com.example.android.bitmapfun.util.ImageFetcher;
 import com.shenma.yueba.R;
+import com.shenma.yueba.baijia.modle.MyFavoriteProductListInfo;
+import com.shenma.yueba.baijia.modle.MyFavoriteProductListPic;
+import com.shenma.yueba.util.ToolsUtil;
 
 /**  
  * @author gyj  
@@ -24,12 +26,12 @@ import com.shenma.yueba.R;
 
 public class StaggeredAdapter extends BaseAdapter {
     private Context mContext;
-    private LinkedList<DuitangInfo> mInfos;
+    private LinkedList<MyFavoriteProductListInfo> mInfos;
     private XListView mListView;
     ImageFetcher mImageFetcher;
     public StaggeredAdapter(Context context, XListView xListView,ImageFetcher mImageFetcher) {
         mContext = context;
-        mInfos = new LinkedList<DuitangInfo>();
+        mInfos = new LinkedList<MyFavoriteProductListInfo>();
         mListView = xListView;
         this.mImageFetcher=mImageFetcher;
     }
@@ -38,7 +40,7 @@ public class StaggeredAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         ViewHolder holder;
-        DuitangInfo duitangInfo = mInfos.get(position);
+        MyFavoriteProductListInfo duitangInfo = mInfos.get(position);
 
         if (convertView == null) {
             LayoutInflater layoutInflator = LayoutInflater.from(parent.getContext());
@@ -50,10 +52,18 @@ public class StaggeredAdapter extends BaseAdapter {
         }
 
         holder = (ViewHolder) convertView.getTag();
-        holder.imageView.setImageWidth(duitangInfo.getWidth());
-        holder.imageView.setImageHeight(duitangInfo.getHeight());
-        holder.contentView.setText(duitangInfo.getMsg());
-        mImageFetcher.loadImage(duitangInfo.getIsrc(), holder.imageView);
+        int width=320;
+        MyFavoriteProductListPic pic=duitangInfo.getPic();
+        int heitht=0;
+        if(pic!=null)
+        {
+        	heitht=(int)pic.getRatio()*width;
+        }
+        
+        holder.imageView.setImageWidth(width);
+        holder.imageView.setImageHeight(heitht);
+        holder.contentView.setText(duitangInfo.getName());
+        mImageFetcher.loadImage(ToolsUtil.getImage(ToolsUtil.nullToString(pic.getPic()), width, 0), holder.imageView);
         return convertView;
     }
 
@@ -78,13 +88,20 @@ public class StaggeredAdapter extends BaseAdapter {
         return 0;
     }
 
-    public void addItemLast(List<DuitangInfo> datas) {
-        mInfos.addAll(datas);
+    public void addItemLast(List<MyFavoriteProductListInfo> datas) {
+       if(datas!=null)
+       {
+    	   mInfos.addAll(datas);
+       }
+    	
     }
 
-    public void addItemTop(List<DuitangInfo> datas) {
-        for (DuitangInfo info : datas) {
+    public void addItemTop(List<MyFavoriteProductListInfo> datas) {
+       if(datas!=null)
+       {
+    	for (MyFavoriteProductListInfo info : datas) {
             mInfos.addFirst(info);
         }
+       }
     }
 }
