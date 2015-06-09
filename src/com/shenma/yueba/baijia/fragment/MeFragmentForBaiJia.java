@@ -11,19 +11,13 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.activity.BaiJiaOrderListActivity;
 import com.shenma.yueba.baijia.activity.BuyerCertificationActivity1;
 import com.shenma.yueba.baijia.activity.MyCollectionActivity;
-import com.shenma.yueba.baijia.activity.MyCollectionActivitybak;
 import com.shenma.yueba.baijia.activity.UserConfigActivity;
-import com.shenma.yueba.baijia.adapter.MyFragmentPagerAdapter;
-import com.shenma.yueba.util.FontManager;
-import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.util.ToolsUtil;
-import com.shenma.yueba.yangjia.activity.MainActivityForYangJia;
 
 /**
  * 败家--个人账户

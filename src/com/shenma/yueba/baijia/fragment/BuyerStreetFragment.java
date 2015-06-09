@@ -343,11 +343,11 @@ public class BuyerStreetFragment extends Fragment {
 				switch(v.getId())
 				{
 				case R.id.baijia_tab1_item_productcontent_imageview:
-					if(v.getTag()!=null && v.getTag() instanceof ProductPicInfoBean)
+					if(v.getTag()!=null && v.getTag() instanceof ProductsInfoBean)
 					{
-						ProductPicInfoBean productPicInfoBean=(ProductPicInfoBean)v.getTag();
+						ProductsInfoBean productsInfoBean =(ProductsInfoBean)v.getTag();
 						Intent intent=new Intent(getActivity(),ApproveBuyerDetailsActivity.class);
-						intent.putExtra("productID", productPicInfoBean.getId());
+						intent.putExtra("productID", productsInfoBean.getProductId());
 						startActivity(intent);
 					}
 					break;
@@ -388,7 +388,7 @@ public class BuyerStreetFragment extends Fragment {
 		//产品描述
 		holder.buyersteetfragmeng_item_desc_textview.setText(productsInfoBean.getProductName());
 		//商品内容图片
-		holder.baijia_tab1_item_productcontent_imageview.setTag(productPicInfoBean);
+		holder.baijia_tab1_item_productcontent_imageview.setTag(productsInfoBean);
 		//加载商品图片
 		initPic(ToolsUtil.getImage(productPicInfoBean.getName(), 640, 0), holder.baijia_tab1_item_productcontent_imageview, R.drawable.default_pic);
 		//更改字体
