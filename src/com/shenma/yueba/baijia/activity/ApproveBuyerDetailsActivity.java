@@ -32,6 +32,7 @@ import com.shenma.yueba.ChatActivity;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.adapter.UserIconAdapter;
+import com.shenma.yueba.baijia.modle.BrandCityWideInfo;
 import com.shenma.yueba.baijia.modle.LikeUsersInfoBean;
 import com.shenma.yueba.baijia.modle.ProductPicInfoBean;
 import com.shenma.yueba.baijia.modle.ProductsDetailsInfoBean;
@@ -329,6 +330,32 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView impleme
 				myGirdView.setAdapter(new UserIconAdapter(users,
 						ApproveBuyerDetailsActivity.this, myGirdView));
 			}
+			
+			TextView approvebuyerdetails_attention_textview=(TextView)findViewById(R.id.approvebuyerdetails_attention_textview);
+			approvebuyerdetails_attention_textview.setSelected(likeUsersInfoBean.isIsLike());
+			approvebuyerdetails_attention_textview.setTag(Data);
+			approvebuyerdetails_attention_textview.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					if(v.getTag()!=null && v.getTag() instanceof ProductsDetailsInfoBean)
+					{
+						ProductsDetailsInfoBean Data=(ProductsDetailsInfoBean)v.getTag();
+						LikeUsersInfoBean likeUsersInfoBean=Data.getLikeUsers();
+						if(likeUsersInfoBean!=null)
+						{
+							if(likeUsersInfoBean.isIsLike())
+							{
+								submitAttention(0, Data,v);
+							}else
+							{
+								submitAttention(1, Data,v);
+							}
+						}
+						
+					}
+				}
+			});
 		}
 
 		if (Data.getProductPic() != null && Data.getProductPic().length > 0) {
@@ -344,6 +371,8 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView impleme
 			appprovebuyer_viewpager.setAdapter(customPagerAdapter);
 			setcurrItem(0);
 			startTimeToViewPager();
+			
+			
 		}
 
 	}
@@ -514,4 +543,42 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView impleme
 		}
 		
 	}
+	
+	
+	/****
+	 * 提交收藏与取消收藏商品
+	 * @param type int   0表示取消收藏   1表示收藏
+	 * @param brandCityWideInfo BrandCityWideInfo  商品对象
+	 * **/
+	void submitAttention(final int Status,final ProductsDetailsInfoBean bean,final View v)
+	{
+		httpControl.setFavor(bean.getProductId(), Status, new HttpCallBackInterface() {
+			
+			@Override
+			public void http_Success(Object obj) {
+				if(v!=null && v instanceof TextView)
+				{
+					switch(Status)
+					{
+					case 0:
+						v.setSelected(false);
+						bean.getLikeUsers().setIsLike(false);
+						break;
+					case 1:
+						v.setSelected(true);
+						bean.getLikeUsers().setIsLike(true);
+						break;
+					}
+					
+				}
+				//SameCityAdapter.this.notifyDataSetChanged();
+			}
+			
+			@Override
+			public void http_Fails(int error, String msg) {
+				MyApplication.getInstance().showMessage(ApproveBuyerDetailsActivity.this, msg);
+			}
+		}, ApproveBuyerDetailsActivity.this);
+	}
+	
 }

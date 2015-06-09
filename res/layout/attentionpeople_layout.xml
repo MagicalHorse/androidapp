@@ -12,7 +12,7 @@
         android:id="@+id/approvebuyerdetails_attention_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/zan"
+        android:drawableLeft="@drawable/redheart_backgroud"
         android:gravity="center"
         android:hint="558" />
 
