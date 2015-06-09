@@ -1355,8 +1355,7 @@ public class HttpControl {
 
 						if (httpCallBack != null) {
 							Log.i("result", responseInfo.result);
-							BaseRequest bean = BaseGsonUtils.getJsonToObject(
-									classzz, responseInfo.result);
+							BaseRequest bean = BaseGsonUtils.getJsonToObject(classzz, responseInfo.result);
 							if (bean == null) {
 								httpCallBack.http_Fails(0, "数据解析异常");
 

@@ -1,0 +1,132 @@
+package com.shenma.yueba.baijia.view;
+
+import java.util.List;
+
+import android.content.Context;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.modle.MyFavoriteProductListInfo;
+import com.shenma.yueba.baijia.modle.MyFavoriteProductListLikeUser;
+import com.shenma.yueba.baijia.modle.MyFavoriteProductListPic;
+import com.shenma.yueba.util.FontManager;
+import com.shenma.yueba.util.ToolsUtil;
+import com.umeng.socialize.utils.Log;
+
+/**  
+ * @author gyj  
+ * @version 创建时间：2015-6-9 下午2:48:26  
+ * 程序的简单说明  瀑布流管理
+ */
+
+public class PubuliuManager {
+	Context context;
+	View parent;
+	//瀑布流 左右布局
+	LinearLayout pubuliy_left_linearlayout,pubuliy_right_linearlayout;
+	int leftHeight;//左侧高度
+	int rightHeight;//右侧高度
+	public PubuliuManager(Context context,View parent)
+	{
+		this.context=context;
+		this.parent=parent;
+		initView();
+	}
+	
+	/***
+	 * 加载视图
+	 * **/
+	void initView()
+	{
+		pubuliy_left_linearlayout=(LinearLayout)parent.findViewById(R.id.pubuliy_left_linearlayout);
+		pubuliy_right_linearlayout=(LinearLayout)parent.findViewById(R.id.pubuliy_right_linearlayout);
+	}
+	
+	/****
+	 * 设置刷新
+	 * @param item List<MyFavoriteProductListInfo>
+	 * ***/
+	public void onResher(List<MyFavoriteProductListInfo> item)
+	{
+		leftHeight=0;
+		rightHeight=0;
+		pubuliy_left_linearlayout.removeAllViews();
+		pubuliy_right_linearlayout.removeAllViews();
+		addItem(item);
+	}
+	
+	/****
+	 * 加载数据
+	 * @param item List<MyFavoriteProductListInfo>
+	 * ****/
+	public void onaddData(List<MyFavoriteProductListInfo> item)
+	{
+		addItem(item);
+	}
+	
+	
+	 /*******
+     * 设置 瀑布流的 高度
+     * 
+     * *****/
+    void addItem(List<MyFavoriteProductListInfo> item)
+    {
+    	if(item!=null)
+    	{
+    		for(int i=0;i<item.size();i++)
+    		{
+    			MyFavoriteProductListInfo bean=item.get(i);
+    			int witdh=pubuliy_left_linearlayout.getWidth();
+    			MyFavoriteProductListPic myFavoriteProductListPic=bean.getPic();
+    			int height=(int)(witdh*myFavoriteProductListPic.getRatio());
+    			Log.i("TAG", "height="+height +" witdh="+witdh   +"ration="+myFavoriteProductListPic.getRatio());
+    			View parentview=LinearLayout.inflate(context, R.layout.pubuliu_item_layout, null);
+    			//价格
+    			TextView pubuliu_item_layout_pricevalue_textview=(TextView)parentview.findViewById(R.id.pubuliu_item_layout_pricevalue_textview);
+    			pubuliu_item_layout_pricevalue_textview.setText(bean.getPrice()+"");
+    			//商品名称
+    			TextView pubuliu_item_layout_name_textview=(TextView)parentview.findViewById(R.id.pubuliu_item_layout_name_textview);
+    			pubuliu_item_layout_name_textview.setText(bean.getName());
+    			//喜欢
+    			TextView pubuliu_item_layout_like_textview=(TextView)parentview.findViewById(R.id.pubuliu_item_layout_like_textview);
+    			if(bean.getLikeUser()!=null)
+    			{
+    				MyFavoriteProductListLikeUser likeuser=bean.getLikeUser();
+    				pubuliu_item_layout_like_textview.setText(likeuser.getCount()+"");
+    			}
+    			ImageView iv=(ImageView)parentview.findViewById(R.id.pubuliu_item_layout_imageview);
+    			iv.getLayoutParams().height=height;
+    			iv.setBackgroundResource(R.color.color_blue);
+    			iv.setTag(bean);
+    			iv.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						MyApplication.getInstance().showMessage(context, "点击了");
+					}
+				});
+    			iv.setImageResource(R.drawable.default_pic);
+    			iv.setScaleType(ScaleType.FIT_XY);
+    			android.util.Log.i("TAG", "leftHeight="+leftHeight+"   rightHeight="+rightHeight);
+    			if(leftHeight<=rightHeight)
+    			{
+    				leftHeight+=height;
+    				pubuliy_left_linearlayout.addView(parentview, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+    			}else
+    			{
+    				rightHeight+=height;
+    				pubuliy_right_linearlayout.addView(parentview, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+    			}
+    			ToolsUtil.setFontStyle(context, parentview, R.id.pubuliu_item_layout_pricevalue_textview,R.id.pubuliu_item_layout_name_textview,R.id.pubuliu_item_layout_like_textview,R.id.pubuliu_item_layout_price_textview);
+    			MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.getImage(ToolsUtil.nullToString(myFavoriteProductListPic.getPic()), 320, 0), iv, MyApplication.getInstance().getDisplayImageOptions());
+    			//MyApplication.getInstance().getImageLoader().displayImage(myFavoriteProductListPic.getPic(), iv, MyApplication.getInstance().getDisplayImageOptions());
+    		}
+    	}
+    }
+}

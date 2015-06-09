@@ -148,7 +148,7 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView impleme
 					@Override
 					public void onPageSelected(int arg0) {
 						currid = arg0;
-						// setcurrItem(arg0);
+						setcurrItem(arg0);
 					}
 
 					@Override

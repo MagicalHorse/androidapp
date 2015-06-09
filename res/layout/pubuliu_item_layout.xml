@@ -2,7 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical" 
+    android:paddingLeft="@dimen/shop_main_width2_dimen"
+    android:paddingRight="@dimen/shop_main_width2_dimen"
+    >
     <ImageView
         android:id="@+id/pubuliu_item_layout_imageview"
         android:layout_width="match_parent"
@@ -12,11 +15,15 @@
         />
 
     <TextView
+        android:layout_margin="@dimen/shop_main_width3_dimen"
         android:id="@+id/pubuliu_item_layout_name_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />
+    
     <RelativeLayout 
+        android:gravity="center_vertical"
+        android:layout_margin="@dimen/shop_main_width3_dimen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
