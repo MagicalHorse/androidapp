@@ -9,12 +9,19 @@
         android:layout_alignParentTop="true"
         layout="@layout/top_layout" />
 
-    <me.maxwin.view.XListView
-        android:layout_below="@id/shop_main_layout_title_relativelayout"
-        android:id="@+id/xListView"
-        android:scrollbars="vertical"
-         android:fastScrollEnabled="true"
+    <include 
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:layout_below="@id/shop_main_layout_title_relativelayout"
+        android:id="@+id/shop_main_layout_head_relativelayout"
+        layout="@layout/shop_main_head_layout"
+        />
+    <include 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/shop_main_layout_head_relativelayout"
+        android:id="@+id/pubuliu_layout_include"
+        layout="@layout/pubuliu_layout"
+        />
 
 </RelativeLayout>
