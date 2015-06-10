@@ -25,6 +25,7 @@ public class ApplyAuthBuyerBean implements Serializable{
 	private String CardBack;//身份证背面
 	private String CardFront;//身份证正面
 	private String StoreId;//门店编号
+	
 //	private CardBean WorkCard;//工牌
 //	private CardBean CardBack;//身份证背面
 //	private CardBean CardFront;//身份证正面
