@@ -275,6 +275,7 @@ public class BuyerStreetFragment extends Fragment {
 				holder.v = convertView;
 				holder.customImage = (RoundImageView) convertView
 						.findViewById(R.id.baijia_tab1_item_icon_imageview);
+				setOnclickListener(holder.customImage);
 				holder.baijia_tab1_item_productname_textview = (TextView)convertView
 						.findViewById(R.id.baijia_tab1_item_productname_textview);
 				holder.baijia_tab1_item_productaddress_textview = (TextView) convertView
@@ -350,6 +351,10 @@ public class BuyerStreetFragment extends Fragment {
 						intent.putExtra("productID", productsInfoBean.getProductId());
 						startActivity(intent);
 					}
+					break;
+				case R.id.baijia_tab1_item_icon_imageview://商铺详细
+					Intent intent=new Intent(getActivity(),ShopMainActivity.class);
+					startActivity(intent);
 					break;
 				}
 				

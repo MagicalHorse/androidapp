@@ -1,39 +1,29 @@
 package com.shenma.yueba.baijia.activity;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.maxwin.view.XListView;
-import me.maxwin.view.XListView.IXListViewListener;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
-import android.os.AsyncTask.Status;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.dodola.model.DuitangInfo;
-import com.dodowaterfall.Helper;
-import com.example.android.bitmapfun.util.ImageFetcher;
-import com.huewu.pla.lib.internal.PLA_AdapterView;
-import com.huewu.pla.lib.internal.PLA_AdapterView.OnItemClickListener;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
+import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
-import com.shenma.yueba.baijia.adapter.StaggeredAdapter;
+import com.shenma.yueba.baijia.fragment.ShopPuBuliuFragment;
+import com.shenma.yueba.baijia.modle.FragmentBean;
+import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.view.imageshow.CustomImageView;
 /*****
  * 本类定义 店铺商品首页显示页面 
@@ -41,7 +31,7 @@ import com.shenma.yueba.view.imageshow.CustomImageView;
  * @author gyj
  * @date 2015-05-05
  * ***/
-public class ShopMainActivity extends BaseActivityWithTopView {
+public class ShopMainActivity extends FragmentActivity {
 	//商品logo 
     CustomImageView shop_main_layout_icon_imageview;
     //店铺名称
@@ -58,23 +48,28 @@ public class ShopMainActivity extends BaseActivityWithTopView {
     TextView shop_main_fansvalue_textview;
     //赞值
     TextView shop_main_praisevalue_textview;
-    XListView xListView;
-    
-    
-    private ImageFetcher mImageFetcher;
-    private StaggeredAdapter mAdapter = null;
-    private int currentPage = 0;
-    ContentTask task = new ContentTask(this, 2);
+    //主要内容
+    FrameLayout shop_main_layout_tabcontent_framelayout;
     //商品描述
     TextView shap_main_description1_textview,shap_main_description2_textview,shap_main_description3_textview;
-    
+    FragmentManager fragmentManager;
+    //商品  上新
+    List<FragmentBean> fragmentBean_list=new ArrayList<FragmentBean>();
+    List<View> view_list=new ArrayList<View>();
+    PullToRefreshScrollView shop_main_layout_title_pulltorefreshscrollview;
+    int currId=-1;
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
     	MyApplication.getInstance().addActivity(this);//加入回退栈
     	requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.shop_main_layout);
 		super.onCreate(savedInstanceState);
+		fragmentManager=getSupportFragmentManager();
 		initView();
+		if(view_list.size()>0)
+		{
+		   setItem(true,0);
+		}
 	}
 	
 	/****
@@ -82,73 +77,85 @@ public class ShopMainActivity extends BaseActivityWithTopView {
 	 * **/
 	void initView()
 	{
-		setTitle("店铺名称");
-		setLeftTextView(new OnClickListener() {
+		TextView tv_top_left=(TextView)findViewById(R.id.tv_top_left);
+		tv_top_left.setVisibility(View.VISIBLE);
+		tv_top_left.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				
 				ShopMainActivity.this.finish();
 			}
 		});
-		xListView=(XListView)findViewById(R.id.xListView);
-		LinearLayout headview=(LinearLayout)LinearLayout.inflate(this, R.layout.shop_main_head_layout, null);
-		xListView.addHeader(this,headview);
-		shop_main_layout_icon_imageview=(CustomImageView)headview.findViewById(R.id.shop_main_layout_icon_imageview);
-		shop_main_layout_name_textview=(TextView)headview.findViewById(R.id.shop_main_layout_name_textview);
-		shop_main_layout_market_textview=(TextView)headview.findViewById(R.id.shop_main_layout_market_textview);
-		shop_main_siliao_imagebutton=(ImageButton)headview.findViewById(R.id.shop_main_siliao_imagebutton); 
-		shop_main_attention_imagebutton=(ImageButton)headview.findViewById(R.id.shop_main_attention_imagebutton); 
-		shop_main_attentionvalue_textview=(TextView)headview.findViewById(R.id.shop_main_attentionvalue_textview); 
+		TextView tv_top_title=(TextView)findViewById(R.id.tv_top_title);
+		tv_top_title.setVisibility(View.VISIBLE);
+		tv_top_title.setText("店铺名称");
+
+		shop_main_layout_title_pulltorefreshscrollview=(PullToRefreshScrollView)findViewById(R.id.shop_main_layout_title_pulltorefreshscrollview);
+		shop_main_layout_title_pulltorefreshscrollview.setMode(Mode.BOTH);
+		shop_main_layout_title_pulltorefreshscrollview.setOnRefreshListener(new OnRefreshListener2() {
+
+			@Override
+			public void onPullDownToRefresh(PullToRefreshBase refreshView) {
+				onRefresh();
+			}
+
+			@Override
+			public void onPullUpToRefresh(PullToRefreshBase refreshView) {
+				onAddData();
+			}
+		});
+		
+		shop_main_layout_tabcontent_framelayout=(FrameLayout)findViewById(R.id.shop_main_layout_tabcontent_framelayout);
+		
+		
+		
+		LinearLayout shop_main_circle_layout=(LinearLayout)findViewById(R.id.shop_main_circle_layout);
+		shop_main_circle_layout.setOnClickListener(onClickListener);
+		shop_main_layout_icon_imageview=(CustomImageView)findViewById(R.id.shop_main_layout_icon_imageview);
+		shop_main_layout_name_textview=(TextView)findViewById(R.id.shop_main_layout_name_textview);
+		shop_main_layout_market_textview=(TextView)findViewById(R.id.shop_main_layout_market_textview);
+		shop_main_siliao_imagebutton=(ImageButton)findViewById(R.id.shop_main_siliao_imagebutton); 
+		shop_main_attention_imagebutton=(ImageButton)findViewById(R.id.shop_main_attention_imagebutton); 
+		shop_main_attentionvalue_textview=(TextView)findViewById(R.id.shop_main_attentionvalue_textview); 
 		shop_main_attentionvalue_textview.setText("886");
-		shop_main_fansvalue_textview=(TextView)headview.findViewById(R.id.shop_main_fansvalue_textview); 
+		shop_main_fansvalue_textview=(TextView)findViewById(R.id.shop_main_fansvalue_textview); 
 		shop_main_fansvalue_textview.setText("4883");
-		shop_main_praisevalue_textview=(TextView)headview.findViewById(R.id.shop_main_praisevalue_textview); 
+		shop_main_praisevalue_textview=(TextView)findViewById(R.id.shop_main_praisevalue_textview); 
 		shop_main_praisevalue_textview.setText("456");
-		shap_main_description1_textview=(TextView)headview.findViewById(R.id.shap_main_description1_textview); 
-		shap_main_description2_textview=(TextView)headview.findViewById(R.id.shap_main_description2_textview); 
-		shap_main_description3_textview=(TextView)headview.findViewById(R.id.shap_main_description3_textview); 
+		shap_main_description1_textview=(TextView)findViewById(R.id.shap_main_description1_textview); 
+		shap_main_description2_textview=(TextView)findViewById(R.id.shap_main_description2_textview); 
+		shap_main_description3_textview=(TextView)findViewById(R.id.shap_main_description3_textview); 
 		
-		xListView.setPullLoadEnable(true);
-		xListView.setXListViewListener(new IXListViewListener() {
-			
-			@Override
-			public void onRefresh() {
-				
-				AddItemToContainer(++currentPage, 1);
+		LinearLayout shop_main_head_layout_tab_linearlayout=(LinearLayout)findViewById(R.id.shop_main_head_layout_tab_linearlayout);
+		ShopPuBuliuFragment shopPuBuliuFragment1=new ShopPuBuliuFragment();
+		ShopPuBuliuFragment ShopPuBuliuFragment2=new ShopPuBuliuFragment();
+		fragmentBean_list.add(new FragmentBean("商品", -1, shopPuBuliuFragment1));
+		fragmentBean_list.add(new FragmentBean("上新", -1, ShopPuBuliuFragment2));
+		for(int i=0;i<fragmentBean_list.size();i++)
+		{
+			FragmentBean bean=fragmentBean_list.get(i);
+			LinearLayout ll=(LinearLayout)LinearLayout.inflate(ShopMainActivity.this, R.layout.shop_stay_layout, null);
+			LinearLayout shop_stay_layout_parent_linearlayout=(LinearLayout)ll.findViewById(R.id.shop_stay_layout_parent_linearlayout);
+			shop_stay_layout_parent_linearlayout.setTag(new Integer(i));
+			shop_stay_layout_parent_linearlayout.setOnClickListener(onClickListener);
+			TextView tv1=(TextView)ll.findViewById(R.id.shop_stay_layout_item_textview1);
+			tv1.setText(bean.getName());
+    		TextView tv2=(TextView)ll.findViewById(R.id.shop_stay_layout_item_textview2);
+			FontManager.changeFonts(ShopMainActivity.this, tv1,tv2);
+    		LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+			params.weight=1;
+			shop_main_head_layout_tab_linearlayout.addView(ll, params);
+			view_list.add(ll);
+			if(i==fragmentBean_list.size()-1)
+			{
+				View shop_stay_layout_tabline_relativelayout=(View)ll.findViewById(R.id.shop_stay_layout_tabline_relativelayout);
+				shop_stay_layout_tabline_relativelayout.setVisibility(View.GONE);
 			}
-			
-			@Override
-			public void onLoadMore() {
-				
-				AddItemToContainer(++currentPage, 2);
-			}
-		});
-
-		xListView.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(PLA_AdapterView<?> parent, View view,
-					int position, long id) {
-				
-				Intent intent=new Intent(ShopMainActivity.this,ApproveBuyerDetailsActivity.class);
-				startActivity(intent);
-			}
-		});
-		
-        mImageFetcher = new ImageFetcher(this, 240);
-        mImageFetcher.setLoadingImage(R.drawable.empty_photo);
-        mAdapter = new StaggeredAdapter(this, xListView,mImageFetcher);
-        RelativeLayout shop_stay_layout_tab1_relativelayout=(RelativeLayout)headview.findViewById(R.id.shop_stay_layout_tab1_relativelayout);
-        setTabView(shop_stay_layout_tab1_relativelayout, "商品", "123", true);
-        RelativeLayout shop_stay_layout_tab2_relativelayout=(RelativeLayout)headview.findViewById(R.id.shop_stay_layout_tab2_relativelayout);
-        setTabView(shop_stay_layout_tab2_relativelayout, "上新", "12", false);
-        RelativeLayout shop_stay_layout_tab3_relativelayout=(RelativeLayout)headview.findViewById(R.id.shop_stay_layout_tab3_relativelayout);
-        setTabView(shop_stay_layout_tab3_relativelayout, "圈子", "5", false);
-        
-        shop_stay_layout_tab1_relativelayout.setOnClickListener(onClickListener);
-        shop_stay_layout_tab2_relativelayout.setOnClickListener(onClickListener);
-        shop_stay_layout_tab3_relativelayout.setOnClickListener(onClickListener);
+		}
+		TextView shop_main_attention_textview=(TextView)findViewById(R.id.shop_main_attention_textview);
+		TextView shop_main_fans_textview=(TextView)findViewById(R.id.shop_main_fans_textview);
+		TextView shop_main_praise_textview=(TextView)findViewById(R.id.shop_main_praise_textview);
+		FontManager.changeFonts(ShopMainActivity.this, shop_main_layout_name_textview,shop_main_layout_market_textview,shop_main_attentionvalue_textview,shop_main_fansvalue_textview,shop_main_praisevalue_textview,shap_main_description1_textview,shap_main_description2_textview,shap_main_description3_textview,shop_main_attention_textview,shop_main_fans_textview,shop_main_praise_textview);
 	}
 	
 	
@@ -157,136 +164,29 @@ public class ShopMainActivity extends BaseActivityWithTopView {
 		@Override
 		public void onClick(View v) {
 			
-			Intent intent=null;
 			switch(v.getId())
 			{
-			case R.id.shop_stay_layout_tab1_relativelayout:
-				intent=null;
+			case R.id.shop_stay_layout_parent_linearlayout:
+				if(v.getTag()!=null && v.getTag() instanceof Integer)
+				{
+					setItem(false,(Integer)v.getTag());
+				}
 				break;
-			case R.id.shop_stay_layout_tab2_relativelayout:
-				intent=new Intent(ShopMainActivity.this,NewProduceListActivity.class);
-				break;
-			case R.id.shop_stay_layout_tab3_relativelayout:
-				intent=new Intent(ShopMainActivity.this,CircleListActivity.class);
-				break;
-			}
-			if(intent!=null)
-			{
+			case R.id.shop_main_circle_layout:
+				Intent intent=new Intent(ShopMainActivity.this,CircleListActivity.class);
 				startActivity(intent);
+				break;
 			}
 		}
 	};
+    
 	
-	private class ContentTask extends AsyncTask<String, Integer, List<DuitangInfo>> {
-
-        private Context mContext;
-        private int mType = 1;
-
-        public ContentTask(Context context, int type) {
-            super();
-            mContext = context;
-            mType = type;
-        }
-
-        @Override
-        protected List<DuitangInfo> doInBackground(String... params) {
-            try {
-                return parseNewsJSON(params[0]);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(List<DuitangInfo> result) {
-            if (mType == 1) {
-
-                mAdapter.addItemTop(null);
-                mAdapter.notifyDataSetChanged();
-                xListView.stopRefresh();
-
-            } else if (mType == 2) {
-            	xListView.stopLoadMore();
-                mAdapter.addItemLast(null);
-                mAdapter.notifyDataSetChanged();
-            }
-
-        }
-
-        @Override
-        protected void onPreExecute() {
-        }
-
-        public List<DuitangInfo> parseNewsJSON(String url) throws IOException {
-            List<DuitangInfo> duitangs = new ArrayList<DuitangInfo>();
-            String json = "";
-            if (Helper.checkConnection(mContext)) {
-                try {
-                    json = Helper.getStringFromUrl(url);
-
-                } catch (IOException e) {
-                    Log.e("IOException is : ", e.toString());
-                    e.printStackTrace();
-                    return duitangs;
-                }
-            }
-            Log.d("MainActiivty", "json:" + json);
-
-            try {
-                if (null != json) {
-                    JSONObject newsObject = new JSONObject(json);
-                    JSONObject jsonObject = newsObject.getJSONObject("data");
-                    JSONArray blogsJson = jsonObject.getJSONArray("blogs");
-
-                    for (int i = 0; i < blogsJson.length(); i++) {
-                        JSONObject newsInfoLeftObject = blogsJson.getJSONObject(i);
-                        DuitangInfo newsInfo1 = new DuitangInfo();
-                        newsInfo1.setAlbid(newsInfoLeftObject.isNull("albid") ? "" : newsInfoLeftObject.getString("albid"));
-                        newsInfo1.setIsrc(newsInfoLeftObject.isNull("isrc") ? "" : newsInfoLeftObject.getString("isrc"));
-                        newsInfo1.setMsg(newsInfoLeftObject.isNull("msg") ? "" : newsInfoLeftObject.getString("msg"));
-                        newsInfo1.setHeight(newsInfoLeftObject.getInt("iht"));
-                        duitangs.add(newsInfo1);
-                    }
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            return duitangs;
-        }
-    }
-
-	/**
-     * 添加内容
-     * 
-     * @param pageindex
-     * @param type
-     *            1为下拉刷新 2为加载更多
-     */
-    private void AddItemToContainer(int pageindex, int type) {
-        if (task.getStatus() != Status.RUNNING) {
-            String url = "http://www.duitang.com/album/1733789/masn/p/" + pageindex + "/24/";
-            Log.d("MainActivity", "current url:" + url);
-            ContentTask task = new ContentTask(this, type);
-            task.execute(url);
-
-        }
-    }
-    
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mImageFetcher.setExitTasksEarly(false);
-        xListView.setAdapter(mAdapter);
-        AddItemToContainer(currentPage, 2);
-    }
-    
     /****
      * 设置 tab切换文字的信息 以及是否显示底部横条
      * @param v View 父类视图
      * @param str1 信息1
      * @param str2 信息2
-     * @param b booelean是否显示 横条 true显示  false不显示
+     * @param b boolean是否显示 横条 true显示  false不显示
      * */
     void setTabView(View v,String str1,String str2,boolean b)
     {
@@ -304,4 +204,88 @@ public class ShopMainActivity extends BaseActivityWithTopView {
     	}
     }
 	
+    /*****
+     * 设置fragment显示的内容
+     * @param isfirst boolean true表示第一次添加  false 表示替换
+     * */
+    void setItem(boolean isfirst,int _id)
+    {
+    	if(currId==_id)
+    	{
+    		return;
+    	}
+    	
+    	currId=_id;
+    	//设置 TAB 视图
+    	for(int i=0;i<view_list.size();i++)
+    	{
+    		View parent=view_list.get(i);
+    		TextView tv1=(TextView)parent.findViewById(R.id.shop_stay_layout_item_textview1);
+    		TextView tv2=(TextView)parent.findViewById(R.id.shop_stay_layout_item_textview2);
+    		View shop_stay_layout_item_line_view=(View)parent.findViewById(R.id.shop_stay_layout_item_line_view);
+    		if(i==currId)
+    		{
+    			tv1.setTextColor(this.getResources().getColor(R.color.color_deeoyellow));
+    			tv2.setTextColor(this.getResources().getColor(R.color.color_deeoyellow));
+    			shop_stay_layout_item_line_view.setVisibility(View.VISIBLE);
+    		}else
+    		{
+    			tv1.setTextColor(this.getResources().getColor(R.color.color_gray));
+    			tv2.setTextColor(this.getResources().getColor(R.color.color_gray));
+    			shop_stay_layout_item_line_view.setVisibility(View.INVISIBLE);
+    		}
+    	}
+    	
+    	if(isfirst)
+    	{
+    		fragmentManager.beginTransaction().add(R.id.shop_main_layout_tabcontent_framelayout, (ShopPuBuliuFragment)fragmentBean_list.get(_id).getFragment()).commit();
+    	}else
+    	{
+    		fragmentManager.beginTransaction().replace(R.id.shop_main_layout_tabcontent_framelayout, (ShopPuBuliuFragment)fragmentBean_list.get(_id).getFragment()).commit();
+    	}
+    	
+    }
+    
+    
+    /******
+     * 下拉刷新
+     * ***/
+    void onRefresh()
+    {
+    	if(fragmentBean_list.get(currId)!=null)
+    	{
+    		shop_main_layout_title_pulltorefreshscrollview.setRefreshing();
+    		ShopPuBuliuFragment fragment=(ShopPuBuliuFragment)fragmentBean_list.get(currId).getFragment();
+    		fragment.onPuBuliuRefersh();
+    	}
+    }
+    
+    /******
+     * 上啦加载刷新
+     * ***/
+    void onAddData()
+    {
+    	if(fragmentBean_list.get(currId)!=null)
+    	{
+    		shop_main_layout_title_pulltorefreshscrollview.setRefreshing();
+    		ShopPuBuliuFragment fragment=(ShopPuBuliuFragment)fragmentBean_list.get(currId).getFragment();
+    		fragment.onPuBuliuaddData();
+    	}
+    }
+    
+    /*****
+     * 下拉刷新监听
+     * **/
+    public interface PubuliuFragmentListener
+	{
+		/***
+		 * 刷新
+		 * **/
+		void onPuBuliuRefersh();
+		
+		/**
+		 * 加载
+		 * **/
+		void onPuBuliuaddData();
+	}
 }

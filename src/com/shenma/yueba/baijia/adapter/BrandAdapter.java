@@ -22,19 +22,19 @@ public class BrandAdapter extends BaseAdapterWithUtil {
 
 	@Override
 	public int getCount() {
-		// TODO Auto-generated method stub
+		
 		return items.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		// TODO Auto-generated method stub
+		
 		return items.get(position);
 	}
 
 	@Override
 	public long getItemId(int position) {
-		// TODO Auto-generated method stub
+		
 		return position;
 	}
 

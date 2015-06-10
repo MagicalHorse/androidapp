@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract.Contacts;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -20,6 +22,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.State;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.activity.BaiJiaOrderDetailsActivity;
 import com.shenma.yueba.baijia.adapter.BaiJiaOrderListAdapter;
 import com.shenma.yueba.baijia.modle.BaiJiaOrderListInfo;
 import com.shenma.yueba.baijia.modle.BaiJiaOrderListInfoBean;
@@ -112,6 +115,22 @@ public class BaiJiaOrderListFragment extends Fragment {
 			@Override
 			public void onPullUpToRefresh(PullToRefreshBase refreshView) {
 				requestData();
+			}
+		});
+		
+		pull_refresh_list.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				if(object_list!=null)
+				{
+					BaiJiaOrderListInfo info=object_list.get(arg2);
+					Intent intent=new Intent(getActivity(),BaiJiaOrderDetailsActivity.class);
+					intent.putExtra("ORDER_ID", info.getOrderNo());
+					startActivity(intent);
+				}
+				
 			}
 		});
 	}

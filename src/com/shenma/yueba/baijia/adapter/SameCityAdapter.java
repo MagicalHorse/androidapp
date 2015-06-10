@@ -19,6 +19,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.ApproveBuyerDetailsActivity;
+import com.shenma.yueba.baijia.activity.ShopMainActivity;
 import com.shenma.yueba.baijia.modle.BrandCityWideInfo;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
@@ -64,6 +65,7 @@ public class SameCityAdapter extends BaseAdapterWithUtil {
 			convertView = View.inflate(ctx, R.layout.same_city_list_item, null);
 			ToolsUtil.setFontStyle(ctx, convertView, R.id.tv_nick_name,R.id.tv_belong,R.id.tv_attention);
 			holder.iv_head = (RoundImageView) convertView.findViewById(R.id.iv_head);
+			holder.iv_head.setOnClickListener(onClickListener);
 			holder.nick_name = (TextView) convertView.findViewById(R.id.tv_nick_name);
 			holder.tv_belong = (TextView) convertView.findViewById(R.id.tv_belong);
 			holder.tv_attention = (TextView) convertView.findViewById(R.id.tv_attention);
@@ -178,6 +180,9 @@ public class SameCityAdapter extends BaseAdapterWithUtil {
 				intent.putExtra("productID",(Integer)v.getTag());
 				ctx.startActivity(intent);
 				break;
+			case R.id.iv_head://头像
+			    Intent iconintent=new Intent(ctx,ShopMainActivity.class);
+			    ctx.startActivity(iconintent);
 			}
 		}
 	};

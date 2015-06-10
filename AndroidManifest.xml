@@ -320,11 +320,6 @@
             android:name="com.shenma.yueba.baijia.activity.ShopMainActivity"
             android:screenOrientation="portrait" >
         </activity>
-        <!-- 上新 -->
-        <activity
-            android:name="com.shenma.yueba.baijia.activity.NewProduceListActivity"
-            android:screenOrientation="portrait" >
-        </activity>
         <!-- 圈子 -->
         <activity
             android:name="com.shenma.yueba.baijia.activity.CircleListActivity"

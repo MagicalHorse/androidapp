@@ -95,6 +95,8 @@ PrioductSizesInfoBean currCheckedFouce=null;//选择的尺寸数据
 			}
 		});
 		affirmorder_layout_icon_roundimageview=(RoundImageView)findViewById(R.id.affirmorder_layout_icon_roundimageview);
+		affirmorder_layout_icon_roundimageview.setTag(productsDetailsInfoBean);
+		affirmorder_layout_icon_roundimageview.setOnClickListener(onClickListener);
 		MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.nullToString(productsDetailsInfoBean.getBuyerLogo()), affirmorder_layout_icon_roundimageview);
 		affirmorder_layout_icon_imageview=(ImageView)findViewById(R.id.affirmorder_layout_icon_imageview);
 		//设置联系电话
@@ -148,7 +150,7 @@ PrioductSizesInfoBean currCheckedFouce=null;//选择的尺寸数据
 		});
 		ToolsUtil.setFontStyle(this, parentview, R.id.affrimorder_layout_footer_countprice_textview, ToolsUtil.DounbleToString_2(allPrice));
 		
-		
+		ToolsUtil.setFontStyle(this, parentview, R.id.affirmorder_item_tihuophone_textview,R.id.affirmorder_item_tihuophonevalue_textview,R.id.affirmorder_item_tihuophonetitle_textview);
 		
 		
 	}
@@ -175,4 +177,24 @@ PrioductSizesInfoBean currCheckedFouce=null;//选择的尺寸数据
 			}
 		}, AffirmOrderActivity.this);
 	}
+	
+	
+	OnClickListener onClickListener=new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			switch(v.getId())
+			{
+			case R.id.affirmorder_layout_icon_roundimageview:
+				if(v.getTag() !=null && v.getTag() instanceof ProductsDetailsInfoBean)
+				{
+					ProductsDetailsInfoBean bean=(ProductsDetailsInfoBean)v.getTag();
+					Intent intent=new Intent(AffirmOrderActivity.this,ShopMainActivity.class);
+					startActivity(intent);
+				}
+				
+				break;
+			}
+		}
+	};
 }

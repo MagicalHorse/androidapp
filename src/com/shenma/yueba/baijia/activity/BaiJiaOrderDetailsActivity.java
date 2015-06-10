@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.adapter.BaijiaOrderDetailsAdapter;
 import com.shenma.yueba.util.ToolsUtil;
 
@@ -29,12 +30,20 @@ Button baijia_orderdetails_ziti_button;//自提
 Button baijia_orderdetails_cancellorder_button;//取消订单
 Button baijia_orderdetails_pay_button;//付款
 List<Object> obj_list=new ArrayList<Object>();
+String orderNo=null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(getWindow().FEATURE_NO_TITLE);
 		parentView=this.getLayoutInflater().inflate(R.layout.baijia_orderdetails_layout, null);
 		setContentView(parentView);
 		super.onCreate(savedInstanceState);
+		if(this.getIntent().getStringExtra("ORDER_ID")==null)
+		{
+			MyApplication.getInstance().showMessage(BaiJiaOrderDetailsActivity.this, "数据错误");
+			this.finish();
+			return;
+		}
+		orderNo=this.getIntent().getStringExtra("ORDER_ID");
 		initView();
 	}
 	
