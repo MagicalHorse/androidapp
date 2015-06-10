@@ -11,13 +11,16 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.activity.BaiJiaOrderListActivity;
 import com.shenma.yueba.baijia.activity.BuyerCertificationActivity1;
 import com.shenma.yueba.baijia.activity.MyCollectionActivity;
 import com.shenma.yueba.baijia.activity.UserConfigActivity;
+import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.util.ToolsUtil;
+import com.shenma.yueba.yangjia.activity.MainActivityForYangJia;
 
 /**
  * 败家--个人账户
@@ -140,21 +143,21 @@ public class MeFragmentForBaiJia extends BaseFragment implements OnClickListener
 		case R.id.tv_buyer://申请买手或者我是买手
 			break;
 		case R.id.tv_will_yangjia://我要养家
-//			/**
-//			 * -2表示还没有申请过认证买手  ，-1表示身亲被拒绝  ，0表示正在申请中，1表示申请通过
-//			 */
-//			if("0".equals(SharedUtil.getAuditStatus(getActivity()))){//正在审核，不可再次点击审核
-//				Toast.makeText(getActivity(), "申请审核中，请耐心等待...", Toast.LENGTH_LONG).show();
-//			}else if("-2".equals(SharedUtil.getAuditStatus(getActivity()))){//还未审核，可以进入
-//				Intent buyerCertificaitonIntent = new Intent(getActivity(),BuyerCertificationActivity1.class);
-//				startActivity(buyerCertificaitonIntent);
-//			}else if("-1".equals(SharedUtil.getAuditStatus(getActivity()))){
-//				Toast.makeText(getActivity(), "您的审核已被拒绝，请三天后重试...", Toast.LENGTH_LONG).show();
-//			}else if("1".equals(SharedUtil.getAuditStatus(getActivity()))){
-//				startActivity(new Intent(getActivity(), MainActivityForYangJia.class));
-//			}
-			Intent buyerCertificaitonIntent = new Intent(getActivity(),BuyerCertificationActivity1.class);
-			startActivity(buyerCertificaitonIntent);
+			/**
+			 * -2表示还没有申请过认证买手  ，-1表示身亲被拒绝  ，0表示正在申请中，1表示申请通过
+			 */
+			if("0".equals(SharedUtil.getAuditStatus(getActivity()))){//正在审核，不可再次点击审核
+				Toast.makeText(getActivity(), "申请审核中，请耐心等待...", Toast.LENGTH_LONG).show();
+			}else if("-2".equals(SharedUtil.getAuditStatus(getActivity()))){//还未审核，可以进入
+				Intent buyerCertificaitonIntent = new Intent(getActivity(),BuyerCertificationActivity1.class);
+				startActivity(buyerCertificaitonIntent);
+			}else if("-1".equals(SharedUtil.getAuditStatus(getActivity()))){
+				Toast.makeText(getActivity(), "您的审核已被拒绝，请三天后重试...", Toast.LENGTH_LONG).show();
+			}else if("1".equals(SharedUtil.getAuditStatus(getActivity()))){
+				startActivity(new Intent(getActivity(), MainActivityForYangJia.class));
+			}
+//			Intent buyerCertificaitonIntent = new Intent(getActivity(),BuyerCertificationActivity1.class);
+//			startActivity(buyerCertificaitonIntent);
 			break;
 		case R.id.tv_my_collection://我的收藏
 			Intent intent5 = new Intent(getActivity(),MyCollectionActivity.class);

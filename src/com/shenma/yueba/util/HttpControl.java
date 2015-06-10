@@ -599,6 +599,9 @@ public class HttpControl {
 				BaseRequest.class, true, true);
 	}
 
+	
+	
+	
 	/**
 	 * 获取买手在线商品列表（买手）
 	 * 
@@ -643,6 +646,25 @@ public class HttpControl {
 				httpCallBack, BaseRequest.class, refresh, canCancle);
 	}
 
+	/**
+	 * 设置店铺说明
+	 * @param description  店铺说明
+	 * @param httpCallBack
+	 * @param context
+	 * @param refresh
+	 * @param canCancle
+	 */
+	public void setStoreIntroduce(String description,
+			final HttpCallBackInterface httpCallBack, Context context,
+			boolean refresh, boolean canCancle) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put(Constants.DESCRIPTION, description);
+		BasehttpSend(map, context, HttpConstants.METHOD_BUYER_SETSTOREDESCRIPTION,
+				httpCallBack, BaseRequest.class, refresh, canCancle);
+	}
+	
+	
+	
 	/**
 	 * 删除商品（买手）
 	 * 
