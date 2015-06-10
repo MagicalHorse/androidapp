@@ -1,52 +1,20 @@
 package com.shenma.yueba.yangjia.fragment;
 
-import java.util.ArrayList;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
-import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
-import com.lidroid.xutils.BitmapUtils;
 import com.shenma.yueba.R;
-import com.shenma.yueba.baijia.adapter.MyFragmentPagerAdapter;
 import com.shenma.yueba.baijia.fragment.BaseFragment;
-import com.shenma.yueba.baijia.fragment.MyBuyerFragment;
-import com.shenma.yueba.baijia.fragment.TheySayFragment;
-import com.shenma.yueba.baijia.modle.BuyerIndexInfo;
-import com.shenma.yueba.baijia.modle.BuyerIndexInfoBean;
-import com.shenma.yueba.baijia.modle.Favorite;
-import com.shenma.yueba.baijia.modle.Goodsamount;
-import com.shenma.yueba.baijia.modle.Income;
-import com.shenma.yueba.baijia.modle.Order;
-import com.shenma.yueba.baijia.modle.Product;
 import com.shenma.yueba.util.FontManager;
-import com.shenma.yueba.util.HttpControl;
-import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
-import com.shenma.yueba.util.SocicalShareUtil;
-import com.shenma.yueba.util.ToolsUtil;
-import com.shenma.yueba.view.imageshow.ImageShowActivity;
 import com.shenma.yueba.yangjia.activity.BoradRewardActivity;
-import com.shenma.yueba.yangjia.activity.EarningManagerActivity;
-import com.shenma.yueba.yangjia.activity.HuoKuanManagerActivity2;
-import com.shenma.yueba.yangjia.activity.ProductManagerActivity;
-import com.shenma.yueba.yangjia.activity.SalesManagerForBuyerActivity;
-import com.shenma.yueba.yangjia.activity.SocialManagerActivity;
+import com.shenma.yueba.yangjia.activity.OpenRewardActivity;
+import com.shenma.yueba.yangjia.activity.OrderRewardActivity;
 
 /**
  * 红榜奖励
@@ -132,16 +100,16 @@ public class TaskRewardFragment extends BaseFragment implements
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.ll_open_reward://查看二維碼大图
-		
-			
+			Intent openIntent = new Intent(getActivity(), OpenRewardActivity.class);
+			startActivity(openIntent);
 			break;
-		case R.id.ll_board_reward:// 货款管理
+		case R.id.ll_board_reward:// 红榜奖励
 			Intent intent = new Intent(getActivity(), BoradRewardActivity.class);
 			startActivity(intent);
 			break;
-		case R.id.ll_order_reward:// 销售管理
-			
-		
+		case R.id.ll_order_reward:// 冲单奖励
+			Intent orderIntent = new Intent(getActivity(), OrderRewardActivity.class);
+			startActivity(orderIntent);
 			break;
 		default:
 			break;
