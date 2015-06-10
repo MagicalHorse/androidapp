@@ -42,7 +42,7 @@ public class Constants {
 	public static final String OrderProductType="OrderProductType";
 	public static final String STATUS="Status";
 	public static final String GROUPID="groupid";
-	
+	public static final String DESCRIPTION="description";
 	
 	
 	public static final String BRANDID = "BrandId";//品牌编号
@@ -121,7 +121,6 @@ public class Constants {
 	public static int CMNET = 2;// net网络
 	public static int CMWAP = 3;// wap网络
 	
-	public static String DESCRIPTION = "description";
 	public static String CUSTOMER_ID = "customer_id";//意见反馈里的
 	public static String FAMOUS = "famous";//是否是名医店
 	public static String RECOMMEND = "recommend";//是否是推荐

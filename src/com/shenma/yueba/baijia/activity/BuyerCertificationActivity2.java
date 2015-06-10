@@ -186,7 +186,7 @@ public class BuyerCertificationActivity2 extends BaseActivityWithTopView
 				}
 				if(tag == 4){
 					tv_store_title.setText(storeList.get(position).getStoreName());
-					store_id = mList.get(position).getId();
+					store_id = storeList.get(position).getStoreId();
 					drawer_layout.closeDrawers();
 				}
 			}
@@ -295,8 +295,8 @@ public class BuyerCertificationActivity2 extends BaseActivityWithTopView
 			break;
 		case R.id.tv_confirm:// 提交申请
 
-			if (TextUtils.isEmpty(tv_store_title.getText().toString().trim())) {//
-				Toast.makeText(mContext, "请填写商场名称", 1000).show();
+			if (TextUtils.isEmpty(store_id)) {//
+				Toast.makeText(mContext, "请选择商场", 1000).show();
 				return;
 			}
 			if (TextUtils.isEmpty(et_zhuangui_name.getText().toString().trim())) {//
@@ -354,6 +354,7 @@ public class BuyerCertificationActivity2 extends BaseActivityWithTopView
 		bean.setProvinceId(province_id);
 		bean.setCityId(city_id);
 		bean.setDistrictId(town_id);
+		bean.setStoreId(store_id);
 	}
 
 	private void uploadData() {

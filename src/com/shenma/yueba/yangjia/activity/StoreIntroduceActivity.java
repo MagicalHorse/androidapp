@@ -2,16 +2,22 @@ package com.shenma.yueba.yangjia.activity;
 
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.activity.BaseActivityWithTopView;
+import com.shenma.yueba.baijia.modle.BaseRequest;
 import com.shenma.yueba.util.FontManager;
+import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.ToolsUtil;
+import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 
 
 /**
@@ -40,8 +46,10 @@ public class StoreIntroduceActivity extends BaseActivityWithTopView {
 		setTopRightTextView("完成", new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				String commitContent = et_modify_info.getText().toString().trim();
-				
+				if(TextUtils.isEmpty(et_modify_info.getText().toString().trim())){
+					Toast.makeText(mContext, "店铺说明不能为空", 1000).show();
+				}
+				setStoreIntroduce();
 			}
 		});
 		et_modify_info = (EditText) findViewById(R.id.et_modify_info);
@@ -67,5 +75,23 @@ public class StoreIntroduceActivity extends BaseActivityWithTopView {
 		});
 		tv_retain = (TextView) findViewById(R.id.tv_retain);
 		FontManager.changeFonts(mContext, et_modify_info,tv_top_title,tv_retain);
+	}
+	
+	
+	
+	private void setStoreIntroduce(){
+		HttpControl httpControl = new HttpControl();
+		httpControl.setStoreIntroduce(et_modify_info.getText().toString().trim(), new HttpCallBackInterface() {
+			@Override
+			public void http_Success(Object obj) {
+				Toast.makeText(mContext, "设置成功", 1000).show();
+				StoreIntroduceActivity.this.finish();
+			}
+			
+			@Override
+			public void http_Fails(int error, String msg) {
+				Toast.makeText(mContext, ToolsUtil.nullToString(msg), 1000).show();
+			}
+		}, StoreIntroduceActivity.this, true, false);
 	}
 }

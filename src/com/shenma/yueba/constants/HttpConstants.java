@@ -406,6 +406,11 @@ public class HttpConstants {
 	public static String METHOD_BUYER_INDEX = BUYER
 			+ "Index";
 	
+	/**
+	 * 设置店铺说明
+	 */
+	public static String METHOD_BUYER_SETSTOREDESCRIPTION = BUYER
+			+ "SetStoreDescription";
 	
 	/**
 	 * 败家 -获取订单列表
