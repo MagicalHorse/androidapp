@@ -164,6 +164,10 @@
         <activity
             android:name="com.shenma.yueba.yangjia.activity.MainActivityForYangJia"
             android:screenOrientation="portrait" />
+         <activity
+            android:name="com.shenma.yueba.yangjia.activity.BoradRewardActivity"
+            android:screenOrientation="portrait" />
+        
         <activity
             android:name="com.shenma.yueba.baijia.activity.BuyerCertificationActivity1"
             android:screenOrientation="portrait" />
