@@ -50,6 +50,14 @@
                     android:text="我是奖励说明我是奖励说明我是奖励说明我是奖励说明我是奖励说明我是奖励说明我是奖励说明"
                     android:textColor="@color/text_gray_color"
                     android:textSize="15sp" />
+
+                <LinearLayout
+                    android:id="@+id/ll_reward_detail"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="vertical" >
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -85,10 +93,9 @@
             </LinearLayout>
 
             <LinearLayout
-                
-                  android:layout_marginTop="15dip"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="15dip"
                 android:background="@color/white"
                 android:orientation="vertical"
                 android:padding="10dip" >
@@ -103,16 +110,15 @@
                     android:textColor="@color/black"
                     android:textSize="20sp" />
 
-                <View 
-                     android:layout_marginTop="10dip"
+                <View
                     style="@style/style_horizontal_line"
-                    />
-                
+                    android:layout_marginTop="10dip" />
+
                 <ListView
                     android:id="@+id/lv"
-                    android:layout_marginTop="10dip"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dip"
                     android:cacheColorHint="#00000000"
                     android:divider="#33333333"
                     android:dividerHeight="1dip"

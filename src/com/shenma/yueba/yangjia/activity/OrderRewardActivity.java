@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Bundle;
-import android.support.v4.widget.ListViewAutoScrollHelper;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -21,16 +21,16 @@ import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.activity.BaseActivityWithTopView;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.ListViewUtils;
-import com.shenma.yueba.yangjia.adapter.BroadRewardAdapter;
+import com.shenma.yueba.yangjia.adapter.OrderRewardAdapter;
 import com.shenma.yueba.yangjia.modle.BroadRewardListBean;
 
 /**
- * 红榜奖励
+ * 冲单奖励
  * 
  * @author a
  * 
  */
-public class BoradRewardActivity extends BaseActivityWithTopView{
+public class OrderRewardActivity extends BaseActivityWithTopView{
 
 	private TextView tv_reward_title;
 	private TextView tv_reward_introduce;
@@ -39,22 +39,23 @@ public class BoradRewardActivity extends BaseActivityWithTopView{
 	private TextView tv_history_title;
 	private ListView lv;
 	private PullToRefreshScrollView pulltorefreshscrollview;
-	private BroadRewardAdapter adapter;
+	private OrderRewardAdapter adapter;
 	private List<BroadRewardListBean> mList = new ArrayList<BroadRewardListBean>();
+	private LinearLayout ll_reward_detail;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.broad_reward);
+		setContentView(R.layout.order_reward);
 		super.onCreate(savedInstanceState);
 		initView();
 	}
 
 	private void initView() {
-		setTitle("红榜奖励");
+		setTitle("冲单奖励");
 		setLeftTextView(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				BoradRewardActivity.this.finish();
+				OrderRewardActivity.this.finish();
 			}
 		});
 		pulltorefreshscrollview = getView(R.id.pulltorefreshscrollview);
@@ -71,6 +72,7 @@ public class BoradRewardActivity extends BaseActivityWithTopView{
 			}
 		});
 		tv_reward_title = getView(R.id.tv_reward_title);
+		ll_reward_detail = getView(R.id.ll_reward_detail);
 		tv_reward_introduce = getView(R.id.tv_reward_introduce);
 		tv_progress_content = getView(R.id.tv_progress_content);
 		tv_progress_title = getView(R.id.tv_progress_title);
@@ -82,7 +84,7 @@ public class BoradRewardActivity extends BaseActivityWithTopView{
 			bean.setTime("2012/02/03");
 			mList.add(bean);
 		}
-		adapter = new BroadRewardAdapter(BoradRewardActivity.this, mList);
+		adapter = new OrderRewardAdapter(OrderRewardActivity.this, mList);
 		lv.setAdapter(adapter);
 		ListViewUtils.setListViewHeightBasedOnChildren(lv);
 		FontManager.changeFonts(mContext, tv_reward_title,

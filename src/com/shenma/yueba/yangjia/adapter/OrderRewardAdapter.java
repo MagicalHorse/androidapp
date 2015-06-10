@@ -12,9 +12,9 @@ import com.shenma.yueba.baijia.adapter.BaseAdapterWithUtil;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.yangjia.modle.BroadRewardListBean;
 
-public class BroadRewardAdapter extends BaseAdapterWithUtil {
+public class OrderRewardAdapter extends BaseAdapterWithUtil {
 	private List<BroadRewardListBean> mList;
-	public BroadRewardAdapter(Context ctx,List<BroadRewardListBean> mList) {
+	public OrderRewardAdapter(Context ctx,List<BroadRewardListBean> mList) {
 		super(ctx);
 		this.mList = mList;
 	}

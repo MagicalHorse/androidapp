@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Bundle;
-import android.support.v4.widget.ListViewAutoScrollHelper;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -21,72 +21,43 @@ import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.activity.BaseActivityWithTopView;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.ListViewUtils;
-import com.shenma.yueba.yangjia.adapter.BroadRewardAdapter;
+import com.shenma.yueba.yangjia.adapter.OrderRewardAdapter;
 import com.shenma.yueba.yangjia.modle.BroadRewardListBean;
 
 /**
- * 红榜奖励
+ * 开店奖励
  * 
  * @author a
  * 
  */
-public class BoradRewardActivity extends BaseActivityWithTopView{
+public class OpenRewardActivity extends BaseActivityWithTopView{
 
 	private TextView tv_reward_title;
 	private TextView tv_reward_introduce;
 	private TextView tv_progress_content;
 	private TextView tv_progress_title;
-	private TextView tv_history_title;
-	private ListView lv;
-	private PullToRefreshScrollView pulltorefreshscrollview;
-	private BroadRewardAdapter adapter;
-	private List<BroadRewardListBean> mList = new ArrayList<BroadRewardListBean>();
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.broad_reward);
+		setContentView(R.layout.open_reward);
 		super.onCreate(savedInstanceState);
 		initView();
 	}
 
 	private void initView() {
-		setTitle("红榜奖励");
+		setTitle("开店奖励");
 		setLeftTextView(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				BoradRewardActivity.this.finish();
-			}
-		});
-		pulltorefreshscrollview = getView(R.id.pulltorefreshscrollview);
-		pulltorefreshscrollview.setMode(Mode.PULL_UP_TO_REFRESH);
-		pulltorefreshscrollview.setOnRefreshListener(new OnRefreshListener<ScrollView>() {
-
-			@Override
-			public void onRefresh(PullToRefreshBase<ScrollView> refreshView) {
-				Toast.makeText(mContext, "加载更多", 1000).show();
-				mList.addAll(mList);
-				adapter.notifyDataSetChanged();
-				ListViewUtils.setListViewHeightBasedOnChildren(lv);
-				pulltorefreshscrollview.onRefreshComplete();
+				OpenRewardActivity.this.finish();
 			}
 		});
 		tv_reward_title = getView(R.id.tv_reward_title);
 		tv_reward_introduce = getView(R.id.tv_reward_introduce);
 		tv_progress_content = getView(R.id.tv_progress_content);
 		tv_progress_title = getView(R.id.tv_progress_title);
-		tv_history_title = getView(R.id.tv_history_title);
-		lv = getView(R.id.lv);
-		for (int i = 0; i < 10; i++) {
-			BroadRewardListBean bean = new BroadRewardListBean();
-			bean.setContent("contentn");
-			bean.setTime("2012/02/03");
-			mList.add(bean);
-		}
-		adapter = new BroadRewardAdapter(BoradRewardActivity.this, mList);
-		lv.setAdapter(adapter);
-		ListViewUtils.setListViewHeightBasedOnChildren(lv);
 		FontManager.changeFonts(mContext, tv_reward_title,
-				tv_reward_introduce, tv_progress_content, tv_progress_title, tv_history_title);
+				tv_reward_introduce, tv_progress_content, tv_progress_title);
 	}
 
 	
