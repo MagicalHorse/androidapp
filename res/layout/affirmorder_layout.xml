@@ -8,25 +8,24 @@
         layout="@layout/title_for_common" />
 
     <ScrollView
-        android:layout_marginTop="@dimen/shop_main_lineheight10_dimen"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/affrimorder_layout_footer_relativelayout"
         android:layout_below="@id/affirmorder_layout_head"
+        android:layout_marginTop="@dimen/shop_main_lineheight10_dimen"
         android:scrollbars="none" >
 
         <LinearLayout
-            android:paddingBottom="@dimen/shop_main_lineheight10_dimen"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical" 
-            >
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/shop_main_lineheight10_dimen" >
 
             <RelativeLayout
-                android:background="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="@dimen/shop_main_iconwidth80_dimen"
+                android:background="@color/white"
+                android:minHeight="@dimen/user_config_iconwidth60_dimen"
                 android:padding="@dimen/margin_left_and_right" >
 
                 <TextView
@@ -65,7 +64,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:minHeight="@dimen/shop_main_iconwidth80_dimen"
+                android:minHeight="@dimen/user_config_iconwidth60_dimen"
                 android:padding="@dimen/margin_left_and_right" >
 
                 <TextView
@@ -104,7 +103,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:minHeight="@dimen/shop_main_iconwidth80_dimen"
+                android:minHeight="@dimen/user_config_iconwidth60_dimen"
                 android:padding="@dimen/margin_left_and_right" >
 
                 <TextView
@@ -125,20 +124,19 @@
                     android:text="1111" />
             </RelativeLayout>
 
-
             <ListView
-                android:background="@color/white"
                 android:id="@+id/affirmorder_layout_product_listview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/shop_main_lineheight10_dimen" />
+                android:layout_marginTop="@dimen/shop_main_lineheight10_dimen"
+                android:background="@color/white" />
 
             <RelativeLayout
-                android:padding="@dimen/margin_left_and_right"
-                android:background="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal" >
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="@dimen/margin_left_and_right" >
 
                 <TextView
                     android:id="@+id/affirmorder_item_allcount_textview"
@@ -162,16 +160,55 @@
                     android:gravity="right"
                     android:text="0" />
             </RelativeLayout>
+
+           
+            <!-- 提货电话 -->
+
+            <RelativeLayout
+                android:layout_marginTop="@dimen/shop_main_lineheight10_dimen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="@dimen/margin_left_and_right">
+
+                <TextView
+                    android:id="@+id/affirmorder_item_tihuophone_textview"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="提货电话:" />
+
+                <EditText
+                    android:layout_toRightOf="@id/affirmorder_item_tihuophone_textview"
+                    android:layout_centerVertical="true"
+                    android:id="@+id/affirmorder_item_tihuophonevalue_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true" />
+                <TextView
+                    android:id="@+id/affirmorder_item_tihuophonetitle_textview"
+                    android:layout_marginTop="@dimen/shop_main_lineheight10_dimen"
+                    android:layout_below="@id/affirmorder_item_tihuophonevalue_textview"
+                    android:layout_toRightOf="@+id/affirmorder_item_tihuophone_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/textsize12sp"
+                    android:textColor="@color/red"
+                    android:text="*输入您的手机号,方便买手找到你"
+                    />
+            </RelativeLayout>
         </LinearLayout>
     </ScrollView>
 
     <RelativeLayout
-        android:padding="@dimen/shop_main_width2_dimen"
-        android:background="@color/white"
         android:id="@+id/affrimorder_layout_footer_relativelayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:padding="@dimen/shop_main_width2_dimen" >
 
         <TextView
             android:id="@+id/affrimorder_layout_footer_countpricename_textview"

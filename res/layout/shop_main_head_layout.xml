@@ -88,8 +88,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="bottom"
-                android:singleLine="true"
-                android:hint="1" />
+                android:hint="1"
+                android:singleLine="true" />
 
             <TextView
                 android:id="@+id/shop_main_attention_textview"
@@ -118,8 +118,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="bottom"
-                android:singleLine="true"
-                android:hint="1" />
+                android:hint="1"
+                android:singleLine="true" />
 
             <TextView
                 android:id="@+id/shop_main_fans_textview"
@@ -133,6 +133,7 @@
         <!-- 圆形 -->
 
         <LinearLayout
+            android:id="@+id/shop_main_circle_layout"
             android:layout_width="@dimen/shop_main_iconwidth80_dimen"
             android:layout_height="@dimen/shop_main_iconwidth80_dimen"
             android:layout_marginLeft="@dimen/shop_main_lineheight10_dimen"
@@ -148,8 +149,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="bottom"
-                android:singleLine="true"
-                android:hint="1" />
+                android:hint="1"
+                android:singleLine="true" />
 
             <TextView
                 android:id="@+id/shop_main_praise_textview"
@@ -188,14 +189,13 @@
         android:paddingLeft="@dimen/margin_left_and_right"
         android:paddingRight="@dimen/margin_left_and_right" />
 
-    <!-- 头文件 -->
+    <!-- tab -->
 
-    <include
-        android:id="@+id/shop_content_stayLayout"
+    <LinearLayout
+        android:layout_marginTop="@dimen/shop_main_width5_dimen"
+        android:id="@+id/shop_main_head_layout_tab_linearlayout"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginBottom="@dimen/shop_main_lineheight10_dimen"
-        android:layout_marginTop="@dimen/shop_main_lineheight10_dimen"
-        layout="@layout/shop_stay_layout" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" />
 
 </LinearLayout>

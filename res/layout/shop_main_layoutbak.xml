@@ -6,15 +6,24 @@
 
     <include
         android:id="@+id/shop_main_layout_title_relativelayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         layout="@layout/top_layout" />
 
-    <include 
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <com.handmark.pulltorefresh.library.PullToRefreshScrollView
+        android:layout_marginTop="@dimen/shop_main_width3_dimen"
         android:layout_below="@id/shop_main_layout_title_relativelayout"
-        android:id="@+id/pubuliu_layout_include"
-        layout="@layout/pubuliu_layout"
-        />
+        android:id="@+id/shop_main_layout_title_pulltorefreshscrollview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <include
+            android:id="@+id/pubuliu_layout_include"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/shop_main_layout_title_relativelayout"
+            layout="@layout/pubuliu_layout" />
+    </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
 
 </RelativeLayout>

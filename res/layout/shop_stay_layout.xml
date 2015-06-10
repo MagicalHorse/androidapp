@@ -3,37 +3,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:weightSum="3" >
+    android:id="@+id/shop_stay_layout_parent_linearlayout"
+    android:orientation="horizontal"
+    >
 
     <include
-        android:id="@+id/shop_stay_layout_tab1_relativelayout"
+        android:id="@+id/shop_stay_layout_tab_include"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        layout="@layout/shop_stay_layout_oitem" />
+        android:layout_height="wrap_content"
+        layout="@layout/shop_stay_layout_oitem" 
+        android:layout_marginRight="@dimen/shop_main_width2_dimen"
+        />
 
     <View
+        android:id="@+id/shop_stay_layout_tabline_relativelayout"
         style="@style/style_vertical_line"
+        android:layout_width="@dimen/shop_main_width3_dimen"
+        android:layout_height="match_parent"
         android:layout_marginBottom="@dimen/shop_main_lineheight8_dimen"
         android:layout_marginTop="@dimen/shop_main_lineheight8_dimen" />
-
-    <include
-        android:id="@+id/shop_stay_layout_tab2_relativelayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        layout="@layout/shop_stay_layout_oitem" />
-    
-    <View
-        style="@style/style_vertical_line"
-        android:layout_marginBottom="@dimen/shop_main_lineheight8_dimen"
-        android:layout_marginTop="@dimen/shop_main_lineheight8_dimen" />
-
-    <include
-        android:id="@+id/shop_stay_layout_tab3_relativelayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        layout="@layout/shop_stay_layout_oitem" />
-
 </LinearLayout>
