@@ -2,6 +2,7 @@ package com.shenma.yueba.yangjia.modle;
 
 public class HuoKuanItem {
 
+	
 	private String CreateDate;//时间,
 	private String Amount;// 金额,
 	private String OrderNo;// 订单号
