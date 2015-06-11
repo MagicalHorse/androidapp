@@ -378,6 +378,22 @@ public class HttpConstants {
 	public static String METHOD_CIRCLE_CREATEGROUP = Circle
 			+ "CreateGroup";
 	
+	/**
+	 * 社交管理--修改圈子头像
+	 */
+	
+	public static String METHOD_CIRCLE_CHANGEGROUPLOGO = Circle
+			+ "ChangeGroupLogo";
+	 
+	
+	
+	/**
+	 * 社交管理--删除圈子
+	 */
+	
+	public static String METHOD_CIRCLE_DELETEGROUP = Circle
+			+ "DeleteGroup";
+	 
 	
 	
 	/**

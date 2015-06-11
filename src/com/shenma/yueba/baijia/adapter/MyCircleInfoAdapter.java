@@ -96,7 +96,7 @@ public class MyCircleInfoAdapter extends BaseAdapterWithUtil{
 			}else{
 				holder.iv_delete.setVisibility(View.GONE);
 			}
-			if(TextUtils.isEmpty(mList.get(position).getLogo())){
+			if(!TextUtils.isEmpty(mList.get(position).getLogo())){
 				MyApplication.getInstance().getImageLoader().displayImage(mList.get(position).getLogo(), holder.riv_head);
 			}else{
 				MyApplication.getInstance().getImageLoader().displayImage("aaa", holder.riv_head);

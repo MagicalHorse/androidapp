@@ -1006,6 +1006,33 @@ public class HttpControl {
 				httpCallBack, BaseRequest.class, showDialog, false);
 	}
 
+	/**
+	 * 修改圈子头像
+	 * 
+	 * @return void
+	 * **/ 
+	public void changeCircleLogo(String circleId, String logo, boolean showDialog,
+			final HttpCallBackInterface httpCallBack, Context context) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put(Constants.GROUPID, circleId);
+		map.put(Constants.LOGO, logo);
+		BasehttpSend(map, context, HttpConstants.METHOD_CIRCLE_CHANGEGROUPLOGO,
+				httpCallBack, BaseRequest.class, showDialog, false);
+	}
+	
+	/**
+	 * 删除圈子
+	 * 
+	 * @return void
+	 * **/ 
+	public void deleteCircle(String circleId, String logo, boolean showDialog,
+			final HttpCallBackInterface httpCallBack, Context context) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put(Constants.GROUPID, circleId);
+		BasehttpSend(map, context, HttpConstants.METHOD_CIRCLE_DELETEGROUP,
+				httpCallBack, BaseRequest.class, showDialog, false);
+	}
+	
 	
 	
 	/**
