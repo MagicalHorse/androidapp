@@ -1,6 +1,5 @@
 package com.shenma.yueba.baijia.activity;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +11,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
@@ -39,6 +39,8 @@ RoundImageView affirmorder_layout_icon_roundimageview;
 ImageView affirmorder_layout_icon_imageview;
 View parentview;
 ListView affirmorder_layout_product_listview;
+//提货人手机号
+TextView affirmorder_item_tihuophonevalue_textview;
 //提交
 Button affrimorder_layout_footer_sumit_button;
 HttpControl httpControl=new HttpControl();
@@ -94,6 +96,7 @@ PrioductSizesInfoBean currCheckedFouce=null;//选择的尺寸数据
 				submitData();
 			}
 		});
+		affirmorder_item_tihuophonevalue_textview=(TextView)findViewById(R.id.affirmorder_item_tihuophonevalue_textview);
 		affirmorder_layout_icon_roundimageview=(RoundImageView)findViewById(R.id.affirmorder_layout_icon_roundimageview);
 		affirmorder_layout_icon_roundimageview.setTag(productsDetailsInfoBean);
 		affirmorder_layout_icon_roundimageview.setOnClickListener(onClickListener);
@@ -145,6 +148,11 @@ PrioductSizesInfoBean currCheckedFouce=null;//选择的尺寸数据
 			
 			@Override
 			public void onClick(View v) {
+				if(affirmorder_item_tihuophonevalue_textview.getText().toString().trim().equals(""))
+				{
+					MyApplication.getInstance().showMessage(AffirmOrderActivity.this, "请输入提货人手机号");
+					return;
+				}
 				submitData();
 			}
 		});
@@ -160,7 +168,8 @@ PrioductSizesInfoBean currCheckedFouce=null;//选择的尺寸数据
 	 * ***/
 	void submitData()
 	{
-		httpControl.createProductOrder(productsDetailsInfoBean.getProductId(), buyCount, currCheckedFouce.getSizeId(), true, new HttpCallBackInterface() {
+		String phone=affirmorder_item_tihuophonevalue_textview.getText().toString().trim();
+		httpControl.createProductOrder(phone,productsDetailsInfoBean.getProductId(), buyCount, currCheckedFouce.getSizeId(), true, new HttpCallBackInterface() {
 			
 			@Override
 			public void http_Success(Object obj) {

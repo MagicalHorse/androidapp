@@ -178,7 +178,7 @@ public class BuyerAdapter extends BaseAdapter{
 			holder.buyersteetfragment_item_footer_imageview.setVisibility(View.VISIBLE);
 		}else
 		{
-			holder.buyersteetfragment_item_footer_imageview.setVisibility(View.VISIBLE);
+			holder.buyersteetfragment_item_footer_imageview.setVisibility(View.GONE);
 		}
 		
 		//加载商品图片

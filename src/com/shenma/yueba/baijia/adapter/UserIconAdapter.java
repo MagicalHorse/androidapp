@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.LayoutParams;
@@ -14,6 +16,7 @@ import android.widget.GridView;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.activity.ShopMainActivity;
 import com.shenma.yueba.baijia.modle.UsersInfoBean;
 import com.shenma.yueba.view.RoundImageView;
 
@@ -65,6 +68,7 @@ public class UserIconAdapter extends BaseAdapter {
 
 		UsersInfoBean usersInfoBean = bean.get(position);
 		RoundImageView riv = new RoundImageView(context);
+		riv.setTag(usersInfoBean.getUserId());
 		int width=gridbview.getWidth();
 		width=width/maxCount;
 		Log.i("TAG", "WIDTH:"+width);
@@ -76,6 +80,14 @@ public class UserIconAdapter extends BaseAdapter {
 			riv.setImageResource(R.drawable.default_pic);
 			//MyApplication.getInstance().getImageLoader().displayImage(usersInfoBean.getLogo(), riv);
 		}
+		riv.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent=new Intent(context,ShopMainActivity.class);
+				context.startActivity(intent);
+			}
+		});
 		return riv;
 	}
 }

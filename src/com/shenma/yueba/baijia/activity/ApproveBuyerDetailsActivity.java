@@ -20,6 +20,8 @@ import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.animation.AccelerateInterpolator;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
@@ -32,11 +34,8 @@ import com.shenma.yueba.ChatActivity;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.adapter.UserIconAdapter;
-import com.shenma.yueba.baijia.modle.BrandCityWideInfo;
 import com.shenma.yueba.baijia.modle.LikeUsersInfoBean;
-import com.shenma.yueba.baijia.modle.ProductPicInfoBean;
 import com.shenma.yueba.baijia.modle.ProductsDetailsInfoBean;
-import com.shenma.yueba.baijia.modle.ProductsInfoBean;
 import com.shenma.yueba.baijia.modle.RequestProductDetailsInfoBean;
 import com.shenma.yueba.baijia.modle.UsersInfoBean;
 import com.shenma.yueba.util.FontManager;
@@ -316,24 +315,22 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView impleme
 		setdataValue(R.id.approvebuyerdetails_producename_textview, productName);
 		LikeUsersInfoBean likeUsersInfoBean = Data.getLikeUsers();
 		if (likeUsersInfoBean != null) {
-			// 喜欢人数
-			setdataValue(R.id.approvebuyerdetails_producename_textview,
-					likeUsersInfoBean.getCount() + "");
-			List<UsersInfoBean> users = likeUsersInfoBean.getUsers();
-			if (users != null) {
-				myGirdView.setAdapter(new UserIconAdapter(users,
-						ApproveBuyerDetailsActivity.this, myGirdView));
-			}
-			
+			//喜欢
 			TextView approvebuyerdetails_attention_textview=(TextView)findViewById(R.id.approvebuyerdetails_attention_textview);
+			//收藏
 			TextView approvebuyerdetails_layout_shoucang_linerlayout_textview=(TextView)findViewById(R.id.approvebuyerdetails_layout_shoucang_linerlayout_textview);
 			approvebuyerdetails_layout_shoucang_linerlayout_textview.setOnClickListener(this);
 			approvebuyerdetails_layout_shoucang_linerlayout_textview.setTag(Data);
 			approvebuyerdetails_layout_shoucang_linerlayout_textview.setSelected(Data.isIsFavorite());
 			
 			approvebuyerdetails_attention_textview.setSelected(likeUsersInfoBean.isIsLike());
+			approvebuyerdetails_attention_textview.setText(likeUsersInfoBean.getCount());
 			approvebuyerdetails_attention_textview.setTag(Data);
 			approvebuyerdetails_attention_textview.setOnClickListener(this); 
+			List<UsersInfoBean> users = likeUsersInfoBean.getUsers();
+			if (users != null) {
+				myGirdView.setAdapter(new UserIconAdapter(users,ApproveBuyerDetailsActivity.this, myGirdView));
+			}
 		}
 
 		if (Data.getProductPic() != null && Data.getProductPic().length > 0) {

@@ -161,6 +161,31 @@
                     android:text="0" />
             </RelativeLayout>
 
+            <!-- 打烊购 -->
+           <RelativeLayout 
+               android:layout_marginTop="@dimen/shop_main_lineheight10_dimen"
+               android:padding="@dimen/margin_left_and_right"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="horizontal"
+               android:id="@+id/affirmorder_item_youhui_linearlayout"
+               >
+               <TextView
+                   android:layout_centerVertical="true"
+                   android:id="@+id/affirmorder_item_youhuititle_textview"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="打烊购"
+                   />
+               <TextView
+                   android:layout_centerVertical="true"
+                   android:layout_alignParentRight="true"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:id="@+id/affirmorder_item_youhuicontext_textview"
+                   android:text="立减30.00"
+                   />
+           </RelativeLayout>
            
             <!-- 提货电话 -->
 
@@ -186,7 +211,9 @@
                     android:id="@+id/affirmorder_item_tihuophonevalue_textview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:phoneNumber="true"
                     android:singleLine="true" />
+                
                 <TextView
                     android:id="@+id/affirmorder_item_tihuophonetitle_textview"
                     android:layout_marginTop="@dimen/shop_main_lineheight10_dimen"

@@ -1009,12 +1009,14 @@ public class HttpControl {
 	
 	
 	/**
+	 * @param phone String 提货人手机号
 	 * @param ProductId 商品id
 	 * @param Count  int 购买数量
 	 * @return void
 	 * **/
-	public void createProductOrder(int ProductId, int Count, long SizeId,boolean showDialog, final HttpCallBackInterface httpCallBack,Context context) {
+	public void createProductOrder(String phone,int ProductId, int Count, long SizeId,boolean showDialog, final HttpCallBackInterface httpCallBack,Context context) {
 		Map<String, String> map = new HashMap<String, String>();
+		map.put("mobile", phone);
 		map.put("ProductId", Integer.toString(ProductId));
 		map.put("Count", Integer.toString(Count));
 		map.put("SizeId", Long.toString(SizeId));
