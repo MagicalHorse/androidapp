@@ -44,7 +44,7 @@
                         android:id="@+id/order_no_content"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="7987869966"
+                        android:text=""
                         android:textColor="@color/black"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -71,7 +71,7 @@
                         android:id="@+id/order_wating_content"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="未付款"
+                        android:text=""
                         android:textColor="@color/black"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -98,7 +98,7 @@
                         android:id="@+id/order_money_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="￥234.00"
+                        android:text=""
                         android:textColor="@color/red"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -129,7 +129,7 @@
                         android:id="@+id/order_date_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="2015-02-23 15:32:22"
+                        android:text=""
                         android:textColor="@color/black"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -166,7 +166,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
-                        android:text="3cm-mao"
+                        android:text=""
                         android:textColor="@color/black"
                         android:textSize="14sp" />
 
@@ -204,7 +204,7 @@
                         android:id="@+id/tv_customer_phone_content"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="13020392019"
+                        android:text=""
                         android:textColor="@color/black"
                         android:textSize="14sp" />
                     
@@ -286,7 +286,7 @@
         <TextView
             android:layout_marginLeft="@dimen/shop_main_lineheight8_dimen"
             android:gravity="center"
-            android:id="@+id/baijia_orderdetails_lianxibuyer_textview"
+            android:id="@+id/baijia_orderdetails_xjfx_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"

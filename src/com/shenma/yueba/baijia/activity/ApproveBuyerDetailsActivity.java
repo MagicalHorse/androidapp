@@ -324,7 +324,7 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView impleme
 			approvebuyerdetails_layout_shoucang_linerlayout_textview.setSelected(Data.isIsFavorite());
 			
 			approvebuyerdetails_attention_textview.setSelected(likeUsersInfoBean.isIsLike());
-			approvebuyerdetails_attention_textview.setText(likeUsersInfoBean.getCount());
+			approvebuyerdetails_attention_textview.setText(likeUsersInfoBean.getCount()+"");
 			approvebuyerdetails_attention_textview.setTag(Data);
 			approvebuyerdetails_attention_textview.setOnClickListener(this); 
 			List<UsersInfoBean> users = likeUsersInfoBean.getUsers();

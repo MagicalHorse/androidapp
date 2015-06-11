@@ -6,7 +6,9 @@
     android:orientation="vertical"
     android:paddingLeft="@dimen/margin_left_and_right"
     android:paddingRight="@dimen/margin_left_and_right"
-    android:paddingBottom="@dimen/margin_left_and_right">
+    android:paddingBottom="@dimen/margin_left_and_right"
+    android:descendantFocusability="blocksDescendants"
+    >
 
     <RelativeLayout
         android:layout_width="match_parent"

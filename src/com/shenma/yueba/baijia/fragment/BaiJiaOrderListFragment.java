@@ -125,7 +125,7 @@ public class BaiJiaOrderListFragment extends Fragment {
 					long arg3) {
 				if(object_list!=null)
 				{
-					BaiJiaOrderListInfo info=object_list.get(arg2);
+					BaiJiaOrderListInfo info=object_list.get(arg2-1);
 					Intent intent=new Intent(getActivity(),BaiJiaOrderDetailsActivity.class);
 					intent.putExtra("ORDER_ID", info.getOrderNo());
 					startActivity(intent);
@@ -221,11 +221,10 @@ public class BaiJiaOrderListFragment extends Fragment {
 		{
 			return;
 		}
-		List<BaiJiaOrderListInfo> item=bean.getItems();
-		if(item!=null)
+		if(bean.getItems()!=null)
 		{
 			object_list.clear();
-			object_list.addAll(item);
+			object_list.addAll(bean.getItems());
 		}
 		pull_refresh_list.onRefreshComplete();
 		if(baiJiaOrderListAdapter!=null)
@@ -245,10 +244,9 @@ public class BaiJiaOrderListFragment extends Fragment {
 		{
 			return;
 		}
-		List<BaiJiaOrderListInfo> item=bean.getItems();
-		if(item!=null)
+		if(bean.getItems()!=null)
 		{
-			object_list.addAll(item);
+			object_list.addAll(bean.getItems());
 		}
 		pull_refresh_list.onRefreshComplete();
 		object_list.add(null);

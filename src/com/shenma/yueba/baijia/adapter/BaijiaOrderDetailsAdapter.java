@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.baijia.modle.BaiJiaOrdeDetailsInfoBean;
 import com.shenma.yueba.util.FontManager;
 
 /**  
@@ -22,8 +23,8 @@ import com.shenma.yueba.util.FontManager;
 
 public class BaijiaOrderDetailsAdapter extends BaseAdapter{
 Context context;
-List<Object> obj_list=new ArrayList<Object>();
-	public BaijiaOrderDetailsAdapter(Context context,List<Object> obj_list)
+List<BaiJiaOrdeDetailsInfoBean> obj_list=new ArrayList<BaiJiaOrdeDetailsInfoBean>();
+	public BaijiaOrderDetailsAdapter(Context context,List<BaiJiaOrdeDetailsInfoBean> obj_list)
 	{
 		this.context=context;
 		this.obj_list=obj_list;
