@@ -29,7 +29,7 @@ public class SharedUtil {
 	 */
 	public static final String user_AuditStatus = "AuditStatus";//用户审核状态
 	
-	
+	public static final String user_Description = "Description";//店铺说明
 	
 	
 	

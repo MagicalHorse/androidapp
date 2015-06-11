@@ -1606,6 +1606,8 @@ public class HttpControl {
 					SharedUtil.user_loginstatus, true);
 			SharedUtil.setStringPerfernece(context,
 					SharedUtil.user_AuditStatus, userInfo.getAuditStatus());
+			SharedUtil.setStringPerfernece(context,
+					SharedUtil.user_Description, userInfo.getDescription());
 		}
 	}
 

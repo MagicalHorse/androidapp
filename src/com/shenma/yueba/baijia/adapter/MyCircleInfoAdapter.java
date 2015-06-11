@@ -5,10 +5,12 @@ import java.util.List;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,8 +33,9 @@ public class MyCircleInfoAdapter extends BaseAdapterWithUtil{
 	private boolean showDelete;
 	private List<Users> mList = new ArrayList<Users>();
 	private String circleId;
-	public MyCircleInfoAdapter(Context ctx,List<Users> mList) {
+	public MyCircleInfoAdapter(Context ctx,List<Users> mList,String cirlceId) {
 		super(ctx);
+		this.circleId = cirlceId;
 		this.mList = mList;
 		this.ctx = ctx;
 	}
@@ -40,24 +43,9 @@ public class MyCircleInfoAdapter extends BaseAdapterWithUtil{
 	
 	
 	
-	
-	public String getCircleId() {
-		return circleId;
-	}
 
 
 
-
-
-	public void setCircleId(String circleId) {
-		this.circleId = circleId;
-	}
-
-
-
-
-
-	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
 		return mList.size();
@@ -107,8 +95,13 @@ public class MyCircleInfoAdapter extends BaseAdapterWithUtil{
 			}else{
 				holder.iv_delete.setVisibility(View.GONE);
 			}
+			if(TextUtils.isEmpty(mList.get(position).getLogo())){
+				MyApplication.getInstance().getImageLoader().displayImage(mList.get(position).getLogo(), holder.riv_head);
+			}else{
+				MyApplication.getInstance().getImageLoader().displayImage("aaa", holder.riv_head);
+			}
 			holder.tv_text.setText(mList.get(position).getNickName());
-			MyApplication.getInstance().getImageLoader().displayImage(mList.get(position).getLogo(), holder.riv_head);
+		
 		}
 		holder.iv_delete.setOnClickListener(new OnClickListener() {
 			@Override
@@ -163,6 +156,12 @@ public class MyCircleInfoAdapter extends BaseAdapterWithUtil{
 				BaseRequest result = (BaseRequest) obj;
 				if (200 == result.getStatusCode()) {// 修改成功
 					Toast.makeText(ctx, "删除成功", 1000).show();
+					for (int i = 0; i < mList.size(); i++) {
+						if(userId.equals(mList.get(i).getUserId())){
+							mList.remove(i);
+							notifyDataSetChanged();
+						}
+					}
 				}
 			}
 			

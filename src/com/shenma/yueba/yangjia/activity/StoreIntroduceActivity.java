@@ -16,6 +16,7 @@ import com.shenma.yueba.baijia.activity.BaseActivityWithTopView;
 import com.shenma.yueba.baijia.modle.BaseRequest;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 
@@ -53,6 +54,9 @@ public class StoreIntroduceActivity extends BaseActivityWithTopView {
 			}
 		});
 		et_modify_info = (EditText) findViewById(R.id.et_modify_info);
+		et_modify_info.setText(SharedUtil.getStringPerfernece(mContext,SharedUtil.user_Description));
+		tv_retain = (TextView) findViewById(R.id.tv_retain);
+		tv_retain.setText(300 - et_modify_info.getText().toString().trim().length()+"字");
 		et_modify_info.addTextChangedListener(new TextWatcher() {
 			
 			@Override
@@ -73,7 +77,6 @@ public class StoreIntroduceActivity extends BaseActivityWithTopView {
 				
 			}
 		});
-		tv_retain = (TextView) findViewById(R.id.tv_retain);
 		FontManager.changeFonts(mContext, et_modify_info,tv_top_title,tv_retain);
 	}
 	
@@ -85,6 +88,7 @@ public class StoreIntroduceActivity extends BaseActivityWithTopView {
 			@Override
 			public void http_Success(Object obj) {
 				Toast.makeText(mContext, "设置成功", 1000).show();
+				SharedUtil.setStringPerfernece(mContext, SharedUtil.user_Description, et_modify_info.getText().toString().trim());
 				StoreIntroduceActivity.this.finish();
 			}
 			

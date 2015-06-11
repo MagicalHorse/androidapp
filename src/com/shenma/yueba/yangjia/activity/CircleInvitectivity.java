@@ -73,6 +73,7 @@ public class CircleInvitectivity extends BaseActivityWithTopView implements
 	private PinyinComparator pinyinComparator;
 	private TextView tv_sure;
 	private String circleId;
+	private TextView tv_nodata;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -96,20 +97,21 @@ public class CircleInvitectivity extends BaseActivityWithTopView implements
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView,
 					boolean isChecked) {
-				for (int i = 0; i < sourceDateList.size(); i++) {
-					if (!allChecked) {
+				for (int i = 0; i < sourceDateList.size(); i++) { 
+					if(isChecked){
 						sourceDateList.get(i).setChecked(true);
-						allChecked = true;
-						setIdToList(sourceDateList.get(i).getUserId());
-					} else {
+						if(!ids.contains(sourceDateList.get(i).getUserId())){
+							ids.add(sourceDateList.get(i).getUserId());
+						}
+					}else{
 						sourceDateList.get(i).setChecked(false);
-						allChecked = false;
 						ids.clear();
 					}
 				}
 				adapter.notifyDataSetChanged();
 			}
 		});
+		tv_nodata = getView(R.id.tv_nodata);
 		tv_sure = getView(R.id.tv_sure);
 		tv_sure.setOnClickListener(this);
 		// 实例化汉字转拼音类
@@ -258,14 +260,14 @@ public class CircleInvitectivity extends BaseActivityWithTopView implements
 						if (bean != null && bean.getData() != null
 								&& bean.getData().getItems() != null
 								&& bean.getData().getItems().size() > 0) {
+							tv_nodata.setVisibility(View.GONE);
 							filledData(bean.getData().getItems());
 							// 根据a-z进行排序源数据
 							Collections.sort(sourceDateList, pinyinComparator);
 							adapter.updateListView(sourceDateList);
 							adapter.notifyDataSetChanged();
 						} else {
-							Toast.makeText(CircleInvitectivity.this, "暂无粉丝",
-									1000).show();
+							tv_nodata.setVisibility(View.VISIBLE);
 						}
 					}
 
