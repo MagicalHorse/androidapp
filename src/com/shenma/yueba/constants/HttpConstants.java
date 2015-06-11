@@ -406,6 +406,12 @@ public class HttpConstants {
 	public static String METHOD_BUYER_PAYMENTGOODS = BUYER
 	+ "PaymentGoods";
 	
+	/**
+	 * 货款管理列表
+	 */
+	public static String METHOD_BUYER_PAYMENTGOODLIST = BUYER
+	+ "PaymentGoodsList";
+	
 	
 	
 	/**

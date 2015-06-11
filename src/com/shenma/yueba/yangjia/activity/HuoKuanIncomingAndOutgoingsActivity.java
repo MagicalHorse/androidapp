@@ -64,7 +64,7 @@ public class HuoKuanIncomingAndOutgoingsActivity extends BaseFragmentActivity im
 		tv_top_title = (TextView) findViewById(R.id.tv_top_title);
 		tv_top_left.setVisibility(View.VISIBLE);
 		tv_top_title.setVisibility(View.VISIBLE);
-		tv_top_title.setText("销售管理");
+		tv_top_title.setText("销售收支");
 		tv_top_left.setOnClickListener(this);
 		iv_cursor_left = (ImageView) findViewById(R.id.iv_cursor_left);
 		iv_cursor_left2 = (ImageView) findViewById(R.id.iv_cursor_left2);

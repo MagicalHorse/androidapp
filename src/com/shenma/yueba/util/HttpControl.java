@@ -572,6 +572,26 @@ public class HttpControl {
 				httpCallBack, HuoKuanManagerBackBean.class, refresh, canCancle);
 	}
 
+	
+	/**
+	 * 货款管理列表
+	 * 
+	 * @param bean
+	 * @param httpCallBack
+	 * @param context
+	 */
+	public void getHuoKuanList(int page,String status,final HttpCallBackInterface httpCallBack,
+			Context context, boolean refresh, boolean canCancle) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put(Constants.PAGESIZE, Constants.PageSize);
+		map.put(Constants.PAGE, page+"");
+		map.put(Constants.STATUS, status);
+		BasehttpSend(map, context, HttpConstants.METHOD_BUYER_PAYMENTGOODLIST,
+				httpCallBack, HuoKuanManagerBackBean.class, refresh, canCancle);
+	}
+
+	
+	
 	/**
 	 * 申请认证买手的接口
 	 * 

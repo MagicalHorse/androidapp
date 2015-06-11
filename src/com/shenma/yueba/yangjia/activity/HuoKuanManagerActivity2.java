@@ -119,7 +119,7 @@ public class HuoKuanManagerActivity2 extends BaseActivityWithTopView implements
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.tv_in_and_out://货款收支
-			skip(IncomeDetailActivity.class, false);
+			skip(HuoKuanIncomingAndOutgoingsActivity.class, false);
 			break;
 		default:
 			break;
