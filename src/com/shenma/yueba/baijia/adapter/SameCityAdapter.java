@@ -194,7 +194,7 @@ public class SameCityAdapter extends BaseAdapterWithUtil {
 	 * **/
 	void submitAttention(final int Status,final BrandCityWideInfo brandCityWideInfo)
 	{
-		httpControl.setFavor(brandCityWideInfo.getProductId(), Status, new HttpCallBackInterface() {
+		httpControl.setFavoite(brandCityWideInfo.getUserId(), Status, new HttpCallBackInterface() {
 			
 			@Override
 			public void http_Success(Object obj) {

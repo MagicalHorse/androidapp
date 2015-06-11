@@ -20,14 +20,14 @@
             android:id="@+id/baijia_orderlayout_item_nickname_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="小天使" />
+            android:text="" />
 
         <TextView
             android:id="@+id/baijia_orderlayout_item_status_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="未提货"
+            android:text=""
             android:textColor="@color/red" />
     </RelativeLayout>
 
@@ -47,7 +47,7 @@
             android:id="@+id/baijia_orderlayout_item_producecount_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="共2件商品" />
+            android:text="" />
 
         <TextView
             android:id="@+id/baijia_orderlayout_item_price_textview"
@@ -61,7 +61,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="2000" />
+            android:text="" />
     </RelativeLayout>
 
     <View style="@style/style_horizontal_line" />
@@ -84,7 +84,7 @@
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/baijiaorder_layout_item_status1"
             android:gravity="left|center_vertical"
-            android:text="NICK华宇购物广场"
+            android:text=""
             android:textSize="@dimen/textsize13sp" />
 
         <LinearLayout

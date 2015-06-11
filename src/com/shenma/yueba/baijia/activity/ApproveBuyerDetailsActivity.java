@@ -64,6 +64,8 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView impleme
 	ScrollView approvebuyerdetails_srcollview;
 	// 底部购物车父视图
 	RelativeLayout approvebuyerdetails_footer;
+	TextView approvebuyerdetails_closeingtime_textview;//打烊时间
+	TextView approvebuyerdetails_closeinginfo_textview;//打烊信息
 	int childWidth = 0;
 	int maxcount = 8;
 	CustomPagerAdapter customPagerAdapter;
@@ -112,6 +114,10 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView impleme
 				ApproveBuyerDetailsActivity.this.finish();
 			}
 		});
+		//打烊时间
+		approvebuyerdetails_closeingtime_textview=(TextView)findViewById(R.id.approvebuyerdetails_closeingtime_textview);
+		//打烊信息
+		approvebuyerdetails_closeinginfo_textview=(TextView)findViewById(R.id.approvebuyerdetails_closeinginfo_textview);
 		approvebuyerdetails_footer = (RelativeLayout) findViewById(R.id.approvebuyerdetails_footer);
 		approvebuyerdetails_srcollview = (ScrollView) findViewById(R.id.approvebuyerdetails_srcollview);
 		showloading = (LinearLayout) findViewById(R.id.showloading);
@@ -416,6 +422,8 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView impleme
 	}
 
 	void setFont() {
+		setdataValue(R.id.approvebuyerdetails_closeingtime_textview, null);
+		setdataValue(R.id.approvebuyerdetails_closeinginfo_textview, null);
 		setdataValue(R.id.tv_top_title, null);
 		// 设置昵称
 		setdataValue(R.id.approvebuyerdetails_name_textview, null);
