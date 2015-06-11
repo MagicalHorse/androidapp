@@ -26,6 +26,8 @@ import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.yangjia.activity.OrderDetailActivity;
 import com.shenma.yueba.yangjia.adapter.HuoKuanIncomeAndOutGoingAdapter;
+import com.shenma.yueba.yangjia.modle.HuoKuanItem;
+import com.shenma.yueba.yangjia.modle.HuoKuanListBackBean;
 import com.shenma.yueba.yangjia.modle.OrderItem;
 import com.shenma.yueba.yangjia.modle.OrderListBackBean;
 
@@ -33,13 +35,12 @@ import com.shenma.yueba.yangjia.modle.OrderListBackBean;
 public class HuoKuanIncomeAndOutGoingFragment extends BaseFragment {
 	private View rootView;// 缓存Fragment view
 	private PullToRefreshListView rlv;
-	private List<OrderItem> mList = new ArrayList<OrderItem>();
+	private List<HuoKuanItem> mList = new ArrayList<HuoKuanItem>();
 	private HuoKuanIncomeAndOutGoingAdapter adapter;
 	private boolean isRefresh = true;
 	private int page = 1;
 	private int tag = 0;
-	private String orderProductType;
-	private String status;
+	private String status;// 0冻结中，1可提现，2已经提现，3退款
 	public TextView tv_nodata;
 
 	@SuppressLint("ValidFragment")
@@ -64,14 +65,14 @@ public class HuoKuanIncomeAndOutGoingFragment extends BaseFragment {
 				public void onPullDownToRefresh(PullToRefreshBase refreshView) {
 					page = 1;
 					isRefresh = true;
-					getDataFromNet(false,getActivity());
+					getDataFromNet(false, getActivity());
 				}
 
 				@Override
 				public void onPullUpToRefresh(PullToRefreshBase refreshView) {
 					page++;
 					isRefresh = false;
-					getDataFromNet(false,getActivity());
+					getDataFromNet(false, getActivity());
 				}
 			});
 			rlv.setOnItemClickListener(new OnItemClickListener() {
@@ -96,73 +97,69 @@ public class HuoKuanIncomeAndOutGoingFragment extends BaseFragment {
 
 	public void getData(int tag, Context ctx) {
 		this.tag = tag;
-		if (tag == 0) {// 全部订单
-			orderProductType = "";
-			status = "";
-			if(mList.size() != 0){
+		if (tag == 0) {// 可提现
+			status = "1";
+			if (mList.size() != 0) {
 				return;
 			}
-		} else if (tag == 1) {// 待付款
+		} else if (tag == 1) {// 冻结中
 			status = "0";
-			orderProductType = "";
-			if(mList.size() != 0){
+			if (mList.size() != 0) {
 				return;
 			}
-		} else if (tag == 2) {// 专柜自提
-			orderProductType = "4";
-			status = "";
-			if(mList.size()!= 0){
+		} else if (tag == 2) {// 已提现
+			status = "2";
+			if (mList.size() != 0) {
 				return;
 			}
-		} else if (tag == 3) {
+		} else if (tag == 3) {// 退款
 			status = "3";
-			orderProductType = "";
-			if(mList.size() != 0){
+			if (mList.size() != 0) {
 				return;
 			}
 		}
-		getDataFromNet(true,ctx);
+		getDataFromNet(true, ctx);
 	}
 
-	
-	
-	private void getDataFromNet(boolean showDialog,Context ctx){
-		HttpControl hControl = new HttpControl();
-		hControl.getOrderList(page, Constants.PageSize, orderProductType,
-				status, new HttpCallBackInterface() {
-
-					@Override
-					public void http_Success(Object obj) {
-						rlv.onRefreshComplete();
-						OrderListBackBean bean = (OrderListBackBean) obj;
-						if (isRefresh) {
-							if(bean.getData()!=null && bean.getData().getOrderlist()!=null && bean.getData().getOrderlist().size()>0){
-								tv_nodata.setVisibility(View.GONE);
-								mList.clear();
-								mList.addAll(bean.getData().getOrderlist());
-								adapter = new HuoKuanIncomeAndOutGoingAdapter(
-										getActivity(), mList, 0);
-								rlv.setAdapter(adapter);
-							}else{
-								tv_nodata.setVisibility(View.VISIBLE);
-							}
-							
-						} else {
-							if(bean.getData().getOrderlist()!=null && bean.getData().getOrderlist().size()>0){
-								mList.addAll(bean.getData().getOrderlist());
-							}else{
-								Toast.makeText(getActivity(), "没有更多数据了...", 1000).show();
-							}
-							
-							adapter.notifyDataSetChanged();
-						}
+	private void getDataFromNet(boolean showDialog, Context ctx) {
+		HttpControl httpContorl = new HttpControl();
+		httpContorl.getHuoKuanList(page, status, new HttpCallBackInterface() {
+			@Override
+			public void http_Success(Object obj) {
+				rlv.onRefreshComplete();
+				HuoKuanListBackBean bean = (HuoKuanListBackBean) obj;
+				if (isRefresh) {
+					if (bean.getData() != null
+							&& bean.getData().getItems() != null
+							&& bean.getData().getItems().size() > 0) {
+						tv_nodata.setVisibility(View.GONE);
+						mList.clear();
+						mList.addAll(bean.getData().getItems());
+						adapter = new HuoKuanIncomeAndOutGoingAdapter(
+								getActivity(), mList, 0);
+						rlv.setAdapter(adapter);
+					} else {
+						tv_nodata.setVisibility(View.VISIBLE);
 					}
 
-					@Override
-					public void http_Fails(int error, String msg) {
-						rlv.onRefreshComplete();
-						Toast.makeText(getActivity(), msg, 1000).show();
+				} else {
+					if (bean.getData().getItems() != null
+							&& bean.getData().getItems().size() > 0) {
+						mList.addAll(bean.getData().getItems());
+					} else {
+						Toast.makeText(getActivity(), "没有更多数据了...", 1000)
+								.show();
 					}
-				}, ctx,showDialog);
+
+					adapter.notifyDataSetChanged();
+				}
+			}
+
+			@Override
+			public void http_Fails(int error, String msg) {
+				rlv.onRefreshComplete();
+				Toast.makeText(getActivity(), msg, 1000).show();
+			}
+		}, getActivity(), true, false);
 	}
 }

@@ -28,7 +28,29 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
-import com.shenma.yueba.baijia.modle.*;
+import com.shenma.yueba.baijia.modle.ApplyAuthBuyerBean;
+import com.shenma.yueba.baijia.modle.BaseRequest;
+import com.shenma.yueba.baijia.modle.BrandDetailInfoBean;
+import com.shenma.yueba.baijia.modle.BuyerIndexInfoBean;
+import com.shenma.yueba.baijia.modle.CityListBackBean;
+import com.shenma.yueba.baijia.modle.CityListRequestBean;
+import com.shenma.yueba.baijia.modle.HuoKuanManagerBackBean;
+import com.shenma.yueba.baijia.modle.MyRequestProductListInfoBean;
+import com.shenma.yueba.baijia.modle.ProvinceCityListBeanRequest;
+import com.shenma.yueba.baijia.modle.RequestBaiJiaOrdeDetailsInfoBean;
+import com.shenma.yueba.baijia.modle.RequestBaiJiaOrderListInfoBean;
+import com.shenma.yueba.baijia.modle.RequestBrandCityWideInfoBean;
+import com.shenma.yueba.baijia.modle.RequestBrandInfoBean;
+import com.shenma.yueba.baijia.modle.RequestCreatOrderInfoBean;
+import com.shenma.yueba.baijia.modle.RequestMyCircleInfoBean;
+import com.shenma.yueba.baijia.modle.RequestMyFavoriteProductListInfoBean;
+import com.shenma.yueba.baijia.modle.RequestProductDetailsInfoBean;
+import com.shenma.yueba.baijia.modle.RequestProductListInfoBean;
+import com.shenma.yueba.baijia.modle.RequestUploadProductInfoBean;
+import com.shenma.yueba.baijia.modle.ResponseUploadProductInfoBean;
+import com.shenma.yueba.baijia.modle.StoreListBackBean;
+import com.shenma.yueba.baijia.modle.UserInfo;
+import com.shenma.yueba.baijia.modle.UserRequestBean;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.constants.HttpConstants;
 import com.shenma.yueba.yangjia.modle.AliYunKeyBackBean;
@@ -39,6 +61,7 @@ import com.shenma.yueba.yangjia.modle.CircleListBackBean;
 import com.shenma.yueba.yangjia.modle.ContactsAddressRequestBean;
 import com.shenma.yueba.yangjia.modle.ContactsAddressRequestListBean;
 import com.shenma.yueba.yangjia.modle.ContactsAddressResponseBean;
+import com.shenma.yueba.yangjia.modle.HuoKuanListBackBean;
 import com.shenma.yueba.yangjia.modle.OrderDetailBackBean;
 import com.shenma.yueba.yangjia.modle.OrderListBackBean;
 
@@ -587,7 +610,7 @@ public class HttpControl {
 		map.put(Constants.PAGE, page+"");
 		map.put(Constants.STATUS, status);
 		BasehttpSend(map, context, HttpConstants.METHOD_BUYER_PAYMENTGOODLIST,
-				httpCallBack, HuoKuanManagerBackBean.class, refresh, canCancle);
+				httpCallBack, HuoKuanListBackBean.class, refresh, canCancle);
 	}
 
 	
