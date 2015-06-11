@@ -1100,7 +1100,7 @@ public class HttpControl {
 			Context context) {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("OrderNo",orderNo);
-		BasehttpSend(map, context, HttpConstants.GETORDERLIST, httpCallBack,RequestBaiJiaOrdeDetailsInfoBean.class, showDialog, false);
+		BasehttpSend(map, context, HttpConstants.GETORDERLISTDETAILS, httpCallBack,RequestBaiJiaOrdeDetailsInfoBean.class, showDialog, false);
 	}
 
 	/**

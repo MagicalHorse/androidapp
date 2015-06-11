@@ -25,6 +25,15 @@ public class BaiJiaOrdeDetailsInfoBean implements Serializable{
 	int OrderStatus;//订单状态  int
 	String OrderStatusName="";// 订单状态描述
 	String CreateDate="";// 创建时间
+	String BuyerLogo="";//买手头像
+
+	
+	public String getBuyerLogo() {
+		return BuyerLogo;
+	}
+	public void setBuyerLogo(String buyerLogo) {
+		BuyerLogo = buyerLogo;
+	}
 	public int getProductId() {
 		return ProductId;
 	}

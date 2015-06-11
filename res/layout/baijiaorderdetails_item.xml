@@ -5,6 +5,7 @@
     android:orientation="vertical"
     android:padding="@dimen/margin_left_and_right"
     android:background="@color/white"
+    android:descendantFocusability="blocksDescendants"
     >
      <include layout="@layout/productinfolist_layout"/>
 </LinearLayout>

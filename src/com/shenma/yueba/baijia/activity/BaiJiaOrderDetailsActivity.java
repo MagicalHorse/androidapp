@@ -8,6 +8,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -43,6 +45,7 @@ TextView order_wating_content;//订单状态
 TextView order_money_count;//订单金额
 TextView order_date_count;//订单日期
 TextView customer_account_content;//买手昵称
+TextView tv_get_address_content;//提货地址
 TextView tv_customer_phone_content;//买手手机号
 //头像
 RoundImageView riv_customer_head;
@@ -91,6 +94,8 @@ BaijiaOrderDetailsAdapter baijiaOrderDetailsAdapter;
 		order_date_count=(TextView)parentView.findViewById(R.id.order_money_count);
 		//买手昵称
 		customer_account_content=(TextView)parentView.findViewById(R.id.customer_account_content);
+		//提货地址
+		tv_get_address_content=(TextView)parentView.findViewById(R.id.tv_get_address_content);
 		//买手手机号
 		tv_customer_phone_content=(TextView)parentView.findViewById(R.id.tv_customer_phone_content);
 		tv_customer_phone_content.setOnClickListener(this);
@@ -116,6 +121,20 @@ BaijiaOrderDetailsAdapter baijiaOrderDetailsAdapter;
 		baijia_orderdetails_xjfx_textview=(TextView)parentView.findViewById(R.id.baijia_orderdetails_xjfx_textview);
 		baijia_orderdetails_xjfx_textview.setOnClickListener(this);
 		setFont();
+		baijia_orderdetails_layout_lsitview.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				if(obj_list.size()>0)
+				{
+					BaiJiaOrdeDetailsInfoBean bean=obj_list.get(arg2-1);
+					Intent intent=new Intent(BaiJiaOrderDetailsActivity.this,ApproveBuyerDetailsActivity.class);
+					intent.putExtra("productID", bean.getProductId());
+					startActivity(intent);
+				}
+			}
+		});
 	}
 	
 	/****
@@ -198,9 +217,14 @@ BaijiaOrderDetailsAdapter baijiaOrderDetailsAdapter;
 			
 			@Override
 			public void http_Success(Object obj) {
-				if(obj!=null && obj instanceof RequestBaiJiaOrdeDetailsInfoBean && bean.getData()!=null)
+				if(obj!=null && obj instanceof RequestBaiJiaOrdeDetailsInfoBean)
 				{
 					bean=(RequestBaiJiaOrdeDetailsInfoBean)obj;
+					if(bean.getData()==null)
+					{
+						http_Fails(500, "获取失败 数据错误");
+						return;
+					}
 					setvalue();
 				}else
 				{
@@ -211,6 +235,7 @@ BaijiaOrderDetailsAdapter baijiaOrderDetailsAdapter;
 			@Override
 			public void http_Fails(int error, String msg) {
 				MyApplication.getInstance().showMessage(BaiJiaOrderDetailsActivity.this, msg);
+				BaiJiaOrderDetailsActivity.this.finish();
 			}
 		}, BaiJiaOrderDetailsActivity.this);
 	}
@@ -227,8 +252,10 @@ BaijiaOrderDetailsAdapter baijiaOrderDetailsAdapter;
 		order_date_count.setText(ToolsUtil.nullToString(baiJiaOrdeDetailsInfoBean.getCreateDate()));
 		customer_account_content.setText(ToolsUtil.nullToString(baiJiaOrdeDetailsInfoBean.getBuyerName()));
 		tv_customer_phone_content.setText(ToolsUtil.nullToString(baiJiaOrdeDetailsInfoBean.getBuyerMobile()));
-		MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.nullToString(""), riv_customer_head, MyApplication.getInstance().getDisplayImageOptions());
-		
-		
+		tv_get_address_content.setText(ToolsUtil.nullToString(baiJiaOrdeDetailsInfoBean.getPickAddress()));
+		MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.nullToString(baiJiaOrdeDetailsInfoBean.getBuyerLogo()), riv_customer_head, MyApplication.getInstance().getDisplayImageOptions());
+		obj_list.add(baiJiaOrdeDetailsInfoBean);
+		baijiaOrderDetailsAdapter.notifyDataSetChanged();
 	}
+	
 }
