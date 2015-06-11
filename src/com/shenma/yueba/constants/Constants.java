@@ -10,7 +10,7 @@ public class Constants {
 	
 	public static final int REQUESTCODE = 100;
 	public static final int RESULTCODE = 101;
-	
+	public static final int RESULTCODE2 = 102;
 	
 	//网络请求的字段
 	public static final String HTTPCHANNEL="channel";//附加参数

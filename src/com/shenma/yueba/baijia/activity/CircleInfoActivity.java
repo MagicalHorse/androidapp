@@ -183,9 +183,10 @@ public class CircleInfoActivity extends BaseActivityWithTopView implements
 													120, 0), riv_circle_head);
 							List<Users> users = bean.getUsers();
 							if (users != null && users.size() > 0) {
-								users.addAll(mList);
 								mList.clear();
 								mList.addAll(users);
+								mList.add(new Users());
+								mList.add(new Users());
 								adapter = new MyCircleInfoAdapter(mContext, mList,circleId);
 								gv_circle.setAdapter(adapter);
 							}
@@ -202,12 +203,17 @@ public class CircleInfoActivity extends BaseActivityWithTopView implements
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == Constants.REQUESTCODE
-				&& resultCode == Constants.RESULTCODE) {//修改圈子名称
+				&& resultCode == Constants.RESULTCODE) {//修改圈子名称的返回监听
 			if (data != null) {
 				String newName = data.getStringExtra("newName");
 				tv_circle_name.setText(ToolsUtil.nullToString(newName));
 			}
 		}
+		if(requestCode == Constants.REQUESTCODE
+				&& resultCode == Constants.RESULTCODE2){//邀请粉丝加入圈子的返回监听
+			getCircleDetail(cricleId, mContext, true);
+		}
+		
 		if (requestCode == PhotoUtils.INTENT_REQUEST_CODE_ALBUM) {
 			// 调用相册返回
 			if (resultCode == RESULT_OK) {

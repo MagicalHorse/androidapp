@@ -31,6 +31,7 @@ import com.shenma.yueba.baijia.activity.BaseActivityWithTopView;
 import com.shenma.yueba.baijia.activity.FillPersonDataActivity;
 import com.shenma.yueba.baijia.modle.BaseRequest;
 import com.shenma.yueba.baijia.modle.CityListRequestBean;
+import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.sore.CharacterParser;
@@ -320,6 +321,9 @@ public class CircleInvitectivity extends BaseActivityWithTopView implements
 					@Override
 					public void http_Success(Object obj) {
 						Toast.makeText(mContext, "邀请成功！", 1000).show();
+						setResult(Constants.RESULTCODE2);
+						CircleInvitectivity.this.finish();
+						
 					}
 
 					@Override

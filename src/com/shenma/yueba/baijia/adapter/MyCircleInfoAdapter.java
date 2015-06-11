@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.activity.CircleInfoActivity;
 import com.shenma.yueba.baijia.modle.BaseRequest;
 import com.shenma.yueba.baijia.modle.GridVIewItemBean;
 import com.shenma.yueba.constants.Constants;
@@ -130,7 +131,7 @@ public class MyCircleInfoAdapter extends BaseAdapterWithUtil{
 					//邀请加入圈子
 					Intent intent = new Intent(ctx,CircleInvitectivity.class);
 					intent.putExtra("circleId", circleId);
-					ctx.startActivity(intent);
+					((CircleInfoActivity)ctx).startActivityForResult(intent, Constants.REQUESTCODE);
 				}
 			}
 		});
@@ -156,12 +157,13 @@ public class MyCircleInfoAdapter extends BaseAdapterWithUtil{
 				BaseRequest result = (BaseRequest) obj;
 				if (200 == result.getStatusCode()) {// 修改成功
 					Toast.makeText(ctx, "删除成功", 1000).show();
-					for (int i = 0; i < mList.size(); i++) {
+					/*for (int i = 0; i < mList.size(); i++) {
 						if(userId.equals(mList.get(i).getUserId())){
 							mList.remove(i);
 							notifyDataSetChanged();
 						}
-					}
+					}*/
+					((CircleInfoActivity)ctx).getCircleDetail(MyCircleInfoAdapter.this.circleId, ctx, true);
 				}
 			}
 			

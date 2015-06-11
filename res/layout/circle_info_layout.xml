@@ -1,168 +1,175 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content" 
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/parent"
-    >
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_bg"
+    android:orientation="vertical" >
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/main_bg"
-        android:orientation="vertical" >
+     <include layout="@layout/title_for_common" />
+    
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
 
-        <include layout="@layout/title_for_common"/>
-        
-        <TextView
-            android:id="@+id/tv_circle_title"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:padding="10dip"
-            android:text="圈子成员"
-            android:textColor="@color/text_gray_color"
-            android:textSize="18sp" />
-
-        <View style="@style/style_horizontal_line" />
-
-        <com.shenma.yueba.view.MyGridView
-            android:id="@+id/gv_circle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:cacheColorHint="#00000000"
-            android:columnWidth="65dp"
-            android:gravity="center"
-            android:horizontalSpacing="10dip"
-            android:listSelector="@color/transparent"
-            android:numColumns="auto_fit"
-            android:padding="10dp"
-            android:stretchMode="columnWidth"
-            android:verticalSpacing="10dp" />
-
-        <View style="@style/style_horizontal_line" />
+       
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
             android:orientation="vertical" >
 
-            <RelativeLayout
-                android:visibility="gone"
-                android:id="@+id/rl_qrcode"
+            <TextView
+                android:id="@+id/tv_circle_title"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="5dip"
-                android:paddingTop="5dip" >
+                android:background="@color/white"
+                android:padding="10dip"
+                android:text="圈子成员"
+                android:textColor="@color/text_gray_color"
+                android:textSize="18sp" />
 
-                <TextView
-                    android:id="@+id/tv_cirlce_qrcode_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:padding="10dip"
-                    android:text="圈子二维码"
-                    android:textColor="@color/text_gray_color"
-                    android:textSize="18sp" />
+            <View style="@style/style_horizontal_line" />
 
-                <ImageView
-                    android:id="@+id/iv_qrcode"
-                    android:layout_width="30dip"
-                    android:layout_height="30dip"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="22dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/default_pic" />
-            </RelativeLayout>
+            <com.shenma.yueba.view.MyGridView
+                android:id="@+id/gv_circle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:cacheColorHint="#00000000"
+                android:columnWidth="65dp"
+                android:gravity="center"
+                android:horizontalSpacing="10dip"
+                android:listSelector="@color/transparent"
+                android:numColumns="auto_fit"
+                android:padding="10dp"
+                android:stretchMode="columnWidth"
+                android:verticalSpacing="10dp" />
 
-            <View
-                android:visibility="gone"
-                style="@style/style_horizontal_line"
-                android:layout_marginLeft="10dip" />
+            <View style="@style/style_horizontal_line" />
 
-            <RelativeLayout
-                android:id="@+id/rl_circle_name"
+            <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="5dip"
-                android:paddingTop="5dip" >
+                android:background="@color/white"
+                android:orientation="vertical" >
 
-                <TextView
-                    android:id="@+id/tv_cirlce_name_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:padding="10dip"
-                    android:text="圈子名称"
-                    android:textColor="@color/text_gray_color"
-                    android:textSize="18sp" />
-
-                <ImageView
-                    android:id="@+id/imageView1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/arrow_right" />
-
-                <TextView
-                    android:id="@+id/tv_circle_name"
+                <RelativeLayout
+                    android:id="@+id/rl_qrcode"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="22dp"
-                    android:layout_toLeftOf="@+id/imageView1"
-                    android:layout_toRightOf="@id/tv_cirlce_name_title"
-                    android:gravity="right"
-                    android:text="躲猫猫" />
-            </RelativeLayout>
+                    android:paddingBottom="5dip"
+                    android:paddingTop="5dip"
+                    android:visibility="gone" >
 
-            <View
-                style="@style/style_horizontal_line"
-                android:layout_marginLeft="10dip" />
+                    <TextView
+                        android:id="@+id/tv_cirlce_qrcode_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:padding="10dip"
+                        android:text="圈子二维码"
+                        android:textColor="@color/text_gray_color"
+                        android:textSize="18sp" />
 
-            <RelativeLayout
-                android:id="@+id/rl_head"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="5dip"
-                android:paddingTop="5dip" >
+                    <ImageView
+                        android:id="@+id/iv_qrcode"
+                        android:layout_width="30dip"
+                        android:layout_height="30dip"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="22dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/default_pic" />
+                </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/tv_cirlce_head_title"
-                    android:layout_width="wrap_content"
+                <View
+                    style="@style/style_horizontal_line"
+                    android:layout_marginLeft="10dip"
+                    android:visibility="gone" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_circle_name"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:padding="10dip"
-                    android:text="圈子头像"
-                    android:textColor="@color/text_gray_color"
-                    android:textSize="18sp" />
+                    android:paddingBottom="5dip"
+                    android:paddingTop="5dip" >
 
-                <ImageView
-                    android:id="@+id/imageView1"
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/tv_cirlce_name_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:padding="10dip"
+                        android:text="圈子名称"
+                        android:textColor="@color/text_gray_color"
+                        android:textSize="18sp" />
+
+                    <ImageView
+                        android:id="@+id/imageView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/arrow_right" />
+
+                    <TextView
+                        android:id="@+id/tv_circle_name"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="22dp"
+                        android:layout_toLeftOf="@+id/imageView1"
+                        android:layout_toRightOf="@id/tv_cirlce_name_title"
+                        android:gravity="right"
+                        android:text="躲猫猫" />
+                </RelativeLayout>
+
+                <View
+                    style="@style/style_horizontal_line"
+                    android:layout_marginLeft="10dip" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_head"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/arrow_right" />
+                    android:paddingBottom="5dip"
+                    android:paddingTop="5dip" >
 
-                <com.shenma.yueba.view.RoundImageView
-                    android:id="@+id/riv_circle_head"
-                    android:layout_width="40dip"
-                    android:layout_height="40dip"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="22dp"
-                    android:layout_toLeftOf="@+id/imageView1"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/default_pic" />
-            </RelativeLayout>
+                    <TextView
+                        android:id="@+id/tv_cirlce_head_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:padding="10dip"
+                        android:text="圈子头像"
+                        android:textColor="@color/text_gray_color"
+                        android:textSize="18sp" />
 
-            <View
-                style="@style/style_horizontal_line"
-                android:layout_marginLeft="10dip" />
+                    <ImageView
+                        android:id="@+id/imageView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/arrow_right" />
+
+                    <com.shenma.yueba.view.RoundImageView
+                        android:id="@+id/riv_circle_head"
+                        android:layout_width="40dip"
+                        android:layout_height="40dip"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="22dp"
+                        android:layout_toLeftOf="@+id/imageView1"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/default_pic" />
+                </RelativeLayout>
+
+                <View
+                    style="@style/style_horizontal_line"
+                    android:layout_marginLeft="10dip" />
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+    </ScrollView>
 
-</ScrollView>
+</LinearLayout>
