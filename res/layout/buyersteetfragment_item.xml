@@ -130,5 +130,17 @@
     <include
         android:id="@+id/approvebuyerdetails_attention_linerlayout"
         layout="@layout/attentionpeople_layout" />
+    
+    <ImageView
+        android:layout_marginTop="@dimen/shop_main_width3_dimen"
+        android:layout_marginLeft="@dimen/margin_left_and_right"
+        android:layout_marginRight="@dimen/margin_left_and_right"
+        android:layout_marginBottom="@dimen/shop_main_width3_dimen"
+        android:id="@+id/buyersteetfragment_item_footer_imageview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/youhui"
+        android:scaleType="fitXY"
+        />
 
 </LinearLayout>

@@ -18,6 +18,13 @@ public class ProductsInfoBean implements Serializable{
 	double Price;//价格
 	String ProductName="";// 产品名字
 	int ProductId; //产品编号
+	boolean IsPromotion=false;//是否有打烊购优惠
+	public boolean isIsPromotion() {
+		return IsPromotion;
+	}
+	public void setIsPromotion(boolean isPromotion) {
+		IsPromotion = isPromotion;
+	}
 	//关注的人
 	LikeUsersInfoBean LikeUsers=new LikeUsersInfoBean();
 	//买手推荐商品信息

@@ -36,6 +36,7 @@ import com.shenma.yueba.baijia.modle.BrandCityWideInfo;
 import com.shenma.yueba.baijia.modle.LikeUsersInfoBean;
 import com.shenma.yueba.baijia.modle.ProductPicInfoBean;
 import com.shenma.yueba.baijia.modle.ProductsDetailsInfoBean;
+import com.shenma.yueba.baijia.modle.ProductsInfoBean;
 import com.shenma.yueba.baijia.modle.RequestProductDetailsInfoBean;
 import com.shenma.yueba.baijia.modle.UsersInfoBean;
 import com.shenma.yueba.util.FontManager;
@@ -164,14 +165,7 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView impleme
 				});
 
 		approvebuyerdetails_icon_imageview = (RoundImageView) findViewById(R.id.approvebuyerdetails_icon_imageview);
-		approvebuyerdetails_icon_imageview
-				.setOnClickListener(new OnClickListener() {
-
-					@Override
-					public void onClick(View v) {
-
-					}
-				});
+		approvebuyerdetails_icon_imageview.setOnClickListener(this);
 
 		approvebuyerdetails_layout_siliao_linerlayout = (LinearLayout) findViewById(R.id.approvebuyerdetails_layout_siliao_linerlayout);
 		approvebuyerdetails_layout_siliao_linerlayout.setOnClickListener(this);
@@ -332,30 +326,14 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView impleme
 			}
 			
 			TextView approvebuyerdetails_attention_textview=(TextView)findViewById(R.id.approvebuyerdetails_attention_textview);
+			TextView approvebuyerdetails_layout_shoucang_linerlayout_textview=(TextView)findViewById(R.id.approvebuyerdetails_layout_shoucang_linerlayout_textview);
+			approvebuyerdetails_layout_shoucang_linerlayout_textview.setOnClickListener(this);
+			approvebuyerdetails_layout_shoucang_linerlayout_textview.setTag(Data);
+			approvebuyerdetails_layout_shoucang_linerlayout_textview.setSelected(Data.isIsFavorite());
+			
 			approvebuyerdetails_attention_textview.setSelected(likeUsersInfoBean.isIsLike());
 			approvebuyerdetails_attention_textview.setTag(Data);
-			approvebuyerdetails_attention_textview.setOnClickListener(new OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					if(v.getTag()!=null && v.getTag() instanceof ProductsDetailsInfoBean)
-					{
-						ProductsDetailsInfoBean Data=(ProductsDetailsInfoBean)v.getTag();
-						LikeUsersInfoBean likeUsersInfoBean=Data.getLikeUsers();
-						if(likeUsersInfoBean!=null)
-						{
-							if(likeUsersInfoBean.isIsLike())
-							{
-								submitAttention(0, Data,v);
-							}else
-							{
-								submitAttention(1, Data,v);
-							}
-						}
-						
-					}
-				}
-			});
+			approvebuyerdetails_attention_textview.setOnClickListener(this); 
 		}
 
 		if (Data.getProductPic() != null && Data.getProductPic().length > 0) {
@@ -465,13 +443,9 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView impleme
 		// 自提地址
 		setdataValue(R.id.approvebuyerdetails_addressvalue_textview, null);
 		// 收藏
-		setdataValue(
-				R.id.approvebuyerdetails_layout_shoucang_linerlayout_textview,
-				null);
+		setdataValue(R.id.approvebuyerdetails_layout_shoucang_linerlayout_textview,null);
 		// 私聊
-		setdataValue(
-				R.id.approvebuyerdetails_layout_siliao_linerlayout_textview,
-				null);
+		setdataValue(R.id.approvebuyerdetails_layout_siliao_linerlayout_textview,null);
 		// 喜欢人数
 		setdataValue(R.id.approvebuyerdetails_attention_textview, null);
 		FontManager.changeFonts(this, approvebuyer_addcartbutton);
@@ -534,15 +508,102 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView impleme
 	public void onClick(View v) {
 		switch(v.getId())
 		{
+		case R.id.approvebuyerdetails_icon_imageview://头像
+			Intent intent=new Intent(ApproveBuyerDetailsActivity.this,ShopMainActivity.class);
+			startActivity(intent);
+			break;
 		case R.id.approvebuyerdetails_layout_siliao_linerlayout:
 			startActivity();
 			break;
 		case R.id.approvebuyerbuybutton:
 			startActivity();
 			break;
+		case R.id.approvebuyerdetails_attention_textview://喜欢或取消喜欢
+			if(v.getTag()!=null || v.getTag() instanceof ProductsDetailsInfoBean)
+			{
+				ProductsDetailsInfoBean Data=(ProductsDetailsInfoBean)v.getTag();
+				LikeUsersInfoBean likeUsersInfoBean=Data.getLikeUsers();
+				if(likeUsersInfoBean!=null)
+				{
+					if(likeUsersInfoBean.isIsLike())
+					{
+						setLikeOrUnLike(Data, 0,(TextView)v);
+					}else
+					{
+						setLikeOrUnLike(Data, 1,(TextView)v);
+					}
+				}
+				
+			}
+			break;
+		case R.id.approvebuyerdetails_layout_shoucang_linerlayout_textview:
+			if(v.getTag()!=null && v.getTag() instanceof ProductsDetailsInfoBean)
+			{
+				ProductsDetailsInfoBean Data=(ProductsDetailsInfoBean)v.getTag();
+				LikeUsersInfoBean likeUsersInfoBean=Data.getLikeUsers();
+				if(likeUsersInfoBean!=null)
+				{
+					if(likeUsersInfoBean.isIsLike())
+					{
+						submitAttention(0, Data,v);
+					}else
+					{
+						submitAttention(1, Data,v);
+					}
+				}
+				
+			}
+			break;
 		}
 		
 	}
+	
+	
+	
+	
+	/*****
+	 * 设置喜欢 或取消喜欢
+	 * @param bean  ProductsInfoBean 商品对象
+	 * @param Status int 0表示取消喜欢   1表示喜欢
+	 * @param v  TextView
+	 * ***/
+	void setLikeOrUnLike(final ProductsDetailsInfoBean bean,final int Status,final TextView v)
+	{
+		httpControl.setLike(bean.getProductId(), Status, new HttpCallBackInterface() {
+			
+			@Override
+			public void http_Success(Object obj) {
+				int count=bean.getLikeUsers().getCount();
+				switch(Status)
+				{
+				case 0:
+					v.setSelected(false);
+					count--;
+					if(count<0)
+					{
+						count=0;
+					}
+					bean.getLikeUsers().setIsLike(false);
+					bean.getLikeUsers().setCount(count);
+					v.setText(count+"");
+					break;
+				case 1:
+					count++;
+					v.setSelected(true);
+					v.setText(count+"");
+					bean.getLikeUsers().setIsLike(true);
+					bean.getLikeUsers().setCount(count);
+					break;
+				}
+			}
+			
+			@Override
+			public void http_Fails(int error, String msg) {
+				MyApplication.getInstance().showMessage(ApproveBuyerDetailsActivity.this, msg);
+			}
+		}, ApproveBuyerDetailsActivity.this);
+	}
+	
 	
 	
 	/****
@@ -562,16 +623,15 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView impleme
 					{
 					case 0:
 						v.setSelected(false);
-						bean.getLikeUsers().setIsLike(false);
+						bean.setIsFavorite(false);
 						break;
 					case 1:
 						v.setSelected(true);
-						bean.getLikeUsers().setIsLike(true);
+						bean.setIsFavorite(true);
 						break;
 					}
 					
 				}
-				//SameCityAdapter.this.notifyDataSetChanged();
 			}
 			
 			@Override
