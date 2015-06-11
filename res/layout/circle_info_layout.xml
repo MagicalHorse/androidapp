@@ -13,7 +13,6 @@
         android:layout_height="wrap_content" >
 
        
-
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -169,6 +168,19 @@
                     style="@style/style_horizontal_line"
                     android:layout_marginLeft="10dip" />
             </LinearLayout>
+            
+             <Button
+                 android:id="@+id/bt_delete_or_exit"
+                 android:layout_width="fill_parent"
+                 android:layout_height="45dip"
+                 android:layout_marginLeft="15dip"
+                 android:layout_marginRight="15dip"
+                 android:layout_marginTop="25dip"
+                 android:background="@drawable/shape_main_color_button"
+                 android:text="删除圈子"
+                 android:textColor="@color/white"
+                 android:textSize="17sp" />
+
         </LinearLayout>
     </ScrollView>
 

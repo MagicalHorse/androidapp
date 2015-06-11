@@ -18,21 +18,22 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.sdk.android.oss.callback.SaveCallback;
+import com.alibaba.sdk.android.oss.model.OSSException;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
-import com.shenma.yueba.baijia.activity.UserConfigActivity.ShowMenu;
 import com.shenma.yueba.baijia.adapter.MyCircleInfoAdapter;
-import com.shenma.yueba.baijia.dialog.QRCodeShareDialog;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.FileUtils;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
-import com.shenma.yueba.util.PhotoUtils;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
+import com.shenma.yueba.util.PhotoUtils;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.MyGridView;
 import com.shenma.yueba.view.RoundImageView;
@@ -67,6 +68,7 @@ public class CircleInfoActivity extends BaseActivityWithTopView implements
 	private String littlePicPath;//小图路径
 	private String littlePicPath_cache;//裁剪后图片存储的路径
 	private TextView tv_top_title_below;//标题下面的人数
+	private Button bt_delete_or_exit;//删除或退出，如果是养家则删除，如果是败家则退出
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -97,6 +99,8 @@ public class CircleInfoActivity extends BaseActivityWithTopView implements
 		tv_cirlce_name_title = getView(R.id.tv_cirlce_name_title);
 		tv_circle_title = getView(R.id.tv_circle_title);
 		tv_circle_name = getView(R.id.tv_circle_name);
+		bt_delete_or_exit = getView(R.id.bt_delete_or_exit);
+		bt_delete_or_exit.setOnClickListener(this);
 		rl_head = getView(R.id.rl_head);
 		rl_head.setOnClickListener(this);
 		rl_circle_name = getView(R.id.rl_circle_name);
@@ -128,6 +132,15 @@ public class CircleInfoActivity extends BaseActivityWithTopView implements
 			startActivityForResult(modifyCircleNameIntent,
 					Constants.REQUESTCODE);
 			break;
+		case R.id.bt_delete_or_exit://删除过退出
+			if("删除圈子".equals(bt_delete_or_exit.getText().toString().trim())){
+				deleteCircle();
+				
+			}else if("退出圈子".equals(bt_delete_or_exit.getText().toString().trim())){
+				
+			}
+			break;
+			
 //		case R.id.rl_qrcode:// 二维码查看
 //			/*
 //			 * ArrayList<String> urlList = new ArrayList<String>();
@@ -150,6 +163,16 @@ public class CircleInfoActivity extends BaseActivityWithTopView implements
 		default:
 			break;
 		}
+	}
+
+	
+	/**
+	 * 删除圈子
+	 */
+	private void deleteCircle() {
+		
+		HttpControl httpControl = new HttpControl();
+//		httpControl.
 	}
 
 	/**
@@ -246,11 +269,9 @@ public class CircleInfoActivity extends BaseActivityWithTopView implements
 		}
 		if (requestCode == PhotoUtils.INTENT_REQUEST_CODE_CROP) {// 裁剪后返回
 			if (resultCode == RESULT_OK) {
-				// tv_upload.setVisibility(View.GONE);
 				Bitmap bm = BitmapFactory.decodeFile(littlePicPath_cache);
-				// iv_pic.setImageBitmap(bm);
-				// iv_pic.setVisibility(View.VISIBLE);
 				riv_circle_head.setImageBitmap(bm);
+				uploadPic();//上传头像
 			}
 		}
 		if (requestCode == PhotoUtils.INTENT_REQUEST_CODE_CAMERA) {// 调用相机返回
@@ -316,6 +337,45 @@ public class CircleInfoActivity extends BaseActivityWithTopView implements
 			canceView();
 		}
 
+	}
+	
+	
+	public void uploadPic(){
+		HttpControl httpContorl = new HttpControl();
+		httpContorl.syncUpload(littlePicPath_cache, new SaveCallback() {
+			
+			@Override
+			public void onProgress(String arg0, int arg1, int arg2) {
+				String picName = littlePicPath_cache.substring(littlePicPath_cache.lastIndexOf("/") + 1,
+						littlePicPath_cache.length());
+				HttpControl httpControl2 = new HttpControl();
+				httpControl2.changeCircleLogo(cricleId, picName, true, new HttpCallBackInterface() {
+					
+					@Override
+					public void http_Success(Object obj) {
+						Toast.makeText(mContext, "修改成功", 1000).show();
+						
+					}
+					
+					@Override
+					public void http_Fails(int error, String msg) {
+						Toast.makeText(mContext, msg, 1000).show();
+					}
+				}, CircleInfoActivity.this);
+			}
+			
+			@Override
+			public void onFailure(String arg0, OSSException arg1) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onSuccess(String arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 	}
 
 }
