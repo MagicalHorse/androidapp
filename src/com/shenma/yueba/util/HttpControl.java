@@ -1073,6 +1073,20 @@ public class HttpControl {
 		BasehttpSend(map, context, HttpConstants.GETORDERLIST, httpCallBack,
 				RequestBaiJiaOrderListInfoBean.class, showDialog, true);
 	}
+	
+	
+	/**
+	 * 获取败家订单详情
+	 * 
+	 * @param OrderNo String 订单号
+	 * @return void
+	 * **/
+	public void getBaijiaOrderDetails(String orderNo,boolean showDialog, final HttpCallBackInterface httpCallBack,
+			Context context) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("OrderNo",orderNo);
+		BasehttpSend(map, context, HttpConstants.GETORDERLIST, httpCallBack,RequestBaiJiaOrdeDetailsInfoBean.class, showDialog, false);
+	}
 
 	/**
 	 * 获取败家我的圈子
