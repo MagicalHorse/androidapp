@@ -12,6 +12,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/title"
+        android:visibility="gone"
         android:layout_marginTop="5dip"
         android:background="@drawable/search_bar_edit_selector"
         android:drawableLeft="@drawable/search_bar_icon_normal"
@@ -90,5 +91,15 @@
             android:layout_height="fill_parent"
             android:layout_gravity="right|center" />
     </FrameLayout>
-    
+      <TextView
+          android:layout_below="@id/title"
+        android:id="@+id/tv_nodata"
+        android:visibility="gone"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        android:text="神马都没有..."
+        android:background="#ffffff"
+        android:textColor="@color/text_gray_color"
+        android:textSize="18sp" />
 </RelativeLayout>

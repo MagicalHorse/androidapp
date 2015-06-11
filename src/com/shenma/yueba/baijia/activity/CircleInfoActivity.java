@@ -103,7 +103,9 @@ public class CircleInfoActivity extends BaseActivityWithTopView implements
 		rl_circle_name.setOnClickListener(this);
 		rl_qrcode = getView(R.id.rl_qrcode);
 		rl_qrcode.setOnClickListener(this);
-		adapter = new MyCircleInfoAdapter(mContext, mList);
+		mList.add(new Users());
+		mList.add(new Users());
+		adapter = new MyCircleInfoAdapter(mContext, mList,cricleId);
 		gv_circle.setAdapter(adapter);
 		FontManager.changeFonts(mContext, tv_cirlce_head_title,
 				tv_cirlce_name_title, tv_circle_title, tv_circle_name);
@@ -157,7 +159,7 @@ public class CircleInfoActivity extends BaseActivityWithTopView implements
 	 * @param isRefresh
 	 * @param showDialog
 	 */
-	public void getCircleDetail(String circleId, Context ctx, boolean showDialog) {
+	public void getCircleDetail(final String circleId, Context ctx, boolean showDialog) {
 		HttpControl httpControl = new HttpControl();
 		httpControl.getCircleDetail(circleId, showDialog,
 				new HttpCallBackInterface() {
@@ -180,14 +182,12 @@ public class CircleInfoActivity extends BaseActivityWithTopView implements
 															.getGroupPic()),
 													120, 0), riv_circle_head);
 							List<Users> users = bean.getUsers();
-							adapter.setCircleId(cricleId);
 							if (users != null && users.size() > 0) {
+								users.addAll(mList);
+								mList.clear();
 								mList.addAll(users);
-								mList.addAll(users);
-								mList.addAll(users);
-								mList.add(new Users());
-								mList.add(new Users());
-								adapter.notifyDataSetChanged();
+								adapter = new MyCircleInfoAdapter(mContext, mList,circleId);
+								gv_circle.setAdapter(adapter);
 							}
 						}
 					}

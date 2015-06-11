@@ -8,6 +8,7 @@ import java.io.Serializable;
  */
 
 public class UserInfo implements Serializable {
+	private String Description;//店铺说明
 	private String AuditStatus;//审核状态
 	boolean isbuyer=false;
 	int operate_right ;// null,
@@ -175,6 +176,12 @@ public class UserInfo implements Serializable {
 	}
 	public void setAuditStatus(String auditStatus) {
 		AuditStatus = auditStatus;
+	}
+	public String getDescription() {
+		return Description;
+	}
+	public void setDescription(String description) {
+		Description = description;
 	}
 	
 
