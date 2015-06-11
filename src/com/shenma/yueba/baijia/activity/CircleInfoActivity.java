@@ -135,7 +135,6 @@ public class CircleInfoActivity extends BaseActivityWithTopView implements
 		case R.id.bt_delete_or_exit://删除过退出
 			if("删除圈子".equals(bt_delete_or_exit.getText().toString().trim())){
 				deleteCircle();
-				
 			}else if("退出圈子".equals(bt_delete_or_exit.getText().toString().trim())){
 				
 			}
@@ -165,14 +164,26 @@ public class CircleInfoActivity extends BaseActivityWithTopView implements
 		}
 	}
 
-	
 	/**
 	 * 删除圈子
 	 */
 	private void deleteCircle() {
-		
 		HttpControl httpControl = new HttpControl();
-//		httpControl.
+		httpControl.deleteCircle(cricleId, "", true, new HttpCallBackInterface() {
+			@Override
+			public void http_Success(Object obj) {
+				Toast.makeText(mContext, "删除成功", 1000).show();		
+				setResult(Constants.RESULTCODE);
+				CircleInfoActivity.this.finish();
+			}
+			
+			@Override
+			public void http_Fails(int error, String msg) {
+			
+				Toast.makeText(mContext, msg, 1000).show();
+				
+			}
+		}, CircleInfoActivity.this);
 	}
 
 	/**

@@ -20,6 +20,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.activity.CircleInfoActivity;
 import com.shenma.yueba.baijia.fragment.BaseFragment;
+import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.yangjia.adapter.MyCircleForSocialAdapter;
@@ -61,7 +62,7 @@ public class MyCircleForSocialFragment extends BaseFragment {
 					long arg3) {
 				Intent intent = new Intent(getActivity(),CircleInfoActivity.class);
 				intent.putExtra("circleId", mList.get(pos-1).getId());
-				startActivity(intent);
+				getActivity().startActivityForResult(intent, Constants.REQUESTCODE);
 			}
 		});
 		pull_refresh_list.setOnRefreshListener(new OnRefreshListener2() {
