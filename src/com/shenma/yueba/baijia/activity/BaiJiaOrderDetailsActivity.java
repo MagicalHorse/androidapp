@@ -91,7 +91,7 @@ BaijiaOrderDetailsAdapter baijiaOrderDetailsAdapter;
 		//订单金额
 		order_money_count=(TextView)parentView.findViewById(R.id.order_money_count);
 		//日期
-		order_date_count=(TextView)parentView.findViewById(R.id.order_money_count);
+		order_date_count=(TextView)parentView.findViewById(R.id.order_date_count);
 		//买手昵称
 		customer_account_content=(TextView)parentView.findViewById(R.id.customer_account_content);
 		//提货地址
@@ -142,7 +142,7 @@ BaijiaOrderDetailsAdapter baijiaOrderDetailsAdapter;
 	 * ***/
 	void setFont()
 	{
-		ToolsUtil.setFontStyle(this, parentView, R.id.tv_top_title,R.id.order_no_title,R.id.order_no_content,R.id.order_wating_title,R.id.order_wating_content,R.id.order_money_title,R.id.order_money_count,R.id.order_date_title,R.id.order_date_count,R.id.customer_account_title,R.id.customer_account_content,R.id.tv_customer_phone_title,R.id.tv_customer_phone_content,R.id.tv_get_address_title,R.id.tv_get_address_content,R.id.baijia_orderdetails_lianxibuyer_textview,R.id.baijia_orderdetails_ziti_button,R.id.baijia_orderdetails_sqtk_button,R.id.baijia_orderdetails_cancellorder_button,R.id.baijia_orderdetails_pay_button);
+		ToolsUtil.setFontStyle(this, parentView, R.id.tv_top_title,R.id.order_no_title,R.id.order_no_content,R.id.order_wating_title,R.id.order_wating_content,R.id.order_money_title,R.id.order_money_count,R.id.order_date_title,R.id.order_date_count,R.id.customer_account_title,R.id.customer_account_content,R.id.tv_customer_phone_title,R.id.tv_customer_phone_content,R.id.tv_get_address_title,R.id.tv_get_address_content,R.id.baijia_orderdetails_lianxibuyer_textview,R.id.baijia_orderdetails_ziti_button,R.id.baijia_orderdetails_sqtk_button,R.id.baijia_orderdetails_cancellorder_button,R.id.baijia_orderdetails_pay_button,R.id.baijia_orderdetails_xjfx_textview);
 	}
 
 	@Override

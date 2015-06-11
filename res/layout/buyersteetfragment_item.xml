@@ -3,6 +3,7 @@
     xmlns:zzy="http://schemas.android.com/apk/res/com.shenma.yueba"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical" >
 
     <RelativeLayout
@@ -78,6 +79,7 @@
         android:scaleType="fitXY"/>
 
     <TextView
+        android:textSize="@dimen/textsize13sp"
         android:id="@+id/buyersteetfragmeng_item_desc_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -128,6 +130,9 @@
     </RelativeLayout>
 
     <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/user_config_iconwidth40_dimen"
         android:id="@+id/approvebuyerdetails_attention_linerlayout"
         layout="@layout/attentionpeople_layout" />
     

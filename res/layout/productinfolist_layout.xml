@@ -22,21 +22,21 @@
             android:id="@+id/affirmorder_item_productname_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="名称" />
+            android:text="" />
 
         <TextView
             android:id="@+id/affirmorder_item_productsize_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/affirmorder_item_productname_textview"
-            android:text="尺寸" />
+            android:text="" />
 
         <TextView
             android:id="@+id/affirmorder_item_productcount_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/affirmorder_item_productsize_textview"
-            android:text="数量" />
+            android:text="" />
 
         <TextView
             android:id="@+id/affirmorder_item_productprice_textview"

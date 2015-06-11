@@ -8,6 +8,7 @@
     android:paddingTop="@dimen/shop_main_width3_dimen"
     android:paddingBottom="@dimen/shop_main_width3_dimen"
     android:orientation="horizontal"
+    android:background="@color/white"
     >
 
     <TextView

@@ -63,6 +63,12 @@ public class HttpConstants {
 	 * 我关注的人/我的粉丝
 	 */
 	public static String METHOD_GETUSERFAVOITE = USERURL + "GetUserFavoite";
+	
+	/**
+	 * 设置或取消我的关注
+	 */
+	public static String SETFAVOITE = USERURL + "Favoite";
+	
 	/**
 	 * 常见联系人地址
 	 */

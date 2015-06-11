@@ -1245,6 +1245,21 @@ public class HttpControl {
 	
 	
 	
+	/**
+	 * 设置关注或取消关注
+	 * 
+	 * @param httpCallBack HttpCallBackInterface 回调接口
+	 * @param context  Context
+	 * @param FavoriteId  被关注的人的Id
+	 * @param Status   1表示关注   0表示取消关注
+	 * @return void
+	 * **/
+	public void setFavoite(int favoriteId,int Status,final HttpCallBackInterface httpCallBack, Context context) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("FavoriteId", Integer.toString(favoriteId));
+		map.put("Status", Integer.toString(Status));
+		BasehttpSend(map, context, HttpConstants.SETFAVOITE,httpCallBack, BaseRequest.class, true, true);
+	}
 	
 	
 	

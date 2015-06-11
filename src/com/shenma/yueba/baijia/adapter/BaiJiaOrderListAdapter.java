@@ -154,9 +154,7 @@ public class BaiJiaOrderListAdapter extends BaseAdapter {
 				+ productPrice);
 		holder.baijia_orderdetails_lianxibuyer_textview.setText(ToolsUtil
 				.nullToString(productAddress));
-		holder.baijia_orderlayout_item_pricevalue_textview.setText("共"
-				+ allCount + "件商品");
-		holder.baijia_orderlayout_item_price_textview.setText(allPrice + "");
+		holder.baijia_orderlayout_item_pricevalue_textview.setText(allPrice + "");
 		holder.affirmorder_item_icon_imageview
 				.setImageResource(R.drawable.default_pic);
 		holder.affirmorder_item_icon_imageview.setTag(productInfoBean
