@@ -400,6 +400,11 @@ public class HttpConstants {
 	 * buyer相关的接口
 	 */
 	
+	/**
+	 * 货款管理的信息
+	 */
+	public static String METHOD_BUYER_PAYMENTGOODS = BUYER
+	+ "PaymentGoods";
 	
 	
 	

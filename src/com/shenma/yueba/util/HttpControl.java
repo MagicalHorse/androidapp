@@ -557,6 +557,20 @@ public class HttpControl {
 		BasehttpSend(map, context, HttpConstants.METHOD_BUYER_GET_STORE_LIST,
 				httpCallBack, StoreListBackBean.class, refresh, canCancle);
 	}
+	
+	/**
+	 * 货款管理信息
+	 * 
+	 * @param bean
+	 * @param httpCallBack
+	 * @param context
+	 */
+	public void getHuoKuanManagerInfo(final HttpCallBackInterface httpCallBack,
+			Context context, boolean refresh, boolean canCancle) {
+		Map<String, String> map = new HashMap<String, String>();
+		BasehttpSend(map, context, HttpConstants.METHOD_BUYER_PAYMENTGOODS,
+				httpCallBack, HuoKuanManagerBackBean.class, refresh, canCancle);
+	}
 
 	/**
 	 * 申请认证买手的接口

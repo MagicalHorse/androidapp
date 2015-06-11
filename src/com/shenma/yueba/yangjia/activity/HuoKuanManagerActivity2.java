@@ -1,6 +1,5 @@
 package com.shenma.yueba.yangjia.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -11,7 +10,11 @@ import android.widget.TextView;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.BaseActivityWithTopView;
+import com.shenma.yueba.baijia.modle.HuoKuanManagerBackBean;
 import com.shenma.yueba.util.FontManager;
+import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.ToolsUtil;
+import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.view.progressbar.NumberProgressBar;
 import com.shenma.yueba.view.progressbar.NumberProgressBar.ProgressTextVisibility;
 import com.shenma.yueba.view.progressbar.OnProgressBarListener;
@@ -138,5 +141,35 @@ public class HuoKuanManagerActivity2 extends BaseActivityWithTopView implements
 	public void onProgressChange(int current, int max) {
 		// TODO Auto-generated method stub
 
+	}
+	
+	
+	private void getHuoKuanManagerInfo(){
+		HttpControl httpContorl = new HttpControl();
+		httpContorl.getHuoKuanManagerInfo(new HttpCallBackInterface() {
+			
+			@Override
+			public void http_Success(Object obj) {
+				HuoKuanManagerBackBean bean = (HuoKuanManagerBackBean) obj;
+				if(bean!=null && bean.getData()!=null){
+					tv_had_withdraw_ratio.setText("￥"+ToolsUtil.nullToString(bean.getData().getPickedAmount()));
+					tv_had_withdraw_ratio.setText("已提现货款"+ToolsUtil.nullToString(bean.getData().getPickedAmount()));
+					tv_had_withdraw_ratio.setText("已提现货款"+ToolsUtil.nullToString(bean.getData().getPickedAmount()));
+					tv_had_withdraw_ratio.setText("已提现货款"+ToolsUtil.nullToString(bean.getData().getPickedAmount()));
+					tv_had_withdraw_ratio.setText("已提现货款"+ToolsUtil.nullToString(bean.getData().getPickedAmount()));
+					tv_had_withdraw_ratio.setText("已提现货款"+ToolsUtil.nullToString(bean.getData().getPickedAmount()));
+					tv_had_withdraw_ratio.setText("已提现货款"+ToolsUtil.nullToString(bean.getData().getPickedAmount()));
+					tv_had_withdraw_ratio.setText("已提现货款"+ToolsUtil.nullToString(bean.getData().getPickedAmount()));
+					tv_had_withdraw_ratio.setText("已提现货款"+ToolsUtil.nullToString(bean.getData().getPickedAmount()));
+					tv_had_withdraw_ratio.setText("已提现货款"+ToolsUtil.nullToString(bean.getData().getPickedAmount()));
+				}
+			}
+			
+			@Override
+			public void http_Fails(int error, String msg) {
+				// TODO Auto-generated method stub
+				
+			}
+		}, HuoKuanManagerActivity2.this, true, true);
 	}
 }
