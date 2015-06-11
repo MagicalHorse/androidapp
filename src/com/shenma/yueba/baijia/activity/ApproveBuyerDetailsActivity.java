@@ -545,10 +545,9 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView impleme
 			if(v.getTag()!=null && v.getTag() instanceof ProductsDetailsInfoBean)
 			{
 				ProductsDetailsInfoBean Data=(ProductsDetailsInfoBean)v.getTag();
-				LikeUsersInfoBean likeUsersInfoBean=Data.getLikeUsers();
-				if(likeUsersInfoBean!=null)
+				if(Data!=null)
 				{
-					if(likeUsersInfoBean.isIsLike())
+					if(Data.isIsFavorite())
 					{
 						submitAttention(0, Data,v);
 					}else

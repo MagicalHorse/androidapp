@@ -41,6 +41,18 @@ View parentview;
 ListView affirmorder_layout_product_listview;
 //提货人手机号
 TextView affirmorder_item_tihuophonevalue_textview;
+//买手号码
+TextView affirmorder_layout_novalue_textview;
+//买手电话
+TextView affirmorder_layout_phonevalue_textview;
+//提货地址
+TextView affirmorder_layout_pickupvalue_textview;
+//商品个数
+TextView affirmorder_item_allcount_textview;
+//实际付款
+TextView affirmorder_item_pricevalue_textview;
+//打烊
+TextView affirmorder_item_youhuicontext_textview;
 //提交
 Button affrimorder_layout_footer_sumit_button;
 HttpControl httpControl=new HttpControl();
@@ -70,6 +82,7 @@ PrioductSizesInfoBean currCheckedFouce=null;//选择的尺寸数据
 			if(productsDetailsInfoBean!=null)
 			{
 				initView();
+				ToolsUtil.setFontStyle(AffirmOrderActivity.this, parentview, R.id.affirmorder_item_youhuititle_textview,R.id.affirmorder_item_youhuicontext_textview);
 			}else
 			{
 				MyApplication.getInstance().showMessage(this, "数据错误");
@@ -96,6 +109,21 @@ PrioductSizesInfoBean currCheckedFouce=null;//选择的尺寸数据
 				submitData();
 			}
 		});
+
+		//买手号码
+		affirmorder_layout_novalue_textview=(TextView)findViewById(R.id.affirmorder_layout_novalue_textview);
+		// 买手电话
+		affirmorder_layout_phonevalue_textview=(TextView)findViewById(R.id.affirmorder_layout_phonevalue_textview);
+		//提货地址
+		affirmorder_layout_pickupvalue_textview=(TextView)findViewById(R.id.affirmorder_layout_pickupvalue_textview);
+		//商品总个数
+		affirmorder_item_allcount_textview=(TextView)findViewById(R.id.affirmorder_item_allcount_textview);
+		//实际付款
+		affirmorder_item_pricevalue_textview=(TextView)findViewById(R.id.affirmorder_item_pricevalue_textview);
+		//打烊
+		affirmorder_item_youhuicontext_textview=(TextView)findViewById(R.id.affirmorder_item_youhuicontext_textview);
+		
+		//提货电话
 		affirmorder_item_tihuophonevalue_textview=(TextView)findViewById(R.id.affirmorder_item_tihuophonevalue_textview);
 		affirmorder_layout_icon_roundimageview=(RoundImageView)findViewById(R.id.affirmorder_layout_icon_roundimageview);
 		affirmorder_layout_icon_roundimageview.setTag(productsDetailsInfoBean);
@@ -103,7 +131,7 @@ PrioductSizesInfoBean currCheckedFouce=null;//选择的尺寸数据
 		MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.nullToString(productsDetailsInfoBean.getBuyerLogo()), affirmorder_layout_icon_roundimageview);
 		affirmorder_layout_icon_imageview=(ImageView)findViewById(R.id.affirmorder_layout_icon_imageview);
 		//设置联系电话
-		affirmorder_layout_icon_imageview.setTag("");
+		affirmorder_layout_icon_imageview.setTag(ToolsUtil.nullToString(productsDetailsInfoBean.getBuyerMobile()));
 		//电话
 		affirmorder_layout_icon_imageview.setOnClickListener(new OnClickListener() {
 			
@@ -143,6 +171,7 @@ PrioductSizesInfoBean currCheckedFouce=null;//选择的尺寸数据
 		allPrice=buyCount * productsDetailsInfoBean.getPrice();
 		ToolsUtil.setFontStyle(this, parentview, R.id.affirmorder_item_pricevalue_textview, ToolsUtil.DounbleToString_2(allPrice));
 		
+		//确定
 		affrimorder_layout_footer_sumit_button=(Button)parentview.findViewById(R.id.affrimorder_layout_footer_sumit_button);
 		affrimorder_layout_footer_sumit_button.setOnClickListener(new OnClickListener() {
 			
