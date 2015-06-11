@@ -207,19 +207,13 @@
                 android:orientation="vertical"
                 android:padding="@dimen/shop_main_width5_dimen" >
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="bottom|center_horizontal"
-                    android:layout_weight="1"
-                    android:src="@drawable/circle_default" />
-
                 <TextView
+                    android:drawableTop="@drawable/circle_default"
                     android:id="@+id/approvebuyerdetails_layout_siliao_linerlayout_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="top"
+                    android:gravity="center"
                     android:textSize="13dip"
                     android:text="私聊" />
             </LinearLayout>
@@ -232,20 +226,13 @@
                 android:gravity="center"
                 android:orientation="vertical"
                 android:padding="@dimen/shop_main_width5_dimen" >
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="bottom|center_horizontal"
-                    android:layout_weight="1"
-                    android:src="@drawable/greystar_big" />
-
+                
                 <TextView
+                    android:gravity="center"
+                    android:drawableTop="@drawable/collect_backgroud"
                     android:id="@+id/approvebuyerdetails_layout_shoucang_linerlayout_textview"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="top"
                     android:textSize="13dip"
                     android:text="收藏" />
             </LinearLayout>
