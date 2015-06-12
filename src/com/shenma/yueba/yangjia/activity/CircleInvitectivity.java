@@ -29,7 +29,6 @@ import android.widget.Toast;
 import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.activity.BaseActivityWithTopView;
 import com.shenma.yueba.baijia.activity.FillPersonDataActivity;
-import com.shenma.yueba.baijia.modle.BaseRequest;
 import com.shenma.yueba.baijia.modle.CityListRequestBean;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.HttpControl;
@@ -41,7 +40,8 @@ import com.shenma.yueba.util.sore.PinyinComparator;
 import com.shenma.yueba.util.sore.SideBar;
 import com.shenma.yueba.util.sore.SideBar.OnTouchingLetterChangedListener;
 import com.shenma.yueba.yangjia.modle.AttationAndFansItemBean;
-import com.shenma.yueba.yangjia.modle.AttationAndFansListBackBean;
+import com.shenma.yueba.yangjia.modle.FansBackListForInviteCirlce;
+import com.shenma.yueba.yangjia.modle.FansItemBean;
 
 /**
  * 邀请好友加入圈子
@@ -63,7 +63,7 @@ public class CircleInvitectivity extends BaseActivityWithTopView implements
 	 * 汉字转换成拼音的类
 	 */
 	private CharacterParser characterParser;
-	private List<AttationAndFansItemBean> sourceDateList;
+	private List<FansItemBean> sourceDateList;
 	// 城市列表map string--城市名称 Integer--对应城市的id
 	Map<String, Integer> citymap = new HashMap<String, Integer>();
 	List<String> city_list = new ArrayList<String>();
@@ -149,10 +149,10 @@ public class CircleInvitectivity extends BaseActivityWithTopView implements
 						getApplication(),
 						((AttationAndFansItemBean) adapter.getItem(position))
 								.getUserName(), Toast.LENGTH_SHORT).show();
-				List<AttationAndFansItemBean> AttationAndFansItemBean = adapter
+				List<FansItemBean> AttationAndFansItemBean = adapter
 						.getListData();
 				if (AttationAndFansItemBean != null) {
-					AttationAndFansItemBean attationAndFansItemBean = AttationAndFansItemBean
+					FansItemBean attationAndFansItemBean = AttationAndFansItemBean
 							.get(position);
 					String name = attationAndFansItemBean.getUserName();
 					if (citymap.containsKey(name)) {
@@ -169,7 +169,7 @@ public class CircleInvitectivity extends BaseActivityWithTopView implements
 				finish();
 			}
 		});
-		sourceDateList = new ArrayList<AttationAndFansItemBean>();
+		sourceDateList = new ArrayList<FansItemBean>();
 		// SourceDateList =
 		// filledData(getResources().getStringArray(R.array.date));
 		adapter = new FriendSortAdapter(this, sourceDateList);
@@ -208,13 +208,13 @@ public class CircleInvitectivity extends BaseActivityWithTopView implements
 	 * @param filterStr
 	 */
 	private void filterData(String filterStr) {
-		List<AttationAndFansItemBean> filterDateList = new ArrayList<AttationAndFansItemBean>();
+		List<FansItemBean> filterDateList = new ArrayList<FansItemBean>();
 
 		if (TextUtils.isEmpty(filterStr)) {
 			filterDateList = sourceDateList;
 		} else {
 			filterDateList.clear();
-			for (AttationAndFansItemBean AttationAndFansItemBean : sourceDateList) {
+			for (FansItemBean AttationAndFansItemBean : sourceDateList) {
 				String name = AttationAndFansItemBean.getUserName();
 				if (name.indexOf(filterStr.toString()) != -1
 						|| characterParser.getSelling(name).startsWith(
@@ -259,12 +259,11 @@ public class CircleInvitectivity extends BaseActivityWithTopView implements
 
 					@Override
 					public void http_Success(Object obj) {
-						AttationAndFansListBackBean bean = (AttationAndFansListBackBean) obj;
+						FansBackListForInviteCirlce bean = (FansBackListForInviteCirlce) obj;
 						if (bean != null && bean.getData() != null
-								&& bean.getData().getItems() != null
-								&& bean.getData().getItems().size() > 0) {
+								&& bean.getData().size() > 0) {
 							tv_nodata.setVisibility(View.GONE);
-							filledData(bean.getData().getItems());
+							filledData(bean.getData());
 							// 根据a-z进行排序源数据
 							Collections.sort(sourceDateList, pinyinComparator);
 							adapter.updateListView(sourceDateList);
@@ -288,14 +287,16 @@ public class CircleInvitectivity extends BaseActivityWithTopView implements
 	 * @param date
 	 * @return
 	 */
-	private void filledData(List<AttationAndFansItemBean> dataList) {
+	private void filledData(List<FansItemBean> dataList) {
 		for (int i = 0; i < dataList.size(); i++) {
 			String userName = dataList.get(i).getUserName();
+			if (TextUtils.isEmpty(userName)) {
+				userName = "无名氏";
+				dataList.get(i).setUserName(userName);
+			}
 			// 汉字转换成拼音
 			String pinyin = characterParser.getSelling(userName);
-			if (TextUtils.isEmpty(pinyin)) {
-				continue;
-			}
+			
 			String sortString = pinyin.substring(0, 1).toUpperCase();
 			// 正则表达式，判断首字母是否是英文字母
 			if (sortString.matches("[A-Z]")) {

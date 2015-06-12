@@ -7,7 +7,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -19,13 +18,13 @@ import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.view.RoundImageView;
 import com.shenma.yueba.yangjia.activity.CircleInvitectivity;
-import com.shenma.yueba.yangjia.modle.AttationAndFansItemBean;
+import com.shenma.yueba.yangjia.modle.FansItemBean;
 
 public class FriendSortAdapter extends BaseAdapter implements SectionIndexer{
-	private List<AttationAndFansItemBean> list = null;
+	private List<FansItemBean> list = null;
 	private Context mContext;
 	
-	public FriendSortAdapter(Context mContext, List<AttationAndFansItemBean> list) {
+	public FriendSortAdapter(Context mContext, List<FansItemBean> list) {
 		this.mContext = mContext;
 		this.list = list;
 	}
@@ -34,12 +33,12 @@ public class FriendSortAdapter extends BaseAdapter implements SectionIndexer{
 	 * 当ListView数据发生变化时,调用此方法来更新ListView
 	 * @param list
 	 */
-	public void updateListView(List<AttationAndFansItemBean> list){
+	public void updateListView(List<FansItemBean> list){
 		this.list = list;
 		notifyDataSetChanged();
 	}
 
-	public List<AttationAndFansItemBean>  getListData()
+	public List<FansItemBean>  getListData()
 	{
 		return list;
 	}
@@ -58,7 +57,7 @@ public class FriendSortAdapter extends BaseAdapter implements SectionIndexer{
 
 	public View getView(final int position, View view, ViewGroup arg2) {
 		ViewHolder viewHolder = null;
-		final AttationAndFansItemBean mContent = list.get(position);
+		final FansItemBean mContent = list.get(position);
 		if (view == null) {
 			viewHolder = new ViewHolder();
 			view = LayoutInflater.from(mContext).inflate(R.layout.invite_to_circle_item, null);
