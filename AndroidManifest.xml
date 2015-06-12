@@ -108,11 +108,11 @@
             android:name="com.shenma.yueba.baijia.activity.SplashActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
-            <intent-filter>
+            <!-- <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter> -->
         </activity>
 
         <!-- 友盟AppKey， 需要替换成你自己的 -->
@@ -297,6 +297,12 @@
         <!-- 败家订单申诉页面 -->
         <activity
             android:name="com.shenma.yueba.baijia.activity.OrderAppealActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        
+        <!-- 败家订单申诉中页面 -->
+        <activity
+            android:name="com.shenma.yueba.baijia.activity.BaijiaAppealLoadingActivity"
             android:screenOrientation="portrait" >
         </activity>
 
