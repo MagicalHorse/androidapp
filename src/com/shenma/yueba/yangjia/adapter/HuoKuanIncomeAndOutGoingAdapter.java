@@ -6,18 +6,22 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.adapter.BaseAdapterWithUtil;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.ToolsUtil;
+import com.shenma.yueba.yangjia.activity.HuoKuanIncomingAndOutgoingsActivity;
 import com.shenma.yueba.yangjia.modle.HuoKuanItem;
 import com.shenma.yueba.yangjia.modle.OrderItem;
 
 public class HuoKuanIncomeAndOutGoingAdapter extends BaseAdapterWithUtil {
 	private List<HuoKuanItem> mList;
 	private int tag;//标记不同的订单状态
+	private double prices;
 	public HuoKuanIncomeAndOutGoingAdapter(Context ctx,List<HuoKuanItem> mList,int tag) {
 		super(ctx);
 		this.mList = mList;
@@ -45,7 +49,7 @@ public class HuoKuanIncomeAndOutGoingAdapter extends BaseAdapterWithUtil {
 
 	@SuppressWarnings("null")
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public View getView(final int position, View convertView, ViewGroup parent) {
 		Holder holder;
 		if(convertView == null){
 			holder = new Holder();
@@ -57,6 +61,22 @@ public class HuoKuanIncomeAndOutGoingAdapter extends BaseAdapterWithUtil {
 			holder.tv_order_muber = (TextView) convertView.findViewById(R.id.tv_order_muber);
 			holder.tv_date = (TextView) convertView.findViewById(R.id.tv_date);
 			holder.cb = (CheckBox) convertView.findViewById(R.id.cb);
+			holder.cb.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+				
+				@Override
+				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+					if(isChecked){
+						((HuoKuanIncomingAndOutgoingsActivity)ctx).setIds(mList.get(position).getOrderNo());
+						prices= prices+Double.parseDouble(mList.get(position).getAmount());
+						((HuoKuanIncomingAndOutgoingsActivity)ctx).setHuoKuanCount(prices+"");
+					}else{
+						((HuoKuanIncomingAndOutgoingsActivity)ctx).removeIds(mList.get(position).getOrderNo());
+						prices= prices - Double.parseDouble(mList.get(position).getAmount());
+						((HuoKuanIncomingAndOutgoingsActivity)ctx).setHuoKuanCount(prices+"");
+					}
+					
+				}
+			});
 			if(tag == 0){//可提现
 				holder.cb.setVisibility(View.VISIBLE);
 				holder.tv_status.setVisibility(View.GONE);

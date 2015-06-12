@@ -1,6 +1,7 @@
 package com.shenma.yueba.yangjia.fragment;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import android.annotation.SuppressLint;
@@ -9,9 +10,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,7 +35,7 @@ import com.shenma.yueba.yangjia.modle.OrderItem;
 import com.shenma.yueba.yangjia.modle.OrderListBackBean;
 
 @SuppressLint("ValidFragment")
-public class HuoKuanIncomeAndOutGoingFragment extends BaseFragment {
+public class HuoKuanIncomeAndOutGoingFragment extends BaseFragment implements OnClickListener {
 	private View rootView;// 缓存Fragment view
 	private PullToRefreshListView rlv;
 	private List<HuoKuanItem> mList = new ArrayList<HuoKuanItem>();
@@ -42,7 +45,10 @@ public class HuoKuanIncomeAndOutGoingFragment extends BaseFragment {
 	private int tag = 0;
 	private String status;// 0冻结中，1可提现，2已经提现，3退款
 	public TextView tv_nodata;
-
+	private LinearLayout ll_bottom_layout;
+	private View bottomView;
+	public TextView tv_bottom;
+	private List<String> ids = new LinkedList<String>();
 	@SuppressLint("ValidFragment")
 	public HuoKuanIncomeAndOutGoingFragment(int tag) {
 		this.tag = tag;
@@ -56,6 +62,17 @@ public class HuoKuanIncomeAndOutGoingFragment extends BaseFragment {
 					R.layout.refresh_listview_without_title_layout, container,
 					false);
 			tv_nodata = (TextView) rootView.findViewById(R.id.tv_nodata);
+			ll_bottom_layout = (LinearLayout) rootView.findViewById(R.id.ll_bottom_layout);
+			bottomView = View.inflate(getActivity(), R.layout.bottom_text_layout, null);
+			tv_bottom = (TextView) bottomView.findViewById(R.id.tv_bottom);
+			tv_bottom.setOnClickListener(this);
+			ll_bottom_layout.addView(bottomView);
+			if(tag == 0){
+				ll_bottom_layout.setVisibility(View.VISIBLE);
+				tv_bottom.setText("提现货款");
+			}else{
+				ll_bottom_layout.setVisibility(View.GONE);
+			}
 			rlv = (PullToRefreshListView) rootView
 					.findViewById(R.id.pull_refresh_list);
 			rlv.setMode(Mode.BOTH);
@@ -95,6 +112,33 @@ public class HuoKuanIncomeAndOutGoingFragment extends BaseFragment {
 		return rootView;
 	}
 
+	
+	
+	public String setListToString(List<String> ids) {
+		StringBuffer sb = new StringBuffer();
+		for (int i = 0; i < ids.size(); i++) {
+			sb.append(ids.get(i)).append(",");
+		}
+		return sb.substring(0, sb.length() - 1);
+	}
+	
+	
+	public void setIdToList(String id) {
+		if (ids.contains(id)) {
+			return;
+		} else {
+			ids.add(id);
+		}
+	}
+
+	public void removeIdFromList(String id) {
+		if (ids.contains(id)) {
+			ids.remove(id);
+		} else {
+			return;
+		}
+	}
+	
 	public void getData(int tag, Context ctx) {
 		this.tag = tag;
 		if (tag == 0) {// 可提现
@@ -161,5 +205,18 @@ public class HuoKuanIncomeAndOutGoingFragment extends BaseFragment {
 				Toast.makeText(getActivity(), msg, 1000).show();
 			}
 		}, getActivity(), true, false);
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.tv_bottom://
+			
+			break;
+
+		default:
+			break;
+		}
+		
 	}
 }

@@ -59,12 +59,24 @@ public class HuoKuanIncomingAndOutgoingsActivity extends BaseFragmentActivity im
 		fragmentList.get(0).getData(0,HuoKuanIncomingAndOutgoingsActivity.this);
 	}
 
+	
+	public void setHuoKuanCount(String content){
+		fragmentList.get(0).tv_bottom.setText(content);
+	}
+	
+	public void setIds(String id){
+		fragmentList.get(0).setIdToList(id);
+	}
+	public void removeIds(String id){
+		fragmentList.get(0).removeIdFromList(id);
+	}
+	
 	private void initView() {
 		tv_top_left = (TextView) findViewById(R.id.tv_top_left);
 		tv_top_title = (TextView) findViewById(R.id.tv_top_title);
 		tv_top_left.setVisibility(View.VISIBLE);
 		tv_top_title.setVisibility(View.VISIBLE);
-		tv_top_title.setText("销售收支");
+		tv_top_title.setText("货款收支");
 		tv_top_left.setOnClickListener(this);
 		iv_cursor_left = (ImageView) findViewById(R.id.iv_cursor_left);
 		iv_cursor_left2 = (ImageView) findViewById(R.id.iv_cursor_left2);
