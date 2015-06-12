@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
+    
     <LinearLayout
         android:id="@+id/ll_board_reward"
         android:layout_width="fill_parent"
