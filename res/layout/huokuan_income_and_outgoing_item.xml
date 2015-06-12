@@ -38,7 +38,14 @@
             android:text="已提货"
             android:textColor="@color/text_gray_color"
             android:textSize="16sp" />
-       
+         <CheckBox
+            android:id="@+id/cb"
+            android:visibility="gone"
+              android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/checkbox_selector" />
     </RelativeLayout>
 
     <RelativeLayout

@@ -5,6 +5,7 @@ import java.util.List;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.shenma.yueba.R;
@@ -55,6 +56,14 @@ public class HuoKuanIncomeAndOutGoingAdapter extends BaseAdapterWithUtil {
 			holder.tv_order_number_title = (TextView) convertView.findViewById(R.id.tv_order_number_title);
 			holder.tv_order_muber = (TextView) convertView.findViewById(R.id.tv_order_muber);
 			holder.tv_date = (TextView) convertView.findViewById(R.id.tv_date);
+			holder.cb = (CheckBox) convertView.findViewById(R.id.cb);
+			if(tag == 0){//可提现
+				holder.cb.setVisibility(View.VISIBLE);
+				holder.tv_status.setVisibility(View.GONE);
+			}else{
+				holder.cb.setVisibility(View.GONE);
+				holder.tv_status.setVisibility(View.VISIBLE);
+			}
 			FontManager.changeFonts(ctx, holder.tv_earning_money_title,holder.tv_money_number,
 					holder.tv_status,holder.tv_order_number_title,holder.tv_order_muber,holder.tv_date);
 			convertView.setTag(holder);
@@ -77,6 +86,7 @@ public class HuoKuanIncomeAndOutGoingAdapter extends BaseAdapterWithUtil {
 		TextView tv_order_number_title;//货号
 		TextView tv_money_number;//规格
 		TextView tv_status;//规格
+		CheckBox cb;
 	}
 
 }

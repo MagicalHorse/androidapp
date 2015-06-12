@@ -136,7 +136,7 @@ public class HuoKuanIncomeAndOutGoingFragment extends BaseFragment {
 						mList.clear();
 						mList.addAll(bean.getData().getItems());
 						adapter = new HuoKuanIncomeAndOutGoingAdapter(
-								getActivity(), mList, 0);
+								getActivity(), mList, tag);
 						rlv.setAdapter(adapter);
 					} else {
 						tv_nodata.setVisibility(View.VISIBLE);
