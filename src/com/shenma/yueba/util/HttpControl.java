@@ -1036,6 +1036,21 @@ public class HttpControl {
 	}
 
 	/**
+	 * 获取粉丝列表（去除该圈子还没有添加的人）
+	 * 
+	 * @return void
+	 * **/
+	public void GetValidFansListToGroup(String groupid,
+			boolean showDialog, final HttpCallBackInterface httpCallBack,
+			Context context) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put(Constants.GROUPID, groupid);
+		BasehttpSend(map, context, HttpConstants.METHOD_CIRCLE_GETVALIDFANSLISTTOGROUP,
+				httpCallBack, BaseRequest.class, showDialog, true);
+	}
+	
+	
+	/**
 	 * 删除圈子成员
 	 * 
 	 * @return void

@@ -361,6 +361,14 @@ public class HttpConstants {
 	
 	
 	/**
+	 * 社交管理--修改圈子名称
+	 */
+	public static String METHOD_CIRCLE_GETVALIDFANSLISTTOGROUP = Circle
+			+ "GetValidFansListToGroup";
+	
+
+	
+	/**
 	 * 社交管理--删除圈子成员
 	 */
 	public static String METHOD_CIRCLE_REMOVEGROUPMEMBER = Circle

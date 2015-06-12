@@ -246,13 +246,15 @@ public class CircleInvitectivity extends BaseActivityWithTopView implements
 
 	}
 
+	
+	
 	/**
 	 * 获取关注列表和fans列表
 	 */
 	public void getAttationOrFansList(String status, Context ctx,
 			boolean showDialog) {
 		HttpControl httpControl = new HttpControl();
-		httpControl.getAttationOrFansList(status, 1, "1000",
+		httpControl.GetValidFansListToGroup(circleId,true,
 				new HttpCallBackInterface() {
 
 					@Override
@@ -277,7 +279,7 @@ public class CircleInvitectivity extends BaseActivityWithTopView implements
 						Toast.makeText(CircleInvitectivity.this, msg, 1000)
 								.show();
 					}
-				}, ctx, showDialog);
+				}, ctx);
 	}
 
 	/**
