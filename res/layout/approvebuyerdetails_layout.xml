@@ -178,6 +178,7 @@
                 <!-- 优惠信息 -->
 
                 <LinearLayout
+                    android:visibility="gone"
                     android:layout_marginBottom="@dimen/shop_main_width5_dimen"
                     android:paddingLeft="@dimen/margin_left_and_right"
                     android:id="@+id/approvebuyerdetails_closeingtime_linearlayout"

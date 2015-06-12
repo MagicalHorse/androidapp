@@ -36,6 +36,7 @@ import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.adapter.UserIconAdapter;
 import com.shenma.yueba.baijia.modle.LikeUsersInfoBean;
 import com.shenma.yueba.baijia.modle.ProductsDetailsInfoBean;
+import com.shenma.yueba.baijia.modle.ProductsDetailsPromotion;
 import com.shenma.yueba.baijia.modle.RequestProductDetailsInfoBean;
 import com.shenma.yueba.baijia.modle.UsersInfoBean;
 import com.shenma.yueba.util.FontManager;
@@ -86,6 +87,7 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView impleme
 	// 直接购买
 	Button approvebuyerbuybutton;
 	List<View> viewlist = new ArrayList<View>();
+	LinearLayout approvebuyerdetails_closeingtime_linearlayout;
 	Timer timer;
 	RequestProductDetailsInfoBean bean;
 	@Override
@@ -114,6 +116,8 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView impleme
 				ApproveBuyerDetailsActivity.this.finish();
 			}
 		});
+		//活动父视图
+		approvebuyerdetails_closeingtime_linearlayout=(LinearLayout)findViewById(R.id.approvebuyerdetails_closeingtime_linearlayout);
 		//打烊时间
 		approvebuyerdetails_closeingtime_textview=(TextView)findViewById(R.id.approvebuyerdetails_closeingtime_textview);
 		//打烊信息
@@ -355,7 +359,14 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView impleme
 			
 			
 		}
-
+		ProductsDetailsPromotion productsDetailsPromotion=Data.getIsPromotion();
+		if(productsDetailsPromotion!=null)
+		{
+			approvebuyerdetails_closeingtime_linearlayout.setVisibility(View.VISIBLE);
+			approvebuyerdetails_closeingtime_textview.setText(ToolsUtil.nullToString(productsDetailsPromotion.getDescriptionText()));
+			approvebuyerdetails_closeinginfo_textview.setText(ToolsUtil.nullToString(productsDetailsPromotion.getTipText()));
+		}
+		
 	}
 
 	@Override
