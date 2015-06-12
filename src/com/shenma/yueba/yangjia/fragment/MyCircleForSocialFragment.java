@@ -43,6 +43,7 @@ public class MyCircleForSocialFragment extends BaseFragment {
 	public TextView tv_nodata;
 	private int page = 1;
 	private boolean isRefresh = true;
+	private View view;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -51,7 +52,7 @@ public class MyCircleForSocialFragment extends BaseFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View view = inflater.inflate(
+		view = inflater.inflate(
 				R.layout.refresh_listview_without_title_layout, null);
 		tv_nodata = (TextView) view.findViewById(R.id.tv_nodata);
 		pull_refresh_list = (PullToRefreshListView) view.findViewById(R.id.pull_refresh_list);
@@ -97,6 +98,9 @@ public class MyCircleForSocialFragment extends BaseFragment {
 		httpControl.getCircleList(page,showDialog, new HttpCallBackInterface() {
 			@Override
 			public void http_Success(Object obj) {
+				if(pull_refresh_list ==null){
+					pull_refresh_list = (PullToRefreshListView) view.findViewById(R.id.pull_refresh_list);
+				}
 				pull_refresh_list.onRefreshComplete();
 				CircleListBackBean bean = (CircleListBackBean) obj;
 				if (isRefresh) {

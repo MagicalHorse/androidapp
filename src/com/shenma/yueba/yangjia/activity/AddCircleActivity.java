@@ -60,7 +60,7 @@ public class AddCircleActivity extends BaseActivityWithTopView implements
 	private RelativeLayout rl_head;
 	private String littlePicPath;// 小图路径
 	private String littlePicPath_cache;// 裁剪后图片存储的路径
-	private CustomProgressDialog progressDialog;
+	//private CustomProgressDialog progressDialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +68,7 @@ public class AddCircleActivity extends BaseActivityWithTopView implements
 		setContentView(R.layout.add_circle_layout);
 		super.onCreate(savedInstanceState);
 		initView();
-		progressDialog = CustomProgressDialog.createDialog(this);
+		//progressDialog = CustomProgressDialog.createDialog(this);
 	}
 
 	private void initView() {
@@ -121,7 +121,7 @@ public class AddCircleActivity extends BaseActivityWithTopView implements
 		httpUtils.send(HttpMethod.POST, HttpConstants.METHOD_CIRCLE_GETBUYERGROUPS, map,new RequestCallBack<String>() {
 			@Override
 			public void onSuccess(ResponseInfo<String> responseInfo) {
-				progressDialog.dismiss();
+				//progressDialog.dismiss();
 				BaseRequest resultBean = ParserJson.parserBase(responseInfo.result);
 				if(200 == resultBean.getStatusCode()){//返回成功
 					Toast.makeText(mContext, "创建成功", 1000).show();
@@ -134,7 +134,7 @@ public class AddCircleActivity extends BaseActivityWithTopView implements
 
 			@Override
 			public void onFailure(HttpException error, String msg) {
-				progressDialog.dismiss();
+				//progressDialog.dismiss();
 				Toast.makeText(mContext, "创建失败！", 1000).show();
 			}
 		});
@@ -161,7 +161,7 @@ public class AddCircleActivity extends BaseActivityWithTopView implements
 						Toast.makeText(mContext, msg, 1000).show();
 
 					}
-				}, mContext.getApplicationContext());
+				}, AddCircleActivity.this);
 	}
 
 	/**
@@ -268,9 +268,9 @@ public class AddCircleActivity extends BaseActivityWithTopView implements
 	}
 
 	private void uploadImage(String imagePath) {
-		 if(!progressDialog.isShowing()){
-		 progressDialog.show();
-		 }
+//		 if(!progressDialog.isShowing()){
+//		 progressDialog.show();
+//		 }
 		HttpControl httpControl = new HttpControl();
 		httpControl.syncUpload(littlePicPath_cache, new SaveCallback() {
 
@@ -288,7 +288,12 @@ public class AddCircleActivity extends BaseActivityWithTopView implements
 
 			@Override
 			public void onSuccess(String arg0) {
-				createCircle();
+				runOnUiThread(new Runnable() {
+					public void run() {
+						createCircle();
+					}
+				});
+				
 			}
 
 		});

@@ -1461,10 +1461,10 @@ public class HttpControl {
 			final Context context, final String method,
 			final HttpCallBackInterface httpCallBack, final Class<T> classzz,
 			boolean isshwoDialog, boolean isDialogCancell) {
-		// final CustomProgressDialog progressDialog = CustomProgressDialog
-		// .createDialog(context);
-		// progressDialog.setCancelable(isDialogCancell);
-		// progressDialog.show();
+		 final CustomProgressDialog progressDialog = CustomProgressDialog
+		 .createDialog(context);
+		 progressDialog.setCancelable(isDialogCancell);
+		 progressDialog.show();
 		httpUtils.send(HttpMethod.POST, method.trim(),
 				setBaseRequestParams(map, context),
 				new RequestCallBack<String>() {
@@ -1485,7 +1485,7 @@ public class HttpControl {
 								httpCallBack.http_Success(bean);
 							}
 						}
-						// progressDialog.cancel();
+						 progressDialog.cancel();
 					}
 
 					@Override
@@ -1494,7 +1494,7 @@ public class HttpControl {
 						if (httpCallBack != null) {
 							httpCallBack.http_Fails(0, msg);
 						}
-						// progressDialog.cancel();
+						 progressDialog.cancel();
 					}
 				});
 	}
