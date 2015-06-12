@@ -61,6 +61,7 @@ import com.shenma.yueba.yangjia.modle.CircleListBackBean;
 import com.shenma.yueba.yangjia.modle.ContactsAddressRequestBean;
 import com.shenma.yueba.yangjia.modle.ContactsAddressRequestListBean;
 import com.shenma.yueba.yangjia.modle.ContactsAddressResponseBean;
+import com.shenma.yueba.yangjia.modle.FansBackListForInviteCirlce;
 import com.shenma.yueba.yangjia.modle.HuoKuanListBackBean;
 import com.shenma.yueba.yangjia.modle.OrderDetailBackBean;
 import com.shenma.yueba.yangjia.modle.OrderListBackBean;
@@ -1036,6 +1037,21 @@ public class HttpControl {
 	}
 
 	/**
+	 * 获取粉丝列表（去除该圈子还没有添加的人）
+	 * 
+	 * @return void
+	 * **/
+	public void GetValidFansListToGroup(String groupid,
+			boolean showDialog, final HttpCallBackInterface httpCallBack,
+			Context context) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put(Constants.GROUPID, groupid);
+		BasehttpSend(map, context, HttpConstants.METHOD_CIRCLE_GETVALIDFANSLISTTOGROUP,
+				httpCallBack, FansBackListForInviteCirlce.class, showDialog, true);
+	}
+	
+	
+	/**
 	 * 删除圈子成员
 	 * 
 	 * @return void
@@ -1461,10 +1477,10 @@ public class HttpControl {
 			final Context context, final String method,
 			final HttpCallBackInterface httpCallBack, final Class<T> classzz,
 			boolean isshwoDialog, boolean isDialogCancell) {
-		// final CustomProgressDialog progressDialog = CustomProgressDialog
-		// .createDialog(context);
-		// progressDialog.setCancelable(isDialogCancell);
-		// progressDialog.show();
+		 final CustomProgressDialog progressDialog = CustomProgressDialog
+		 .createDialog(context);
+		 progressDialog.setCancelable(isDialogCancell);
+		 progressDialog.show();
 		httpUtils.send(HttpMethod.POST, method.trim(),
 				setBaseRequestParams(map, context),
 				new RequestCallBack<String>() {
@@ -1485,7 +1501,7 @@ public class HttpControl {
 								httpCallBack.http_Success(bean);
 							}
 						}
-						// progressDialog.cancel();
+						 progressDialog.cancel();
 					}
 
 					@Override
@@ -1494,7 +1510,7 @@ public class HttpControl {
 						if (httpCallBack != null) {
 							httpCallBack.http_Fails(0, msg);
 						}
-						// progressDialog.cancel();
+						 progressDialog.cancel();
 					}
 				});
 	}
