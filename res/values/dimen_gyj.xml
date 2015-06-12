@@ -15,7 +15,12 @@
     <dimen name="shop_main_width20_dimen">20dp</dimen>
     <dimen name="shop_main_width25_dimen">25dp</dimen>
     <dimen name="shop_main_width15_dimen">15dp</dimen>
+    <dimen name="shop_main_width18_dimen">18dp</dimen>
+    <dimen name="shop_main_width20_dimen">20dp</dimen>
     <dimen name="shop_main_width100_dimen">100dp</dimen>
+    <dimen name="shop_main_width120_dimen">120dp</dimen>
+    <dimen name="shop_main_width130_dimen">130dp</dimen>
+    <dimen name="shop_main_width140_dimen">140dp</dimen>
     <dimen name="shop_main_width150_dimen">150dp</dimen>
     <dimen name="shop_main_width200_dimen">200dp</dimen>
     <dimen name="shop_main_width300_dimen">300dp</dimen>
