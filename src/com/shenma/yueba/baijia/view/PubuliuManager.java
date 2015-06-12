@@ -97,7 +97,7 @@ public class PubuliuManager {
     			//商品名称
     			TextView pubuliu_item_layout_name_textview=(TextView)parentview.findViewById(R.id.pubuliu_item_layout_name_textview);
     			pubuliu_item_layout_name_textview.setText(bean.getName());
-    			//喜欢
+    			//收藏
     			TextView pubuliu_item_layout_like_textview=(TextView)parentview.findViewById(R.id.pubuliu_item_layout_like_textview);
     			pubuliu_item_layout_like_textview.setOnClickListener(onClickListener);
     			if(bean.getLikeUser()!=null)
@@ -120,7 +120,6 @@ public class PubuliuManager {
         			
     				iv.getLayoutParams().height=height;
     			}
-    			iv.setBackgroundResource(R.color.color_blue);
     			iv.setTag(bean);
     			iv.setOnClickListener(new OnClickListener() {
 					
@@ -132,6 +131,7 @@ public class PubuliuManager {
     			iv.setImageResource(R.drawable.default_pic);
     			iv.setScaleType(ScaleType.FIT_XY);
     			android.util.Log.i("TAG", "leftHeight="+leftHeight+"   rightHeight="+rightHeight);
+    		    //根据 左右高度判断
     			if(leftHeight<=rightHeight)
     			{
     				leftHeight+=height;
@@ -142,8 +142,8 @@ public class PubuliuManager {
     				pubuliy_right_linearlayout.addView(parentview, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
     			}
     			ToolsUtil.setFontStyle(context, parentview, R.id.pubuliu_item_layout_pricevalue_textview,R.id.pubuliu_item_layout_name_textview,R.id.pubuliu_item_layout_like_textview,R.id.pubuliu_item_layout_price_textview);
-    			//MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.getImage(ToolsUtil.nullToString(myFavoriteProductListPic.getPic()), 320, 0), iv, MyApplication.getInstance().getDisplayImageOptions());
-    			MyApplication.getInstance().getImageLoader().displayImage(myFavoriteProductListPic.getPic(), iv, MyApplication.getInstance().getDisplayImageOptions());
+    			MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.getImage(ToolsUtil.nullToString(myFavoriteProductListPic.getPic()), 320, 0), iv, MyApplication.getInstance().getDisplayImageOptions());
+    			//MyApplication.getInstance().getImageLoader().displayImage(myFavoriteProductListPic.getPic(), iv, MyApplication.getInstance().getDisplayImageOptions());
     		}
     	}
     }
@@ -190,13 +190,24 @@ public class PubuliuManager {
 					MyFavoriteProductListLikeUser myFavoriteProductListLikeUser=bean.getLikeUser();
 					if(myFavoriteProductListLikeUser!=null)
 					{
+						int count=bean.getLikeUser().getCount();
 						switch(Status)
 						{
 						case 0:
+							count--;
+							if(count<0)
+							{
+								count=0;
+							}
+							bean.getLikeUser().setCount(count);
 							v.setSelected(false);
+							((TextView)v).setText(count+"");
 							myFavoriteProductListLikeUser.setIsLike(false);
 							break;
 						case 1:
+							count++;
+							bean.getLikeUser().setCount(count);
+							((TextView)v).setText(count+"");
 							v.setSelected(true);
 							myFavoriteProductListLikeUser.setIsLike(true);
 							break;

@@ -1799,7 +1799,6 @@ public class HttpControl {
 		try {
 			bigfFile.setUploadFilePath(imageLocalPath, "image/*");
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		bigfFile.ResumableUploadInBackground(callBack);
