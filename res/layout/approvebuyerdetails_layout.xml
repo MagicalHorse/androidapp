@@ -193,19 +193,21 @@
                         style="@style/style_horizontal_line" />
 
                     <TextView
+                        android:drawableLeft="@drawable/dayangtime_icon"
                         android:layout_marginTop="@dimen/shop_main_lineheight8_dimen"
                         android:id="@+id/approvebuyerdetails_closeingtime_textview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="打烊时间"
+                        android:text=""
                         android:textSize="@dimen/textsize12sp" />
 
                     <TextView
+                        android:drawableLeft="@drawable/dayangdes_icon"
                         android:id="@+id/approvebuyerdetails_closeinginfo_textview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/shop_main_width3_dimen"
-                        android:text="打烊时间"
+                        android:text=""
                         android:textSize="@dimen/textsize12sp" />
                 </LinearLayout>
             </RelativeLayout>
