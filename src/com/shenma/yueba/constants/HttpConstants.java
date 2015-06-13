@@ -414,8 +414,15 @@ public class HttpConstants {
 	 *  任务奖励---获取当前用户的活动列表
 	 */
 	
-	public static String METHOD_PROMOTION_LIST = Circle
+	public static String METHOD_PROMOTION_LIST = Promotion
 			+ "List";
+	
+	/**
+	 *  任务奖励---获取当前用户的活动列表
+	 */
+	
+	public static String METHOD_PROMOTION_DETAIL = Promotion
+			+ "Detail";
 	
 	
 	/**

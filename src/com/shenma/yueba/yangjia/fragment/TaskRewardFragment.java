@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +23,7 @@ import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.yangjia.activity.BoradRewardActivity;
 import com.shenma.yueba.yangjia.activity.OpenRewardActivity;
 import com.shenma.yueba.yangjia.activity.OrderRewardActivity;
+import com.shenma.yueba.yangjia.activity.RewardDetailActivity;
 import com.shenma.yueba.yangjia.adapter.TastRewardAdapter;
 import com.shenma.yueba.yangjia.modle.TaskListItem;
 import com.shenma.yueba.yangjia.modle.TastRewardListBackBean;
@@ -40,6 +43,7 @@ public class TaskRewardFragment extends BaseFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		getTastReward();
 	}
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -62,6 +66,15 @@ public class TaskRewardFragment extends BaseFragment {
 		tv_top_title.setVisibility(View.VISIBLE);
 		tv_top_title.setText("首页");
 		lv =  (ListView) view.findViewById(R.id.lv);
+		lv.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int position,
+					long arg3) {
+				Intent intent = new Intent(getActivity(), RewardDetailActivity.class);
+				intent.putExtra("promotionId", mList.get(position).getId());
+				startActivity(intent);
+			}
+		});
 		FontManager.changeFonts(getActivity(), tv_top_title);
 	}
 	

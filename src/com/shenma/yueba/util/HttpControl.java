@@ -1121,6 +1121,19 @@ public class HttpControl {
 	}
 	
 	
+	/**
+	 * 获取任务奖励详情
+	 * 
+	 * @return void
+	 * **/ 
+	public void getTaskRewardDetail(String promotionId, boolean showDialog,
+			final HttpCallBackInterface httpCallBack, Context context) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put(Constants.PROMOTIONID, promotionId);
+		BasehttpSend(map, context, HttpConstants.METHOD_PROMOTION_LIST,
+				httpCallBack, TastRewardListBackBean.class, showDialog, false);
+	}
+	
 	
 	
 	/**
