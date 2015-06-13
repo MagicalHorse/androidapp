@@ -7,10 +7,25 @@
 
     <include layout="@layout/title_for_common" />
 
-    <View
+     <View
         style="@style/style_horizontal_line"
         android:layout_marginTop="10dip" />
-
+    
+    
+    
+    
+    
+    <ListView 
+        android:id="@+id/lv"
+        android:layout_height="fill_parent"
+        android:layout_width="fill_parent"
+        android:cacheColorHint="#00000000"
+        android:listSelector="#00000000"
+        android:dividerHeight="15dip"
+        android:divider="@color/main_bg"
+        ></ListView>
+   
+<!-- 
     <LinearLayout
         android:id="@+id/ll_open_reward"
         android:layout_width="fill_parent"
@@ -172,5 +187,5 @@
                 android:textSize="15sp" />
         </LinearLayout>
     </LinearLayout>
-
+ -->
 </LinearLayout>
