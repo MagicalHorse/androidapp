@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Bundle;
-import android.support.v4.widget.ListViewAutoScrollHelper;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -19,7 +18,10 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.activity.BaseActivityWithTopView;
+import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.FontManager;
+import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.ListViewUtils;
 import com.shenma.yueba.yangjia.adapter.BroadRewardAdapter;
 import com.shenma.yueba.yangjia.modle.BroadRewardListBean;
@@ -49,6 +51,7 @@ public class RewardDetailActivity extends BaseActivityWithTopView{
 		super.onCreate(savedInstanceState);
 		promotionId = getIntent().getStringExtra("promotionId");
 		initView();
+		getRewardDetail();
 	}
 
 	private void initView() {
@@ -92,29 +95,25 @@ public class RewardDetailActivity extends BaseActivityWithTopView{
 	}
 
 	
-//	public void createCircle() {
-//		HttpControl httpContorl = new HttpControl();
-//		httpContorl.createCircle(et_circle_name.getText().toString().trim(),
-//				littlePicPath_cache.substring(
-//						littlePicPath_cache.lastIndexOf("/") + 1,
-//						littlePicPath_cache.length()), false,
-//				new HttpCallBackInterface() {
-//
-//					@Override
-//					public void http_Success(Object obj) {
-//						Toast.makeText(mContext, "创建成功", 1000).show();
-//						setResult(Constants.RESULTCODE);
-//						BoradRewardActivity.this.finish();
-//					}
-//
-//					@Override
-//					public void http_Fails(int error, String msg) {
-//					
-//						Toast.makeText(mContext, msg, 1000).show();
-//
-//					}
-//				}, mContext.getApplicationContext());
-//	}
+	
+	
+	
+	public void getRewardDetail() {
+		HttpControl httpContorl = new HttpControl();
+		httpContorl.getTaskRewardDetail(promotionId, true, new HttpCallBackInterface() {
+			@Override
+			public void http_Success(Object obj) {
+				
+				
+			}
+			
+			@Override
+			public void http_Fails(int error, String msg) {
+				// TODO Auto-generated method stub
+				
+			}
+		}, RewardDetailActivity.this);
+	}
 
 
 }

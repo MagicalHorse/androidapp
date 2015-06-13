@@ -65,6 +65,7 @@ import com.shenma.yueba.yangjia.modle.FansBackListForInviteCirlce;
 import com.shenma.yueba.yangjia.modle.HuoKuanListBackBean;
 import com.shenma.yueba.yangjia.modle.OrderDetailBackBean;
 import com.shenma.yueba.yangjia.modle.OrderListBackBean;
+import com.shenma.yueba.yangjia.modle.RewardDetailBackBean;
 import com.shenma.yueba.yangjia.modle.TastRewardListBackBean;
 
 /**
@@ -1131,7 +1132,7 @@ public class HttpControl {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put(Constants.PROMOTIONID, promotionId);
 		BasehttpSend(map, context, HttpConstants.METHOD_PROMOTION_DETAIL,
-				httpCallBack, TastRewardListBackBean.class, showDialog, false);
+				httpCallBack, RewardDetailBackBean.class, showDialog, false);
 	}
 	
 	
