@@ -1130,7 +1130,7 @@ public class HttpControl {
 			final HttpCallBackInterface httpCallBack, Context context) {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put(Constants.PROMOTIONID, promotionId);
-		BasehttpSend(map, context, HttpConstants.METHOD_PROMOTION_LIST,
+		BasehttpSend(map, context, HttpConstants.METHOD_PROMOTION_DETAIL,
 				httpCallBack, TastRewardListBackBean.class, showDialog, false);
 	}
 	
