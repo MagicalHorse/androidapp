@@ -359,12 +359,15 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView impleme
 			
 			
 		}
-		ProductsDetailsPromotion productsDetailsPromotion=Data.getIsPromotion();
+		ProductsDetailsPromotion productsDetailsPromotion=Data.getPromotion();
 		if(productsDetailsPromotion!=null)
 		{
 			approvebuyerdetails_closeingtime_linearlayout.setVisibility(View.VISIBLE);
 			approvebuyerdetails_closeingtime_textview.setText(ToolsUtil.nullToString(productsDetailsPromotion.getDescriptionText()));
 			approvebuyerdetails_closeinginfo_textview.setText(ToolsUtil.nullToString(productsDetailsPromotion.getTipText()));
+		}else
+		{
+			approvebuyerdetails_closeingtime_linearlayout.setVisibility(View.GONE);
 		}
 		
 	}
