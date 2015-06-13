@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,8 @@ import com.shenma.yueba.baijia.fragment.BaseFragment;
 import com.shenma.yueba.util.CustomProgressDialog;
 import com.shenma.yueba.util.DialogUtils;
 import com.shenma.yueba.util.FontManager;
+import com.shenma.yueba.util.SharedUtil;
+import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.yangjia.activity.BuyerIndentificationActivity;
 import com.shenma.yueba.yangjia.activity.IdentificationBuyerListActivity;
 import com.shenma.yueba.yangjia.activity.MainActivityForYangJia;
@@ -74,8 +77,12 @@ public class MeFragmentForYangJia extends BaseFragment implements
 		view = inflater.inflate(R.layout.me_fragment_for_yangjia, null);
 		iv_setting = (ImageView) view.findViewById(R.id.iv_setting);
 		iv_icon = (ImageView) view.findViewById(R.id.iv_icon);
-
+		String iconUrl = SharedUtil.getStringPerfernece(getActivity(), SharedUtil.user_logo);
+		if(!TextUtils.isEmpty(iconUrl)){
+			MyApplication.getInstance().getImageLoader().displayImage(iconUrl, iv_icon);
+		}
 		tv_nickname = (TextView) view.findViewById(R.id.tv_nickname);
+		tv_nickname.setText(ToolsUtil.nullToString(SharedUtil.getStringPerfernece(getActivity(), SharedUtil.user_names)));
 		tv_grade = (TextView) view.findViewById(R.id.tv_grade);
 		tv_store = (TextView) view.findViewById(R.id.tv_store);
 		tv_store_introduce = (TextView) view

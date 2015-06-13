@@ -25,6 +25,7 @@ import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.util.FileUtils;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.PhotoUtils;
+import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.RoundImageView;
 import com.shenma.yueba.view.SelectePhotoType;
@@ -79,6 +80,7 @@ public class UserConfigActivity extends BaseActivityWithTopView {
 				R.string.user_config_icon_str));
 		icon_imageview = (RoundImageView) icon_layout
 				.findViewById(R.id.people_config_str2_imageview);
+		MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.nullToString(SharedUtil.getStringPerfernece(mContext, SharedUtil.user_logo)), icon_imageview);
 		icon_imageview.setVisibility(View.VISIBLE);
 
 		RelativeLayout nickname_layout = (RelativeLayout) findViewById(R.id.user_config_nickname_include);
@@ -89,6 +91,7 @@ public class UserConfigActivity extends BaseActivityWithTopView {
 				R.string.user_config_nickname_str));
 		nickname_textvalue = (TextView) nickname_layout
 				.findViewById(R.id.people_config_str2_textview);
+		nickname_textvalue.setText(ToolsUtil.nullToString(SharedUtil.getStringPerfernece(mContext, SharedUtil.user_names)));
 
 		RelativeLayout myaddress_layout = (RelativeLayout) findViewById(R.id.user_config_address_include);
 		// 我的地址
@@ -117,15 +120,12 @@ public class UserConfigActivity extends BaseActivityWithTopView {
 				.findViewById(R.id.people_config_str1_textview);
 		messagednd_textview.setText(this.getResources().getText(
 				R.string.user_config_messagednd_str));
-		// 我要养家按钮
-		Button user_config_yangjia_button = (Button) findViewById(R.id.user_config_yangjia_button);
 		// 退出登录
 		Button user_config_exit_button = (Button) findViewById(R.id.user_config_exit_button);
 		// 设置字体样式
 		FontManager.changeFonts(this, tv_top_title, icon_text, nickname_text,
 				nickname_textvalue, myaddress_textview, mycollect_textview,
-				userpwd_textview, messagednd_textview,
-				user_config_yangjia_button, user_config_exit_button);
+				userpwd_textview, messagednd_textview, user_config_exit_button);
 		// 设置按键监听
 		icon_layout.setOnClickListener(onClickListener);
 		nickname_layout.setOnClickListener(onClickListener);
@@ -133,7 +133,6 @@ public class UserConfigActivity extends BaseActivityWithTopView {
 		mycollect_layout.setOnClickListener(onClickListener);
 		userpwd_layout.setOnClickListener(onClickListener);
 		messagednd_layout.setOnClickListener(onClickListener);
-		user_config_yangjia_button.setOnClickListener(onClickListener);
 		user_config_exit_button.setOnClickListener(onClickListener);
 
 	}
@@ -143,12 +142,6 @@ public class UserConfigActivity extends BaseActivityWithTopView {
 		@Override
 		public void onClick(View v) {
 			switch (v.getId()) {
-			case R.id.user_config_yangjia_button:// 我要养家
-				Intent intent = new Intent(UserConfigActivity.this,
-						MainActivityForYangJia.class);
-				startActivity(intent);
-				MyApplication.getInstance().removeAllActivity();
-				break;
 			case R.id.user_config_icon_include:
 				showBottomDialog();
 //				Intent intent2 = new Intent(UserConfigActivity.this,
@@ -159,6 +152,8 @@ public class UserConfigActivity extends BaseActivityWithTopView {
 				Intent intent3 = new Intent(UserConfigActivity.this,
 						MyCollectionActivity.class);
 				startActivity(intent3);
+			case R.id.user_config_nickname_include://修改昵称
+				break;
 			default:
 				break;
 			}
