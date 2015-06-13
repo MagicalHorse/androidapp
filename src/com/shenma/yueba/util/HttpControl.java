@@ -65,6 +65,7 @@ import com.shenma.yueba.yangjia.modle.FansBackListForInviteCirlce;
 import com.shenma.yueba.yangjia.modle.HuoKuanListBackBean;
 import com.shenma.yueba.yangjia.modle.OrderDetailBackBean;
 import com.shenma.yueba.yangjia.modle.OrderListBackBean;
+import com.shenma.yueba.yangjia.modle.TastRewardListBackBean;
 
 /**
  * @author gyj
@@ -1105,6 +1106,20 @@ public class HttpControl {
 		BasehttpSend(map, context, HttpConstants.METHOD_CIRCLE_DELETEGROUP,
 				httpCallBack, BaseRequest.class, showDialog, false);
 	}
+	
+	
+	/**
+	 * 获取任务奖励列表
+	 * 
+	 * @return void
+	 * **/ 
+	public void getTaskRewardList( boolean showDialog,
+			final HttpCallBackInterface httpCallBack, Context context) {
+		Map<String, String> map = new HashMap<String, String>();
+		BasehttpSend(map, context, HttpConstants.METHOD_PROMOTION_LIST,
+				httpCallBack, TastRewardListBackBean.class, showDialog, false);
+	}
+	
 	
 	
 	

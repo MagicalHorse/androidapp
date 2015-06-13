@@ -11,15 +11,19 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.fragment.BaseFragment;
 import com.shenma.yueba.util.FontManager;
+import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.yangjia.activity.BoradRewardActivity;
 import com.shenma.yueba.yangjia.activity.OpenRewardActivity;
 import com.shenma.yueba.yangjia.activity.OrderRewardActivity;
 import com.shenma.yueba.yangjia.adapter.TastRewardAdapter;
 import com.shenma.yueba.yangjia.modle.TaskListItem;
+import com.shenma.yueba.yangjia.modle.TastRewardListBackBean;
 
 /**
  * 红榜奖励
@@ -58,15 +62,29 @@ public class TaskRewardFragment extends BaseFragment {
 		tv_top_title.setVisibility(View.VISIBLE);
 		tv_top_title.setText("首页");
 		lv =  (ListView) view.findViewById(R.id.lv);
-		adapter = new TastRewardAdapter(getActivity(), mList);
 		FontManager.changeFonts(getActivity(), tv_top_title);
 	}
 	
 
 	
 	public void getTastReward(){
-		
-		
+		HttpControl httpControl = new HttpControl();
+		httpControl.getTaskRewardList(true, new HttpCallBackInterface() {
+			@Override
+			public void http_Success(Object obj) {
+				TastRewardListBackBean bean = (TastRewardListBackBean) obj;
+				if(bean.getData()!=null){
+				mList.addAll(bean.getData());
+				adapter = new TastRewardAdapter(getActivity(), mList);
+				lv.setAdapter(adapter);
+				}
+			}
+			
+			@Override
+			public void http_Fails(int error, String msg) {
+				Toast.makeText(getActivity(), msg, 1000).show();
+			}
+		}, getActivity());
 		
 		
 	}
