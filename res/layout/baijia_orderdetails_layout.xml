@@ -291,7 +291,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:drawableTop="@drawable/circle_default"
+            android:drawableTop="@drawable/priceshare"
             android:textSize="@dimen/textsize13sp"
             android:text="现金分享" />
         </LinearLayout>

@@ -15,6 +15,14 @@ public class ProductsDetailsPromotion implements Serializable{
     String DescriptionText="";//活动描述
     String TipText="";//活动内容
     String Link="";//
+    boolean IsShow=false;
+    
+	public boolean isIsShow() {
+		return IsShow;
+	}
+	public void setIsShow(boolean isShow) {
+		IsShow = isShow;
+	}
 	public int getId() {
 		return Id;
 	}

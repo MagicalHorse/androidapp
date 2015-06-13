@@ -148,6 +148,8 @@
         android:layout_marginRight="@dimen/margin_left_and_right"
         android:layout_marginBottom="@dimen/shop_main_width3_dimen"
         android:background="@drawable/youhui"
+        android:paddingBottom="@dimen/shop_main_width3_dimen"
+        android:paddingTop="@dimen/shop_main_lineheight8_dimen"
         >
         <TextView
             android:id="@+id/buyersteetfragment_item_footer_linearlyout_content_textview"

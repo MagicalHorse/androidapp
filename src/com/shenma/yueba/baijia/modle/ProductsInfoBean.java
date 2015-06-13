@@ -19,13 +19,14 @@ public class ProductsInfoBean implements Serializable{
 	String ProductName="";// 产品名字
 	int ProductId; //产品编号
 	//活动信息
-    ProductsDetailsPromotion IsPromotion=new ProductsDetailsPromotion();
+    ProductsDetailsPromotion Promotion=new ProductsDetailsPromotion();
 	
-	public ProductsDetailsPromotion getIsPromotion() {
-		return IsPromotion;
+	
+	public ProductsDetailsPromotion getPromotion() {
+		return Promotion;
 	}
-	public void setIsPromotion(ProductsDetailsPromotion isPromotion) {
-		IsPromotion = isPromotion;
+	public void setPromotion(ProductsDetailsPromotion promotion) {
+		Promotion = promotion;
 	}
 	//关注的人
 	LikeUsersInfoBean LikeUsers=new LikeUsersInfoBean();

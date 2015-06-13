@@ -106,6 +106,9 @@ public class BuyerAdapter extends BaseAdapter{
 			setOnclickListener(holder.buyersteetfragmeng_item_share_button);
 			convertView.setTag(holder);
 			holder.approvebuyerdetails_attentionvalue_gridview=(MyGridView)convertView.findViewById(R.id.approvebuyerdetails_attentionvalue_gridview);
+			//更改字体
+			FontManager.changeFonts(activity, holder.baijia_tab1_item_productname_textview,holder.baijia_tab1_item_productaddress_textview,holder.baijia_tab1_item_time_textview,holder.buyersteetfragmeng_item_price_textview,holder.buyersteetfragmeng_item_desc_textview,holder.buyersteetfragmeng_item_share_button,holder.buyersteetfragmeng_item_siliao_button,holder.approvebuyerdetails_attention_textview,holder.buyersteetfragment_item_footer_linearlyout_content_textview);
+			
 		} else {
 			holder = (Holder) convertView.getTag();
 
@@ -174,19 +177,18 @@ public class BuyerAdapter extends BaseAdapter{
 		holder.buyersteetfragmeng_item_desc_textview.setText(productsInfoBean.getProductName());
 		//商品内容图片
 		holder.baijia_tab1_item_productcontent_imageview.setTag(productsInfoBean.getProductId());
-		if(productsInfoBean.getIsPromotion()!=null)
-		{
-			holder.buyersteetfragment_item_footer_linearlyout.setVisibility(View.VISIBLE);
-			holder.buyersteetfragment_item_footer_linearlyout_content_textview.setText(ToolsUtil.nullToString(productsInfoBean.getIsPromotion().getTipText()));
-		}else
+		if(productsInfoBean.getPromotion()==null || !productsInfoBean.getPromotion().isIsShow())
 		{
 			holder.buyersteetfragment_item_footer_linearlyout.setVisibility(View.GONE);
+			
+		}else
+		{
+			holder.buyersteetfragment_item_footer_linearlyout.setVisibility(View.VISIBLE);
+			holder.buyersteetfragment_item_footer_linearlyout_content_textview.setText(ToolsUtil.nullToString(productsInfoBean.getPromotion().getDescriptionText()));
 		}
 		
 		//加载商品图片
 		initPic(ToolsUtil.getImage(productPicInfoBean.getName(), 640, 0), holder.baijia_tab1_item_productcontent_imageview, R.drawable.default_pic);
-		//更改字体
-		FontManager.changeFonts(activity, holder.baijia_tab1_item_productname_textview,holder.baijia_tab1_item_productaddress_textview,holder.baijia_tab1_item_time_textview,holder.buyersteetfragmeng_item_price_textview,holder.buyersteetfragmeng_item_desc_textview,holder.buyersteetfragmeng_item_share_button,holder.buyersteetfragmeng_item_siliao_button,holder.approvebuyerdetails_attention_textview);
 		LikeUsersInfoBean userinfo=productsInfoBean.getLikeUsers();
 		if(userinfo!=null && userinfo.getUsers()!=null)
 		{
