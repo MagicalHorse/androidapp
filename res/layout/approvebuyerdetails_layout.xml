@@ -23,108 +23,105 @@
             android:orientation="vertical" >
 
             <RelativeLayout
+                android:id="@+id/approvebuyerdetails_head_relativelayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white" >
+                android:layout_height="wrap_content" >
+
+                <!-- 头像 -->
+
+                <com.shenma.yueba.view.RoundImageView
+                    android:id="@+id/approvebuyerdetails_icon_imageview"
+                    android:layout_width="@dimen/shop_main_iconwidth80_dimen"
+                    android:layout_height="@dimen/shop_main_iconwidth80_dimen"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/shop_main_width2_dimen"
+                    android:src="@drawable/default_pic" />
+                <!-- 店名 -->
+
+                <TextView
+                    android:id="@+id/approvebuyerdetails_name_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/approvebuyerdetails_icon_imageview"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/shop_main_marginleft30_dimen"
+                    android:text="名字" />
 
                 <RelativeLayout
-                    android:id="@+id/approvebuyerdetails_head_relativelayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" >
-
-                    <!-- 头像 -->
-
-                    <com.shenma.yueba.view.RoundImageView
-                        android:id="@+id/approvebuyerdetails_icon_imageview"
-                        android:layout_width="@dimen/shop_main_iconwidth80_dimen"
-                        android:layout_height="@dimen/shop_main_iconwidth80_dimen"
-                        android:layout_centerInParent="true"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="@dimen/shop_main_width2_dimen"
-                        android:src="@drawable/default_pic" />
-                    <!-- 店名 -->
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/approvebuyerdetails_name_textview"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/margin_left_and_right" >
 
                     <TextView
-                        android:id="@+id/approvebuyerdetails_name_textview"
+                        android:id="@+id/appprovebuyerdetails_text1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/approvebuyerdetails_icon_imageview"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="@dimen/shop_main_marginleft30_dimen"
-                        android:text="名字" />
+                        android:text="成交:"
+                        android:textSize="@dimen/textsize13sp" />
 
-                    <RelativeLayout
+                    <TextView
+                        android:id="@+id/appprovebuyerdetails_textvalue1_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignBottom="@id/approvebuyerdetails_name_textview"
-                        android:layout_alignParentBottom="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="@dimen/margin_left_and_right" >
+                        android:layout_alignTop="@id/appprovebuyerdetails_text1"
+                        android:layout_toRightOf="@id/appprovebuyerdetails_text1"
+                        android:text="152"
+                        android:textSize="@dimen/textsize13sp" />
 
-                        <TextView
-                            android:id="@+id/appprovebuyerdetails_text1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="成交:"
-                            android:textSize="@dimen/textsize13sp" />
+                    <TextView
+                        android:id="@+id/appprovebuyerdetails_text2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/appprovebuyerdetails_text1"
+                        android:text="好评:"
+                        android:textSize="@dimen/textsize13sp" />
 
-                        <TextView
-                            android:id="@+id/appprovebuyerdetails_textvalue1_textview"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignTop="@id/appprovebuyerdetails_text1"
-                            android:layout_toRightOf="@id/appprovebuyerdetails_text1"
-                            android:text="152"
-                            android:textSize="@dimen/textsize13sp" />
-
-                        <TextView
-                            android:id="@+id/appprovebuyerdetails_text2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/appprovebuyerdetails_text1"
-                            android:text="好评:"
-                            android:textSize="@dimen/textsize13sp" />
-
-                        <TextView
-                            android:id="@+id/appprovebuyerdetails_text2value_textview"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignTop="@id/appprovebuyerdetails_text2"
-                            android:layout_below="@id/appprovebuyerdetails_text1"
-                            android:layout_toRightOf="@id/appprovebuyerdetails_text2"
-                            android:text="0%"
-                            android:textColor="@color/red"
-                            android:textSize="@dimen/textsize13sp" />
-                    </RelativeLayout>
+                    <TextView
+                        android:id="@+id/appprovebuyerdetails_text2value_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/appprovebuyerdetails_text2"
+                        android:layout_below="@id/appprovebuyerdetails_text1"
+                        android:layout_toRightOf="@id/appprovebuyerdetails_text2"
+                        android:text="0%"
+                        android:textColor="@color/red"
+                        android:textSize="@dimen/textsize13sp" />
                 </RelativeLayout>
+            </RelativeLayout>
 
-                <RelativeLayout
-                    android:id="@+id/appprovebuyer_viewpager_relativelayout"
+            <RelativeLayout
+                android:id="@+id/appprovebuyer_viewpager_relativelayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/shop_main_width3_dimen" >
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/appprovebuyer_viewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:id="@+id/appprovebuyer_viewpager_footer_linerlayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/approvebuyerdetails_head_relativelayout"
-                    android:layout_marginTop="@dimen/shop_main_width3_dimen" >
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="@dimen/shop_main_width5_dimen"
+                    android:gravity="center"
+                    android:orientation="horizontal" />
+            </RelativeLayout>
 
-                    <android.support.v4.view.ViewPager
-                        android:id="@+id/appprovebuyer_viewpager"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-
-                    <LinearLayout
-                        android:id="@+id/appprovebuyer_viewpager_footer_linerlayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginBottom="@dimen/shop_main_width5_dimen"
-                        android:gravity="center"
-                        android:orientation="horizontal" />
-                </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
 
                 <TextView
                     android:id="@+id/approvebuyerdetails_price_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/appprovebuyer_viewpager_relativelayout"
                     android:layout_marginBottom="@dimen/shop_main_width5_dimen"
                     android:layout_marginTop="@dimen/shop_main_width5_dimen"
                     android:hint="￥0"
@@ -138,28 +135,30 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:layout_below="@id/appprovebuyer_viewpager_relativelayout"
                     android:layout_marginRight="@dimen/margin_left_and_right"
                     android:layout_marginTop="@dimen/shop_main_width2_dimen"
                     android:text="*商品只支持商城自提"
                     android:textColor="@color/red"
                     android:textSize="@dimen/textsize12sp" />
+            </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/approvebuyerdetails_producename_textview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/approvebuyerdetails_price_textview"
-                    android:hint="[卷儿]"
-                    android:paddingLeft="@dimen/margin_left_and_right"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/textsize18sp" />
+            <TextView
+                android:id="@+id/approvebuyerdetails_producename_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="[卷儿]"
+                android:paddingLeft="@dimen/margin_left_and_right"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textsize18sp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
 
                 <TextView
                     android:id="@+id/approvebuyerdetails_address_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/approvebuyerdetails_producename_textview"
                     android:layout_marginTop="@dimen/shop_main_width5_dimen"
                     android:hint="自提地点:"
                     android:paddingLeft="@dimen/margin_left_and_right"
@@ -169,94 +168,54 @@
                     android:id="@+id/approvebuyerdetails_addressvalue_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/approvebuyerdetails_producename_textview"
                     android:layout_marginTop="@dimen/shop_main_width5_dimen"
                     android:layout_toRightOf="@id/approvebuyerdetails_address_textview"
                     android:hint="北京市人民大学"
                     android:textSize="@dimen/textsize13sp" />
-
-                <!-- 优惠信息 -->
-
-                <LinearLayout
-                    android:id="@+id/approvebuyerdetails_closeingtime_linearlayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/approvebuyerdetails_addressvalue_textview"
-                    android:layout_marginBottom="@dimen/shop_main_width5_dimen"
-                    android:orientation="vertical"
-                    android:paddingBottom="@dimen/shop_main_lineheight8_dimen"
-                    android:paddingLeft="@dimen/margin_left_and_right"
-                    android:visibility="gone" >
-
-                    <View
-                        style="@style/style_horizontal_line"
-                        android:layout_marginTop="@dimen/shop_main_width5_dimen" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/shop_main_lineheight8_dimen"
-                        android:orientation="horizontal" >
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/shop_main_width3_dimen"
-                            android:layout_marginTop="@dimen/shop_main_width3_dimen"
-                            android:drawableLeft="@drawable/dayangtime_icon" />
-
-                        <TextView
-                            android:id="@+id/approvebuyerdetails_closeingtime_textview"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/shop_main_width3_dimen"
-                            android:text=""
-                            android:textSize="@dimen/textsize12sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal" >
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/shop_main_width3_dimen"
-                            android:layout_marginTop="@dimen/shop_main_width3_dimen"
-                            android:drawableLeft="@drawable/dayangdes_icon" />
-
-                        <TextView
-                            android:id="@+id/approvebuyerdetails_closeinginfo_textview"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/shop_main_width3_dimen"
-                            android:layout_marginTop="@dimen/shop_main_width3_dimen"
-                            android:drawableLeft="@drawable/dayangdes_icon"
-                            android:text=""
-                            android:textSize="@dimen/textsize12sp" />
-                    </LinearLayout>
-                </LinearLayout>
             </RelativeLayout>
 
-            <include
-                android:id="@+id/approvebuyerdetails_attention_linerlayout"
+            <View
+                style="@style/style_horizontal_line"
+                android:layout_marginTop="@dimen/shop_main_width5_dimen" />
+
+            <LinearLayout
+                android:id="@+id/approvebuyerdetails_closeingtime_linearlayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/shop_main_lineheight8_dimen"
-                layout="@layout/attentionpeople_layout"
-                android:paddingBottom="@dimen/shop_main_width5_dimen"
-                android:paddingTop="@dimen/shop_main_width5_dimen" />
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/margin_left_and_right" >
+
+                <TextView
+                    android:drawablePadding="@dimen/shop_main_width3_dimen"
+                    android:id="@+id/approvebuyerdetails_closeingtime_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/shop_main_width3_dimen"
+                    android:drawableLeft="@drawable/dayangtime_icon"
+                    android:text=""
+                    android:textSize="@dimen/textsize12sp" />
+
+                <TextView
+                    android:layout_marginTop="@dimen/shop_main_width3_dimen"
+                    android:id="@+id/approvebuyerdetails_closeinginfo_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/shop_main_width3_dimen"
+                    android:drawableLeft="@drawable/dayangdes_icon"
+                    android:drawablePadding="@dimen/shop_main_width3_dimen"
+                    android:textSize="@dimen/textsize12sp" />
+
+                <include
+                    android:id="@+id/approvebuyerdetails_attention_linerlayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/shop_main_lineheight8_dimen"
+                    layout="@layout/attentionpeople_layout"
+                    android:paddingBottom="@dimen/shop_main_width5_dimen"
+                    android:paddingTop="@dimen/shop_main_width5_dimen" />
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
-
-    <include
-        android:id="@+id/showloading"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/title_include"
-        layout="@layout/showloading_layout"
-        android:visibility="gone" />
 
     <RelativeLayout
         android:id="@+id/approvebuyerdetails_footer"
