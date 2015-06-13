@@ -39,6 +39,7 @@ public class TastRewardAdapter extends BaseAdapterWithUtil {
 		return position;
 	}
 
+	
 	@SuppressWarnings("null")
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
@@ -47,7 +48,8 @@ public class TastRewardAdapter extends BaseAdapterWithUtil {
 			holder = new Holder();
 			convertView = View.inflate(ctx, R.layout.task_reward_item, null);
 			holder.tv_board_reward = (TextView) convertView.findViewById(R.id.tv_board_reward);
-			holder.tv_progress = (TextView) convertView.findViewById(R.id.tv_money);
+			holder.tv_progress = (TextView) convertView.findViewById(R.id.tv_progress);
+			holder.iv= (ImageView) convertView.findViewById(R.id.iv);
 			FontManager.changeFonts(ctx, holder.tv_board_reward,holder.tv_progress);
 			convertView.setTag(holder);
 		}else{

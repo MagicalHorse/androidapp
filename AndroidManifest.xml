@@ -385,6 +385,11 @@
             android:name="com.shenma.yueba.yangjia.activity.AddCircleActivity"
             android:screenOrientation="portrait" >
         </activity>
+           <!-- 奖励详情 -->
+        <activity
+            android:name="com.shenma.yueba.yangjia.activity.RewardDetailActivity"
+            android:screenOrientation="portrait" >
+        </activity>
         <!-- 申请提现 -->
         <activity
             android:name="com.shenma.yueba.yangjia.activity.ApplyWithdrawActivity"
