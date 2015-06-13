@@ -47,8 +47,8 @@
             android:layout_alignParentRight="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="200"
-            android:drawableLeft="@drawable/collect_backgroud"
+            android:text=""
+            android:drawableLeft="@drawable/like_backgroud"
             />
     </RelativeLayout>
 </LinearLayout>

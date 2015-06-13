@@ -174,14 +174,14 @@ public class PubuliuManager {
 	};
 	
 	/****
-	 * 提交收藏与取消收藏商品
+	 * 提交喜欢与取消喜欢商品
 	 * @param type int   0表示取消收藏   1表示收藏
 	 * @param brandCityWideInfo BrandCityWideInfo  商品对象
 	 * @param v View  商品对象
 	 * **/
 	void submitAttention(final int Status,final MyFavoriteProductListInfo  bean,final View v)
 	{
-		httpControl.setFavor(bean.getId(), Status, new HttpCallBackInterface() {
+		httpControl.setLike(bean.getId(), Status, new HttpCallBackInterface() {
 			
 			@Override
 			public void http_Success(Object obj) {

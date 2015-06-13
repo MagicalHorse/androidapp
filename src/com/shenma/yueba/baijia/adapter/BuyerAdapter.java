@@ -98,8 +98,8 @@ public class BuyerAdapter extends BaseAdapter{
 					.findViewById(R.id.buyersteetfragmeng_item_siliao_button);
 			setOnclickListener(holder.buyersteetfragmeng_item_siliao_button);
 			//广告图片
-			holder.buyersteetfragment_item_footer_imageview=(ImageView)convertView.findViewById(R.id.buyersteetfragment_item_footer_imageview);
-			setOnclickListener(holder.buyersteetfragment_item_footer_imageview);
+			holder.buyersteetfragment_item_footer_linearlyout=(LinearLayout)convertView.findViewById(R.id.buyersteetfragment_item_footer_linearlyout);
+            holder.buyersteetfragment_item_footer_linearlyout_content_textview=(TextView)convertView.findViewById(R.id.buyersteetfragment_item_footer_linearlyout_content_textview);
 			
 			holder.buyersteetfragmeng_item_share_button = (Button) convertView
 					.findViewById(R.id.buyersteetfragmeng_item_share_button);
@@ -135,7 +135,9 @@ public class BuyerAdapter extends BaseAdapter{
 		// 关注人列表
 		MyGridView approvebuyerdetails_attentionvalue_gridview;
 		//广告图片
-		ImageView buyersteetfragment_item_footer_imageview;
+		LinearLayout buyersteetfragment_item_footer_linearlyout;
+		//内容
+		TextView buyersteetfragment_item_footer_linearlyout_content_textview;
 		
 	}
 	
@@ -172,13 +174,13 @@ public class BuyerAdapter extends BaseAdapter{
 		holder.buyersteetfragmeng_item_desc_textview.setText(productsInfoBean.getProductName());
 		//商品内容图片
 		holder.baijia_tab1_item_productcontent_imageview.setTag(productsInfoBean.getProductId());
-		holder.buyersteetfragment_item_footer_imageview.setTag(productsInfoBean.getProductId());
-		if(productsInfoBean.isIsPromotion())
+		if(productsInfoBean.getIsPromotion()!=null)
 		{
-			holder.buyersteetfragment_item_footer_imageview.setVisibility(View.VISIBLE);
+			holder.buyersteetfragment_item_footer_linearlyout.setVisibility(View.VISIBLE);
+			holder.buyersteetfragment_item_footer_linearlyout_content_textview.setText(ToolsUtil.nullToString(productsInfoBean.getIsPromotion().getTipText()));
 		}else
 		{
-			holder.buyersteetfragment_item_footer_imageview.setVisibility(View.GONE);
+			holder.buyersteetfragment_item_footer_linearlyout.setVisibility(View.GONE);
 		}
 		
 		//加载商品图片
@@ -225,8 +227,6 @@ public class BuyerAdapter extends BaseAdapter{
 				case R.id.baijia_tab1_item_icon_imageview://商铺详细
 					Intent intent=new Intent(activity,ShopMainActivity.class);
 					activity.startActivity(intent);
-					break;
-				case R.id.buyersteetfragment_item_footer_imageview://广告图片
 					break;
 				case R.id.approvebuyerdetails_attention_textview://商品喜欢/取消喜欢
 					if(v.getTag()!=null || v.getTag() instanceof ProductsInfoBean)
