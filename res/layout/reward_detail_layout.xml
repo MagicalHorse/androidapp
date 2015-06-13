@@ -5,6 +5,7 @@
     android:background="@color/main_bg"
     android:orientation="vertical" >
 
+
     <include layout="@layout/title_for_common" />
 
     <View
