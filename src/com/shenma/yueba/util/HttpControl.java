@@ -1502,7 +1502,10 @@ public class HttpControl {
 		 final CustomProgressDialog progressDialog = CustomProgressDialog
 		 .createDialog(context);
 		 progressDialog.setCancelable(isDialogCancell);
-		 progressDialog.show();
+		 if(isshwoDialog)
+		 {
+			 progressDialog.show();
+		 }
 		httpUtils.send(HttpMethod.POST, method.trim(),
 				setBaseRequestParams(map, context),
 				new RequestCallBack<String>() {
