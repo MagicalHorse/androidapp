@@ -18,13 +18,14 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.activity.BaseActivityWithTopView;
-import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.ListViewUtils;
 import com.shenma.yueba.yangjia.adapter.BroadRewardAdapter;
 import com.shenma.yueba.yangjia.modle.BroadRewardListBean;
+import com.shenma.yueba.yangjia.modle.HistoryItem;
+import com.shenma.yueba.yangjia.modle.RewardDetailBackBean;
 
 /**
  * 奖励详情
@@ -42,12 +43,12 @@ public class RewardDetailActivity extends BaseActivityWithTopView{
 	private ListView lv;
 	private PullToRefreshScrollView pulltorefreshscrollview;
 	private BroadRewardAdapter adapter;
-	private List<BroadRewardListBean> mList = new ArrayList<BroadRewardListBean>();
+	private List<HistoryItem> mList = new ArrayList<HistoryItem>();
 	private String promotionId;//奖励id
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.broad_reward);
+		setContentView(R.layout.reward_detail_layout);
 		super.onCreate(savedInstanceState);
 		promotionId = getIntent().getStringExtra("promotionId");
 		initView();
@@ -81,12 +82,6 @@ public class RewardDetailActivity extends BaseActivityWithTopView{
 		tv_progress_title = getView(R.id.tv_progress_title);
 		tv_history_title = getView(R.id.tv_history_title);
 		lv = getView(R.id.lv);
-		for (int i = 0; i < 10; i++) {
-			BroadRewardListBean bean = new BroadRewardListBean();
-			bean.setContent("contentn");
-			bean.setTime("2012/02/03");
-			mList.add(bean);
-		}
 		adapter = new BroadRewardAdapter(RewardDetailActivity.this, mList);
 		lv.setAdapter(adapter);
 		ListViewUtils.setListViewHeightBasedOnChildren(lv);
@@ -103,8 +98,16 @@ public class RewardDetailActivity extends BaseActivityWithTopView{
 		httpContorl.getTaskRewardDetail(promotionId, true, new HttpCallBackInterface() {
 			@Override
 			public void http_Success(Object obj) {
-				
-				
+				RewardDetailBackBean bean = (RewardDetailBackBean) obj;
+				if(bean.getData()!=null){
+					String desc = bean.getData().getDesc();
+					String tip = bean.getData().getTip();
+					tv_reward_introduce.setText(desc);
+					tv_progress_content.setText(tip);
+					mList.addAll(bean.getData().getHistory());
+					adapter.notifyDataSetChanged();
+					ListViewUtils.setListViewHeightBasedOnChildren(lv);
+				}
 			}
 			
 			@Override
