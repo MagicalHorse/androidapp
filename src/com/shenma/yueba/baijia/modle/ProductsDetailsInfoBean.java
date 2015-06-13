@@ -25,15 +25,14 @@ public class ProductsDetailsInfoBean implements Serializable{
 	String StoreName="";//商店名字
 	int StoreId  ;//店铺id
 	//活动信息
-    ProductsDetailsPromotion IsPromotion=new ProductsDetailsPromotion();
+    ProductsDetailsPromotion Promotion=new ProductsDetailsPromotion();
 	
 	
-	
-	public ProductsDetailsPromotion getIsPromotion() {
-		return IsPromotion;
+	public ProductsDetailsPromotion getPromotion() {
+		return Promotion;
 	}
-	public void setIsPromotion(ProductsDetailsPromotion isPromotion) {
-		IsPromotion = isPromotion;
+	public void setPromotion(ProductsDetailsPromotion promotion) {
+		Promotion = promotion;
 	}
 	public String getStoreName() {
 		return StoreName;
