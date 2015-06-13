@@ -480,6 +480,13 @@ public class HttpConstants {
 	
 	public static String GETORDERLISTDETAILS = Order+ "GetUserOrderDetail";
 	
+	
+	/**
+	 * 败家 -获取订单详情
+	 */
+	
+	public static String GETCOMPUTEAMOUNT = PRODUCT+ "ComputeAmount";
+	
 	/**
 	 * 败家 -创建订单（生成订单 （败家）-新）
 	 */

@@ -28,29 +28,7 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
-import com.shenma.yueba.baijia.modle.ApplyAuthBuyerBean;
-import com.shenma.yueba.baijia.modle.BaseRequest;
-import com.shenma.yueba.baijia.modle.BrandDetailInfoBean;
-import com.shenma.yueba.baijia.modle.BuyerIndexInfoBean;
-import com.shenma.yueba.baijia.modle.CityListBackBean;
-import com.shenma.yueba.baijia.modle.CityListRequestBean;
-import com.shenma.yueba.baijia.modle.HuoKuanManagerBackBean;
-import com.shenma.yueba.baijia.modle.MyRequestProductListInfoBean;
-import com.shenma.yueba.baijia.modle.ProvinceCityListBeanRequest;
-import com.shenma.yueba.baijia.modle.RequestBaiJiaOrdeDetailsInfoBean;
-import com.shenma.yueba.baijia.modle.RequestBaiJiaOrderListInfoBean;
-import com.shenma.yueba.baijia.modle.RequestBrandCityWideInfoBean;
-import com.shenma.yueba.baijia.modle.RequestBrandInfoBean;
-import com.shenma.yueba.baijia.modle.RequestCreatOrderInfoBean;
-import com.shenma.yueba.baijia.modle.RequestMyCircleInfoBean;
-import com.shenma.yueba.baijia.modle.RequestMyFavoriteProductListInfoBean;
-import com.shenma.yueba.baijia.modle.RequestProductDetailsInfoBean;
-import com.shenma.yueba.baijia.modle.RequestProductListInfoBean;
-import com.shenma.yueba.baijia.modle.RequestUploadProductInfoBean;
-import com.shenma.yueba.baijia.modle.ResponseUploadProductInfoBean;
-import com.shenma.yueba.baijia.modle.StoreListBackBean;
-import com.shenma.yueba.baijia.modle.UserInfo;
-import com.shenma.yueba.baijia.modle.UserRequestBean;
+import com.shenma.yueba.baijia.modle.*;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.constants.HttpConstants;
 import com.shenma.yueba.yangjia.modle.AliYunKeyBackBean;
@@ -1189,6 +1167,21 @@ public class HttpControl {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("OrderNo",orderNo);
 		BasehttpSend(map, context, HttpConstants.GETORDERLISTDETAILS, httpCallBack,RequestBaiJiaOrdeDetailsInfoBean.class, showDialog, false);
+	}
+	
+	
+	/**
+	 * 计算订单商品金额
+	 * @param ProductId int 商品编号
+	 * @param Quantity int 数量 
+	 * @return void
+	 * **/
+	public void getBaijiaOrderPrice(int ProductId,int Quantity,boolean showDialog, final HttpCallBackInterface httpCallBack,
+			Context context) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("ProductId",Integer.toString(ProductId));
+		map.put("Quantity",Integer.toString(Quantity));
+		BasehttpSend(map, context, HttpConstants.GETCOMPUTEAMOUNT, httpCallBack,RequestComputeAmountInfoBean.class, showDialog, false);
 	}
 
 	/**

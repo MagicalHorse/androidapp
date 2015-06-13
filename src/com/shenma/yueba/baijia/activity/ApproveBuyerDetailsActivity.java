@@ -59,8 +59,7 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView impleme
 	ViewPager appprovebuyer_viewpager;
 	// 滚动图像下面的 原点
 	LinearLayout appprovebuyer_viewpager_footer_linerlayout;
-	// 加载视图
-	LinearLayout showloading;
+	
 	// 滚动视图 主要内容
 	ScrollView approvebuyerdetails_srcollview;
 	// 底部购物车父视图
@@ -105,7 +104,7 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView impleme
 		//productID = 12947;
 		initViews();
 		initData();
-		setFont();
+		//setFont();
 	}
 
 	private void initViews() {
@@ -124,7 +123,7 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView impleme
 		approvebuyerdetails_closeinginfo_textview=(TextView)findViewById(R.id.approvebuyerdetails_closeinginfo_textview);
 		approvebuyerdetails_footer = (RelativeLayout) findViewById(R.id.approvebuyerdetails_footer);
 		approvebuyerdetails_srcollview = (ScrollView) findViewById(R.id.approvebuyerdetails_srcollview);
-		showloading = (LinearLayout) findViewById(R.id.showloading);
+		
 		appprovebuyer_viewpager_footer_linerlayout = (LinearLayout) findViewById(R.id.appprovebuyer_viewpager_footer_linerlayout);
 		appprovebuyer_viewpager = (ViewPager) findViewById(R.id.appprovebuyer_viewpager);
 		DisplayMetrics dm = new DisplayMetrics();
@@ -369,7 +368,7 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView impleme
 		{
 			approvebuyerdetails_closeingtime_linearlayout.setVisibility(View.GONE);
 		}
-		
+		setFont();
 	}
 
 	@Override

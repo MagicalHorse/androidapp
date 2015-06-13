@@ -183,7 +183,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingLeft="@dimen/margin_left_and_right" >
+                android:paddingLeft="@dimen/margin_left_and_right"
+                android:paddingTop="@dimen/shop_main_width5_dimen"
+                android:paddingBottom="@dimen/shop_main_width5_dimen"
+                 >
 
                 <TextView
                     android:drawablePadding="@dimen/shop_main_width3_dimen"
