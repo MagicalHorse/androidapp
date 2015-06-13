@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.FileUtils;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.PhotoUtils;
@@ -30,6 +31,7 @@ import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.RoundImageView;
 import com.shenma.yueba.view.SelectePhotoType;
 import com.shenma.yueba.yangjia.activity.MainActivityForYangJia;
+import com.shenma.yueba.yangjia.activity.ModifyNickNameActivity;
 import com.shenma.yueba.yangjia.activity.PublishProductsActivity;
 
 /*****
@@ -153,6 +155,8 @@ public class UserConfigActivity extends BaseActivityWithTopView {
 						MyCollectionActivity.class);
 				startActivity(intent3);
 			case R.id.user_config_nickname_include://修改昵称
+				Intent intent = new Intent(mContext, ModifyNickNameActivity.class);
+				startActivityForResult(intent, Constants.REQUESTCODE);
 				break;
 			default:
 				break;
@@ -266,6 +270,10 @@ public class UserConfigActivity extends BaseActivityWithTopView {
 							PhotoUtils.INTENT_REQUEST_CODE_CROP);
 				}
 			}
+		}
+		if(requestCode == Constants.REQUESTCODE && resultCode == Constants.RESULTCODE){//修改昵称返回
+			String newName = data.getStringExtra("newName");
+			nickname_textvalue.setText(ToolsUtil.nullToString(newName));
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	
