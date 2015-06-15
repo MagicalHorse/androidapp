@@ -57,6 +57,7 @@ public class MyCollectionActivity extends BaseActivityWithTopView{
 		requestWindowFeature(getWindow().FEATURE_NO_TITLE);
 		setContentView(R.layout.shop_main_layoutbak);
 		super.onCreate(savedInstanceState);
+		MyApplication.getInstance().addActivity(this);
 		initView();
 		requestFalshData();
 	}
@@ -105,13 +106,13 @@ public class MyCollectionActivity extends BaseActivityWithTopView{
 	
 	void requestData()
 	{
-		shop_main_layout_title_pulltorefreshscrollview.setRefreshing();
+		//shop_main_layout_title_pulltorefreshscrollview.setRefreshing();
 		sendHttp(currPage,1);
 	}
 	
 	void requestFalshData()
 	{
-		shop_main_layout_title_pulltorefreshscrollview.setRefreshing();
+		//shop_main_layout_title_pulltorefreshscrollview.setRefreshing();
 		currPage=Constants.CURRPAGE_VALUE;
 		sendHttp(1,0);
 	}

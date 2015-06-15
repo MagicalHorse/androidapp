@@ -7,6 +7,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshGridView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.adapter.ProductTagsListAdapter;
 import com.shenma.yueba.baijia.adapter.RecommendedCircleAdapter;
 import com.shenma.yueba.baijia.modle.RecommendedCircleBean;
@@ -34,6 +35,8 @@ public class ProductsTagsListActivity extends BaseActivityWithTopView {
 	protected void onCreate(Bundle savedInstanceState) {
 	setContentView(R.layout.product_tags_list_layout);
 		super.onCreate(savedInstanceState);
+		MyApplication.getInstance().addActivity(this);
+		
 		gv_recommended_circles = (PullToRefreshGridView) view
 				.findViewById(R.id.gv_recommended_circles);
 		gv_recommended_circles.setMode(Mode.BOTH);

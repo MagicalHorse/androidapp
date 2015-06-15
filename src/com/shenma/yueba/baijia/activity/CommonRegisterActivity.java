@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.ParserJson;
 import com.shenma.yueba.util.SharedUtil;
@@ -57,6 +58,7 @@ public class CommonRegisterActivity extends BaseActivityWithTopView implements
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.common_register_layout2);
 		super.onCreate(savedInstanceState);
+		MyApplication.getInstance().addActivity(this);
 		setTitle("普通注册");
 		setLeftTextView("返回", new OnClickListener() {
 			@Override

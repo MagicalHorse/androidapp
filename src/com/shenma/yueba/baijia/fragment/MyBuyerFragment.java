@@ -163,7 +163,6 @@ public class MyBuyerFragment extends Fragment {
 	 * 上啦加载数据
 	 * ***/
 	void requestData() {
-		//pulltorefreshscrollview.setRefreshing();
 		sendRequestData(currpage,1);
 	}
 
@@ -172,7 +171,6 @@ public class MyBuyerFragment extends Fragment {
 	 * ***/
 	void requestFalshData() {
 		isFirst=false;
-		//pulltorefreshscrollview.setRefreshing();
 		sendRequestData(1,0);
 
 	}

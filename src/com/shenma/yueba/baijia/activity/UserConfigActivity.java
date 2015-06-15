@@ -62,6 +62,8 @@ public class UserConfigActivity extends BaseActivityWithTopView {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.mefragmentforseller_config_layout);
 		super.onCreate(savedInstanceState);
+		MyApplication.getInstance().addActivity(this);
+		
 		initView();
 	}
 

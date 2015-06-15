@@ -33,7 +33,7 @@ public class BrandFragment extends BaseFragment{
 	private View view;
 	private PullToRefreshListView pull_refresh_list;
 	LinearLayout showloading_layout_view;
-	@Override
+	/*@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 	}
@@ -173,5 +173,5 @@ public class BrandFragment extends BaseFragment{
 		//ListUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
 		pull_refresh_list.onRefreshComplete();
 		
-	}
+	}*/
 }

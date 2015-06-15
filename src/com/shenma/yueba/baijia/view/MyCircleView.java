@@ -110,17 +110,12 @@ public class MyCircleView extends BaseView{
 			@Override
 			public void onPullDownToRefresh(PullToRefreshBase refreshView) {
 				
-				//SystemClock.sleep(100);
-				Log.i("TAG", "onPullDownToRefresh");
-				//pulltorefreshscrollview.setRefreshing();
 				requestFalshData();
 			}
 
 			@Override
 			public void onPullUpToRefresh(PullToRefreshBase refreshView) {
-				//SystemClock.sleep(100);
-				//pulltorefreshscrollview.setRefreshing();
-				Log.i("TAG", "onPullUpToRefresh");
+				
 				requestData();
 			}
 		});
@@ -131,15 +126,12 @@ public class MyCircleView extends BaseView{
 	
 	void requestData()
 	{
-		//pull_refresh_list.setRefreshing();
-		sendHttp(1);
+		sendHttp(currPage,1);
 	}
 	
 	void requestFalshData()
 	{
-		currPage=Constants.CURRPAGE_VALUE;
-		//pull_refresh_list.setRefreshing();
-		sendHttp(0);
+		sendHttp(1,0);
 	}
 	
 	
@@ -171,10 +163,14 @@ public class MyCircleView extends BaseView{
 		
 	}
 	
-	
-	void sendHttp(final int type)
+	/******
+	 * @param page int 访问页
+	 * @param type int 0：刷新  1：加载
+	 * 
+	 * **/
+	void sendHttp(int page,final int type)
 	{
-		httpCntrol.getMyCircle(currPage, pageSize, showDialog, new HttpCallBackInterface() {
+		httpCntrol.getMyCircle(page, pageSize, showDialog, new HttpCallBackInterface() {
 			
 			@Override
 			public void http_Success(Object obj) {
@@ -183,6 +179,7 @@ public class MyCircleView extends BaseView{
 				{
 					RequestMyCircleInfoBean bean=(RequestMyCircleInfoBean)obj;
 					if (bean != null) {
+						currPage=bean.getPageindex();
 						if(currPage==1)
 						{
 							if(bean.getData()==null)

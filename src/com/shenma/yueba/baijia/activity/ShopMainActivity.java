@@ -64,6 +64,8 @@ public class ShopMainActivity extends FragmentActivity {
     	requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.shop_main_layout);
 		super.onCreate(savedInstanceState);
+		MyApplication.getInstance().addActivity(this);
+		
 		fragmentManager=getSupportFragmentManager();
 		initView();
 		if(view_list.size()>0)
@@ -254,7 +256,7 @@ public class ShopMainActivity extends FragmentActivity {
     {
     	if(fragmentBean_list.get(currId)!=null)
     	{
-    		shop_main_layout_title_pulltorefreshscrollview.setRefreshing();
+    		//shop_main_layout_title_pulltorefreshscrollview.setRefreshing();
     		ShopPuBuliuFragment fragment=(ShopPuBuliuFragment)fragmentBean_list.get(currId).getFragment();
     		fragment.onPuBuliuRefersh();
     	}
@@ -267,7 +269,7 @@ public class ShopMainActivity extends FragmentActivity {
     {
     	if(fragmentBean_list.get(currId)!=null)
     	{
-    		shop_main_layout_title_pulltorefreshscrollview.setRefreshing();
+    		//shop_main_layout_title_pulltorefreshscrollview.setRefreshing();
     		ShopPuBuliuFragment fragment=(ShopPuBuliuFragment)fragmentBean_list.get(currId).getFragment();
     		fragment.onPuBuliuaddData();
     	}

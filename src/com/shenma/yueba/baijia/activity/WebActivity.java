@@ -38,6 +38,8 @@ public class WebActivity extends BaseActivityWithTopView {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.web_layout);
 		super.onCreate(savedInstanceState);
+		MyApplication.getInstance().addActivity(this);
+		
 		getIntentData();
 		initBaseView();
 		initWebView();

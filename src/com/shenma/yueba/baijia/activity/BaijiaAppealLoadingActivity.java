@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.RoundImageView;
 
@@ -49,6 +50,7 @@ Button  appealloading_layout_cancelpayprice_button;
 		parentView=this.getLayoutInflater().inflate(R.layout.appealloading_layout, null);
 		setContentView(parentView);
 		super.onCreate(savedInstanceState);
+		MyApplication.getInstance().addActivity(this);
 		initView();
 	}
 	

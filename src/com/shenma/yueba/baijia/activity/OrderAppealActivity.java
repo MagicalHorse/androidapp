@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.RoundImageView;
 
@@ -36,6 +37,7 @@ View parementView;
 		parementView=this.getLayoutInflater().inflate(R.layout.orderappeal_layout, null);
 		setContentView(parementView);
 		super.onCreate(savedInstanceState);
+		MyApplication.getInstance().addActivity(this);
 		initView();
 	}
 	

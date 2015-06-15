@@ -32,6 +32,8 @@ public class SwipeListViewActivity extends Activity{
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.swipe_list);
 		super.onCreate(savedInstanceState);
+		MyApplication.getInstance().addActivity(this);
+		
 		data = new ArrayList<String>();
 		data.add("aaaaaaaaaaaaaaa");
 		data.add("bbbbbbbbbbbbbb");

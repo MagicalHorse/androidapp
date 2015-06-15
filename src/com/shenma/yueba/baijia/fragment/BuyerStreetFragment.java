@@ -234,7 +234,6 @@ public class BuyerStreetFragment extends Fragment {
 	 * 上啦加载数据
 	 * ***/
 	void requestData() {
-		pulltorefreshscrollview.setRefreshing();
 		sendRequestData(currpage,1);
 	}
 
@@ -242,7 +241,6 @@ public class BuyerStreetFragment extends Fragment {
 	 * 下拉刷新数据
 	 * ***/
 	void requestFalshData() {
-		pulltorefreshscrollview.setRefreshing();
 		stopTimerToViewPager();
 		currid = -1;
 		sendRequestData(1,0);

@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.adapter.LoginAndRegisterFragmentPagerAdapter;
 import com.shenma.yueba.baijia.fragment.LoginFragment;
 import com.shenma.yueba.baijia.fragment.RegisterFragment;
@@ -59,6 +60,7 @@ public class LoginAndRegisterActivity extends FragmentActivity implements OnClic
 		requestWindowFeature(getWindow().FEATURE_NO_TITLE);
 		setContentView(R.layout.login_and_register_layout);
 		super.onCreate(savedInstanceState);
+		MyApplication.getInstance().addActivity(this);
 		initView();
 		loginFragment = new LoginFragment();
 		registerFragment = new RegisterFragment();

@@ -35,7 +35,7 @@ public class BuyerFragment extends BaseFragment{
 	private PullToRefreshListView pull_refresh_list;
 	LinearLayout showloading_layout_view;
 	
-	@Override
+	/*@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		
@@ -170,5 +170,5 @@ public class BuyerFragment extends BaseFragment{
 		//ListUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
 		pull_refresh_list.onRefreshComplete();
 		
-	}
+	}*/
 }

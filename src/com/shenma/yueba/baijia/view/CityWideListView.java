@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.os.Handler;
+import android.os.Message;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -128,18 +130,14 @@ public class CityWideListView extends BaseView{
 		pull_refresh_list.setAdapter(msgAdapter);
 	}
 	
-	
 	void requestData()
 	{
-		//pull_refresh_list.setRefreshing();
-		sendHttp(1);
+		sendHttp(currPage,1);
 	}
 	
 	void requestFalshData()
 	{
-		//pull_refresh_list.setRefreshing();
-		currPage=Constants.CURRPAGE_VALUE;
-		sendHttp(0);
+		sendHttp(1,0);
 	}
 	
 	
@@ -173,10 +171,13 @@ public class CityWideListView extends BaseView{
 		
 	}
 	
-	
-	void sendHttp(final int type)
+	/***
+	 * @param page int 访问页
+	 * @param type 0：刷新 1：加载
+	 * **/
+	void sendHttp(int page,final int type)
 	{
-		httpCntrol.getBrandCity_Wide(currPage, pageSize, CityId, showDialog,new HttpCallBackInterface() {
+		httpCntrol.getBrandCity_Wide(page, pageSize, CityId, showDialog,new HttpCallBackInterface() {
 			
 			@Override
 			public void http_Success(Object obj) {
@@ -187,6 +188,7 @@ public class CityWideListView extends BaseView{
 					RequestBrandCityWideInfoBean bean=(RequestBrandCityWideInfoBean)obj;
 					if (bean != null && bean.getData()!=null) {
 						BrandCityWideInfoBean brandCityWideInfoBean=bean.getData();
+						currPage=brandCityWideInfoBean.getPageindex();
 						if(currPage==1)
 						{
 							if(bean.getData()==null)

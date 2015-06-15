@@ -117,7 +117,7 @@ public class MsgListView {
 	
 	void requestData()
 	{
-		pull_refresh_list.setRefreshing();
+		//pull_refresh_list.setRefreshing();
 		new Thread()
 		{
 			public void run() {
@@ -136,7 +136,7 @@ public class MsgListView {
 	
 	void requestFalshData()
 	{
-		pull_refresh_list.setRefreshing();
+		//pull_refresh_list.setRefreshing();
 		new Thread()
 		{
 			public void run() {

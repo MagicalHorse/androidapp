@@ -17,6 +17,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.State;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.adapter.MyCircleAdapter;
 import com.shenma.yueba.baijia.modle.MyCircleBean;
 
@@ -31,10 +32,12 @@ public class CircleListActivity extends BaseActivityWithTopView{
 	LinearLayout showloading_layout_view;
 	private List<MyCircleBean> mList = new ArrayList<MyCircleBean>();
 	MyCircleAdapter myCircleAdapter;
+	boolean ishow=false;
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(getWindow().FEATURE_NO_TITLE);
 		setContentView(R.layout.circlelistactivity_layout);
 		super.onCreate(savedInstanceState);
+		MyApplication.getInstance().addActivity(this);
 		initView();
 		requestFalshData();
 	}
@@ -95,11 +98,11 @@ public class CircleListActivity extends BaseActivityWithTopView{
 	
 	void requestData()
 	{
-		pull_refresh_list.setRefreshing();
+		//pull_refresh_list.setRefreshing();
 		new Thread()
 		{
 			public void run() {
-				SystemClock.sleep(100);
+				SystemClock.sleep(8000);
 				CircleListActivity.this.runOnUiThread(new Runnable() {
 					
 					@Override
@@ -114,11 +117,11 @@ public class CircleListActivity extends BaseActivityWithTopView{
 	
 	void requestFalshData()
 	{
-		pull_refresh_list.setRefreshing();
+		//pull_refresh_list.setRefreshing();
 		new Thread()
 		{
 			public void run() {
-				SystemClock.sleep(100);
+				SystemClock.sleep(8000);
 				CircleListActivity.this.runOnUiThread(new Runnable() {
 					
 					@Override

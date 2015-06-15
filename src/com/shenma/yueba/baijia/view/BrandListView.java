@@ -123,16 +123,11 @@ public class BrandListView extends BaseView{
 			@Override
 			public void onPullDownToRefresh(PullToRefreshBase refreshView) {
 				
-				//SystemClock.sleep(100);
-				Log.i("TAG", "onPullDownToRefresh");
-				//pulltorefreshscrollview.setRefreshing();
 				requestFalshData();
 			}
 
 			@Override
 			public void onPullUpToRefresh(PullToRefreshBase refreshView) {
-				//SystemClock.sleep(100);
-				//pulltorefreshscrollview.setRefreshing();
 				Log.i("TAG", "onPullUpToRefresh");
 				requestData();
 			}
@@ -144,16 +139,13 @@ public class BrandListView extends BaseView{
 	
 	void requestData()
 	{
-		//pull_refresh_list.setRefreshing();
-		sendHttp(1);
+		sendHttp(currPage,1);
 		
 	}
 	
 	void requestFalshData()
 	{
-		//pull_refresh_list.setRefreshing();
-		currPage=Constants.CURRPAGE_VALUE;
-		sendHttp(0);
+		sendHttp(1,0);
 	}
 	
 	
@@ -186,10 +178,13 @@ public class BrandListView extends BaseView{
 		
 	}
 	
-	
-	void sendHttp(final int type)
+	/******
+	 * @param page int 访问页面
+	 * @param type int 0：刷新 1 加载
+	 * ***/
+	void sendHttp(int page,final int type)
 	{
-		httpCntrol.getBrandProductList(currPage, pageSize, showDialog, new HttpCallBackInterface() {
+		httpCntrol.getBrandProductList(page, pageSize, showDialog, new HttpCallBackInterface() {
 			
 			@Override
 			public void http_Success(Object obj) {
@@ -199,6 +194,7 @@ public class BrandListView extends BaseView{
 					RequestBrandInfoBean bean=(RequestBrandInfoBean)obj;
 					if (bean != null && bean.getData()!=null) {
 						BrandInfoBean brandInfoBean=bean.getData();
+						int currPage=brandInfoBean.getPageindex();
 						if(currPage==1)
 						{
 							if(bean.getData()==null)

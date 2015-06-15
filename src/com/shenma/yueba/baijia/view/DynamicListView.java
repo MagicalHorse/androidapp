@@ -96,17 +96,12 @@ public class DynamicListView {
 			@Override
 			public void onPullDownToRefresh(PullToRefreshBase refreshView) {
 				
-				//SystemClock.sleep(100);
-				Log.i("TAG", "onPullDownToRefresh");
-				//pulltorefreshscrollview.setRefreshing();
 				requestFalshData();
 			}
 
 			@Override
 			public void onPullUpToRefresh(PullToRefreshBase refreshView) {
-				//SystemClock.sleep(100);
-				//pulltorefreshscrollview.setRefreshing();
-				Log.i("TAG", "onPullUpToRefresh");
+				
 				requestData();
 			}
 		});
@@ -117,7 +112,7 @@ public class DynamicListView {
 	
 	void requestData()
 	{
-		pull_refresh_list.setRefreshing();
+		//pull_refresh_list.setRefreshing();
 		new Thread()
 		{
 			public void run() {
@@ -136,7 +131,7 @@ public class DynamicListView {
 	
 	void requestFalshData()
 	{
-		pull_refresh_list.setRefreshing();
+		//pull_refresh_list.setRefreshing();
 		new Thread()
 		{
 			public void run() {

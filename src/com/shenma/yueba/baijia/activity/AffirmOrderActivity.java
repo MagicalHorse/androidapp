@@ -78,6 +78,7 @@ RequestComputeAmountInfoBean requestComputeAmountInfoBean;
 		requestWindowFeature(getWindow().FEATURE_NO_TITLE);
 		setContentView(parentview);
 		super.onCreate(savedInstanceState);
+		MyApplication.getInstance().addActivity(this);
 		if(this.getIntent().getSerializableExtra("DATA")!=null && this.getIntent().getSerializableExtra("DATA") instanceof RequestProductDetailsInfoBean)
 		{
 			RequestProductDetailsInfoBean bean=(RequestProductDetailsInfoBean)this.getIntent().getSerializableExtra("DATA");

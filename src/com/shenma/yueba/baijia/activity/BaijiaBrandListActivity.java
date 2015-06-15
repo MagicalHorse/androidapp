@@ -50,6 +50,7 @@ List<Object> object_list=new ArrayList<Object>();
 		super.onCreate(savedInstanceState);
 		httpControl=new HttpControl();
 		BrandId=this.getIntent().getIntExtra("BRANDID", -1);
+		MyApplication.getInstance().addActivity(this);
 		/*if(BrandId<0)
 		{
 			MyApplication.getInstance().showMessage(BaijiaBrandListActivity.this, "数据错误");

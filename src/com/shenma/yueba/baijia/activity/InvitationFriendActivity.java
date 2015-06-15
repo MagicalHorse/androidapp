@@ -11,6 +11,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.adapter.InvitationAdapter;
 
 /**  
@@ -28,6 +29,7 @@ List<Integer> icon_list=new ArrayList<Integer>();
 		requestWindowFeature(getWindow().FEATURE_NO_TITLE);
 		setContentView(R.layout.invitationfriend_layout);
 		super.onCreate(savedInstanceState);
+		MyApplication.getInstance().addActivity(this);
 		str_list.add("邀请微信好友");
 		str_list.add("邀请通讯录好友");
 		icon_list.add(new Integer(R.drawable.test002));

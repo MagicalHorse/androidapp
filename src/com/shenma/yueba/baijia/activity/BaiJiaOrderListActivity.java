@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.fragment.BaiJiaOrderListFragment;
 import com.shenma.yueba.baijia.modle.FragmentBean;
 import com.shenma.yueba.util.FontManager;
@@ -39,6 +40,7 @@ int currid=-1;
 		requestWindowFeature(getWindow().FEATURE_NO_TITLE);
 		setContentView(R.layout.baijia_myorder_layout);
 		super.onCreate(savedInstanceState);
+		MyApplication.getInstance().addActivity(this);
 		initView();
 		initaddFooterView();
 		//获取 显示的视图

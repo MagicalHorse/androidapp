@@ -26,7 +26,7 @@ public class MyCircleFragment extends BaseFragment {
 	private List<MyCircleBean> mList = new ArrayList<MyCircleBean>();
 	private View view;
 	private PullToRefreshListView pull_refresh_list;
-	@Override
+	/*@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 	}
@@ -166,5 +166,5 @@ public class MyCircleFragment extends BaseFragment {
 		//ListUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
 		pull_refresh_list.onRefreshComplete();
 		
-	}
+	}*/
 }

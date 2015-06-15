@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.modle.CityBean;
 import com.shenma.yueba.baijia.modle.CityBeanList;
 import com.shenma.yueba.baijia.modle.CityListRequestBean;
@@ -62,6 +63,7 @@ public class CityListActivity extends BaseActivityWithTopView {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.city_list_layout);
 		super.onCreate(savedInstanceState);
+		MyApplication.getInstance().addActivity(this);
 		initViews();
 	}
 

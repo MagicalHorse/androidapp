@@ -94,6 +94,7 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView impleme
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.approvebuyerdetails_layout);
 		super.onCreate(savedInstanceState);
+		MyApplication.getInstance().addActivity(this);
 		productID=this.getIntent().getIntExtra("productID", -1);
 		if(productID<0)
 		{

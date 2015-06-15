@@ -40,6 +40,7 @@ public class FindPasswordActivity extends BaseActivityWithTopView implements
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.find_password_layout);
 		super.onCreate(savedInstanceState);
+		MyApplication.getInstance().addActivity(this);
 		initView();
 	}
 

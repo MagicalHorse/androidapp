@@ -74,6 +74,7 @@ public class CircleInfoActivity extends BaseActivityWithTopView implements
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.circle_info_layout);
 		super.onCreate(savedInstanceState);
+		MyApplication.getInstance().addActivity(this);
 		initView();
 		getIntentData();
 		getCircleDetail(cricleId, mContext, true);

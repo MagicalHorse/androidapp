@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.view.Window;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.util.ToolsUtil;
 
 /**
@@ -21,6 +22,8 @@ public class SplashActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.loading_layout);
+		MyApplication.getInstance().addActivity(this);
+		
 		handler.postDelayed(new Runnable() {
 			@Override
 			public void run() {

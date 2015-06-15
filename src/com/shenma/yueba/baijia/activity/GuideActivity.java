@@ -20,6 +20,7 @@ import android.widget.ImageView.ScaleType;
 import android.widget.TextView;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.adapter.GuideAdapter;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.ToolsUtil;
@@ -50,6 +51,7 @@ public class GuideActivity extends BaseActivity  {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		MyApplication.getInstance().addActivity(this);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.guide);
 		SharedUtil.setInstallFlag(mContext);// 第一次安装时，置为true

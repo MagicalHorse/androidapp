@@ -55,6 +55,8 @@ public class SearchActivity extends FragmentActivity implements OnClickListener 
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.search_layout);
+		MyApplication.getInstance().addActivity(this);
+		
 		initView();
 		initFragment();
 		initViewPager();

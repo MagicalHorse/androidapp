@@ -34,6 +34,8 @@ public class ResetPasswordActivity extends BaseActivityWithTopView implements On
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.set_reset_password_layout);
 		super.onCreate(savedInstanceState);
+		MyApplication.getInstance().addActivity(this);
+		
 		initView();
 	}
 

@@ -9,6 +9,7 @@ import android.view.View;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.adapter.FansListAdapter;
 import com.shenma.yueba.baijia.modle.FansListBean;
 
@@ -28,6 +29,7 @@ public class FansActivity extends BaseActivityWithTopView {
 	protected void onCreate(Bundle savedInstanceState) {
 		setContentView(R.layout.refresh_listview_with_title_layout);
 		super.onCreate(savedInstanceState);
+		MyApplication.getInstance().addActivity(this);
 		initView();
 	}
 

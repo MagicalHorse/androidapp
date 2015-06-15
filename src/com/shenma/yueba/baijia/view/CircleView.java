@@ -210,15 +210,12 @@ public class CircleView extends BaseView{
 	
 	void requestData()
 	{
-		//baijia_quanzi_layout_tanb1_gridbview.setRefreshing();
-		sendHttp(1);
+		sendHttp(currPage,1);
 	}
 	
 	void requestFalshData()
 	{
-		//baijia_quanzi_layout_tanb1_gridbview.setRefreshing();
-		currPage=Constants.CURRPAGE_VALUE;
-		sendHttp(0);
+		sendHttp(1,0);
 	}
 	
 	
@@ -247,15 +244,14 @@ public class CircleView extends BaseView{
 		showloading_layout_view.setVisibility(View.GONE);
 		baseAdapter.notifyDataSetChanged();
 		
-		//ListUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
 		baijia_quanzi_layout_tanb1_gridbview.onRefreshComplete();
 		
 	}
 	
 	
-	void sendHttp(final int type)
+	void sendHttp(int page,final int type)
 	{
-		httpCntrol.getRecommendGroup(currPage, pageSize, showDialog, new HttpCallBackInterface() {
+		httpCntrol.getRecommendGroup(page, pageSize, showDialog, new HttpCallBackInterface() {
 			
 			@Override
 			public void http_Success(Object obj) {
@@ -263,6 +259,7 @@ public class CircleView extends BaseView{
 				{
 					RequestMyCircleInfoBean bean=(RequestMyCircleInfoBean)obj;
 					if (bean != null) {
+						currPage=bean.getPageindex();
 						if(currPage==1)
 						{
 							if(bean.getData()==null)

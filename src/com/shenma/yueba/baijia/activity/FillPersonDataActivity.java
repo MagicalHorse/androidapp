@@ -48,6 +48,7 @@ public class FillPersonDataActivity extends BaseActivityWithTopView {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.fill_person_data);
 		super.onCreate(savedInstanceState);
+		MyApplication.getInstance().addActivity(this);
 		initView();
 	}
 

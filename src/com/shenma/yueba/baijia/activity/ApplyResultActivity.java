@@ -25,6 +25,7 @@ public class ApplyResultActivity extends BaseActivityWithTopView implements OnCl
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.apply_result_layout);
 		super.onCreate(savedInstanceState);
+		MyApplication.getInstance().addActivity(this);
 		initView();
 		getIntentData();
 	}

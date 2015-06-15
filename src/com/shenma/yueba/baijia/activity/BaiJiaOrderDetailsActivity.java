@@ -61,6 +61,7 @@ BaijiaOrderDetailsAdapter baijiaOrderDetailsAdapter;
 		parentView=this.getLayoutInflater().inflate(R.layout.baijia_orderdetails_layout, null);
 		setContentView(parentView);
 		super.onCreate(savedInstanceState);
+		MyApplication.getInstance().addActivity(this);
 		if(this.getIntent().getStringExtra("ORDER_ID")==null)
 		{
 			MyApplication.getInstance().showMessage(BaiJiaOrderDetailsActivity.this, "数据错误");

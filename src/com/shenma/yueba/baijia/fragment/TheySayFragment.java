@@ -35,7 +35,7 @@ public class TheySayFragment extends BaseFragment {
 	private View view;
 	private PullToRefreshListView pull_refresh_list;
     LinearLayout showloading_layout_view;
-	@Override
+	/*@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 	}
@@ -177,5 +177,5 @@ public class TheySayFragment extends BaseFragment {
 		pull_refresh_list.onRefreshComplete();
 		
 	}
-
+*/
 }

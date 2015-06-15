@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.fragment.CircleFragment;
 import com.shenma.yueba.baijia.fragment.FindFragment;
 import com.shenma.yueba.baijia.fragment.IndexFragmentForBaiJia;
@@ -22,6 +23,7 @@ import com.shenma.yueba.baijia.fragment.MeFragmentForBaiJia;
 import com.shenma.yueba.baijia.fragment.MessageFragment;
 import com.shenma.yueba.baijia.modle.FragmentBean;
 import com.shenma.yueba.util.FontManager;
+import com.shenma.yueba.util.ToolsUtil;
 
 public class MainActivityForBaiJia extends FragmentActivity {
 FrameLayout baijia_main_framelayout;
@@ -37,6 +39,7 @@ FragmentManager fragmentManager;
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(getWindow().FEATURE_NO_TITLE);
 		setContentView(R.layout.baijia_main_layout);
+		MyApplication.getInstance().addActivity(this);
 		initView();
 		initaddFooterView();
 		setCurrView(0);
@@ -53,11 +56,11 @@ FragmentManager fragmentManager;
 		findFragment=new FindFragment();
 		meFragmentForBaiJia=new MeFragmentForBaiJia();
 		
-		fragment_list.add(new FragmentBean("主页",R.drawable.tab_index_selector,indexFragmentForBaiJia));
-		fragment_list.add(new FragmentBean("圈子",R.drawable.tab_circle_selector,circleFragment));
-		fragment_list.add(new FragmentBean("消息",R.drawable.tab_msg_selector,messageFragment));
-		fragment_list.add(new FragmentBean("发现",R.drawable.tab_find_selector,findFragment));
-		fragment_list.add(new FragmentBean("我",R.drawable.tab_me_selector,meFragmentForBaiJia));
+		fragment_list.add(new FragmentBean("主页",R.drawable.baijia_home_icon,indexFragmentForBaiJia));
+		fragment_list.add(new FragmentBean("圈子",R.drawable.baijia_circle_cion,circleFragment));
+		fragment_list.add(new FragmentBean("消息",R.drawable.baijia_message_icon,messageFragment));
+		fragment_list.add(new FragmentBean("发现",R.drawable.baijia_search_icon,findFragment));
+		fragment_list.add(new FragmentBean("我",R.drawable.baijia_mine_icon,meFragmentForBaiJia));
 		
 		
 	}
@@ -71,6 +74,7 @@ FragmentManager fragmentManager;
 			imageview.setImageResource(fragment_list.get(i).getIcon());
 			TextView tv1=(TextView)ll.findViewById(R.id.tv1);
 			tv1.setText(fragment_list.get(i).getName());
+			tv1.setTextSize(12);
 			FontManager.changeFonts(getApplication(), tv1);
 			LinearLayout.LayoutParams param=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
 			param.weight=1;
