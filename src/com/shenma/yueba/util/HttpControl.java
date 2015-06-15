@@ -41,6 +41,7 @@ import com.shenma.yueba.baijia.modle.RequestBaiJiaOrdeDetailsInfoBean;
 import com.shenma.yueba.baijia.modle.RequestBaiJiaOrderListInfoBean;
 import com.shenma.yueba.baijia.modle.RequestBrandCityWideInfoBean;
 import com.shenma.yueba.baijia.modle.RequestBrandInfoBean;
+import com.shenma.yueba.baijia.modle.RequestBrandInfoInfoBean;
 import com.shenma.yueba.baijia.modle.RequestComputeAmountInfoBean;
 import com.shenma.yueba.baijia.modle.RequestCreatOrderInfoBean;
 import com.shenma.yueba.baijia.modle.RequestMyCircleInfoBean;
@@ -1334,6 +1335,29 @@ public class HttpControl {
 				httpCallBack, RequestBrandCityWideInfoBean.class, showDialog,
 				true);
 	}
+	
+	
+	/**
+	 * 获取败家品牌信息详细
+	 * 
+	 * @param currPage
+	 *            int 当前页
+	 * @param pageSize
+	 *            int 条数
+	 * @param BrandId int 品牌id
+	 * @return void
+	 * **/
+	public void getBaijiaBrandDetails(int currPage, int pageSize, int BrandId ,
+			boolean showDialog, final HttpCallBackInterface httpCallBack,
+			Context context) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put(Constants.PAGE, Integer.toString(currPage));
+		map.put(Constants.PAGESIZE, Integer.toString(pageSize));
+		map.put("BrandId", Integer.toString(BrandId));
+		BasehttpSend(map, context, HttpConstants.METHOD_BRANDMANAGEER_DETAIL, httpCallBack,
+				RequestBrandInfoInfoBean.class, showDialog, true);
+	}
+	
 	
 	/**
 	 * 获取我收藏的商品列表-败家(新)

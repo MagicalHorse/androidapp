@@ -32,7 +32,7 @@ import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
  * 程序的简单说明  
  */
 
-public class BrandListView {
+public class BrandListView extends BaseView{
 	static BrandListView msgListView;
 	Activity activity;
 	LayoutInflater layoutInflater;
@@ -46,6 +46,8 @@ public class BrandListView {
 	boolean showDialog=true;
 	HttpControl httpCntrol=new HttpControl();
 	List<BrandInfo> items=new ArrayList<BrandInfo>();
+	boolean isfirst=true;
+	
 	public static BrandListView the()
 	{
 		if(msgListView==null)
@@ -63,7 +65,8 @@ public class BrandListView {
 			layoutInflater=activity.getLayoutInflater();
 			initView();
 			initPullView();
-			requestFalshData();
+			firstInitData();
+			//requestFalshData();
 		}
 		return view;
 	}
@@ -126,14 +129,14 @@ public class BrandListView {
 	
 	void requestData()
 	{
-		pull_refresh_list.setRefreshing();
+		//pull_refresh_list.setRefreshing();
 		sendHttp(1);
 		
 	}
 	
 	void requestFalshData()
 	{
-		pull_refresh_list.setRefreshing();
+		//pull_refresh_list.setRefreshing();
 		currPage=Constants.CURRPAGE_VALUE;
 		sendHttp(0);
 	}
@@ -148,12 +151,12 @@ public class BrandListView {
 		}
 		showloading_layout_view.setVisibility(View.GONE);
 		brandAdapter.notifyDataSetChanged();
-		//ListUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
 		pull_refresh_list.onRefreshComplete();
 	}
 	
 	void falshData(BrandInfoBean bean)
 	{
+		isfirst=false;
 		currPage++;
 		items.clear();
 		if(bean.getItems()!=null)
@@ -217,5 +220,13 @@ public class BrandListView {
 				MyApplication.getInstance().showMessage(activity, msg);
 			}
 		},activity );
+	}
+
+	@Override
+	public void firstInitData() {
+		if(isfirst)
+		{
+			requestFalshData();
+		}
 	}
 }

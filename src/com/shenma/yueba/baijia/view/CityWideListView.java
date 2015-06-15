@@ -35,7 +35,7 @@ import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
  * 程序的简单说明  
  */
 
-public class CityWideListView {
+public class CityWideListView extends BaseView{
 	static CityWideListView msgListView;
 	Activity activity;
 	LayoutInflater layoutInflater;
@@ -49,6 +49,7 @@ public class CityWideListView {
 	boolean showDialog=true;
 	HttpControl httpCntrol=new HttpControl();
 	List<BrandCityWideInfo> items=new ArrayList<BrandCityWideInfo>();
+	boolean isfirst=true;
 	int CityId=0;//当前城市id
 	public static CityWideListView the()
 	{
@@ -67,7 +68,7 @@ public class CityWideListView {
 			layoutInflater=activity.getLayoutInflater();
 			initView();
 			initPullView();
-			requestFalshData();
+			//requestFalshData();
 		}
 		return view;
 	}
@@ -130,13 +131,13 @@ public class CityWideListView {
 	
 	void requestData()
 	{
-		pull_refresh_list.setRefreshing();
+		//pull_refresh_list.setRefreshing();
 		sendHttp(1);
 	}
 	
 	void requestFalshData()
 	{
-		pull_refresh_list.setRefreshing();
+		//pull_refresh_list.setRefreshing();
 		currPage=Constants.CURRPAGE_VALUE;
 		sendHttp(0);
 	}
@@ -157,6 +158,7 @@ public class CityWideListView {
 	
 	void falshData(BrandCityWideInfoBean brandCityWideInfoBean)
 	{
+		isfirst=false;
 		currPage++;
 		items.clear();
 		if(brandCityWideInfoBean.getItems()!=null)
@@ -222,5 +224,13 @@ public class CityWideListView {
 				MyApplication.getInstance().showMessage(activity, msg);
 			}
 		},activity );
+	}
+
+	@Override
+	public void firstInitData() {
+		if(isfirst)
+		{
+			requestFalshData();
+		}
 	}
 }

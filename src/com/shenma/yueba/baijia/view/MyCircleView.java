@@ -46,6 +46,8 @@ public class MyCircleView extends BaseView{
 	boolean showDialog=true;
 	HttpControl httpCntrol=new HttpControl();
 	List<MyCircleInfo> items=new ArrayList<MyCircleInfo>();
+	boolean isFirst=true;
+	
 	public static MyCircleView the()
 	{
 		if(myCircleView==null)
@@ -63,7 +65,7 @@ public class MyCircleView extends BaseView{
 		{
 			initView();
 			initPullView();
-			requestFalshData();
+			//requestFalshData();
 		}
 		return view ;
 	}
@@ -129,14 +131,14 @@ public class MyCircleView extends BaseView{
 	
 	void requestData()
 	{
-		pull_refresh_list.setRefreshing();
+		//pull_refresh_list.setRefreshing();
 		sendHttp(1);
 	}
 	
 	void requestFalshData()
 	{
 		currPage=Constants.CURRPAGE_VALUE;
-		pull_refresh_list.setRefreshing();
+		//pull_refresh_list.setRefreshing();
 		sendHttp(0);
 	}
 	
@@ -150,12 +152,12 @@ public class MyCircleView extends BaseView{
 		}
 		showloading_layout_view.setVisibility(View.GONE);
 		myCircleAdapter.notifyDataSetChanged();
-		//ListUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
 		pull_refresh_list.onRefreshComplete();
 	}
 	
 	void falshData(MyCircleInfoBean bean)
 	{
+		isFirst=false;
 		currPage++;
 		items.clear();
 		if(bean.getItems()!=null)
@@ -165,7 +167,6 @@ public class MyCircleView extends BaseView{
 		showloading_layout_view.setVisibility(View.GONE);
 		myCircleAdapter.notifyDataSetChanged();
 		
-		//ListUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
 		pull_refresh_list.onRefreshComplete();
 		
 	}
@@ -222,7 +223,10 @@ public class MyCircleView extends BaseView{
 
 	@Override
 	public void firstInitData() {
-		// TODO Auto-generated method stub
+		if(isFirst)
+		{
+			requestFalshData();
+		}
 		
 	}
 }

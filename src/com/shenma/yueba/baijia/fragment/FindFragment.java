@@ -24,6 +24,7 @@ import android.widget.TextView;
 import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.activity.SearchActivity;
 import com.shenma.yueba.baijia.modle.FragmentBean;
+import com.shenma.yueba.baijia.view.BaseView;
 import com.shenma.yueba.baijia.view.BrandListView;
 import com.shenma.yueba.baijia.view.CityWideListView;
 import com.shenma.yueba.util.FontManager;
@@ -77,9 +78,7 @@ public class FindFragment extends Fragment{
 	
 	void initView(View v)
 	{
-		/*Fragment recommendedCircleFragment=new RecommendedCircleFragment();
-		Fragment myCircleFragment=new MyCircleFragment();
-		*/
+		
 		bt_search=(Button)v.findViewById(R.id.bt_search);
 		bt_search.setOnClickListener(new OnClickListener() {
 			
@@ -89,8 +88,8 @@ public class FindFragment extends Fragment{
 				startActivityForResult(intent, 200);
 			}
 		});
-		fragment_list.add(new FragmentBean("品牌", -1, BrandListView.the().getView(getActivity())));
-		fragment_list.add(new FragmentBean("同城", -1, CityWideListView.the().getView(getActivity())));
+		fragment_list.add(new FragmentBean("品牌", -1, BrandListView.the()));
+		fragment_list.add(new FragmentBean("同城", -1, CityWideListView.the()));
 		
 		baijia_fragment_tab1_head_linearlayout=(LinearLayout)v.findViewById(R.id.baijia_fragment_tab1_head_linearlayout);
 		for(int i=0;i<fragment_list.size();i++)
@@ -134,7 +133,8 @@ public class FindFragment extends Fragment{
 			public Object instantiateItem(ViewGroup container, int position) {
 				
 				//return super.instantiateItem(container, position);
-				View v=(View)fragment_list.get(position).getFragment();
+				BaseView bv=(BaseView)fragment_list.get(position).getFragment();
+				View v=bv.getView(getActivity());
 				container.addView(v,0);
 				return v;
 			}
@@ -153,7 +153,7 @@ public class FindFragment extends Fragment{
 			@Override
 			public void onPageSelected(int arg0) {
 				setTextColor(arg0);
-				
+				((BaseView)fragment_list.get(arg0).getFragment()).firstInitData();
 			}
 			
 			@Override

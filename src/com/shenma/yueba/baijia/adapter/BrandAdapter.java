@@ -3,21 +3,26 @@ package com.shenma.yueba.baijia.adapter;
 import java.util.List;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.activity.ShopMainActivity;
 import com.shenma.yueba.baijia.modle.BrandInfo;
+import com.shenma.yueba.baijia.modle.ProductInFo;
 import com.shenma.yueba.util.ToolsUtil;
 
 public class BrandAdapter extends BaseAdapterWithUtil {
 	private List<BrandInfo> items;
+	Context context;
 	public BrandAdapter(Context ctx,List<BrandInfo> items) {
 		super(ctx);
 		this.items = items;
+		this.context=ctx;
 	}
 
 	@Override
@@ -38,7 +43,6 @@ public class BrandAdapter extends BaseAdapterWithUtil {
 		return position;
 	}
 
-	@SuppressWarnings("null")
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		Holder holder;
@@ -50,17 +54,41 @@ public class BrandAdapter extends BaseAdapterWithUtil {
 			holder.brandlist_item_imageview2 = (ImageView) convertView.findViewById(R.id.brandlist_item_imageview2);
 			holder.brandlist_item_imageview3 = (ImageView) convertView.findViewById(R.id.brandlist_item_imageview3);
 			holder.brandlist_item_imageview4 = (ImageView) convertView.findViewById(R.id.brandlist_item_imageview4);
+			holder.brandlist_item_imageview1.setOnClickListener(onClickListener);
+			holder.brandlist_item_imageview2.setOnClickListener(onClickListener);
+			holder.brandlist_item_imageview3.setOnClickListener(onClickListener);
+			holder.brandlist_item_imageview4.setOnClickListener(onClickListener);
 			convertView.setTag(holder);
 		}else{
 			holder = (Holder) convertView.getTag();
 		}
 		BrandInfo brandInfo=items.get(position);
+		holder.iv_brand.setTag(brandInfo.getBrandId());
 		initPic(holder.iv_brand, ToolsUtil.nullToString(brandInfo.getBrandLogo()));
-		
-		initPic(holder.brandlist_item_imageview1, ToolsUtil.nullToString(brandInfo.getBrandLogo()));
-		initPic(holder.brandlist_item_imageview2, ToolsUtil.nullToString(brandInfo.getBrandLogo()));
-		initPic(holder.brandlist_item_imageview3, ToolsUtil.nullToString(brandInfo.getBrandLogo()));
-		initPic(holder.brandlist_item_imageview4, ToolsUtil.nullToString(brandInfo.getBrandLogo()));
+		List<ProductInFo> productInFo_list=brandInfo.getProduct();
+		for(int i=0;i<productInFo_list.size();i++)
+		{
+			ProductInFo productInFo=productInFo_list.get(i);
+			switch(i)
+			{
+			case 0:
+				initPic(holder.brandlist_item_imageview1, ToolsUtil.getImage(ToolsUtil.nullToString(productInFo.getPic()), 320, 0));
+				holder.brandlist_item_imageview1.setTag(productInFo.getProductId());
+				break;
+			case 1:
+				initPic(holder.brandlist_item_imageview2, ToolsUtil.getImage(ToolsUtil.nullToString(productInFo.getPic()), 320, 0));
+				holder.brandlist_item_imageview2.setTag(productInFo.getProductId());
+				break;
+			case 2:
+				initPic(holder.brandlist_item_imageview3, ToolsUtil.getImage(ToolsUtil.nullToString(productInFo.getPic()), 320, 0));
+				holder.brandlist_item_imageview3.setTag(productInFo.getProductId());
+				break;
+			case 3:
+				initPic(holder.brandlist_item_imageview4, ToolsUtil.getImage(ToolsUtil.nullToString(productInFo.getPic()), 320, 0));
+				holder.brandlist_item_imageview4.setTag(productInFo.getProductId());
+				break;
+			}
+		}
 		
 		return convertView;
 	}
@@ -80,4 +108,15 @@ public class BrandAdapter extends BaseAdapterWithUtil {
 		MyApplication.getInstance().getImageLoader().displayImage(url, iv, MyApplication.getInstance().getDisplayImageOptions());
 	}
 
+	
+	OnClickListener onClickListener=new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			switch(v.getId())
+			{
+			
+			}
+		}
+	};
 }

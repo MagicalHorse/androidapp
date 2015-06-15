@@ -141,7 +141,6 @@ public class BaiJiaOrderListFragment extends Fragment {
 	 * ***/
 	void requestData()
 	{
-		pull_refresh_list.setRefreshing();
 		sendRequestData(currpage,1);
 	}
 	
@@ -150,8 +149,6 @@ public class BaiJiaOrderListFragment extends Fragment {
 	 * ***/
 	void requestFalshData()
 	{
-		currpage=Constants.CURRPAGE_VALUE;
-		pull_refresh_list.setRefreshing();
 		sendRequestData(1,0);
 	}
 	

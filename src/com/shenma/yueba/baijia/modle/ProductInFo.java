@@ -11,8 +11,16 @@ import java.io.Serializable;
 public class ProductInFo implements Serializable{
 	int ProductId;//商品编号",
     String ProductName="";//商品名称",
-    int StoreItemNo;//商店编号",
     String Pic="";//图片"
+    String StoreItemNo;//商店编号",
+    
+    
+	public String getStoreItemNo() {
+		return StoreItemNo;
+	}
+	public void setStoreItemNo(String storeItemNo) {
+		StoreItemNo = storeItemNo;
+	}
 	public int getProductId() {
 		return ProductId;
 	}
@@ -25,12 +33,7 @@ public class ProductInFo implements Serializable{
 	public void setProductName(String productName) {
 		ProductName = productName;
 	}
-	public int getStoreItemNo() {
-		return StoreItemNo;
-	}
-	public void setStoreItemNo(int storeItemNo) {
-		StoreItemNo = storeItemNo;
-	}
+	
 	public String getPic() {
 		return Pic;
 	}

@@ -1,11 +1,13 @@
 package com.shenma.yueba.baijia.activity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -47,7 +49,8 @@ public class MyCollectionActivity extends BaseActivityWithTopView{
 	LinearLayout pubuliy_left_linearlayout,pubuliy_right_linearlayout;
 	int leftHeight;//左侧高度
 	int rightHeight;//右侧高度
-	RequestMyFavoriteProductListInfoBean bean;
+	List<MyFavoriteProductListInfo> arr_list=new ArrayList<MyFavoriteProductListInfo>();
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		
@@ -157,7 +160,7 @@ public class MyCollectionActivity extends BaseActivityWithTopView{
 				shop_main_layout_title_pulltorefreshscrollview.onRefreshComplete();
 				if(obj!=null && obj instanceof RequestMyFavoriteProductListInfoBean)
 				{
-					bean=(RequestMyFavoriteProductListInfoBean)obj;
+					RequestMyFavoriteProductListInfoBean bean=(RequestMyFavoriteProductListInfoBean)obj;
 					if (bean != null) {
 						if(currPage==1)
 						{
@@ -219,6 +222,7 @@ public class MyCollectionActivity extends BaseActivityWithTopView{
 		rightHeight=0;
 		pubuliy_left_linearlayout.removeAllViews();
 		pubuliy_right_linearlayout.removeAllViews();
+		arr_list.clear();
 		addItem(item);
 	}
 	
@@ -241,6 +245,8 @@ public class MyCollectionActivity extends BaseActivityWithTopView{
     {
     	if(item!=null)
     	{
+    		arr_list.addAll(item);
+    		
     		for(int i=0;i<item.size();i++)
     		{
     			MyFavoriteProductListInfo bean=item.get(i);
@@ -353,17 +359,17 @@ public class MyCollectionActivity extends BaseActivityWithTopView{
 						switch(Status)
 						{
 						case 0:
-							if(bean.getData().getItems().contains(myFavoriteProductListInfo))
+							if(arr_list.contains(myFavoriteProductListInfo))
 							{
-								bean.getData().getItems().remove(myFavoriteProductListInfo);
-								if(v.getParent()!=null)
+								arr_list.remove(myFavoriteProductListInfo);
+								if(v.getParent().getParent()!=null)
 								{
-									if(v.getParent()==pubuliy_left_linearlayout)
+									if(v.getParent().getParent()==pubuliy_left_linearlayout)
 									{
-										leftHeight-=v.getHeight();
+										leftHeight-=((ViewGroup)v.getParent()).getHeight();
 									}else if(v.getParent()==pubuliy_right_linearlayout)
 									{
-										rightHeight=v.getHeight();
+										rightHeight-=((ViewGroup)v.getParent()).getHeight();
 									}
 									((LinearLayout)v.getParent().getParent()).setVisibility(View.GONE);
 								}

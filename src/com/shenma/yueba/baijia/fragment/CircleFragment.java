@@ -122,8 +122,9 @@ public class CircleFragment extends Fragment{
 			@Override
 			public Object instantiateItem(ViewGroup container, int position) {
 				
-				BaseView v=(BaseView)fragment_list.get(position).getFragment();
-				container.addView(v.getView(getActivity()),0);
+				BaseView bv=(BaseView)fragment_list.get(position).getFragment();
+				View v=bv.getView(getActivity());
+				container.addView(v,0);
 				return v;
 			}
 			

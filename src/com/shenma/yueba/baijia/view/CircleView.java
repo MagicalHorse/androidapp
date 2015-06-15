@@ -70,7 +70,7 @@ public class CircleView extends BaseView{
 			v=inflater.inflate(R.layout.circleview_layout, null);
 			initPullView();
 			initView(v);
-			//requestFalshData();
+			firstInitData();
 		}
 		baijia_quanzi_layout_tanb1_gridbview.setFocusable(false);
 		baijia_quanzi_layout_tanb1_gridbview.setFocusableInTouchMode(false);
@@ -210,13 +210,13 @@ public class CircleView extends BaseView{
 	
 	void requestData()
 	{
-		baijia_quanzi_layout_tanb1_gridbview.setRefreshing();
+		//baijia_quanzi_layout_tanb1_gridbview.setRefreshing();
 		sendHttp(1);
 	}
 	
 	void requestFalshData()
 	{
-		baijia_quanzi_layout_tanb1_gridbview.setRefreshing();
+		//baijia_quanzi_layout_tanb1_gridbview.setRefreshing();
 		currPage=Constants.CURRPAGE_VALUE;
 		sendHttp(0);
 	}
