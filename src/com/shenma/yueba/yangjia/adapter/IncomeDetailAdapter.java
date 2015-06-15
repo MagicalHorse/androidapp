@@ -5,22 +5,22 @@ import java.util.List;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.adapter.BaseAdapterWithUtil;
 import com.shenma.yueba.util.FontManager;
-import com.shenma.yueba.yangjia.modle.IncomeDetailListBean;
+import com.shenma.yueba.util.ToolsUtil;
+import com.shenma.yueba.yangjia.modle.IncomeDetailItem;
 
 public class IncomeDetailAdapter extends BaseAdapterWithUtil {
-	private List<IncomeDetailListBean> mList;
+	private List<IncomeDetailItem> mList;
 	private int tag;
-	public IncomeDetailAdapter(Context ctx,List<IncomeDetailListBean> mList) {
+	public IncomeDetailAdapter(Context ctx,List<IncomeDetailItem> mList) {
 		super(ctx);
 		this.mList = mList;
 	}
-	public IncomeDetailAdapter(Context ctx,List<IncomeDetailListBean> mList,int tag) {
+	public IncomeDetailAdapter(Context ctx,List<IncomeDetailItem> mList,int tag) {
 		super(ctx);
 		this.mList = mList;
 		tag = tag;
@@ -28,7 +28,7 @@ public class IncomeDetailAdapter extends BaseAdapterWithUtil {
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return 10;
+		return mList.size();
 	}
 
 	@Override
@@ -66,6 +66,13 @@ public class IncomeDetailAdapter extends BaseAdapterWithUtil {
 		}else{
 			holder = (Holder) convertView.getTag();
 		}
+		holder.tv_earning_money.setText("￥"+ToolsUtil.nullToString(mList.get(position).getIncome_amount()));
+		holder.tv_from.setText("1".equals(ToolsUtil.nullToString(mList.get(position).getOrder_type()))?"来源：奖励":"来源：订单");
+		holder.tv_money_number.setText("￥"+ToolsUtil.nullToString(mList.get(position).getAmount()));
+		holder.tv_date.setText("￥"+ToolsUtil.nullToString(mList.get(position).getCreate_date()));
+		holder.tv_order_muber.setText("￥"+ToolsUtil.nullToString(mList.get(position).getOrder_no()));
+		holder.tv_status.setText("￥"+ToolsUtil.nullToString(mList.get(position).getOrderstatus_s()));
+		
 		return convertView;
 	}
 	
@@ -80,6 +87,7 @@ public class IncomeDetailAdapter extends BaseAdapterWithUtil {
 		TextView tv_order_number_title;
 		TextView tv_order_number;
 		TextView tv_status;
+		TextView tv_order_muber;
 	}
 
 }
