@@ -9,16 +9,18 @@ import android.widget.TextView;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.adapter.BaseAdapterWithUtil;
+import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.yangjia.modle.IncomeDetailListBean;
+import com.shenma.yueba.yangjia.modle.IncomeHistoryItem;
 
 public class WithDrawHistoryAdapter extends BaseAdapterWithUtil {
-	private List<IncomeDetailListBean> mList;
+	private List<IncomeHistoryItem> mList;
 	private int tag;
-	public WithDrawHistoryAdapter(Context ctx,List<IncomeDetailListBean> mList) {
+	public WithDrawHistoryAdapter(Context ctx,List<IncomeHistoryItem> mList) {
 		super(ctx);
 		this.mList = mList;
 	}
-	public WithDrawHistoryAdapter(Context ctx,List<IncomeDetailListBean> mList,int tag) {
+	public WithDrawHistoryAdapter(Context ctx,List<IncomeHistoryItem> mList,int tag) {
 		super(ctx);
 		this.mList = mList;
 		tag = tag;
@@ -26,7 +28,7 @@ public class WithDrawHistoryAdapter extends BaseAdapterWithUtil {
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return 10;
+		return mList.size();
 	}
 
 	@Override
@@ -54,6 +56,9 @@ public class WithDrawHistoryAdapter extends BaseAdapterWithUtil {
 		}else{
 			holder = (Holder) convertView.getTag();
 		}
+		
+		holder.tv_money.setText("￥"+ToolsUtil.nullToString(mList.get(position).getAmount()));
+		holder.tv_date.setText(ToolsUtil.nullToString(mList.get(position).getCreateDate()));
 		return convertView;
 	}
 	

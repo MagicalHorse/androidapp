@@ -138,19 +138,19 @@ public class IncomeDetailFragment extends BaseFragment {
 		case 0:// 在线
 			if (mList.size() == 0) {
 				type = 3;
-				getIncomeDetail();
+				getIncomeDetail(ctx);
 			}
 			break;
 		case 1:// 即将下线
 			if (mList.size() == 0) {
 				type = 1;
-				getIncomeDetail();
+				getIncomeDetail(ctx);
 			}
 			break;
 		case 2:// 已经下线
 			if (mList.size() == 0) {
 				type = 2;
-				getIncomeDetail();
+				getIncomeDetail(ctx);
 			}
 			break;
 		default:
@@ -160,20 +160,20 @@ public class IncomeDetailFragment extends BaseFragment {
 
 	
 	
-	public void getIncomeDetail(){
+	public void getIncomeDetail(Context ctx){
 		HttpControl httpControl = new HttpControl();
 		httpControl.getIncomeDetail(page, Constants.PageSize, type+"", new HttpCallBackInterface() {
 			@Override
 			public void http_Success(Object obj) {
 				pull_refresh_list.onRefreshComplete();
 				IncomeDetailBackBean bean = (IncomeDetailBackBean) obj;
+				adapter = new IncomeDetailAdapter(
+						getActivity(), mList, 0);
 				if (isRefresh) {
 					if(bean.getData()!=null && bean.getData().getItems()!=null && bean.getData().getItems().size()>0){
 						tv_nodata.setVisibility(View.GONE);
 						mList.clear();
 						mList.addAll(bean.getData().getItems());
-						adapter = new IncomeDetailAdapter(
-								getActivity(), mList, 0);
 						pull_refresh_list.setAdapter(adapter);
 					}else{
 						tv_nodata.setVisibility(View.VISIBLE);
@@ -195,7 +195,7 @@ public class IncomeDetailFragment extends BaseFragment {
 				// TODO Auto-generated method stub
 				
 			}
-		}, getActivity());
+		}, ctx);
 		
 		
 	}

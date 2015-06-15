@@ -66,6 +66,7 @@ import com.shenma.yueba.yangjia.modle.ContactsAddressResponseBean;
 import com.shenma.yueba.yangjia.modle.FansBackListForInviteCirlce;
 import com.shenma.yueba.yangjia.modle.HuoKuanListBackBean;
 import com.shenma.yueba.yangjia.modle.IncomeDetailBackBean;
+import com.shenma.yueba.yangjia.modle.IncomeHistoryBackBean;
 import com.shenma.yueba.yangjia.modle.OrderDetailBackBean;
 import com.shenma.yueba.yangjia.modle.OrderListBackBean;
 import com.shenma.yueba.yangjia.modle.RewardDetailBackBean;
@@ -1017,6 +1018,25 @@ public class HttpControl {
 		BasehttpSend(map, context, HttpConstants.METHOD_ASSISTANT_GETINCOMEINFO,
 				httpCallBack, IncomeDetailBackBean.class, true, true);
 	}
+	
+	/**
+	 * 获取收益历史
+	 * 
+	 * @return void
+	 * **/
+	public void getIncomeHistory(int page,String pageCount,String IncomeTransferStatus,
+			final HttpCallBackInterface httpCallBack, Context context) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put(Constants.PAGE,page+"");
+		map.put(Constants.PAGECOUNT,pageCount);
+		map.put(Constants.INCOMETRANSFERSTATUS,IncomeTransferStatus);
+		BasehttpSend(map, context, HttpConstants.METHOD_ASSISTANT_GETINCOMEHISTORY,
+				httpCallBack, IncomeHistoryBackBean.class, true, true);
+	}
+	
+	
+	
+	
 
 	/**
 	 * 获取订单详情

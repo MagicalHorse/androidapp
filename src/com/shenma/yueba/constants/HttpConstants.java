@@ -220,6 +220,10 @@ public class HttpConstants {
 	
 	
 	/**
+	 * 获取提现历史
+	 */
+	public static String METHOD_ASSISTANT_GETINCOMEHISTORY = ASSISTANT + "GetIncomeHistory";
+	/**
 	 * 收益明细
 	 */
 	public static String METHOD_ASSISTANT_GETINCOMEINFO = ASSISTANT + "GetIncomeInfo";

@@ -51,7 +51,7 @@ public class WithdrawHistoryActivity extends BaseFragmentActivity implements
 		initView();
 		initFragment();
 		initViewPager();
-		//productManagerFragmentForOnLine.getData(0,WithdrawHistoryActivity.this);
+		withdrawHistoryFragment.getData(0,WithdrawHistoryActivity.this);
 		super.onCreate(arg0);
 	}
 
@@ -123,6 +123,20 @@ public class WithdrawHistoryActivity extends BaseFragmentActivity implements
 			 */
 			public void onPageSelected(int arg0) {
 				setCursorAndText(arg0,cursorImageList,titleTextList);
+				switch (arg0) {
+				case 0:
+					withdrawHistoryFragment.getData(0,WithdrawHistoryActivity.this);
+					break;
+				case 1:
+					withdrawHistoryFragment2.getData(1,WithdrawHistoryActivity.this);
+					break;
+				case 2:
+					withdrawHistoryFragment3.getData(2,WithdrawHistoryActivity.this);
+					break;
+				default:
+					break;
+				}
+				withdrawHistoryFragment.getData(0,WithdrawHistoryActivity.this);
 			}
 
 			@Override

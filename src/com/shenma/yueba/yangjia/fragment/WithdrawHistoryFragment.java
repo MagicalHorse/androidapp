@@ -4,29 +4,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.shenma.yueba.R;
-import com.shenma.yueba.baijia.adapter.ProductManagerFragmentForOnLineAdapter;
 import com.shenma.yueba.baijia.fragment.BaseFragment;
-import com.shenma.yueba.baijia.modle.ProductManagerForOnLineBean;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
-import com.shenma.yueba.yangjia.activity.ProductManagerActivity;
-import com.shenma.yueba.yangjia.adapter.IncomeDetailAdapter;
 import com.shenma.yueba.yangjia.adapter.WithDrawHistoryAdapter;
-import com.shenma.yueba.yangjia.modle.BuyerProductManagerListBean;
-import com.shenma.yueba.yangjia.modle.IncomeDetailListBean;
+import com.shenma.yueba.yangjia.modle.IncomeDetailBackBean;
+import com.shenma.yueba.yangjia.modle.IncomeHistoryBackBean;
+import com.shenma.yueba.yangjia.modle.IncomeHistoryItem;
 
 /**
  * 提现历史的Fragment
@@ -44,10 +45,12 @@ public class WithdrawHistoryFragment extends BaseFragment {
 	}
 
 	private WithDrawHistoryAdapter adapter;
-	private List<IncomeDetailListBean> mList = new ArrayList<IncomeDetailListBean>();
+	private List<IncomeHistoryItem> mList = new ArrayList<IncomeHistoryItem>();
 	private View view;
 	private PullToRefreshListView pull_refresh_list;
-
+	private int page = 1;
+	private boolean isRefresh = true;
+	private TextView tv_nodata;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -78,9 +81,37 @@ public class WithdrawHistoryFragment extends BaseFragment {
 					R.layout.refresh_listview_without_title_layout, null);
 			pull_refresh_list = (PullToRefreshListView) view
 					.findViewById(R.id.pull_refresh_list);
+			tv_nodata = (TextView) view.findViewById(R.id.tv_nodata);
 			pull_refresh_list.setMode(Mode.BOTH);
 			pull_refresh_list
 					.setAdapter(new WithDrawHistoryAdapter(getActivity(), mList, 0));
+			pull_refresh_list.setOnRefreshListener(new OnRefreshListener2() {
+
+				@Override
+				public void onPullDownToRefresh(PullToRefreshBase refreshView) {
+					page = 1;
+					isRefresh = true;
+					getData(page, getActivity());
+				}
+
+				@Override
+				public void onPullUpToRefresh(PullToRefreshBase refreshView) {
+					page++;
+					isRefresh = false;
+					getData(page, getActivity());
+				}
+			});
+			pull_refresh_list.setOnItemClickListener(new OnItemClickListener() {
+				@Override
+				public void onItemClick(AdapterView<?> arg0, View arg1,
+						int arg2, long arg3) {
+//					Intent intent = new Intent(getActivity(),
+//							OrderDetailActivity.class);
+//					intent.putExtra("orderId", mList.get(arg2).getOrderNo());
+//					startActivity(intent);
+
+				}
+			});
 		}
 		// 缓存的rootView需要判断是否已经被加过parent，如果有parent需要从parent删除，要不然会发生这个rootview已经有parent的错误。
 		ViewGroup parent = (ViewGroup) view.getParent();
@@ -94,17 +125,20 @@ public class WithdrawHistoryFragment extends BaseFragment {
 		switch (index) {
 		case 0:// 在线
 			if (mList.size() == 0) {
-				//getProductListForOnLine(index,ctx);
+				type = 1;
+				getIncomeHistory(ctx);
 			}
 			break;
 		case 1:// 即将下线
 			if (mList.size() == 0) {
-				//getProductListForWillOffLine(index);
+				type = 2;
+				getIncomeHistory(ctx);
 			}
 			break;
 		case 2:// 已经下线
 			if (mList.size() == 0) {
-				//getProductListForHasOffLine(index);
+				type = 3;
+				getIncomeHistory(ctx);
 			}
 			break;
 		default:
@@ -112,5 +146,48 @@ public class WithdrawHistoryFragment extends BaseFragment {
 		}
 	}
 
+	
 
+
+	public void getIncomeHistory(Context ctx){
+		HttpControl httpControl = new HttpControl();
+		httpControl.getIncomeHistory(page, Constants.PageSize, type+"", new HttpCallBackInterface() {
+			@Override
+			public void http_Success(Object obj) {
+				pull_refresh_list.onRefreshComplete();
+				IncomeHistoryBackBean bean = (IncomeHistoryBackBean) obj;
+				adapter = new WithDrawHistoryAdapter(getActivity(), mList, 0);
+				if (isRefresh) {
+					if(bean.getData()!=null && bean.getData().getItems()!=null && bean.getData().getItems().size()>0){
+						tv_nodata.setVisibility(View.GONE);
+						mList.clear();
+						mList.addAll(bean.getData().getItems());
+						pull_refresh_list.setAdapter(adapter);
+					}else{
+						tv_nodata.setVisibility(View.VISIBLE);
+					}
+					
+				} else {
+					if(bean.getData().getItems()!=null && bean.getData().getItems().size()>0){
+						mList.addAll(bean.getData().getItems());
+					}else{
+						Toast.makeText(getActivity(), "没有更多数据了...", 1000).show();
+					}
+					
+					adapter.notifyDataSetChanged();
+				}
+			}
+			
+			@Override
+			public void http_Fails(int error, String msg) {
+				// TODO Auto-generated method stub
+				
+			}
+		}, ctx);
+		
+		
+	}
+	
+	
+	
 }
