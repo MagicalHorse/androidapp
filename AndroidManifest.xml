@@ -350,6 +350,12 @@
             android:name="com.shenma.yueba.baijia.activity.ApproveBuyerDetailsActivity"
             android:screenOrientation="portrait" >
         </activity>
+        
+         <!--品牌详细页面-->
+        <activity
+            android:name="com.shenma.yueba.baijia.activity.BaijiaBrandListActivity"
+            android:screenOrientation="portrait" />
+        
         <!-- 聊天界面 -->
         <activity
             android:name="com.shenma.yueba.ChatActivity"
@@ -365,6 +371,9 @@
             android:name="com.shenma.yueba.yangjia.activity.SocialManagerActivity"
             android:screenOrientation="portrait" >
         </activity>
+        
+       
+        
         <!-- 订单详情 -->
         <activity
             android:name="com.shenma.yueba.yangjia.activity.OrderDetailActivity"

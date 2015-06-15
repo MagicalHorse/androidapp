@@ -49,13 +49,13 @@ List<Object> object_list=new ArrayList<Object>();
 		setContentView(parenetView);
 		super.onCreate(savedInstanceState);
 		httpControl=new HttpControl();
-		BrandId=this.getIntent().getIntExtra("BrandId", -1);
-		if(BrandId<0)
+		BrandId=this.getIntent().getIntExtra("BRANDID", -1);
+		/*if(BrandId<0)
 		{
 			MyApplication.getInstance().showMessage(BaijiaBrandListActivity.this, "数据错误");
 			finish();
 			return;
-		}
+		}*/
 		initView();
 	}
 	

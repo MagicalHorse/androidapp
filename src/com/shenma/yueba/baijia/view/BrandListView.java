@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
@@ -18,6 +21,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.State;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.activity.BaijiaBrandListActivity;
 import com.shenma.yueba.baijia.adapter.BrandAdapter;
 import com.shenma.yueba.baijia.modle.BrandInfo;
 import com.shenma.yueba.baijia.modle.BrandInfoBean;
@@ -79,6 +83,17 @@ public class BrandListView extends BaseView{
 	void initPullView()
 	{
 		pull_refresh_list=(PullToRefreshListView)view.findViewById(R.id.pull_refresh_list);
+		pull_refresh_list.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,long arg3) {
+				BrandInfo brandInfo=items.get(arg2-1);
+				Intent intent=new Intent(activity,BaijiaBrandListActivity.class);
+				intent.putExtra("BRANDID", brandInfo.getBrandId());
+				activity.startActivity(intent);
+			}
+		});
+		
 		showloading_layout_view=(LinearLayout)view.findViewById(R.id.showloading_layout_view);
 		pull_refresh_list.setMode(Mode.PULL_FROM_START);
 		 
