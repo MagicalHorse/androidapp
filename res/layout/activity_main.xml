@@ -3,12 +3,14 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="#ffffff"
-    android:orientation="vertical" >
+    android:orientation="vertical" 
+    >
 
     <FrameLayout
         android:id="@+id/realtabcontent"
         android:layout_width="fill_parent"
         android:layout_height="0dip"
+        android:background="@color/gray_bg"
         android:layout_weight="1" />
 
     <View
@@ -21,10 +23,12 @@
         android:layout_height="50dip" >
 
         <android.support.v4.app.FragmentTabHost
+            android:layout_marginTop="5dip"
+            android:layout_marginBottom="5dip"
             android:id="@android:id/tabhost"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:background="@color/gray_bg" >
+             >
 
             <FrameLayout
                 android:id="@android:id/tabcontent"
@@ -56,13 +60,13 @@
                 android:id="@+id/tv_center"
                 android:background="@color/gray_bg"
                 android:layout_width="0dip"
-                android:drawableTop="@drawable/tab_msg_selector"
+                android:drawableTop="@drawable/tab_publish_selector"
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
                 android:focusable="true"
                 android:gravity="center"
                 android:textColor="@color/text_gray_color"
-                android:text="发布" />
+                 />
 
             <TextView
                 android:layout_width="0dip"
