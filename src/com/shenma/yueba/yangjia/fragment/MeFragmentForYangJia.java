@@ -70,6 +70,9 @@ public class MeFragmentForYangJia extends BaseFragment implements
 		return view;
 	}
 
+	
+	
+	
 	/**
 	 * 初始化view
 	 */
@@ -77,12 +80,7 @@ public class MeFragmentForYangJia extends BaseFragment implements
 		view = inflater.inflate(R.layout.me_fragment_for_yangjia, null);
 		iv_setting = (ImageView) view.findViewById(R.id.iv_setting);
 		iv_icon = (ImageView) view.findViewById(R.id.iv_icon);
-		String iconUrl = SharedUtil.getStringPerfernece(getActivity(), SharedUtil.user_logo);
-		if(!TextUtils.isEmpty(iconUrl)){
-			MyApplication.getInstance().getImageLoader().displayImage(iconUrl, iv_icon);
-		}
 		tv_nickname = (TextView) view.findViewById(R.id.tv_nickname);
-		tv_nickname.setText(ToolsUtil.nullToString(SharedUtil.getStringPerfernece(getActivity(), SharedUtil.user_names)));
 		tv_grade = (TextView) view.findViewById(R.id.tv_grade);
 		tv_store = (TextView) view.findViewById(R.id.tv_store);
 		tv_store_introduce = (TextView) view
@@ -102,7 +100,11 @@ public class MeFragmentForYangJia extends BaseFragment implements
 
 	@Override
 	public void onResume() {
-		Log.i("CircleFragment", "onResume");
+		tv_nickname.setText(ToolsUtil.nullToString(SharedUtil.getStringPerfernece(getActivity(), SharedUtil.user_names)));
+		String iconUrl = SharedUtil.getStringPerfernece(getActivity(), SharedUtil.user_logo);
+		if(!TextUtils.isEmpty(iconUrl)){
+			MyApplication.getInstance().getImageLoader().displayImage(iconUrl, iv_icon);
+		}
 		super.onResume();
 	}
 

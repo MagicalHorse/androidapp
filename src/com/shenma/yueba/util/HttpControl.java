@@ -122,6 +122,21 @@ public class HttpControl {
 	
 	
 	/**
+	 * 修改用户头像
+	 * @param str
+	 * @param httpCallBack
+	 * @param context
+	 */
+	public void modifyUserLogo(String logo,boolean showDialog,boolean isCancal,
+			final HttpCallBackInterface httpCallBack, Context context) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put(Constants.LOGO, logo);
+		BasehttpSend(map, context, HttpConstants.changeUserLogo, httpCallBack,
+				BaseRequest.class, true, true);
+	}
+	
+	
+	/**
 	 * 校验手机验证码
 	 * 
 	 * @param phone
