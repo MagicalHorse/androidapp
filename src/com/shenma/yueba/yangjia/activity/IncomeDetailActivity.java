@@ -22,7 +22,8 @@ import com.shenma.yueba.yangjia.fragment.IncomeDetailFragment;
 import com.shenma.yueba.yangjia.fragment.WithdrawHistoryFragment;
 
 /**
- * 收入明细 
+ * 收入明细
+ * 
  * @author a
  */
 public class IncomeDetailActivity extends BaseFragmentActivity implements
@@ -41,21 +42,20 @@ public class IncomeDetailActivity extends BaseFragmentActivity implements
 	private TextView tv_top_title;
 	private ArrayList<ImageView> cursorImageList = new ArrayList<ImageView>();
 	private ArrayList<TextView> titleTextList = new ArrayList<TextView>();
-	private int page =1;
+	private int page = 1;
 	private int index;
+
 	@Override
 	protected void onCreate(Bundle arg0) {
-		MyApplication.getInstance().addActivity(this);//加入回退栈
+		MyApplication.getInstance().addActivity(this);// 加入回退栈
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.income_detail_layout2);
 		initView();
 		initFragment();
 		initViewPager();
-		//productManagerFragmentForOnLine.getData(0,WithdrawHistoryActivity.this);
+		incomeDetailFragment.getData(0, IncomeDetailActivity.this);
 		super.onCreate(arg0);
 	}
-
-	
 
 	private void initView() {
 
@@ -70,19 +70,20 @@ public class IncomeDetailActivity extends BaseFragmentActivity implements
 				IncomeDetailActivity.this.finish();
 			}
 		});
-		
+
 		tv_can_getmoney = (TextView) findViewById(R.id.tv_can_getmoney);
 		tv_freezing = (TextView) findViewById(R.id.tv_freezing);
 		tv_disabled = (TextView) findViewById(R.id.tv_disabled);
 		tv_can_getmoney.setTextSize(20);
-		tv_can_getmoney.setTextColor(getResources().getColor(R.color.main_color));
+		tv_can_getmoney.setTextColor(getResources()
+				.getColor(R.color.main_color));
 		tv_can_getmoney.setOnClickListener(this);
 		tv_freezing.setOnClickListener(this);
 		tv_disabled.setOnClickListener(this);
 		titleTextList.add(tv_can_getmoney);
 		titleTextList.add(tv_freezing);
 		titleTextList.add(tv_disabled);
-		
+
 		iv_cursor_left = (ImageView) findViewById(R.id.iv_cursor_left);
 		iv_cursor_left.setVisibility(View.VISIBLE);
 		iv_cursor_center = (ImageView) findViewById(R.id.iv_cursor_center);
@@ -92,7 +93,7 @@ public class IncomeDetailActivity extends BaseFragmentActivity implements
 		cursorImageList.add(iv_cursor_right);
 		viewpager_main = (ViewPager) findViewById(R.id.viewpager_main);
 		FontManager.changeFonts(this, tv_can_getmoney, tv_freezing,
-				tv_disabled,tv_top_left,tv_top_title);
+				tv_disabled, tv_top_left, tv_top_title);
 	}
 
 	private void initFragment() {
@@ -107,9 +108,6 @@ public class IncomeDetailActivity extends BaseFragmentActivity implements
 
 	}
 
-	
-	
-	
 	private void initViewPager() {
 		viewpager_main.setAdapter(myFragmentPagerAdapter);
 		viewpager_main.setCurrentItem(0);
@@ -122,7 +120,22 @@ public class IncomeDetailActivity extends BaseFragmentActivity implements
 			 * 页面跳转完成后调用的方法
 			 */
 			public void onPageSelected(int arg0) {
-				setCursorAndText(arg0,cursorImageList,titleTextList);
+				setCursorAndText(arg0, cursorImageList, titleTextList);
+				switch (arg0) {
+				case 0:
+					incomeDetailFragment.getData(0, IncomeDetailActivity.this);
+					break;
+				case 1:
+					incomeDetailFragment2.getData(1, IncomeDetailActivity.this);
+					break;
+
+				case 2:
+					incomeDetailFragment3.getData(2, IncomeDetailActivity.this);
+					break;
+
+				default:
+					break;
+				}
 			}
 
 			@Override

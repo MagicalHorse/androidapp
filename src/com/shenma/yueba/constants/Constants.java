@@ -35,6 +35,7 @@ public class Constants {
 	public static final String UUID="uid";//随机数
 	public static final String TOKEN="token";//随机数
 	public static final String PAGE="Page";//第几页，页码
+	public static final String INCOMESTATUS="IncomeStatus";//收入明细状态
 	public static final String PAGESIZE="Pagesize";//页size
 	public static final String ID="Id";
 	public static final String USERIDSTR="useridstr";

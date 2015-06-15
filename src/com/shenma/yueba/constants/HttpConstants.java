@@ -216,6 +216,13 @@ public class HttpConstants {
 	 * ---------------------------------买手相关接口----------------------------------
 	 * ---------
 	 */
+	
+	
+	
+	/**
+	 * 收益明细
+	 */
+	public static String METHOD_ASSISTANT_GETINCOMEINFO = ASSISTANT + "GetIncomeInfo";
 	/**
 	 * 获取自己的品牌列表
 	 */

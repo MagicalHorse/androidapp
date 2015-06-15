@@ -42,6 +42,7 @@ public class IncomeDetailFragment extends BaseFragment {
 		this.type = type;
 	}
 
+	private int page = 1;
 	private IncomeDetailAdapter adapter;
 	private List<IncomeDetailListBean> mList = new ArrayList<IncomeDetailListBean>();
 	private View view;
@@ -93,17 +94,20 @@ public class IncomeDetailFragment extends BaseFragment {
 		switch (index) {
 		case 0:// 在线
 			if (mList.size() == 0) {
-				//getProductListForOnLine(index,ctx);
+				type = 3;
+				getIncomeDetail();
 			}
 			break;
 		case 1:// 即将下线
 			if (mList.size() == 0) {
-				//getProductListForWillOffLine(index);
+				type = 1;
+				getIncomeDetail();
 			}
 			break;
 		case 2:// 已经下线
 			if (mList.size() == 0) {
-				//getProductListForHasOffLine(index);
+				type = 2;
+				getIncomeDetail();
 			}
 			break;
 		default:
@@ -111,5 +115,28 @@ public class IncomeDetailFragment extends BaseFragment {
 		}
 	}
 
+	
+	
+	public void getIncomeDetail(){
+		HttpControl httpControl = new HttpControl();
+		httpControl.getIncomeDetail(page, Constants.PageSize, type+"", new HttpCallBackInterface() {
+			
+			@Override
+			public void http_Success(Object obj) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void http_Fails(int error, String msg) {
+				// TODO Auto-generated method stub
+				
+			}
+		}, getActivity());
+		
+		
+	}
+	
+	
 
 }
