@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.modle.FragmentBean;
+import com.shenma.yueba.baijia.view.BaseView;
 import com.shenma.yueba.baijia.view.CircleView;
 import com.shenma.yueba.baijia.view.MyCircleView;
 import com.shenma.yueba.util.FontManager;
@@ -77,8 +78,8 @@ public class CircleFragment extends Fragment{
 		/*Fragment recommendedCircleFragment=new RecommendedCircleFragment();
 		Fragment myCircleFragment=new MyCircleFragment();
 		*/
-		fragment_list.add(new FragmentBean("推荐圈子", -1, CircleView.the().getView(getActivity())));
-		fragment_list.add(new FragmentBean("我的圈子", -1, MyCircleView.the().getView(getActivity())));
+		fragment_list.add(new FragmentBean("推荐圈子", -1, CircleView.the()));
+		fragment_list.add(new FragmentBean("我的圈子", -1, MyCircleView.the()));
 		
 		baijia_fragment_tab1_head_linearlayout=(LinearLayout)v.findViewById(R.id.baijia_fragment_tab1_head_linearlayout);
 		for(int i=0;i<fragment_list.size();i++)
@@ -121,9 +122,8 @@ public class CircleFragment extends Fragment{
 			@Override
 			public Object instantiateItem(ViewGroup container, int position) {
 				
-				//return super.instantiateItem(container, position);
-				View v=(View)fragment_list.get(position).getFragment();
-				container.addView(v,0);
+				BaseView v=(BaseView)fragment_list.get(position).getFragment();
+				container.addView(v.getView(getActivity()),0);
 				return v;
 			}
 			
@@ -141,6 +141,8 @@ public class CircleFragment extends Fragment{
 			@Override
 			public void onPageSelected(int arg0) {
 				setTextColor(arg0);
+				BaseView bv=(BaseView)fragment_list.get(arg0).getFragment();
+				bv.firstInitData();
 				
 			}
 			

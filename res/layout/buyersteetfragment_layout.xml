@@ -53,7 +53,7 @@
                     android:layout_height="30dp"
                     android:layout_marginLeft="@dimen/shop_main_width5_dimen"
                     android:layout_marginRight="@dimen/shop_main_width5_dimen"
-                    android:text="最新上新" />
+                    android:text="" />
 
                 <View style="@style/style_horizontal_line" />
 

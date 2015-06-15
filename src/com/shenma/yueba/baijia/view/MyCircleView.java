@@ -33,7 +33,7 @@ import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
  * 
  */
 
-public class MyCircleView {
+public class MyCircleView extends BaseView{
 	private View view;
 	private PullToRefreshListView pull_refresh_list;
 	LinearLayout showloading_layout_view;
@@ -217,5 +217,12 @@ public class MyCircleView {
 				MyApplication.getInstance().showMessage(activity, msg);
 			}
 		},activity );
+	}
+
+
+	@Override
+	public void firstInitData() {
+		// TODO Auto-generated method stub
+		
 	}
 }

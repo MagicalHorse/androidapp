@@ -30,6 +30,7 @@ import com.shenma.yueba.baijia.modle.RequestBaiJiaOrderListInfoBean;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
+import com.umeng.socialize.utils.Log;
 
 /**
  * @author gyj
@@ -141,7 +142,7 @@ public class BaiJiaOrderListFragment extends Fragment {
 	void requestData()
 	{
 		pull_refresh_list.setRefreshing();
-		sendRequestData(1);
+		sendRequestData(currpage,1);
 	}
 	
 	/*****
@@ -151,18 +152,17 @@ public class BaiJiaOrderListFragment extends Fragment {
 	{
 		currpage=Constants.CURRPAGE_VALUE;
 		pull_refresh_list.setRefreshing();
-		sendRequestData(0);
+		sendRequestData(1,0);
 	}
 	
 	/******
 	 * 与网络通信请求数据
-	 * 
-	 * @param type
-	 *            int 0 刷新 1 加载
+	 * @param page int 访问页
+	 * @param type int 0 刷新 1 加载
 	 * ***/
-	void sendRequestData(final int type) {
-		
-		httpControl.getBaijiaOrderList(currpage, pagersize, type, ishow, new HttpCallBackInterface() {
+	void sendRequestData(int page ,final int type) {
+		Log.i("TAG", "currpage="+page+"   pagesize="+pagersize);
+		httpControl.getBaijiaOrderList(page, pagersize, type, ishow, new HttpCallBackInterface() {
 			
 			@Override
 			public void http_Success(Object obj) {
@@ -181,6 +181,7 @@ public class BaiJiaOrderListFragment extends Fragment {
 								return;
 						   }
 						}
+						currpage=bean.getPageindex();
 						int totalPage = bean.getTotalpaged();
 						if (currpage >= totalPage) {
 							pull_refresh_list.setMode(Mode.PULL_FROM_START);

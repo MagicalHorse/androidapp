@@ -170,10 +170,7 @@ BaijiaOrderDetailsAdapter baijiaOrderDetailsAdapter;
 			String phoneNo=tv_customer_phone_content.getText().toString().trim();
 			if(!phoneNo.equals(""))
 			{
-				//调用拨号键
-				Uri telUri = Uri.parse("tel:+phoneNo+");
-				Intent intent= new Intent(Intent.ACTION_DIAL, telUri);
-				startActivity(intent); 
+				ToolsUtil.callActivity(BaiJiaOrderDetailsActivity.this, phoneNo);
 			}
 			break;
 		}

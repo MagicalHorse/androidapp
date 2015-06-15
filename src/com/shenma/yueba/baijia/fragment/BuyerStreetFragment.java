@@ -51,6 +51,7 @@ import com.shenma.yueba.baijia.modle.ProductListInfoBean;
 import com.shenma.yueba.baijia.modle.ProductsInfoBean;
 import com.shenma.yueba.baijia.modle.RequestProductListInfoBean;
 import com.shenma.yueba.constants.Constants;
+import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.ListViewUtils;
@@ -67,6 +68,8 @@ public class BuyerStreetFragment extends Fragment {
 	TextView focus_textview;
 	// tab原点的 父视图
 	LinearLayout baijia_head_layout;
+	//最新上新
+	TextView buyersteet_newtextview;
 	View parentview;
 	PullToRefreshScrollView pulltorefreshscrollview;
 	ViewPager baijiasteetfragmnet_layout_head_viewpager;
@@ -168,6 +171,7 @@ public class BuyerStreetFragment extends Fragment {
 	}
 
 	void initView(View v) {
+		buyersteet_newtextview=(TextView)v.findViewById(R.id.buyersteet_newtextview);
 		baijia_head_layout = (LinearLayout) v
 				.findViewById(R.id.baijia_head_layout);
 		focus_textview = (TextView) v.findViewById(R.id.focus_textview);
@@ -231,7 +235,7 @@ public class BuyerStreetFragment extends Fragment {
 	 * ***/
 	void requestData() {
 		pulltorefreshscrollview.setRefreshing();
-		sendRequestData(1);
+		sendRequestData(currpage,1);
 	}
 
 	/******
@@ -240,29 +244,30 @@ public class BuyerStreetFragment extends Fragment {
 	void requestFalshData() {
 		pulltorefreshscrollview.setRefreshing();
 		stopTimerToViewPager();
-		currpage = 1;
 		currid = -1;
-		sendRequestData(0);
+		sendRequestData(1,0);
 
 	}
 
 	/******
 	 * 与网络通信请求数据
-	 * 
-	 * @param type
-	 *            int 0 刷新 1 加载
+	 * @param page int 当前页
+	 * @param type int 0 刷新 1 加载
 	 * ***/
-	void sendRequestData(final int type) {
-		httpContril.getProduceHomeListData(currpage, pagesize,new HttpCallBackInterface() {
+	void sendRequestData(int page,final int type) {
+		Log.i("TAG", "currpage="+page+"   pagesize="+pagesize);
+		httpContril.getProduceHomeListData(page, pagesize,new HttpCallBackInterface() {
 
 					@Override
 					public void http_Success(Object obj) {
+						buyersteet_newtextview.setText("最新上新");
+						FontManager.changeFonts(getActivity(), buyersteet_newtextview);
 						pulltorefreshscrollview.onRefreshComplete();
-						if (obj != null
-								&& obj instanceof RequestProductListInfoBean) {
+						if (obj != null && obj instanceof RequestProductListInfoBean) {
 							RequestProductListInfoBean bean = (RequestProductListInfoBean) obj;
 							HomeProductListInfoBean data = bean.getData();
 							if (data != null) {
+								currpage=data.getPageindex();
 								int totalPage = data.getTotalpaged();
 								if (currpage >= totalPage) {
 									pulltorefreshscrollview
@@ -299,6 +304,7 @@ public class BuyerStreetFragment extends Fragment {
 	 * 加载数据
 	 * **/
 	void addData(HomeProductListInfoBean data) {
+		currpage++;
 		ishow=false;
 		showloading_layout_view.setVisibility(View.GONE);
 		ProductListInfoBean item = data.getItems();
@@ -315,6 +321,7 @@ public class BuyerStreetFragment extends Fragment {
 	 * 刷新viewpager数据
 	 * ***/
 	void falshData(HomeProductListInfoBean data) {
+		currpage++;
 		ishow=false;
 		showloading_layout_view.setVisibility(View.GONE);
 		currid = -1;
