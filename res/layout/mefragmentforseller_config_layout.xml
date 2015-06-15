@@ -47,6 +47,7 @@
      
      <!-- 我的地址 -->
      <include  
+         android:visibility="gone"
          android:id="@+id/user_config_address_include"
          android:layout_marginTop="20dp"
          android:layout_width="match_parent"
@@ -96,18 +97,6 @@
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
          layout="@layout/mefragmentforseller_config_layout_item"  />
-     
-     <Button
-         android:id="@+id/user_config_yangjia_button"
-         android:textColor="@color/white"
-         android:layout_marginTop="20dp"
-         android:layout_marginLeft="@dimen/margin_left_and_right"
-         android:layout_marginRight="@dimen/margin_left_and_right"
-         android:layout_width="match_parent"
-         android:layout_height="@dimen/default_button_height"
-         android:background="@drawable/user_config_yangjia_button_background"
-         android:text="@string/user_config_woyaoyangjia_str"
-         />
      
      <Button
          android:id="@+id/user_config_exit_button"

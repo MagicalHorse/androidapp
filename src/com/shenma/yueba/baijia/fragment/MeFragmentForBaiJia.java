@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.BaiJiaOrderListActivity;
 import com.shenma.yueba.baijia.activity.BuyerCertificationActivity1;
 import com.shenma.yueba.baijia.activity.MyCollectionActivity;
@@ -66,7 +68,6 @@ public class MeFragmentForBaiJia extends BaseFragment implements OnClickListener
 		return view;
 	}
 
-
 	/**
 	 * 初始化view
 	 */
@@ -75,8 +76,14 @@ public class MeFragmentForBaiJia extends BaseFragment implements OnClickListener
 		ToolsUtil.setFontStyle(getActivity(), view, R.id.tv_nickname,R.id.tv_nickname,R.id.shop_main_attentionvalue_textview,R.id.shop_main_attention_textview,R.id.shop_main_fansvalue_textview,R.id.shop_main_fans_textview,R.id.shop_main_praisevalue_textview,R.id.shop_main_praise_textview,R.id.tv_all_order,R.id.tv_waiting_for_send,R.id.tv_waiting_for_recieve,R.id.tv_pick_by_myself,R.id.tv_my_collection,R.id.tv_will_yangjia);
 		iv_setting = (ImageView) view.findViewById(R.id.iv_setting);
 		iv_icon = (ImageView) view.findViewById(R.id.iv_icon);
+		String iconUrl = SharedUtil.getStringPerfernece(getActivity(), SharedUtil.user_logo);
+		if(!TextUtils.isEmpty(iconUrl)){
+			MyApplication.getInstance().getImageLoader().displayImage(iconUrl, iv_icon);
+		}
 		//买手名称
 		tv_nickname = (TextView) view.findViewById(R.id.tv_nickname);
+		tv_nickname.setText(ToolsUtil.nullToString(SharedUtil.getStringPerfernece(getActivity(), SharedUtil.user_names)));
+	
 		//类型 养家模式
 		tv_style = (TextView) view.findViewById(R.id.tv_style);
 		tv_attention_count = (TextView) view.findViewById(R.id.tv_attention_count);

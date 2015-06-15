@@ -82,7 +82,6 @@ public class BoradRewardActivity extends BaseActivityWithTopView{
 			bean.setTime("2012/02/03");
 			mList.add(bean);
 		}
-		adapter = new BroadRewardAdapter(BoradRewardActivity.this, mList);
 		lv.setAdapter(adapter);
 		ListViewUtils.setListViewHeightBasedOnChildren(lv);
 		FontManager.changeFonts(mContext, tv_reward_title,

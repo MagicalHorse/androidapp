@@ -47,7 +47,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dip"
-                    android:text="我是奖励说明我是奖励说明我是奖励说明我是奖励说明我是奖励说明我是奖励说明我是奖励说明"
+                    android:text="@null"
                     android:textColor="@color/text_gray_color"
                     android:textSize="15sp" />
             </LinearLayout>
@@ -79,7 +79,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dip"
-                    android:text="我是当前进度我是当前进度我是当前进度我是当前进度我是当前进度我是当前进度"
+                    android:text="@null"
                     android:textColor="@color/text_gray_color"
                     android:textSize="15sp" />
             </LinearLayout>

@@ -17,6 +17,16 @@ public class HttpConstants {
 	
 	
 	/**
+	 * 修改昵称
+	 */
+	public static String changeNickName = USERURL + "ChangeNickname";
+
+	/**
+	 * 修改用户头像
+	 */
+	public static String changeUserLogo = USERURL + "ChangeUserLogo";
+	
+	/**
 	 * 注册----获取手机短信验证码
 	 */
 	public static String sendPhoneCode = USERURL + "SendMobileCode";

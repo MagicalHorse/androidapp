@@ -10,11 +10,11 @@ import android.widget.TextView;
 import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.adapter.BaseAdapterWithUtil;
 import com.shenma.yueba.util.FontManager;
-import com.shenma.yueba.yangjia.modle.BroadRewardListBean;
+import com.shenma.yueba.yangjia.modle.HistoryItem;
 
 public class BroadRewardAdapter extends BaseAdapterWithUtil {
-	private List<BroadRewardListBean> mList;
-	public BroadRewardAdapter(Context ctx,List<BroadRewardListBean> mList) {
+	private List<HistoryItem> mList;
+	public BroadRewardAdapter(Context ctx,List<HistoryItem> mList) {
 		super(ctx);
 		this.mList = mList;
 	}

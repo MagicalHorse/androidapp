@@ -168,6 +168,9 @@
             android:name="com.shenma.yueba.yangjia.activity.BoradRewardActivity"
             android:screenOrientation="portrait" />
           <activity
+            android:name="com.shenma.yueba.yangjia.activity.ModifyNickNameActivity"
+            android:screenOrientation="portrait" />
+          <activity
             android:name="com.shenma.yueba.yangjia.activity.OpenRewardActivity"
             android:screenOrientation="portrait" />
            <activity
