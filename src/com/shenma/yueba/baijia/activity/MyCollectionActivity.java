@@ -2,6 +2,7 @@ package com.shenma.yueba.baijia.activity;
 
 import java.util.List;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
@@ -102,14 +103,14 @@ public class MyCollectionActivity extends BaseActivityWithTopView{
 	void requestData()
 	{
 		shop_main_layout_title_pulltorefreshscrollview.setRefreshing();
-		sendHttp(1);
+		sendHttp(currPage,1);
 	}
 	
 	void requestFalshData()
 	{
 		shop_main_layout_title_pulltorefreshscrollview.setRefreshing();
 		currPage=Constants.CURRPAGE_VALUE;
-		sendHttp(0);
+		sendHttp(1,0);
 	}
 	
 	
@@ -143,11 +144,13 @@ public class MyCollectionActivity extends BaseActivityWithTopView{
     
     /***
      * 加载数据
+     * @param page int 访问页
      * @param type int 0: 刷新  1:加载更多
      * **/
-    void sendHttp(final int type)
+    void sendHttp(int page,final int type)
 	{
-		httpCntrol.getMyFavoriteProductList(currPage, pageSize, showDialog, new HttpCallBackInterface() {
+    	Log.i("TAG", "currpage="+page+"   pagesize="+pageSize);
+		httpCntrol.getMyFavoriteProductList(page, pageSize, showDialog, new HttpCallBackInterface() {
 			
 			@Override
 			public void http_Success(Object obj) {
@@ -164,6 +167,7 @@ public class MyCollectionActivity extends BaseActivityWithTopView{
 								return;
 						   }
 						}
+					    currPage=bean.getData().getPageindex();
 						int totalPage = bean.getData().getTotalpaged();
 						if (currPage >= totalPage) {
 							shop_main_layout_title_pulltorefreshscrollview.setMode(Mode.PULL_FROM_START);
@@ -263,7 +267,6 @@ public class MyCollectionActivity extends BaseActivityWithTopView{
     			{
     				MyFavoriteProductListLikeUser likeuser=bean.getLikeUser();
     				pubuliu_item_layout_like_textview.setSelected(likeuser.isIsLike());
-    				pubuliu_item_layout_like_textview.setText(likeuser.getCount()+"");
     				pubuliu_item_layout_like_textview.setTag(bean);
     			}
     			ImageView iv=(ImageView)parentview.findViewById(R.id.pubuliu_item_layout_imageview);
@@ -279,12 +282,17 @@ public class MyCollectionActivity extends BaseActivityWithTopView{
         			
     				iv.getLayoutParams().height=height;
     			}
-    			iv.setTag(bean);
+    			iv.setTag(bean.getId());
     			iv.setOnClickListener(new OnClickListener() {
 					
 					@Override
 					public void onClick(View v) {
-						MyApplication.getInstance().showMessage(MyCollectionActivity.this, "点击了");
+						if(v.getTag()!=null && v.getTag() instanceof Integer)
+						{
+							Intent intent=new Intent(MyCollectionActivity.this,ApproveBuyerDetailsActivity.class);
+							intent.putExtra("productID", (Integer)v.getTag());
+							startActivity(intent);
+						}
 					}
 				});
     			iv.setImageResource(R.drawable.default_pic);
@@ -317,14 +325,7 @@ public class MyCollectionActivity extends BaseActivityWithTopView{
 				if(v.getTag()!=null && v.getTag() instanceof MyFavoriteProductListInfo)
 				{
 					MyFavoriteProductListInfo  bean=(MyFavoriteProductListInfo)v.getTag();
-					MyFavoriteProductListLikeUser myFavoriteProductListLikeUser=bean.getLikeUser();
-					if(myFavoriteProductListLikeUser.isIsLike())
-					{
-						submitAttention(0,bean,v);
-					}else
-					{
-						submitAttention(1,bean,v);
-					}
+					submitAttention(0,bean,v);
 					
 				}
 				break;
@@ -355,7 +356,17 @@ public class MyCollectionActivity extends BaseActivityWithTopView{
 							if(bean.getData().getItems().contains(myFavoriteProductListInfo))
 							{
 								bean.getData().getItems().remove(myFavoriteProductListInfo);
-								v.setVisibility(View.GONE);
+								if(v.getParent()!=null)
+								{
+									if(v.getParent()==pubuliy_left_linearlayout)
+									{
+										leftHeight-=v.getHeight();
+									}else if(v.getParent()==pubuliy_right_linearlayout)
+									{
+										rightHeight=v.getHeight();
+									}
+									((LinearLayout)v.getParent().getParent()).setVisibility(View.GONE);
+								}
 							}
 							v.setSelected(false);
 							break;

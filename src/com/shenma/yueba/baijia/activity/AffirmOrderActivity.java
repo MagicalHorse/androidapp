@@ -36,7 +36,7 @@ import com.shenma.yueba.view.RoundImageView;
  * 程序的简单说明  
  */
 
-public class AffirmOrderActivity extends BaseActivityWithTopView{
+public class AffirmOrderActivity extends BaseActivityWithTopView implements OnClickListener{
 	//头像
 RoundImageView affirmorder_layout_icon_roundimageview;
 //拨打电话
@@ -129,6 +129,7 @@ RequestComputeAmountInfoBean requestComputeAmountInfoBean;
 		affirmorder_layout_novalue_textview=(TextView)findViewById(R.id.affirmorder_layout_novalue_textview);
 		// 买手电话
 		affirmorder_layout_phonevalue_textview=(TextView)findViewById(R.id.affirmorder_layout_phonevalue_textview);
+		affirmorder_layout_phonevalue_textview.setOnClickListener(this);
 		//提货地址
 		affirmorder_layout_pickupvalue_textview=(TextView)findViewById(R.id.affirmorder_layout_pickupvalue_textview);
 		//商品总个数
@@ -148,21 +149,7 @@ RequestComputeAmountInfoBean requestComputeAmountInfoBean;
 		//设置联系电话
 		affirmorder_layout_icon_imageview.setTag(ToolsUtil.nullToString(productsDetailsInfoBean.getBuyerMobile()));
 		//电话
-		affirmorder_layout_icon_imageview.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				String phoneNo=(String)v.getTag();
-				if(!phoneNo.equals(""))
-				{
-					//调用拨号键
-					Uri telUri = Uri.parse("tel:+phoneNo+");
-					Intent intent= new Intent(Intent.ACTION_DIAL, telUri);
-					startActivity(intent); 
-				}
-				
-			}
-		});
+		affirmorder_layout_icon_imageview.setOnClickListener(this);
 		
 		affirmorder_layout_product_listview=(ListView)findViewById(R.id.affirmorder_layout_product_listview);
 		AffirmAdapter affirmAdapter=new AffirmAdapter(this,productlist,currCheckedFouce,buyCount);
@@ -305,5 +292,20 @@ RequestComputeAmountInfoBean requestComputeAmountInfoBean;
 					ToolsUtil.setFontStyle(this, parentview, R.id.affirmorder_item_youhuicontext_textview, ToolsUtil.nullToString("立减 "+Double.toString(requestComputeAmountInfoBean.getData().getDiscountamount())));
 				}
 				
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch(v.getId())
+		{
+		case R.id.affirmorder_layout_phonevalue_textview://买的电话
+		case R.id.affirmorder_layout_icon_imageview:
+		String phoneNo=(String)v.getTag();
+		if(!phoneNo.equals(""))
+		{
+			ToolsUtil.callActivity(AffirmOrderActivity.this, phoneNo);
+		}
+		break;
+		}
 	}
 }

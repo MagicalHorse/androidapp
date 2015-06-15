@@ -104,7 +104,7 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView impleme
 		//productID = 12947;
 		initViews();
 		initData();
-		//setFont();
+		setFont();
 	}
 
 	private void initViews() {

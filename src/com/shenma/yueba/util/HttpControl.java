@@ -1230,7 +1230,7 @@ public class HttpControl {
 		map.put(Constants.PAGE, Integer.toString(currPage));
 		map.put(Constants.PAGESIZE, Integer.toString(pageSize));
 		BasehttpSend(map, context, HttpConstants.GETMYCIRCLE, httpCallBack,
-				RequestMyCircleInfoBean.class, showDialog, true);
+				RequestMyCircleInfoBean.class, showDialog, false);
 	}
 
 	/**
@@ -1249,7 +1249,7 @@ public class HttpControl {
 		map.put(Constants.PAGE, Integer.toString(currPage));
 		map.put(Constants.PAGESIZE, Integer.toString(pageSize));
 		BasehttpSend(map, context, HttpConstants.GETRECOMMENDGROUP,
-				httpCallBack, RequestMyCircleInfoBean.class, showDialog, true);
+				httpCallBack, RequestMyCircleInfoBean.class, showDialog, false);
 	}
 
 	/**

@@ -34,7 +34,7 @@ import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.RoundImageView;
 
-public class CircleView {
+public class CircleView extends BaseView{
 	static CircleView quanziControlView;
 	Activity activity;
 	List<FragmentBean> fragment_list=new ArrayList<FragmentBean>();
@@ -49,6 +49,7 @@ public class CircleView {
 	int currPage=Constants.CURRPAGE_VALUE;
 	int pageSize=Constants.PAGESIZE_VALUE;
 	boolean showDialog=true;
+	boolean isFirst=true;
 	HttpControl httpCntrol=new HttpControl();
 	public static CircleView the()
 	{
@@ -69,7 +70,7 @@ public class CircleView {
 			v=inflater.inflate(R.layout.circleview_layout, null);
 			initPullView();
 			initView(v);
-			requestFalshData();
+			//requestFalshData();
 		}
 		baijia_quanzi_layout_tanb1_gridbview.setFocusable(false);
 		baijia_quanzi_layout_tanb1_gridbview.setFocusableInTouchMode(false);
@@ -236,6 +237,7 @@ public class CircleView {
 	
 	void falshData(MyCircleInfoBean bean)
 	{
+		isFirst=false;
 		currPage++;
 		items.clear();
 		if(bean.getItems()!=null)
@@ -296,5 +298,17 @@ public class CircleView {
 				MyApplication.getInstance().showMessage(activity, msg);
 			}
 		},activity );
+	}
+	
+	/*****
+	 * 首次加载
+	 * ***/
+	public void firstInitData()
+	{
+		if(isFirst)
+		{
+			requestFalshData();
+		}
+		
 	}
 }

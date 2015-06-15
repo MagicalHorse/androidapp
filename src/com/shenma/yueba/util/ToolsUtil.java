@@ -15,10 +15,12 @@ import java.util.regex.Pattern;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Environment;
 import android.os.StatFs;
 import android.text.Html;
@@ -595,5 +597,16 @@ public class ToolsUtil {
 	{
 		DecimalFormat df = new DecimalFormat("0.00");
 		return df.format(d);
+	}
+	
+	/***
+	 * 调用系统呼叫页面
+	 * **/
+	public static void callActivity(Context context,String phone)
+	{
+		//调用拨号键
+		Uri telUri = Uri.parse("tel:"+phone);
+		Intent intent= new Intent(Intent.ACTION_DIAL, telUri);
+		context.startActivity(intent); 
 	}
 }

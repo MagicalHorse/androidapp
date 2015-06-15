@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,7 +62,8 @@ public class MyBuyerFragment extends Fragment {
 	// 商品信息列表
 	List<ProductsInfoBean> Products = new ArrayList<ProductsInfoBean>();
 	BitmapUtils bitmapUtils;
-	BuyerAdapter buyerAdapter;;
+	BuyerAdapter buyerAdapter;
+	boolean isFirst=true;//是否第一次加载数据
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -72,7 +74,7 @@ public class MyBuyerFragment extends Fragment {
 			bitmapUtils = new BitmapUtils(getActivity());
 			initPullView();
 			initView(parentview);
-			requestFalshData();
+			
 		}
 		ViewGroup vp = (ViewGroup)parentview.getParent();
 		if (vp != null) {
@@ -161,27 +163,28 @@ public class MyBuyerFragment extends Fragment {
 	 * 上啦加载数据
 	 * ***/
 	void requestData() {
-		pulltorefreshscrollview.setRefreshing();
-		sendRequestData(1);
+		//pulltorefreshscrollview.setRefreshing();
+		sendRequestData(currpage,1);
 	}
 
 	/******
 	 * 下拉刷新数据
 	 * ***/
 	void requestFalshData() {
-		pulltorefreshscrollview.setRefreshing();
-		currpage = 1;
-		sendRequestData(0);
+		isFirst=false;
+		//pulltorefreshscrollview.setRefreshing();
+		sendRequestData(1,0);
 
 	}
 
 	/******
 	 * 与网络通信请求数据
-	 * 
+	 * @param page int 访问页数
 	 * @param type int 0 刷新 1 加载
 	 * ***/
-	void sendRequestData(final int type) {
-		httpContril.getMyBuyerListData(currpage, pagesize,new HttpCallBackInterface() {
+	void sendRequestData(int page,final int type) {
+		Log.i("TAG", "currpage="+page+"   pagesize="+pagesize);
+		httpContril.getMyBuyerListData(page, pagesize,new HttpCallBackInterface() {
 
 					@Override
 					public void http_Success(Object obj) {
@@ -191,6 +194,7 @@ public class MyBuyerFragment extends Fragment {
 							MyHomeProductListInfoBean data = bean.getData();
 							if (data != null) {
 								int totalPage = data.getTotalpaged();
+								currpage=data.getPageindex();
 								if (currpage >= totalPage) {
 									pulltorefreshscrollview
 											.setMode(Mode.PULL_FROM_START);
@@ -219,13 +223,14 @@ public class MyBuyerFragment extends Fragment {
 						MyApplication.getInstance().showMessage(getActivity(),
 								msg);
 					}
-				}, getActivity(),ishow,true);
+				}, getActivity(),ishow,false);
 	}
 
 	/***
 	 * 加载数据
 	 * **/
 	void addData(MyHomeProductListInfoBean data) {
+		currpage++;
 		ishow=false;
 		showloading_layout_view.setVisibility(View.GONE);
 		MyProductListInfoBean item = data.getItems();
@@ -242,6 +247,7 @@ public class MyBuyerFragment extends Fragment {
 	 * 刷新viewpager数据
 	 * ***/
 	void falshData(MyHomeProductListInfoBean data) {
+		currpage++;
 		ishow=false;
 		showloading_layout_view.setVisibility(View.GONE);
 		MyProductListInfoBean item = data.getItems();
@@ -255,5 +261,17 @@ public class MyBuyerFragment extends Fragment {
 		ListViewUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
 		pulltorefreshscrollview.onRefreshComplete();
 
+	}
+	
+	/*****
+	 * 首次加载
+	 * ***/
+	public void firstInitData()
+	{
+		if(isFirst)
+		{
+			requestFalshData();
+		}
+		
 	}
 }

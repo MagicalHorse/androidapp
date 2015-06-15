@@ -48,6 +48,7 @@ public class IndexFragmentForBaiJia extends Fragment{
 		{
 			v=inflater.inflate(R.layout.indexfragmentforbaijia_layout, null);
 			initView(v);
+			baijia_fragment_tab1_pagerview.setOffscreenPageLimit(0);
 		}
 		ViewGroup vp=(ViewGroup)v.getParent();
 		if(vp!=null)
@@ -125,6 +126,14 @@ public class IndexFragmentForBaiJia extends Fragment{
 			public void onPageSelected(int arg0) {
 				currid=arg0;
 				setTextColor(arg0);
+				switch(arg0)
+				{
+				case 0:
+					break;
+				case 1:
+					((MyBuyerFragment)fragment_list.get(arg0).getFragment()).firstInitData();
+					break;
+				}
 			}
 			
 			@Override
