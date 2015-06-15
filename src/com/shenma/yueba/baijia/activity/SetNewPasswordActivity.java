@@ -1,5 +1,6 @@
 package com.shenma.yueba.baijia.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -10,7 +11,6 @@ import android.widget.EditText;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
-import com.shenma.yueba.baijia.modle.UserRequestBean;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
@@ -91,8 +91,9 @@ public class SetNewPasswordActivity extends BaseActivityWithTopView implements O
 				
 				@Override
 				public void http_Success(Object obj) {
-					
-					SetNewPasswordActivity.this.finish();
+					Intent intentLogin = new Intent(mContext,SplashActivity.class);
+					startActivity(intentLogin);
+					MyApplication.getInstance().removeAllActivity();
 				}
 				
 				@Override

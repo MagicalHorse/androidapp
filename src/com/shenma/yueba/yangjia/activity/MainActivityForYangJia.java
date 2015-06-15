@@ -68,8 +68,8 @@ public final class MainActivityForYangJia extends FragmentActivity {
 	private FragmentTabHost mTabHost;
 //	// 定义数组来存放按钮图片
 	private int mImageViewArray[] = { R.drawable.tab_index_selector,
-			R.drawable.tab_circle_selector, R.drawable.tab_msg_selector,
-			R.drawable.tab_find_selector, R.drawable.tab_me_selector };
+			R.drawable.tab_reward_selector, R.drawable.tab_publish_selector,
+			R.drawable.tab_msg_selector, R.drawable.tab_me_selector };
 	// Tab选项卡的文字
 		private String mTextviewArray[] = { "主页", "红榜", "发布", "消息","我" };
 	// 定义数组来存放Fragment界面
@@ -144,9 +144,9 @@ private View getTabItemView(int index) {
 	View view = View.inflate(this,R.layout.tab_item_view, null);
 	ImageView imageView = (ImageView) view.findViewById(R.id.imageview);
 	imageView.setImageResource(mImageViewArray[index]);
-	TextView textView = (TextView) view.findViewById(R.id.textview);
-	textView.setText(mTextviewArray[index]);
-	FontManager.changeFonts(getApplicationContext(), textView);
+//	TextView textView = (TextView) view.findViewById(R.id.textview);
+//	textView.setText(mTextviewArray[index]);
+//	FontManager.changeFonts(getApplicationContext(), textView);
 	return view;
 }
 

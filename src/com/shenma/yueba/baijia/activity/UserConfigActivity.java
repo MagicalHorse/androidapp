@@ -176,6 +176,9 @@ public class UserConfigActivity extends BaseActivityWithTopView {
 	            Intent intentLogin = new Intent(mContext, SplashActivity.class);
 	            startActivity(intentLogin);
 				break;
+			case R.id.user_config_password_include://修改密码
+				Intent intentModifyPassword = new Intent(UserConfigActivity.this,SetNewPasswordActivity.class);
+				startActivity(intentModifyPassword);
 			default:
 				break;
 			}

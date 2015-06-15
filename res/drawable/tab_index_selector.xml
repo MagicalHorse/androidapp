@@ -4,6 +4,7 @@
     <item android:drawable="@drawable/index_selected" android:state_selected="true"/>
     <item android:drawable="@drawable/index_selected" android:state_checked="true"/>
     <item android:drawable="@drawable/index_selected" android:state_pressed="true"/>
-    <item android:drawable="@drawable/index_default"/>
+    <item android:drawable="@drawable/index_normal"/>
+
 
 </selector>
