@@ -335,6 +335,13 @@
             android:name="com.shenma.yueba.baijia.activity.ShopMainActivity"
             android:screenOrientation="portrait" >
         </activity>
+        
+        <!-- 支付方式选择页面 -->
+        <activity
+            android:name="com.shenma.yueba.baijia.activity.BaijiaPayActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        
         <!-- 圈子 -->
         <activity
             android:name="com.shenma.yueba.baijia.activity.CircleListActivity"
