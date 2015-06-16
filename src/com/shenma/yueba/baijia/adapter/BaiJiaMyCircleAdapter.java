@@ -57,6 +57,7 @@ public class BaiJiaMyCircleAdapter extends BaseAdapterWithUtil {
 			holder.tv_time = (TextView) convertView.findViewById(R.id.tv_time);
 			holder.tv_msg = (TextView) convertView.findViewById(R.id.tv_msg);
 			convertView.setTag(holder);
+			ToolsUtil.setFontStyle(ctx, convertView, R.id.tv_product_name,R.id.tv_msg,R.id.tv_time,R.id.tv_msg_count);
 		} else {
 			holder = (Holder) convertView.getTag();
 		}
@@ -64,7 +65,7 @@ public class BaiJiaMyCircleAdapter extends BaseAdapterWithUtil {
 		MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.nullToString(myCircleInfo.getLogo()), holder.iv_head,  MyApplication.getInstance().getDisplayImageOptions());
 		
 		holder.tv_product_name.setText(ToolsUtil.nullToString(myCircleInfo.getName()));
-		holder.tv_msg_count.setText("");
+		holder.tv_msg_count.setText(Integer.toString(myCircleInfo.getMemberCount()));
 		holder.tv_time.setText("");
 		holder.tv_msg.setText("");
 		

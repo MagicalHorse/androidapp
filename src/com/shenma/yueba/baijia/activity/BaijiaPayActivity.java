@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
@@ -37,6 +38,14 @@ List<BaijiaPayInfoBean> bean=new ArrayList<BaijiaPayInfoBean>();
 	
 	void initView()
 	{
+		setTitle("选择付款方式");
+		setLeftTextView(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				BaijiaPayActivity.this.finish();
+			}
+		});
 		bean.add(new BaijiaPayInfoBean(R.drawable.weixin_icon,BaijiaPayInfoBean.Type.weixinpay,"请支付","0.00","微信支付","微信安全支付"));
 		baiJiaPayAdapter=new BaiJiaPayAdapter(bean, BaijiaPayActivity.this);
 		baijiapay_layout_paytype_listview=(ListView)parentView.findViewById(R.id.baijiapay_layout_paytype_listview);

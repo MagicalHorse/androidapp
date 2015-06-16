@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
-import android.util.Log;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
@@ -18,6 +20,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.State;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.activity.CircleInfoActivity;
 import com.shenma.yueba.baijia.adapter.BaiJiaMyCircleAdapter;
 import com.shenma.yueba.baijia.modle.MyCircleInfo;
 import com.shenma.yueba.baijia.modle.MyCircleInfoBean;
@@ -121,6 +124,16 @@ public class MyCircleView extends BaseView{
 		});
 		myCircleAdapter=new BaiJiaMyCircleAdapter(activity, items);
 		pull_refresh_list.setAdapter(myCircleAdapter);
+		pull_refresh_list.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,long arg3) {
+				MyCircleInfo myCircleInfo=items.get(arg2-1);
+				Intent intent=new Intent(activity,CircleInfoActivity.class);
+				intent.putExtra("circleId",Integer.toString(myCircleInfo.getId()));
+				activity.startActivity(intent);
+			}
+		});
 	}
 	
 	
