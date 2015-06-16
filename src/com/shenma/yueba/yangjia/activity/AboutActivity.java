@@ -50,6 +50,7 @@ import com.shenma.yueba.view.SelectePhotoType;
  */
 public class AboutActivity extends BaseActivityWithTopView {
 
+	
 	private TextView tv_version;
 	private TextView tv_content;
 	private TextView tv_right;
