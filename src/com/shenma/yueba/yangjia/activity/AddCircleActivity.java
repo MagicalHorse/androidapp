@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -80,12 +81,12 @@ public class AddCircleActivity extends BaseActivityWithTopView implements
 			}
 		});
 		tv_create = getView(R.id.tv_create);
+		tv_create.setOnClickListener(this);
 		et_circle_name = getView(R.id.et_circle_name);
 		riv_circle_head = getView(R.id.riv_circle_head);
 		ll_logo = getView(R.id.ll_logo);
 		ll_logo.setOnClickListener(this);
-		FontManager.changeFonts(mContext,
-				et_circle_name,tv_create);
+		FontManager.changeFonts(mContext, et_circle_name, tv_create);
 	}
 
 	@Override
@@ -95,46 +96,58 @@ public class AddCircleActivity extends BaseActivityWithTopView implements
 			ToolsUtil.hideSoftKeyboard(mContext, ll_logo);
 			showBottomDialog();
 			break;
-		case R.id.tv_create://新建圈子
-		uploadImage(littlePicPath_cache);
-		break;
+		case R.id.tv_create:// 新建圈子
+			if (TextUtils.isEmpty(littlePicPath_cache)) {
+				Toast.makeText(mContext, "圈子头像不能为空", 1000).show();
+				return;
+			}
+			if (TextUtils.isEmpty(et_circle_name.getText().toString().trim())) {
+				Toast.makeText(mContext, "圈子名称不能为空", 1000).show();
+				return;
+			}
+			uploadImage(littlePicPath_cache);
+			break;
 		default:
 			break;
 		}
 
 	}
 
-	
-	public void createCircle2(){
+	public void createCircle2() {
 		HttpUtils httpUtils = new HttpUtils();
 		RequestParams map = new RequestParams();
 		HttpControl httpControl = new HttpControl();
-		map.addBodyParameter(Constants.NAME, et_circle_name.getText().toString().trim());
+		map.addBodyParameter(Constants.NAME, et_circle_name.getText()
+				.toString().trim());
 		map.addBodyParameter(Constants.LOGO, littlePicPath_cache.substring(
 				littlePicPath_cache.lastIndexOf("/") + 1,
 				littlePicPath_cache.length()));
-		httpUtils.send(HttpMethod.POST, HttpConstants.METHOD_CIRCLE_GETBUYERGROUPS, map,new RequestCallBack<String>() {
-			@Override
-			public void onSuccess(ResponseInfo<String> responseInfo) {
-				progressDialog.dismiss();
-				BaseRequest resultBean = ParserJson.parserBase(responseInfo.result);
-				if(200 == resultBean.getStatusCode()){//返回成功
-					Toast.makeText(mContext, "创建成功", 1000).show();
-					setResult(Constants.RESULTCODE);
-					AddCircleActivity.this.finish();
-				}else{
-					Toast.makeText(mContext, resultBean.getMessage(), 1000).show();
-				}
-			}
+		httpUtils.send(HttpMethod.POST,
+				HttpConstants.METHOD_CIRCLE_GETBUYERGROUPS, map,
+				new RequestCallBack<String>() {
+					@Override
+					public void onSuccess(ResponseInfo<String> responseInfo) {
+						progressDialog.dismiss();
+						BaseRequest resultBean = ParserJson
+								.parserBase(responseInfo.result);
+						if (200 == resultBean.getStatusCode()) {// 返回成功
+							Toast.makeText(mContext, "创建成功", 1000).show();
+							setResult(Constants.RESULTCODE);
+							AddCircleActivity.this.finish();
+						} else {
+							Toast.makeText(mContext, resultBean.getMessage(),
+									1000).show();
+						}
+					}
 
-			@Override
-			public void onFailure(HttpException error, String msg) {
-				//progressDialog.dismiss();
-				Toast.makeText(mContext, "创建失败！", 1000).show();
-			}
-		});
+					@Override
+					public void onFailure(HttpException error, String msg) {
+						// progressDialog.dismiss();
+						Toast.makeText(mContext, "创建失败！", 1000).show();
+					}
+				});
 	}
-	
+
 	public void createCircle() {
 		HttpControl httpContorl = new HttpControl();
 		httpContorl.createCircle(et_circle_name.getText().toString().trim(),
@@ -145,7 +158,7 @@ public class AddCircleActivity extends BaseActivityWithTopView implements
 
 					@Override
 					public void http_Success(Object obj) {
-						if(progressDialog.isShowing()){
+						if (progressDialog.isShowing()) {
 							progressDialog.cancel();
 						}
 						Toast.makeText(mContext, "创建成功", 1000).show();
@@ -155,7 +168,7 @@ public class AddCircleActivity extends BaseActivityWithTopView implements
 
 					@Override
 					public void http_Fails(int error, String msg) {
-						if(progressDialog.isShowing()){
+						if (progressDialog.isShowing()) {
 							progressDialog.cancel();
 						}
 						Toast.makeText(mContext, msg, 1000).show();
@@ -268,9 +281,9 @@ public class AddCircleActivity extends BaseActivityWithTopView implements
 	}
 
 	private void uploadImage(String imagePath) {
-		 if(!progressDialog.isShowing()){
-		 progressDialog.show();
-		 }
+		if (!progressDialog.isShowing()) {
+			progressDialog.show();
+		}
 		HttpControl httpControl = new HttpControl();
 		httpControl.syncUpload(littlePicPath_cache, new SaveCallback() {
 
@@ -293,7 +306,7 @@ public class AddCircleActivity extends BaseActivityWithTopView implements
 						createCircle();
 					}
 				});
-				
+
 			}
 
 		});

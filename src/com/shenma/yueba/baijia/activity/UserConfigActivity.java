@@ -36,7 +36,9 @@ import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.RoundImageView;
 import com.shenma.yueba.view.SelectePhotoType;
+import com.shenma.yueba.yangjia.activity.AboutActivity;
 import com.shenma.yueba.yangjia.activity.ModifyNickNameActivity;
+
 
 /*****
  * 用户设置
@@ -56,6 +58,8 @@ public class UserConfigActivity extends BaseActivityWithTopView {
 	private String littlePicPath_cache;// 裁剪后图片存储的路径
 	private CustomProgressDialog progressDialog;
 
+	private TextView tv_about;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		MyApplication.getInstance().addActivity(this);// 加入回退栈
@@ -63,7 +67,7 @@ public class UserConfigActivity extends BaseActivityWithTopView {
 		setContentView(R.layout.mefragmentforseller_config_layout);
 		super.onCreate(savedInstanceState);
 		MyApplication.getInstance().addActivity(this);
-		
+
 		initView();
 	}
 
@@ -88,6 +92,13 @@ public class UserConfigActivity extends BaseActivityWithTopView {
 				.findViewById(R.id.people_config_str1_textview);
 		icon_text.setText(this.getResources().getText(
 				R.string.user_config_icon_str));
+		tv_about = (TextView) findViewById(R.id.tv_about);
+		tv_about.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				skip(AboutActivity.class, true);
+			}
+		});
 		icon_imageview = (RoundImageView) icon_layout
 				.findViewById(R.id.people_config_str2_imageview);
 		MyApplication
@@ -142,7 +153,8 @@ public class UserConfigActivity extends BaseActivityWithTopView {
 		// 设置字体样式
 		FontManager.changeFonts(this, tv_top_title, icon_text, nickname_text,
 				nickname_textvalue, myaddress_textview, mycollect_textview,
-				userpwd_textview, messagednd_textview, user_config_exit_button);
+				userpwd_textview, messagednd_textview, user_config_exit_button,
+				tv_about);
 		// 设置按键监听
 		icon_layout.setOnClickListener(onClickListener);
 		nickname_layout.setOnClickListener(onClickListener);
@@ -171,15 +183,17 @@ public class UserConfigActivity extends BaseActivityWithTopView {
 						ModifyNickNameActivity.class);
 				startActivityForResult(intent, Constants.REQUESTCODE);
 				break;
-			case R.id.user_config_exit_button://退出登录
-//				Intent intentSelf = getPackageManager().getLaunchIntentForPackage("com.shenma.yueba");//"jp.co.johospace.jorte"就是我们获得要启动应用的包名   
-//	            startActivity(intentSelf); 
+			case R.id.user_config_exit_button:// 退出登录
+				// Intent intentSelf =
+				// getPackageManager().getLaunchIntentForPackage("com.shenma.yueba");//"jp.co.johospace.jorte"就是我们获得要启动应用的包名
+				// startActivity(intentSelf);
 				MyApplication.removeAllActivity();
-	            Intent intentLogin = new Intent(mContext, SplashActivity.class);
-	            startActivity(intentLogin);
+				Intent intentLogin = new Intent(mContext, SplashActivity.class);
+				startActivity(intentLogin);
 				break;
-			case R.id.user_config_password_include://修改密码
-				Intent intentModifyPassword = new Intent(UserConfigActivity.this,SetNewPasswordActivity.class);
+			case R.id.user_config_password_include:// 修改密码
+				Intent intentModifyPassword = new Intent(
+						UserConfigActivity.this, SetNewPasswordActivity.class);
 				startActivity(intentModifyPassword);
 			default:
 				break;
@@ -300,7 +314,7 @@ public class UserConfigActivity extends BaseActivityWithTopView {
 	 * 修改头像
 	 */
 	private void modifyUserLogo() {
-		if(!progressDialog.isShowing()){
+		if (!progressDialog.isShowing()) {
 			progressDialog.show();
 		}
 		final HttpControl httpControl = new HttpControl();
@@ -329,7 +343,7 @@ public class UserConfigActivity extends BaseActivityWithTopView {
 								false, new HttpCallBackInterface() {
 									@Override
 									public void http_Success(Object obj) {
-										if(progressDialog.isShowing()){
+										if (progressDialog.isShowing()) {
 											progressDialog.dismiss();
 										}
 										Toast.makeText(mContext, "修改成功", 1000)

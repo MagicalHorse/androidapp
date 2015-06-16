@@ -164,16 +164,16 @@
         <activity
             android:name="com.shenma.yueba.yangjia.activity.MainActivityForYangJia"
             android:screenOrientation="portrait" />
-         <activity
+        <activity
             android:name="com.shenma.yueba.yangjia.activity.BoradRewardActivity"
             android:screenOrientation="portrait" />
-          <activity
+        <activity
             android:name="com.shenma.yueba.yangjia.activity.ModifyNickNameActivity"
             android:screenOrientation="portrait" />
-          <activity
+        <activity
             android:name="com.shenma.yueba.yangjia.activity.OpenRewardActivity"
             android:screenOrientation="portrait" />
-           <activity
+        <activity
             android:name="com.shenma.yueba.yangjia.activity.OrderRewardActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -208,22 +208,22 @@
             android:name="com.shenma.yueba.baijia.activity.FillPersonDataActivity"
             android:screenOrientation="portrait" >
         </activity>
-          <!-- 找回密码 -->
+        <!-- 找回密码 -->
         <activity
             android:name="com.shenma.yueba.baijia.activity.FindPasswordActivity"
             android:screenOrientation="portrait" >
         </activity>
-          <!-- 登录注册 -->
+        <!-- 登录注册 -->
         <activity
             android:name="com.shenma.yueba.baijia.activity.LoginAndRegisterActivity"
             android:screenOrientation="portrait" >
         </activity>
-          <!-- 设置新密码 -->
+        <!-- 设置新密码 -->
         <activity
             android:name="com.shenma.yueba.baijia.activity.SetNewPasswordActivity"
             android:screenOrientation="portrait" >
         </activity>
-           <!-- 收益管理 -->
+        <!-- 收益管理 -->
         <activity
             android:name="com.shenma.yueba.yangjia.activity.EarningManagerActivity"
             android:screenOrientation="portrait" >
@@ -247,6 +247,10 @@
         </activity>
         <activity
             android:name="com.shenma.yueba.yangjia.activity.CircleInvitectivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.shenma.yueba.yangjia.activity.AboutActivity"
             android:screenOrientation="portrait" >
         </activity>
         <activity
@@ -296,13 +300,13 @@
             android:name="com.shenma.yueba.baijia.activity.BaiJiaOrderDetailsActivity"
             android:screenOrientation="portrait" >
         </activity>
-        
+
         <!-- 败家订单申诉页面 -->
         <activity
             android:name="com.shenma.yueba.baijia.activity.OrderAppealActivity"
             android:screenOrientation="portrait" >
         </activity>
-        
+
         <!-- 败家订单申诉中页面 -->
         <activity
             android:name="com.shenma.yueba.baijia.activity.BaijiaAppealLoadingActivity"
@@ -335,13 +339,13 @@
             android:name="com.shenma.yueba.baijia.activity.ShopMainActivity"
             android:screenOrientation="portrait" >
         </activity>
-        
+
         <!-- 支付方式选择页面 -->
         <activity
             android:name="com.shenma.yueba.baijia.activity.BaijiaPayActivity"
             android:screenOrientation="portrait" >
         </activity>
-        
+
         <!-- 圈子 -->
         <activity
             android:name="com.shenma.yueba.baijia.activity.CircleListActivity"
@@ -357,12 +361,12 @@
             android:name="com.shenma.yueba.baijia.activity.ApproveBuyerDetailsActivity"
             android:screenOrientation="portrait" >
         </activity>
-        
-         <!--品牌详细页面-->
+
+        <!-- 品牌详细页面 -->
         <activity
             android:name="com.shenma.yueba.baijia.activity.BaijiaBrandListActivity"
             android:screenOrientation="portrait" />
-        
+
         <!-- 聊天界面 -->
         <activity
             android:name="com.shenma.yueba.ChatActivity"
@@ -378,9 +382,7 @@
             android:name="com.shenma.yueba.yangjia.activity.SocialManagerActivity"
             android:screenOrientation="portrait" >
         </activity>
-        
-       
-        
+
         <!-- 订单详情 -->
         <activity
             android:name="com.shenma.yueba.yangjia.activity.OrderDetailActivity"
@@ -404,7 +406,7 @@
             android:name="com.shenma.yueba.yangjia.activity.AddCircleActivity"
             android:screenOrientation="portrait" >
         </activity>
-           <!-- 奖励详情 -->
+        <!-- 奖励详情 -->
         <activity
             android:name="com.shenma.yueba.yangjia.activity.RewardDetailActivity"
             android:screenOrientation="portrait" >
