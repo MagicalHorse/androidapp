@@ -13,6 +13,8 @@ import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.activity.ApplyResultActivity;
 import com.shenma.yueba.baijia.activity.BaseActivityWithTopView;
 import com.shenma.yueba.util.FontManager;
+import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 
 /**
  * 申请提现的界面
@@ -40,6 +42,11 @@ public class ApplyWithdrawActivity extends BaseActivityWithTopView implements
 	}
 
 	private void getIntentData() {
+		String money = getIntent().getStringExtra("money");
+		tv_retan_money.setText("可提现收益" + money + "元");
+	}
+
+	private void initView() {
 		setTitle("申请提现");
 		setLeftTextView(new OnClickListener() {
 			@Override
@@ -47,11 +54,6 @@ public class ApplyWithdrawActivity extends BaseActivityWithTopView implements
 				ApplyWithdrawActivity.this.finish();
 			}
 		});
-		String money = getIntent().getStringExtra("money");
-		tv_retan_money.setText("可提现收益" + money + "元");
-	}
-
-	private void initView() {
 		tv_retan_money = getView(R.id.tv_retan_money);
 		et_money = getView(R.id.et_money);
 		tv_yuan = getView(R.id.tv_yuan);
@@ -68,10 +70,7 @@ public class ApplyWithdrawActivity extends BaseActivityWithTopView implements
 		case R.id.tv_sure:// 确认提现
 			String money = et_money.getText().toString().trim();
 			if (money.matches("[0-9]+")) {
-				Intent intent = new Intent(ApplyWithdrawActivity.this,
-						ApplyResultActivity.class);
-				intent.putExtra("flag", "applaywithdraw");//申请提现
-				startActivity(intent);
+				getIncomeRedPack();
 			} else {
 				Toast.makeText(mContext, "请输入整数", 1000).show();
 			}
@@ -80,5 +79,27 @@ public class ApplyWithdrawActivity extends BaseActivityWithTopView implements
 		default:
 			break;
 		}
+
+	}
+
+	public void getIncomeRedPack() {
+		HttpControl httpControl = new HttpControl();
+		httpControl.getIncomeRedPack(et_money.getText().toString().trim(),
+				new HttpCallBackInterface() {
+
+					@Override
+					public void http_Success(Object obj) {
+						Intent intent = new Intent(ApplyWithdrawActivity.this,
+								ApplyResultActivity.class);
+						intent.putExtra("flag", "applaywithdraw");// 申请提现
+						startActivity(intent);
+					}
+
+					@Override
+					public void http_Fails(int error, String msg) {
+						Toast.makeText(mContext, msg, 1000).show();
+
+					}
+				}, ApplyWithdrawActivity.this);
 	}
 }
