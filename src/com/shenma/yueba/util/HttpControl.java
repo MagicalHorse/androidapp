@@ -1034,6 +1034,18 @@ public class HttpControl {
 				httpCallBack, IncomeHistoryBackBean.class, true, true);
 	}
 	
+	/**
+	 * 买手提现
+	 * 
+	 * @return void
+	 * **/
+	public void getIncomeRedPack(String amount,
+			final HttpCallBackInterface httpCallBack, Context context) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put(Constants.AMOUNT, amount);
+		BasehttpSend(map, context, HttpConstants.METHOD_ASSISTANT_INCOMEREQUESTREDPACK,
+				httpCallBack, IncomeHistoryBackBean.class, true, true);
+	}
 	
 	
 	

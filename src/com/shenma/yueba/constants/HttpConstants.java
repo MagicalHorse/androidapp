@@ -222,6 +222,10 @@ public class HttpConstants {
 	/**
 	 * 获取提现历史
 	 */
+	public static String METHOD_ASSISTANT_INCOMEREQUESTREDPACK= ASSISTANT + "Income_Request_RedPack";
+	/**
+	 * 获取提现历史
+	 */
 	public static String METHOD_ASSISTANT_GETINCOMEHISTORY = ASSISTANT + "GetIncomeHistory";
 	/**
 	 * 收益明细
