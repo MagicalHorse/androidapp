@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,6 +25,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.State;
 import com.handmark.pulltorefresh.library.PullToRefreshGridView;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.activity.CircleInfoActivity;
 import com.shenma.yueba.baijia.modle.FragmentBean;
 import com.shenma.yueba.baijia.modle.MyCircleInfo;
 import com.shenma.yueba.baijia.modle.MyCircleInfoBean;
@@ -139,8 +141,10 @@ public class CircleView extends BaseView{
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
-				
-				
+				Intent intent=new Intent(activity,CircleInfoActivity.class);
+				MyCircleInfo myCircleInfo=items.get(arg2);
+				intent.putExtra("circleId", Integer.toString(myCircleInfo.getId()));
+				activity.startActivity(intent);
 			}
 		});
 	}

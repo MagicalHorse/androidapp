@@ -59,7 +59,7 @@ public class BaiJiaPayAdapter extends BaseAdapter{
 			holder.tv2=(TextView)convertView.findViewById(R.id.baijiapay_layout_item_textview2);
 			holder.tv3=(TextView)convertView.findViewById(R.id.baijiapay_layout_item_textview3);
 			holder.tv4=(TextView)convertView.findViewById(R.id.baijiapay_layout_item_textview4);
-			
+			ToolsUtil.setFontStyle(context, convertView, R.id.baijiapay_layout_item_textview1,R.id.baijiapay_layout_item_textview2,R.id.baijiapay_layout_item_textview3,R.id.baijiapay_layout_item_textview4);
 		}else
 		{
 			holder=(Holder)convertView.getTag();
