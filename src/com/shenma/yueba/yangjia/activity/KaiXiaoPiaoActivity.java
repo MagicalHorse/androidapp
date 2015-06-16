@@ -1,16 +1,19 @@
 package com.shenma.yueba.yangjia.activity;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.BaseActivityWithTopView;
 import com.shenma.yueba.util.FontManager;
+import com.shenma.yueba.util.ToolsUtil;
 
 /**
  * 开小票
@@ -18,12 +21,9 @@ import com.shenma.yueba.util.FontManager;
  */
 
 public class KaiXiaoPiaoActivity extends BaseActivityWithTopView implements OnClickListener {
-	private EditText et_product_name;
-	private EditText et_product_style;
-	private EditText et_product_color;
 	private EditText et_product_number;
 	private EditText et_product_price;
-	private TextView tv_product_code;
+	private TextView tv_tishi;
 	private TextView tv_facetoface_product;
 	
 	@Override
@@ -35,20 +35,42 @@ public class KaiXiaoPiaoActivity extends BaseActivityWithTopView implements OnCl
 		initView();
 	}
 	private void initView() {
-		et_product_name = (EditText) findViewById(R.id.et_product_name);
-		et_product_style = (EditText) findViewById(R.id.et_product_style);
-		et_product_color = (EditText) findViewById(R.id.et_product_color);
+		setTitle("开小票");
+		setLeftTextView(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				KaiXiaoPiaoActivity.this.finish();
+			}
+		});
 		et_product_number = (EditText) findViewById(R.id.et_product_number);
 		et_product_price = (EditText) findViewById(R.id.et_product_price);
-		tv_product_code = (TextView) findViewById(R.id.tv_product_code);
-		tv_facetoface_product = (TextView) findViewById(R.id.tv_facetoface_product);
-		FontManager.changeFonts(this, et_product_name,et_product_style,et_product_color,
-				et_product_number,et_product_price,tv_product_code,tv_facetoface_product);
+		tv_tishi = (TextView) findViewById(R.id.tv_tishi);
+		tv_facetoface_product = (TextView) findViewById(R.id.tv_tishi);
 		tv_facetoface_product.setOnClickListener(this);
+		FontManager.changeFonts(this,et_product_number,et_product_price,tv_tishi);
 	}
 	@Override
 	public void onClick(View v) {
-		// TODO Auto-generated method stub
+		switch (v.getId()) {
+		case R.id.tv_facetoface_product://创建面对面小票
+			if(TextUtils.isEmpty(et_product_number.getText().toString())){
+				Toast.makeText(mContext, "货号不能为空", 1000).show();
+				break;
+			}
+			if(TextUtils.isEmpty(et_product_price.getText().toString())){
+				Toast.makeText(mContext, "售价不能为空", 1000).show();
+				break;
+			}
+			if(!ToolsUtil.isDecimal(et_product_price.getText().toString())){
+				Toast.makeText(mContext, "售价不合法", 1000).show();
+				break;
+			}
+			
+			break;
+
+		default:
+			break;
+		}
 		
 	}
 }

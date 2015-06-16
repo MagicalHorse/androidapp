@@ -609,4 +609,19 @@ public class ToolsUtil {
 		Intent intent= new Intent(Intent.ACTION_DIAL, telUri);
 		context.startActivity(intent); 
 	}
+	
+	/**
+	 * 判断小数是否合法
+	 * @param price
+	 * @return
+	 */
+	public static boolean isDecimal(String price){
+		try {
+			double priceDouble = Double.valueOf(price);
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
+		
+	}
 }

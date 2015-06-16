@@ -95,17 +95,17 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
 			startActivity(intent);
 			break;
 		case R.id.bt_login:// 登录
-			if (TextUtils.isEmpty(et_mobile.getText().toString())) {
-				Toast.makeText(getActivity(), "手机号不能为空", 1000).show();
-				et_mobile.startAnimation(AnimationUtils.loadAnimation(
-						getActivity(), R.anim.shake));
-			} else if (!ToolsUtil.checkPhone(et_mobile.getText().toString())) {
-				Toast.makeText(getActivity(), "手机号格式不正确", 1000).show();
-			} else if (TextUtils.isEmpty(et_password.getText().toString())) {
-				Toast.makeText(getActivity(), "密码不能为空", 1000).show();
-				et_password.startAnimation(AnimationUtils.loadAnimation(
-						getActivity(), R.anim.shake));
-			} else {
+//			if (TextUtils.isEmpty(et_mobile.getText().toString())) {
+//				Toast.makeText(getActivity(), "手机号不能为空", 1000).show();
+//				et_mobile.startAnimation(AnimationUtils.loadAnimation(
+//						getActivity(), R.anim.shake));
+//			} else if (!ToolsUtil.checkPhone(et_mobile.getText().toString())) {
+//				Toast.makeText(getActivity(), "手机号格式不正确", 1000).show();
+//			} else if (TextUtils.isEmpty(et_password.getText().toString())) {
+//				Toast.makeText(getActivity(), "密码不能为空", 1000).show();
+//				et_password.startAnimation(AnimationUtils.loadAnimation(
+//						getActivity(), R.anim.shake));
+//			} else {
 				final HttpControl httpControl = new HttpControl();
 				httpControl.userLogin(et_mobile.getText().toString().trim(),
 						et_password.getText().toString().trim(),
@@ -132,7 +132,7 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
 										getActivity(), msg);
 							}
 						}, getActivity());
-			}
+//			}
 			
 //			Intent intent2 = new Intent(getActivity(), ChatActivity.class);
 //			startActivity(intent2);
@@ -155,9 +155,9 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
 	public void initWeiChatLogin() {
 		// 添加微信平台
 		UMWXHandler wxHandler = new UMWXHandler(getActivity(),
-				"wx967daebe835fbeac", "5bb696d9ccd75a38c8a0bfe0675559b3");
+				"wx0bd15e11e7c3090f", "e3ff58518855345970755d08a3540c26");
 		wxHandler.addToSocialSDK();
-		mController.doOauthVerify(getActivity(), SHARE_MEDIA.WEIXIN,
+		/*mController.doOauthVerify(getActivity(), SHARE_MEDIA.WEIXIN,
 				new UMAuthListener() {
 					@Override
 					public void onError(SocializeException e,
@@ -183,7 +183,7 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
 					@Override
 					public void onStart(SHARE_MEDIA platform) {
 					}
-				});
+				});*/
 		mController.doOauthVerify(getActivity(), SHARE_MEDIA.WEIXIN,
 				new UMAuthListener() {
 					@Override
@@ -226,6 +226,7 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
 																.toString()
 														+ "\r\n");
 											}
+											Toast.makeText(getActivity(), sb.toString(), 1000).show();
 											Log.d("TestData", sb.toString());
 										} else {
 											Log.d("TestData", "发生错误：" + status);

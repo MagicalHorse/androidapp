@@ -41,7 +41,6 @@ import android.widget.Toast;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.camera.CameraAty;
-import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.yangjia.fragment.CartFragment;
 import com.shenma.yueba.yangjia.fragment.IndexFragmentForYangJia;
 import com.shenma.yueba.yangjia.fragment.MeFragmentForYangJia;
@@ -171,6 +170,8 @@ private void showDialog() {
 		@Override
 		public void onClick(View v) {
 			// 跳转到开下票的界面
+			Intent intentXP = new Intent(MainActivityForYangJia.this,KaiXiaoPiaoActivity.class);
+			startActivity(intentXP);
 			dialog.cancel();
 		}
 	});

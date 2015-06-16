@@ -24,38 +24,7 @@
                     style="@style/style_horizontal_line"
                     android:layout_marginTop="15dip" />
 
-                <EditText
-                    android:id="@+id/et_product_name"
-                    style="@style/edittext_style_for_input"
-                    android:hint="商品名称" />
-
                 <View style="@style/style_horizontal_line" />
-
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dip"
-                    android:background="@color/white"
-                    android:orientation="vertical" >
-
-                    <View style="@style/style_horizontal_line" />
-
-                    <EditText
-                        android:id="@+id/et_product_style"
-                        style="@style/edittext_style_for_input"
-                        android:hint="型号" />
-
-                    <View
-                        style="@style/style_horizontal_line"
-                        android:layout_marginLeft="20dip" />
-
-                    <EditText
-                        android:id="@+id/et_product_color"
-                        style="@style/edittext_style_for_input"
-                        android:hint="颜色" />
-
-                    <View style="@style/style_horizontal_line" />
-                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="fill_parent"
@@ -83,17 +52,23 @@
                     <View style="@style/style_horizontal_line" />
                 </LinearLayout>
 
-                <View
-                    style="@style/style_horizontal_line"
-                    android:layout_marginTop="15dip" />
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="10dip" >
 
-                <TextView
-                    android:id="@+id/tv_product_code"
-                    style="@style/edittext_style_for_input"
-                    android:drawableRight="@drawable/arrow_down"
-                    android:hint="商品编码" />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/help" />
 
-                <View style="@style/style_horizontal_line" />
+                    <TextView
+                        android:id="@+id/tv_tishi"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="您好，我們會以微信紅包的形式發送給你，請注意查收您好，我們會以微信紅包的形式發送給你，請注意查收您好，我們會以微信紅包的形式發送給你，請注意查收" />
+                </LinearLayout>
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
@@ -107,7 +82,7 @@
         android:gravity="center"
         android:padding="10dip"
         android:text="创建面对面商品"
-        android:textColor="@color/blue"
+        android:textColor="@color/red_text_color"
         android:textSize="18sp" />
 
 </RelativeLayout>
