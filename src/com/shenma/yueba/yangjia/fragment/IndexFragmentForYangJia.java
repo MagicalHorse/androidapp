@@ -41,7 +41,7 @@ import com.shenma.yueba.util.SocicalShareUtil;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.imageshow.ImageShowActivity;
 import com.shenma.yueba.yangjia.activity.EarningManagerActivity;
-import com.shenma.yueba.yangjia.activity.HuoKuanManagerActivity2;
+import com.shenma.yueba.yangjia.activity.HuoKuanManagerActivity;
 import com.shenma.yueba.yangjia.activity.ProductManagerActivity;
 import com.shenma.yueba.yangjia.activity.SalesManagerForBuyerActivity;
 import com.shenma.yueba.yangjia.activity.SocialManagerActivity;
@@ -342,7 +342,7 @@ public class IndexFragmentForYangJia extends BaseFragment implements
 			break;
 		case R.id.rl_huokuan:// 货款管理
 			
-			Intent intentHuoKuan = new Intent(getActivity(), HuoKuanManagerActivity2.class);
+			Intent intentHuoKuan = new Intent(getActivity(), HuoKuanManagerActivity.class);
 			startActivity(intentHuoKuan);
 			
 //			Intent intentSales = new Intent(getActivity(), SalesManagerForSupperManActivity.class);

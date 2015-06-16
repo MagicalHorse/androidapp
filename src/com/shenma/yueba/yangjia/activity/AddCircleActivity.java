@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,19 +54,18 @@ import com.shenma.yueba.view.SelectePhotoType;
 public class AddCircleActivity extends BaseActivityWithTopView implements
 		OnClickListener {
 
-	private TextView tv_cirlce_head_title;
-	private TextView tv_cirlce_name_title;
-	private EditText et_circle_name;
 	private RoundImageView riv_circle_head;
-	private RelativeLayout rl_head;
+	private EditText et_circle_name;
+	private LinearLayout ll_logo;
 	private String littlePicPath;// 小图路径
 	private String littlePicPath_cache;// 裁剪后图片存储的路径
 	private CustomProgressDialog progressDialog;
+	private TextView tv_create;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.add_circle_layout);
+		setContentView(R.layout.add_circle_layout2);
 		super.onCreate(savedInstanceState);
 		initView();
 		progressDialog = CustomProgressDialog.createDialog(this);
@@ -79,30 +79,25 @@ public class AddCircleActivity extends BaseActivityWithTopView implements
 				AddCircleActivity.this.finish();
 			}
 		});
-		setTopRightTextView("完成", new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				uploadImage(littlePicPath_cache);
-			}
-		});
-		tv_cirlce_head_title = getView(R.id.tv_cirlce_head_title);
-		tv_cirlce_name_title = getView(R.id.tv_cirlce_name_title);
+		tv_create = getView(R.id.tv_create);
 		et_circle_name = getView(R.id.et_circle_name);
 		riv_circle_head = getView(R.id.riv_circle_head);
-		rl_head = getView(R.id.rl_head);
-		rl_head.setOnClickListener(this);
-		FontManager.changeFonts(mContext, tv_cirlce_head_title,
-				tv_cirlce_name_title, et_circle_name, riv_circle_head, rl_head);
+		ll_logo = getView(R.id.ll_logo);
+		ll_logo.setOnClickListener(this);
+		FontManager.changeFonts(mContext,
+				et_circle_name,tv_create);
 	}
 
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.rl_head:// 提交头像
-			ToolsUtil.hideSoftKeyboard(mContext, rl_head);
+		case R.id.ll_logo:// 提交头像
+			ToolsUtil.hideSoftKeyboard(mContext, ll_logo);
 			showBottomDialog();
 			break;
-
+		case R.id.tv_create://新建圈子
+		uploadImage(littlePicPath_cache);
+		break;
 		default:
 			break;
 		}

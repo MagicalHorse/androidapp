@@ -88,6 +88,7 @@
                     android:visibility="gone" />
 
                 <RelativeLayout
+                    android:paddingRight="10dip"
                     android:id="@+id/rl_circle_name"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
@@ -105,6 +106,7 @@
                         android:textSize="18sp" />
 
                     <ImageView
+                        android:visibility="invisible"
                         android:id="@+id/imageView1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -121,7 +123,7 @@
                         android:layout_toLeftOf="@+id/imageView1"
                         android:layout_toRightOf="@id/tv_cirlce_name_title"
                         android:gravity="right"
-                        android:text="躲猫猫" />
+                        android:text="@null" />
                 </RelativeLayout>
 
                 <View
@@ -129,6 +131,7 @@
                     android:layout_marginLeft="10dip" />
 
                 <RelativeLayout
+                       android:paddingRight="10dip"
                     android:id="@+id/rl_head"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
@@ -146,11 +149,13 @@
                         android:textSize="18sp" />
 
                     <ImageView
-                        android:id="@+id/imageView1"
+                        
+                        android:id="@+id/imageView2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
+                        android:visibility="invisible"
                         android:background="@drawable/arrow_right" />
 
                     <com.shenma.yueba.view.RoundImageView
@@ -159,7 +164,7 @@
                         android:layout_height="40dip"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="22dp"
-                        android:layout_toLeftOf="@+id/imageView1"
+                        android:layout_toLeftOf="@+id/imageView2"
                         android:scaleType="fitXY"
                         android:src="@drawable/default_pic" />
                 </RelativeLayout>
@@ -170,7 +175,7 @@
             </LinearLayout>
             
              <Button
-                 android:id="@+id/bt_delete_or_exit"
+                 android:id="@+id/bt_action"
                  android:layout_width="fill_parent"
                  android:layout_height="45dip"
                  android:layout_marginBottom="25dip"
@@ -178,7 +183,7 @@
                  android:layout_marginRight="15dip"
                  android:layout_marginTop="25dip"
                  android:background="@drawable/shape_main_color_button"
-                 android:text="删除圈子"
+                 android:text="@null"
                  android:textColor="@color/white"
                  android:textSize="17sp" />
 

@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -57,6 +58,7 @@ public class CircleInfoActivity extends BaseActivityWithTopView implements
 	private TextView tv_cirlce_name_title;
 	private TextView tv_circle_title;
 	private TextView tv_circle_name;
+	private ImageView imageView1,imageView2;
 	private RoundImageView riv_circle_head;
 	private MyGridView gv_circle;
 	private MyCircleInfoAdapter adapter;
@@ -68,7 +70,8 @@ public class CircleInfoActivity extends BaseActivityWithTopView implements
 	private String littlePicPath;//小图路径
 	private String littlePicPath_cache;//裁剪后图片存储的路径
 	private TextView tv_top_title_below;//标题下面的人数
-	private Button bt_delete_or_exit;//删除或退出，如果是养家则删除，如果是败家则退出
+	private Button bt_action;//分为 退出圈子，加入圈子，删除圈子三种状态
+	private String from;//来自哪里  1表示来自养家的圈子管理，2表示来自推荐的圈子，3表示来自已经加入的圈子
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -82,7 +85,7 @@ public class CircleInfoActivity extends BaseActivityWithTopView implements
 
 	private void getIntentData() {
 		cricleId = getIntent().getStringExtra("circleId");
-
+		from = getIntent().getStringExtra("from");
 	}
 
 	private void initView() {
@@ -93,6 +96,8 @@ public class CircleInfoActivity extends BaseActivityWithTopView implements
 				finish();
 			}
 		});
+		imageView1 = getView(R.id.imageView1);
+		imageView2 = getView(R.id.imageView2);
 		gv_circle = getView(R.id.gv_circle);
 		riv_circle_head = getView(R.id.riv_circle_head);
 		tv_top_title_below = getView(R.id.tv_top_title_below);
@@ -100,8 +105,8 @@ public class CircleInfoActivity extends BaseActivityWithTopView implements
 		tv_cirlce_name_title = getView(R.id.tv_cirlce_name_title);
 		tv_circle_title = getView(R.id.tv_circle_title);
 		tv_circle_name = getView(R.id.tv_circle_name);
-		bt_delete_or_exit = getView(R.id.bt_delete_or_exit);
-		bt_delete_or_exit.setOnClickListener(this);
+		bt_action = getView(R.id.bt_action);
+		bt_action.setOnClickListener(this);
 		rl_head = getView(R.id.rl_head);
 		rl_head.setOnClickListener(this);
 		rl_circle_name = getView(R.id.rl_circle_name);
@@ -115,6 +120,16 @@ public class CircleInfoActivity extends BaseActivityWithTopView implements
 		FontManager.changeFonts(mContext, tv_cirlce_head_title,
 				tv_cirlce_name_title, tv_circle_title, tv_circle_name);
 
+	}
+	
+	
+	/**
+	 * 设置可见或者不可见
+	 * @param isVisible
+	 */
+	private void setVisibleState(boolean isVisible){
+		imageView1.setVisibility(isVisible?View.VISIBLE:View.INVISIBLE);
+		imageView2.setVisibility(isVisible?View.VISIBLE:View.INVISIBLE);
 	}
 
 	@Override
@@ -133,10 +148,12 @@ public class CircleInfoActivity extends BaseActivityWithTopView implements
 			startActivityForResult(modifyCircleNameIntent,
 					Constants.REQUESTCODE);
 			break;
-		case R.id.bt_delete_or_exit://删除过退出
-			if("删除圈子".equals(bt_delete_or_exit.getText().toString().trim())){
+		case R.id.bt_action:
+			if("删除圈子".equals(bt_action.getText().toString().trim())){
 				deleteCircle();
-			}else if("退出圈子".equals(bt_delete_or_exit.getText().toString().trim())){
+			}else if("退出圈子".equals(bt_action.getText().toString().trim())){
+				
+			}else if("加入圈子".equals(bt_action.getText().toString().trim())){
 				
 			}
 			break;
