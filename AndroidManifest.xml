@@ -234,7 +234,7 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.shenma.yueba.yangjia.activity.HuoKuanManagerActivity2"
+            android:name="com.shenma.yueba.yangjia.activity.HuoKuanManagerActivity"
             android:screenOrientation="portrait" >
         </activity>
         <activity
