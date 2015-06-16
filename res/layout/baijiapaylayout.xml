@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <include 
+        layout="@layout/title_for_common"
+        />
+
+    <ListView 
+        android:layout_marginTop="@dimen/shop_main_lineheight10_dimen"
+        android:id="@+id/baijiapay_layout_paytype_listview"
+        android:dividerHeight="@dimen/shop_main_lineheight10_dimen"
+        android:divider="@color/color_transparent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+</LinearLayout>
