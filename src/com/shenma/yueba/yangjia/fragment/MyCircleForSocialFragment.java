@@ -63,6 +63,7 @@ public class MyCircleForSocialFragment extends BaseFragment {
 					long arg3) {
 				Intent intent = new Intent(getActivity(),CircleInfoActivity.class);
 				intent.putExtra("circleId", mList.get(pos-1).getId());
+				intent.putExtra("from", "1");//1表示来自养家中的圈子管理
 				getActivity().startActivityForResult(intent, Constants.REQUESTCODE);
 			}
 		});
