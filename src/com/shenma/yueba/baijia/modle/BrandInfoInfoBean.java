@@ -1,6 +1,8 @@
 package com.shenma.yueba.baijia.modle;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**  
  * @author gyj  
@@ -10,54 +12,47 @@ import java.io.Serializable;
 
 public class BrandInfoInfoBean implements Serializable{
 
-	int id;// 品牌编号,
-    String name="";//中文名称,
-    String englishname="";//EnglishName,
-    String description="";//描述,
-    String logo="";//LOGO,
-    String website="";// 网站,
-    String group="";//品牌名首字母，检索使用
-	public int getId() {
-		return id;
+	List<BrandInfoInfo> items=new ArrayList<BrandInfoInfo>();
+	int pageindex;
+    int pagesize;
+    int totalcount;
+    int totalpaged;
+    boolean ispaged=false;
+	public List<BrandInfoInfo> getItems() {
+		return items;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setItems(List<BrandInfoInfo> items) {
+		this.items = items;
 	}
-	public String getName() {
-		return name;
+	public int getPageindex() {
+		return pageindex;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setPageindex(int pageindex) {
+		this.pageindex = pageindex;
 	}
-	public String getEnglishname() {
-		return englishname;
+	public int getPagesize() {
+		return pagesize;
 	}
-	public void setEnglishname(String englishname) {
-		this.englishname = englishname;
+	public void setPagesize(int pagesize) {
+		this.pagesize = pagesize;
 	}
-	public String getDescription() {
-		return description;
+	public int getTotalcount() {
+		return totalcount;
 	}
-	public void setDescription(String description) {
-		this.description = description;
+	public void setTotalcount(int totalcount) {
+		this.totalcount = totalcount;
 	}
-	public String getLogo() {
-		return logo;
+	public int getTotalpaged() {
+		return totalpaged;
 	}
-	public void setLogo(String logo) {
-		this.logo = logo;
+	public void setTotalpaged(int totalpaged) {
+		this.totalpaged = totalpaged;
 	}
-	public String getWebsite() {
-		return website;
+	public boolean isIspaged() {
+		return ispaged;
 	}
-	public void setWebsite(String website) {
-		this.website = website;
+	public void setIspaged(boolean ispaged) {
+		this.ispaged = ispaged;
 	}
-	public String getGroup() {
-		return group;
-	}
-	public void setGroup(String group) {
-		this.group = group;
-	}
-
+	
 }

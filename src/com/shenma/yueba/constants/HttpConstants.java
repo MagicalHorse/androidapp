@@ -121,7 +121,7 @@ public class HttpConstants {
 	/**
 	 * 获取品牌信息详细
 	 */
-	public static String METHOD_BRANDMANAGEER_DETAIL = BRAND + "Detail";
+	public static String METHOD_BRANDMANAGEER_DETAIL = PRODUCT + "GetProductListByBrandId";
 
 	/**
 	 * 获取品牌列表

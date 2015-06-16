@@ -19,12 +19,14 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshGridView;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.modle.BrandInfoInfo;
 import com.shenma.yueba.baijia.modle.BrandInfoInfoBean;
-import com.shenma.yueba.baijia.modle.RequestBaiJiaOrderListInfoBean;
 import com.shenma.yueba.baijia.modle.RequestBrandInfoInfoBean;
 import com.shenma.yueba.constants.Constants;
+import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
+import com.shenma.yueba.util.ToolsUtil;
 
 /**  
  * @author gyj  
@@ -40,7 +42,7 @@ int currPage=Constants.CURRPAGE_VALUE;
 int pageSize=Constants.PAGESIZE_VALUE;
 boolean showDialog=true;
 int BrandId=-1;
-List<Object> object_list=new ArrayList<Object>();
+List<BrandInfoInfo> object_list=new ArrayList<BrandInfoInfo>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,18 +53,20 @@ List<Object> object_list=new ArrayList<Object>();
 		httpControl=new HttpControl();
 		BrandId=this.getIntent().getIntExtra("BRANDID", -1);
 		MyApplication.getInstance().addActivity(this);
-		/*if(BrandId<0)
+		if(BrandId<0)
 		{
 			MyApplication.getInstance().showMessage(BaijiaBrandListActivity.this, "数据错误");
 			finish();
 			return;
-		}*/
+		}
 		initView();
+		requestFalshData();
 	}
 	
 	void initView()
 	{
 		setTitle("品牌");
+		FontManager.changeFonts(mContext,tv_top_title);
 		setLeftTextView(new OnClickListener() {
 			
 			@Override
@@ -77,7 +81,9 @@ List<Object> object_list=new ArrayList<Object>();
 
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,long arg3) {
+				BrandInfoInfo brandInfoInfo=object_list.get(arg2);
 				Intent intent=new Intent(BaijiaBrandListActivity.this,ApproveBuyerDetailsActivity.class);
+				intent.putExtra("productID", brandInfoInfo.getProductId());
 				startActivity(intent);
 			}
 		});
@@ -115,15 +121,20 @@ List<Object> object_list=new ArrayList<Object>();
 				holder=new Holder();
 				holder.imageview=new ImageView(BaijiaBrandListActivity.this);
 				holder.imageview.setScaleType(ScaleType.FIT_CENTER);
-				holder.imageview.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT,AbsListView.LayoutParams.MATCH_PARENT));
+				//AbsListView.LayoutParams params=new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT,AbsListView.LayoutParams.MATCH_PARENT);
+				AbsListView.LayoutParams params=new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT,BaijiaBrandListActivity.this.getResources().getDimensionPixelSize(R.dimen.shop_main_width150_dimen));
+				holder.imageview.setLayoutParams(params);
+				holder.imageview.setBackgroundResource(R.drawable.back_background);
+				//holder.imageview.setBackgroundResource(R.color.white);
+				holder.imageview.setPadding(10, 5, 10, 5);
 				convertView=holder.imageview;
 				convertView.setTag(holder);
 			}else
 			{
 				holder=(Holder)convertView.getTag();
 			}
-		
-			initPic("", holder.imageview);
+			BrandInfoInfo bean=object_list.get(position);
+			initPic(ToolsUtil.getImage(ToolsUtil.nullToString(bean.getPic()), 320, 0), holder.imageview);
 			return convertView;
 		}
 		
@@ -161,19 +172,16 @@ List<Object> object_list=new ArrayList<Object>();
 			@Override
 			public void http_Success(Object obj) {
 			brandlist_layout_pullTorefreshgridview.onRefreshComplete();
-			if(obj!=null && obj instanceof RequestBaiJiaOrderListInfoBean)
+			if(obj!=null && obj instanceof RequestBrandInfoInfoBean)
 			{
-				for(int i=0;i<10;i++)
-				{
-					object_list.add(null);
-				}
+				
 				RequestBrandInfoInfoBean bean=(RequestBrandInfoInfoBean)obj;
-				List<BrandInfoInfoBean> brandInfoInfoBean_list=bean.getData();
+				
 				if (bean != null) {
 					int totalPage = bean.getTotalpaged();
 					if(currPage==1)
 					{
-						if(bean.getData()==null || bean.getData().size()==0)
+						if(bean.getData()==null || bean.getData().getItems()==null)
 					   {
 							MyApplication.getInstance().showMessage(BaijiaBrandListActivity.this, "还没有订单");
 							return;
@@ -187,10 +195,10 @@ List<Object> object_list=new ArrayList<Object>();
 					}
 					switch (type) {
 					case 0:
-						falshData(object_list);
+						falshData(bean.getData().getItems());
 						break;
 					case 1:
-						addData(object_list);
+						addData(bean.getData().getItems());
 						break;
 					}
 				} else {
@@ -211,7 +219,7 @@ List<Object> object_list=new ArrayList<Object>();
 	/***
 	 * 刷新viewpager数据
 	 * ***/
-	void falshData(List<Object> bean) {
+	void falshData(List<BrandInfoInfo> bean) {
 		currPage++;
 		if(bean==null)
 		{
@@ -234,7 +242,7 @@ List<Object> object_list=new ArrayList<Object>();
 	/***
 	 * 加载数据
 	 * **/
-	void addData(List<Object> bean) {
+	void addData(List<BrandInfoInfo> bean) {
 		currPage++;
 		if(bean==null)
 		{
