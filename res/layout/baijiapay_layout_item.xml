@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/shop_main_width15_dimen" >
+
+        <TextView
+            android:textSize="@dimen/textsize13sp"
+            android:id="@+id/baijiapay_layout_item_textview1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" 
+            />
+
+        <TextView
+            android:textColor="@color/red"
+            android:textSize="@dimen/textsize13sp"
+            android:id="@+id/baijiapay_layout_item_textview2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true" />
+    </RelativeLayout>
+
+    <View style="@style/style_horizontal_line" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/shop_main_width15_dimen" >
+
+        <ImageView
+            android:id="@+id/baijiapay_layout_item_imageview"
+            android:layout_width="@dimen/user_config_iconwidth50_dimen"
+            android:layout_height="@dimen/user_config_iconwidth50_dimen"
+            android:layout_centerVertical="true"
+            android:src="@drawable/default_pic"
+            android:scaleType="fitCenter" />
+
+        <LinearLayout
+            android:layout_marginLeft="@dimen/shop_main_width5_dimen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/baijiapay_layout_item_right_imageview"
+            android:layout_toRightOf="@id/baijiapay_layout_item_imageview"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/baijiapay_layout_item_textview3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/textsize15sp"
+                 />
+
+            <TextView
+                android:id="@+id/baijiapay_layout_item_textview4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/textsize12sp"
+                />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/baijiapay_layout_item_right_imageview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/arrow_right" />
+    </RelativeLayout>
+
+</LinearLayout>
