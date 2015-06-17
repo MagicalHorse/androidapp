@@ -3,15 +3,16 @@ package com.shenma.yueba.yangjia.modle;
 public class AliYunKeyBean {
 
 	
-	private String Key;
+	private String key;
 
 	public String getKey() {
-		return Key;
+		return key;
 	}
 
 	public void setKey(String key) {
-		Key = key;
+		this.key = key;
 	}
-	
+
+
 	
 }

@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -23,6 +24,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.StatFs;
+import android.os.StrictMode;
 import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -38,10 +40,18 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.sdk.android.oss.OSSService;
+import com.alibaba.sdk.android.oss.OSSServiceProvider;
+import com.alibaba.sdk.android.oss.model.AccessControlList;
+import com.alibaba.sdk.android.oss.model.ClientConfiguration;
+import com.alibaba.sdk.android.oss.model.TokenGenerator;
+import com.alibaba.sdk.android.oss.util.OSSToolKit;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.yangjia.modle.AliYunKeyBackBean;
 import com.shenma.yueba.yangjia.modle.AliYunKeyBean;
+import com.umeng.socialize.controller.impl.InitializeController;
+import com.umeng.socialize.media.SinaShareContent;
 
 public class ToolsUtil {
 
@@ -543,7 +553,7 @@ public class ToolsUtil {
 					if(bean!=null && bean.getData()!=null){
 							AliYunKeyBean data = bean.getData();
 							if(data!=null && data.getKey()!=null){
-								String[] keyAndSign = data.getKey().split("||");
+								String[] keyAndSign = data.getKey().split(",");
 								if(keyAndSign!=null && keyAndSign.length==2){
 									String[] keyArr = keyAndSign[0].split("=");
 									String[] signArr = keyAndSign[1].split("=");
@@ -553,6 +563,7 @@ public class ToolsUtil {
 									if(signArr!=null && signArr.length == 2){
 										SharedUtil.setAliYunSign(ctx, ToolsUtil.nullToString(signArr[1]));
 									}
+									initAliOSS(ctx,ToolsUtil.nullToString(keyArr[1]),ToolsUtil.nullToString(signArr[1]));
 							}
 						}else{
 							Toast.makeText(ctx, "阿里云key获取失败", 1000).show();
@@ -568,6 +579,41 @@ public class ToolsUtil {
 		}
 		
 	
+	
+	@SuppressLint("NewApi")
+	public static void initAliOSS(Context ctx,final String key,final String sign) {
+		OSSService ossService = OSSServiceProvider.getService();
+		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+				.permitAll().build();
+		StrictMode.setThreadPolicy(policy);
+		// 初始化设置
+		ossService.setApplicationContext(ctx);
+		ossService.setGlobalDefaultTokenGenerator(new TokenGenerator() { // 设置全局默认加签器
+					@Override
+					public String generateToken(String httpMethod, String md5,
+							String type, String date, String ossHeaders,
+							String resource) {
+
+						String content = httpMethod + "\n" + md5 + "\n" + type
+								+ "\n" + date + "\n" + ossHeaders + resource;
+
+						return OSSToolKit.generateToken(key, sign,
+								content);
+					}
+				});
+		ossService.setGlobalDefaultHostId("oss-cn-beijing.aliyuncs.com");
+		ossService
+				.setCustomStandardTimeWithEpochSec(System.currentTimeMillis() / 1000);
+		ossService.setGlobalDefaultACL(AccessControlList.PUBLIC_READ); // 默认为private
+
+		ClientConfiguration conf = new ClientConfiguration();
+		conf.setConnectTimeout(15 * 1000); // 设置全局网络连接超时时间，默认30s
+		conf.setSocketTimeout(15 * 1000); // 设置全局socket超时时间，默认30s
+		conf.setMaxConnections(50); // 设置全局最大并发网络链接数, 默认50
+		ossService.setClientConfiguration(conf);
+
+	}
+
 	
 	public static void hideSoftKeyboard(Context context, View view) {
 		// 隐藏软键盘

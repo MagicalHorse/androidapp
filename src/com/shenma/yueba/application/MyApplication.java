@@ -71,10 +71,7 @@ public class MyApplication extends Application {
 	private UserRequestBean userRequestBean;
 	private Typeface tf;
 
-	static final String accessKey = "9mtpdwiywiF5yYwV"; // 测试代码没有考虑AK/SK的安全性
-	static final String screctKey = "IfGB5txNXBv0vv7Z5qERPH1Bp4DLtn";
 
-	public static OSSService ossService = OSSServiceProvider.getService();
 
 	@Override
 	public void onCreate() {
@@ -87,41 +84,8 @@ public class MyApplication extends Application {
 		initFaceMap();
 		dbHelper = RoboGuice.getBaseApplicationInjector(this).getInstance(
 				DBHelper.class);
-		initAliOSS();
 	}
 
-	@SuppressLint("NewApi")
-	private void initAliOSS() {
-		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
-				.permitAll().build();
-		StrictMode.setThreadPolicy(policy);
-		// 初始化设置
-		ossService.setApplicationContext(this.getApplicationContext());
-		ossService.setGlobalDefaultTokenGenerator(new TokenGenerator() { // 设置全局默认加签器
-					@Override
-					public String generateToken(String httpMethod, String md5,
-							String type, String date, String ossHeaders,
-							String resource) {
-
-						String content = httpMethod + "\n" + md5 + "\n" + type
-								+ "\n" + date + "\n" + ossHeaders + resource;
-
-						return OSSToolKit.generateToken(accessKey, screctKey,
-								content);
-					}
-				});
-		ossService.setGlobalDefaultHostId("oss-cn-beijing.aliyuncs.com");
-		ossService
-				.setCustomStandardTimeWithEpochSec(System.currentTimeMillis() / 1000);
-		ossService.setGlobalDefaultACL(AccessControlList.PUBLIC_READ); // 默认为private
-
-		ClientConfiguration conf = new ClientConfiguration();
-		conf.setConnectTimeout(15 * 1000); // 设置全局网络连接超时时间，默认30s
-		conf.setSocketTimeout(15 * 1000); // 设置全局socket超时时间，默认30s
-		conf.setMaxConnections(50); // 设置全局最大并发网络链接数, 默认50
-		ossService.setClientConfiguration(conf);
-
-	}
 
 	public static MyApplication getInstance() {
 		if (instance == null) {
