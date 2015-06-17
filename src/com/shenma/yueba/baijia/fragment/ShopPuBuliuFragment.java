@@ -172,9 +172,9 @@ HttpControl httpControl=new HttpControl();
 	void refreshLoading()
 	{
 		View v=getActivity().findViewById(R.id.shop_main_layout_title_pulltorefreshscrollview);
-		if(v!=null && v instanceof PullToRefreshScrollView )
+		/*if(v!=null && v instanceof PullToRefreshScrollView )
 		{
 		   ((PullToRefreshScrollView)v).setRefreshing();
-		}
+		}*/
 	}
 }
