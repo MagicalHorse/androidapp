@@ -12,6 +12,7 @@
     <dimen name="shop_main_width2_dimen">2dp</dimen>
     <dimen name="shop_main_width1_dimen">1dp</dimen>
     <dimen name="shop_main_marginleft30_dimen">30dp</dimen>
+    <dimen name="shop_main_marginleft35_dimen">35dp</dimen>
     <dimen name="shop_main_width20_dimen">20dp</dimen>
     <dimen name="shop_main_width25_dimen">25dp</dimen>
     <dimen name="shop_main_width15_dimen">15dp</dimen>

@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -31,7 +30,6 @@ import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.RoundImageView;
-import com.shenma.yueba.view.imageshow.CustomImageView;
 /*****
  * 本类定义 店铺商品首页显示页面 
  * 1.显示商家logo  名称  地址   店铺描述 以及 商品图片等信息
@@ -46,9 +44,9 @@ public class ShopMainActivity extends FragmentActivity {
     //商场名称
     TextView shop_main_layout_market_textview;
     //私聊按钮
-    ImageButton shop_main_siliao_imagebutton;
+    TextView shop_main_siliao_imagebutton;
     //关注按钮
-    ImageButton shop_main_attention_imagebutton;
+    TextView  shop_main_attention_imagebutton;
     //关注 值
     TextView shop_main_attentionvalue_textview;
     //粉丝值
@@ -125,14 +123,11 @@ public class ShopMainActivity extends FragmentActivity {
 		shop_main_layout_icon_imageview=(RoundImageView)findViewById(R.id.shop_main_layout_icon_imageview);
 		shop_main_layout_name_textview=(TextView)findViewById(R.id.shop_main_layout_name_textview);
 		shop_main_layout_market_textview=(TextView)findViewById(R.id.shop_main_layout_market_textview);
-		shop_main_siliao_imagebutton=(ImageButton)findViewById(R.id.shop_main_siliao_imagebutton); 
-		shop_main_attention_imagebutton=(ImageButton)findViewById(R.id.shop_main_attention_imagebutton); 
+		shop_main_siliao_imagebutton=(TextView)findViewById(R.id.shop_main_siliao_imagebutton); 
+		shop_main_attention_imagebutton=(TextView)findViewById(R.id.shop_main_attention_imagebutton); 
 		shop_main_attentionvalue_textview=(TextView)findViewById(R.id.shop_main_attentionvalue_textview); 
-		shop_main_attentionvalue_textview.setText("886");
 		shop_main_fansvalue_textview=(TextView)findViewById(R.id.shop_main_fansvalue_textview); 
-		shop_main_fansvalue_textview.setText("4883");
 		shop_main_praisevalue_textview=(TextView)findViewById(R.id.shop_main_praisevalue_textview); 
-		shop_main_praisevalue_textview.setText("456");
 		shap_main_description1_textview=(TextView)findViewById(R.id.shap_main_description1_textview); 
 		shap_main_description2_textview=(TextView)findViewById(R.id.shap_main_description2_textview); 
 		shap_main_description3_textview=(TextView)findViewById(R.id.shap_main_description3_textview); 
@@ -143,7 +138,7 @@ public class ShopMainActivity extends FragmentActivity {
 		TextView shop_main_attention_textview=(TextView)findViewById(R.id.shop_main_attention_textview);
 		TextView shop_main_fans_textview=(TextView)findViewById(R.id.shop_main_fans_textview);
 		TextView shop_main_praise_textview=(TextView)findViewById(R.id.shop_main_praise_textview);
-		FontManager.changeFonts(ShopMainActivity.this, shop_main_layout_name_textview,shop_main_layout_market_textview,shop_main_attentionvalue_textview,shop_main_fansvalue_textview,shop_main_praisevalue_textview,shap_main_description1_textview,shap_main_description2_textview,shap_main_description3_textview,shop_main_attention_textview,shop_main_fans_textview,shop_main_praise_textview);
+		FontManager.changeFonts(ShopMainActivity.this, shop_main_layout_name_textview,shop_main_layout_market_textview,shop_main_attentionvalue_textview,shop_main_fansvalue_textview,shop_main_praisevalue_textview,shap_main_description1_textview,shap_main_description2_textview,shap_main_description3_textview,shop_main_attention_textview,shop_main_fans_textview,shop_main_praise_textview,shop_main_attention_imagebutton,shop_main_siliao_imagebutton);
 	}
 	
 	
@@ -240,12 +235,21 @@ public class ShopMainActivity extends FragmentActivity {
      * ***/
     void onRefresh()
     {
-    	if(fragmentBean_list.get(currId)!=null)
-    	{
-    		//shop_main_layout_title_pulltorefreshscrollview.setRefreshing();
-    		ShopPuBuliuFragment fragment=(ShopPuBuliuFragment)fragmentBean_list.get(currId).getFragment();
-    		fragment.onPuBuliuRefersh();
-    	}
+    	if(fragmentBean_list!=null && fragmentBean_list.size()>0 && fragmentBean_list.size()>currId)
+		{
+			if(fragmentBean_list.get(currId).getFragment()!=null && fragmentBean_list.get(currId).getFragment() instanceof ShopPuBuliuFragment)
+			{
+				ShopPuBuliuFragment fragment=(ShopPuBuliuFragment)fragmentBean_list.get(currId).getFragment();
+        		fragment.onPuBuliuRefersh();
+			}else
+			{
+				shop_main_layout_title_pulltorefreshscrollview.onRefreshComplete();
+			}
+			
+		}else
+		{
+			shop_main_layout_title_pulltorefreshscrollview.onRefreshComplete();
+		}
     }
     
     /******
@@ -253,11 +257,21 @@ public class ShopMainActivity extends FragmentActivity {
      * ***/
     void onAddData()
     {
-    	if(fragmentBean_list.get(currId)!=null)
+    	
+    	if(fragmentBean_list!=null && fragmentBean_list.size()>0 && fragmentBean_list.size()>currId)
+		{
+			if(fragmentBean_list.get(currId).getFragment()!=null && fragmentBean_list.get(currId).getFragment() instanceof ShopPuBuliuFragment)
+			{
+				ShopPuBuliuFragment fragment=(ShopPuBuliuFragment)fragmentBean_list.get(currId).getFragment();
+				fragment.onPuBuliuaddData();
+			}else
+			{
+				shop_main_layout_title_pulltorefreshscrollview.onRefreshComplete();
+			}
+			
+		}else
     	{
-    		//shop_main_layout_title_pulltorefreshscrollview.setRefreshing();
-    		ShopPuBuliuFragment fragment=(ShopPuBuliuFragment)fragmentBean_list.get(currId).getFragment();
-    		fragment.onPuBuliuaddData();
+    		shop_main_layout_title_pulltorefreshscrollview.onRefreshComplete();
     	}
     }
     
@@ -301,7 +315,7 @@ public class ShopMainActivity extends FragmentActivity {
 			@Override
 			public void http_Fails(int error, String msg) {
 				MyApplication.getInstance().showMessage(ShopMainActivity.this, msg);
-				ShopMainActivity.this.finish();
+				//ShopMainActivity.this.finish();
 			}
 		}, ShopMainActivity.this);
     }
