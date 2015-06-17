@@ -57,7 +57,7 @@ public class TastRewardAdapter extends BaseAdapterWithUtil {
 		}
 		holder.tv_board_reward.setText(ToolsUtil.nullToString(mList.get(position).getName()));
 		holder.tv_progress.setText(ToolsUtil.nullToString(mList.get(position).getTip()));
-		bitmapUtils.display(holder.iv, mList.get(position).getIcom());
+		bitmapUtils.display(holder.iv, mList.get(position).getIcon());
 		return convertView;
 	}
 	

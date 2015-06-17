@@ -98,10 +98,6 @@
          android:layout_height="wrap_content"
          layout="@layout/mefragmentforseller_config_layout_item"  />
      
-     
-     
-     
-     
      <TextView 
          android:id="@+id/tv_about"
          android:layout_marginTop="15dip"
