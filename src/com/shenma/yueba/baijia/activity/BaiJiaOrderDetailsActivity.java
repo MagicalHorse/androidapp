@@ -129,7 +129,7 @@ BaijiaOrderDetailsAdapter baijiaOrderDetailsAdapter;
 					long arg3) {
 				if(obj_list.size()>0)
 				{
-					BaiJiaOrdeDetailsInfoBean bean=obj_list.get(arg2-1);
+					BaiJiaOrdeDetailsInfoBean bean=obj_list.get(arg2);
 					Intent intent=new Intent(BaiJiaOrderDetailsActivity.this,ApproveBuyerDetailsActivity.class);
 					intent.putExtra("productID", bean.getProductId());
 					startActivity(intent);

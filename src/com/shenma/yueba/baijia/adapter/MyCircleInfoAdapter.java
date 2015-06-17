@@ -29,25 +29,21 @@ import com.shenma.yueba.yangjia.activity.CircleInvitectivity;
 import com.shenma.yueba.yangjia.activity.ModifyCircleNameActivity;
 import com.shenma.yueba.yangjia.modle.Users;
 
-public class MyCircleInfoAdapter extends BaseAdapterWithUtil{
+public class MyCircleInfoAdapter extends BaseAdapterWithUtil {
 	private Context ctx;
 	private boolean showDelete;
 	private List<Users> mList = new ArrayList<Users>();
 	private String circleId;
-	boolean IsOwer=false;// 是否为创建者
-	public MyCircleInfoAdapter(Context ctx,List<Users> mList,String cirlceId,boolean IsOwer) {
+	boolean IsOwer = false;// 是否为创建者
+
+	public MyCircleInfoAdapter(Context ctx, List<Users> mList, String cirlceId,
+			boolean IsOwer) {
 		super(ctx);
 		this.circleId = cirlceId;
 		this.mList = mList;
 		this.ctx = ctx;
-		this.IsOwer=IsOwer;
+		this.IsOwer = IsOwer;
 	}
-
-	
-	
-	
-
-
 
 	public int getCount() {
 		// TODO Auto-generated method stub
@@ -69,132 +65,144 @@ public class MyCircleInfoAdapter extends BaseAdapterWithUtil{
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		final Holder holder;
-		if(convertView == null){
+		if (convertView == null) {
 			holder = new Holder();
 			convertView = View.inflate(ctx, R.layout.grid_item, null);
-			holder.riv_head = (RoundImageView) convertView.findViewById(R.id.riv_head);
+			holder.riv_head = (RoundImageView) convertView
+					.findViewById(R.id.riv_head);
 			holder.tv_text = (TextView) convertView.findViewById(R.id.tv_text);
-			holder.iv_delete = (ImageView) convertView.findViewById(R.id.iv_delete);
+			holder.iv_delete = (ImageView) convertView
+					.findViewById(R.id.iv_delete);
 			FontManager.changeFonts(ctx, holder.tv_text);
 			convertView.setTag(holder);
-		}else{
+		} else {
 			holder = (Holder) convertView.getTag();
 		}
-		
-		if(position == mList.size()-2){
-			if(IsOwer)
-			{
-				holder.riv_head.setVisibility(View.VISIBLE);
-				holder.tv_text.setVisibility(View.VISIBLE);
-			}else
-			{
-				holder.riv_head.setVisibility(View.GONE);
-				holder.tv_text.setVisibility(View.GONE);
+
+		if (IsOwer) {
+
+			if (position == mList.size() - 2) {
+				holder.riv_head.setBackgroundResource(R.drawable.plus);
+				holder.tv_text.setText("邀请好友");
+
+			} else if (position == mList.size() - 1) {
+				holder.riv_head.setBackgroundResource(R.drawable.reduce);
+				holder.tv_text.setText("删除成员");
 			}
-			holder.riv_head.setBackgroundResource(R.drawable.plus);
-			holder.tv_text.setText("邀请好友");
-			
-		}else if(position == mList.size()-1){
-			//如果是创建者
-			if(IsOwer)
-			{
-				convertView.setVisibility(View.VISIBLE);
-				holder.riv_head.setVisibility(View.VISIBLE);
-				holder.tv_text.setVisibility(View.VISIBLE);
-			}else
-			{
-				convertView.setVisibility(View.GONE);
-				holder.riv_head.setVisibility(View.GONE);
-				holder.tv_text.setVisibility(View.GONE);
-			}
-			holder.riv_head.setBackgroundResource(R.drawable.reduce);
-			holder.tv_text.setText("删除成员");
-		}else{
-			if(showDelete){
-				if(position == 0){
-					holder.iv_delete.setVisibility(View.GONE);
-				}else{
-					holder.iv_delete.setVisibility(View.VISIBLE);
-				}
-			}else{
-				holder.iv_delete.setVisibility(View.GONE);
-			}
-			if(!TextUtils.isEmpty(mList.get(position).getLogo())){
-				MyApplication.getInstance().getImageLoader().displayImage(mList.get(position).getLogo(), holder.riv_head);
-			}else{
-				MyApplication.getInstance().getImageLoader().displayImage("aaa", holder.riv_head);
-			}
-			holder.tv_text.setText(mList.get(position).getNickName());
-		
+
 		}
+
+		//如果显示 删除图标
+		if (showDelete) {
+			if (position == 0) {
+			} else {
+				holder.iv_delete.setVisibility(View.VISIBLE);
+			}
+			if(IsOwer)
+			{
+				if (position == mList.size() - 2) {
+					holder.iv_delete.setVisibility(View.GONE);
+
+				} else if (position == mList.size() - 1) {
+					holder.iv_delete.setVisibility(View.GONE);
+				}
+			}
+			
+		} else {
+			holder.iv_delete.setVisibility(View.GONE);
+		}
+		if (!TextUtils.isEmpty(mList.get(position).getLogo())) {
+			MyApplication
+					.getInstance()
+					.getImageLoader()
+					.displayImage(mList.get(position).getLogo(),
+							holder.riv_head);
+		} else {
+			MyApplication.getInstance().getImageLoader()
+					.displayImage("aaa", holder.riv_head);
+		}
+		holder.tv_text.setText(mList.get(position).getNickName());
+
 		holder.iv_delete.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//删除成员
-				renameCircleName(circleId, mList.get(position).getUserId(), ctx, true);
+				//如果不是创建者 则不响应
+				if(!IsOwer)
+				{
+					return;
+				}
+				// 删除成员
+				renameCircleName(circleId, mList.get(position).getUserId(),
+						ctx, true);
 			}
 		});
 		holder.riv_head.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 
-				//踢出圈子
-				if(position == mList.size()-1){
-					if(showDelete == true){
+				//如果不是创建者 则不响应
+				if(!IsOwer)
+				{
+					return;
+				}
+				// 踢出圈子
+				if (position == mList.size() - 1) {
+					if (showDelete == true) {
 						showDelete = false;
 						notifyDataSetChanged();
-					}else{
+					} else {
 						showDelete = true;
 						notifyDataSetChanged();
 					}
 				}
-			
-				if(position == mList.size()-2){
-					//邀请加入圈子
-					Intent intent = new Intent(ctx,CircleInvitectivity.class);
+
+				if (position == mList.size() - 2) {
+					// 邀请加入圈子
+					Intent intent = new Intent(ctx, CircleInvitectivity.class);
 					intent.putExtra("circleId", circleId);
-					((CircleInfoActivity)ctx).startActivityForResult(intent, Constants.REQUESTCODE);
+					((CircleInfoActivity) ctx).startActivityForResult(intent,
+							Constants.REQUESTCODE);
 				}
 			}
 		});
 		return convertView;
 	}
-	
-	class Holder{
+
+	class Holder {
 		RoundImageView riv_head;
 		TextView tv_text;
 		ImageView iv_delete;
 	}
 
-	
-	
-	public void renameCircleName(String circleId, final String userId, final Context ctx,
-			boolean showDialog) {
+	public void renameCircleName(String circleId, final String userId,
+			final Context ctx, boolean showDialog) {
 		HttpControl httpControl = new HttpControl();
-		httpControl.removeCircleMember(circleId, userId, showDialog, new HttpCallBackInterface() {
-			
-			@Override
-			public void http_Success(Object obj) {
+		httpControl.removeCircleMember(circleId, userId, showDialog,
+				new HttpCallBackInterface() {
 
-				BaseRequest result = (BaseRequest) obj;
-				if (200 == result.getStatusCode()) {// 修改成功
-					Toast.makeText(ctx, "删除成功", 1000).show();
-					/*for (int i = 0; i < mList.size(); i++) {
-						if(userId.equals(mList.get(i).getUserId())){
-							mList.remove(i);
-							notifyDataSetChanged();
+					@Override
+					public void http_Success(Object obj) {
+
+						BaseRequest result = (BaseRequest) obj;
+						if (200 == result.getStatusCode()) {// 修改成功
+							Toast.makeText(ctx, "删除成功", 1000).show();
+							/*
+							 * for (int i = 0; i < mList.size(); i++) {
+							 * if(userId.equals(mList.get(i).getUserId())){
+							 * mList.remove(i); notifyDataSetChanged(); } }
+							 */
+							((CircleInfoActivity) ctx).getCircleDetail(
+									MyCircleInfoAdapter.this.circleId, ctx,
+									true);
 						}
-					}*/
-					((CircleInfoActivity)ctx).getCircleDetail(MyCircleInfoAdapter.this.circleId, ctx, true);
-				}
-			}
-			
-			@Override
-			public void http_Fails(int error, String msg) {
-				Toast.makeText(ctx, msg, 1000).show();
-				
-			}
-		}, ctx);
-}
+					}
+
+					@Override
+					public void http_Fails(int error, String msg) {
+						Toast.makeText(ctx, msg, 1000).show();
+
+					}
+				}, ctx);
+	}
 }

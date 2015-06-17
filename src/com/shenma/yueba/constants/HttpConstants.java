@@ -510,6 +510,12 @@ public class HttpConstants {
 	
 	public static String GETORDERLIST = Order+ "GetOrderListByState";
 
+	/**
+	 * 败家 -获取用户信息（新）
+	 */
+	
+	public static String GETUSERINFO = USERURL+ "GetUserInfo";
+	
 	
 	/**
 	 * 败家 -获取订单详情
