@@ -11,7 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:numColumns="4"
-        android:verticalSpacing="@dimen/shop_main_width3_dimen"
-        android:horizontalSpacing="1dp"
+        android:horizontalSpacing="@dimen/shop_main_width5_dimen"
+        android:verticalSpacing="@dimen/shop_main_lineheight10_dimen"
         />
+    
 </LinearLayout>

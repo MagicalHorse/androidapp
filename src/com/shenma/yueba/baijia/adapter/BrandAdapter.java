@@ -54,10 +54,10 @@ public class BrandAdapter extends BaseAdapterWithUtil {
 			holder.brandlist_item_imageview2 = (ImageView) convertView.findViewById(R.id.brandlist_item_imageview2);
 			holder.brandlist_item_imageview3 = (ImageView) convertView.findViewById(R.id.brandlist_item_imageview3);
 			holder.brandlist_item_imageview4 = (ImageView) convertView.findViewById(R.id.brandlist_item_imageview4);
-			holder.brandlist_item_imageview1.setOnClickListener(onClickListener);
+			/*holder.brandlist_item_imageview1.setOnClickListener(onClickListener);
 			holder.brandlist_item_imageview2.setOnClickListener(onClickListener);
 			holder.brandlist_item_imageview3.setOnClickListener(onClickListener);
-			holder.brandlist_item_imageview4.setOnClickListener(onClickListener);
+			holder.brandlist_item_imageview4.setOnClickListener(onClickListener);*/
 			convertView.setTag(holder);
 		}else{
 			holder = (Holder) convertView.getTag();

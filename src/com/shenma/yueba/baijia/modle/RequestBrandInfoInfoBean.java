@@ -11,7 +11,16 @@ import java.util.List;
 
 public class RequestBrandInfoInfoBean extends BaseRequest{
 
-	List<BrandInfoInfoBean> data=new ArrayList<BrandInfoInfoBean>();
+	BrandInfoInfoBean data=new BrandInfoInfoBean();
+	
+	public BrandInfoInfoBean getData() {
+		return data;
+	}
+
+	public void setData(BrandInfoInfoBean data) {
+		this.data = data;
+	}
+
 	int pageindex;
 	int pagesize;
 	int totalcount;
@@ -56,13 +65,5 @@ public class RequestBrandInfoInfoBean extends BaseRequest{
 
 	public void setIspaged(boolean ispaged) {
 		this.ispaged = ispaged;
-	}
-
-	public List<BrandInfoInfoBean> getData() {
-		return data;
-	}
-
-	public void setData(List<BrandInfoInfoBean> data) {
-		this.data = data;
 	}
 }
