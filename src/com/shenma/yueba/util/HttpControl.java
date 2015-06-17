@@ -128,7 +128,7 @@ public class HttpControl {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put(Constants.MOBILE, str.trim());
 		BasehttpSend(map, context, HttpConstants.sendPhoneCode, httpCallBack,
-				BaseRequest.class, true, true);
+				BaseRequest.class, true, false);
 	}
 
 	
@@ -143,7 +143,7 @@ public class HttpControl {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put(Constants.NICKNAME, nickname.trim());
 		BasehttpSend(map, context, HttpConstants.changeNickName, httpCallBack,
-				BaseRequest.class, true, true);
+				BaseRequest.class, true, false);
 	}
 	
 	
@@ -158,7 +158,7 @@ public class HttpControl {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put(Constants.LOGO, logo);
 		BasehttpSend(map, context, HttpConstants.changeUserLogo, httpCallBack,
-				BaseRequest.class, true, true);
+				BaseRequest.class, true, false);
 	}
 	
 	
@@ -181,7 +181,7 @@ public class HttpControl {
 		map.put(Constants.MOBILE, phone.trim());
 		map.put(Constants.CODE, code.trim());
 		BasehttpSend(map, context, HttpConstants.METHOD_VERIFYCODE,
-				httpCallBack, BaseRequest.class, true, true);
+				httpCallBack, BaseRequest.class, true, false);
 	}
 
 	/**
@@ -196,7 +196,7 @@ public class HttpControl {
 	public void getCityList(final HttpCallBackInterface httpCallBack,
 			Context context) {
 		BasehttpSend(null, context, HttpConstants.METHOD_GETCITYLIST,
-				httpCallBack, CityListRequestBean.class, true, true);
+				httpCallBack, CityListRequestBean.class, true, false);
 	}
 
 	/**
@@ -226,7 +226,7 @@ public class HttpControl {
 	public void getAllCityList(final HttpCallBackInterface httpCallBack,
 			Context context) {
 		BasehttpSend(null, context, HttpConstants.METHOD_ALLGETCITYLIST,
-				httpCallBack, ProvinceCityListBeanRequest.class, true, true);
+				httpCallBack, ProvinceCityListBeanRequest.class, true, false);
 	}
 
 	/**
@@ -244,7 +244,7 @@ public class HttpControl {
 		map.put(Constants.PARENTID, parentId);
 		BasehttpSend(map, context,
 				HttpConstants.METHOD_COMMON_GETCITYLISYBYPARENTID,
-				httpCallBack, CityListBackBean.class, true, true);
+				httpCallBack, CityListBackBean.class, true, false);
 	}
 
 	/**
@@ -273,7 +273,7 @@ public class HttpControl {
 		map.put(Constants._PASSWORD, pwd.trim());
 		map.put(Constants.CITYID, Integer.toString(cityId));
 		BasehttpSend(map, context, HttpConstants.METHOD_REGISTER, httpCallBack,
-				UserRequestBean.class, true, true);
+				UserRequestBean.class, true, false);
 	}
 
 	/**
@@ -295,7 +295,7 @@ public class HttpControl {
 		map.put(Constants.MOBILE, phone.trim());
 		map.put(Constants._PASSWORD, password.trim());
 		BasehttpSend(map, context, HttpConstants.METHOD_LOGIN, httpCallBack,
-				UserRequestBean.class, true, true);
+				UserRequestBean.class, true, false);
 	}
 
 	/**
@@ -321,7 +321,7 @@ public class HttpControl {
 		map.put(Constants._PASSWORD, password.trim());
 		map.put(Constants._OLDPASSWORD, oldpassword.trim());
 		BasehttpSend(map, context, HttpConstants.METHOD_UPDATEPWD,
-				httpCallBack, BaseRequest.class, true, true);
+				httpCallBack, BaseRequest.class, true, false);
 	}
 
 	/**
@@ -343,7 +343,7 @@ public class HttpControl {
 		map.put(Constants.MOBILE, phone.trim());
 		map.put(Constants._PASSWORD, password.trim());
 		BasehttpSend(map, context, HttpConstants.METHOD_RESETPASSWORD,
-				httpCallBack, BaseRequest.class, true, true);
+				httpCallBack, BaseRequest.class, true, false);
 	}
 
 	/**
@@ -368,7 +368,7 @@ public class HttpControl {
 		map.put(Constants.PAGESIZE, pageSize);
 		BasehttpSend(map, context, HttpConstants.METHOD_GETUSERFAVOITE,
 				httpCallBack, AttationAndFansListBackBean.class, showDialog,
-				true);
+				false);
 	}
 
 	/**
@@ -390,7 +390,7 @@ public class HttpControl {
 		}
 		basehttpSendToJson(responsejsonstr, null, context,
 				HttpConstants.METHOD_ADDRESSCREATE, httpCallBack,
-				ContactsAddressRequestBean.class, true, true);
+				ContactsAddressRequestBean.class, true, false);
 	}
 
 	/**
@@ -409,7 +409,7 @@ public class HttpControl {
 		String json = "{'Id':" + Id + "}";
 		basehttpSendToJson(json, null, context,
 				HttpConstants.METHOD_ADDRESSCREATE_DETAILS, httpCallBack,
-				ContactsAddressRequestBean.class, true, true);
+				ContactsAddressRequestBean.class, true, false);
 	}
 
 	/**
@@ -428,7 +428,7 @@ public class HttpControl {
 		String json = "{'Id':" + Id + "}";
 		basehttpSendToJson(json, null, context,
 				HttpConstants.METHOD_MYADDRESSCREATE_LIST, httpCallBack,
-				ContactsAddressRequestListBean.class, true, true);
+				ContactsAddressRequestListBean.class, true, false);
 	}
 
 	/**
@@ -447,7 +447,7 @@ public class HttpControl {
 		String json = "{'id':" + Id + "}";
 		basehttpSendToJson(json, null, context,
 				HttpConstants.METHOD_ADDRESSCREATE_DELETE, httpCallBack,
-				BaseRequest.class, true, true);
+				BaseRequest.class, true, false);
 	}
 
 	/**
@@ -470,7 +470,7 @@ public class HttpControl {
 		}
 		basehttpSendToJson(responsejsonstr, null, context,
 				HttpConstants.METHOD_ADDRESSCREATE_UPDATE, httpCallBack,
-				ContactsAddressRequestListBean.class, true, true);
+				ContactsAddressRequestListBean.class, true, false);
 	}
 
 	/**
@@ -489,7 +489,7 @@ public class HttpControl {
 		String json = "{'id':" + Id + "}";
 		basehttpSendToJson(json, null, context,
 				HttpConstants.METHOD_ADDRESSCREATE_DEFAULT, httpCallBack,
-				BaseRequest.class, true, true);
+				BaseRequest.class, true, false);
 	}
 
 	/**
@@ -507,7 +507,7 @@ public class HttpControl {
 			final HttpCallBackInterface httpCallBack, Context context, int Id) {
 		basehttpSendToJson(null, null, context,
 				HttpConstants.METHOD_ADDRESSCREATE_GETDEFAULT, httpCallBack,
-				ContactsAddressRequestBean.class, true, true);
+				ContactsAddressRequestBean.class, true, false);
 	}
 
 	/**
@@ -526,7 +526,7 @@ public class HttpControl {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put(Constants.BRANDID, BrandId + "");
 		BasehttpSend(map, context, HttpConstants.METHOD_BRANDMANAGEER_DETAIL,
-				httpCallBack, BrandDetailInfoBean.class, true, true);
+				httpCallBack, BrandDetailInfoBean.class, true, false);
 	}
 
 	/**
@@ -546,7 +546,7 @@ public class HttpControl {
 		map.put(Constants.TYPE, type);
 		map.put(Constants.REFRESHTS, refreshts);
 		BasehttpSend(map, context, HttpConstants.METHOD_BRANDMANAGEER_ALL,
-				httpCallBack, BrandDetailInfoBean.class, true, true);
+				httpCallBack, BrandDetailInfoBean.class, true, false);
 	}
 
 	/**
@@ -565,7 +565,7 @@ public class HttpControl {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put(Constants.REFRESHTS, refreshts);
 		BasehttpSend(map, context, HttpConstants.METHOD_BRANDMANAGEER_REFRESH,
-				httpCallBack, BrandDetailInfoBean.class, true, true);
+				httpCallBack, BrandDetailInfoBean.class, true, false);
 	}
 
 	/**
@@ -672,7 +672,7 @@ public class HttpControl {
 		}
 		basehttpSendToJson(responsejsonstr, null, context,
 				HttpConstants.METHOD_BUYER_CREATE_AUTH_BUYER, httpCallBack,
-				BaseRequest.class, true, true);
+				BaseRequest.class, true, false);
 	}
 
 	
@@ -775,7 +775,7 @@ public class HttpControl {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("Id", Long.toString(productId));
 		map.put("Status", Integer.toString(Status));
-		BasehttpSend(map, context, HttpConstants.METHOD_PRODUCTMANAGER_FAVOR,httpCallBack, BaseRequest.class, true, true);
+		BasehttpSend(map, context, HttpConstants.METHOD_PRODUCTMANAGER_FAVOR,httpCallBack, BaseRequest.class, true, false);
 	}
 
 
@@ -792,7 +792,7 @@ public class HttpControl {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("Id", Integer.toString(productId));
 		map.put("Status", Integer.toString(Status));
-		BasehttpSend(map, context, HttpConstants.METHOD_PRODUCTMANAGER_LIKE,httpCallBack, BaseRequest.class, true, true);
+		BasehttpSend(map, context, HttpConstants.METHOD_PRODUCTMANAGER_LIKE,httpCallBack, BaseRequest.class, true, false);
 	}
 
 	/**
@@ -888,7 +888,7 @@ public class HttpControl {
 		map.put(Constants.PAGESIZE, Integer.toString(pagesize));
 		BasehttpSend(map, context,
 				HttpConstants.METHOD_PRODUCTMANAGER_LIKEDUSERS, httpCallBack,
-				BaseRequest.class, true, true);
+				BaseRequest.class, true, false);
 	}
 
 	/**
@@ -911,7 +911,7 @@ public class HttpControl {
 		map.put(Constants.PAGESIZE, Integer.toString(pagesize));
 		BasehttpSend(map, context,
 				HttpConstants.METHOD_PRODUCTMANAGER_MYBUYERPRODUCTLIST,
-				httpCallBack, BaseRequest.class, true, true);
+				httpCallBack, BaseRequest.class, true, false);
 	}
 
 	/**
@@ -932,7 +932,7 @@ public class HttpControl {
 		map.put("UserId", ToolsUtil.nullToString(SharedUtil
 				.getStringPerfernece(context, SharedUtil.user_id)));
 		BasehttpSend(map, context, HttpConstants.METHOD_PRODUCTMANAGER_DETAIL,
-				httpCallBack, RequestProductDetailsInfoBean.class, true, true);
+				httpCallBack, RequestProductDetailsInfoBean.class, true, false);
 	}
 
 	/**
@@ -956,7 +956,7 @@ public class HttpControl {
 		}
 		basehttpSendToJson(responsejsonstr, null, context,
 				HttpConstants.METHOD_PRODUCTMANAGER_CREATE, httpCallBack,
-				RequestUploadProductInfoBean.class, true, true);
+				RequestUploadProductInfoBean.class, true, false);
 	}
 
 	/**
@@ -980,7 +980,7 @@ public class HttpControl {
 		}
 		basehttpSendToJson(responsejsonstr, null, context,
 				HttpConstants.METHOD_PRODUCTMANAGER_UPDATE, httpCallBack,
-				RequestUploadProductInfoBean.class, true, true);
+				RequestUploadProductInfoBean.class, true, false);
 	}
 
 	/**
@@ -999,7 +999,7 @@ public class HttpControl {
 		map.put(Constants.STATUS, Status);
 		BasehttpSend(map, context,
 				HttpConstants.METHOD_ORDER_GETALLORDERFORBUYER, httpCallBack,
-				OrderListBackBean.class, showDialog, true);
+				OrderListBackBean.class, showDialog, false);
 	}
 	
 	
@@ -1016,7 +1016,7 @@ public class HttpControl {
 		map.put(Constants.PAGECOUNT,pageCount);
 		map.put(Constants.INCOMESTATUS,incomeStatus);
 		BasehttpSend(map, context, HttpConstants.METHOD_ASSISTANT_GETINCOMEINFO,
-				httpCallBack, IncomeDetailBackBean.class, true, true);
+				httpCallBack, IncomeDetailBackBean.class, true, false);
 	}
 	
 	/**
@@ -1031,7 +1031,7 @@ public class HttpControl {
 		map.put(Constants.PAGECOUNT,pageCount);
 		map.put(Constants.INCOMETRANSFERSTATUS,IncomeTransferStatus);
 		BasehttpSend(map, context, HttpConstants.METHOD_ASSISTANT_GETINCOMEHISTORY,
-				httpCallBack, IncomeHistoryBackBean.class, true, true);
+				httpCallBack, IncomeHistoryBackBean.class, true, false);
 	}
 	
 	/**
@@ -1044,7 +1044,7 @@ public class HttpControl {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put(Constants.AMOUNT, amount);
 		BasehttpSend(map, context, HttpConstants.METHOD_ASSISTANT_INCOMEREQUESTREDPACK,
-				httpCallBack, IncomeHistoryBackBean.class, true, true);
+				httpCallBack, IncomeHistoryBackBean.class, true, false);
 	}
 	
 	
@@ -1060,7 +1060,7 @@ public class HttpControl {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put(Constants.ORDER_NO, orderNo);
 		BasehttpSend(map, context, HttpConstants.METHOD_ORDER_GETORDERDETAIL,
-				httpCallBack, OrderDetailBackBean.class, true, true);
+				httpCallBack, OrderDetailBackBean.class, true, false);
 	}
 
 	/**
@@ -1074,7 +1074,7 @@ public class HttpControl {
 		map.put(Constants.PAGE, Integer.toString(page));
 		map.put(Constants.PAGESIZE, Constants.PageSize);
 		BasehttpSend(map, context, HttpConstants.METHOD_CIRCLE_GETBUYERGROUPS,
-				httpCallBack, CircleListBackBean.class, showDialog, true);
+				httpCallBack, CircleListBackBean.class, showDialog, false);
 	}
 
 	/**
@@ -1088,7 +1088,7 @@ public class HttpControl {
 		map.put(Constants.GROUPID, groupid);
 		BasehttpSend(map, context,
 				HttpConstants.METHOD_CIRCLE_GETBUYERGROUPDETAIL, httpCallBack,
-				CircleDetailBackBean.class, showDialog, true);
+				CircleDetailBackBean.class, showDialog, false);
 	}
 
 	/**
@@ -1103,7 +1103,7 @@ public class HttpControl {
 		map.put(Constants.USERIDSTR, ids);
 		BasehttpSend(map, context,
 				HttpConstants.METHOD_CIRCLE_ADDFANSTOGROUP, httpCallBack,
-				BaseRequest.class, showDialog, true);
+				BaseRequest.class, showDialog, false);
 	}
 	
 	/**
@@ -1118,7 +1118,7 @@ public class HttpControl {
 		map.put(Constants.GROUPID, groupid);
 		map.put(Constants.NAME, name);
 		BasehttpSend(map, context, HttpConstants.METHOD_CIRCLE_RENAMEGROUP,
-				httpCallBack, BaseRequest.class, showDialog, true);
+				httpCallBack, BaseRequest.class, showDialog, false);
 	}
 
 	/**
@@ -1132,7 +1132,7 @@ public class HttpControl {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put(Constants.GROUPID, groupid);
 		BasehttpSend(map, context, HttpConstants.METHOD_CIRCLE_GETVALIDFANSLISTTOGROUP,
-				httpCallBack, FansBackListForInviteCirlce.class, showDialog, true);
+				httpCallBack, FansBackListForInviteCirlce.class, showDialog, false);
 	}
 	
 	
@@ -1148,7 +1148,7 @@ public class HttpControl {
 		map.put(Constants.GROUPID, groupid);
 		map.put(Constants.USERID, userId);
 		BasehttpSend(map, context, HttpConstants.METHOD_CIRCLE_REMOVEGROUPMEMBER,
-				httpCallBack, BaseRequest.class, showDialog, true);
+				httpCallBack, BaseRequest.class, showDialog, false);
 	}
 	/**
 	 * 新建圈子
@@ -1177,6 +1177,32 @@ public class HttpControl {
 		BasehttpSend(map, context, HttpConstants.METHOD_CIRCLE_CHANGEGROUPLOGO,
 				httpCallBack, BaseRequest.class, showDialog, false);
 	}
+	
+	
+	/**
+	 * 加入圈子
+	 * @param groupid int 圈子id
+	 * @return void
+	 * **/ 
+	public void addCircle(String groupid,boolean showDialog,final HttpCallBackInterface httpCallBack, Context context) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put(Constants.GROUPID, groupid);
+		BasehttpSend(map, context, HttpConstants.METHOD_CIRCLE_ADDGROUP,httpCallBack, BaseRequest.class, showDialog, false);
+	}
+	
+	
+	/**
+	 * 退出圈子
+	 * @param groupid int 圈子id
+	 * @return void
+	 * **/ 
+	public void exitCircle(String groupid,boolean showDialog,final HttpCallBackInterface httpCallBack, Context context) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put(Constants.GROUPID, groupid);
+		BasehttpSend(map, context, HttpConstants.METHOD_CIRCLE_EXITGROUP,httpCallBack, BaseRequest.class, showDialog, false);
+	}
+	
+	
 	
 	/**
 	 * 删除圈子
@@ -1255,8 +1281,7 @@ public class HttpControl {
 		map.put(Constants.PAGE, Integer.toString(currPage));
 		map.put(Constants.PAGESIZE, Integer.toString(pageSize));
 		map.put("State", Integer.toString(State));
-		BasehttpSend(map, context, HttpConstants.GETORDERLIST, httpCallBack,
-				RequestBaiJiaOrderListInfoBean.class, showDialog, true);
+		BasehttpSend(map, context, HttpConstants.GETORDERLIST, httpCallBack,RequestBaiJiaOrderListInfoBean.class, showDialog, false);
 	}
 	
 	
@@ -1342,7 +1367,7 @@ public class HttpControl {
 		map.put(Constants.PAGE, Integer.toString(currPage));
 		map.put(Constants.PAGESIZE, Integer.toString(pageSize));
 		BasehttpSend(map, context, HttpConstants.GETBRANDPRODUCTLIST,
-				httpCallBack, RequestBrandInfoBean.class, showDialog, true);
+				httpCallBack, RequestBrandInfoBean.class, showDialog, false);
 	}
 
 	/**
@@ -1365,7 +1390,7 @@ public class HttpControl {
 		map.put("CityId", Integer.toString(CityId));
 		BasehttpSend(map, context, HttpConstants.GETCITYPRODUCTLIST,
 				httpCallBack, RequestBrandCityWideInfoBean.class, showDialog,
-				true);
+				false);
 	}
 	
 	
@@ -1387,7 +1412,7 @@ public class HttpControl {
 		map.put(Constants.PAGESIZE, Integer.toString(pageSize));
 		map.put("BrandId", Integer.toString(BrandId));
 		BasehttpSend(map, context, HttpConstants.METHOD_BRANDMANAGEER_DETAIL, httpCallBack,
-				RequestBrandInfoInfoBean.class, showDialog, true);
+				RequestBrandInfoInfoBean.class, showDialog, false);
 	}
 	
 	
@@ -1406,7 +1431,7 @@ public class HttpControl {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put(Constants.PAGE, Integer.toString(currPage));
 		map.put(Constants.PAGESIZE, Integer.toString(pageSize));
-		BasehttpSend(map, context, HttpConstants.GETMYFAVORITEPRODUCTLIST,httpCallBack, RequestMyFavoriteProductListInfoBean.class, showDialog,true);
+		BasehttpSend(map, context, HttpConstants.GETMYFAVORITEPRODUCTLIST,httpCallBack, RequestMyFavoriteProductListInfoBean.class, showDialog,false);
 	}
 	
 	
@@ -1424,7 +1449,7 @@ public class HttpControl {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("FavoriteId", Integer.toString(favoriteId));
 		map.put("Status", Integer.toString(Status));
-		BasehttpSend(map, context, HttpConstants.SETFAVOITE,httpCallBack, BaseRequest.class, true, true);
+		BasehttpSend(map, context, HttpConstants.SETFAVOITE,httpCallBack, BaseRequest.class, true, false);
 	}
 	
 	

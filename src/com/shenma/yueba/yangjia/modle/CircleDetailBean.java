@@ -7,6 +7,24 @@ public class CircleDetailBean {
 	private String GroupName;
 	private String GroupPic;
 	private String MemberCount;
+	boolean IsOwer=false; // 是否为创建者
+	boolean IsMember=false; // 是否已经加入圈子
+
+	public boolean isIsOwer() {
+		return IsOwer;
+	}
+
+	public void setIsOwer(boolean isOwer) {
+		IsOwer = isOwer;
+	}
+
+	public boolean isIsMember() {
+		return IsMember;
+	}
+
+	public void setIsMember(boolean isMember) {
+		IsMember = isMember;
+	}
 
 	private List<Users> Users;
 

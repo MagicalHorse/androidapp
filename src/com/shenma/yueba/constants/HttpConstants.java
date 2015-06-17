@@ -433,6 +433,17 @@ public class HttpConstants {
 	public static String METHOD_CIRCLE_DELETEGROUP = Circle
 			+ "DeleteGroup";
 	 
+	/**
+	 * 败家--加入圈子
+	 */
+	
+	public static String METHOD_CIRCLE_ADDGROUP = Circle+ "JoinGroup";
+	
+	/**
+	 * 败家--退出圈子
+	 */
+	
+	public static String METHOD_CIRCLE_EXITGROUP = Circle+ "ExitGroup";
 	
 	
 	/**
