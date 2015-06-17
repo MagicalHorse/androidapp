@@ -251,8 +251,7 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView impleme
 
 		@Override
 		public void destroyItem(ViewGroup container, int position, Object object) {
-			ImageView imageview = (ImageView) viewlist.get(position
-					% viewlist.size());
+			ImageView imageview = (ImageView) viewlist.get(position% viewlist.size());
 			container.removeView(imageview);
 		}
 	}

@@ -49,6 +49,7 @@ import com.shenma.yueba.baijia.modle.RequestMyFavoriteProductListInfoBean;
 import com.shenma.yueba.baijia.modle.RequestProductDetailsInfoBean;
 import com.shenma.yueba.baijia.modle.RequestProductListInfoBean;
 import com.shenma.yueba.baijia.modle.RequestUploadProductInfoBean;
+import com.shenma.yueba.baijia.modle.RequestUserInfoBean;
 import com.shenma.yueba.baijia.modle.ResponseUploadProductInfoBean;
 import com.shenma.yueba.baijia.modle.StoreListBackBean;
 import com.shenma.yueba.baijia.modle.UserInfo;
@@ -1013,7 +1014,7 @@ public class HttpControl {
 			final HttpCallBackInterface httpCallBack, Context context) {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put(Constants.PAGE,page+"");
-		map.put(Constants.PAGECOUNT,pageCount);
+		map.put(Constants.PAGESIZE,pageCount);
 		map.put(Constants.INCOMESTATUS,incomeStatus);
 		BasehttpSend(map, context, HttpConstants.METHOD_ASSISTANT_GETINCOMEINFO,
 				httpCallBack, IncomeDetailBackBean.class, true, false);
@@ -1028,7 +1029,7 @@ public class HttpControl {
 			final HttpCallBackInterface httpCallBack, Context context) {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put(Constants.PAGE,page+"");
-		map.put(Constants.PAGECOUNT,pageCount);
+		map.put(Constants.PAGESIZE,pageCount);
 		map.put(Constants.INCOMETRANSFERSTATUS,IncomeTransferStatus);
 		BasehttpSend(map, context, HttpConstants.METHOD_ASSISTANT_GETINCOMEHISTORY,
 				httpCallBack, IncomeHistoryBackBean.class, true, false);
@@ -1259,6 +1260,17 @@ public class HttpControl {
 		map.put("Count", Integer.toString(Count));
 		map.put("SizeId", Long.toString(SizeId));
 		BasehttpSend(map, context, HttpConstants.CREATEORDER, httpCallBack,RequestCreatOrderInfoBean.class, showDialog, false);
+	}
+	
+	
+	/**
+	 * 获取败家获取用户信息（新）
+	 * @param showDialog  boolean 当前页
+	 * @return void
+	 * **/
+	public void getBaijiaUserInfo(boolean showDialog, final HttpCallBackInterface httpCallBack,Context context) {
+		Map<String, String> map = new HashMap<String, String>();
+		BasehttpSend(map, context, HttpConstants.GETUSERINFO, httpCallBack,RequestUserInfoBean.class, showDialog, false);
 	}
 	
 	

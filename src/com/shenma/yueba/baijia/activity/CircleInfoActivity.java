@@ -280,8 +280,11 @@ public class CircleInfoActivity extends BaseActivityWithTopView implements
 							if (users != null && users.size() > 0) {
 								mList.clear();
 								mList.addAll(users);
+								if(bean.isIsOwer())
+								{
 								mList.add(new Users());
 								mList.add(new Users());
+								}
 								adapter = new MyCircleInfoAdapter(mContext, mList,circleId,bean.isIsOwer());
 								gv_circle.setAdapter(adapter);
 							}
