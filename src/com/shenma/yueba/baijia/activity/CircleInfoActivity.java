@@ -72,6 +72,8 @@ public class CircleInfoActivity extends BaseActivityWithTopView implements
 	private TextView tv_top_title_below;//标题下面的人数
 	private Button bt_action;//分为 退出圈子，加入圈子，删除圈子三种状态
 	private String from;//来自哪里  1表示来自养家的圈子管理，2表示来自推荐的圈子，3表示来自已经加入的圈子
+	HttpControl httpControl = new HttpControl();
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -113,12 +115,12 @@ public class CircleInfoActivity extends BaseActivityWithTopView implements
 		rl_circle_name.setOnClickListener(this);
 		rl_qrcode = getView(R.id.rl_qrcode);
 		rl_qrcode.setOnClickListener(this);
-		mList.add(new Users());
-		mList.add(new Users());
-		adapter = new MyCircleInfoAdapter(mContext, mList,cricleId);
-		gv_circle.setAdapter(adapter);
+		//mList.add(new Users());
+		//mList.add(new Users());
+		//adapter = new MyCircleInfoAdapter(mContext, mList,cricleId);
+		//gv_circle.setAdapter(adapter);
 		FontManager.changeFonts(mContext, tv_cirlce_head_title,
-				tv_cirlce_name_title, tv_circle_title, tv_circle_name);
+				tv_cirlce_name_title, tv_circle_title, tv_circle_name,bt_action);
 
 	}
 	
@@ -152,9 +154,9 @@ public class CircleInfoActivity extends BaseActivityWithTopView implements
 			if("删除圈子".equals(bt_action.getText().toString().trim())){
 				deleteCircle();
 			}else if("退出圈子".equals(bt_action.getText().toString().trim())){
-				
+				exitCircle();
 			}else if("加入圈子".equals(bt_action.getText().toString().trim())){
-				
+				addCircle();
 			}
 			break;
 			
@@ -181,12 +183,53 @@ public class CircleInfoActivity extends BaseActivityWithTopView implements
 			break;
 		}
 	}
+	
+	
+	/*****
+	 * 退出圈子
+	 * ****/
+	void exitCircle()
+	{
+		httpControl.exitCircle(cricleId, true, new HttpCallBackInterface() {
+			
+			@Override
+			public void http_Success(Object obj) {
+				//刷新圈子信息
+				getCircleDetail(cricleId, mContext, true);
+			}
+			
+			@Override
+			public void http_Fails(int error, String msg) {
+				MyApplication.getInstance().showMessage(CircleInfoActivity.this,msg);
+			}
+		}, CircleInfoActivity.this);
+	}
+	
+	/*****
+	 * 退出圈子
+	 * ****/
+	void addCircle()
+	{
+		httpControl.addCircle(cricleId, true, new HttpCallBackInterface() {
+			
+			@Override
+			public void http_Success(Object obj) {
+				//刷新圈子信息
+				getCircleDetail(cricleId, mContext, true);
+			}
+			
+			@Override
+			public void http_Fails(int error, String msg) {
+				MyApplication.getInstance().showMessage(CircleInfoActivity.this, msg);
+			}
+		}, CircleInfoActivity.this);
+	}
+	
 
 	/**
 	 * 删除圈子
 	 */
 	private void deleteCircle() {
-		HttpControl httpControl = new HttpControl();
 		httpControl.deleteCircle(cricleId, "", true, new HttpCallBackInterface() {
 			@Override
 			public void http_Success(Object obj) {
@@ -239,19 +282,44 @@ public class CircleInfoActivity extends BaseActivityWithTopView implements
 								mList.addAll(users);
 								mList.add(new Users());
 								mList.add(new Users());
-								adapter = new MyCircleInfoAdapter(mContext, mList,circleId);
+								adapter = new MyCircleInfoAdapter(mContext, mList,circleId,bean.isIsOwer());
 								gv_circle.setAdapter(adapter);
 							}
+							//如果是创建者
+							if(bean.isIsOwer())
+							{
+								bt_action.setText("删除圈子");
+								rl_head.setEnabled(true);
+								rl_circle_name.setEnabled(true);
+							}else
+							{
+								rl_head.setEnabled(false);
+								rl_circle_name.setEnabled(false);
+								if(bean.isIsMember())
+								{
+									bt_action.setText("退出圈子");
+								}else
+								{
+									bt_action.setText("加入圈子");
+								}
+							}
+						}else
+						{
+							http_Fails(500, "数据错误");
 						}
 					}
 
 					@Override
 					public void http_Fails(int error, String msg) {
 						Toast.makeText(mContext, msg, 1000).show();
+						CircleInfoActivity.this.finish();
 					}
 				}, CircleInfoActivity.this);
 	}
 
+	
+	
+	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == Constants.REQUESTCODE
