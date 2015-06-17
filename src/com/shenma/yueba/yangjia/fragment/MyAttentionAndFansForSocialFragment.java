@@ -38,7 +38,7 @@ public class MyAttentionAndFansForSocialFragment extends BaseFragment {
 	private List<AttationAndFansItemBean> mList = new ArrayList<AttationAndFansItemBean>();
 	private int page = 1;
 	private boolean isRefresh = true;
-	private String status;// 0表示我关注的人   1表示我的粉丝
+	private String status = "2";// 0表示我关注的人   1表示我的粉丝
 	public TextView tv_nodata;
 
 	@Override

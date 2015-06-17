@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.UUID;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -17,6 +16,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,6 +36,8 @@ import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.RoundImageView;
 import com.shenma.yueba.view.SelectePhotoType;
+import com.shenma.yueba.view.SwitchButton;
+import com.shenma.yueba.view.SwitchButton.OnChangedListener;
 import com.shenma.yueba.yangjia.activity.AboutActivity;
 import com.shenma.yueba.yangjia.activity.ModifyNickNameActivity;
 
@@ -146,6 +148,18 @@ public class UserConfigActivity extends BaseActivityWithTopView {
 		// 消息免打扰
 		TextView messagednd_textview = (TextView) messagednd_layout
 				.findViewById(R.id.people_config_str1_textview);
+		ImageView arrowRight = (ImageView) messagednd_layout.findViewById(R.id.people_config_str1_imageview);
+		arrowRight.setVisibility(View.GONE);
+		SwitchButton switchButton = (SwitchButton) messagednd_layout.findViewById(R.id.switchButton);
+		switchButton.setVisibility(View.VISIBLE);
+		switchButton.setOnChangedListener(new OnChangedListener() {
+			
+			@Override
+			public void OnChanged(SwitchButton wiperSwitch, boolean checkState) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		messagednd_textview.setText(this.getResources().getText(
 				R.string.user_config_messagednd_str));
 		// 退出登录

@@ -60,6 +60,7 @@ public class IncomeDetailFragment extends BaseFragment {
 	private PullToRefreshListView pull_refresh_list;
 	private boolean isRefresh = true;
 	private TextView tv_nodata;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -92,39 +93,39 @@ public class IncomeDetailFragment extends BaseFragment {
 			pull_refresh_list = (PullToRefreshListView) view
 					.findViewById(R.id.pull_refresh_list);
 			pull_refresh_list.setMode(Mode.BOTH);
-			pull_refresh_list
-					.setAdapter(new IncomeDetailAdapter(getActivity(), mList, 0));
-			
+			pull_refresh_list.setAdapter(new IncomeDetailAdapter(getActivity(),
+					mList, 0));
+
 			pull_refresh_list.setOnRefreshListener(new OnRefreshListener2() {
 
 				@Override
 				public void onPullDownToRefresh(PullToRefreshBase refreshView) {
 					page = 1;
 					isRefresh = true;
-					getData(page, getActivity());
+					getIncomeDetail(getActivity());
 				}
 
 				@Override
 				public void onPullUpToRefresh(PullToRefreshBase refreshView) {
 					page++;
 					isRefresh = false;
-					getData(page, getActivity());
+					getIncomeDetail(getActivity());
 				}
 			});
 			pull_refresh_list.setOnItemClickListener(new OnItemClickListener() {
 				@Override
 				public void onItemClick(AdapterView<?> arg0, View arg1,
 						int arg2, long arg3) {
-//					Intent intent = new Intent(getActivity(),
-//							OrderDetailActivity.class);
-//					intent.putExtra("orderId", mList.get(arg2).getOrderNo());
-//					startActivity(intent);
+					// Intent intent = new Intent(getActivity(),
+					// OrderDetailActivity.class);
+					// intent.putExtra("orderId", mList.get(arg2).getOrderNo());
+					// startActivity(intent);
 
 				}
 			});
-			
+
 		}
-		
+
 		// 缓存的rootView需要判断是否已经被加过parent，如果有parent需要从parent删除，要不然会发生这个rootview已经有parent的错误。
 		ViewGroup parent = (ViewGroup) view.getParent();
 		if (parent != null) {
@@ -133,7 +134,7 @@ public class IncomeDetailFragment extends BaseFragment {
 		return view;
 	}
 
-	public void getData(int index,Context ctx) {
+	public void getData(int index, Context ctx) {
 		switch (index) {
 		case 0:// 在线
 			if (mList.size() == 0) {
@@ -158,48 +159,49 @@ public class IncomeDetailFragment extends BaseFragment {
 		}
 	}
 
-	
-	
-	public void getIncomeDetail(Context ctx){
+	public void getIncomeDetail(Context ctx) {
 		HttpControl httpControl = new HttpControl();
-		httpControl.getIncomeDetail(page, Constants.PageSize, type+"", new HttpCallBackInterface() {
-			@Override
-			public void http_Success(Object obj) {
-				pull_refresh_list.onRefreshComplete();
-				IncomeDetailBackBean bean = (IncomeDetailBackBean) obj;
-				adapter = new IncomeDetailAdapter(
-						getActivity(), mList, 0);
-				if (isRefresh) {
-					if(bean.getData()!=null && bean.getData().getItems()!=null && bean.getData().getItems().size()>0){
-						tv_nodata.setVisibility(View.GONE);
-						mList.clear();
-						mList.addAll(bean.getData().getItems());
-						pull_refresh_list.setAdapter(adapter);
-					}else{
-						tv_nodata.setVisibility(View.VISIBLE);
+		httpControl.getIncomeDetail(page, Constants.PageSize, type + "",
+				new HttpCallBackInterface() {
+					@Override
+					public void http_Success(Object obj) {
+						pull_refresh_list.onRefreshComplete();
+						IncomeDetailBackBean bean = (IncomeDetailBackBean) obj;
+						adapter = new IncomeDetailAdapter(getActivity(), mList,
+								0);
+						if (isRefresh) {
+							if (bean.getData() != null
+									&& bean.getData().getItems() != null
+									&& bean.getData().getItems().size() > 0) {
+								tv_nodata.setVisibility(View.GONE);
+								mList.clear();
+								mList.addAll(bean.getData().getItems());
+								pull_refresh_list.setAdapter(adapter);
+							} else {
+								tv_nodata.setVisibility(View.VISIBLE);
+							}
+
+						} else {
+							if (bean.getData().getItems() != null
+									&& bean.getData().getItems().size() > 0) {
+								mList.addAll(bean.getData().getItems());
+							} else {
+								Toast.makeText(getActivity(), "没有更多数据了...",
+										1000).show();
+							}
+
+							adapter.notifyDataSetChanged();
+						}
 					}
-					
-				} else {
-					if(bean.getData().getItems()!=null && bean.getData().getItems().size()>0){
-						mList.addAll(bean.getData().getItems());
-					}else{
-						Toast.makeText(getActivity(), "没有更多数据了...", 1000).show();
+
+					@Override
+					public void http_Fails(int error, String msg) {
+						pull_refresh_list.onRefreshComplete();
+						Toast.makeText(getActivity(), msg,
+								1000).show();
 					}
-					
-					adapter.notifyDataSetChanged();
-				}
-			}
-			
-			@Override
-			public void http_Fails(int error, String msg) {
-				// TODO Auto-generated method stub
-				
-			}
-		}, ctx);
-		
-		
+				}, ctx);
+
 	}
-	
-	
 
 }

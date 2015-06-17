@@ -91,14 +91,14 @@ public class WithdrawHistoryFragment extends BaseFragment {
 				public void onPullDownToRefresh(PullToRefreshBase refreshView) {
 					page = 1;
 					isRefresh = true;
-					getData(page, getActivity());
+					getIncomeHistory(getActivity());
 				}
 
 				@Override
 				public void onPullUpToRefresh(PullToRefreshBase refreshView) {
 					page++;
 					isRefresh = false;
-					getData(page, getActivity());
+					getIncomeHistory(getActivity());
 				}
 			});
 			pull_refresh_list.setOnItemClickListener(new OnItemClickListener() {

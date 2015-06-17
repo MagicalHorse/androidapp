@@ -16,17 +16,13 @@ import android.widget.TextView;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.MainActivityForBaiJia;
+import com.shenma.yueba.baijia.activity.ShopMainActivity;
 import com.shenma.yueba.baijia.activity.UserConfigActivity;
-import com.shenma.yueba.baijia.adapter.MyFragmentPagerAdapter;
 import com.shenma.yueba.baijia.fragment.BaseFragment;
 import com.shenma.yueba.util.CustomProgressDialog;
-import com.shenma.yueba.util.DialogUtils;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.util.ToolsUtil;
-import com.shenma.yueba.yangjia.activity.BuyerIndentificationActivity;
-import com.shenma.yueba.yangjia.activity.IdentificationBuyerListActivity;
-import com.shenma.yueba.yangjia.activity.MainActivityForYangJia;
 import com.shenma.yueba.yangjia.activity.StoreIntroduceActivity;
 
 /**
@@ -117,12 +113,14 @@ public class MeFragmentForYangJia extends BaseFragment implements
 			 startActivity(userConfigIntent);
 			break;
 		case R.id.tv_store:// 店铺首页
+			Intent shopIntent = new Intent(getActivity(),
+					ShopMainActivity.class);
+			startActivity(shopIntent);
 			break;
 		case R.id.tv_store_introduce:// 店铺说明
 			Intent storeIntroduceIntent = new Intent(getActivity(),
 					StoreIntroduceActivity.class);
 			startActivity(storeIntroduceIntent);
-
 			break;
 		case R.id.tv_invite_buyer:// 邀请买手
 			break;

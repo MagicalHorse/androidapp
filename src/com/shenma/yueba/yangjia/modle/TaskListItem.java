@@ -4,7 +4,7 @@ public class TaskListItem {
 
 	
 	private String id;
-	private String icom;//小图标
+	private String icon;//小图标
 	private String name;//奖励名称
 	private String status;
 	private String amount;
@@ -17,11 +17,12 @@ public class TaskListItem {
 	public void setId(String id) {
 		this.id = id;
 	}
-	public String getIcom() {
-		return icom;
+
+	public String getIcon() {
+		return icon;
 	}
-	public void setIcom(String icom) {
-		this.icom = icom;
+	public void setIcon(String icon) {
+		this.icon = icon;
 	}
 	public String getName() {
 		return name;
