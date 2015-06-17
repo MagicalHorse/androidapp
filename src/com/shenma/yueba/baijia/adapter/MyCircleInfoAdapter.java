@@ -34,11 +34,13 @@ public class MyCircleInfoAdapter extends BaseAdapterWithUtil{
 	private boolean showDelete;
 	private List<Users> mList = new ArrayList<Users>();
 	private String circleId;
-	public MyCircleInfoAdapter(Context ctx,List<Users> mList,String cirlceId) {
+	boolean IsOwer=false;// 是否为创建者
+	public MyCircleInfoAdapter(Context ctx,List<Users> mList,String cirlceId,boolean IsOwer) {
 		super(ctx);
 		this.circleId = cirlceId;
 		this.mList = mList;
 		this.ctx = ctx;
+		this.IsOwer=IsOwer;
 	}
 
 	
@@ -80,10 +82,31 @@ public class MyCircleInfoAdapter extends BaseAdapterWithUtil{
 		}
 		
 		if(position == mList.size()-2){
+			if(IsOwer)
+			{
+				holder.riv_head.setVisibility(View.VISIBLE);
+				holder.tv_text.setVisibility(View.VISIBLE);
+			}else
+			{
+				holder.riv_head.setVisibility(View.GONE);
+				holder.tv_text.setVisibility(View.GONE);
+			}
 			holder.riv_head.setBackgroundResource(R.drawable.plus);
 			holder.tv_text.setText("邀请好友");
 			
 		}else if(position == mList.size()-1){
+			//如果是创建者
+			if(IsOwer)
+			{
+				convertView.setVisibility(View.VISIBLE);
+				holder.riv_head.setVisibility(View.VISIBLE);
+				holder.tv_text.setVisibility(View.VISIBLE);
+			}else
+			{
+				convertView.setVisibility(View.GONE);
+				holder.riv_head.setVisibility(View.GONE);
+				holder.tv_text.setVisibility(View.GONE);
+			}
 			holder.riv_head.setBackgroundResource(R.drawable.reduce);
 			holder.tv_text.setText("删除成员");
 		}else{
