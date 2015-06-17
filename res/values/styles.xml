@@ -271,7 +271,7 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
 
-    <style name="MyDialog" parent="android:Theme.Dialog">
+        <style name="MyDialog" parent="android:Theme.Dialog">
 
         <!-- <item name="android:windowAnimationStyle">@style/AnimTop2</item> -->
         <item name="android:windowFrame">@null</item>
@@ -282,12 +282,9 @@
         <!-- 半透明 -->
         <item name="android:windowNoTitle">true</item>
         <!-- 无标题 -->
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <!-- 背景透明 -->
         <item name="android:backgroundDimEnabled">true</item>
         <!-- 模糊 -->
     </style>
-
     <style name="DialogWindowTitle">
         <item name="android:textSize">22sp</item>
     </style>

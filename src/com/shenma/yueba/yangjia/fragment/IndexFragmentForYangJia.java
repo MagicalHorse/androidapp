@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -37,7 +38,7 @@ import com.shenma.yueba.baijia.modle.Product;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
-import com.shenma.yueba.util.SocicalShareUtil;
+import com.shenma.yueba.util.ShareUtil;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.imageshow.ImageShowActivity;
 import com.shenma.yueba.yangjia.activity.EarningManagerActivity;
@@ -376,8 +377,9 @@ public class IndexFragmentForYangJia extends BaseFragment implements
 			startActivity(intentSocialManager);
 			break;
 		case R.id.bt_top_right:
-			SocicalShareUtil shareUtil = new SocicalShareUtil(getActivity());
-			shareUtil.showShareDialog();
+//			SocicalShareUtil shareUtil = new SocicalShareUtil(getActivity());
+//			shareUtil.showShareDialog();
+			ShareUtil.shareAll(getActivity(), "我市内容", "我是url", "http://img3.3lian.com/2014/c2/61/d/17.jpg");
 		default:
 			break;
 		}
@@ -439,4 +441,7 @@ public class IndexFragmentForYangJia extends BaseFragment implements
 		
 		
 		}
+	
+	
+	
 	}

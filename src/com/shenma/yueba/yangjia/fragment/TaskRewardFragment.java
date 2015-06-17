@@ -65,7 +65,7 @@ public class TaskRewardFragment extends BaseFragment {
 		view = inflater.inflate(R.layout.task_reward, null);
 		tv_top_title = (TextView) view.findViewById(R.id.tv_top_title);
 		tv_top_title.setVisibility(View.VISIBLE);
-		tv_top_title.setText("首页");
+		tv_top_title.setText("奖励");
 		lv =  (ListView) view.findViewById(R.id.lv);
 		lv.setOnItemClickListener(new OnItemClickListener() {
 			@Override

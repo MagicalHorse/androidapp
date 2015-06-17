@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:background="@drawable/money" />
+        android:background="@drawable/earning_icon" />
 
     <TextView
         android:id="@+id/tv_earnings_title"

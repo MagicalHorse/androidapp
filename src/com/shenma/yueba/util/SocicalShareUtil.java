@@ -2,15 +2,21 @@ package com.shenma.yueba.util;
 
 import android.app.Activity;
 import android.content.Context;
+import android.widget.Toast;
 
+import com.umeng.socialize.bean.RequestType;
 import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.bean.SocializeEntity;
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
+import com.umeng.socialize.controller.listener.SocializeListeners.SnsPostListener;
+import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.sso.QZoneSsoHandler;
 import com.umeng.socialize.sso.SinaSsoHandler;
 import com.umeng.socialize.sso.TencentWBSsoHandler;
 import com.umeng.socialize.sso.UMQQSsoHandler;
 import com.umeng.socialize.weixin.controller.UMWXHandler;
+import com.umeng.socialize.weixin.media.CircleShareContent;
 import com.umeng.socialize.weixin.media.WeiXinShareContent;
 
 /**
@@ -20,7 +26,8 @@ import com.umeng.socialize.weixin.media.WeiXinShareContent;
  * 
  */
 public class SocicalShareUtil {
-
+	String appId = "wx0bd15e11e7c3090f";
+	String appSecret = "e3ff58518855345970755d08a3540c26";
 	private Context ctx;
 	private final UMSocialService mController = UMServiceFactory
 			.getUMSocialService("com.umeng.share");
@@ -30,6 +37,12 @@ public class SocicalShareUtil {
 		configPlatforms();
 	}
 
+	
+	
+	
+	public void setTitle(){
+		
+	}
 
 	/**
 	 * 配置分享平台参数</br>
@@ -41,9 +54,8 @@ public class SocicalShareUtil {
 		mController.getConfig().setSsoHandler(new TencentWBSsoHandler());
 		// 添加QQ、QZone平台
 		addQQQZonePlatform();
-
 		// 添加微信、微信朋友圈平台
-		addWXPlatform();
+		
 	}
 
 	/**
@@ -72,25 +84,54 @@ public class SocicalShareUtil {
 	 * @功能描述 : 添加微信平台分享
 	 * @return
 	 */
-	private void addWXPlatform() {
-		// 注意：在微信授权的时候，必须传递appSecret
-		// wx967daebe835fbeac是你在微信开发平台注册应用的AppID, 这里需要替换成你注册的AppID
-		String appId = "wx967daebe835fbeac";
-		String appSecret = "5bb696d9ccd75a38c8a0bfe0675559b3";
+	private void addWXPlatform(Context ctx,String title,String content,String image,String url) {
 		// 添加微信平台
 		UMWXHandler wxHandler = new UMWXHandler(ctx, appId, appSecret);
-		wxHandler.setTargetUrl("www.baidu.com");
-		wxHandler.setTitle("我是微信");
-		WeiXinShareContent weixinShareContent = new WeiXinShareContent();
-		weixinShareContent.setShareContent("dddddddd");
-		mController.setShareMedia(weixinShareContent);
 		wxHandler.addToSocialSDK();
-		// 支持微信朋友圈
-		UMWXHandler wxCircleHandler = new UMWXHandler(ctx, appId, appSecret);
-		wxCircleHandler.setToCircle(true);
-		wxCircleHandler.addToSocialSDK();
+		WeiXinShareContent weixinContent = new WeiXinShareContent();
+		weixinContent.setTitle(title);
+		weixinContent.setShareContent(content);
+		weixinContent.setTargetUrl(url);
+		weixinContent.setShareImage(new UMImage(ctx, image));
+		UMSocialService controller = UMServiceFactory.getUMSocialService(
+				"com.umeng.share", RequestType.SOCIAL);
+		controller.setShareMedia(weixinContent);
+		controller.getConfig().closeToast();
 	}
 
+	
+	private void addWXCircle(final Context ctx,String title,String content,String image,String url){
+		UMWXHandler wxHandler = new UMWXHandler(ctx, appId, appSecret);
+		wxHandler.setToCircle(true);
+		wxHandler.addToSocialSDK();
+		CircleShareContent circleMedia = new CircleShareContent();
+		circleMedia.setTitle(title);
+		circleMedia.setShareContent(content);
+		circleMedia.setShareImage(new UMImage(ctx, image));
+		circleMedia.setTargetUrl(url);
+		UMSocialService controller = UMServiceFactory.getUMSocialService(
+				"com.umeng.share", RequestType.SOCIAL);
+		controller.setShareMedia(circleMedia);
+		controller.getConfig().closeToast();
+		controller.postShare(ctx, SHARE_MEDIA.WEIXIN_CIRCLE,
+				new SnsPostListener() {
+
+					@Override
+					public void onComplete(SHARE_MEDIA arg0, int arg1,
+							SocializeEntity arg2) {
+						Toast.makeText(ctx, "分享成功", 1000).show();
+						
+					}
+
+					@Override
+					public void onStart() {
+						Toast.makeText(ctx, "分享中...", 1000).show();
+						
+					}
+
+				});
+	}
+	
 	public void showShareDialog() {
 		mController.getConfig().setPlatforms(SHARE_MEDIA.WEIXIN,
 				SHARE_MEDIA.WEIXIN_CIRCLE, SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE,
