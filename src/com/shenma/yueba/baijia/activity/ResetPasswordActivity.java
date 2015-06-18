@@ -65,10 +65,10 @@ public class ResetPasswordActivity extends BaseActivityWithTopView implements On
 		switch (v.getId()) {
 		case R.id.bt_sure://找回
 			//判断用户是否登录
-			if(!(MyApplication.getInstance().isUserLogin(ResetPasswordActivity.this)))
-			{
-				return;
-			}
+//			if(!(MyApplication.getInstance().isUserLogin(ResetPasswordActivity.this)))
+//			{
+//				return;
+//			}
 			String mobile=et_mobile_no.getText().toString().trim();
 			String newpwd=et_new_password.getText().toString().trim();
 			String renewpwd=et_new_repassword.getText().toString().trim();

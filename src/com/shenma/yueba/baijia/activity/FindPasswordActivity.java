@@ -21,10 +21,12 @@ import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.MyCountDown;
+
 /**
  * 找回密码
+ * 
  * @author a
- *
+ * 
  */
 public class FindPasswordActivity extends BaseActivityWithTopView implements
 		OnClickListener, TextWatcher {
@@ -36,9 +38,10 @@ public class FindPasswordActivity extends BaseActivityWithTopView implements
 	private int maxSecond = 90;
 	private String getCodeString = "获取验证码";
 	private String from;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		MyApplication.getInstance().addActivity(this);//加入回退栈
+		MyApplication.getInstance().addActivity(this);// 加入回退栈
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.find_password_layout);
 		super.onCreate(savedInstanceState);
@@ -50,7 +53,7 @@ public class FindPasswordActivity extends BaseActivityWithTopView implements
 		from = getIntent().getStringExtra("from");
 		if ("bindPhone".equals(from)) {// 绑定手机号
 			setTitle("验证手机号");
-		}else{
+		} else {
 			setTitle("重置密码");
 		}
 		setLeftTextView(new OnClickListener() {
@@ -74,95 +77,95 @@ public class FindPasswordActivity extends BaseActivityWithTopView implements
 
 	@Override
 	public void onClick(View v) {
-		final String phone=et_mobile.getText().toString().trim();
-		final String code=et_code.getText().toString().trim();
+		final String phone = et_mobile.getText().toString().trim();
+		final String code = et_code.getText().toString().trim();
 		switch (v.getId()) {
 		case R.id.bt_sure:// 确定找回密码
-			
-			if(TextUtils.isEmpty(phone))
-			{
-				MyApplication.getInstance().showMessage(FindPasswordActivity.this, "手机号码不能为空");
+
+			if (TextUtils.isEmpty(phone)) {
+				MyApplication.getInstance().showMessage(
+						FindPasswordActivity.this, "手机号码不能为空");
 				return;
-			}else if(TextUtils.isEmpty(code))
-			{
-				MyApplication.getInstance().showMessage(FindPasswordActivity.this, "验证码不能为空");
+			} else if (TextUtils.isEmpty(code)) {
+				MyApplication.getInstance().showMessage(
+						FindPasswordActivity.this, "验证码不能为空");
 				return;
 			}
-			HttpControl httpControl=new HttpControl();
-			httpControl.validVerifyCode(phone, code, new HttpCallBackInterface() {
-				
-				@Override
-				public void http_Success(Object obj) {
-					if("bindPhone".equals(from)){//绑定手机号码
-						bindMobile();
-					}else{
-						skip(Constants.USER_MOBILE, phone, ResetPasswordActivity.class, true);
-					}
-				}
-				
-				@Override
-				public void http_Fails(int error, String msg) {
-					
-					MyApplication.getInstance().showMessage(FindPasswordActivity.this, msg);
-				}
-			}, FindPasswordActivity.this);
-			
+			HttpControl httpControl = new HttpControl();
+			httpControl.validVerifyCode(phone, code,
+					new HttpCallBackInterface() {
+
+						@Override
+						public void http_Success(Object obj) {
+							if ("bindPhone".equals(from)) {// 绑定手机号码
+								bindMobile();
+							} else {
+								skip(Constants.USER_MOBILE, phone,
+										ResetPasswordActivity.class, true);
+							}
+						}
+
+						@Override
+						public void http_Fails(int error, String msg) {
+
+							MyApplication.getInstance().showMessage(
+									FindPasswordActivity.this, msg);
+						}
+					}, FindPasswordActivity.this);
+
 			break;
 		case R.id.tv_getcode:// 获取验证码
-			if(TextUtils.isEmpty(phone))
-			{
-				MyApplication.getInstance().showMessage(FindPasswordActivity.this, "手机号码不能为空");
+			if (TextUtils.isEmpty(phone)) {
+				MyApplication.getInstance().showMessage(
+						FindPasswordActivity.this, "手机号码不能为空");
 				return;
 			}
-			HttpControl hControl=new HttpControl();
-			hControl.sendPhoeCode(phone, new HttpCallBackInterface() {
-				
+			HttpControl hControl = new HttpControl();
+			hControl.sendPhoeCode(phone, "true", new HttpCallBackInterface() {
+
 				@Override
 				public void http_Success(Object obj) {
-					
-					MyApplication.getInstance().showMessage(FindPasswordActivity.this, "验证码发送成功请注意查收");
+					MyApplication.getInstance().showMessage(
+							FindPasswordActivity.this, "验证码发送成功请注意查收");
+					new MyCountDown(maxSecond * 1000, 1000, tv_getcode,
+							getCodeString).start();
 				}
-				
+
 				@Override
 				public void http_Fails(int error, String msg) {
-					
-					MyApplication.getInstance().showMessage(FindPasswordActivity.this, msg);
+
+					MyApplication.getInstance().showMessage(
+							FindPasswordActivity.this, msg);
 				}
 			}, FindPasswordActivity.this);
-			new MyCountDown(maxSecond * 1000, 1000, tv_getcode, getCodeString)
-					.start();
 			break;
 		default:
 			break;
 		}
 
 	}
-	
+
 	@Override
 	public void afterTextChanged(Editable arg0) {
-		if(arg0.length()>0){
+		if (arg0.length() > 0) {
 			et_mobile.setVisibility(View.VISIBLE);
-		}else{
+		} else {
 			et_mobile.setVisibility(View.INVISIBLE);
 		}
-		
+
 	}
 
 	@Override
 	public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
 			int arg3) {
-		
-		
+
 	}
 
 	@Override
 	public void onTextChanged(CharSequence s, int start, int before, int count) {
-		
-		
+
 	}
-	
-	
-	
+
 	private void bindMobile() {
 		HttpControl httpControl = new HttpControl();
 		httpControl.bindMobile(et_mobile.getText().toString().trim(),
@@ -171,9 +174,11 @@ public class FindPasswordActivity extends BaseActivityWithTopView implements
 					@Override
 					public void http_Success(Object obj) {
 						Toast.makeText(mContext, "绑定成功", 1000).show();
-						SharedUtil.setBooleanPerfernece(mContext, SharedUtil.user_IsBindMobile, true);
+						SharedUtil.setBooleanPerfernece(mContext,
+								SharedUtil.user_IsBindMobile, true);
 						FindPasswordActivity.this.finish();
 					}
+
 					@Override
 					public void http_Fails(int error, String msg) {
 						Toast.makeText(mContext, msg, 1000).show();

@@ -163,7 +163,7 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
 				new UMAuthListener() {
 					@Override
 					public void onStart(SHARE_MEDIA platform) {
-						Toast.makeText(getActivity(), "授权开始",
+						Toast.makeText(getActivity(), "正在授权，请稍后",
 								Toast.LENGTH_SHORT).show();
 					}
 

@@ -124,10 +124,11 @@ public class HttpControl {
 	 * @param context
 	 * @return void
 	 * **/
-	public void sendPhoeCode(String str,
+	public void sendPhoeCode(String str,String isChecked,
 			final HttpCallBackInterface httpCallBack, Context context) {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put(Constants.MOBILE, str.trim());
+		map.put(Constants.isverifymobile, isChecked);
 		BasehttpSend(map, context, HttpConstants.sendPhoneCode, httpCallBack,
 				BaseRequest.class, true, false);
 	}
