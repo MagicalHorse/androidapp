@@ -14,6 +14,8 @@ import com.shenma.yueba.baijia.activity.ApplyResultActivity;
 import com.shenma.yueba.baijia.activity.BaseActivityWithTopView;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.SharedUtil;
+import com.shenma.yueba.util.WXLoginUtil;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 
 /**
@@ -70,7 +72,13 @@ public class ApplyWithdrawActivity extends BaseActivityWithTopView implements
 		case R.id.tv_sure:// 确认提现
 			String money = et_money.getText().toString().trim();
 			if (money.matches("[0-9]+")) {
-				getIncomeRedPack();
+				
+				if(SharedUtil.getBooleanPerfernece(mContext, SharedUtil.user_IsBindWeiXin)){
+					getIncomeRedPack();
+				}else{
+					WXLoginUtil wxLoginUtil = new WXLoginUtil(mContext);
+					wxLoginUtil.initWeiChatLogin(false);
+				}
 			} else {
 				Toast.makeText(mContext, "请输入整数", 1000).show();
 			}

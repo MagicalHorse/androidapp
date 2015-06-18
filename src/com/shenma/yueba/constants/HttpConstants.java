@@ -17,6 +17,10 @@ public class HttpConstants {
 	
 	
 	/**
+	 * 微信登录
+	 */
+	public static String METHOD_wxLogin = USERURL + "OutSiteLogin";
+	/**
 	 * 修改昵称
 	 */
 	public static String changeNickName = USERURL + "ChangeNickname";

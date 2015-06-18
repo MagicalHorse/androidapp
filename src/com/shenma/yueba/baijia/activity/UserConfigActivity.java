@@ -34,13 +34,13 @@ import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.PhotoUtils;
 import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.util.ToolsUtil;
+import com.shenma.yueba.util.WXLoginUtil;
 import com.shenma.yueba.view.RoundImageView;
 import com.shenma.yueba.view.SelectePhotoType;
 import com.shenma.yueba.view.SwitchButton;
 import com.shenma.yueba.view.SwitchButton.OnChangedListener;
 import com.shenma.yueba.yangjia.activity.AboutActivity;
 import com.shenma.yueba.yangjia.activity.ModifyNickNameActivity;
-
 
 /*****
  * 用户设置
@@ -49,27 +49,33 @@ import com.shenma.yueba.yangjia.activity.ModifyNickNameActivity;
  *         切换到我要养家 退出登录等
  * 
  * *****/
-public class UserConfigActivity extends BaseActivityWithTopView {
+public class UserConfigActivity extends BaseActivityWithTopView implements
+		OnClickListener {
 
 	// 头像图片
-	RoundImageView icon_imageview;
-	// 昵称值
-	TextView nickname_textvalue;
-
 	private String littlePicPath;// 小图路径
 	private String littlePicPath_cache;// 裁剪后图片存储的路径
 	private CustomProgressDialog progressDialog;
-
+	private TextView tv_head;
+	private RoundImageView people_config_str2_imageview;
+	private TextView tv_nickname_title;
+	private TextView tv_nickname_value;
+	private TextView rv_rename_password;
+	private TextView tv_message_setting;
+	private SwitchButton switchButton;
+	private TextView tv_bind_phone_title;
+	private TextView tv_bind_phone_value;
+	private TextView tv_bind_wechat_title;
+	private TextView tv_bind_wechat_value;
 	private TextView tv_about;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		MyApplication.getInstance().addActivity(this);// 加入回退栈
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.mefragmentforseller_config_layout);
+		setContentView(R.layout.setting_layout);
 		super.onCreate(savedInstanceState);
 		MyApplication.getInstance().addActivity(this);
-
 		initView();
 	}
 
@@ -79,142 +85,49 @@ public class UserConfigActivity extends BaseActivityWithTopView {
 	 * **/
 	void initView() {
 		progressDialog = new CustomProgressDialog(mContext);
-		setTitle(this.getResources().getString(R.string.user_setconfig_str));
+		setTitle("设置");
 		setLeftTextView(new OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 				UserConfigActivity.this.finish();
 			}
 		});
-		RelativeLayout icon_layout = (RelativeLayout) findViewById(R.id.user_config_icon_include);
-		// 图片
-		TextView icon_text = (TextView) icon_layout
-				.findViewById(R.id.people_config_str1_textview);
-		icon_text.setText(this.getResources().getText(
-				R.string.user_config_icon_str));
-		tv_about = (TextView) findViewById(R.id.tv_about);
-		tv_about.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				skip(AboutActivity.class, true);
-			}
-		});
-		icon_imageview = (RoundImageView) icon_layout
-				.findViewById(R.id.people_config_str2_imageview);
-		MyApplication
-				.getInstance()
-				.getImageLoader()
-				.displayImage(
-						ToolsUtil.nullToString(SharedUtil.getStringPerfernece(
-								mContext, SharedUtil.user_logo)),
-						icon_imageview);
-		icon_imageview.setVisibility(View.VISIBLE);
+		tv_head = getView(R.id.tv_head);
+		people_config_str2_imageview = getView(R.id.people_config_str2_imageview);
 
-		RelativeLayout nickname_layout = (RelativeLayout) findViewById(R.id.user_config_nickname_include);
-		// 昵称
-		TextView nickname_text = (TextView) nickname_layout
-				.findViewById(R.id.people_config_str1_textview);
-		nickname_text.setText(this.getResources().getText(
-				R.string.user_config_nickname_str));
-		nickname_textvalue = (TextView) nickname_layout
-				.findViewById(R.id.people_config_str2_textview);
-		nickname_textvalue.setText(ToolsUtil.nullToString(SharedUtil
-				.getStringPerfernece(mContext, SharedUtil.user_names)));
+		tv_nickname_title = getView(R.id.tv_nickname_title);
+		tv_nickname_value = getView(R.id.tv_nickname_value);
+		rv_rename_password = getView(R.id.rv_rename_password);
 
-		RelativeLayout myaddress_layout = (RelativeLayout) findViewById(R.id.user_config_address_include);
-		// 我的地址
-		TextView myaddress_textview = (TextView) myaddress_layout
-				.findViewById(R.id.people_config_str1_textview);
-		myaddress_textview.setText(this.getResources().getText(
-				R.string.user_config_myaddress_str));
+		tv_message_setting = getView(R.id.tv_message_setting);
+		switchButton = getView(R.id.switchButton);
+		tv_bind_phone_title = getView(R.id.tv_bind_phone_title);
+		tv_bind_phone_value = getView(R.id.tv_bind_phone_value);
+		tv_bind_wechat_title = getView(R.id.tv_bind_wechat_title);
+		tv_bind_wechat_value = getView(R.id.tv_bind_wechat_value);
 
-		RelativeLayout mycollect_layout = (RelativeLayout) findViewById(R.id.user_config_collect_include);
-		// 我的收藏
-		TextView mycollect_textview = (TextView) mycollect_layout
-				.findViewById(R.id.people_config_str1_textview);
-		mycollect_textview.setText(this.getResources().getText(
-				R.string.user_config_mycollect_str));
+		tv_about = getView(R.id.tv_about);
 
-		RelativeLayout userpwd_layout = (RelativeLayout) findViewById(R.id.user_config_password_include);
-		// 账户密码
-		TextView userpwd_textview = (TextView) userpwd_layout
-				.findViewById(R.id.people_config_str1_textview);
-		userpwd_textview.setText(this.getResources().getText(
-				R.string.user_config_userpwd_str));
+		RelativeLayout rl_head = getView(R.id.rl_head);
+		RelativeLayout rl_nickName = getView(R.id.rl_nickName);
+		RelativeLayout rl_rename_password = getView(R.id.rl_rename_password);
+		RelativeLayout rl_bind_phone = getView(R.id.rl_bind_phone);
+		RelativeLayout rl_bind_wechat = getView(R.id.rl_bind_wechat);
 
-		RelativeLayout messagednd_layout = (RelativeLayout) findViewById(R.id.user_config_dnd_include);
-		// 消息免打扰
-		TextView messagednd_textview = (TextView) messagednd_layout
-				.findViewById(R.id.people_config_str1_textview);
-		ImageView arrowRight = (ImageView) messagednd_layout.findViewById(R.id.people_config_str1_imageview);
-		arrowRight.setVisibility(View.GONE);
-		SwitchButton switchButton = (SwitchButton) messagednd_layout.findViewById(R.id.switchButton);
-		switchButton.setVisibility(View.VISIBLE);
-		switchButton.setOnChangedListener(new OnChangedListener() {
-			
-			@Override
-			public void OnChanged(SwitchButton wiperSwitch, boolean checkState) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-		messagednd_textview.setText(this.getResources().getText(
-				R.string.user_config_messagednd_str));
-		// 退出登录
-		Button user_config_exit_button = (Button) findViewById(R.id.user_config_exit_button);
+		rl_head.setOnClickListener(this);
+		rl_nickName.setOnClickListener(this);
+		rl_rename_password.setOnClickListener(this);
+		rl_bind_phone.setOnClickListener(this);
+		rl_bind_wechat.setOnClickListener(this);
+		tv_about.setOnClickListener(this);
+
+		Button user_config_exit_button = getView(R.id.user_config_exit_button);
 		// 设置字体样式
-		FontManager.changeFonts(this, tv_top_title, icon_text, nickname_text,
-				nickname_textvalue, myaddress_textview, mycollect_textview,
-				userpwd_textview, messagednd_textview, user_config_exit_button,
-				tv_about);
-		// 设置按键监听
-		icon_layout.setOnClickListener(onClickListener);
-		nickname_layout.setOnClickListener(onClickListener);
-		myaddress_layout.setOnClickListener(onClickListener);
-		mycollect_layout.setOnClickListener(onClickListener);
-		userpwd_layout.setOnClickListener(onClickListener);
-		messagednd_layout.setOnClickListener(onClickListener);
-		user_config_exit_button.setOnClickListener(onClickListener);
-
+		FontManager.changeFonts(this, tv_top_title, tv_nickname_title,
+				tv_nickname_value, rv_rename_password, tv_message_setting,
+				tv_bind_phone_title, tv_bind_phone_value, tv_bind_wechat_title,
+				tv_bind_wechat_value, user_config_exit_button, tv_about);
 	}
-
-	OnClickListener onClickListener = new OnClickListener() {
-
-		@Override
-		public void onClick(View v) {
-			switch (v.getId()) {
-			case R.id.user_config_icon_include:
-				showBottomDialog();
-				break;
-			case R.id.user_config_collect_include:
-				Intent intent3 = new Intent(UserConfigActivity.this,
-						MyCollectionActivity.class);
-				startActivity(intent3);
-			case R.id.user_config_nickname_include:// 修改昵称
-				Intent intent = new Intent(mContext,
-						ModifyNickNameActivity.class);
-				startActivityForResult(intent, Constants.REQUESTCODE);
-				break;
-			case R.id.user_config_exit_button:// 退出登录
-				// Intent intentSelf =
-				// getPackageManager().getLaunchIntentForPackage("com.shenma.yueba");//"jp.co.johospace.jorte"就是我们获得要启动应用的包名
-				// startActivity(intentSelf);
-				MyApplication.removeAllActivity();
-				Intent intentLogin = new Intent(mContext, SplashActivity.class);
-				startActivity(intentLogin);
-				break;
-			case R.id.user_config_password_include:// 修改密码
-				Intent intentModifyPassword = new Intent(
-						UserConfigActivity.this, SetNewPasswordActivity.class);
-				startActivity(intentModifyPassword);
-			default:
-				break;
-			}
-
-		}
-	};
 
 	/**
 	 * 弹出底部菜单(相机和图库)
@@ -318,7 +231,7 @@ public class UserConfigActivity extends BaseActivityWithTopView {
 		if (requestCode == Constants.REQUESTCODE
 				&& resultCode == Constants.RESULTCODE) {// 修改昵称返回
 			String newName = data.getStringExtra("newName");
-			nickname_textvalue.setText(ToolsUtil.nullToString(newName));
+			tv_nickname_value.setText(ToolsUtil.nullToString(newName));
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 
@@ -364,7 +277,8 @@ public class UserConfigActivity extends BaseActivityWithTopView {
 												.show();
 										Bitmap bm = BitmapFactory
 												.decodeFile(littlePicPath_cache);
-										icon_imageview.setImageBitmap(bm);
+										people_config_str2_imageview
+												.setImageBitmap(bm);
 									}
 
 									@Override
@@ -379,6 +293,62 @@ public class UserConfigActivity extends BaseActivityWithTopView {
 				});
 			}
 		});
+
+	}
+
+	@Override
+	protected void onResume() {
+		tv_bind_phone_value.setText(SharedUtil.getBooleanPerfernece(mContext,
+				SharedUtil.user_IsBindMobile) ? "已绑定" : "未绑定");
+		tv_bind_wechat_value.setText(SharedUtil.getBooleanPerfernece(mContext,
+				SharedUtil.user_IsBindWeiXin) ? "已绑定" : "未绑定");
+		super.onResume();
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.rl_head:// 修改头像
+			showBottomDialog();
+			break;
+		case R.id.rl_nickName:// 修改昵称
+			Intent intent = new Intent(mContext, ModifyNickNameActivity.class);
+			startActivityForResult(intent, Constants.REQUESTCODE);
+			break;
+		case R.id.rl_rename_password:// 修改密码
+			Intent intentModifyPassword = new Intent(UserConfigActivity.this,
+					SetNewPasswordActivity.class);
+			startActivity(intentModifyPassword);
+			break;
+		case R.id.rl_bind_phone:// 绑定手机号
+			if (SharedUtil.getBooleanPerfernece(mContext,
+					SharedUtil.user_IsBindMobile)) {
+				Toast.makeText(mContext, "手机号已绑定", 1000).show();
+			} else {
+				// 绑定手机号
+			}
+			break;
+		case R.id.rl_bind_wechat:// 绑定微信
+			if (SharedUtil.getBooleanPerfernece(mContext,
+					SharedUtil.user_IsBindWeiXin)) {
+				Toast.makeText(mContext, "微信号已绑定", 1000).show();
+			} else {
+				// 绑定手机号
+				WXLoginUtil wxLoginUtil = new WXLoginUtil(mContext);
+				wxLoginUtil.initWeiChatLogin(false);
+			}
+			break;
+		case R.id.user_config_exit_button:// 退出登录
+			MyApplication.removeAllActivity();
+			Intent intentLogin = new Intent(mContext, SplashActivity.class);
+			startActivity(intentLogin);
+			break;
+		case R.id.tv_about:// 关于我们
+			Intent intentAbout = new Intent(mContext, AboutActivity.class);
+			startActivity(intentAbout);
+		default:
+			break;
+		}
 
 	}
 

@@ -26,6 +26,7 @@ import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.ToolsUtil;
+import com.shenma.yueba.util.WXLoginUtil;
 import com.shenma.yueba.yangjia.activity.MainActivityForYangJia;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.controller.UMServiceFactory;
@@ -48,6 +49,7 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
 	private Button bt_login;
 	private View view;
 	private UMSocialService mController;
+	private StringBuilder sb;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -75,8 +77,8 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
 			bt_login.setOnClickListener(this);
 			tv_wechat.setOnClickListener(this);
 			tv_qq.setOnClickListener(this);
-			FontManager.changeFonts(getActivity(), tv_mobile_title,
-					 tv_forget, tv_other, tv_wechat, bt_login);
+			FontManager.changeFonts(getActivity(), tv_mobile_title, tv_forget,
+					tv_other, tv_wechat, bt_login);
 		}
 		// 缓存的rootView需要判断是否已经被加过parent，如果有parent需要从parent删除，要不然会发生这个rootview已经有parent的错误。
 		ViewGroup parent = (ViewGroup) view.getParent();
@@ -95,50 +97,52 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
 			startActivity(intent);
 			break;
 		case R.id.bt_login:// 登录
-//			if (TextUtils.isEmpty(et_mobile.getText().toString())) {
-//				Toast.makeText(getActivity(), "手机号不能为空", 1000).show();
-//				et_mobile.startAnimation(AnimationUtils.loadAnimation(
-//						getActivity(), R.anim.shake));
-//			} else if (!ToolsUtil.checkPhone(et_mobile.getText().toString())) {
-//				Toast.makeText(getActivity(), "手机号格式不正确", 1000).show();
-//			} else if (TextUtils.isEmpty(et_password.getText().toString())) {
-//				Toast.makeText(getActivity(), "密码不能为空", 1000).show();
-//				et_password.startAnimation(AnimationUtils.loadAnimation(
-//						getActivity(), R.anim.shake));
-//			} else {
-				final HttpControl httpControl = new HttpControl();
-				httpControl.userLogin(et_mobile.getText().toString().trim(),
-						et_password.getText().toString().trim(),
-						new HttpCallBackInterface() {
+			// if (TextUtils.isEmpty(et_mobile.getText().toString())) {
+			// Toast.makeText(getActivity(), "手机号不能为空", 1000).show();
+			// et_mobile.startAnimation(AnimationUtils.loadAnimation(
+			// getActivity(), R.anim.shake));
+			// } else if (!ToolsUtil.checkPhone(et_mobile.getText().toString()))
+			// {
+			// Toast.makeText(getActivity(), "手机号格式不正确", 1000).show();
+			// } else if (TextUtils.isEmpty(et_password.getText().toString())) {
+			// Toast.makeText(getActivity(), "密码不能为空", 1000).show();
+			// et_password.startAnimation(AnimationUtils.loadAnimation(
+			// getActivity(), R.anim.shake));
+			// } else {
+			final HttpControl httpControl = new HttpControl();
+			httpControl.userLogin(et_mobile.getText().toString().trim(),
+					et_password.getText().toString().trim(),
+					new HttpCallBackInterface() {
 
-							@Override
-							public void http_Success(Object obj) {
+						@Override
+						public void http_Success(Object obj) {
 
-								if (obj != null
-										&& obj instanceof UserRequestBean) {
-									UserRequestBean bean = (UserRequestBean) obj;
-									httpControl.setLoginInfo(getActivity(), bean);
-									Intent intent = new Intent(getActivity(),MainActivityForYangJia.class);
-									intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-									startActivity(intent);
-									getActivity().finish();
-								}
+							if (obj != null && obj instanceof UserRequestBean) {
+								UserRequestBean bean = (UserRequestBean) obj;
+								httpControl.setLoginInfo(getActivity(), bean);
+								Intent intent = new Intent(getActivity(),
+										MainActivityForYangJia.class);
+								intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+								startActivity(intent);
+								getActivity().finish();
 							}
+						}
 
-							@Override
-							public void http_Fails(int error, String msg) {
+						@Override
+						public void http_Fails(int error, String msg) {
 
-								MyApplication.getInstance().showMessage(
-										getActivity(), msg);
-							}
-						}, getActivity());
-//			}
-			
-//			Intent intent2 = new Intent(getActivity(), ChatActivity.class);
-//			startActivity(intent2);
+							MyApplication.getInstance().showMessage(
+									getActivity(), msg);
+						}
+					}, getActivity());
+			// }
+
+			// Intent intent2 = new Intent(getActivity(), ChatActivity.class);
+			// startActivity(intent2);
 			break;
 		case R.id.tv_wechat:// 微信登录
-			initWeiChatLogin();
+			WXLoginUtil wxLoginUtil = new WXLoginUtil(getActivity());
+			wxLoginUtil.initWeiChatLogin(true);
 			break;
 		case R.id.tv_qq:// QQ登录
 			initQQLogin();
@@ -146,102 +150,8 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
 		default:
 			break;
 		}
-
 	}
 
-	/**
-	 * 初始化微信第三方登录
-	 */
-	public void initWeiChatLogin() {
-		// 添加微信平台
-		UMWXHandler wxHandler = new UMWXHandler(getActivity(),
-				"wx0bd15e11e7c3090f", "e3ff58518855345970755d08a3540c26");
-		wxHandler.addToSocialSDK();
-		/*mController.doOauthVerify(getActivity(), SHARE_MEDIA.WEIXIN,
-				new UMAuthListener() {
-					@Override
-					public void onError(SocializeException e,
-							SHARE_MEDIA platform) {
-					}
-
-					@Override
-					public void onComplete(Bundle value, SHARE_MEDIA platform) {
-						if (value != null
-								&& !TextUtils.isEmpty(value.getString("uid"))) {
-							Toast.makeText(getActivity(), "授权成功.",
-									Toast.LENGTH_SHORT).show();
-						} else {
-							Toast.makeText(getActivity(), "授权失败",
-									Toast.LENGTH_SHORT).show();
-						}
-					}
-
-					@Override
-					public void onCancel(SHARE_MEDIA platform) {
-					}
-
-					@Override
-					public void onStart(SHARE_MEDIA platform) {
-					}
-				});*/
-		mController.doOauthVerify(getActivity(), SHARE_MEDIA.WEIXIN,
-				new UMAuthListener() {
-					@Override
-					public void onStart(SHARE_MEDIA platform) {
-						Toast.makeText(getActivity(), "授权开始",
-								Toast.LENGTH_SHORT).show();
-					}
-
-					@Override
-					public void onError(SocializeException e,
-							SHARE_MEDIA platform) {
-						Toast.makeText(getActivity(), "授权错误",
-								Toast.LENGTH_SHORT).show();
-					}
-
-					@Override
-					public void onComplete(Bundle value, SHARE_MEDIA platform) {
-						Toast.makeText(getActivity(), "授权完成",
-								Toast.LENGTH_SHORT).show();
-						// 获取相关授权信息
-						mController.getPlatformInfo(getActivity(),
-								SHARE_MEDIA.WEIXIN, new UMDataListener() {
-									@Override
-									public void onStart() {
-										Toast.makeText(getActivity(),
-												"获取平台数据开始...",
-												Toast.LENGTH_SHORT).show();
-									}
-
-									@Override
-									public void onComplete(int status,
-											Map<String, Object> info) {
-										if (status == 200 && info != null) {
-											StringBuilder sb = new StringBuilder();
-											Set<String> keys = info.keySet();
-											for (String key : keys) {
-												sb.append(key
-														+ "="
-														+ info.get(key)
-																.toString()
-														+ "\r\n");
-											}
-											Toast.makeText(getActivity(), sb.toString(), 1000).show();
-											Log.d("TestData", sb.toString());
-										} else {
-											Log.d("TestData", "发生错误：" + status);
-										}
-									}
-								});
-					}
-
-					@Override
-					public void onCancel(SHARE_MEDIA platform) {
-						Toast.makeText(getActivity(), "授权取消",
-								Toast.LENGTH_SHORT).show();
-					}
-				});
-	}
 
 	private void initQQLogin() {
 		// 参数1为当前Activity， 参数2为开发者在QQ互联申请的APP ID，参数3为开发者在QQ互联申请的APP kEY.
@@ -271,6 +181,7 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
 						// 获取相关授权信息
 						mController.getPlatformInfo(getActivity(),
 								SHARE_MEDIA.QQ, new UMDataListener() {
+
 									@Override
 									public void onStart() {
 										Toast.makeText(getActivity(),
@@ -282,15 +193,16 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
 									public void onComplete(int status,
 											Map<String, Object> info) {
 										if (status == 200 && info != null) {
-											StringBuilder sb = new StringBuilder();
+											sb = new StringBuilder();
 											Set<String> keys = info.keySet();
+											sb.append("{");
 											for (String key : keys) {
 												sb.append(key
-														+ "="
+														+ ":"
 														+ info.get(key)
-																.toString()
-														+ "\r\n");
+																.toString());
 											}
+											sb.append("}");
 											Log.d("TestData", sb.toString());
 										} else {
 											Log.d("TestData", "发生错误：" + status);
@@ -307,4 +219,5 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
 				});
 
 	}
+
 }

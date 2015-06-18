@@ -1903,6 +1903,7 @@ public class HttpControl {
 					userInfo.getLogobg_s());
 			SharedUtil.setStringPerfernece(context, SharedUtil.user_mobile,
 					userInfo.getMobile());
+			Log.i("token",userInfo.getToken());
 			SharedUtil.setStringPerfernece(context, SharedUtil.user_token,
 					userInfo.getToken());
 			SharedUtil.setBooleanPerfernece(context,
@@ -1911,6 +1912,10 @@ public class HttpControl {
 					SharedUtil.user_AuditStatus, userInfo.getAuditStatus());
 			SharedUtil.setStringPerfernece(context,
 					SharedUtil.user_Description, userInfo.getDescription());
+			SharedUtil.setBooleanPerfernece(context,
+					SharedUtil.user_IsBindMobile, userInfo.isIsBindMobile());
+			SharedUtil.setBooleanPerfernece(context,
+					SharedUtil.user_IsBindWeiXin, userInfo.isIsBindWeiXin());
 		}
 	}
 
@@ -2010,4 +2015,34 @@ public class HttpControl {
 		bigfFile.ResumableUploadInBackground(callBack);
 	}
 
+	
+	
+	
+	
+	
+
+	/**
+	 * 获取我关注的人和我的粉丝的列表
+	 * 
+	 * @param phone
+	 *            String手机号码
+	 * @param password
+	 *            String 密码
+	 * @param httpCallBack
+	 *            HttpCallBackInterface回调接口
+	 * @param context
+	 *            Context
+	 * @return void
+	 * **/
+	public void wxLongin(String jsonStr,
+			final HttpCallBackInterface httpCallBack, Context context,
+			boolean showDialog) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put(Constants.JSON, jsonStr);
+		BasehttpSend(map, context, HttpConstants.METHOD_wxLogin,
+				httpCallBack, UserRequestBean.class, showDialog,
+				false);
+	}
+	
+	
 }

@@ -54,7 +54,7 @@ public class Constants {
 	public static final String PRODUCTID = "productId";//商品编号
 	public static final String PRODUCTI_USERID = "UserId";//当前登录的用户id
 	public static final String PROMOTIONID = "promotionId";//活动id
-	
+	public static final String JSON = "json";//json数据 
 	
 	
 	

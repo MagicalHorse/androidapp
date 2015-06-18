@@ -29,6 +29,9 @@ public class SharedUtil {
 	 */
 	public static final String user_AuditStatus = "AuditStatus";//用户审核状态
 	
+	public static final String user_IsBindMobile = "IsBindMobile";//是否绑定手机号
+	
+	public static final String user_IsBindWeiXin = "IsBindWeiXin";//是否绑定微信号
 	public static final String user_Description = "Description";//店铺说明
 	
 	
