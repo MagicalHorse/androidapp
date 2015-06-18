@@ -321,12 +321,16 @@ public class UserConfigActivity extends BaseActivityWithTopView implements
 			startActivity(intentModifyPassword);
 			break;
 		case R.id.rl_bind_phone:// 绑定手机号
-			if (SharedUtil.getBooleanPerfernece(mContext,
-					SharedUtil.user_IsBindMobile)) {
-				Toast.makeText(mContext, "手机号已绑定", 1000).show();
-			} else {
-				// 绑定手机号
-			}
+			 if (SharedUtil.getBooleanPerfernece(mContext,
+			 SharedUtil.user_IsBindMobile)) {
+			 Toast.makeText(mContext, "手机号已绑定", 1000).show();
+			 } else {
+			// 绑定手机号
+			Intent intentBindPhone = new Intent(UserConfigActivity.this,
+					FindPasswordActivity.class);
+			intentBindPhone.putExtra("from", "bindPhone");
+			startActivity(intentBindPhone);
+			 }
 			break;
 		case R.id.rl_bind_wechat:// 绑定微信
 			if (SharedUtil.getBooleanPerfernece(mContext,

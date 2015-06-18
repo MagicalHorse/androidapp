@@ -11,12 +11,14 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.MyCountDown;
 /**
@@ -33,7 +35,7 @@ public class FindPasswordActivity extends BaseActivityWithTopView implements
 	private TextView tv_getcode;// 获取验证码
 	private int maxSecond = 90;
 	private String getCodeString = "获取验证码";
-
+	private String from;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		MyApplication.getInstance().addActivity(this);//加入回退栈
@@ -45,7 +47,12 @@ public class FindPasswordActivity extends BaseActivityWithTopView implements
 	}
 
 	private void initView() {
-		setTitle("重置密码");
+		from = getIntent().getStringExtra("from");
+		if ("bindPhone".equals(from)) {// 绑定手机号
+			setTitle("验证手机号");
+		}else{
+			setTitle("重置密码");
+		}
 		setLeftTextView(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -86,7 +93,11 @@ public class FindPasswordActivity extends BaseActivityWithTopView implements
 				
 				@Override
 				public void http_Success(Object obj) {
-					skip(Constants.USER_MOBILE, phone, ResetPasswordActivity.class, true);
+					if("bindPhone".equals(from)){//绑定手机号码
+						bindMobile();
+					}else{
+						skip(Constants.USER_MOBILE, phone, ResetPasswordActivity.class, true);
+					}
 				}
 				
 				@Override
@@ -148,5 +159,25 @@ public class FindPasswordActivity extends BaseActivityWithTopView implements
 	public void onTextChanged(CharSequence s, int start, int before, int count) {
 		
 		
+	}
+	
+	
+	
+	private void bindMobile() {
+		HttpControl httpControl = new HttpControl();
+		httpControl.bindMobile(et_mobile.getText().toString().trim(),
+				new HttpCallBackInterface() {
+
+					@Override
+					public void http_Success(Object obj) {
+						Toast.makeText(mContext, "绑定成功", 1000).show();
+						SharedUtil.setBooleanPerfernece(mContext, SharedUtil.user_IsBindMobile, true);
+						FindPasswordActivity.this.finish();
+					}
+					@Override
+					public void http_Fails(int error, String msg) {
+						Toast.makeText(mContext, msg, 1000).show();
+					}
+				}, mContext, true);
 	}
 }

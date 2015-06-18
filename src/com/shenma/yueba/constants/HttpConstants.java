@@ -16,6 +16,11 @@ public class HttpConstants {
 	
 	
 	
+	
+	/**
+	 * 微信登录
+	 */
+	public static String METHOD_BINDMOBILE = USERURL + "BindMobile";
 	/**
 	 * 微信登录
 	 */

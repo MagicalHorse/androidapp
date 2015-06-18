@@ -2045,4 +2045,30 @@ public class HttpControl {
 	}
 	
 	
+
+	/**
+	 * 获取我关注的人和我的粉丝的列表
+	 * 
+	 * @param phone
+	 *            String手机号码
+	 * @param password
+	 *            String 密码
+	 * @param httpCallBack
+	 *            HttpCallBackInterface回调接口
+	 * @param context
+	 *            Context
+	 * @return void
+	 * **/
+	public void bindMobile(String mobile,
+			final HttpCallBackInterface httpCallBack, Context context,
+			boolean showDialog) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put(Constants.MOBILE, mobile);
+		BasehttpSend(map, context, HttpConstants.METHOD_BINDMOBILE,
+				httpCallBack, BaseRequest.class, showDialog,
+				false);
+	}
+	
+	
+	
 }
