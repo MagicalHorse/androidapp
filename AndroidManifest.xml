@@ -349,6 +349,11 @@
         <activity
             android:name="com.shenma.yueba.baijia.activity.BaijiaPayActivity"
             android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:scheme="@string/wenxin_appid"/>
+            </intent-filter>
         </activity>
 
         <!-- 圈子 -->

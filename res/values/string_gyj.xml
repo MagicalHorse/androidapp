@@ -22,6 +22,10 @@
     <string name="shop_description2_str">猫猫出品必出精品。还有没来得及了解纪梵希的亲,赶快加猫猫的圈子,这是个好机会哦。</string>
     <string name="shop_description3_str">群内纪梵希品牌历史演讲。\n时间4月31日 18:00。</string>
     
+    <string name="wenxin_appid">wx281aa8c2686c0e7c</string>
+    <string name="wenxin_shanghuno">1247257401</string>
+    <string name="wenxin_api_key">1a8fd52d8cb2b6099b1c4c669e5e2717</string>
+    
     
     
 </resources>
