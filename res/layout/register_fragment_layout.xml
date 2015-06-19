@@ -28,14 +28,13 @@
             <EditText
                 android:id="@+id/et_mobile"
                 android:layout_width="0dip"
-                android:layout_height="wrap_content"
+                android:layout_height="fill_parent"
                 android:layout_marginLeft="10dip"
                 android:layout_weight="4"
                 android:background="@color/transparent"
                 android:inputType="phone"
                 android:maxLength="11"
                 android:textSize="17sp" >
-
                 <requestFocus />
             </EditText>
         </LinearLayout>
@@ -45,16 +44,19 @@
             android:layout_marginLeft="5dip"
             android:layout_marginRight="5dip" />
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="55dip"
             android:paddingLeft="15dip"
+            android:orientation="horizontal"
             android:paddingRight="15dip" >
 
             <EditText
                 android:id="@+id/et_code"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="0dip"
+                android:layout_weight="1"
+                android:inputType="number"
+                android:layout_height="fill_parent"
                 android:layout_centerVertical="true"
                 android:background="@color/transparent"
                 android:hint="请输入短信验证码"
@@ -71,7 +73,7 @@
                 android:text="获取验证码"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
-        </RelativeLayout>
+        </LinearLayout>
 
         <View
             style="@style/style_horizontal_line"
