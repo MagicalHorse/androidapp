@@ -1917,6 +1917,10 @@ public class HttpControl {
 					SharedUtil.user_IsBindMobile, userInfo.isIsBindMobile());
 			SharedUtil.setBooleanPerfernece(context,
 					SharedUtil.user_IsBindWeiXin, userInfo.isIsBindWeiXin());
+			
+			
+			JpushUtils jpushUtils = new JpushUtils(context);
+			jpushUtils.setAlias(SharedUtil.getStringPerfernece(context, SharedUtil.user_id));//设置别名
 		}
 	}
 

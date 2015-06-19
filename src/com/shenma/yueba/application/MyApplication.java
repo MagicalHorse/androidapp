@@ -18,6 +18,8 @@ import android.graphics.Typeface;
 import android.os.StrictMode;
 import android.widget.Toast;
 
+import cn.jpush.android.api.JPushInterface;
+
 import com.alibaba.sdk.android.oss.OSSService;
 import com.alibaba.sdk.android.oss.OSSServiceProvider;
 import com.alibaba.sdk.android.oss.model.AccessControlList;
@@ -82,9 +84,16 @@ public class MyApplication extends Application {
 		initDisplayImageOptions();
 		initRoundDisplayImageOptions();
 		initFaceMap();
+		initJpush();
 		dbHelper = RoboGuice.getBaseApplicationInjector(this).getInstance(
 				DBHelper.class);
 	}
+
+
+	private void initJpush() {
+		// 初始化 JPush。如果已经初始化，但没有登录成功，则执行重新登录。
+			 JPushInterface.init(getApplicationContext());
+		}
 
 
 	public static MyApplication getInstance() {
