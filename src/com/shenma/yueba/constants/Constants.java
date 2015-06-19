@@ -1,5 +1,8 @@
 package com.shenma.yueba.constants;
 
+import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
+
 import android.os.Environment;
 
 public class Constants {
@@ -20,12 +23,17 @@ public class Constants {
 	// appid
 	// 请同时修改 androidmanifest.xml里面，.PayActivityd里的属性<data
 	// android:scheme="wxb4ba3c02aa476ea1"/>为新设置的appid
-	public static final String WX_APP_ID = "wx281aa8c2686c0e7c";
+	public static final String WX_APP_ID = MyApplication.getInstance().getResources().getString(R.string.wenxin_appid);
 	// 商户号
-	public static final String WX_MCH_ID = "1247257401";
+	public static final String WX_MCH_ID = MyApplication.getInstance().getResources().getString(R.string.wenxin_shanghuno);
+	
 	// API密钥，在商户平台设置
-	public static final String WX_API_KEY = "1a8fd52d8cb2b6099b1c4c669e5e2717";
-
+	public static final String WX_API_KEY = MyApplication.getInstance().getResources().getString(R.string.wenxin_api_key);
+    //回调同志的url
+	public static final String WX_NOTIFY_URL="http://wxpay.weixin.qq.com/pub_v2/pay/notify.v2.php";
+	
+	
+	
 	public static final String KEY = "key";// 阿里云上传图片需要的key
 	public static final String MOBILE = "mobile";// 手机号
 	public static final String isverifymobile = "isverifymobile";// 是否校验

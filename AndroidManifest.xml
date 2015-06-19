@@ -153,12 +153,13 @@
             android:name="com.tencent.connect.common.AssistActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
-              <activity
+        
+        <!-- 微信支付回调 -->
+        <activity
             android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
-            android:launchMode="singleTop"/>
-        
+            android:launchMode="singleTop" />
+
         <!-- 微信回调activity -->
         <activity
             android:name=".wxapi.WXEntryActivity"
@@ -348,7 +349,17 @@
         <!-- 支付方式选择页面 -->
         <activity
             android:name="com.shenma.yueba.baijia.activity.BaijiaPayActivity"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait" 
+            android:exported="true"
+            android:launchMode="singleTop"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:scheme="@string/wenxin_appid" />
+            </intent-filter>
         </activity>
 
         <!-- 圈子 -->
@@ -472,6 +483,14 @@
                 <action android:name="android.intent.action.SCREEN_ON" />
                 <action android:name="android.intent.action.SCREEN_OFF" />
                 <action android:name="android.intent.action.USER_PRESENT" />
+            </intent-filter>
+        </receiver>
+        
+        <!-- 微信微信支付服务 -->
+        <receiver
+            android:name="net.sourceforge.simcpux.AppRegister">
+            <intent-filter>
+                <action android:name="com.tencent.mm.plugin.openapi.Intent.ACTION_REFRESH_WXAPP" />
             </intent-filter>
         </receiver>
     </application>

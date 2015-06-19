@@ -29,7 +29,7 @@
 
     <include layout="@layout/productinfolist_layout"/>
     
-    <TextView
+    <View
         android:id="@+id/affrimorder_item_line_textview"
         android:layout_marginTop="@dimen/shop_main_width3_dimen"
         style="@style/style_horizontal_line"

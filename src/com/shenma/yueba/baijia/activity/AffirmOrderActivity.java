@@ -244,10 +244,17 @@ public class AffirmOrderActivity extends BaseActivityWithTopView implements
 
 					@Override
 					public void http_Success(Object obj) {
-						if (obj != null
-								&& obj instanceof RequestCreatOrderInfoBean) {
-							MyApplication.getInstance().showMessage(
-									AffirmOrderActivity.this, "下单成功");
+						if (obj != null && obj instanceof RequestCreatOrderInfoBean) {
+							RequestCreatOrderInfoBean requestCreatOrderInfoBean=(RequestCreatOrderInfoBean)obj;
+							if(requestCreatOrderInfoBean.getData()!=null)
+							{
+								MyApplication.getInstance().showMessage(AffirmOrderActivity.this, "下单成功");
+								Intent intent=new Intent(AffirmOrderActivity.this,BaijiaPayActivity.class);
+								intent.putExtra("PAYDATA", requestCreatOrderInfoBean.getData());
+								intent.putExtra("MessageTitle", productsDetailsInfoBean.getProductName());
+								intent.putExtra("MessageDesc", "【"+productsDetailsInfoBean.getProductName()+"】  x "+buyCount+"  "+currCheckedFouce.getSize());
+								AffirmOrderActivity.this.startActivity(intent);
+							}
 							finish();
 						}
 					}
