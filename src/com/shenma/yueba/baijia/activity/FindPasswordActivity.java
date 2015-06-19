@@ -51,11 +51,7 @@ public class FindPasswordActivity extends BaseActivityWithTopView implements
 
 	private void initView() {
 		from = getIntent().getStringExtra("from");
-		if ("bindPhone".equals(from)) {// 绑定手机号
 			setTitle("验证手机号");
-		} else {
-			setTitle("重置密码");
-		}
 		setLeftTextView(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
