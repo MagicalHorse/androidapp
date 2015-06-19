@@ -20,11 +20,11 @@ public class Constants {
 	// appid
 	// 请同时修改 androidmanifest.xml里面，.PayActivityd里的属性<data
 	// android:scheme="wxb4ba3c02aa476ea1"/>为新设置的appid
-	public static final String APP_ID = "wx281aa8c2686c0e7c";
+	public static final String WX_APP_ID = "wx281aa8c2686c0e7c";
 	// 商户号
-	public static final String MCH_ID = "1247257401";
+	public static final String WX_MCH_ID = "1247257401";
 	// API密钥，在商户平台设置
-	public static final String API_KEY = "1a8fd52d8cb2b6099b1c4c669e5e2717";
+	public static final String WX_API_KEY = "1a8fd52d8cb2b6099b1c4c669e5e2717";
 
 	public static final String KEY = "key";// 阿里云上传图片需要的key
 	public static final String MOBILE = "mobile";// 手机号

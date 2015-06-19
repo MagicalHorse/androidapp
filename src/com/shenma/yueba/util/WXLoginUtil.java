@@ -11,6 +11,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.shenma.yueba.baijia.modle.UserRequestBean;
+import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.yangjia.activity.MainActivityForYangJia;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -27,6 +28,7 @@ public class WXLoginUtil {
 	private Context ctx;
 	private UMSocialService mController;
 
+	
 	private boolean closeSelf;
 	public WXLoginUtil(Context ctx) {
 		this.ctx = ctx;
@@ -39,8 +41,8 @@ public class WXLoginUtil {
 		this.closeSelf = closeSelf;
 		mController = UMServiceFactory.getUMSocialService("com.umeng.login");
 		// 添加微信平台
-		UMWXHandler wxHandler = new UMWXHandler(ctx, "wx0bd15e11e7c3090f",
-				"e3ff58518855345970755d08a3540c26");
+		UMWXHandler wxHandler = new UMWXHandler(ctx, Constants.WX_APP_ID,
+				Constants.WX_API_KEY);
 		wxHandler.addToSocialSDK();
 		/*
 		 * mController.doOauthVerify(ctx, SHARE_MEDIA.WEIXIN, new
@@ -102,6 +104,7 @@ public class WXLoginUtil {
 												sb.append(",");
 											}
 											sb.append("}");
+											sb.append("&appid=").append(Constants.WX_APP_ID);
 											((Activity)ctx).runOnUiThread(new Runnable() {
 												@Override
 												public void run() {

@@ -230,8 +230,8 @@ public class UserConfigActivity extends BaseActivityWithTopView implements
 		}
 		if (requestCode == Constants.REQUESTCODE
 				&& resultCode == Constants.RESULTCODE) {// 修改昵称返回
-			String newName = data.getStringExtra("newName");
-			tv_nickname_value.setText(ToolsUtil.nullToString(newName));
+//			String newName = data.getStringExtra("newName");
+//			tv_nickname_value.setText(ToolsUtil.nullToString(newName));
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 
@@ -298,6 +298,7 @@ public class UserConfigActivity extends BaseActivityWithTopView implements
 
 	@Override
 	protected void onResume() {
+		tv_nickname_value.setText(SharedUtil.getStringPerfernece(mContext, SharedUtil.user_names));
 		tv_bind_phone_value.setText(SharedUtil.getBooleanPerfernece(mContext,
 				SharedUtil.user_IsBindMobile) ? "已绑定" : "未绑定");
 		tv_bind_wechat_value.setText(SharedUtil.getBooleanPerfernece(mContext,
