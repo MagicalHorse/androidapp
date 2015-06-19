@@ -79,14 +79,30 @@ public class WeiXinPayManager {
 			/*if (dialog != null) {
 				dialog.dismiss();
 			}*/
-			sb.append("prepay_id\n"+result.get("prepay_id")+"\n\n");
-			Log.i("TAG", "weixin:prepay_id="+result.get("prepay_id"));
-			//show.setText(sb.toString());
+			if(!result.containsKey("return_code"))
+			{
+				showFail("启动失败，请重试");
+				return;
+			}else if(result.get("return_code").equals("SUCCESS"))
+			{
+				sb.append("prepay_id\n"+result.get("prepay_id")+"\n\n");
+				Log.i("TAG", "weixin:prepay_id="+result.get("prepay_id"));
+				//show.setText(sb.toString());
 
-			resultunifiedorder=result;
-            //获取预支付订单号成功
-			genPayReq();
-			sendPayReq();
+				resultunifiedorder=result;
+	            //获取预支付订单号成功
+				genPayReq();
+				sendPayReq();
+				if(dialog!=null)
+				{
+					dialog.cancel();
+				}
+			}else 
+			{
+				String errormsg=result.get("return_msg");
+				showFail(errormsg);
+			}
+			
 		}		
 		
 		@Override
@@ -122,14 +138,13 @@ public class WeiXinPayManager {
 			xml.append("</xml>");
             List<NameValuePair> packageParams = new LinkedList<NameValuePair>();
 			packageParams.add(new BasicNameValuePair("appid", Constants.APP_ID));
-			packageParams.add(new BasicNameValuePair("body", messageTitle));
-			packageParams.add(new BasicNameValuePair("detail", messageDesc));
+			packageParams.add(new BasicNameValuePair("body", "messageTitle"));
 			packageParams.add(new BasicNameValuePair("mch_id", Constants.MCH_ID));
 			packageParams.add(new BasicNameValuePair("nonce_str", nonceStr));
-			packageParams.add(new BasicNameValuePair("notify_url",com.shenma.yueba.constants.Constants.WX_NOTIFY_URL));
+			packageParams.add(new BasicNameValuePair("notify_url", com.shenma.yueba.constants.Constants.WX_NOTIFY_URL));
 			packageParams.add(new BasicNameValuePair("out_trade_no",genOutTradNo()));
 			packageParams.add(new BasicNameValuePair("spbill_create_ip","127.0.0.1"));
-			packageParams.add(new BasicNameValuePair("total_fee", Double.toString(creatOrderInfoBean.getTotalamount())));
+			packageParams.add(new BasicNameValuePair("total_fee", Integer.toString((int)(creatOrderInfoBean.getTotalAmount()*100))));
 			packageParams.add(new BasicNameValuePair("trade_type", "APP"));
 
 
@@ -144,7 +159,7 @@ public class WeiXinPayManager {
 		} catch (Exception e) {
 			return null;
 		}
-		
+	
 
 	}
 	
@@ -260,8 +275,7 @@ public class WeiXinPayManager {
 
 		//show.setText(sb.toString());
 
-		Log.i("TAG", "weixin:签名："+sb.toString());
-		//Log.e("orion", signParams.toString());
+		Log.e("orion", signParams.toString());
 
 	}
 	
@@ -297,4 +311,13 @@ public class WeiXinPayManager {
 		msgApi.registerApp(Constants.APP_ID);
 		msgApi.sendReq(req);
 	}
+       
+       void showFail(String errormsg)
+       {
+    	   MyApplication.getInstance().showMessage(context, errormsg);
+    	   if(dialog!=null)
+    	   {
+    		   dialog.cancel();
+    	   }
+       }
 }
