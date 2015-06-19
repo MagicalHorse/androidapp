@@ -92,7 +92,7 @@ public class ResetPasswordActivity extends BaseActivityWithTopView implements On
 				return;
 			}
 			HttpControl httpControl=new HttpControl();
-			httpControl.resetPassword(phone, newpwd, new HttpCallBackInterface() {
+			httpControl.resetPassword(et_mobile_no.getText().toString().trim(), newpwd, new HttpCallBackInterface() {
 				
 				@Override
 				public void http_Success(Object obj) {
