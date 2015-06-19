@@ -482,5 +482,30 @@ public class Constants {
 	public static String VERSION_NAME = "";
 	public static String VERSION_CODE = "";
 	public static final String COMMON_SP = "common_shared_preferences";
+	
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 *推送
+	 */
+	public static String PUSH_TAG_ADDFRIEND = "addFriend";
+	public static String PUSH_TAG_SYSTEM = "system";
+	public static String PUSH_TAG_AGREE_FRIEND = "agreeFriend";
+	public static String PUSH_TAG_REFUSE_FRIEND = "refuseFriend";
+	public static String PUSH_SOCIAL = "social";
+	public static String PUSH_ASK = "askPrice";
+	public static String PUSH_ORFER = "offerPrice";
+	public static String ADD = "0";
+	public static String AGREE = "1";
+	public static String REFUSE = "2";
+	public static String FRIEND_TITLE = "好友通知";
+	public static String SYSTEM_TITLE = "系统通知";
+	public static String SOCIAL_TITLE = "社交消息";
+	
 
 }

@@ -23,7 +23,7 @@ import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.MyCountDown;
 import com.shenma.yueba.util.ToolsUtil;
 
-public class RegisterFragment extends BaseFragment implements OnClickListener, TextWatcher {
+public class RegisterFragment extends BaseFragment implements OnClickListener {
 
 	private EditText et_mobile;
 	private TextView tv_mobile_title;
@@ -44,7 +44,6 @@ public class RegisterFragment extends BaseFragment implements OnClickListener, T
 		if(view == null){
 			view = inflater.inflate(R.layout.register_fragment_layout, null);
 			et_mobile = (EditText) view.findViewById(R.id.et_mobile);
-			et_mobile.addTextChangedListener(this);
 			tv_getcode = (TextView) view
 					.findViewById(R.id.tv_getcode);
 			et_code = (EditText) view.findViewById(R.id.et_code);
@@ -79,13 +78,12 @@ public class RegisterFragment extends BaseFragment implements OnClickListener, T
 					Toast.makeText(getActivity(), "请输入正确的手机号", 1000).show();
 					return;
 				}
-				
 				HttpControl httpControl=new HttpControl();
 				httpControl.sendPhoeCode(et_mobile.getText().toString().trim(), "false",new HttpCallBackInterface() {
 					
 					@Override
 					public void http_Success(Object obj) {
-						
+						Toast.makeText(getActivity(), "获取成功", 1000).show();
 						new MyCountDown(maxSecond * 1000, 1000, tv_getcode, getCodeString).start();
 					}
 					
@@ -136,29 +134,6 @@ public class RegisterFragment extends BaseFragment implements OnClickListener, T
 		default:
 			break;
 		}
-		
-	}
-
-	@Override
-	public void afterTextChanged(Editable arg0) {
-		if(arg0.length()>0){
-			tv_getcode.setVisibility(View.VISIBLE);
-		}else{
-			tv_getcode.setVisibility(View.INVISIBLE);
-		}
-		
-	}
-
-	@Override
-	public void beforeTextChanged(CharSequence s, int start, int count,
-			int after) {
-		
-		
-	}
-
-	@Override
-	public void onTextChanged(CharSequence s, int start, int before, int count) {
-		
 		
 	}
 }

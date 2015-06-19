@@ -68,6 +68,7 @@ public class UserConfigActivity extends BaseActivityWithTopView implements
 	private TextView tv_bind_wechat_title;
 	private TextView tv_bind_wechat_value;
 	private TextView tv_about;
+	private Button user_config_exit_button;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -121,7 +122,8 @@ public class UserConfigActivity extends BaseActivityWithTopView implements
 		rl_bind_wechat.setOnClickListener(this);
 		tv_about.setOnClickListener(this);
 
-		Button user_config_exit_button = getView(R.id.user_config_exit_button);
+		user_config_exit_button = getView(R.id.user_config_exit_button);
+		user_config_exit_button.setOnClickListener(this);
 		// 设置字体样式
 		FontManager.changeFonts(this, tv_top_title, tv_nickname_title,
 				tv_nickname_value, rv_rename_password, tv_message_setting,
