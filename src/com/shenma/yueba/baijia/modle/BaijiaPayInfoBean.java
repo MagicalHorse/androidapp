@@ -22,8 +22,17 @@ String extname2="";
 String extname3="";
 String extname4="";
 
-
-public BaijiaPayInfoBean(int icon,Type type,String extname1,String extname2,String extname3,String extname4)
+/*****
+ * @param icon int 图片
+ * @param type Type 支付类型
+ * @param extname1 String 描述1
+ * @param extname1 String 描述2
+ * @param extname1 String 描述3
+ * @param extname1 String 描述4
+ * @param creatOrderInfoBean CreatOrderInfoBean 订单
+ * 
+ * *****/
+public BaijiaPayInfoBean(int icon,Type type,String extname1,String extname2,String extname3,String extname4,CreatOrderInfoBean creatOrderInfoBean)
 {
 	this.icon=icon;
 	this.type=type;
@@ -31,10 +40,14 @@ public BaijiaPayInfoBean(int icon,Type type,String extname1,String extname2,Stri
 	this.extname2=extname2;
 	this.extname3=extname3;
 	this.extname4=extname4;
+	this.extname4=extname4;
+	this.creatOrderInfoBean=creatOrderInfoBean;
 }
 
+CreatOrderInfoBean creatOrderInfoBean;
 Type type;
 int icon;
+
 public String getExtname1() {
 	return extname1;
 }

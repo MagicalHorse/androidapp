@@ -29,7 +29,11 @@ public class Constants {
 	
 	// API密钥，在商户平台设置
 	public static final String WX_API_KEY = MyApplication.getInstance().getResources().getString(R.string.wenxin_api_key);
-
+    //回调同志的url
+	public static final String WX_NOTIFY_URL="http://wxpay.weixin.qq.com/pub_v2/pay/notify.v2.php";
+	
+	
+	
 	public static final String KEY = "key";// 阿里云上传图片需要的key
 	public static final String MOBILE = "mobile";// 手机号
 	public static final String isverifymobile = "isverifymobile";// 是否校验

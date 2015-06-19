@@ -14,6 +14,8 @@ import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.adapter.BaiJiaPayAdapter;
 import com.shenma.yueba.baijia.modle.BaijiaPayInfoBean;
+import com.shenma.yueba.baijia.modle.CreatOrderInfoBean;
+import com.shenma.yueba.wxapi.WeiXinPayManager;
 
 /**  
  * @author gyj  
@@ -26,6 +28,11 @@ View parentView;
 ListView baijiapay_layout_paytype_listview;
 BaiJiaPayAdapter baiJiaPayAdapter;
 List<BaijiaPayInfoBean> bean=new ArrayList<BaijiaPayInfoBean>();
+CreatOrderInfoBean creatOrderInfoBean;
+//微信支付 商品名描述
+String messageTitle="";
+//微信支付商品信息描述
+String messageDesc="";
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(getWindow().FEATURE_NO_TITLE);
@@ -33,6 +40,23 @@ List<BaijiaPayInfoBean> bean=new ArrayList<BaijiaPayInfoBean>();
 		setContentView(parentView);
 		super.onCreate(savedInstanceState);
 		MyApplication.getInstance().addActivity(this);
+		if(this.getIntent().getSerializableExtra("PAYDATA")!=null)
+		{
+			creatOrderInfoBean=(CreatOrderInfoBean)this.getIntent().getSerializableExtra("PAYDATA");
+		}else
+		{
+			finish();
+			MyApplication.getInstance().showMessage(BaijiaPayActivity.this, "数据错误，请从订单页面进入");
+			return;
+		}
+		if(this.getIntent().getStringExtra("MessageTitle")!=null)
+		{
+			messageTitle=this.getIntent().getStringExtra("MessageTitle");
+		}
+		if(this.getIntent().getStringExtra("MessageDesc")!=null)
+		{
+			messageDesc=this.getIntent().getStringExtra("MessageDesc");
+		}
 		initView();
 	}
 	
@@ -46,7 +70,7 @@ List<BaijiaPayInfoBean> bean=new ArrayList<BaijiaPayInfoBean>();
 				BaijiaPayActivity.this.finish();
 			}
 		});
-		bean.add(new BaijiaPayInfoBean(R.drawable.weixin_icon,BaijiaPayInfoBean.Type.weixinpay,"请支付","0.00","微信支付","微信安全支付"));
+		bean.add(new BaijiaPayInfoBean(R.drawable.weixin_icon,BaijiaPayInfoBean.Type.weixinpay,"请支付",Double.toString(creatOrderInfoBean.getTotalamount()),"微信支付","微信安全支付",creatOrderInfoBean));
 		baiJiaPayAdapter=new BaiJiaPayAdapter(bean, BaijiaPayActivity.this);
 		baijiapay_layout_paytype_listview=(ListView)parentView.findViewById(R.id.baijiapay_layout_paytype_listview);
 		baijiapay_layout_paytype_listview.setAdapter(baiJiaPayAdapter);
@@ -58,10 +82,17 @@ List<BaijiaPayInfoBean> bean=new ArrayList<BaijiaPayInfoBean>();
 				switch(baijiaPayInfoBean.getType())
 				{
 				case weixinpay:
-					
+					//启动微信支付
+					startWenXinPay();
 					break;
 				}
 			}
 		});
+	}
+	
+	void startWenXinPay()
+	{
+		WeiXinPayManager wxpm=new WeiXinPayManager(this);
+		wxpm.createWenXinPay(creatOrderInfoBean,messageTitle,messageDesc);
 	}
 }
