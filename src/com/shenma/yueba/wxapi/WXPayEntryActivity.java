@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.constants.Constants;
+import com.tencent.mm.sdk.constants.ConstantsAPI;
 import com.tencent.mm.sdk.modelbase.BaseReq;
 import com.tencent.mm.sdk.modelbase.BaseResp;
 import com.tencent.mm.sdk.openapi.IWXAPI;
@@ -42,7 +44,20 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler{
 
 	@Override
 	public void onResp(BaseResp resp) {
-		
+		if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
+			switch(resp.errCode)
+			{
+			case 0://成功
+				MyApplication.getInstance().showMessage(WXPayEntryActivity.this, resp.errStr+"  case:"+0);
+				break;
+			case -1://错误
+				MyApplication.getInstance().showMessage(WXPayEntryActivity.this, resp.errStr+"  case:"+-1);
+				break;
+			case -2://用户取消
+				MyApplication.getInstance().showMessage(WXPayEntryActivity.this,"已取消"+"  case:"+-2);
+				break;
+			}
+		}
 		
 	}
 }

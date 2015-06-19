@@ -70,7 +70,7 @@ String messageDesc="";
 				BaijiaPayActivity.this.finish();
 			}
 		});
-		bean.add(new BaijiaPayInfoBean(R.drawable.weixin_icon,BaijiaPayInfoBean.Type.weixinpay,"请支付",Double.toString(creatOrderInfoBean.getTotalamount()),"微信支付","微信安全支付",creatOrderInfoBean));
+		bean.add(new BaijiaPayInfoBean(R.drawable.weixin_icon,BaijiaPayInfoBean.Type.weixinpay,"请支付",Double.toString(creatOrderInfoBean.getTotalAmount()),"微信支付","微信安全支付",creatOrderInfoBean));
 		baiJiaPayAdapter=new BaiJiaPayAdapter(bean, BaijiaPayActivity.this);
 		baijiapay_layout_paytype_listview=(ListView)parentView.findViewById(R.id.baijiapay_layout_paytype_listview);
 		baijiapay_layout_paytype_listview.setAdapter(baiJiaPayAdapter);

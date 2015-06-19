@@ -9,27 +9,28 @@ import java.io.Serializable;
  */
 
 public class CreatOrderInfoBean implements Serializable{
-	int orderno;//" : 订单号 "115012080504",
-    double totalamount;//订单金额 101.00,
-    double discountamount;//":优惠的金额
-	public int getOrderno() {
-		return orderno;
+	String OrderNo;//" : 订单号 "115012080504",
+    double TotalAmount;//订单金额 101.00,
+    double DisCountAmount;//":优惠的金额
+	public String getOrderNo() {
+		return OrderNo;
 	}
-	public void setOrderno(int orderno) {
-		this.orderno = orderno;
+	public void setOrderNo(String orderNo) {
+		OrderNo = orderNo;
 	}
-	public double getTotalamount() {
-		return totalamount;
+	public double getTotalAmount() {
+		return TotalAmount;
 	}
-	public void setTotalamount(double totalamount) {
-		this.totalamount = totalamount;
+	public void setTotalAmount(double totalAmount) {
+		TotalAmount = totalAmount;
 	}
-	public double getDiscountamount() {
-		return discountamount;
+	public double getDisCountAmount() {
+		return DisCountAmount;
 	}
-	public void setDiscountamount(double discountamount) {
-		this.discountamount = discountamount;
+	public void setDisCountAmount(double disCountAmount) {
+		DisCountAmount = disCountAmount;
 	}
+	
 
 	
 }

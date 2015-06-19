@@ -252,7 +252,7 @@ public class AffirmOrderActivity extends BaseActivityWithTopView implements
 								Intent intent=new Intent(AffirmOrderActivity.this,BaijiaPayActivity.class);
 								intent.putExtra("PAYDATA", requestCreatOrderInfoBean.getData());
 								intent.putExtra("MessageTitle", productsDetailsInfoBean.getProductName());
-								intent.putExtra("MessageDesc", "【"+productsDetailsInfoBean.getProductName()+"】  x "+buyCount+"  "+currCheckedFouce.getSize());
+								intent.putExtra("MessageDesc", ""+productsDetailsInfoBean.getProductName()+"  x "+buyCount);
 								AffirmOrderActivity.this.startActivity(intent);
 							}
 							finish();
