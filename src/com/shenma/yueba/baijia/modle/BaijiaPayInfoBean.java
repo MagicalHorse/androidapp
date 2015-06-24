@@ -32,7 +32,7 @@ String extname4="";
  * @param creatOrderInfoBean CreatOrderInfoBean 订单
  * 
  * *****/
-public BaijiaPayInfoBean(int icon,Type type,String extname1,String extname2,String extname3,String extname4,CreatOrderInfoBean creatOrderInfoBean)
+public BaijiaPayInfoBean(int icon,Type type,String extname1,String extname2,String extname3,String extname4)
 {
 	this.icon=icon;
 	this.type=type;
@@ -41,10 +41,8 @@ public BaijiaPayInfoBean(int icon,Type type,String extname1,String extname2,Stri
 	this.extname3=extname3;
 	this.extname4=extname4;
 	this.extname4=extname4;
-	this.creatOrderInfoBean=creatOrderInfoBean;
 }
 
-CreatOrderInfoBean creatOrderInfoBean;
 Type type;
 int icon;
 

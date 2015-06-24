@@ -48,13 +48,21 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler{
 			switch(resp.errCode)
 			{
 			case 0://成功
-				MyApplication.getInstance().showMessage(WXPayEntryActivity.this, resp.errStr+"  case:"+0);
+				MyApplication.getInstance().showMessage(WXPayEntryActivity.this, "  case:"+0);
+				//支付成功进行订单查询确认
 				break;
 			case -1://错误
-				MyApplication.getInstance().showMessage(WXPayEntryActivity.this, resp.errStr+"  case:"+-1);
+				String errmsg=resp.errStr;
+				if(errmsg==null || errmsg.equals(""))
+				{
+					errmsg="未知错误";
+				}
+				MyApplication.getInstance().showMessage(WXPayEntryActivity.this,errmsg);
+				finish();
 				break;
 			case -2://用户取消
-				MyApplication.getInstance().showMessage(WXPayEntryActivity.this,"已取消"+"  case:"+-2);
+				MyApplication.getInstance().showMessage(WXPayEntryActivity.this,"已取消");
+				finish();
 				break;
 			}
 		}
