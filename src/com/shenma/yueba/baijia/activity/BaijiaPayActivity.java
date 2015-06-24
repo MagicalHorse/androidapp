@@ -1,7 +1,9 @@
 package com.shenma.yueba.baijia.activity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import android.os.Bundle;
 import android.view.View;
@@ -14,8 +16,10 @@ import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.adapter.BaiJiaPayAdapter;
 import com.shenma.yueba.baijia.modle.BaijiaPayInfoBean;
+import com.shenma.yueba.baijia.modle.ComputeAmountInfoBean;
 import com.shenma.yueba.baijia.modle.CreatOrderInfoBean;
-import com.shenma.yueba.wxapi.WeiXinPayManager;
+import com.shenma.yueba.wxapi.CreateWeiXinOrderManager;
+import com.shenma.yueba.wxapi.WeiXinBasePayManager.WeiXinPayManagerListener;
 
 /**  
  * @author gyj  
@@ -70,7 +74,7 @@ String messageDesc="";
 				BaijiaPayActivity.this.finish();
 			}
 		});
-		bean.add(new BaijiaPayInfoBean(R.drawable.weixin_icon,BaijiaPayInfoBean.Type.weixinpay,"请支付",Double.toString(creatOrderInfoBean.getTotalAmount()),"微信支付","微信安全支付",creatOrderInfoBean));
+		bean.add(new BaijiaPayInfoBean(R.drawable.weixin_icon,BaijiaPayInfoBean.Type.weixinpay,"请支付",Double.toString(creatOrderInfoBean.getTotalAmount()),"微信支付","微信安全支付"));
 		baiJiaPayAdapter=new BaiJiaPayAdapter(bean, BaijiaPayActivity.this);
 		baijiapay_layout_paytype_listview=(ListView)parentView.findViewById(R.id.baijiapay_layout_paytype_listview);
 		baijiapay_layout_paytype_listview.setAdapter(baiJiaPayAdapter);
@@ -92,7 +96,24 @@ String messageDesc="";
 	
 	void startWenXinPay()
 	{
-		WeiXinPayManager wxpm=new WeiXinPayManager(this);
-		wxpm.createWenXinPay(creatOrderInfoBean,messageTitle,messageDesc);
+		//WeiXinPayManagerbar wxpm=new WeiXinPayManagerbar(this);
+		//wxpm.createWenXinPay(creatOrderInfoBean,messageTitle,messageDesc);
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("messageTitle", messageTitle);
+		map.put("TotalAmount", creatOrderInfoBean.getTotalAmount());
+		map.put("OrderNo", creatOrderInfoBean.getOrderNo());
+		CreateWeiXinOrderManager cwxm=new CreateWeiXinOrderManager(BaijiaPayActivity.this, new WeiXinPayManagerListener() {
+			
+			@Override
+			public void success(Object obj) {
+				
+			}
+			
+			@Override
+			public void fails(String msg) {
+				MyApplication.getInstance().showMessage(BaijiaPayActivity.this, msg);
+			}
+		},map );
+		cwxm.execute();
 	}
 }

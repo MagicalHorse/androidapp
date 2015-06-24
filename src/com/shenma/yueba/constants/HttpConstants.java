@@ -13,6 +13,8 @@ public class HttpConstants {
 	private static String Order = baseUrl + "Order/";// 订单相关的接口
 	private static String Circle = baseUrl + "Community/";// 圈子相关的接口
 	private static String Promotion = baseUrl + "Promotion/";//活动相关
+	private static String weixinBaseUrl = "https://api.mch.weixin.qq.com/";//微信接口
+	private static String weixinPAYUrl = weixinBaseUrl+"pay/";//微信支付接口
 	
 	
 	
@@ -25,6 +27,13 @@ public class HttpConstants {
 	 * 微信登录
 	 */
 	public static String METHOD_wxLogin = USERURL + "OutSiteLogin";
+	
+	/*****
+	 * 微信创建统一订单
+	 * ***/
+	public static String METHOD_WXCREATEORDER = weixinPAYUrl + "unifiedorder";
+	
+	
 	/**
 	 * 修改昵称
 	 */

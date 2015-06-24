@@ -33,7 +33,7 @@ import com.tencent.mm.sdk.openapi.WXAPIFactory;
  * @version 创建时间：2015-6-19 上午10:48:54 程序的简单说明
  */
 
-public class WeiXinPayManager {
+public class WeiXinPayManagerbar {
 	Context context;
 	Map<String,String> resultunifiedorder;
 	StringBuffer sb;
@@ -42,7 +42,7 @@ public class WeiXinPayManager {
 	PayReq req;
 	CreatOrderInfoBean creatOrderInfoBean;
 	String messageTitle, messageDesc;
-	public WeiXinPayManager(Context context) {
+	public WeiXinPayManagerbar(Context context) {
 		this.context = context;
 		msgApi = WXAPIFactory.createWXAPI(context, null);
 		msgApi.registerApp(Constants.APP_ID);
@@ -92,7 +92,7 @@ public class WeiXinPayManager {
 				resultunifiedorder=result;
 	            //获取预支付订单号成功
 				genPayReq();
-				sendPayReq();
+				//sendPayReq();
 				if(dialog!=null)
 				{
 					dialog.cancel();
@@ -138,7 +138,7 @@ public class WeiXinPayManager {
 			xml.append("</xml>");
             List<NameValuePair> packageParams = new LinkedList<NameValuePair>();
 			packageParams.add(new BasicNameValuePair("appid", Constants.APP_ID));
-			packageParams.add(new BasicNameValuePair("body", "messageTitle"));
+			packageParams.add(new BasicNameValuePair("body", messageTitle));
 			packageParams.add(new BasicNameValuePair("mch_id", Constants.MCH_ID));
 			packageParams.add(new BasicNameValuePair("nonce_str", nonceStr));
 			packageParams.add(new BasicNameValuePair("notify_url", com.shenma.yueba.constants.Constants.WX_NOTIFY_URL));
@@ -210,7 +210,7 @@ public class WeiXinPayManager {
 	}
 	
 	/**
-	 生成签名
+	 生成签名111
 	 */
 
 	private String genPackageSign(List<NameValuePair> params) {
@@ -279,7 +279,7 @@ public class WeiXinPayManager {
 
 	}
 	
-	private long genTimeStamp() {
+	protected long genTimeStamp() {
 		return System.currentTimeMillis() / 1000;
 	}
 	
@@ -302,15 +302,7 @@ public class WeiXinPayManager {
 	}
 	
 	
-	/****
-	 * 调起微信支付
-	 * ***/
-       private void sendPayReq() {
-		
-
-		msgApi.registerApp(Constants.APP_ID);
-		msgApi.sendReq(req);
-	}
+	
        
        void showFail(String errormsg)
        {
@@ -319,5 +311,30 @@ public class WeiXinPayManager {
     	   {
     		   dialog.cancel();
     	   }
+       }
+       
+       
+       /*******
+        * 查询微信订单
+        * ***/
+       public void QueryOrder()
+       {
+    	   
+       }
+       
+       
+       private class WenXinTask extends AsyncTask<Void, Void, Map<String,String>> {
+
+		@Override
+		protected Map<String, String> doInBackground(Void... params) {
+			return null;
+		}
+		
+		@Override
+		protected void onPostExecute(Map<String, String> result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+		}
+		
        }
 }
