@@ -131,6 +131,7 @@ public class BuyerCertificationActivity2 extends BaseActivityWithTopView
 		bean.setWorkCard(intent.getStringExtra("pic3"));
 		bean.setCardFront(intent.getStringExtra("pic1"));
 		bean.setCardBack(intent.getStringExtra("pic2"));
+		bean.setName(intent.getStringExtra("name"));
 	}
 
 	public void getStoreList() {
@@ -185,7 +186,7 @@ public class BuyerCertificationActivity2 extends BaseActivityWithTopView
 					drawer_layout.closeDrawers();
 				}
 				if(tag == 4){
-					tv_store_title.setText(storeList.get(position).getStoreName());
+					tv_store_title.setText("商城名称 "+storeList.get(position).getStoreName());
 					store_id = storeList.get(position).getStoreId();
 					drawer_layout.closeDrawers();
 				}

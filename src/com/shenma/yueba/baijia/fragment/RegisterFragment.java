@@ -79,7 +79,7 @@ public class RegisterFragment extends BaseFragment implements OnClickListener {
 					return;
 				}
 				HttpControl httpControl=new HttpControl();
-				httpControl.sendPhoeCode(et_mobile.getText().toString().trim(), "false",new HttpCallBackInterface() {
+				httpControl.sendPhoeCode(et_mobile.getText().toString().trim(), "true",new HttpCallBackInterface() {
 					
 					@Override
 					public void http_Success(Object obj) {

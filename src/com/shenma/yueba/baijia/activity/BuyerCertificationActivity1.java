@@ -58,6 +58,8 @@ public class BuyerCertificationActivity1 extends BaseActivityWithTopView
 	private EditText et_info;// 信息
 	private TextView tv_retain;// 剩余字数
 	private TextView tv_next;// 提交
+	private TextView tv_name;
+	private EditText et_name;//
 	private RelativeLayout rl_idcard_positive;
 	private RelativeLayout rl_idcard_reverse;
 	private ImageView iv_idcard_positive;
@@ -89,6 +91,8 @@ public class BuyerCertificationActivity1 extends BaseActivityWithTopView
 		tv_idcard_title = (TextView) findViewById(R.id.tv_idcard_title);
 		tv_get_point = (TextView) findViewById(R.id.tv_get_point);
 		et_info = (EditText) findViewById(R.id.et_info);
+		et_name = (EditText) findViewById(R.id.et_name);
+		tv_name = (TextView) findViewById(R.id.tv_retain);
 		tv_retain = (TextView) findViewById(R.id.tv_retain);
 		rl_idcard_positive = (RelativeLayout) findViewById(R.id.rl_idcard_positive);
 		rl_idcard_reverse = (RelativeLayout) findViewById(R.id.rl_idcard_reverse);
@@ -123,6 +127,10 @@ public class BuyerCertificationActivity1 extends BaseActivityWithTopView
 			showBottomDialog();
 			break;
 		case R.id.tv_next:// 下一步
+			if (TextUtils.isEmpty(et_name.getText().toString().trim())) {
+				Toast.makeText(mContext, "姓名不能为空", 1000).show();
+				return;
+			}
 			if (TextUtils.isEmpty(pic1)) {
 				Toast.makeText(mContext, "身份证正面图片不能为空", 1000).show();
 				return;
@@ -147,7 +155,7 @@ public class BuyerCertificationActivity1 extends BaseActivityWithTopView
 	 * 弹出底部菜单(相机和图库)
 	 */
 	protected void showBottomDialog() {
-		ToolsUtil.hideSoftInputKeyBoard(BuyerCertificationActivity1.this);
+		ToolsUtil.hideSoftKeyboard(BuyerCertificationActivity1.this, et_name);
 		ShowMenu showMenu = new ShowMenu(mContext, findViewById(R.id.parent),
 				R.layout.camera_pic_popwindow);
 		showMenu.createView();
@@ -307,6 +315,8 @@ public class BuyerCertificationActivity1 extends BaseActivityWithTopView
 							"pic3",
 							pic3.substring(pic3.lastIndexOf("/") + 1,
 									pic3.length()));
+					intent.putExtra(
+							"name",et_name.getText().toString().trim());
 					startActivity(intent);
 				default:
 					break;
