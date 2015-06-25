@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -113,7 +114,7 @@ int currid=-1;
 	{
 		if(currid==-1 && i==0)
 		{
-			fragmentManager.beginTransaction().add(R.id.baijia_main_framelayout,(Fragment) fragment_list.get(i).getFragment()).commit();
+			fragmentManager.beginTransaction().add(R.id.baijia_main_framelayout,(BaiJiaOrderListFragment) fragment_list.get(i).getFragment()).commit();
 		}
 	    else if(currid==i)
 		{
@@ -121,7 +122,7 @@ int currid=-1;
 		}
 		currid=i;
 		setTextColor(i);
-		fragmentManager.beginTransaction().replace(R.id.baijia_main_framelayout,(Fragment) fragment_list.get(i).getFragment()).commit();
+		fragmentManager.beginTransaction().replace(R.id.baijia_main_framelayout,(BaiJiaOrderListFragment) fragment_list.get(i).getFragment()).commit();
 		
 	}
 	
@@ -147,4 +148,23 @@ int currid=-1;
 			
 		}
 	}
+	
+	@Override
+		protected void onActivityResult(int arg0, int arg1, Intent arg2) {
+			if(arg0==200)
+			{
+				if(arg2!=null)
+				{
+					if(arg2.getStringExtra("PAYRESULT").equals("SUCESS"))//如果支付返回成功（即微信通知成功）
+					{
+						//刷新数据
+						BaiJiaOrderListFragment fragment=(BaiJiaOrderListFragment) fragment_list.get(currid).getFragment();
+						if(fragment!=null)
+						{
+							fragment.requestFalshData();
+						}
+					}
+				}
+			}
+		}
 }

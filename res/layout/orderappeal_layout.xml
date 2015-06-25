@@ -202,7 +202,7 @@
         <Button
             android:id="@+id/orderappeal_layout_footersubmit_button"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/user_config_iconwidth40_dimen"
             android:background="@drawable/red_background"
             android:paddingLeft="@dimen/shop_main_width15_dimen"
             android:paddingRight="@dimen/shop_main_width15_dimen"

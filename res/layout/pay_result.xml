@@ -7,6 +7,7 @@
     >
     
     <ProgressBar 
+        android:visibility="gone"
         android:id="@+id/pay_resulit_title_progressbar"
         android:layout_centerInParent="true"
         android:layout_width="wrap_content"
@@ -23,7 +24,7 @@
 	 	android:layout_height="fill_parent"
 		android:gravity="center"
 	 	android:textColor="#ff000000"
-	 	android:textSize="@dimen/textsize15sp"
+	 	android:textSize="@dimen/textsize18sp"
 	 	android:text="支付中..."/>
 	
 </RelativeLayout>

@@ -585,5 +585,17 @@ public class HttpConstants {
 	
 	public static String GETMYFAVORITEPRODUCTLIST = PRODUCT+ "GetMyFavoriteProductList";
 	
+	/**
+	 * 败家申请退款 （认证买手商品退款）
+	 */
+	
+	public static String METHOD_APPLY_RMA = Order+ "Apply_Rma";
+	
+	/**
+	 * 败家 确认提货
+	 */
+	
+	public static String METHOD_CONFIRMGOODS = Order+ "ConfirmGoods";
+	
 	
 }

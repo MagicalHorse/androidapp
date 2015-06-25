@@ -163,6 +163,7 @@
 
             <!-- 打烊购 -->
            <RelativeLayout 
+               android:background="@color/white"
                android:layout_marginTop="@dimen/shop_main_lineheight10_dimen"
                android:padding="@dimen/margin_left_and_right"
                android:layout_width="match_parent"
@@ -190,7 +191,6 @@
             <!-- 提货电话 -->
 
             <RelativeLayout
-                android:layout_marginTop="@dimen/shop_main_lineheight10_dimen"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
@@ -206,6 +206,7 @@
                     android:text="提货电话:" />
 
                 <EditText
+                    android:background="@drawable/gray_background"
                     android:layout_toRightOf="@id/affirmorder_item_tihuophone_textview"
                     android:layout_centerVertical="true"
                     android:id="@+id/affirmorder_item_tihuophonevalue_textview"
@@ -216,9 +217,9 @@
                 
                 <TextView
                     android:id="@+id/affirmorder_item_tihuophonetitle_textview"
-                    android:layout_marginTop="@dimen/shop_main_lineheight10_dimen"
-                    android:layout_below="@id/affirmorder_item_tihuophonevalue_textview"
+                    android:layout_marginTop="@dimen/shop_main_width15_dimen"
                     android:layout_toRightOf="@+id/affirmorder_item_tihuophone_textview"
+                    android:layout_below="@+id/affirmorder_item_tihuophonevalue_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/textsize12sp"

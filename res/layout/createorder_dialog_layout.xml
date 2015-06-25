@@ -139,6 +139,7 @@
                     android:text="—" />
 
                 <EditText
+                    android:background="@drawable/whileround_background"
                     android:id="@+id/createorder_dialog_layout_countvalue_edittext"
                     android:layout_width="@dimen/user_config_iconwidth60_dimen"
                     android:layout_height="match_parent"
