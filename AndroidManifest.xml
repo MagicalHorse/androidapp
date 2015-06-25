@@ -266,6 +266,14 @@
             android:name="com.shenma.yueba.yangjia.activity.HuoKuanIncomingAndOutgoingsActivity"
             android:screenOrientation="portrait" >
         </activity>
+         <!-- 货款收支 -->
+        <activity
+            android:name="com.shenma.yueba.camera2.ActivityCapture"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+                android:screenOrientation="landscape"
+                android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+                android:windowSoftInputMode="adjustResize|stateHidden" >
+        </activity>
         <activity
             android:name="com.shenma.yueba.yangjia.activity.HuoKuanManagerActivity"
             android:screenOrientation="portrait" >
@@ -276,6 +284,14 @@
         </activity>
         <activity
             android:name="com.shenma.yueba.yangjia.activity.KaiXiaoPiaoActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+          <activity
+            android:name="com.shenma.yueba.yangjia.activity.EditPicActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+           <activity
+            android:name="com.shenma.yueba.yangjia.activity.AddTagActivity"
             android:screenOrientation="portrait" >
         </activity>
         <activity
@@ -605,8 +621,7 @@
         
         <!-- Required  . Enable it you can get statistics data with channel -->
         <meta-data android:name="JPUSH_CHANNEL" android:value="developer-default"/>
-        <meta-data android:name="JPUSH_APPKEY" android:value="0e1603c9fb1416ba85f2a3a0" /> <!--  </>值来自开发者平台取得的AppKey-->
-        
+        <meta-data android:name="JPUSH_APPKEY" android:value="bd04e24380b02b787b18d013" /> <!--  </>值来自开发者平台取得的AppKey-->
         
         
         

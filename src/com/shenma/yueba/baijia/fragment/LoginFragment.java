@@ -24,6 +24,7 @@ import com.shenma.yueba.baijia.activity.MainActivityForBaiJia;
 import com.shenma.yueba.baijia.modle.UserRequestBean;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.JpushUtils;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.util.WXLoginUtil;
@@ -123,6 +124,8 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
 								Intent intent = new Intent(getActivity(),
 										MainActivityForYangJia.class);
 								intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+								JpushUtils jpushUtils = new JpushUtils(getActivity());
+								jpushUtils.setAlias(bean.getData().getId()+"");
 								startActivity(intent);
 								getActivity().finish();
 							}

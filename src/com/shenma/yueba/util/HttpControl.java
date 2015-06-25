@@ -115,20 +115,19 @@ public class HttpControl {
 	}
 
 	/**
-	 * 发送手机验证码
-	 * 
+	 *  发送手机验证码
 	 * @param str
-	 *            String 手机号码
+	 * @param type 0表示注册，1表示找回密码，2表示绑定手机号
 	 * @param httpCallBack
-	 *            HttpCallBackInterface 回调接口
 	 * @param context
-	 * @return void
-	 * **/
-	public void sendPhoeCode(String str,String isChecked,
+	 */
+	
+	
+	public void sendPhoeCode(String str,String type,
 			final HttpCallBackInterface httpCallBack, Context context) {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put(Constants.MOBILE, str.trim());
-		map.put(Constants.isverifymobile, isChecked);
+		map.put(Constants.TYPE, type);
 		BasehttpSend(map, context, HttpConstants.sendPhoneCode, httpCallBack,
 				BaseRequest.class, true, false);
 	}

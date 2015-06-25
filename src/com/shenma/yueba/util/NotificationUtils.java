@@ -4,10 +4,13 @@ package com.shenma.yueba.util;
 import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.yangjia.activity.SalesManagerForBuyerActivity;
 
 /**
  * notificaion工具类
@@ -16,7 +19,6 @@ import com.shenma.yueba.R;
  * 
  */
 public class NotificationUtils {
-
 	@SuppressLint("NewApi")
 	public static void showNotification(Context ctx, String... text) {
 		// 创建一个NotificationManager的引用
@@ -43,52 +45,21 @@ public class NotificationUtils {
 		notification.ledARGB = Color.BLUE;
 		notification.ledOnMS = 60000; // 闪光时间，毫秒
 		if (text.length >= 2) {
-//			// 设置通知的事件消息
-//			CharSequence contentTitle = text[1]; // 通知栏标题
-//			CharSequence contentText = text[0]; // 通知栏内容
-//			Intent notificationIntent = null;
-//			if (Constants.FRIEND_TITLE.equals(contentTitle)) {// 好友通知
-//				if (text.length == 3) {
-//					if (Constants.ADD.equals(text[2])) {// 加好友
-//						notificationIntent = new Intent(ctx,
-//								FriendMsgActivity.class); // 点击该通知后要跳转的Activity
-//					} else if (Constants.AGREE.equals(text[2])) {// 同意
-//						if (Constants.defalt_buy_user.equals(SharedUtil
-//								.getUserType(ctx))) {// 普通会员
-//							notificationIntent = new Intent(ctx,
-//									FriendManagerCustomerActivity.class); // 点击该通知后要跳转的Activity
-//						} else if (Constants.defalt_user.equals(SharedUtil
-//								.getUserType(ctx))) {// 商户
-//							notificationIntent = new Intent(ctx,
-//									BusinessPartnerActivity.class); // 点击该通知后要跳转的Activity
-//						}
-//					} else if (Constants.REFUSE.equals(text[2])) {// 拒绝
-//						notificationIntent = new Intent(ctx,
-//								FriendMsgActivity.class); // 点击该通知后要跳转的Activity
-//					}
-//				}
-//			} else if (Constants.SYSTEM_TITLE.equals(contentTitle)) {// 系统通知
-//				notificationIntent = new Intent(ctx,
-//						SystemNotificationActivity.class); // 点击该通知后要跳转的Activity
-//
-//			}else if (Constants.SOCIAL_TITLE.equals(contentTitle)) {// 社交消息
-//				if (text.length == 3) {
-//					if (Constants.PUSH_ASK.equals(text[2])) {// 询价
-//						notificationIntent = new Intent(ctx,
-//								OfferInfoActivity.class); // 点击该通知后要跳转的Activity
-//					}else if (Constants.PUSH_ORFER.equals(text[2])) {// 报价
-//						notificationIntent = new Intent(ctx,
-//								NeedInfoActivity.class); // 点击该通知后要跳转的Activity
-//						notificationIntent.putExtra("from", "push");
-//					}
-//				}
-//			}
-//			PendingIntent contentItent = PendingIntent.getActivity(ctx, 0,
-//					notificationIntent, 0);
-//			notification.setLatestEventInfo(ctx, contentTitle, contentText,
-//					contentItent);
-//			// 把Notification传递给NotificationManager
-//			notificationManager.notify(0, notification);
+			// 设置通知的事件消息
+			CharSequence title = text[1]; // 通知标题
+			CharSequence type = text[0]; // 通知类型
+			CharSequence content = text[2]; // 通知内容
+			Intent notificationIntent = null;
+			if("Order".equals(type)){
+				notificationIntent = new Intent(ctx,
+						SalesManagerForBuyerActivity.class); // 点击该通知后要跳转的Activity
+			}
+			PendingIntent contentItent = PendingIntent.getActivity(ctx, 0,
+					notificationIntent, 0);
+			notification.setLatestEventInfo(ctx, title, content,
+					contentItent);
+			// 把Notification传递给NotificationManager
+			notificationManager.notify(0, notification);
 		}
 		}
 	}

@@ -30,6 +30,7 @@ import com.shenma.yueba.baijia.modle.StoreItem;
 import com.shenma.yueba.baijia.modle.StoreListBackBean;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.yangjia.adapter.CityListAdapter;
 import com.shenma.yueba.yangjia.adapter.StoreListAdapter;
@@ -131,6 +132,7 @@ public class BuyerCertificationActivity2 extends BaseActivityWithTopView
 		bean.setWorkCard(intent.getStringExtra("pic3"));
 		bean.setCardFront(intent.getStringExtra("pic1"));
 		bean.setCardBack(intent.getStringExtra("pic2"));
+		bean.setName(intent.getStringExtra("name"));
 	}
 
 	public void getStoreList() {
@@ -185,7 +187,7 @@ public class BuyerCertificationActivity2 extends BaseActivityWithTopView
 					drawer_layout.closeDrawers();
 				}
 				if(tag == 4){
-					tv_store_title.setText(storeList.get(position).getStoreName());
+					tv_store_title.setText("商城名称 "+storeList.get(position).getStoreName());
 					store_id = storeList.get(position).getStoreId();
 					drawer_layout.closeDrawers();
 				}
@@ -364,6 +366,7 @@ public class BuyerCertificationActivity2 extends BaseActivityWithTopView
 
 			@Override
 			public void http_Success(Object obj) {
+				SharedUtil.setStringPerfernece(mContext, SharedUtil.user_AuditStatus, "0");
 				Intent intent = new Intent(mContext, ApplyResultActivity.class);
 				startActivity(intent);
 			}
