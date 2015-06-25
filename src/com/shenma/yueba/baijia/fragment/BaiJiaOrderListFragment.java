@@ -45,13 +45,14 @@ public class BaiJiaOrderListFragment extends Fragment {
 	List<BaiJiaOrderListInfo> object_list=new ArrayList<BaiJiaOrderListInfo>();
 	int currpage=Constants.CURRPAGE_VALUE;
 	int pagersize=Constants.PAGESIZE_VALUE;
-	int type=-1;//订单类型 -1 全部
+	int state=-1;//订单类型 全部订单 0，待付款 1， 专柜自提 2， 售后 3
+
 	HttpControl httpControl=new HttpControl();
 	RequestBaiJiaOrderListInfoBean requestBaiJiaOrderListInfoBean;
 	boolean ishow=true;
-	public BaiJiaOrderListFragment(int type)
+	public BaiJiaOrderListFragment(int state)
 	{
-		this.type=type;
+		this.state=state;
 	}
 	
 	@Override
@@ -139,7 +140,7 @@ public class BaiJiaOrderListFragment extends Fragment {
 	/*****
 	 *请求加载数据
 	 * ***/
-	void requestData()
+	public void requestData()
 	{
 		sendRequestData(currpage,1);
 	}
@@ -147,7 +148,7 @@ public class BaiJiaOrderListFragment extends Fragment {
 	/*****
 	 *请求刷新数据
 	 * ***/
-	void requestFalshData()
+	public void requestFalshData()
 	{
 		sendRequestData(1,0);
 	}
@@ -159,7 +160,7 @@ public class BaiJiaOrderListFragment extends Fragment {
 	 * ***/
 	void sendRequestData(int page ,final int type) {
 		Log.i("TAG", "currpage="+page+"   pagesize="+pagersize);
-		httpControl.getBaijiaOrderList(page, pagersize, type, ishow, new HttpCallBackInterface() {
+		httpControl.getBaijiaOrderList(page, pagersize, state, ishow, new HttpCallBackInterface() {
 			
 			@Override
 			public void http_Success(Object obj) {
@@ -247,7 +248,6 @@ public class BaiJiaOrderListFragment extends Fragment {
 			object_list.addAll(bean.getItems());
 		}
 		pull_refresh_list.onRefreshComplete();
-		object_list.add(null);
 		if(baiJiaOrderListAdapter!=null)
 		{
 			baiJiaOrderListAdapter.notifyDataSetChanged();

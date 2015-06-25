@@ -5,6 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -15,11 +19,18 @@ import android.widget.ListView;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.adapter.BaiJiaPayAdapter;
+import com.shenma.yueba.baijia.dialog.OrderPayDialog;
+import com.shenma.yueba.baijia.dialog.OrderPayDialog.OrderPayOnClick_Listener;
+import com.shenma.yueba.baijia.modle.BaiJiaOrdeDetailsInfoBean;
 import com.shenma.yueba.baijia.modle.BaijiaPayInfoBean;
-import com.shenma.yueba.baijia.modle.ComputeAmountInfoBean;
 import com.shenma.yueba.baijia.modle.CreatOrderInfoBean;
+import com.shenma.yueba.baijia.modle.RequestBaiJiaOrdeDetailsInfoBean;
+import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.wxapi.CreateWeiXinOrderManager;
 import com.shenma.yueba.wxapi.WeiXinBasePayManager.WeiXinPayManagerListener;
+import com.shenma.yueba.yangjia.modle.OrderDetailBackBean;
+import com.shenma.yueba.yangjia.modle.OrderDetailBean;
 
 /**  
  * @author gyj  
@@ -27,16 +38,20 @@ import com.shenma.yueba.wxapi.WeiXinBasePayManager.WeiXinPayManagerListener;
  * 程序的简单说明  
  */
 
-public class BaijiaPayActivity extends BaseActivityWithTopView{
+public class BaijiaPayActivity extends BaseActivityWithTopView implements OrderPayOnClick_Listener{
 View parentView;
 ListView baijiapay_layout_paytype_listview;
 BaiJiaPayAdapter baiJiaPayAdapter;
 List<BaijiaPayInfoBean> bean=new ArrayList<BaijiaPayInfoBean>();
 CreatOrderInfoBean creatOrderInfoBean;
+OrderPayDialog orderPayDialog;
+HttpControl httpControl=new HttpControl();
 //微信支付 商品名描述
 String messageTitle="";
 //微信支付商品信息描述
 String messageDesc="";
+boolean isBroadcast=false;//是否注册广播监听 支付结果
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(getWindow().FEATURE_NO_TITLE);
@@ -86,6 +101,8 @@ String messageDesc="";
 				switch(baijiaPayInfoBean.getType())
 				{
 				case weixinpay:
+					//注册监听 支付结果
+					registerBroadcast();
 					//启动微信支付
 					startWenXinPay();
 					break;
@@ -94,10 +111,103 @@ String messageDesc="";
 		});
 	}
 	
+	
+	/****
+	 * 广播 接受 支付结果 用于关闭页面及 后台查询确认支付结果
+	 * ***/
+     BroadcastReceiver broadcastReceiver=new BroadcastReceiver() {
+		
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			if(intent==null)
+			{
+				return;
+			}else if(intent.getAction().equals(CreateWeiXinOrderManager.WEIXINACTION_FILTER))//如果接收到 支付的广播
+			{
+				String resutl_Code=intent.getStringExtra("Resutl_Code");
+				//MyApplication.getInstance().showMessage(BaijiaPayActivity.this, "接受到广播 Resutl_Code："+resutl_Code);
+				queyPayStatus();
+				/*if(resutl_Code==null)
+				{
+					return;
+				}else if(resutl_Code.equals("SUCESS"))
+				{
+					//与服务器通信 查询 后台支付状态
+					queyPayStatus();
+				}*/
+				unRegisterBroadcast();
+			}
+		}
+	};
+	
+	
+	void queyPayStatus()
+	{
+		showPayDialogLoading();
+		httpControl.getBaijiaOrderDetails(creatOrderInfoBean.getOrderNo(),true,new HttpCallBackInterface() {
+			
+			@Override
+			public void http_Success(Object obj) {
+				if(obj==null)
+				{
+					http_Fails(500, "");
+				}else if(obj instanceof RequestBaiJiaOrdeDetailsInfoBean && ((RequestBaiJiaOrdeDetailsInfoBean)obj).getData()!=null)
+				{
+					RequestBaiJiaOrdeDetailsInfoBean orderDetailBackBean=(RequestBaiJiaOrdeDetailsInfoBean)obj;
+					BaiJiaOrdeDetailsInfoBean baiJiaOrdeDetailsInfoBean=orderDetailBackBean.getData();
+					//MyApplication.getInstance().showMessage(BaijiaPayActivity.this, "查询到订单数据 status:"+baiJiaOrdeDetailsInfoBean.getOrderStatus());
+					if(baiJiaOrdeDetailsInfoBean.getOrderStatus()==1)//如果当前订单状态是 已付款
+					{
+						showSucessDialog();
+					}else
+					{
+						showFailsDailog();
+					}
+					
+				}else
+				{
+					http_Fails(500, "");
+				}
+			}
+			
+			@Override
+			public void http_Fails(int error, String msg) {
+				MyApplication.getInstance().showMessage(BaijiaPayActivity.this, "查询失败，请在订单页面查看订单状态");
+				cancelPayDialog();
+			}
+		}, BaijiaPayActivity.this);
+	}
+	
+	
+	/***
+	 * 支付注册广播监听
+	 * ***/
+	void registerBroadcast()
+	{
+		if(!isBroadcast)
+		{
+		  IntentFilter filter=new IntentFilter(CreateWeiXinOrderManager.WEIXINACTION_FILTER);
+		  BaijiaPayActivity.this.registerReceiver(broadcastReceiver, filter);
+		  isBroadcast=true;
+		}
+	}
+	
+	/***
+	 * 支付注销广播监听
+	 * ***/
+	void unRegisterBroadcast()
+	{
+		if(isBroadcast)
+		{
+			BaijiaPayActivity.this.unregisterReceiver(broadcastReceiver);
+			isBroadcast=false;
+		}
+		
+	}
+	
 	void startWenXinPay()
 	{
-		//WeiXinPayManagerbar wxpm=new WeiXinPayManagerbar(this);
-		//wxpm.createWenXinPay(creatOrderInfoBean,messageTitle,messageDesc);
+		
 		Map<String, Object> map=new HashMap<String, Object>();
 		map.put("messageTitle", messageTitle);
 		map.put("TotalAmount", creatOrderInfoBean.getTotalAmount());
@@ -116,4 +226,74 @@ String messageDesc="";
 		},map );
 		cwxm.execute();
 	}
+	
+	@Override
+		protected void onDestroy() {
+			
+			super.onDestroy();
+			unRegisterBroadcast();
+		}
+	
+	/***
+	 * 显示查询中
+	 * **/
+	public void showPayDialogLoading()
+	{
+		if(orderPayDialog==null)
+		{
+			orderPayDialog=new OrderPayDialog(BaijiaPayActivity.this,this);
+		}
+		orderPayDialog.showDialog();
+		orderPayDialog.showLoading();
+		
+	}
+	
+	/***
+	 * 显示查询成为（即支付成功）
+	 * **/
+	public void showSucessDialog()
+	{
+		if(orderPayDialog==null)
+		{
+			orderPayDialog=new OrderPayDialog(BaijiaPayActivity.this,this);
+		}
+		orderPayDialog.showDialog();
+		orderPayDialog.showSucess();
+		
+	}
+	
+	/***
+	 * 显示查询失败
+	 * **/
+	public void showFailsDailog()
+	{
+		if(orderPayDialog==null)
+		{
+			orderPayDialog=new OrderPayDialog(BaijiaPayActivity.this,this);
+		}
+		orderPayDialog.showDialog();
+		orderPayDialog.showFails();
+		
+	}
+	
+	
+	
+	public void cancelPayDialog()
+	{
+		if(orderPayDialog!=null)
+		{
+			orderPayDialog.cancel();
+		}
+	}
+
+	@Override
+	public void on_Click() {
+		finish();
+	}
+	
+	@Override
+		public void finish() {
+			super.finish();
+			setResult(200, this.getIntent().putExtra("PAYRESULT", "SUCESS"));
+		}
 }

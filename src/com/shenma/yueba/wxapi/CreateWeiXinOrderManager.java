@@ -9,7 +9,11 @@ import net.sourceforge.simcpux.Constants;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
+import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 
 import com.shenma.yueba.constants.HttpConstants;
 import com.shenma.yueba.wxapi.bean.WenXinErrorBean;
@@ -21,6 +25,7 @@ import com.shenma.yueba.wxapi.bean.WenXinErrorBean;
  */
 
 public class CreateWeiXinOrderManager extends WeiXinBasePayManager{
+	public static final String WEIXINACTION_FILTER="com.shenma.yueba.weixinpay_intentfilter";
 	WeiXinPayManagerListener listener;
 	Map map;
 	public CreateWeiXinOrderManager(Context context,WeiXinPayManagerListener listener, Map map) {
@@ -106,7 +111,7 @@ public class CreateWeiXinOrderManager extends WeiXinBasePayManager{
 		req.packageValue = "Sign=WXPay";
 		req.nonceStr = genNonceStr();
 		req.timeStamp = String.valueOf(genTimeStamp());
-
+        /*req.extData=(String)map.get("OrderNo");*/
 
 		List<NameValuePair> signParams = new LinkedList<NameValuePair>();
 		signParams.add(new BasicNameValuePair("appid", req.appId));
@@ -135,8 +140,8 @@ public class CreateWeiXinOrderManager extends WeiXinBasePayManager{
    			String	nonceStr = genNonceStr();
             List<NameValuePair> packageParams = new LinkedList<NameValuePair>();
    			packageParams.add(new BasicNameValuePair("appid", Constants.APP_ID));
-   			//packageParams.add(new BasicNameValuePair("body", (String)map.get("messageTitle")));
-   			packageParams.add(new BasicNameValuePair("body","111"));
+   			packageParams.add(new BasicNameValuePair("body", (String)map.get("messageTitle")));
+   			//packageParams.add(new BasicNameValuePair("body","111"));
    			packageParams.add(new BasicNameValuePair("mch_id", Constants.MCH_ID));
    			packageParams.add(new BasicNameValuePair("nonce_str", nonceStr));
    			packageParams.add(new BasicNameValuePair("notify_url", com.shenma.yueba.constants.Constants.WX_NOTIFY_URL));
