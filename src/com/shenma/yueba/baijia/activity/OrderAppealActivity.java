@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.modle.BaiJiaOrderListInfo;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.RoundImageView;
 
@@ -31,12 +32,22 @@ View parementView;
     EditText orderappeal_layout_appealreason_textview;
     //提货手机号
     EditText affirmorder_item_tihuophonevalue_textview;
+    BaiJiaOrderListInfo baiJiaOrderListInfo;//订单信息对象
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(getWindow().FEATURE_NO_TITLE);
 		parementView=this.getLayoutInflater().inflate(R.layout.orderappeal_layout, null);
 		setContentView(parementView);
 		super.onCreate(savedInstanceState);
+		if(this.getIntent().getSerializableExtra("DATA")==null)
+		{
+			MyApplication.getInstance().showMessage(this, "数据错误，请重试");
+			finish();
+			return;
+		}else
+		{
+			baiJiaOrderListInfo=(BaiJiaOrderListInfo)this.getIntent().getSerializableExtra("DATA");
+		}
 		MyApplication.getInstance().addActivity(this);
 		initView();
 	}
@@ -71,6 +82,7 @@ View parementView;
 		//申诉按钮
 		Button orderappeal_layout_footersubmit_button=(Button)parementView.findViewById(R.id.orderappeal_layout_footersubmit_button);
 		
+		//MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.nullToString(str), imageView, options)
 		
 	}
 }

@@ -1429,6 +1429,35 @@ public class HttpControl {
 	
 	
 	/**
+	 * 败家申请退款（认证买手商品退款）
+	 * 
+	 * @param OrderNo String 订单编号" 必填
+     * @param Count int 退货数量
+     * @param Reason string 退货原因
+     * @return void
+	 * **/
+	public void applyForRefund(String OrderNo, int Count,String Reason,boolean showDialog, final HttpCallBackInterface httpCallBack,Context context) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("OrderNo",OrderNo);
+		map.put("Reason",Reason);
+		map.put("Count", Integer.toString(Count));
+		BasehttpSend(map, context, HttpConstants.METHOD_APPLY_RMA,httpCallBack, BaseRequest.class, showDialog,false);
+	}
+	
+	/**
+	 * 败家  确认提货
+	 * 
+	 * @param OrderNo  String 订单编号" 必填
+     * @return void
+	 * **/
+	public void affirmPickToGood(String OrderNo,boolean showDialog, final HttpCallBackInterface httpCallBack,Context context) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("OrderNo",OrderNo);
+		BasehttpSend(map, context, HttpConstants.METHOD_CONFIRMGOODS,httpCallBack, BaseRequest.class, showDialog,false);
+	}
+	
+	
+	/**
 	 * 获取我收藏的商品列表-败家(新)
 	 * 
 	 * @param currPage

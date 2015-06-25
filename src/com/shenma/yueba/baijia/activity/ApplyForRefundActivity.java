@@ -1,12 +1,5 @@
 package com.shenma.yueba.baijia.activity;
 
-import com.shenma.yueba.R;
-import com.shenma.yueba.application.MyApplication;
-import com.shenma.yueba.baijia.modle.BaiJiaOrderListInfo;
-import com.shenma.yueba.baijia.modle.ProductInfoBean;
-import com.shenma.yueba.util.HttpControl;
-import com.shenma.yueba.util.ToolsUtil;
-
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.Selection;
@@ -19,6 +12,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.modle.BaiJiaOrderListInfo;
+import com.shenma.yueba.baijia.modle.ProductInfoBean;
+import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
+import com.shenma.yueba.util.ToolsUtil;
 
 /**  
  * @author gyj  
@@ -179,7 +180,25 @@ int maxValue=0;
 			return;
 		}
 		HttpControl httpControl=new HttpControl();
-		//httpControl
+		httpControl.applyForRefund(baiJiaOrderListInfo.getOrderNo(), refundcount, refundReason, true, new HttpCallBackInterface() {
+			
+			@Override
+			public void http_Success(Object obj) {
+				if(obj==null)
+				{
+					http_Fails(500, "申请失败");
+				}else
+				{
+					MyApplication.getInstance().showMessage(ApplyForRefundActivity.this, "申请成功");
+					setResult(200, ApplyForRefundActivity.this.getIntent().putExtra("PAYRESULT", "SUCESS"));
+				}
+			}
+			
+			@Override
+			public void http_Fails(int error, String msg) {
+				MyApplication.getInstance().showMessage(ApplyForRefundActivity.this, msg);
+			}
+		}, ApplyForRefundActivity.this);
 	}
 	
 	

@@ -13,10 +13,12 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.activity.ApplyForRefundActivity;
 import com.shenma.yueba.baijia.activity.BaijiaPayActivity;
 import com.shenma.yueba.baijia.modle.BaiJiaOrderListInfo;
 import com.shenma.yueba.baijia.modle.CreatOrderInfoBean;
@@ -24,6 +26,7 @@ import com.shenma.yueba.baijia.modle.ProductInfoBean;
 import com.shenma.yueba.util.ButtonManager;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.ToolsUtil;
 
 /**
@@ -35,9 +38,10 @@ public class BaiJiaOrderListAdapter extends BaseAdapter {
 	List<BaiJiaOrderListInfo> object_list = new ArrayList<BaiJiaOrderListInfo>();
 	Context context;
     HttpControl httpControl=new HttpControl();
-	public BaiJiaOrderListAdapter(List<BaiJiaOrderListInfo> object_list,
-			Context context) {
+    OrderControlListener orderControlListener;
+	public BaiJiaOrderListAdapter(OrderControlListener orderControlListener,List<BaiJiaOrderListInfo> object_list,Context context) {
 		this.object_list = object_list;
+		this.orderControlListener=orderControlListener;
 		this.context = context;
 
 	}
@@ -259,61 +263,31 @@ public class BaiJiaOrderListAdapter extends BaseAdapter {
 	 * ***/
 	void buttonControl(View btn)
 	{
-		if(btn!=null && btn instanceof Button)
+		if(btn==null || btn.getTag()==null || !(btn.getTag() instanceof BaiJiaOrderListInfo))
+        {
+        	return;
+        }
+		BaiJiaOrderListInfo baiJiaOrderListInfo=(BaiJiaOrderListInfo)btn.getTag();
+		String str=((Button)btn).getText().toString();
+		if(str.equals(ButtonManager.WAITPAY))//如果是等待支付
 		{
-			String str=((Button)btn).getText().toString();
-			if(str.equals(ButtonManager.WAITPAY))//如果是等待支付
-			{
-				payOrder(btn);
-			}else if(str.equals(ButtonManager.CANCELPAY))//撤销退款
-			{
-				cancelRefund(btn);
-			}else if(str.equals(ButtonManager.QUERENTIHUO))//确认提货
-			{
-				
-			}else if(str.equals(ButtonManager.SHENQINGTUIKUAN))//申请退款
-			{
-				
-			}
-			
+			ButtonManager.payOrder(context, baiJiaOrderListInfo);
+		}else if(str.equals(ButtonManager.CANCELPAY))//撤销退款
+		{
+			ButtonManager.cancelRefund(context);
+		}else if(str.equals(ButtonManager.QUERENTIHUO))//确认提货
+		{
+			ButtonManager.affirmPUG(context, baiJiaOrderListInfo, orderControlListener);
+		}else if(str.equals(ButtonManager.SHENQINGTUIKUAN))//申请退款
+		{
+			ButtonManager.applyforRefund(context, baiJiaOrderListInfo);
 		}
 	}
 	
 	
 	
-	/****
-	 * 撤销退款
-	 * **/
-	void cancelRefund(View btn)
+	public interface OrderControlListener
 	{
-		if(btn==null || btn.getTag()==null || !(btn.getTag() instanceof BaiJiaOrderListInfo))
-        {
-        	return;
-        }
-		Intent intent=new Intent(context,BaijiaPayActivity.class);
-		((Activity)context).startActivityForResult(intent, 200);
-	}
-	
-	
-	
-	/***
-	 * 付款跳转
-	 * ***/
-	void payOrder(View btn)
-	{
-        if(btn==null || btn.getTag()==null || !(btn.getTag() instanceof BaiJiaOrderListInfo))
-        {
-        	return;
-        }
-        BaiJiaOrderListInfo baiJiaOrderListInfo=(BaiJiaOrderListInfo)btn.getTag();
-		Intent intent=new Intent(context,BaijiaPayActivity.class);
-		CreatOrderInfoBean creatOrderInfoBean=new CreatOrderInfoBean();
-		creatOrderInfoBean.setOrderNo(baiJiaOrderListInfo.getOrderNo());
-		creatOrderInfoBean.setTotalAmount(baiJiaOrderListInfo.getAmount());
-		ProductInfoBean productInfoBean=baiJiaOrderListInfo.getProduct();
-		intent.putExtra("PAYDATA", creatOrderInfoBean);
-		intent.putExtra("MessageTitle", productInfoBean.getName());
-		intent.putExtra("MessageDesc", productInfoBean.getProductdesc());
-		((Activity)context).startActivityForResult(intent, 200);
+		void orderCotrol_OnRefuces();
 	}
 }

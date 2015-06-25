@@ -24,6 +24,7 @@ import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.BaiJiaOrderDetailsActivity;
 import com.shenma.yueba.baijia.adapter.BaiJiaOrderListAdapter;
+import com.shenma.yueba.baijia.adapter.BaiJiaOrderListAdapter.OrderControlListener;
 import com.shenma.yueba.baijia.modle.BaiJiaOrderListInfo;
 import com.shenma.yueba.baijia.modle.BaiJiaOrderListInfoBean;
 import com.shenma.yueba.baijia.modle.RequestBaiJiaOrderListInfoBean;
@@ -38,7 +39,7 @@ import com.umeng.socialize.utils.Log;
  */
 
 @SuppressLint("ValidFragment")
-public class BaiJiaOrderListFragment extends Fragment {
+public class BaiJiaOrderListFragment extends Fragment implements OrderControlListener{
 	View parentView;
 	PullToRefreshListView pull_refresh_list;
 	BaiJiaOrderListAdapter baiJiaOrderListAdapter;
@@ -82,7 +83,7 @@ public class BaiJiaOrderListFragment extends Fragment {
 	{
 		pull_refresh_list=(PullToRefreshListView)parentView.findViewById(R.id.pull_refresh_list);
 		 //设置标签显示的内容
-		baiJiaOrderListAdapter=new BaiJiaOrderListAdapter(object_list,getActivity());
+		baiJiaOrderListAdapter=new BaiJiaOrderListAdapter(this,object_list,getActivity());
 		pull_refresh_list.setAdapter(baiJiaOrderListAdapter);
 		pull_refresh_list.setMode(Mode.PULL_FROM_START);
 		pull_refresh_list.setOnPullEventListener(new OnPullEventListener<ListView>() {
@@ -252,5 +253,10 @@ public class BaiJiaOrderListFragment extends Fragment {
 		{
 			baiJiaOrderListAdapter.notifyDataSetChanged();
 		}
+	}
+
+	@Override
+	public void orderCotrol_OnRefuces() {
+		requestFalshData();
 	}
 }

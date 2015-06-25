@@ -4,10 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.activity.ApplyForRefundActivity;
+import com.shenma.yueba.baijia.activity.BaijiaAppealLoadingActivity;
+import com.shenma.yueba.baijia.activity.BaijiaPayActivity;
+import com.shenma.yueba.baijia.activity.OrderAppealActivity;
+import com.shenma.yueba.baijia.adapter.BaiJiaOrderListAdapter.OrderControlListener;
+import com.shenma.yueba.baijia.modle.BaiJiaOrderListInfo;
+import com.shenma.yueba.baijia.modle.CreatOrderInfoBean;
+import com.shenma.yueba.baijia.modle.ProductInfoBean;
+import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 
 /**  
  * @author gyj  
@@ -20,6 +32,8 @@ public final static String WAITPAY="付款";//0
 public final static String CANCELPAY="撤销退款";//1
 public final static String QUERENTIHUO="确认提货";//2
 public final static String SHENQINGTUIKUAN="申请退款";//3
+public final static String SHENSU="申诉";//4
+public final static String SHENSULOADING="申诉中";//5
 	
 	/***
 	 * 根据订单状态返回操作按钮
@@ -80,9 +94,103 @@ public final static String SHENQINGTUIKUAN="申请退款";//3
 			str=SHENQINGTUIKUAN;
 			back_resource_id=R.drawable.applyrefund_background;
 			break;
+		case 4:
+			str=SHENSU;
+			back_resource_id=R.drawable.back_background;
+			break;
+		case 5:
+			str=SHENSULOADING;
+			back_resource_id=R.drawable.back_background;
+			break;
+			
 		}
 		btn.setText(str);
 		btn.setBackgroundResource(back_resource_id);
 		return v;
+	}
+	
+	
+	/****
+	 * 确认提货
+	 * ***/
+	
+	public static void affirmPUG(final Context context,BaiJiaOrderListInfo baiJiaOrderListInfo ,final OrderControlListener orderControlListener)
+	{
+		HttpControl httpControl=new HttpControl();
+		httpControl.affirmPickToGood(baiJiaOrderListInfo.getOrderNo(), true, new HttpCallBackInterface() {
+			
+			@Override
+			public void http_Success(Object obj) {
+				if(orderControlListener!=null)
+				{
+					orderControlListener.orderCotrol_OnRefuces();//通知刷新页面
+				}
+			}
+			
+			@Override
+			public void http_Fails(int error, String msg) {
+				MyApplication.getInstance().showMessage(context, msg);
+			}
+		}, context);
+	}
+	
+	
+	/****
+	 * 撤销退款
+	 * **/
+	public static void cancelRefund(final Context context)
+	{
+		
+		
+	}
+	
+	
+	
+	/******
+	 * 申请退款
+	 * **/
+	public static void applyforRefund(Context context,BaiJiaOrderListInfo baiJiaOrderListInfo)
+	{
+		
+		Intent intent=new Intent(context,ApplyForRefundActivity.class);
+		intent.putExtra("DATA", baiJiaOrderListInfo);
+		((Activity)context).startActivityForResult(intent, 200);
+	}
+	
+	/***
+	 * 付款跳转
+	 * ***/
+	public static void payOrder(Context context,BaiJiaOrderListInfo baiJiaOrderListInfo)
+	{
+        
+        Intent intent=new Intent(context,BaijiaPayActivity.class);
+		CreatOrderInfoBean creatOrderInfoBean=new CreatOrderInfoBean();
+		creatOrderInfoBean.setOrderNo(baiJiaOrderListInfo.getOrderNo());
+		creatOrderInfoBean.setTotalAmount(baiJiaOrderListInfo.getAmount());
+		ProductInfoBean productInfoBean=baiJiaOrderListInfo.getProduct();
+		intent.putExtra("PAYDATA", creatOrderInfoBean);
+		intent.putExtra("MessageTitle", productInfoBean.getName());
+		intent.putExtra("MessageDesc", productInfoBean.getProductdesc());
+		((Activity)context).startActivityForResult(intent, 200);
+	}
+	
+	/****
+	 * 申诉
+	 * **/
+	public static void cancelRefund(final Context context,BaiJiaOrderListInfo baiJiaOrderListInfo)
+	{
+		Intent intent=new Intent(context,OrderAppealActivity.class);
+		intent.putExtra("DATA", baiJiaOrderListInfo);
+		((Activity)context).startActivityForResult(intent, 200);
+	}
+	
+	/****
+	 * 申诉中
+	 * **/
+	public static void cancelRefundLoading(final Context context,BaiJiaOrderListInfo baiJiaOrderListInfo)
+	{
+		Intent intent=new Intent(context,BaijiaAppealLoadingActivity.class);
+		intent.putExtra("DATA", baiJiaOrderListInfo);
+		((Activity)context).startActivityForResult(intent, 200);
 	}
 }

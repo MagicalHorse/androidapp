@@ -349,6 +349,12 @@
             android:name="com.shenma.yueba.baijia.activity.BaiJiaOrderDetailsActivity"
             android:screenOrientation="portrait" >
         </activity>
+        
+        <!-- 败家订单申请退页面 -->
+        <activity
+            android:name="com.shenma.yueba.baijia.activity.ApplyForRefundActivity"
+            android:screenOrientation="portrait" >
+        </activity>
 
         <!-- 败家订单申诉页面 -->
         <activity
