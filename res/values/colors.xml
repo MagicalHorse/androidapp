@@ -72,4 +72,14 @@
     <color name="common_text_yellow">#ffffe049</color>
     <color name="album_item_bg">#fffcfcfd</color>
     <color name="video_playter_bg">#333333</color>
+    
+    
+    <color name="black_95">#d6000000</color>
+    <color name="red">#ff0000</color>
+    <color name="blank_bg">#cc000000</color>
+    <color name="line_color">#dadae5</color>
+    <color name="common_gray">#999999</color>
+    <color name="black_10">#19000000</color>
+    <color name="background_color">#e7e7ee</color>
+    <color name="common_black">#656074</color>
 </resources>

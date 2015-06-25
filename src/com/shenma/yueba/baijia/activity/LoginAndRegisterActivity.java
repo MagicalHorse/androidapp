@@ -27,6 +27,8 @@ import com.shenma.yueba.baijia.adapter.LoginAndRegisterFragmentPagerAdapter;
 import com.shenma.yueba.baijia.fragment.LoginFragment;
 import com.shenma.yueba.baijia.fragment.RegisterFragment;
 import com.shenma.yueba.util.FontManager;
+import com.shenma.yueba.util.SharedUtil;
+import com.shenma.yueba.view.RoundImageView;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
@@ -45,6 +47,7 @@ import com.umeng.socialize.weixin.controller.UMWXHandler;
 public class LoginAndRegisterActivity extends FragmentActivity implements OnClickListener {
 	private LoginFragment loginFragment;
 	private RegisterFragment registerFragment;
+	private RoundImageView riv_head;
 	private ArrayList<Fragment> fragmentList = new ArrayList<Fragment>();
 	private ViewPager viewPager;
 	private LinearLayout cursor;
@@ -141,6 +144,8 @@ public class LoginAndRegisterActivity extends FragmentActivity implements OnClic
 	}
 
 	private void initView() {
+		riv_head = (RoundImageView) findViewById(R.id.riv_head);
+		MyApplication.getInstance().getImageLoader().displayImage(SharedUtil.getStringPerfernece(LoginAndRegisterActivity.this, SharedUtil.user_logo), riv_head);
 		tv_login = (TextView) findViewById(R.id.tv_login);
 		tv_register = (TextView) findViewById(R.id.tv_register);
 		tv_login.setOnClickListener(this);

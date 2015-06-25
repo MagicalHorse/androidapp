@@ -156,7 +156,7 @@ public class FillPersonDataActivity extends BaseActivityWithTopView {
 			MyApplication.getInstance().showMessage(FillPersonDataActivity.this, "城市信息错误");
 			return;
 		}
-		HttpControl httpControl=new HttpControl();
+		final HttpControl httpControl=new HttpControl();
 		httpControl.registerUserInfo(moblie, name, pass, cityvalue, new HttpCallBackInterface() {
 			
 			@Override
@@ -166,6 +166,7 @@ public class FillPersonDataActivity extends BaseActivityWithTopView {
 				{
 					finish();
 					UserRequestBean bean=(UserRequestBean)obj;
+					httpControl.setLoginInfo(FillPersonDataActivity.this, bean);
 					Intent intent=new Intent(FillPersonDataActivity.this,MainActivityForBaiJia.class);
 					intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					intent.putExtra("forwarddata", bean);

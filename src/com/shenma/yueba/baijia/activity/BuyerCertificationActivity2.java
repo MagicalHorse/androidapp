@@ -30,6 +30,7 @@ import com.shenma.yueba.baijia.modle.StoreItem;
 import com.shenma.yueba.baijia.modle.StoreListBackBean;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.yangjia.adapter.CityListAdapter;
 import com.shenma.yueba.yangjia.adapter.StoreListAdapter;
@@ -365,6 +366,7 @@ public class BuyerCertificationActivity2 extends BaseActivityWithTopView
 
 			@Override
 			public void http_Success(Object obj) {
+				SharedUtil.setStringPerfernece(mContext, SharedUtil.user_AuditStatus, "0");
 				Intent intent = new Intent(mContext, ApplyResultActivity.class);
 				startActivity(intent);
 			}

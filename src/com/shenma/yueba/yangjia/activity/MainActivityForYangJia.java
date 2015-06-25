@@ -41,6 +41,7 @@ import android.widget.Toast;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.camera.CameraAty;
+import com.shenma.yueba.camera2.ActivityCapture;
 import com.shenma.yueba.yangjia.fragment.CartFragment;
 import com.shenma.yueba.yangjia.fragment.IndexFragmentForYangJia;
 import com.shenma.yueba.yangjia.fragment.MeFragmentForYangJia;
@@ -181,6 +182,8 @@ private void showDialog() {
 			// 跳转到到自定义相机
 			Intent intentCamera = new Intent(MainActivityForYangJia.this,CameraAty.class);
 			startActivity(intentCamera);
+//			Intent intentCamera = new Intent(MainActivityForYangJia.this,ActivityCapture.class);
+//			startActivity(intentCamera);
 			dialog.cancel();
 		}
 	});
