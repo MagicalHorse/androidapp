@@ -296,58 +296,13 @@
             android:text="现金分享" />
         </LinearLayout>
         
-        <LinearLayout
+       <LinearLayout
             android:id="@+id/baijia_orderdetails_footer_right_linearlayout"
             android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:orientation="horizontal" >
-
-            <Button
-                android:id="@+id/baijia_orderdetails_sqtk_button"
-                android:layout_width="80dp"
-                android:layout_height="40dp"
-                 android:background="@drawable/applyrefund_background"
-                android:text="申请退款"
-                android:textSize="@dimen/textsize13sp" />
-
-            <Button
-                android:id="@+id/baijia_orderdetails_ziti_button"
-                android:layout_width="80dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="@dimen/shop_main_width5_dimen"
-                android:background="@drawable/red_background"
-                android:text="自提"
-                android:textSize="@dimen/textsize13sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_centerVertical="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:orientation="horizontal" >
-
-            <Button
-                android:id="@+id/baijia_orderdetails_cancellorder_button"
-                android:layout_width="80dp"
-                android:layout_height="40dp"
-                android:background="@drawable/applyrefund_background"
-                android:text="取消订单"
-                android:textSize="@dimen/textsize13sp"
-                android:visibility="gone" />
-
-            <Button
-                android:id="@+id/baijia_orderdetails_pay_button"
-                android:layout_width="80dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="@dimen/shop_main_width5_dimen"
-                android:background="@drawable/red_background"
-                android:text="付款"
-                android:textSize="@dimen/textsize13sp"
-                android:visibility="gone" />
-        </LinearLayout>
+            android:orientation="horizontal"/>
     </RelativeLayout>
 
 </RelativeLayout>

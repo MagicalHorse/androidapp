@@ -10,7 +10,10 @@ import android.widget.TextView;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
-import com.shenma.yueba.baijia.modle.BaiJiaOrderListInfo;
+import com.shenma.yueba.baijia.modle.BaiJiaOrdeDetailsInfoBean;
+import com.shenma.yueba.baijia.modle.RequestBaiJiaOrdeDetailsInfoBean;
+import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.RoundImageView;
 
@@ -20,8 +23,12 @@ import com.shenma.yueba.view.RoundImageView;
  * 程序的简单说明  订单申诉页面
  */
 
-public class OrderAppealActivity extends BaseActivityWithTopView{
+public class OrderAppealActivity extends BaseActivityWithTopView implements OnClickListener{
 View parementView;
+    //买手头像
+    RoundImageView orderappeal_layout_buyericon_textview;
+    //电话图标
+    ImageView orderappeal_layout_phoneicon_textview;
     //买手账号
     TextView orderappeal_layout_buyernovalue_textview;
     //买手电话
@@ -32,7 +39,10 @@ View parementView;
     EditText orderappeal_layout_appealreason_textview;
     //提货手机号
     EditText affirmorder_item_tihuophonevalue_textview;
-    BaiJiaOrderListInfo baiJiaOrderListInfo;//订单信息对象
+    String orderNo=null;
+    BaiJiaOrdeDetailsInfoBean bean;//订单详情对象
+    HttpControl httpControl=new HttpControl();
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(getWindow().FEATURE_NO_TITLE);
@@ -46,10 +56,12 @@ View parementView;
 			return;
 		}else
 		{
-			baiJiaOrderListInfo=(BaiJiaOrderListInfo)this.getIntent().getSerializableExtra("DATA");
+			orderNo=(String)this.getIntent().getSerializableExtra("DATA");
 		}
 		MyApplication.getInstance().addActivity(this);
 		initView();
+		//请求订单信息
+		requestOrderInfo();
 	}
 	
 	
@@ -66,9 +78,10 @@ View parementView;
 		});
 		
 		//买手头像
-		RoundImageView orderappeal_layout_buyericon_textview=(RoundImageView)parementView.findViewById(R.id.orderappeal_layout_buyericon_textview);
+		orderappeal_layout_buyericon_textview=(RoundImageView)parementView.findViewById(R.id.orderappeal_layout_buyericon_textview);
 		//电话图标
-		ImageView orderappeal_layout_phoneicon_textview=(ImageView)parementView.findViewById(R.id.orderappeal_layout_phoneicon_textview);
+		orderappeal_layout_phoneicon_textview=(ImageView)parementView.findViewById(R.id.orderappeal_layout_phoneicon_textview);
+		orderappeal_layout_phoneicon_textview.setOnClickListener(this);
 		//买手账号
 		orderappeal_layout_buyernovalue_textview=(TextView)parementView.findViewById(R.id.orderappeal_layout_buyernovalue_textview);
 		//买手电话
@@ -81,8 +94,86 @@ View parementView;
 		affirmorder_item_tihuophonevalue_textview=(EditText)parementView.findViewById(R.id.affirmorder_item_tihuophonevalue_textview);
 		//申诉按钮
 		Button orderappeal_layout_footersubmit_button=(Button)parementView.findViewById(R.id.orderappeal_layout_footersubmit_button);
+		orderappeal_layout_footersubmit_button.setOnClickListener(this);
 		
-		//MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.nullToString(str), imageView, options)
-		
+	}
+	
+	/*****
+	 * 请求订单详情
+	 * ***/
+	void requestOrderInfo()
+	{
+		httpControl.getBaijiaOrderDetails(orderNo, true, new HttpCallBackInterface() {
+			
+			@Override
+			public void http_Success(Object obj) {
+				if(obj==null)
+				{
+					http_Fails(500, "加载数据失败");
+				}else 
+				{
+					RequestBaiJiaOrdeDetailsInfoBean requestBaiJiaOrdeDetailsInfoBean=(RequestBaiJiaOrdeDetailsInfoBean)obj;
+					if(requestBaiJiaOrdeDetailsInfoBean.getData()==null)
+					{
+						http_Fails(500, "加载数据失败");
+					}else
+					{
+						bean=requestBaiJiaOrdeDetailsInfoBean.getData();
+						setValue();
+					}
+				}
+			}
+			
+			@Override
+			public void http_Fails(int error, String msg) {
+				MyApplication.getInstance().showMessage(OrderAppealActivity.this, msg);
+				OrderAppealActivity.this.finish();
+			}
+		}, this);
+	}
+	
+	/*****
+	 * 负值
+	 * ***/
+	void setValue()
+	{
+		MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.nullToString(bean.getBuyerLogo()), orderappeal_layout_buyericon_textview, MyApplication.getInstance().getDisplayImageOptions());
+		orderappeal_layout_buyernovalue_textview.setText(bean.getBuyerName());
+		orderappeal_layout_buyermobilevalue_textview.setText(bean.getBuyerMobile());
+		orderappeal_layout_goodsaddressvalue_textview.setText(bean.getPickAddress());
+	}
+
+
+	@Override
+	public void onClick(View v) {
+		switch(v.getId())
+		{
+		case R.id.orderappeal_layout_footersubmit_button://申诉按钮
+			submit();
+			break;
+		case R.id.orderappeal_layout_phoneicon_textview://电话图标
+			ToolsUtil.callActivity(OrderAppealActivity.this, bean.getBuyerMobile());
+			break;
+		}
+	}
+	
+	/***
+	 * 提交申诉
+	 * **/
+	void submit()
+	{
+		String msg=orderappeal_layout_appealreason_textview.getText().toString().trim();
+		String phome=affirmorder_item_tihuophonevalue_textview.getText().toString().trim();
+		if(msg.length()<3)
+		{
+			MyApplication.getInstance().showMessage(this, "申诉理由必须大于三个字母");
+			return;
+		}
+		if(phome.equals(""))
+		{
+			MyApplication.getInstance().showMessage(this, "联系电话必须填写");
+			return;
+		}
+		//申诉
 	}
 }

@@ -258,8 +258,7 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView impleme
 
 	// 加载数据
 	public void initData() {
-		httpControl.getMyBuyerProductDetails(productID,
-				new HttpCallBackInterface() {
+		httpControl.getMyBuyerProductDetails(productID,new HttpCallBackInterface() {
 
 					@Override
 					public void http_Success(Object obj) {

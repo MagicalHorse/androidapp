@@ -137,6 +137,7 @@
                     android:gravity="left|top"
                     android:textSize="@dimen/textsize13sp"
                     android:hint="申诉理由"
+                    android:maxLength="200"
                     android:id="@+id/orderappeal_layout_appealreason_textview"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/shop_main_width140_dimen"
