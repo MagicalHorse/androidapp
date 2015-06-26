@@ -1,22 +1,33 @@
 package com.shenma.yueba.camera2;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
 import android.hardware.Camera.Parameters;
 import android.hardware.Camera.PictureCallback;
 import android.hardware.Camera.Size;
+import android.media.ExifInterface;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.OrientationEventListener;
 import android.view.Surface;
@@ -34,6 +45,8 @@ import com.shenma.yueba.R;
 import com.shenma.yueba.util.BitmapUtil;
 import com.shenma.yueba.util.Debug;
 import com.shenma.yueba.util.PathManager;
+import com.shenma.yueba.yangjia.activity.AddTagActivity;
+import com.shenma.yueba.yangjia.activity.EditPicActivity;
 
 @SuppressLint("NewApi")
 // 默认的相机为横平，所以Activity设置为横屏，拍出的照片才正确
@@ -41,8 +54,14 @@ public class ActivityCapture extends Activity implements View.OnClickListener,
 		CaptureSensorsObserver.RefocuseListener {
 	private ImageView bnToggleCamera;
 	private ImageView bt_light;
+    public final static String IMAGE_URI = "iamge_uri";
+	public final static String ACTION_CROP_IMAGE = "android.intent.action.CROP";
+	public final static String CROP_IMAGE_URI = "crop_image_uri";
+	private final int ONE_K = 1024;
+	private final int ONE_M = ONE_K * ONE_K;
+	private final int MAX_AVATAR_SIZE = 2 * ONE_M; // 2M
 	private ImageView bnCapture;
-
+	public final static int REQ_CODE_LOCALE_BG = 202;
 	private FrameLayout framelayoutPreview;
 	private CameraPreview preview;
 	private CameraCropBorderView cropBorderView;
@@ -51,14 +70,13 @@ public class ActivityCapture extends Activity implements View.OnClickListener,
 	private Camera.AutoFocusCallback focusCallback;
 	private CaptureSensorsObserver observer;
 	private View focuseView;
-
+	public final static int REQ_CODE_PHOTO_CROP = 102;
 	private int currentCameraId;
 	private int frontCameraId;
 	private boolean _isCapturing;
 
 	CaptureOrientationEventListener _orientationEventListener;
 	private int _rotation;
-
 	public static final int kPhotoMaxSaveSideLen = 1600;
 	public static final String kPhotoPath = "photo_path";
 
@@ -138,7 +156,26 @@ public class ActivityCapture extends Activity implements View.OnClickListener,
 		bt_light.setRotation(-90);
 	}
 
+	private void getLocalImage(int reqCode) {
+		// 抓下异常是防止有的机器不支持ACTION_PICK或ACTION_GET_CONTENT的动作
+		try {
+			Intent intent = new Intent(Intent.ACTION_PICK, null);
+			intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+					"image/*");
+			startActivityForResult(intent, reqCode);
+		} catch (Exception e1) {
+			try {
+				Intent intent = new Intent();
+				intent.setType("image/*");
+				intent.setAction(Intent.ACTION_GET_CONTENT);
+				startActivityForResult(intent, reqCode);
+			} catch (Exception e2) {
+			}
+		}
+	}
+
 	protected void setListeners() {
+		tv_little_pic.setOnClickListener(this);
 		bnToggleCamera.setOnClickListener(this);
 		bt_light.setOnClickListener(this);
 		bnCapture.setOnClickListener(this);
@@ -213,12 +250,30 @@ public class ActivityCapture extends Activity implements View.OnClickListener,
 						tv_little_pic.setImageBitmap(finalBitmap);
 						tempImageView.setVisibility(View.GONE);
 						focuseView.setVisibility(View.GONE);
-						camera.setPreviewCallback(null) ;
-						camera.stopPreview();
-						camera.release();
-						camera.open();
-
-
+						// camera.setPreviewCallback(null) ;
+						// camera.stopPreview();
+						// camera.release();
+						// camera.open();
+						// setupDevice();
+						// camera.stopPreview();
+						// camera.release();
+						// openCamera();
+						// getViews();
+						// initViews();
+						// setListeners();
+						// observer = new
+						// CaptureSensorsObserver(ActivityCapture.this);
+						// _orientationEventListener = new
+						// CaptureOrientationEventListener(ActivityCapture.this);
+						// getViews();
+						// initViews();
+						// setListeners();
+						// setupDevice();
+						finish();
+						camera.startPreview();
+						Intent intent = new Intent(ActivityCapture.this,
+								EditPicActivity.class);
+						startActivity(intent);
 					}
 				});
 				//
@@ -381,6 +436,8 @@ public class ActivityCapture extends Activity implements View.OnClickListener,
 		case R.id.bnCapture:
 			bnCaptureClicked();
 			break;
+		case R.id.tv_little_pic:// 选择图库
+			getLocalImage(REQ_CODE_LOCALE_BG);
 		}
 	}
 
@@ -742,5 +799,369 @@ public class ActivityCapture extends Activity implements View.OnClickListener,
 			}
 
 		}
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+		if (resultCode == RESULT_OK) {
+			// 读取本地相片
+			if (requestCode == REQ_CODE_LOCALE_BG) {
+
+				readLocalImage(data);
+
+			} else if (requestCode == REQ_CODE_PHOTO_CROP) {// 裁剪图片后的返回结果
+
+				readCropImage(data);
+			}
+		}
+	}
+
+	/**
+	 * 此处写方法描述
+	 * 
+	 * @Title: readLocalImage
+	 * @param data
+	 * @return void
+	 * @date 2012-12-12 上午11:26:35
+	 */
+	private void readLocalImage(Intent data) {
+		if (data == null) {
+			return;
+		}
+
+		Uri uri = null;
+		uri = data.getData();
+
+		if (uri != null) {
+
+			startPhotoCrop(uri, null, REQ_CODE_PHOTO_CROP); // 图片裁剪
+		}
+	}
+
+	/**
+	 * 此处写方法描述
+	 * 
+	 * @Title: readCropImage
+	 * @param data
+	 * @return void
+	 * @date 2012-12-12 上午11:27:52
+	 */
+	@SuppressWarnings("deprecation")
+	private void readCropImage(Intent data) {
+
+		if (data == null) {
+			return;
+		}
+		Uri uri = data.getParcelableExtra(CROP_IMAGE_URI);
+//		Log.d("lzc", "uri=========================>" + uri.toString());
+//		Bitmap photo = getBitmap(uri);
+//		Drawable drawable = new BitmapDrawable(photo);
+//		// Drawable drawable = bd.;
+//		// imageView.setBackgroundDrawable(drawable);
+//		if (photo != null) {
+//
+//			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//			photo.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+//
+//			byte[] datas = null;
+//			try {
+//				datas = baos.toByteArray();
+//				baos.flush();
+//				baos.close();
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//
+//			if (datasException(datas)) {
+//				return;
+//			}
+//
+//			// 保存头像
+//			// 字符参数部分
+//			saveAvatar(datas);
+
+			
+			Intent editPicIntent = new Intent(ActivityCapture.this,EditPicActivity.class);
+			editPicIntent.putExtra("uri", uri);
+			startActivity(editPicIntent);
+			
+			
+			
+		}
+
+	/**
+	 * 此处写方法描述
+	 * 
+	 * @Title: getBitmap
+	 * @param intent
+	 * @return void
+	 * @date 2012-12-13 下午8:22:23
+	 */
+	private Bitmap getBitmap(Uri uri) {
+		Bitmap bitmap = null;
+		InputStream is = null;
+		try {
+
+			is = getInputStream(uri);
+
+			bitmap = BitmapFactory.decodeStream(is);
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (is != null) {
+				try {
+					is.close();
+				} catch (IOException ignored) {
+				}
+			}
+		}
+		return bitmap;
+	}
+
+	/**
+	 * 获取输入流
+	 * 
+	 * @Title: getInputStream
+	 * @param mUri
+	 * @return
+	 * @return InputStream
+	 * @date 2012-12-14 上午9:00:31
+	 */
+	private InputStream getInputStream(Uri mUri) throws IOException {
+		try {
+			if (mUri.getScheme().equals("file")) {
+				return new java.io.FileInputStream(mUri.getPath());
+			} else {
+				return this.getContentResolver().openInputStream(mUri);
+			}
+		} catch (FileNotFoundException ex) {
+			return null;
+		}
+	}
+
+	/**
+	 * 此处写方法描述
+	 * 
+	 * @Title: handleDatasException
+	 * @param datas
+	 * @return void
+	 * @date 2012-12-12 上午11:32:20
+	 */
+	private boolean datasException(byte[] datas) {
+		// 头像处理异常
+		if (datas == null || datas.length <= 0) {
+
+			return true;
+		}
+
+		// 头像尺寸不符
+		if (datas.length > MAX_AVATAR_SIZE) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * 此处写方法描述
+	 * 
+	 * @Title: saveAvatar
+	 * @param datas
+	 * @return void
+	 * @date 2012-12-12 上午11:30:22
+	 */
+	private void saveAvatar(byte[] datas) {
+		/**
+		 * Map<String, String> params = new HashMap<String, String>();
+		 * params.put("avtf", "1"); params.put("_w", "" + AVATAR_CROP_WIDTH);
+		 * params.put("_h", "" + AVATAR_CROP_HEIGHT); params.put("x", "" +
+		 * AVATAR_CROP_STARTX); params.put("y", "" + AVATAR_CROP_STARTY);
+		 * params.put("w", "" + AVATAR_CROP_WIDTH); params.put("h", "" +
+		 * AVATAR_CROP_HEIGHT);
+		 * 
+		 * // 文件参数部分 FormFile formFile = new FormFile(datas, "avatar",
+		 * "avatar_orig");
+		 * formFile.setContentType(FormFile.CONTENT_TYPE_IMAGE_JPEG);
+		 * 
+		 * // 异步上传任务 // new UploadAvatar(params,formFile).execute(); new
+		 * UploadImage(params, formFile).execute();
+		 * 
+		 * progressDialogAvatar = new ProgressDialog(
+		 * Activity_Space_Mine_New.this);
+		 * progressDialogAvatar.setCancelable(true); progressDialogAvatar
+		 * .setMessage(getString(R.string.information_edit_upload_avatar));
+		 * progressDialogAvatar.show();
+		 */
+	}
+
+	/**
+	 * 开始裁剪
+	 * 
+	 * @Title: startPhotoCrop
+	 * @param uri
+	 * @param duplicatePath
+	 * @param reqCode
+	 * @return void
+	 * @date 2012-12-12 上午11:15:38
+	 */
+	private void startPhotoCrop(Uri uri, String duplicatePath, int reqCode) {
+
+		Uri duplicateUri = preCrop(uri, duplicatePath);
+
+		Intent intent = new Intent(ACTION_CROP_IMAGE);
+		intent.putExtra(IMAGE_URI, uri);
+		intent.putExtra("crop", "false");
+		// aspectX aspectY 是宽高的比例
+		intent.putExtra("aspectX", 1);
+		intent.putExtra("aspectY", 1);
+		startActivityForResult(intent, reqCode);
+		/**
+		 * intent.setDataAndType(uri, "image/*"); intent.putExtra("crop",
+		 * "true"); intent.putExtra("outputFormat", "JPEG"); // aspectX aspectY
+		 * 是宽高的比例 intent.putExtra("aspectX", 1); intent.putExtra("aspectY", 1);
+		 * // outputX outputY 是裁剪图片宽高 intent.putExtra("outputX", reqCode ==
+		 * REQ_CODE_BG_CROP ? BG_CROP_WIDTH : AVATAR_CROP_WIDTH);
+		 * intent.putExtra("outputY", reqCode == REQ_CODE_BG_CROP ?
+		 * BG_CROP_HEIGHT : AVATAR_CROP_HEIGHT);
+		 * intent.putExtra(MediaStore.EXTRA_OUTPUT, duplicateUri);
+		 * intent.putExtra("return-data", true);
+		 */
+
+	}
+
+	/**
+	 * 剪裁之前的预处理
+	 * 
+	 * @Title: preCrop
+	 * @param uri
+	 * @param duplicatePath
+	 * @return
+	 * @return Uri
+	 * @date 2012-12-4 上午10:18:33
+	 */
+	private Uri preCrop(Uri uri, String duplicatePath) {
+		Uri duplicateUri = null;
+
+		if (duplicatePath == null) {
+			duplicateUri = getDuplicateUri(uri);
+		} else {
+			duplicateUri = getDuplicateUri(uri, duplicatePath);
+		}
+
+		// rotateImage();
+
+		return duplicateUri;
+	}
+
+	/**
+	 * 设置获取裁剪后图像的uri
+	 * 
+	 * @Title: getDuplicateUri
+	 * @param uri
+	 * @return
+	 * @return Uri
+	 * @date 2012-11-26 下午12:25:16
+	 */
+	private Uri getDuplicateUri(Uri uri) {
+		Uri duplicateUri = null;
+
+		String uriString = getUriString(uri);
+
+		duplicateUri = getDuplicateUri(uri, uriString);
+
+		return duplicateUri;
+	}
+
+	/**
+	 * 如果是拍照的话就直接获取了
+	 * 
+	 * @Title: getDuplicateUri
+	 * @param uri
+	 * @param uriString
+	 * @return
+	 * @return Uri
+	 * @date 2012-11-28 下午6:30:38
+	 */
+	private Uri getDuplicateUri(Uri uri, String uriString) {
+
+		Uri duplicateUri = null;
+		String duplicatePath = null;
+		duplicatePath = uriString.replace(".", "_duplicate.");
+
+		// cropImagePath = uriString;
+		// 判断原图是否旋转，旋转了进行修复
+		rotateImage(uriString);
+
+		duplicateUri = Uri.fromFile(new File(duplicatePath));
+
+		return duplicateUri;
+	}
+
+	/**
+	 * 旋转图象
+	 * 
+	 * @Title: rotateImage
+	 * @return void
+	 * @date 2012-12-4 上午10:18:53
+	 */
+	private void rotateImage(String uriString) {
+
+		try {
+			ExifInterface exifInterface = new ExifInterface(uriString);
+
+			int orientation = exifInterface.getAttributeInt(
+					ExifInterface.TAG_ORIENTATION,
+					ExifInterface.ORIENTATION_NORMAL);
+
+			if (orientation == ExifInterface.ORIENTATION_ROTATE_90
+					|| orientation == ExifInterface.ORIENTATION_ROTATE_180
+					|| orientation == ExifInterface.ORIENTATION_ROTATE_270) {
+
+				String value = String.valueOf(orientation);
+				exifInterface
+						.setAttribute(ExifInterface.TAG_ORIENTATION, value);
+				// exifInterface.setAttribute(ExifInterface.TAG_ORIENTATION,
+				// "no");
+				exifInterface.saveAttributes();
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 根据Uri获取文件的路径
+	 * 
+	 * @Title: getUriString
+	 * @param uri
+	 * @return
+	 * @return String
+	 * @date 2012-11-28 下午1:19:31
+	 */
+	private String getUriString(Uri uri) {
+		String imgPath = null;
+		if (uri != null) {
+			String uriString = uri.toString();
+			// 小米手机的适配问题，小米手机的uri以file开头，其他的手机都以content开头
+			// 以content开头的uri表明图片插入数据库中了，而以file开头表示没有插入数据库
+			// 所以就不能通过query来查询，否则获取的cursor会为null。
+			if (uriString.startsWith("file")) {
+				// uri的格式为file:///mnt....,将前七个过滤掉获取路径
+				imgPath = uriString.substring(7, uriString.length());
+
+				return imgPath;
+			}
+			Cursor cursor = getContentResolver().query(uri, null, null, null,
+					null);
+			cursor.moveToFirst();
+			imgPath = cursor.getString(1); // 图片文件路径
+
+		}
+		return imgPath;
 	}
 }

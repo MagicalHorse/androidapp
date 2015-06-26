@@ -307,6 +307,10 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
+            android:name="com.shenma.yueba.crop.CropActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
             android:name="com.shenma.yueba.yangjia.activity.BuyerIndentificationActivity"
             android:screenOrientation="portrait" >
         </activity>

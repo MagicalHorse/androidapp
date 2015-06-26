@@ -180,10 +180,10 @@ private void showDialog() {
 		@Override
 		public void onClick(View v) {
 			// 跳转到到自定义相机
-			Intent intentCamera = new Intent(MainActivityForYangJia.this,CameraAty.class);
-			startActivity(intentCamera);
-//			Intent intentCamera = new Intent(MainActivityForYangJia.this,ActivityCapture.class);
+//			Intent intentCamera = new Intent(MainActivityForYangJia.this,CameraAty.class);
 //			startActivity(intentCamera);
+			Intent intentCamera = new Intent(MainActivityForYangJia.this,ActivityCapture.class);
+			startActivity(intentCamera);
 			dialog.cancel();
 		}
 	});
