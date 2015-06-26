@@ -129,7 +129,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/shop_main_lineheight10_dimen"
-                android:background="@color/white" />
+                android:background="@color/white"
+                android:visibility="gone" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -162,32 +163,32 @@
             </RelativeLayout>
 
             <!-- 打烊购 -->
-           <RelativeLayout 
-               android:background="@color/white"
-               android:layout_marginTop="@dimen/shop_main_lineheight10_dimen"
-               android:padding="@dimen/margin_left_and_right"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:orientation="horizontal"
-               android:id="@+id/affirmorder_item_youhui_linearlayout"
-               >
-               <TextView
-                   android:layout_centerVertical="true"
-                   android:id="@+id/affirmorder_item_youhuititle_textview"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:text="打烊购"
-                   />
-               <TextView
-                   android:layout_centerVertical="true"
-                   android:layout_alignParentRight="true"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:id="@+id/affirmorder_item_youhuicontext_textview"
-                   android:text="立减30.00"
-                   />
-           </RelativeLayout>
-           
+
+            <RelativeLayout
+                android:id="@+id/affirmorder_item_youhui_linearlayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/shop_main_lineheight10_dimen"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="@dimen/margin_left_and_right" >
+
+                <TextView
+                    android:id="@+id/affirmorder_item_youhuititle_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="打烊购" />
+
+                <TextView
+                    android:id="@+id/affirmorder_item_youhuicontext_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:text="立减30.00" />
+            </RelativeLayout>
+
             <!-- 提货电话 -->
 
             <RelativeLayout
@@ -195,37 +196,38 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:orientation="horizontal"
-                android:padding="@dimen/margin_left_and_right">
+                android:padding="@dimen/margin_left_and_right" >
 
                 <TextView
                     android:id="@+id/affirmorder_item_tihuophone_textview"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:text="提货电话:" />
 
-                <EditText
-                    android:background="@drawable/gray_background"
-                    android:layout_toRightOf="@id/affirmorder_item_tihuophone_textview"
+                <LinearLayout
                     android:layout_centerVertical="true"
-                    android:id="@+id/affirmorder_item_tihuophonevalue_textview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:phoneNumber="true"
-                    android:singleLine="true" />
-                
-                <TextView
-                    android:id="@+id/affirmorder_item_tihuophonetitle_textview"
-                    android:layout_marginTop="@dimen/shop_main_width15_dimen"
-                    android:layout_toRightOf="@+id/affirmorder_item_tihuophone_textview"
-                    android:layout_below="@+id/affirmorder_item_tihuophonevalue_textview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/textsize12sp"
-                    android:textColor="@color/red"
-                    android:text="*输入您的手机号,方便买手找到你"
-                    />
+                    android:layout_toRightOf="@id/affirmorder_item_tihuophone_textview"
+                    android:orientation="vertical" >
+
+                    <EditText
+                        android:id="@+id/affirmorder_item_tihuophonevalue_textview"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/user_config_iconwidth40_dimen"
+                        android:background="@drawable/gray_background"
+                        android:phoneNumber="true"
+                        android:singleLine="true" />
+
+                    <TextView
+                        android:id="@+id/affirmorder_item_tihuophonetitle_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="*输入您的手机号,方便买手找到你"
+                        android:textColor="@color/red"
+                        android:textSize="@dimen/textsize12sp" />
+                </LinearLayout>
             </RelativeLayout>
         </LinearLayout>
     </ScrollView>

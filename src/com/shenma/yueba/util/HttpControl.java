@@ -1292,6 +1292,7 @@ public class HttpControl {
 	 * **/
 	public void getBaijiaUserInfo(int userid,boolean showDialog, final HttpCallBackInterface httpCallBack,Context context) {
 		Map<String, String> map = new HashMap<String, String>();
+		map.put("userid", Integer.toString(userid));
 		BasehttpSend(map, context, HttpConstants.GETUSERINFO, httpCallBack,RequestUserInfoBean.class, showDialog, false);
 	}
 	
