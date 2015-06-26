@@ -530,6 +530,27 @@ public class HttpControl {
 		BasehttpSend(map, context, HttpConstants.METHOD_BRANDMANAGEER_DETAIL,
 				httpCallBack, BrandDetailInfoBean.class, true, false);
 	}
+	
+	
+	/**
+	 * 根据名称搜索标签
+	 * 
+	 * @param httpCallBack
+	 *            HttpCallBackInterface 回调接口
+	 * @param context
+	 *            Context
+	 * @param Id
+	 *            int
+	 * @return void
+	 * **/
+	public void getProductTag(String name,String type,final HttpCallBackInterface httpCallBack,
+			Context context, int BrandId) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put(Constants.NAME, name);
+		map.put(Constants.TYPE, type);
+		BasehttpSend(map, context, HttpConstants.METHOD_GETPRODUCTTAG,
+				httpCallBack, BrandDetailInfoBean.class, true, false);
+	}
 
 	/**
 	 * 获取品牌列表
