@@ -1,7 +1,5 @@
 package com.shenma.yueba.baijia.activity;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -11,6 +9,7 @@ import android.widget.TextView;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.RoundImageView;
 
@@ -22,6 +21,12 @@ import com.shenma.yueba.view.RoundImageView;
 
 public class BaijiaAppealLoadingActivity extends BaseActivityWithTopView implements OnClickListener{
 View parentView;
+//买手头像
+RoundImageView appealloading_layout_buyericon_roundimageview;
+//专员电话图标
+ImageView appealloading_layout_commissionerphoneicon_textview;
+//电话图标
+ImageView appealloading_layout_phoneicon_textview;
 //申诉时间
 TextView appealloading_layout_appealtimevalue_textview;
 //申诉进度
@@ -42,7 +47,8 @@ TextView appealloading_layout_lianxibuyer_textview;
 Button  appealloading_layout_cancelappeal_button;
 //撤销退款
 Button  appealloading_layout_cancelpayprice_button;
-
+String orderNo=null;
+HttpControl httpControl=new HttpControl();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +56,19 @@ Button  appealloading_layout_cancelpayprice_button;
 		parentView=this.getLayoutInflater().inflate(R.layout.appealloading_layout, null);
 		setContentView(parentView);
 		super.onCreate(savedInstanceState);
+		if(this.getIntent().getSerializableExtra("DATA")==null)
+		{
+			MyApplication.getInstance().showMessage(this, "数据错误，请重试");
+			finish();
+			return;
+		}else
+		{
+			orderNo=(String)this.getIntent().getSerializableExtra("DATA");
+		}
 		MyApplication.getInstance().addActivity(this);
 		initView();
+		//请求订单信息
+		requestOrderInfo();
 	}
 	
 	void initView()
@@ -66,12 +83,12 @@ Button  appealloading_layout_cancelpayprice_button;
 		});
 		ToolsUtil.setFontStyle(BaijiaAppealLoadingActivity.this, parentView, R.id.appealloading_layout_appealtime_textview,R.id.appealloading_layout_appealprogress_textview,R.id.appealloading_layout_appealdesc_textview,R.id.appealloading_layout_buyerno_textview,R.id.appealloading_layout_buyermobile_textview,R.id.appealloading_layout_goodsaddress_textview,R.id.appealloading_layout_commissionermobile_textview,R.id.appealloading_layout_appealtimevalue_textview,R.id.appealloading_layout_appealprogressvalue_textview,R.id.appealloading_layout_appealdescvalue_textview,R.id.appealloading_layout_buyernovalue_textview,R.id.appealloading_layout_buyermobilevalue_textview,R.id.appealloading_layout_goodsaddressvalue_textview,R.id.appealloading_layout_commissionermobilevalue_textview,R.id.appealloading_layout_lianxibuyer_textview,R.id.appealloading_layout_cancelappeal_button,R.id.appealloading_layout_cancelpayprice_button);
 		//买手头像
-		RoundImageView appealloading_layout_buyericon_roundimageview=(RoundImageView)findViewById(R.id.appealloading_layout_buyericon_roundimageview);
+		appealloading_layout_buyericon_roundimageview=(RoundImageView)findViewById(R.id.appealloading_layout_buyericon_roundimageview);
 		//买手电话的 图标
-		ImageView appealloading_layout_phoneicon_textview=(ImageView)findViewById(R.id.appealloading_layout_phoneicon_textview);
+		appealloading_layout_phoneicon_textview=(ImageView)findViewById(R.id.appealloading_layout_phoneicon_textview);
 		appealloading_layout_phoneicon_textview.setOnClickListener(this);
 		//专员电话图标
-		ImageView appealloading_layout_commissionerphoneicon_textview=(ImageView)findViewById(R.id.appealloading_layout_commissionerphoneicon_textview);
+		appealloading_layout_commissionerphoneicon_textview=(ImageView)findViewById(R.id.appealloading_layout_commissionerphoneicon_textview);
 		appealloading_layout_commissionerphoneicon_textview.setOnClickListener(this);
 		//申诉时间
 		appealloading_layout_appealtimevalue_textview=(TextView)findViewById(R.id.appealloading_layout_appealtimevalue_textview);
@@ -120,5 +137,38 @@ Button  appealloading_layout_cancelpayprice_button;
 			}
 			break;
 		}
+	}
+	
+	
+	/*****
+	 * 请求申诉订单详情
+	 * ***/
+	void requestOrderInfo()
+	{
+		
+	}
+	
+	/*****
+	 * 负值
+	 * ***/
+	void setValue()
+	{
+		MyApplication.getInstance().getImageLoader().displayImage("", appealloading_layout_buyericon_roundimageview, MyApplication.getInstance().getDisplayImageOptions());
+		//申诉时间
+		appealloading_layout_appealtimevalue_textview.setText("");
+		//申诉进度
+		appealloading_layout_appealprogressvalue_textview.setText("");
+		//申诉理由
+		appealloading_layout_appealdescvalue_textview.setText("");
+		//买手账号
+		appealloading_layout_buyernovalue_textview.setText("");
+		//买手电话
+		appealloading_layout_buyermobilevalue_textview.setText("");
+		//提货地址
+		appealloading_layout_goodsaddressvalue_textview.setText("");
+		//专员电话
+		appealloading_layout_commissionermobilevalue_textview.setText("");
+		
+		
 	}
 }

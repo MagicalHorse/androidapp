@@ -52,18 +52,18 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="5dip"
                 android:text="养家模式"
-                android:visibility="gone"
                 android:textColor="@color/white"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:visibility="gone" />
         </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/shop_main_width5_dimen"
             android:layout_marginBottom="@dimen/shop_main_lineheight10_dimen"
             android:background="@color/white"
-            android:gravity="center" >
+            android:gravity="center"
+            android:padding="@dimen/shop_main_width5_dimen" >
 
             <!-- 圆形 -->
 
@@ -82,7 +82,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="bottom"
-                    android:hint="1"
+                    android:hint="0"
                     android:singleLine="true" />
 
                 <TextView
@@ -112,7 +112,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="bottom"
-                    android:hint="1"
+                    android:hint="0"
                     android:singleLine="true" />
 
                 <TextView
@@ -127,6 +127,7 @@
             <!-- 圆形 -->
 
             <LinearLayout
+                android:id="@+id/me_fragment_for_baijie_layout_mycircle_linearlayout"
                 android:layout_width="@dimen/user_config_iconwidth60_dimen"
                 android:layout_height="@dimen/user_config_iconwidth60_dimen"
                 android:layout_marginLeft="@dimen/shop_main_lineheight10_dimen"
@@ -142,7 +143,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="bottom"
-                    android:hint="1"
+                    android:hint="0"
                     android:singleLine="true" />
 
                 <TextView
@@ -151,7 +152,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="top"
-                    android:hint="收藏" />
+                    android:hint="圈子" />
             </LinearLayout>
         </LinearLayout>
 
@@ -162,53 +163,118 @@
             android:orientation="horizontal"
             android:padding="10dip" >
 
-            <TextView
-                android:id="@+id/tv_all_order"
+            <RelativeLayout
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:drawablePadding="3dip"
-                android:drawableTop="@drawable/all_order"
-                android:gravity="center_horizontal"
-                android:text="全部"
-                android:textColor="@color/black"
-                android:textSize="13dip" />
+                android:padding="@dimen/shop_main_width2_dimen" >
 
-            <TextView
-                android:id="@+id/tv_waiting_for_send"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:drawablePadding="3dip"
-                android:drawableTop="@drawable/dfk"
-                android:gravity="center_horizontal"
-                android:text="代付款"
-                android:textColor="@color/black"
-                android:textSize="13dip" />
+                <TextView
+                    android:layout_margin="@dimen/shop_main_width5_dimen"
+                    android:id="@+id/tv_all_order"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:drawablePadding="3dip"
+                    android:drawableTop="@drawable/all_order"
+                    android:gravity="center_horizontal"
+                    android:text="全部"
+                    android:textColor="@color/black"
+                    android:textSize="13dip" />
 
-            <TextView
-                android:id="@+id/tv_waiting_for_recieve"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:drawablePadding="3dip"
-                android:drawableTop="@drawable/zgzt"
-                android:gravity="center_horizontal"
-                android:text="专柜自提"
-                android:textColor="@color/black"
-                android:textSize="13dip" />
+                <TextView
+                    android:layout_marginRight="@dimen/shop_main_width5_dimen"
+                    android:id="@+id/tv_all_order_count_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:textSize="@dimen/textsize12sp"
+                    android:text="0" />
+            </RelativeLayout>
 
-            <TextView
-                android:id="@+id/tv_pick_by_myself"
+            <RelativeLayout
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:drawablePadding="3dip"
-                android:drawableTop="@drawable/sh"
-                android:gravity="center_horizontal"
-                android:text="售后"
-                android:textColor="@color/black"
-                android:textSize="13dip" />
+                android:padding="@dimen/shop_main_width2_dimen" >
+
+                <TextView
+                    android:layout_margin="@dimen/shop_main_width5_dimen"
+                    android:id="@+id/tv_waiting_for_send"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="3dip"
+                    android:drawableTop="@drawable/dfk"
+                    android:gravity="center_horizontal"
+                    android:text="代付款"
+                    android:textColor="@color/black"
+                    android:textSize="13dip" />
+
+                <TextView
+                    android:layout_marginRight="@dimen/shop_main_width5_dimen"
+                    android:textSize="@dimen/textsize12sp"
+                    android:id="@+id/tv_waiting_for_send_count_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="0" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="@dimen/shop_main_width2_dimen" >
+
+                <TextView
+                    android:layout_margin="@dimen/shop_main_width5_dimen"
+                    android:id="@+id/tv_waiting_for_recieve"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="3dip"
+                    android:drawableTop="@drawable/zgzt"
+                    android:gravity="center_horizontal"
+                    android:text="专柜自提"
+                    android:textColor="@color/black"
+                    android:textSize="13dip" />
+
+                <TextView
+                    android:layout_marginRight="@dimen/shop_main_width5_dimen"
+                    android:textSize="@dimen/textsize12sp"
+                    android:id="@+id/tv_waiting_for_recieve_count_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="0" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="@dimen/shop_main_width2_dimen" >
+
+                <TextView
+                    android:layout_margin="@dimen/shop_main_width5_dimen"
+                    android:id="@+id/tv_pick_by_myself"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="3dip"
+                    android:drawableTop="@drawable/sh"
+                    android:gravity="center_horizontal"
+                    android:text="售后"
+                    android:textColor="@color/black"
+                    android:textSize="13dip" />
+
+                <TextView
+                    android:layout_marginRight="@dimen/shop_main_width5_dimen"
+                    android:textSize="@dimen/textsize12sp"
+                    android:id="@+id/tv_pick_by_myself_count_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="0" />
+            </RelativeLayout>
         </LinearLayout>
 
         <TextView

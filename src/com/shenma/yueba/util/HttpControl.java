@@ -46,6 +46,7 @@ import com.shenma.yueba.baijia.modle.RequestComputeAmountInfoBean;
 import com.shenma.yueba.baijia.modle.RequestCreatOrderInfoBean;
 import com.shenma.yueba.baijia.modle.RequestMyCircleInfoBean;
 import com.shenma.yueba.baijia.modle.RequestMyFavoriteProductListInfoBean;
+import com.shenma.yueba.baijia.modle.RequestMyInfoBean;
 import com.shenma.yueba.baijia.modle.RequestProductDetailsInfoBean;
 import com.shenma.yueba.baijia.modle.RequestProductListInfoBean;
 import com.shenma.yueba.baijia.modle.RequestUploadProductInfoBean;
@@ -1455,6 +1456,33 @@ public class HttpControl {
 		map.put("OrderNo",OrderNo);
 		BasehttpSend(map, context, HttpConstants.METHOD_CONFIRMGOODS,httpCallBack, BaseRequest.class, showDialog,false);
 	}
+	
+	/**
+	 * 获取用户信息
+	 * 败家  客户获取自己的基本信息（新）
+	 * @return void
+	 * **/
+	public void GetBaijiaMyInfo(boolean showDialog, final HttpCallBackInterface httpCallBack,Context context) {
+		Map<String, String> map = new HashMap<String, String>();
+		BasehttpSend(map, context, HttpConstants.METHOD_MYINFO,httpCallBack, RequestMyInfoBean.class, showDialog,false);
+	}
+	
+	/**
+	 * 获取买手的商品列表、上新商品列
+	 * @param page int 当前页
+     *  @param pagesize int 页大小
+     * @param Filter  int 0:全部商品,1:上新商品
+     * @return void
+	 * **/
+	public void GetBaijiaGetUserProductList(int page,int pagesize,int Filter,boolean showDialog, final HttpCallBackInterface httpCallBack,Context context) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put(Constants.PAGE, Integer.toString(page));
+		map.put(Constants.PAGESIZE, Integer.toString(pagesize));
+		map.put("Filter", Integer.toString(Filter));
+		BasehttpSend(map, context, HttpConstants.METHOD_GETUSERPRODUCTLIST,httpCallBack, RequestMyFavoriteProductListInfoBean.class, showDialog,false);
+	}
+	
+	
 	
 	
 	/**

@@ -12,14 +12,20 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.adapter.BaiJiaOrderListAdapter.OrderControlListener;
 import com.shenma.yueba.baijia.adapter.BaijiaOrderDetailsAdapter;
+import com.shenma.yueba.baijia.fragment.BaiJiaOrderListFragment;
 import com.shenma.yueba.baijia.modle.BaiJiaOrdeDetailsInfoBean;
+import com.shenma.yueba.baijia.modle.BaiJiaOrderListInfo;
 import com.shenma.yueba.baijia.modle.RequestBaiJiaOrdeDetailsInfoBean;
+import com.shenma.yueba.util.ButtonManager;
+import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.ToolsUtil;
@@ -31,14 +37,10 @@ import com.shenma.yueba.view.RoundImageView;
  * 程序的简单说明   败家订单详情页面
  */
 
-public class BaiJiaOrderDetailsActivity extends BaseActivityWithTopView implements OnClickListener{
+public class BaiJiaOrderDetailsActivity extends BaseActivityWithTopView implements OnClickListener,OrderControlListener{
 View parentView;
 ListView baijia_orderdetails_layout_lsitview;
 TextView baijia_orderdetails_lianxibuyer_textview;//联系买手
-Button baijia_orderdetails_sqtk_button;//申请退款
-Button baijia_orderdetails_ziti_button;//自提
-Button baijia_orderdetails_cancellorder_button;//取消订单
-Button baijia_orderdetails_pay_button;//付款
 TextView baijia_orderdetails_xjfx_textview;//现金分享
 TextView order_no_content;//订单编号
 TextView order_wating_content;//订单状态
@@ -55,6 +57,8 @@ String orderNo=null;
 HttpControl httpControl=new HttpControl();
 RequestBaiJiaOrdeDetailsInfoBean bean;
 BaijiaOrderDetailsAdapter baijiaOrderDetailsAdapter;
+LinearLayout baijia_orderdetails_footer_right_linearlayout;//按钮的父对象
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(getWindow().FEATURE_NO_TITLE);
@@ -84,7 +88,7 @@ BaijiaOrderDetailsAdapter baijiaOrderDetailsAdapter;
 				
 			}
 		});
-		
+		baijia_orderdetails_footer_right_linearlayout=(LinearLayout)parentView.findViewById(R.id.baijia_orderdetails_footer_right_linearlayout);
 		//订单编号
 		order_no_content=(TextView)parentView.findViewById(R.id.order_no_content);
 		//订单状态
@@ -111,14 +115,6 @@ BaijiaOrderDetailsAdapter baijiaOrderDetailsAdapter;
 		baijia_orderdetails_layout_lsitview.setAdapter(baijiaOrderDetailsAdapter);
 		baijia_orderdetails_lianxibuyer_textview=(TextView)parentView.findViewById(R.id.baijia_orderdetails_lianxibuyer_textview);
 		baijia_orderdetails_lianxibuyer_textview.setOnClickListener(this);
-		baijia_orderdetails_sqtk_button=(Button)parentView.findViewById(R.id.baijia_orderdetails_sqtk_button);
-		baijia_orderdetails_sqtk_button.setOnClickListener(this);
-		baijia_orderdetails_ziti_button=(Button)parentView.findViewById(R.id.baijia_orderdetails_ziti_button);
-		baijia_orderdetails_ziti_button.setOnClickListener(this);
-		baijia_orderdetails_cancellorder_button=(Button)parentView.findViewById(R.id.baijia_orderdetails_cancellorder_button);
-		baijia_orderdetails_cancellorder_button.setOnClickListener(this);
-		baijia_orderdetails_pay_button=(Button)parentView.findViewById(R.id.baijia_orderdetails_pay_button);
-		baijia_orderdetails_pay_button.setOnClickListener(this);
 		baijia_orderdetails_xjfx_textview=(TextView)parentView.findViewById(R.id.baijia_orderdetails_xjfx_textview);
 		baijia_orderdetails_xjfx_textview.setOnClickListener(this);
 		setFont();
@@ -143,7 +139,7 @@ BaijiaOrderDetailsAdapter baijiaOrderDetailsAdapter;
 	 * ***/
 	void setFont()
 	{
-		ToolsUtil.setFontStyle(this, parentView, R.id.tv_top_title,R.id.order_no_title,R.id.order_no_content,R.id.order_wating_title,R.id.order_wating_content,R.id.order_money_title,R.id.order_money_count,R.id.order_date_title,R.id.order_date_count,R.id.customer_account_title,R.id.customer_account_content,R.id.tv_customer_phone_title,R.id.tv_customer_phone_content,R.id.tv_get_address_title,R.id.tv_get_address_content,R.id.baijia_orderdetails_lianxibuyer_textview,R.id.baijia_orderdetails_ziti_button,R.id.baijia_orderdetails_sqtk_button,R.id.baijia_orderdetails_cancellorder_button,R.id.baijia_orderdetails_pay_button,R.id.baijia_orderdetails_xjfx_textview);
+		ToolsUtil.setFontStyle(this, parentView, R.id.tv_top_title,R.id.order_no_title,R.id.order_no_content,R.id.order_wating_title,R.id.order_wating_content,R.id.order_money_title,R.id.order_money_count,R.id.order_date_title,R.id.order_date_count,R.id.customer_account_title,R.id.customer_account_content,R.id.tv_customer_phone_title,R.id.tv_customer_phone_content,R.id.tv_get_address_title,R.id.tv_get_address_content,R.id.baijia_orderdetails_lianxibuyer_textview,R.id.baijia_orderdetails_xjfx_textview);
 	}
 
 	@Override
@@ -151,14 +147,6 @@ BaijiaOrderDetailsAdapter baijiaOrderDetailsAdapter;
 		switch(v.getId())
 		{
 		case R.id.baijia_orderdetails_lianxibuyer_textview://联系买手
-			break;
-		case R.id.baijia_orderdetails_ziti_button://自提
-			break;
-		case R.id.baijia_orderdetails_sqtk_button://申请退款
-			break;
-		case R.id.baijia_orderdetails_cancellorder_button://取消订单
-			break;
-		case R.id.baijia_orderdetails_pay_button://支付
 			break;
 		case R.id.riv_customer_head://头像
 			Intent iconIntent=new Intent(BaiJiaOrderDetailsActivity.this,ShopMainActivity.class);
@@ -174,37 +162,41 @@ BaijiaOrderDetailsAdapter baijiaOrderDetailsAdapter;
 				ToolsUtil.callActivity(BaiJiaOrderDetailsActivity.this, phoneNo);
 			}
 			break;
+			
+		case R.id.baijia_orderdetails_sqtk_button:
+		     buttonControl(v);
+		     break;
 		}
 		
 	}
 	
-	/*****
-	 * 根据类型显示按钮
-	 * **/
-	void setIsShow(int i)
+	/****
+	 * 按钮控制
+	 * ***/
+	void buttonControl(View btn)
 	{
-		switch(i)
+		if(btn==null || btn.getTag()==null || !(btn.getTag() instanceof BaiJiaOrderListInfo))
+        {
+        	return;
+        }
+		BaiJiaOrderListInfo baiJiaOrderListInfo=(BaiJiaOrderListInfo)btn.getTag();
+		String str=((Button)btn).getText().toString();
+		if(str.equals(ButtonManager.WAITPAY))//如果是等待支付
 		{
-		case 0://显示  自提与申请退款
-			baijia_orderdetails_ziti_button.setVisibility(View.VISIBLE);
-			baijia_orderdetails_sqtk_button.setVisibility(View.VISIBLE);
-			baijia_orderdetails_cancellorder_button.setVisibility(View.GONE);
-			baijia_orderdetails_pay_button.setVisibility(View.GONE);
-			break;
-		case 1://显示取消 与付款
-			baijia_orderdetails_ziti_button.setVisibility(View.GONE);
-			baijia_orderdetails_sqtk_button.setVisibility(View.GONE);
-			baijia_orderdetails_cancellorder_button.setVisibility(View.VISIBLE);
-			baijia_orderdetails_pay_button.setVisibility(View.VISIBLE);
-			break;
-		case 2://显示申请退款
-			baijia_orderdetails_ziti_button.setVisibility(View.GONE);
-			baijia_orderdetails_sqtk_button.setVisibility(View.VISIBLE);
-			baijia_orderdetails_cancellorder_button.setVisibility(View.GONE);
-			baijia_orderdetails_pay_button.setVisibility(View.GONE);
-			break;
+			ButtonManager.payOrder(this, baiJiaOrderListInfo);
+		}else if(str.equals(ButtonManager.CANCELPAY))//撤销退款
+		{
+			ButtonManager.cancelRefund(this);
+		}else if(str.equals(ButtonManager.QUERENTIHUO))//确认提货
+		{
+			ButtonManager.affirmPUG(this, baiJiaOrderListInfo, this);
+		}else if(str.equals(ButtonManager.SHENQINGTUIKUAN))//申请退款
+		{
+			ButtonManager.applyforRefund(this, baiJiaOrderListInfo);
 		}
 	}
+	
+	
 	
 	/*****
 	 * 订单详情请求数据
@@ -254,6 +246,46 @@ BaijiaOrderDetailsAdapter baijiaOrderDetailsAdapter;
 		MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.nullToString(baiJiaOrdeDetailsInfoBean.getBuyerLogo()), riv_customer_head, MyApplication.getInstance().getDisplayImageOptions());
 		obj_list.add(baiJiaOrdeDetailsInfoBean);
 		baijiaOrderDetailsAdapter.notifyDataSetChanged();
+		//根据订单状态 设置按钮
+		List<View> view_list=ButtonManager.getButton(this, bean.getData().getOrderStatus());
+		baijia_orderdetails_footer_right_linearlayout.removeAllViews();
+		if(view_list!=null)
+		{
+			if(view_list!=null)
+			{
+				for(int i=0;i<view_list.size();i++)
+				{
+					View button=view_list.get(i);
+					Button btn=(Button)button.findViewById(R.id.baijia_orderdetails_sqtk_button);
+					FontManager.changeFonts(this, btn);
+					btn.setOnClickListener(this);
+					btn.setTag(bean);
+					LinearLayout.LayoutParams param=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+					param.leftMargin=10;
+					baijia_orderdetails_footer_right_linearlayout.addView(button,param);
+				}
+			}
+		}
+		
+	}
+
+	@Override
+	public void orderCotrol_OnRefuces() {
+		requestData();
 	}
 	
+	
+	@Override
+	protected void onActivityResult(int arg0, int arg1, Intent arg2) {
+		if(arg0==200)
+		{
+			if(arg2!=null)
+			{
+				if(arg2.getStringExtra("PAYRESULT").equals("SUCESS"))//如果支付返回成功（即微信通知成功）
+				{
+					requestData();
+				}
+			}
+		}
+	}
 }

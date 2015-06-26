@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,8 +19,13 @@ import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.BaiJiaOrderListActivity;
 import com.shenma.yueba.baijia.activity.BuyerCertificationActivity1;
+import com.shenma.yueba.baijia.activity.CircleListActivity;
 import com.shenma.yueba.baijia.activity.MyCollectionActivity;
 import com.shenma.yueba.baijia.activity.UserConfigActivity;
+import com.shenma.yueba.baijia.modle.MyInfoBean;
+import com.shenma.yueba.baijia.modle.RequestMyInfoBean;
+import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.yangjia.activity.MainActivityForYangJia;
@@ -46,6 +52,14 @@ public class MeFragmentForBaiJia extends BaseFragment implements OnClickListener
 	private TextView tv_pick_by_myself;
 	private TextView tv_will_yangjia;//我要养家
 	private TextView tv_my_collection;//我的收藏
+	TextView shop_main_attentionvalue_textview;//关注
+	TextView shop_main_fansvalue_textview ;//粉丝
+	TextView shop_main_praisevalue_textview ;//收藏
+	TextView tv_all_order_count_textview;//总订单数
+	TextView tv_waiting_for_send_count_textview;//待支付订单数
+	TextView tv_waiting_for_recieve_count_textview;//专柜自提订单数
+	TextView tv_pick_by_myself_count_textview;//售后订单数
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		Log.i("CircleFragment", "oncreate");
@@ -65,6 +79,7 @@ public class MeFragmentForBaiJia extends BaseFragment implements OnClickListener
 		if (parent != null) {
 			parent.removeView(view);
 		}
+		requestData();
 		return view;
 	}
 
@@ -73,13 +88,18 @@ public class MeFragmentForBaiJia extends BaseFragment implements OnClickListener
 	 */
 	private void initViews(LayoutInflater inflater) {
 		view = inflater.inflate(R.layout.me_fragment_for_baijia, null);
+		tv_all_order_count_textview=(TextView)view.findViewById(R.id.tv_all_order_count_textview);
+		tv_waiting_for_send_count_textview=(TextView)view.findViewById(R.id.tv_waiting_for_send_count_textview);
+		tv_waiting_for_recieve_count_textview=(TextView)view.findViewById(R.id.tv_waiting_for_recieve_count_textview);
+		tv_pick_by_myself_count_textview=(TextView)view.findViewById(R.id.tv_pick_by_myself_count_textview);
+		
+		
+		LinearLayout me_fragment_for_baijie_layout_mycircle_linearlayout=(LinearLayout)view.findViewById(R.id.me_fragment_for_baijie_layout_mycircle_linearlayout);
+		me_fragment_for_baijie_layout_mycircle_linearlayout.setOnClickListener(this);
 		ToolsUtil.setFontStyle(getActivity(), view, R.id.tv_nickname,R.id.tv_nickname,R.id.shop_main_attentionvalue_textview,R.id.shop_main_attention_textview,R.id.shop_main_fansvalue_textview,R.id.shop_main_fans_textview,R.id.shop_main_praisevalue_textview,R.id.shop_main_praise_textview,R.id.tv_all_order,R.id.tv_waiting_for_send,R.id.tv_waiting_for_recieve,R.id.tv_pick_by_myself,R.id.tv_my_collection,R.id.tv_will_yangjia);
 		iv_setting = (ImageView) view.findViewById(R.id.iv_setting);
 		iv_icon = (ImageView) view.findViewById(R.id.iv_icon);
-		String iconUrl = SharedUtil.getStringPerfernece(getActivity(), SharedUtil.user_logo);
-		if(!TextUtils.isEmpty(iconUrl)){
-			MyApplication.getInstance().getImageLoader().displayImage(iconUrl, iv_icon);
-		}
+		iv_icon.setImageResource(R.drawable.default_pic);
 		//买手名称
 		tv_nickname = (TextView) view.findViewById(R.id.tv_nickname);
 		tv_nickname.setText(ToolsUtil.nullToString(SharedUtil.getStringPerfernece(getActivity(), SharedUtil.user_names)));
@@ -88,11 +108,11 @@ public class MeFragmentForBaiJia extends BaseFragment implements OnClickListener
 		tv_style = (TextView) view.findViewById(R.id.tv_style);
 		tv_attention_count = (TextView) view.findViewById(R.id.tv_attention_count);
 		//关注
-		TextView shop_main_attentionvalue_textview = (TextView) view.findViewById(R.id.shop_main_attentionvalue_textview);
+		shop_main_attentionvalue_textview = (TextView) view.findViewById(R.id.shop_main_attentionvalue_textview);
 		//粉丝
-		TextView shop_main_fansvalue_textview = (TextView) view.findViewById(R.id.shop_main_fansvalue_textview);
+		shop_main_fansvalue_textview = (TextView) view.findViewById(R.id.shop_main_fansvalue_textview);
 		//收藏
-		TextView shop_main_praisevalue_textview = (TextView) view.findViewById(R.id.shop_main_praisevalue_textview);
+		shop_main_praisevalue_textview = (TextView) view.findViewById(R.id.shop_main_praisevalue_textview);
 		
 		tv_fans_count = (TextView) view.findViewById(R.id.tv_fans_count);
 		tv_all_order = (TextView) view.findViewById(R.id.tv_all_order);
@@ -118,11 +138,16 @@ public class MeFragmentForBaiJia extends BaseFragment implements OnClickListener
 	public void onResume() {
 		Log.i("CircleFragment", "onResume");
 		super.onResume();
+		requestData();
 	}
 
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
+		case R.id.me_fragment_for_baijie_layout_mycircle_linearlayout://圈子
+			Intent intent=new Intent(getActivity(),CircleListActivity.class);
+			startActivity(intent);
+			break;
 		case R.id.iv_setting://设置
 			Intent userConfigIntent = new Intent(getActivity(),UserConfigActivity.class);
 			startActivity(userConfigIntent);
@@ -174,5 +199,48 @@ public class MeFragmentForBaiJia extends BaseFragment implements OnClickListener
 			break;
 		}
 
+	}
+	
+	/*****
+	 * 设置数据
+	 * ******/
+	void setValue(MyInfoBean myInfoBean)
+	{
+		MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.nullToString(myInfoBean.getLogo()), iv_icon, MyApplication.getInstance().getDisplayImageOptions());
+		shop_main_attentionvalue_textview.setText(myInfoBean.getFollowingCount()+"");
+		shop_main_fansvalue_textview.setText(myInfoBean.getFollowerCount()+"");
+		shop_main_praisevalue_textview.setText(myInfoBean.getCommunityCount()+"");
+		
+		tv_all_order_count_textview.setText(myInfoBean.getAllOrderCount()+"");
+		tv_waiting_for_send_count_textview.setText(myInfoBean.getWaitPaymentOrderCount()+"");
+		tv_waiting_for_recieve_count_textview.setText(myInfoBean.getPickedSelfOrderCount()+"");
+		tv_pick_by_myself_count_textview.setText(myInfoBean.getAfterSaleOrderCount()+"");
+	}
+	
+	/***
+	 * 请求数据
+	 * **/
+	void requestData()
+	{
+		HttpControl httpcontrol=new HttpControl();
+		httpcontrol.GetBaijiaMyInfo(false, new HttpCallBackInterface() {
+			
+			@Override
+			public void http_Success(Object obj) {
+				if(obj==null || !(obj instanceof RequestMyInfoBean) || ((RequestMyInfoBean)obj).getData()==null)
+				{
+					return;
+				}else
+				{
+					RequestMyInfoBean requestMyInfoBean=(RequestMyInfoBean)obj;
+					setValue(requestMyInfoBean.getData());
+				}
+			}
+			
+			@Override
+			public void http_Fails(int error, String msg) {
+				
+			}
+		}, getActivity());
 	}
 }

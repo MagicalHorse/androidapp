@@ -294,6 +294,7 @@ public class ShopMainActivity extends FragmentActivity {
     
     void getBaijiaUserInfo()
     {
+    	
     	httpControl.getBaijiaUserInfo(true, new HttpCallBackInterface() {
 			
 			@Override
@@ -315,7 +316,7 @@ public class ShopMainActivity extends FragmentActivity {
 			@Override
 			public void http_Fails(int error, String msg) {
 				MyApplication.getInstance().showMessage(ShopMainActivity.this, msg);
-				//ShopMainActivity.this.finish();
+				ShopMainActivity.this.finish();
 			}
 		}, ShopMainActivity.this);
     }
@@ -332,8 +333,8 @@ public class ShopMainActivity extends FragmentActivity {
     	shop_main_fansvalue_textview.setText(ToolsUtil.nullToString(userInfoBean.getFollowerCount()+""));
     	shop_main_praisevalue_textview.setText(ToolsUtil.nullToString(userInfoBean.getCommunityCount()+""));
     	shap_main_description1_textview.setText(ToolsUtil.nullToString(userInfoBean.getDescription()));
-    	ShopPuBuliuFragment shopPuBuliuFragment1=new ShopPuBuliuFragment();
-		ShopPuBuliuFragment ShopPuBuliuFragment2=new ShopPuBuliuFragment();
+    	ShopPuBuliuFragment shopPuBuliuFragment1=new ShopPuBuliuFragment(0);
+		ShopPuBuliuFragment ShopPuBuliuFragment2=new ShopPuBuliuFragment(1);
 		fragmentBean_list.add(new FragmentBean("商品", -1, shopPuBuliuFragment1));
 		fragmentBean_list.add(new FragmentBean("上新", userInfoBean.getNewProductCount(), ShopPuBuliuFragment2));
     	

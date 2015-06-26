@@ -597,5 +597,13 @@ public class HttpConstants {
 	
 	public static String METHOD_CONFIRMGOODS = Order+ "ConfirmGoods";
 	
+	/*****
+	 * 客户获取自己的基本信息（新）
+	 * **/
+	public static String METHOD_MYINFO = USERURL+ "GetMyInfo";
 	
+	/*****
+	 * 获取买手的商品列表、上新商品列表
+	 * **/
+	public static String METHOD_GETUSERPRODUCTLIST = PRODUCT+ "GetUserProductList";
 }
