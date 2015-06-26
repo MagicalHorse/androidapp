@@ -291,11 +291,19 @@ public class ShopMainActivity extends FragmentActivity {
 		void onPuBuliuaddData();
 	}
     
+    /*****
+     * 获取用户信息
+     * ***/
     
     void getBaijiaUserInfo()
     {
-    	
-    	httpControl.getBaijiaUserInfo(true, new HttpCallBackInterface() {
+    	int userID=0;
+    	String userIDstr=SharedUtil.getStringPerfernece(this, SharedUtil.user_id);
+    	if(userIDstr!=null)
+    	{
+    		userID=Integer.parseInt(userIDstr);
+    	}
+    	httpControl.getBaijiaUserInfo(userID,true, new HttpCallBackInterface() {
 			
 			@Override
 			public void http_Success(Object obj) {
