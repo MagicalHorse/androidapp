@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import android.app.Activity;
@@ -37,7 +39,10 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.activity.BaseActivityWithTopView;
+import com.shenma.yueba.baijia.adapter.ProductTagsListAdapter;
 import com.shenma.yueba.baijia.modle.BaseRequest;
+import com.shenma.yueba.baijia.modle.TagListBackBean;
+import com.shenma.yueba.baijia.modle.TagListItemBean;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.constants.HttpConstants;
 import com.shenma.yueba.util.CustomProgressDialog;
@@ -62,6 +67,8 @@ public class AddTagActivity extends BaseActivityWithTopView implements TextWatch
 	private ImageView iv_delete;//删除
 	private PullToRefreshListView pull_refresh_list;
 	private String type;
+	private ProductTagsListAdapter adapter;
+	private List<TagListItemBean> mList = new ArrayList<TagListItemBean>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +77,7 @@ public class AddTagActivity extends BaseActivityWithTopView implements TextWatch
 		super.onCreate(savedInstanceState);
 		getIntentData();
 		initView();
-		
+		getTagByName();
 	}
 
 	private void getIntentData() {
@@ -91,6 +98,8 @@ public class AddTagActivity extends BaseActivityWithTopView implements TextWatch
 		et_search = getView(R.id.et_search);
 		et_search.addTextChangedListener(this);
 		pull_refresh_list = getView(R.id.pull_refresh_list);
+		adapter = new ProductTagsListAdapter(mContext, mList);
+		pull_refresh_list.setAdapter(adapter);
 		FontManager.changeFonts(mContext, et_search);
 	}
 
@@ -130,4 +139,30 @@ public class AddTagActivity extends BaseActivityWithTopView implements TextWatch
 		
 	}
 
+	
+	
+	
+	private void getTagByName(){
+		HttpControl httpControl = new HttpControl();
+		httpControl.getProductTag(type, et_search.getText().toString().trim(), new HttpCallBackInterface() {
+			
+			@Override
+			public void http_Success(Object obj) {
+				TagListBackBean bean = (TagListBackBean) obj;
+				if(bean.getData()!=null){
+					mList.clear();
+					mList.addAll(bean.getData());
+					adapter.notifyDataSetChanged();
+				}
+				
+			}
+			
+			@Override
+			public void http_Fails(int error, String msg) {
+				// TODO Auto-generated method stub
+				
+			}
+		}, AddTagActivity.this, 0);
+		
+	}
 }

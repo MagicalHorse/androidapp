@@ -53,6 +53,7 @@ import com.shenma.yueba.baijia.modle.RequestUploadProductInfoBean;
 import com.shenma.yueba.baijia.modle.RequestUserInfoBean;
 import com.shenma.yueba.baijia.modle.ResponseUploadProductInfoBean;
 import com.shenma.yueba.baijia.modle.StoreListBackBean;
+import com.shenma.yueba.baijia.modle.TagListBackBean;
 import com.shenma.yueba.baijia.modle.UserInfo;
 import com.shenma.yueba.baijia.modle.UserRequestBean;
 import com.shenma.yueba.constants.Constants;
@@ -549,7 +550,7 @@ public class HttpControl {
 		map.put(Constants.NAME, name);
 		map.put(Constants.TYPE, type);
 		BasehttpSend(map, context, HttpConstants.METHOD_GETPRODUCTTAG,
-				httpCallBack, BrandDetailInfoBean.class, true, false);
+				httpCallBack, TagListBackBean.class, false, false);
 	}
 
 	/**

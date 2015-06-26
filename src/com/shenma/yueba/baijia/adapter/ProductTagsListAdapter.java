@@ -5,23 +5,22 @@ import java.util.List;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.shenma.yueba.R;
-import com.shenma.yueba.application.MyApplication;
-import com.shenma.yueba.baijia.modle.TagListBackBean;
+import com.shenma.yueba.baijia.modle.TagListItemBean;
 
 public class ProductTagsListAdapter extends BaseAdapterWithUtil {
-	private List<TagListBackBean> mList;
+	private List<TagListItemBean> mList;
 
-	public ProductTagsListAdapter(Context ctx, List<TagListBackBean> mList) {
+	public ProductTagsListAdapter(Context ctx, List<TagListItemBean> mList) {
 		super(ctx);
 	}
 
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return 50;
+		return mList.size();
 	}
 
 	@Override
@@ -42,12 +41,8 @@ public class ProductTagsListAdapter extends BaseAdapterWithUtil {
 		Holder holder;
 		if (convertView == null) {
 			holder = new Holder();
-			convertView = View.inflate(ctx, R.layout.tag_list_item, null);
-			MyApplication
-					.getInstance()
-					.getImageLoader()
-					.displayImage(mList.get(position).getImageUrl(),
-							holder.iv_tag);
+			convertView = View.inflate(ctx, R.layout.item_text, null);
+			holder.tv_name = (TextView) convertView.findViewById(R.id.tv_name);
 			convertView.setTag(holder);
 		} else {
 			holder = (Holder) convertView.getTag();
@@ -56,7 +51,7 @@ public class ProductTagsListAdapter extends BaseAdapterWithUtil {
 	}
 
 	class Holder {
-		ImageView iv_tag;
+		TextView tv_name;
 	}
 
 }

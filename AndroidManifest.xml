@@ -309,6 +309,11 @@
         <activity
             android:name="com.shenma.yueba.crop.CropActivity"
             android:screenOrientation="portrait" >
+             <intent-filter>
+                <action android:name="android.intent.action.CROP" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
         <activity
             android:name="com.shenma.yueba.yangjia.activity.BuyerIndentificationActivity"

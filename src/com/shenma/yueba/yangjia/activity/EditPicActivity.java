@@ -95,9 +95,7 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 			skip(AddTagActivity.class, false);
 			break;
 		case R.id.iv_pic://图片的点击事件
-			
-			
-			
+			showDialog();
 			break;
 		default:
 			break;
@@ -418,7 +416,7 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 			@Override
 			public void onClick(View v) {
 				Intent intentBand = new Intent(EditPicActivity.this,AddTagActivity.class);
-				intentBand.putExtra("type", "0");//0表示品牌，1表示商品
+				intentBand.putExtra("type", "1");//1表示品牌，0表示商品
 				startActivity(intentBand);
 				dialog.cancel();
 			}
@@ -427,7 +425,7 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 			@Override
 			public void onClick(View v) {
 				Intent intentProduct = new Intent(EditPicActivity.this,AddTagActivity.class);
-				intentProduct.putExtra("type", "1");//0表示品牌，1表示商品
+				intentProduct.putExtra("type", "0");//1表示品牌，0表示商品
 				startActivity(intentProduct);
 				dialog.cancel();
 			}
