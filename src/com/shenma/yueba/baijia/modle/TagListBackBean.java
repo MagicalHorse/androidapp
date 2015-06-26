@@ -1,21 +1,17 @@
 package com.shenma.yueba.baijia.modle;
 
-public class TagListBackBean {
+import java.util.List;
 
-	
-	private String code;
-	private String imageUrl;
-	public String getCode() {
-		return code;
+public class TagListBackBean extends BaseRequest {
+
+	private List<TagListItemBean> data;
+
+	public List<TagListItemBean> getData() {
+		return data;
 	}
-	public void setCode(String code) {
-		this.code = code;
-	}
-	public String getImageUrl() {
-		return imageUrl;
-	}
-	public void setImageUrl(String imageUrl) {
-		this.imageUrl = imageUrl;
+
+	public void setData(List<TagListItemBean> data) {
+		this.data = data;
 	}
 	
 	
