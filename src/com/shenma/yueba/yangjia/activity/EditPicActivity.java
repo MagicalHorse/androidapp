@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -14,6 +15,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -21,6 +23,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -75,6 +78,7 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 			}
 		});
 		iv_pic = getView(R.id.iv_pic);
+		iv_pic.setOnClickListener(this);
 		LayoutParams params = iv_pic.getLayoutParams();
 		params.height = ToolsUtil.getDisplayWidth(mContext);
 		params.width = ToolsUtil.getDisplayWidth(mContext);
@@ -90,7 +94,11 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 		case R.id.tv_next:// 下一步
 			skip(AddTagActivity.class, false);
 			break;
-
+		case R.id.iv_pic://图片的点击事件
+			
+			
+			
+			break;
 		default:
 			break;
 		}
@@ -391,5 +399,41 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 	};
 	
 	
-	
+	private void showDialog() {
+		final AlertDialog dialog = new AlertDialog.Builder(EditPicActivity.this)
+				.create();
+		dialog.show();
+		Window window = dialog.getWindow();
+		// 设置布局
+		window.setContentView(R.layout.tag_bottom_layout);
+		// 设置宽高
+		window.setLayout(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
+		window.setGravity(Gravity.BOTTOM);
+		// 设置弹出的动画效果
+		window.setWindowAnimations(R.style.AnimBottom);
+		// 设置监听
+		Button bt_band = (Button) window.findViewById(R.id.bt_band);
+		Button bt_product = (Button) window.findViewById(R.id.bt_product);
+		bt_band.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intentBand = new Intent(EditPicActivity.this,AddTagActivity.class);
+				intentBand.putExtra("type", "0");//0表示品牌，1表示商品
+				startActivity(intentBand);
+				dialog.cancel();
+			}
+		});
+		bt_product.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intentProduct = new Intent(EditPicActivity.this,AddTagActivity.class);
+				intentProduct.putExtra("type", "1");//0表示品牌，1表示商品
+				startActivity(intentProduct);
+				dialog.cancel();
+			}
+		});
+		// 因为我们用的是windows的方法，所以不管ok活cancel都要加上“dialog.cancel()”这句话，
+		// 不然有程序崩溃的可能，仅仅是一种可能，但我们还是要排除这一点，对吧？
+		// 用AlertDialog的两个Button，即使监听里什么也不写，点击后也是会吧dialog关掉的，不信的同学可以去试下
+	}
 }

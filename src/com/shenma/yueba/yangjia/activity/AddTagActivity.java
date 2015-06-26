@@ -61,13 +61,21 @@ public class AddTagActivity extends BaseActivityWithTopView implements TextWatch
 	private EditText et_search;
 	private ImageView iv_delete;//删除
 	private PullToRefreshListView pull_refresh_list;
+	private String type;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.add_tag);
 		super.onCreate(savedInstanceState);
+		getIntentData();
 		initView();
+		
+	}
+
+	private void getIntentData() {
+		type = getIntent().getStringExtra("type");
+		
 	}
 
 	private void initView() {
