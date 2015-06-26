@@ -21,6 +21,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.fragment.ShopPuBuliuFragment;
+import com.shenma.yueba.baijia.modle.BrandCityWideInfo;
 import com.shenma.yueba.baijia.modle.FragmentBean;
 import com.shenma.yueba.baijia.modle.RequestUserInfoBean;
 import com.shenma.yueba.baijia.modle.UserInfoBean;
@@ -66,15 +67,22 @@ public class ShopMainActivity extends FragmentActivity {
     int currId=-1;
     HttpControl httpControl=new HttpControl();
     UserInfoBean userInfoBean;
-    
+    int userID=-1;
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
     	MyApplication.getInstance().addActivity(this);//加入回退栈
     	requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.shop_main_layout);
 		super.onCreate(savedInstanceState);
-		MyApplication.getInstance().addActivity(this);
+		userID=this.getIntent().getIntExtra("DATA", -1);
+		if(userID<0)
+		{
+			MyApplication.getInstance().showMessage(ShopMainActivity.this, "数据错误，请重试");
+			finish();
+			return;
+		}
 		
+		MyApplication.getInstance().addActivity(this);
 		fragmentManager=getSupportFragmentManager();
 		initView();
 		getBaijiaUserInfo();
@@ -125,6 +133,7 @@ public class ShopMainActivity extends FragmentActivity {
 		shop_main_layout_market_textview=(TextView)findViewById(R.id.shop_main_layout_market_textview);
 		shop_main_siliao_imagebutton=(TextView)findViewById(R.id.shop_main_siliao_imagebutton); 
 		shop_main_attention_imagebutton=(TextView)findViewById(R.id.shop_main_attention_imagebutton); 
+		shop_main_attention_imagebutton.setOnClickListener(onClickListener);
 		shop_main_attentionvalue_textview=(TextView)findViewById(R.id.shop_main_attentionvalue_textview); 
 		shop_main_fansvalue_textview=(TextView)findViewById(R.id.shop_main_fansvalue_textview); 
 		shop_main_praisevalue_textview=(TextView)findViewById(R.id.shop_main_praisevalue_textview); 
@@ -138,7 +147,7 @@ public class ShopMainActivity extends FragmentActivity {
 		TextView shop_main_attention_textview=(TextView)findViewById(R.id.shop_main_attention_textview);
 		TextView shop_main_fans_textview=(TextView)findViewById(R.id.shop_main_fans_textview);
 		TextView shop_main_praise_textview=(TextView)findViewById(R.id.shop_main_praise_textview);
-		FontManager.changeFonts(ShopMainActivity.this, shop_main_layout_name_textview,shop_main_layout_market_textview,shop_main_attentionvalue_textview,shop_main_fansvalue_textview,shop_main_praisevalue_textview,shap_main_description1_textview,shap_main_description2_textview,shap_main_description3_textview,shop_main_attention_textview,shop_main_fans_textview,shop_main_praise_textview,shop_main_attention_imagebutton,shop_main_siliao_imagebutton);
+		FontManager.changeFonts(ShopMainActivity.this,tv_top_left, shop_main_layout_name_textview,shop_main_layout_market_textview,shop_main_attentionvalue_textview,shop_main_fansvalue_textview,shop_main_praisevalue_textview,shap_main_description1_textview,shap_main_description2_textview,shap_main_description3_textview,shop_main_attention_textview,shop_main_fans_textview,shop_main_praise_textview,shop_main_attention_imagebutton,shop_main_siliao_imagebutton);
 	}
 	
 	
@@ -152,17 +161,67 @@ public class ShopMainActivity extends FragmentActivity {
 			case R.id.shop_stay_layout_parent_linearlayout:
 				if(v.getTag()!=null && v.getTag() instanceof Integer)
 				{
-					setItem(false,(Integer)v.getTag());
+					setItem(false,(Integer)v.getTag());//瀑布流tab按键
 				}
 				break;
-			case R.id.shop_main_circle_layout:
+			case R.id.shop_main_circle_layout://圈子
 				Intent intent=new Intent(ShopMainActivity.this,CircleListActivity.class);
 				startActivity(intent);
+				break;
+			case R.id.shop_main_attention_imagebutton://关注
+				if(v.getTag()!=null)
+				{
+					UserInfoBean bean=(UserInfoBean)v.getTag();
+					if(bean.isIsFollowing())//如果是已关注
+					{
+						//取消关注
+						submitAttention(v,0,bean);
+					}else
+					{
+						//添加关注
+						submitAttention(v,1,bean);
+					}
+				}
 				break;
 			}
 		}
 	};
     
+	
+	/****
+	 * 提交收藏与取消收藏商品
+	 * @param type int   0表示取消收藏   1表示收藏
+	 * @param brandCityWideInfo BrandCityWideInfo  商品对象
+	 * **/
+	void submitAttention(final View textview,final int Status,final UserInfoBean bean)
+	{
+		httpControl.setFavoite(userID, Status, new HttpCallBackInterface() {
+			
+			@Override
+			public void http_Success(Object obj) {
+				switch(Status)
+				{
+				case 0:
+					((TextView)textview).setText("关注");
+					bean.setIsFollowing(false);
+					break;
+				case 1:
+					((TextView)textview).setText("取消");
+					bean.setIsFollowing(true);
+					break;
+				}
+			}
+			
+			@Override
+			public void http_Fails(int error, String msg) {
+				MyApplication.getInstance().showMessage(ShopMainActivity.this, msg);
+			}
+		}, this);
+	}
+	
+	
+	
+	
 	
     /****
      * 设置 tab切换文字的信息 以及是否显示底部横条
@@ -235,7 +294,8 @@ public class ShopMainActivity extends FragmentActivity {
      * ***/
     void onRefresh()
     {
-    	getBaijiaUserInfo();
+    	/*currId=-1;
+    	getBaijiaUserInfo();*/
     	if(fragmentBean_list!=null && fragmentBean_list.size()>0 && fragmentBean_list.size()>currId)
 		{
 			if(fragmentBean_list.get(currId).getFragment()!=null && fragmentBean_list.get(currId).getFragment() instanceof ShopPuBuliuFragment)
@@ -298,12 +358,6 @@ public class ShopMainActivity extends FragmentActivity {
     
     void getBaijiaUserInfo()
     {
-    	int userID=0;
-    	String userIDstr=SharedUtil.getStringPerfernece(this, SharedUtil.user_id);
-    	if(userIDstr!=null)
-    	{
-    		userID=Integer.parseInt(userIDstr);
-    	}
     	httpControl.getBaijiaUserInfo(userID,true, new HttpCallBackInterface() {
 			
 			@Override
@@ -335,6 +389,17 @@ public class ShopMainActivity extends FragmentActivity {
      * **/
     void setHeadValue()
     {
+    	shop_main_attention_imagebutton.setTag(userInfoBean);
+    	if(userInfoBean.isIsFollowing())
+    	{
+    		shop_main_attention_imagebutton.setText("取消");
+    		
+    	}else
+    	{
+    		shop_main_attention_imagebutton.setText("关注");
+    	}
+    	fragmentBean_list.clear();
+    	shop_main_head_layout_tab_linearlayout.removeAllViews();
     	MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.nullToString(SharedUtil.getStringPerfernece(ShopMainActivity.this, SharedUtil.user_logo)), shop_main_layout_icon_imageview, MyApplication.getInstance().getDisplayImageOptions());
     	shop_main_layout_name_textview.setText(ToolsUtil.nullToString(userInfoBean.getUserName()));
     	shop_main_layout_market_textview.setText(ToolsUtil.nullToString(userInfoBean.getAddress()));
@@ -342,10 +407,10 @@ public class ShopMainActivity extends FragmentActivity {
     	shop_main_fansvalue_textview.setText(ToolsUtil.nullToString(userInfoBean.getFollowerCount()+""));
     	shop_main_praisevalue_textview.setText(ToolsUtil.nullToString(userInfoBean.getCommunityCount()+""));
     	shap_main_description1_textview.setText(ToolsUtil.nullToString(userInfoBean.getDescription()));
-    	ShopPuBuliuFragment shopPuBuliuFragment1=new ShopPuBuliuFragment(0);
-		ShopPuBuliuFragment ShopPuBuliuFragment2=new ShopPuBuliuFragment(1);
+    	ShopPuBuliuFragment shopPuBuliuFragment1=new ShopPuBuliuFragment(0,userID);
+		ShopPuBuliuFragment ShopPuBuliuFragment2=new ShopPuBuliuFragment(1,userID);
 		fragmentBean_list.add(new FragmentBean("商品", -1, shopPuBuliuFragment1));
-		fragmentBean_list.add(new FragmentBean("上新", userInfoBean.getNewProductCount(), ShopPuBuliuFragment2));
+		fragmentBean_list.add(new FragmentBean("上新", -1, ShopPuBuliuFragment2));
     	
     	for(int i=0;i<fragmentBean_list.size();i++)
 		{

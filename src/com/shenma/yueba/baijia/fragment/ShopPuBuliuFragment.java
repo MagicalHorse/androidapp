@@ -40,13 +40,15 @@ public class ShopPuBuliuFragment extends Fragment implements
 	PubuliuManager pm;
 	HttpControl httpControl = new HttpControl();
 	int Filter;
+	int userID;
 	List<MyFavoriteProductListInfo> item = new ArrayList<MyFavoriteProductListInfo>();
 	/*****
 	 * @param Filter
 	 *            int 0:刷新 1：加载
 	 * ***/
-	public ShopPuBuliuFragment(int Filter) {
+	public ShopPuBuliuFragment(int Filter,int userID) {
 		this.Filter = Filter;
+		this.userID=userID;
 	}
 
 	@Override
@@ -96,12 +98,7 @@ public class ShopPuBuliuFragment extends Fragment implements
 	 * ****/
 	void sendHttp(int page,final int type)
 	{
-		int userID=0;
-    	String userIDstr=SharedUtil.getStringPerfernece(getActivity(), SharedUtil.user_id);
-    	if(userIDstr!=null)
-    	{
-    		userID=Integer.parseInt(userIDstr);
-    	}
+		
 		httpControl.GetBaijiaGetUserProductList(userID,page, pageSize, Filter, false, new HttpCallBackInterface() {
 			
 			@Override
@@ -200,11 +197,11 @@ public class ShopPuBuliuFragment extends Fragment implements
 	 * 刷新完成
 	 * **/
 	void refreshLoading() {
-		View v = getActivity().findViewById(
-				R.id.shop_main_layout_title_pulltorefreshscrollview);
-		/*
-		 * if(v!=null && v instanceof PullToRefreshScrollView ) {
-		 * ((PullToRefreshScrollView)v).setRefreshing(); }
-		 */
+		View v = getActivity().findViewById(R.id.shop_main_layout_title_pulltorefreshscrollview);
+		/*if(v!=null && v instanceof PullToRefreshScrollView ) 
+		{
+		 ((PullToRefreshScrollView)v).setRefreshing(); 
+		 }*/
+		 
 	}
 }

@@ -166,7 +166,7 @@ public class BuyerAdapter extends BaseAdapter{
 		//商品的图片地址
 		String url=productsInfoBean.getBuyerLogo()+"640x0.jpg";
 		//买家头像
-		holder.customImage.setTag(productsInfoBean.getProductId());
+		holder.customImage.setTag(productsInfoBean.getBuyerid());
 		holder.customImage.setImageResource(R.drawable.default_pic);
 		//下载买家头像
 		initPic(productsInfoBean.getBuyerLogo(), holder.customImage,R.drawable.test002);
@@ -227,7 +227,12 @@ public class BuyerAdapter extends BaseAdapter{
 					}
 					break;
 				case R.id.baijia_tab1_item_icon_imageview://商铺详细
+					if(v.getTag()==null || !(v.getTag() instanceof Integer))
+					{
+						return;
+					}
 					Intent intent=new Intent(activity,ShopMainActivity.class);
+					intent.putExtra("DATA",(Integer)v.getTag());
 					activity.startActivity(intent);
 					break;
 				case R.id.approvebuyerdetails_attention_textview://商品喜欢/取消喜欢

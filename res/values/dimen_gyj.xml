@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="user_config_iconwidth60_dimen">60dp</dimen>
+    <dimen name="user_config_iconwidth70_dimen">70dp</dimen>
+    <dimen name="user_config_iconwidth75_dimen">75dp</dimen>
     <dimen name="user_config_iconwidth50_dimen">50dp</dimen>
     <dimen name="user_config_iconwidth45_dimen">45dp</dimen>
     <dimen name="user_config_iconwidth40_dimen">40dp</dimen>
