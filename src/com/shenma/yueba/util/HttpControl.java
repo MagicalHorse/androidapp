@@ -1269,7 +1269,7 @@ public class HttpControl {
 	 * @param showDialog  boolean 当前页
 	 * @return void
 	 * **/
-	public void getBaijiaUserInfo(boolean showDialog, final HttpCallBackInterface httpCallBack,Context context) {
+	public void getBaijiaUserInfo(int userid,boolean showDialog, final HttpCallBackInterface httpCallBack,Context context) {
 		Map<String, String> map = new HashMap<String, String>();
 		BasehttpSend(map, context, HttpConstants.GETUSERINFO, httpCallBack,RequestUserInfoBean.class, showDialog, false);
 	}
@@ -1762,7 +1762,7 @@ public class HttpControl {
 				});
 	}
 
-	<T extends BaseRequest> void BasehttpSend2(final Map<String, String> map,
+	/*<T extends BaseRequest> void BasehttpSend2(final Map<String, String> map,
 			final Context context, final String method,
 			final HttpCallBackInterface httpCallBack, final Class<T> classzz,
 			boolean isshwoDialog, boolean isDialogCancell) {
@@ -1802,7 +1802,7 @@ public class HttpControl {
 						progressDialog.cancel();
 					}
 				});
-	}
+	}*/
 
 	/*****
 	 * 访问网络 上传JSON类型数据
