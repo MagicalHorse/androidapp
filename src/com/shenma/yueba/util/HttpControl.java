@@ -1493,15 +1493,17 @@ public class HttpControl {
 	/**
 	 * 获取买手的商品列表、上新商品列
 	 * @param page int 当前页
+	 * @param UserId int 当前用户id
      *  @param pagesize int 页大小
      * @param Filter  int 0:全部商品,1:上新商品
      * @return void
 	 * **/
-	public void GetBaijiaGetUserProductList(int page,int pagesize,int Filter,boolean showDialog, final HttpCallBackInterface httpCallBack,Context context) {
+	public void GetBaijiaGetUserProductList(int UserId,int page,int pagesize,int Filter,boolean showDialog, final HttpCallBackInterface httpCallBack,Context context) {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put(Constants.PAGE, Integer.toString(page));
 		map.put(Constants.PAGESIZE, Integer.toString(pagesize));
 		map.put("Filter", Integer.toString(Filter));
+		map.put("UserId", Integer.toString(UserId));
 		BasehttpSend(map, context, HttpConstants.METHOD_GETUSERPRODUCTLIST,httpCallBack, RequestMyFavoriteProductListInfoBean.class, showDialog,false);
 	}
 	

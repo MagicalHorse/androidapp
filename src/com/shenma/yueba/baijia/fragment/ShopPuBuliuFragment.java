@@ -22,6 +22,7 @@ import com.shenma.yueba.baijia.modle.RequestMyFavoriteProductListInfoBean;
 import com.shenma.yueba.baijia.view.PubuliuManager;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 
 /**
@@ -95,7 +96,13 @@ public class ShopPuBuliuFragment extends Fragment implements
 	 * ****/
 	void sendHttp(int page,final int type)
 	{
-		httpControl.GetBaijiaGetUserProductList(page, pageSize, Filter, false, new HttpCallBackInterface() {
+		int userID=0;
+    	String userIDstr=SharedUtil.getStringPerfernece(getActivity(), SharedUtil.user_id);
+    	if(userIDstr!=null)
+    	{
+    		userID=Integer.parseInt(userIDstr);
+    	}
+		httpControl.GetBaijiaGetUserProductList(userID,page, pageSize, Filter, false, new HttpCallBackInterface() {
 			
 			@Override
 			public void http_Success(Object obj) {

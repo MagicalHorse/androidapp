@@ -235,6 +235,7 @@ public class ShopMainActivity extends FragmentActivity {
      * ***/
     void onRefresh()
     {
+    	getBaijiaUserInfo();
     	if(fragmentBean_list!=null && fragmentBean_list.size()>0 && fragmentBean_list.size()>currId)
 		{
 			if(fragmentBean_list.get(currId).getFragment()!=null && fragmentBean_list.get(currId).getFragment() instanceof ShopPuBuliuFragment)
