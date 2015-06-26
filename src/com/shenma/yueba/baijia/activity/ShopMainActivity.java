@@ -294,6 +294,7 @@ public class ShopMainActivity extends FragmentActivity {
     /*****
      * 获取用户信息
      * ***/
+    
     void getBaijiaUserInfo()
     {
     	int userID=0;
