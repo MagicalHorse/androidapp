@@ -115,6 +115,7 @@ public class SameCityAdapter extends BaseAdapterWithUtil {
 		}
 		
 		BrandCityWideInfo brandCityWideInfo=items.get(position);
+		holder.iv_head.setTag(brandCityWideInfo.getUserId());
 		MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.nullToString(brandCityWideInfo.getBuyerLogo()), holder.iv_head, MyApplication.getInstance().getDisplayImageOptions());
 		holder.nick_name.setText(ToolsUtil.nullToString(brandCityWideInfo.getUserName()));
 		holder.tv_belong.setText(ToolsUtil.nullToString(brandCityWideInfo.getAddress()));
@@ -180,7 +181,12 @@ public class SameCityAdapter extends BaseAdapterWithUtil {
 				ctx.startActivity(intent);
 				break;
 			case R.id.iv_head://头像
-			    Intent iconintent=new Intent(ctx,ShopMainActivity.class);
+			    if(v.getTag()==null)
+			    {
+			    	return;
+			    }
+				Intent iconintent=new Intent(ctx,ShopMainActivity.class);
+			    iconintent.putExtra("DATA", (Integer)v.getTag());
 			    ctx.startActivity(iconintent);
 			}
 		}

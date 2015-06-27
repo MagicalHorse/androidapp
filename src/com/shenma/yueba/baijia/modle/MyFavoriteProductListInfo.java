@@ -14,6 +14,25 @@ public class MyFavoriteProductListInfo implements Serializable{
 	MyFavoriteProductListPic  pic=new MyFavoriteProductListPic();
 	double Price;//价格
 	MyFavoriteProductListLikeUser LikeUser=new MyFavoriteProductListLikeUser();
+	
+	int FavoriteCount;//关注的人数
+	boolean IsFavorite=false; //是否关注
+
+	
+	
+	
+	public int getFavoriteCount() {
+		return FavoriteCount;
+	}
+	public void setFavoriteCount(int favoriteCount) {
+		FavoriteCount = favoriteCount;
+	}
+	public boolean isIsFavorite() {
+		return IsFavorite;
+	}
+	public void setIsFavorite(boolean isFavorite) {
+		IsFavorite = isFavorite;
+	}
 	public int getId() {
 		return Id;
 	}

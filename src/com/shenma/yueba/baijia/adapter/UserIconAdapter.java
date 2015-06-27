@@ -84,7 +84,12 @@ public class UserIconAdapter extends BaseAdapter {
 			
 			@Override
 			public void onClick(View v) {
+				if(v.getTag()==null)
+				{
+					return;
+				}
 				Intent intent=new Intent(context,ShopMainActivity.class);
+				intent.putExtra("DATA", (Integer)v.getTag());
 				context.startActivity(intent);
 			}
 		});

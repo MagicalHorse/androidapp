@@ -33,6 +33,7 @@ import android.widget.TextView;
 import com.shenma.yueba.ChatActivity;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.adapter.ScrollViewPagerAdapter;
 import com.shenma.yueba.baijia.adapter.UserIconAdapter;
 import com.shenma.yueba.baijia.modle.LikeUsersInfoBean;
 import com.shenma.yueba.baijia.modle.ProductsDetailsInfoBean;
@@ -68,7 +69,7 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView impleme
 	TextView approvebuyerdetails_closeinginfo_textview;//打烊信息
 	int childWidth = 0;
 	int maxcount = 8;
-	CustomPagerAdapter customPagerAdapter;
+	ScrollViewPagerAdapter customPagerAdapter;
 	MyGridView myGirdView;
 	// 商品id;
 	int productID = -1;
@@ -85,7 +86,7 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView impleme
 	Button approvebuyer_addcartbutton;
 	// 直接购买
 	Button approvebuyerbuybutton;
-	List<View> viewlist = new ArrayList<View>();
+	List<ImageView> viewlist = new ArrayList<ImageView>();
 	LinearLayout approvebuyerdetails_closeingtime_linearlayout;
 	Timer timer;
 	RequestProductDetailsInfoBean bean;
@@ -131,8 +132,7 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView impleme
 		getWindowManager().getDefaultDisplay().getMetrics(dm);
 		int width = dm.widthPixels;
 		int height = width / 2;
-		appprovebuyer_viewpager
-				.setLayoutParams(new RelativeLayout.LayoutParams(width, height));
+		appprovebuyer_viewpager.setLayoutParams(new RelativeLayout.LayoutParams(width, height));
 
 		appprovebuyer_viewpager.setOnTouchListener(new OnTouchListener() {
 
@@ -153,8 +153,7 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView impleme
 
 		myGirdView = (MyGridView) findViewById(R.id.approvebuyerdetails_attentionvalue_gridview);
 
-		appprovebuyer_viewpager
-				.setOnPageChangeListener(new OnPageChangeListener() {
+		appprovebuyer_viewpager.setOnPageChangeListener(new OnPageChangeListener() {
 
 					@Override
 					public void onPageSelected(int arg0) {
@@ -208,51 +207,6 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView impleme
 				((TextView) v).setText(str);
 			}
 			FontManager.changeFonts(this, ((TextView) v));
-		}
-	}
-
-	class CustomPagerAdapter extends PagerAdapter {
-
-		@Override
-		public int getCount() {
-			if (viewlist.size() < 1) {
-				return 0;
-			} else if (viewlist.size() <= 2) {
-				return 2;
-			} else {
-				return Integer.MAX_VALUE;
-			}
-		}
-
-		@Override
-		public boolean isViewFromObject(View arg0, Object arg1) {
-
-			return arg0 == arg1;
-		}
-
-		@Override
-		public Object instantiateItem(ViewGroup container, int position) {
-			int a = position % viewlist.size();
-			Log.i("TAG", "A:" + a);
-			ImageView imageview = (ImageView) viewlist.get(a);
-			if (imageview.getParent() != null) {
-				((ViewGroup) imageview.getParent()).removeView(imageview);
-			}
-			// imageview.setImageResource(R.drawable.default_pic);
-			imageview.setScaleType(ScaleType.FIT_XY);
-			imageview.setLayoutParams(new ViewGroup.LayoutParams(
-					ViewGroup.LayoutParams.MATCH_PARENT,
-					ViewGroup.LayoutParams.MATCH_PARENT));
-			// initPic(ToolsUtil.getImage((String)imageview.getTag(), 320,
-			// 0),imageview);
-			container.addView(imageview, 0);
-			return imageview;
-		}
-
-		@Override
-		public void destroyItem(ViewGroup container, int position, Object object) {
-			ImageView imageview = (ImageView) viewlist.get(position% viewlist.size());
-			container.removeView(imageview);
 		}
 	}
 
@@ -346,11 +300,10 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView impleme
 			for (int i = 0; i < str_array.length; i++) {
 				ImageView iv = new ImageView(ApproveBuyerDetailsActivity.this);
 				iv.setScaleType(ScaleType.FIT_XY);
-				iv.setImageResource(R.drawable.icon11);
 				viewlist.add(iv);
 				initPic(ToolsUtil.getImage(str_array[i], 320, 0), iv);
 			}
-			customPagerAdapter = new CustomPagerAdapter();
+			customPagerAdapter = new ScrollViewPagerAdapter(viewlist);
 			appprovebuyer_viewpager.setAdapter(customPagerAdapter);
 			setcurrItem(0);
 			startTimeToViewPager();
@@ -474,6 +427,7 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView impleme
 	 * 启动自动滚动
 	 * **/
 	void startTimeToViewPager() {
+		
 		stopTimerToViewPager();
 		if (viewlist == null || viewlist.size() <= 2) {
 			return;

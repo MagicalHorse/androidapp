@@ -44,6 +44,7 @@ import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.ShopMainActivity;
 import com.shenma.yueba.baijia.activity.WebActivity;
 import com.shenma.yueba.baijia.adapter.BuyerAdapter;
+import com.shenma.yueba.baijia.adapter.ScrollViewPagerAdapter;
 import com.shenma.yueba.baijia.modle.BannersInfoBean;
 import com.shenma.yueba.baijia.modle.FragmentBean;
 import com.shenma.yueba.baijia.modle.HomeProductListInfoBean;
@@ -76,7 +77,7 @@ public class BuyerStreetFragment extends Fragment {
 	LayoutInflater inflater;
 	LinearLayout showloading_layout_view;
 	Timer timer;
-	CustomPagerAdapter pagerAdapter;
+	ScrollViewPagerAdapter pagerAdapter;
 	HttpControl httpContril = new HttpControl();
 	// 当前页
 	int currpage = Constants.CURRPAGE_VALUE;
@@ -182,8 +183,7 @@ public class BuyerStreetFragment extends Fragment {
 				.findViewById(R.id.baijia_contact_listview);
 		baijiasteetfragmnet_layout_head_viewpager = (ViewPager) v
 				.findViewById(R.id.baijiasteetfragmnet_layout_head_viewpager);
-		baijiasteetfragmnet_layout_head_viewpager
-				.setOnPageChangeListener(new OnPageChangeListener() {
+		baijiasteetfragmnet_layout_head_viewpager.setOnPageChangeListener(new OnPageChangeListener() {
 
 					@Override
 					public void onPageSelected(int arg0) {
@@ -333,10 +333,9 @@ public class BuyerStreetFragment extends Fragment {
 			for (int i = 0; i < Banners.size(); i++) {
 				ImageView imageView =new ImageView(getActivity());
 				imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-				imageView.setImageResource(R.drawable.default_pic);
 				imageView.setTag(Banners.get(i));
-				initPic(ToolsUtil.nullToString(ToolsUtil.getImage(Banners.get(i).getPic(), 320, 0)), imageView,-1);
 				imageViewlist.add(imageView);
+				initPic(ToolsUtil.nullToString(ToolsUtil.getImage(Banners.get(i).getPic(), 320, 0)), imageView);
 				imageView.setOnClickListener(new OnClickListener() {
 					
 					@Override
@@ -349,17 +348,16 @@ public class BuyerStreetFragment extends Fragment {
 				});
 			}
 		}
-		pagerAdapter = new CustomPagerAdapter();
 		DisplayMetrics dm=new DisplayMetrics();
 		getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
 		int width=dm.widthPixels;
 		int height=width/2;
 		baijiasteetfragmnet_layout_head_viewpager.setLayoutParams(new RelativeLayout.LayoutParams(width, height));
+		pagerAdapter = new ScrollViewPagerAdapter(imageViewlist);
 		baijiasteetfragmnet_layout_head_viewpager.setAdapter(pagerAdapter);
 		if (imageViewlist.size() > 0) {
 			setcurrItem(0);
 		}
-		pagerAdapter.notifyDataSetChanged();
 		startTimeToViewPager();
 		
 		if(item.getProducts()!=null)
@@ -430,6 +428,10 @@ public class BuyerStreetFragment extends Fragment {
 	 * 启动自动滚动
 	 * **/
 	void startTimeToViewPager() {
+		if(true)
+		{
+			return;
+		}
 		stopTimerToViewPager();
 		if (imageViewlist == null || imageViewlist.size() <= 2) {
 			return;
@@ -463,48 +465,6 @@ public class BuyerStreetFragment extends Fragment {
 		}
 	}
 
-	class CustomPagerAdapter extends PagerAdapter {
-		@Override
-		public boolean isViewFromObject(View arg0, Object arg1) {
-
-			return arg0 == arg1;
-		}
-
-		@Override
-		public int getCount() {
-
-			if (imageViewlist.size() < 1) {
-				return 0;
-			} else if (imageViewlist.size() <=2) {
-				return imageViewlist.size();
-			} else {
-				return Integer.MAX_VALUE;
-			}
-		}
-
-		@Override
-		public Object instantiateItem(ViewGroup container, int position) {
-			int a=position%imageViewlist.size();
-			Log.i("TAG", "A:"+a);
-			ImageView imageview=imageViewlist.get(a);
-			if (imageview.getParent() != null) {
-				((ViewGroup) imageview.getParent()).removeView(imageview);
-			}
-			//imageview.setImageResource(R.drawable.default_pic);
-			imageview.setScaleType(ScaleType.FIT_XY);
-			imageview.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT));
-			container.addView(imageview, 0);
-			return imageview;
-		}
-
-		@Override
-		public void destroyItem(ViewGroup container, int position, Object object) {
-			ImageView imageview=imageViewlist.get(position%imageViewlist.size());
-			container.removeView(imageview);
-		}
-
-	};
-
 	// 设置滑动速度
 	void setViewPagerDuration(int value) {
 		try {
@@ -523,7 +483,7 @@ public class BuyerStreetFragment extends Fragment {
 	/****
 	 * 加载图片
 	 * */
-	void initPic(final String url, final ImageView iv, final int image) {
+	void initPic(final String url, final ImageView iv) {
 		Log.i("TAG", "URL:"+url);
 		MyApplication.getInstance().getImageLoader().displayImage(url, iv, MyApplication.getInstance().getDisplayImageOptions());
 	}

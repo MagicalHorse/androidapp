@@ -3,6 +3,7 @@ package com.shenma.yueba.baijia.view;
 import java.util.List;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.activity.ApproveBuyerDetailsActivity;
 import com.shenma.yueba.baijia.modle.BrandCityWideInfo;
 import com.shenma.yueba.baijia.modle.MyFavoriteProductListInfo;
 import com.shenma.yueba.baijia.modle.MyFavoriteProductListLikeUser;
@@ -100,13 +102,17 @@ public class PubuliuManager {
     			//收藏
     			TextView pubuliu_item_layout_like_textview=(TextView)parentview.findViewById(R.id.pubuliu_item_layout_like_textview);
     			pubuliu_item_layout_like_textview.setOnClickListener(onClickListener);
-    			if(bean.getLikeUser()!=null)
+    			
+    			pubuliu_item_layout_like_textview.setSelected(bean.isIsFavorite());
+    			pubuliu_item_layout_like_textview.setText(Integer.toString(bean.getFavoriteCount()));
+    			pubuliu_item_layout_like_textview.setTag(bean);
+    			/*if(bean.getLikeUser()!=null)
     			{
     				MyFavoriteProductListLikeUser likeuser=bean.getLikeUser();
     				pubuliu_item_layout_like_textview.setSelected(likeuser.isIsLike());
     				pubuliu_item_layout_like_textview.setText(likeuser.getCount()+"");
     				pubuliu_item_layout_like_textview.setTag(bean);
-    			}
+    			}*/
     			ImageView iv=(ImageView)parentview.findViewById(R.id.pubuliu_item_layout_imageview);
     			if(height>0)
     			{
@@ -125,7 +131,15 @@ public class PubuliuManager {
 					
 					@Override
 					public void onClick(View v) {
-						MyApplication.getInstance().showMessage(context, "点击了");
+						if(v.getTag()==null)
+						{
+							return;
+						}
+						MyFavoriteProductListInfo bean=(MyFavoriteProductListInfo)v.getTag();
+						Intent intent=new Intent(context,ApproveBuyerDetailsActivity.class);
+						intent.putExtra("productID", bean.getId());
+						context.startActivity(intent);
+						//MyApplication.getInstance().showMessage(context, "点击了");
 					}
 				});
     			iv.setImageResource(R.drawable.default_pic);
@@ -155,11 +169,23 @@ public class PubuliuManager {
 			switch(v.getId())
 			{
 			case R.id.pubuliu_item_layout_like_textview:
-				if(v.getTag()!=null && v.getTag() instanceof MyFavoriteProductListInfo)
+				/*if(v.getTag()!=null && v.getTag() instanceof MyFavoriteProductListInfo)
 				{
 					MyFavoriteProductListInfo  bean=(MyFavoriteProductListInfo)v.getTag();
 					MyFavoriteProductListLikeUser myFavoriteProductListLikeUser=bean.getLikeUser();
 					if(myFavoriteProductListLikeUser.isIsLike())
+					{
+						submitAttention(0,bean,v);
+					}else
+					{
+						submitAttention(1,bean,v);
+					}
+					
+				}*/
+				if(v.getTag()!=null && v.getTag() instanceof MyFavoriteProductListInfo)
+				{
+					MyFavoriteProductListInfo  bean=(MyFavoriteProductListInfo)v.getTag();
+					if(bean.isIsFavorite())
 					{
 						submitAttention(0,bean,v);
 					}else
@@ -173,19 +199,38 @@ public class PubuliuManager {
 		}
 	};
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	/****
-	 * 提交喜欢与取消喜欢商品
+	 * 提交收藏与取消收藏商品
 	 * @param type int   0表示取消收藏   1表示收藏
 	 * @param brandCityWideInfo BrandCityWideInfo  商品对象
 	 * @param v View  商品对象
 	 * **/
 	void submitAttention(final int Status,final MyFavoriteProductListInfo  bean,final View v)
 	{
-		httpControl.setLike(bean.getId(), Status, new HttpCallBackInterface() {
+		httpControl.setFavor(bean.getId(), Status, new HttpCallBackInterface() {
 			
 			@Override
 			public void http_Success(Object obj) {
-				if(v!=null && v instanceof TextView)
+				/*if(v!=null && v instanceof TextView)
 				{
 					MyFavoriteProductListLikeUser myFavoriteProductListLikeUser=bean.getLikeUser();
 					if(myFavoriteProductListLikeUser!=null)
@@ -212,6 +257,34 @@ public class PubuliuManager {
 							myFavoriteProductListLikeUser.setIsLike(true);
 							break;
 						}
+					}
+					
+				}*/
+				
+				if(v!=null && v instanceof TextView)
+				{
+					//MyFavoriteProductListLikeUser myFavoriteProductListLikeUser=bean.getLikeUser();
+					int count=bean.getFavoriteCount();
+					switch(Status)
+					{
+					case 0:
+						count--;
+						if(count<0)
+						{
+							count=0;
+						}
+						bean.setFavoriteCount(count);
+						v.setSelected(false);
+						((TextView)v).setText(count+"");
+						bean.setIsFavorite(false);
+						break;
+					case 1:
+						count++;
+						bean.setFavoriteCount(count);
+						((TextView)v).setText(count+"");
+						v.setSelected(true);
+						bean.setIsFavorite(true);
+						break;
 					}
 					
 				}
