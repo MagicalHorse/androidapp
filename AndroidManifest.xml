@@ -475,6 +475,11 @@
             android:name="com.shenma.yueba.yangjia.activity.WithdrawHistoryActivity"
             android:screenOrientation="portrait" >
         </activity>
+          <!-- 提现历史 -->
+        <activity
+            android:name="com.shenma.yueba.yangjia.activity.PublishProductActivity"
+            android:screenOrientation="portrait" >
+        </activity>
         <!-- 添加圈子 -->
         <activity
             android:name="com.shenma.yueba.yangjia.activity.AddCircleActivity"
