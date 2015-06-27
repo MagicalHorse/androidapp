@@ -9,9 +9,14 @@
     
     <TextView 
         android:padding="10dip"
+        android:textSize="18sp"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
         android:id="@+id/tv_name"
         />
-    
+    <View 
+        android:layout_width="fill_parent"
+        android:layout_height="0.5dip"
+        android:background="#33333333"
+        />
 </LinearLayout>

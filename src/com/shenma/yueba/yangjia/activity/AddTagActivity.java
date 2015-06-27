@@ -23,6 +23,8 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -69,7 +71,6 @@ public class AddTagActivity extends BaseActivityWithTopView implements TextWatch
 	private String type;
 	private ProductTagsListAdapter adapter;
 	private List<TagListItemBean> mList = new ArrayList<TagListItemBean>();
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -77,9 +78,10 @@ public class AddTagActivity extends BaseActivityWithTopView implements TextWatch
 		super.onCreate(savedInstanceState);
 		getIntentData();
 		initView();
-		getTagByName();
 	}
 
+	
+	
 	private void getIntentData() {
 		type = getIntent().getStringExtra("type");
 		
@@ -100,6 +102,24 @@ public class AddTagActivity extends BaseActivityWithTopView implements TextWatch
 		pull_refresh_list = getView(R.id.pull_refresh_list);
 		adapter = new ProductTagsListAdapter(mContext, mList);
 		pull_refresh_list.setAdapter(adapter);
+		pull_refresh_list.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int position,
+					long arg3) {
+				Intent intent = new Intent();
+				String id = mList.get(position-1).getId();
+				String name = mList.get(position-1).getName();
+				intent.putExtra("id", id);
+				intent.putExtra("type", type);
+				if(mList.get(position-1).isNewTag()){//如果是添加新标签
+					intent.putExtra("name", et_search.getText().toString().trim());
+				}else{
+					intent.putExtra("name", name);
+				}
+				setResult(Constants.RESULTCODE, intent);
+				AddTagActivity.this.finish(); 
+			}
+		});
 		FontManager.changeFonts(mContext, et_search);
 	}
 
@@ -123,8 +143,7 @@ public class AddTagActivity extends BaseActivityWithTopView implements TextWatch
 
 	@Override
 	public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-		// TODO Auto-generated method stub
-		
+		getTagByName();
 	}
 
 	@Override
@@ -142,17 +161,28 @@ public class AddTagActivity extends BaseActivityWithTopView implements TextWatch
 	
 	
 	
-	private void getTagByName(){
+	public void getTagByName(){
 		HttpControl httpControl = new HttpControl();
-		httpControl.getProductTag(type, et_search.getText().toString().trim(), new HttpCallBackInterface() {
+		httpControl.getProductTag(et_search.getText().toString().trim(),type, new HttpCallBackInterface() {
 			
 			@Override
 			public void http_Success(Object obj) {
 				TagListBackBean bean = (TagListBackBean) obj;
 				if(bean.getData()!=null){
 					mList.clear();
-					mList.addAll(bean.getData());
+					if(bean.getData().size()>0){
+						mList.addAll(bean.getData());
+					}else{
+						if("0".equals(type)){
+							TagListItemBean item = new TagListItemBean();
+							item.setId("");
+							item.setName("添加新标签："+et_search.getText().toString().trim());
+							item.setNewTag(true);
+							mList.add(item);
+						}
+					}
 					adapter.notifyDataSetChanged();
+				
 				}
 				
 			}
