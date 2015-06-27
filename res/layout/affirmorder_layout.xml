@@ -233,7 +233,7 @@
                     android:gravity="right"
                     android:text="*输入您的手机号,方便买手找到你"
                     android:textColor="@color/red"
-                    android:textSize="@dimen/textsize12sp" />
+                    android:textSize="@dimen/textsize10sp" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

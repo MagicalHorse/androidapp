@@ -2,19 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical" >
-
-    <include
-        android:id="@+id/title_include"
-        android:layout_alignParentTop="true"
-        layout="@layout/title_for_common" />
 
     <ScrollView
         android:id="@+id/approvebuyerdetails_srcollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/approvebuyerdetails_footer"
-        android:layout_below="@id/title_include"
         android:visibility="visible" >
 
         <LinearLayout
@@ -26,6 +21,16 @@
                 android:id="@+id/approvebuyerdetails_head_relativelayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/tv_top_left"
+                    style="@style/title_text_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dip"
+                    android:drawableLeft="@drawable/back"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="5dip"
+                    android:paddingRight="5dip" />
 
                 <!-- 头像 -->
 
@@ -46,7 +51,8 @@
                     android:layout_below="@id/approvebuyerdetails_icon_imageview"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/shop_main_marginleft30_dimen"
-                    android:text="名字" />
+                    android:text="名字"
+                    android:textSize="@dimen/textsize15sp" />
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -54,14 +60,14 @@
                     android:layout_alignBottom="@id/approvebuyerdetails_name_textview"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="@dimen/margin_left_and_right" >
+                    android:layout_marginRight="@dimen/shop_main_marginleft30_dimen" >
 
                     <TextView
                         android:id="@+id/appprovebuyerdetails_text1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="成交:"
-                        android:textSize="@dimen/textsize13sp" />
+                        android:textSize="@dimen/textsize10sp" />
 
                     <TextView
                         android:id="@+id/appprovebuyerdetails_textvalue1_textview"
@@ -69,8 +75,8 @@
                         android:layout_height="wrap_content"
                         android:layout_alignTop="@id/appprovebuyerdetails_text1"
                         android:layout_toRightOf="@id/appprovebuyerdetails_text1"
-                        android:text="152"
-                        android:textSize="@dimen/textsize13sp" />
+                        android:text=""
+                        android:textSize="@dimen/textsize10sp" />
 
                     <TextView
                         android:id="@+id/appprovebuyerdetails_text2"
@@ -78,7 +84,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/appprovebuyerdetails_text1"
                         android:text="好评:"
-                        android:textSize="@dimen/textsize13sp" />
+                        android:textSize="@dimen/textsize10sp" />
 
                     <TextView
                         android:id="@+id/appprovebuyerdetails_text2value_textview"
@@ -87,9 +93,9 @@
                         android:layout_alignTop="@id/appprovebuyerdetails_text2"
                         android:layout_below="@id/appprovebuyerdetails_text1"
                         android:layout_toRightOf="@id/appprovebuyerdetails_text2"
-                        android:text="0%"
+                        android:text=""
                         android:textColor="@color/red"
-                        android:textSize="@dimen/textsize13sp" />
+                        android:textSize="@dimen/textsize10sp" />
                 </RelativeLayout>
             </RelativeLayout>
 
@@ -97,12 +103,13 @@
                 android:id="@+id/appprovebuyer_viewpager_relativelayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/shop_main_width3_dimen" >
+                android:layout_marginTop="@dimen/shop_main_width5_dimen" >
 
                 <android.support.v4.view.ViewPager
                     android:id="@+id/appprovebuyer_viewpager"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="@dimen/shop_main_width300_dimen"
+                    android:visibility="visible" />
 
                 <LinearLayout
                     android:id="@+id/appprovebuyer_viewpager_footer_linerlayout"
@@ -139,14 +146,13 @@
                     android:layout_marginTop="@dimen/shop_main_width2_dimen"
                     android:text="*商品只支持商城自提"
                     android:textColor="@color/red"
-                    android:textSize="@dimen/textsize12sp" />
+                    android:textSize="@dimen/textsize10sp" />
             </RelativeLayout>
 
             <TextView
                 android:id="@+id/approvebuyerdetails_producename_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="[卷儿]"
                 android:paddingLeft="@dimen/margin_left_and_right"
                 android:textColor="@color/black"
                 android:textSize="@dimen/textsize18sp" />
@@ -160,9 +166,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/shop_main_width5_dimen"
-                    android:hint="自提地点:"
                     android:paddingLeft="@dimen/margin_left_and_right"
-                    android:textSize="@dimen/textsize13sp" />
+                    android:text="自提地点:"
+                    android:textColor="@color/color_textgray"
+                    android:textSize="@dimen/textsize12sp" />
 
                 <TextView
                     android:id="@+id/approvebuyerdetails_addressvalue_textview"
@@ -170,8 +177,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/shop_main_width5_dimen"
                     android:layout_toRightOf="@id/approvebuyerdetails_address_textview"
-                    android:hint="北京市人民大学"
-                    android:textSize="@dimen/textsize13sp" />
+                    android:textColor="@color/color_textgray"
+                    android:textSize="@dimen/textsize12sp" />
             </RelativeLayout>
 
             <View
@@ -182,41 +189,72 @@
                 android:id="@+id/approvebuyerdetails_closeingtime_linearlayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/shop_main_width5_dimen"
                 android:orientation="vertical"
                 android:paddingLeft="@dimen/margin_left_and_right"
-                android:paddingTop="@dimen/shop_main_width5_dimen"
-                android:paddingBottom="@dimen/shop_main_width5_dimen"
-                 >
+                android:paddingTop="@dimen/shop_main_lineheight10_dimen"
+                android:visibility="visible" >
 
-                <TextView
-                    android:drawablePadding="@dimen/shop_main_width3_dimen"
-                    android:id="@+id/approvebuyerdetails_closeingtime_textview"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/shop_main_width3_dimen"
-                    android:drawableLeft="@drawable/dayangtime_icon"
-                    android:text=""
-                    android:textSize="@dimen/textsize12sp" />
-
-                <TextView
                     android:layout_marginTop="@dimen/shop_main_width3_dimen"
-                    android:id="@+id/approvebuyerdetails_closeinginfo_textview"
+                    android:orientation="horizontal" >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@null"
+                        android:src="@drawable/dayangtime_icon"
+                        android:visibility="visible" />
+
+                    <TextView
+                        android:id="@+id/approvebuyerdetails_closeingtime_textview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/shop_main_width3_dimen"
+                        android:text=""
+                        android:textColor="@color/color_textgray"
+                        android:textSize="@dimen/textsize10sp" />
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/shop_main_width3_dimen"
-                    android:drawableLeft="@drawable/dayangdes_icon"
-                    android:drawablePadding="@dimen/shop_main_width3_dimen"
-                    android:textSize="@dimen/textsize12sp" />
+                    android:layout_marginTop="@dimen/shop_main_width3_dimen"
+                    android:orientation="horizontal" >
 
-                <include
-                    android:id="@+id/approvebuyerdetails_attention_linerlayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/shop_main_lineheight8_dimen"
-                    layout="@layout/attentionpeople_layout"
-                    android:paddingBottom="@dimen/shop_main_width5_dimen"
-                    android:paddingTop="@dimen/shop_main_width5_dimen" />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@null"
+                        android:src="@drawable/dayangdes_icon"
+                        android:visibility="visible" />
+
+                    <TextView
+                        android:id="@+id/approvebuyerdetails_closeinginfo_textview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/shop_main_width3_dimen"
+                        android:textColor="@color/color_textgray"
+                        android:textSize="@dimen/textsize10sp" />
+                </LinearLayout>
             </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/shop_main_lineheight10_dimen"
+                android:layout_marginTop="@dimen/shop_main_lineheight10_dimen"
+                android:background="@color/color_lightgrey" />
+
+            <include
+                android:id="@+id/approvebuyerdetails_attention_linerlayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_left_and_right"
+                layout="@layout/attentionpeople_layout" />
         </LinearLayout>
     </ScrollView>
 

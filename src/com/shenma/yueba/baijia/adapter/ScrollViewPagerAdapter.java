@@ -50,7 +50,7 @@ List<ImageView> imageViewlist=new ArrayList<ImageView>();
 			((ViewGroup) imageview.getParent()).removeView(imageview);
 		}
 		//imageview.setImageResource(R.drawable.default_pic);
-		imageview.setScaleType(ScaleType.FIT_XY);
+		imageview.setScaleType(ScaleType.FIT_CENTER);
 		imageview.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT));
 		container.addView(imageview, 0);
 		return imageview;

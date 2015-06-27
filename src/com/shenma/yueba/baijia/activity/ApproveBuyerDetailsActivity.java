@@ -110,8 +110,8 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView impleme
 	}
 
 	private void initViews() {
-		setTitle("");
-		setLeftTextView(new OnClickListener() {
+		TextView tv_top_left=(TextView)findViewById(R.id.tv_top_left);
+		tv_top_left.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				ApproveBuyerDetailsActivity.this.finish();
@@ -132,7 +132,7 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView impleme
 		getWindowManager().getDefaultDisplay().getMetrics(dm);
 		int width = dm.widthPixels;
 		int height = width / 2;
-		appprovebuyer_viewpager.setLayoutParams(new RelativeLayout.LayoutParams(width, height));
+		//appprovebuyer_viewpager.setLayoutParams(new RelativeLayout.LayoutParams(width, height));
 
 		appprovebuyer_viewpager.setOnTouchListener(new OnTouchListener() {
 
@@ -299,7 +299,7 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView impleme
 			String[] str_array = Data.getProductPic();
 			for (int i = 0; i < str_array.length; i++) {
 				ImageView iv = new ImageView(ApproveBuyerDetailsActivity.this);
-				iv.setScaleType(ScaleType.FIT_XY);
+				iv.setScaleType(ScaleType.FIT_CENTER);
 				viewlist.add(iv);
 				initPic(ToolsUtil.getImage(str_array[i], 320, 0), iv);
 			}
@@ -321,6 +321,7 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView impleme
 			approvebuyerdetails_closeingtime_linearlayout.setVisibility(View.GONE);
 		}
 		setFont();
+		approvebuyerdetails_srcollview.smoothScrollTo(0, 0);
 	}
 
 	@Override
@@ -481,6 +482,7 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView impleme
 		{
 		case R.id.approvebuyerdetails_icon_imageview://头像
 			Intent intent=new Intent(ApproveBuyerDetailsActivity.this,ShopMainActivity.class);
+			intent.putExtra("DATA", bean.getData().getBuyerId());
 			startActivity(intent);
 			break;
 		case R.id.approvebuyerdetails_layout_siliao_linerlayout:

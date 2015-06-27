@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -12,8 +13,12 @@ import android.text.Editable;
 import android.text.Selection;
 import android.text.Spannable;
 import android.text.TextWatcher;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -38,7 +43,7 @@ import com.shenma.yueba.util.ToolsUtil;
  * 程序的简单说明   下单对话框
  */
 
-public class CreateOrderDialog extends Dialog implements android.view.View.OnClickListener{
+public class CreateOrderDialog extends AlertDialog implements android.view.View.OnClickListener{
 	Context context;
 	RelativeLayout ll;
 	EditText createorder_dialog_layout_countvalue_edittext;
@@ -54,7 +59,8 @@ public class CreateOrderDialog extends Dialog implements android.view.View.OnCli
 	List<PrioductSizesInfoBean> size_list=new ArrayList<PrioductSizesInfoBean>();
 	public CreateOrderDialog(Context context,RequestProductDetailsInfoBean bean) {
 		super(context, R.style.MyDialog);
-		requestWindowFeature(getWindow().FEATURE_NO_TITLE);
+		//super(context);
+		//requestWindowFeature(getWindow().FEATURE_NO_TITLE);
 		this.context=context;
 		this.bean=bean;
 		setOwnerActivity((Activity)context);
@@ -144,6 +150,14 @@ public class CreateOrderDialog extends Dialog implements android.view.View.OnCli
 					createorder_dialog_layout_countvalue_edittext.setText(Integer.toString(maxValue));
 					createorder_dialog_layout_submit_button.setEnabled(true);
 				}
+				if(s.toString().length()>1)//如果位数大于1位
+				{
+					char c=s.toString().charAt(0);
+					if(c==0)
+					{
+						createorder_dialog_layout_countvalue_edittext.setText(Integer.toString(value));
+					}
+				}
 				
 			}
 			
@@ -165,7 +179,14 @@ public class CreateOrderDialog extends Dialog implements android.view.View.OnCli
 	public void show() {
 		
 		super.show();
-		
+		WindowManager.LayoutParams param=this.getWindow().getAttributes();
+		DisplayMetrics dm=new DisplayMetrics();
+		((Activity)context).getWindowManager().getDefaultDisplay().getMetrics(dm);
+		param.width=dm.widthPixels;
+	    //param.height=;
+	    Log.i("TAG", "HEIGHT----->:"+dm.heightPixels);
+		this.getWindow().setAttributes(param);
+		this.getWindow().setBackgroundDrawableResource(R.color.color_transparent);
 	}
 
 	

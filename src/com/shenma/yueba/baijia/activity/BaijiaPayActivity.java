@@ -25,6 +25,7 @@ import com.shenma.yueba.baijia.modle.BaiJiaOrdeDetailsInfoBean;
 import com.shenma.yueba.baijia.modle.BaijiaPayInfoBean;
 import com.shenma.yueba.baijia.modle.CreatOrderInfoBean;
 import com.shenma.yueba.baijia.modle.RequestBaiJiaOrdeDetailsInfoBean;
+import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.wxapi.CreateWeiXinOrderManager;
@@ -82,6 +83,7 @@ boolean isBroadcast=false;//是否注册广播监听 支付结果
 	void initView()
 	{
 		setTitle("选择付款方式");
+		FontManager.changeFonts(this, tv_top_title);
 		setLeftTextView(new OnClickListener() {
 			
 			@Override

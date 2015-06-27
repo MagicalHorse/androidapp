@@ -53,7 +53,7 @@
                 android:id="@+id/baijiapay_layout_item_textview3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/textsize15sp"
+                android:textSize="@dimen/textsize13sp"
                  />
 
             <TextView
@@ -61,7 +61,7 @@
                 android:id="@+id/baijiapay_layout_item_textview4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/textsize12sp"
+                android:textSize="@dimen/textsize10sp"
                 />
         </LinearLayout>
 

@@ -3,12 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
-    android:paddingLeft="@dimen/margin_left_and_right"
-    android:paddingRight="@dimen/margin_left_and_right"
-    android:paddingTop="@dimen/shop_main_width3_dimen"
-    android:paddingBottom="@dimen/shop_main_width3_dimen"
     android:orientation="horizontal"
     android:background="@color/white"
+    android:minHeight="@dimen/user_config_iconwidth60_dimen"
     >
 
     <TextView
@@ -17,8 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:drawableLeft="@drawable/like_backgroud"
-        android:gravity="center"
-        android:hint="558" />
+        android:gravity="center"/>
 
     <com.shenma.yueba.view.MyGridView 
         android:cacheColorHint="@color/color_transparent"
