@@ -53,6 +53,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.AffirmOrderActivity;
+import com.shenma.yueba.baijia.activity.CircleInfoActivity;
 import com.shenma.yueba.baijia.adapter.ChattingListViewAdapter;
 import com.shenma.yueba.baijia.dialog.CreateOrderDialog;
 import com.shenma.yueba.baijia.modle.MyMessage;
@@ -134,9 +135,12 @@ public class ChatActivity extends RoboActivity implements OnClickListener,OnChic
 	private Button btnMore;
 	private FaceView fView;
 	private PullToRefreshListView chat_list;
+	TextView tv_top_right;//设置
 	private ChattingListViewAdapter chatAdapter;// 聊天列表adapter
 	RequestProductDetailsInfoBean bean;
 	CreateOrderDialog createOrderDialog;
+	String circleId=null;//圈子ID
+	RelativeLayout chat_product_head_layout_include;//商品信息
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -184,8 +188,23 @@ public class ChatActivity extends RoboActivity implements OnClickListener,OnChic
 	 * initView
 	 */
 	protected void initView() {
+		chat_product_head_layout_include=(RelativeLayout)findViewById(R.id.chat_product_head_layout_include);
+		tv_top_right=(TextView)findViewById(R.id.tv_top_right);
+		if(this.getIntent().getStringExtra("circleId")!=null)
+		{
+			circleId=this.getIntent().getStringExtra("circleId");
+		}
+		if(circleId!=null)
+		{
+			tv_top_right.setVisibility(View.VISIBLE);
+		}else
+		{
+			tv_top_right.setVisibility(View.GONE);
+		}
+		
 		setProduct();
-
+		
+		tv_top_right.setOnClickListener(this);
 		manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 		getWindow().setSoftInputMode(
 				WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -458,6 +477,11 @@ public class ChatActivity extends RoboActivity implements OnClickListener,OnChic
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
+		case R.id.tv_top_right://设置
+			Intent intent=new Intent(this,CircleInfoActivity.class);
+			intent.putExtra("circleId",circleId);
+			startActivity(intent);
+			break;
 		case R.id.iv_emoticons_normal:// 点击显示表情框
 			showOrHideIMM();
 			break;
@@ -577,6 +601,15 @@ public class ChatActivity extends RoboActivity implements OnClickListener,OnChic
 	 * 设置商品信息
 	 * ***/
 	void setProduct() {
+		if(this.getIntent().getSerializableExtra("DATA")==null)
+		{
+			chat_product_head_layout_include.setVisibility(View.GONE);
+			return;
+		}else
+		{
+			chat_product_head_layout_include.setVisibility(View.VISIBLE);
+		}
+		
 		// 产品图片
 		ImageView chat_product_head_layout_imageview = (ImageView) findViewById(R.id.chat_product_head_layout_imageview);
 		// 产品名称
@@ -625,6 +658,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,OnChic
 			}
 
 		} else {
+			chat_product_head_layout_include.setVisibility(View.GONE);
 			chat_product_head_layout_button.setEnabled(false);
 		}
          FontManager.changeFonts(this, chat_product_head_layout_name_textview,chat_product_head_layout_name_textview,chat_product_head_layout_price_textview,chat_product_head_layout_button);

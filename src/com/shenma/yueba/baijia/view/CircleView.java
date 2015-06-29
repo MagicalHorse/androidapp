@@ -5,7 +5,6 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.SystemClock;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,8 +22,10 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.OnPullEventListener;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.State;
 import com.handmark.pulltorefresh.library.PullToRefreshGridView;
+import com.shenma.yueba.ChatActivity;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.activity.ApproveBuyerDetailsActivity;
 import com.shenma.yueba.baijia.activity.CircleInfoActivity;
 import com.shenma.yueba.baijia.modle.FragmentBean;
 import com.shenma.yueba.baijia.modle.MyCircleInfo;
@@ -141,8 +142,8 @@ public class CircleView extends BaseView{
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
-				Intent intent=new Intent(activity,CircleInfoActivity.class);
 				MyCircleInfo myCircleInfo=items.get(arg2);
+				Intent intent=new Intent(activity,ChatActivity.class);
 				intent.putExtra("circleId", Integer.toString(myCircleInfo.getId()));
 				activity.startActivity(intent);
 			}
@@ -225,6 +226,7 @@ public class CircleView extends BaseView{
 	
 	void addData(MyCircleInfoBean bean)
 	{
+		showDialog=false;
 		currPage++;
 		if(bean.getItems()!=null)
 		{
@@ -238,6 +240,7 @@ public class CircleView extends BaseView{
 	
 	void falshData(MyCircleInfoBean bean)
 	{
+		showDialog=false;
 		isFirst=false;
 		currPage++;
 		items.clear();

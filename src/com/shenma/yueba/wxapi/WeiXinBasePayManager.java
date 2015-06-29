@@ -1,12 +1,7 @@
 package com.shenma.yueba.wxapi;
 
 import java.io.StringReader;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -16,7 +11,6 @@ import net.sourceforge.simcpux.MD5;
 import net.sourceforge.simcpux.Util;
 
 import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
 import org.xmlpull.v1.XmlPullParser;
 
 import android.app.ProgressDialog;
