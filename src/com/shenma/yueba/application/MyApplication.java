@@ -1,5 +1,8 @@
 package com.shenma.yueba.application;
 
+import im.control.SocketManger;
+import im.control.SocketManger.SocketManagerListener;
+
 import java.io.File;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -72,12 +75,14 @@ public class MyApplication extends Application {
 	private DisplayImageOptions optionsForRound;
 	private UserRequestBean userRequestBean;
 	private Typeface tf;
-
+	SocketManger socketManger;
 
 
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		//启动IM
+		SocketManger.the(null).contentSocket();
 		instance = this;
 		initBitmapUtils();
 		initImageLoader(getApplicationContext());
