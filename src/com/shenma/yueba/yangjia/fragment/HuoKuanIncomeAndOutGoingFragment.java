@@ -111,6 +111,8 @@ public class HuoKuanIncomeAndOutGoingFragment extends BaseFragment implements On
 		if (parent != null) {
 			parent.removeView(rootView);
 		}
+		adapter = new HuoKuanIncomeAndOutGoingAdapter(
+				getActivity(), mList, tag);
 		return rootView;
 	}
 
@@ -177,17 +179,16 @@ public class HuoKuanIncomeAndOutGoingFragment extends BaseFragment implements On
                      public void run() {
                     	 rlv.onRefreshComplete();
                      }
-             }, 1000);
+             }, 100);
 				HuoKuanListBackBean bean = (HuoKuanListBackBean) obj;
 				if (isRefresh) {
+					ids.clear();
 					if (bean.getData() != null
 							&& bean.getData().getItems() != null
 							&& bean.getData().getItems().size() > 0) {
 						tv_nodata.setVisibility(View.GONE);
 						mList.clear();
 						mList.addAll(bean.getData().getItems());
-						adapter = new HuoKuanIncomeAndOutGoingAdapter(
-								getActivity(), mList, tag);
 						rlv.setAdapter(adapter);
 					} else {
 						tv_nodata.setVisibility(View.VISIBLE);
@@ -201,7 +202,6 @@ public class HuoKuanIncomeAndOutGoingFragment extends BaseFragment implements On
 						Toast.makeText(getActivity(), "没有更多数据了...", 1000)
 								.show();
 					}
-
 					adapter.notifyDataSetChanged();
 				}
 			}

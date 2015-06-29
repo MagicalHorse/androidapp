@@ -2012,7 +2012,7 @@ public class HttpControl {
 			SharedUtil.setBooleanPerfernece(context,
 					SharedUtil.user_IsBindWeiXin, userInfo.isIsBindWeiXin());
 			SharedUtil.setBooleanPerfernece(context,
-					SharedUtil.user_canPush, userInfo.isIsBindWeiXin());
+					SharedUtil.user_canPush, userInfo.isIsOpenPush());
 			JpushUtils jpushUtils = new JpushUtils(context);
 			jpushUtils.setAlias(SharedUtil.getStringPerfernece(context, SharedUtil.user_id));//设置别名
 		}

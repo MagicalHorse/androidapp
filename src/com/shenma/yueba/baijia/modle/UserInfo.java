@@ -12,6 +12,7 @@ public class UserInfo implements Serializable {
 	private boolean IsBindWeiXin;// 是否绑定微信号
 	private String Description;// 店铺说明
 	private String AuditStatus;// 审核状态
+	private boolean IsOpenPush;//推送开关
 	boolean isbuyer = false;
 	int operate_right;// null,
 	int template_id;// null,
@@ -252,4 +253,13 @@ public class UserInfo implements Serializable {
 		IsBindWeiXin = isBindWeiXin;
 	}
 
+	public boolean isIsOpenPush() {
+		return IsOpenPush;
+	}
+
+	public void setIsOpenPush(boolean isOpenPush) {
+		IsOpenPush = isOpenPush;
+	}
+
+	
 }

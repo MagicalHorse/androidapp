@@ -321,6 +321,11 @@ public class UserConfigActivity extends BaseActivityWithTopView implements
 				SharedUtil.user_IsBindMobile) ? "已绑定" : "未绑定");
 		tv_bind_wechat_value.setText(SharedUtil.getBooleanPerfernece(mContext,
 				SharedUtil.user_IsBindWeiXin) ? "已绑定" : "未绑定");
+		if(SharedUtil.getBooleanPerfernece(mContext, SharedUtil.user_canPush)){
+			switchButton.setBackgroundResource(R.drawable.on);
+		}else{
+			switchButton.setBackgroundResource(R.drawable.off);
+		}
 		super.onResume();
 	}
 
