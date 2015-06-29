@@ -165,7 +165,12 @@ public class IncomeDetailFragment extends BaseFragment {
 				new HttpCallBackInterface() {
 					@Override
 					public void http_Success(Object obj) {
-						pull_refresh_list.onRefreshComplete();
+						pull_refresh_list.postDelayed(new Runnable() {
+		                     @Override
+		                     public void run() {
+		                    	 pull_refresh_list.onRefreshComplete();
+		                     }
+		             }, 1000);
 						IncomeDetailBackBean bean = (IncomeDetailBackBean) obj;
 						adapter = new IncomeDetailAdapter(getActivity(), mList,
 								0);

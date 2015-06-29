@@ -74,7 +74,12 @@ public class RewardDetailActivity extends BaseActivityWithTopView{
 				mList.addAll(mList);
 				adapter.notifyDataSetChanged();
 				ListViewUtils.setListViewHeightBasedOnChildren(lv);
-				pulltorefreshscrollview.onRefreshComplete();
+				pulltorefreshscrollview.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                    	pulltorefreshscrollview.onRefreshComplete();
+                    }
+            }, 1000);
 			}
 		});
 		tv_nodata = getView(R.id.tv_nodata);

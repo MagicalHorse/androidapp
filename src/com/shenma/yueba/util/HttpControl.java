@@ -1071,6 +1071,19 @@ public class HttpControl {
 				httpCallBack, IncomeHistoryBackBean.class, true, false);
 	}
 	
+	/**
+	 * 货款提现
+	 * 
+	 * @return void
+	 * **/
+	public void withdrawGoods(String orderNos,
+			final HttpCallBackInterface httpCallBack, Context context) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put(Constants.ORDERNOS, orderNos);
+		BasehttpSend(map, context, HttpConstants.METHOD_ASSISTANT_WithdrawGoods,
+				httpCallBack, IncomeHistoryBackBean.class, true, false);
+	}
+	
 	
 	
 

@@ -245,6 +245,10 @@ public class HttpConstants {
 	
 	
 	/**
+	 * 提现货款
+	 */
+	public static String METHOD_ASSISTANT_WithdrawGoods= BUYER + "WithdrawGoods";
+	/**
 	 * 获取提现历史
 	 */
 	public static String METHOD_ASSISTANT_INCOMEREQUESTREDPACK= ASSISTANT + "Income_Request_RedPack";

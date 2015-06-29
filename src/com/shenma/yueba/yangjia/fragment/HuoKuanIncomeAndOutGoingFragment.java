@@ -23,10 +23,12 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.shenma.yueba.R;
+import com.shenma.yueba.baijia.activity.ApplyResultActivity;
 import com.shenma.yueba.baijia.fragment.BaseFragment;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
+import com.shenma.yueba.yangjia.activity.ApplyWithdrawActivity;
 import com.shenma.yueba.yangjia.activity.OrderDetailActivity;
 import com.shenma.yueba.yangjia.adapter.HuoKuanIncomeAndOutGoingAdapter;
 import com.shenma.yueba.yangjia.modle.HuoKuanItem;
@@ -96,10 +98,10 @@ public class HuoKuanIncomeAndOutGoingFragment extends BaseFragment implements On
 				@Override
 				public void onItemClick(AdapterView<?> arg0, View arg1,
 						int arg2, long arg3) {
-					Intent intent = new Intent(getActivity(),
-							OrderDetailActivity.class);
-					intent.putExtra("orderId", mList.get(arg2).getOrderNo());
-					startActivity(intent);
+//					Intent intent = new Intent(getActivity(),
+//							OrderDetailActivity.class);
+//					intent.putExtra("orderId", mList.get(arg2).getOrderNo());
+//					startActivity(intent);
 
 				}
 			});
@@ -170,7 +172,12 @@ public class HuoKuanIncomeAndOutGoingFragment extends BaseFragment implements On
 		httpContorl.getHuoKuanList(page, status, new HttpCallBackInterface() {
 			@Override
 			public void http_Success(Object obj) {
-				rlv.onRefreshComplete();
+				rlv.postDelayed(new Runnable() {
+                     @Override
+                     public void run() {
+                    	 rlv.onRefreshComplete();
+                     }
+             }, 1000);
 				HuoKuanListBackBean bean = (HuoKuanListBackBean) obj;
 				if (isRefresh) {
 					if (bean.getData() != null
@@ -207,11 +214,36 @@ public class HuoKuanIncomeAndOutGoingFragment extends BaseFragment implements On
 		}, getActivity(), true, false);
 	}
 
+	
+	/**
+	 * 提现货款
+	 */
+	public void withdraw() {
+		HttpControl httpControl = new HttpControl();
+		httpControl.withdrawGoods(setListToString(ids), new HttpCallBackInterface() {
+			@Override
+			public void http_Success(Object obj) {
+				Intent intent = new Intent(getActivity(),
+						ApplyResultActivity.class);
+				intent.putExtra("flag", "withdrawGoods");// 提现货款
+				startActivity(intent);
+			}
+			@Override
+			public void http_Fails(int error, String msg) {
+				Toast.makeText(getActivity(), msg, 1000).show();
+				
+			}
+		}, getActivity());
+	}
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.tv_bottom://
-			
+		case R.id.tv_bottom://提现货款
+			if(ids!=null&& ids.size()>0){
+				withdraw();
+			}else{
+				Toast.makeText(getActivity(), "请选择提现订单", 1000).show();
+			}
 			break;
 
 		default:

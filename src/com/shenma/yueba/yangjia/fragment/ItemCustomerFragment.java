@@ -133,7 +133,12 @@ public class ItemCustomerFragment extends BaseFragment {
 
 					@Override
 					public void http_Success(Object obj) {
-						rlv.onRefreshComplete();
+						rlv.postDelayed(new Runnable() {
+		                     @Override
+		                     public void run() {
+		                    	 rlv.onRefreshComplete();
+		                     }
+		             }, 1000);
 						OrderListBackBean bean = (OrderListBackBean) obj;
 						if (isRefresh) {
 							if(bean.getData()!=null && bean.getData().getOrderlist()!=null && bean.getData().getOrderlist().size()>0){

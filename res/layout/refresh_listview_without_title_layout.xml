@@ -4,6 +4,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
+      <LinearLayout 
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"
+        android:id="@+id/ll_bottom_layout"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:orientation="vertical"
+        ></LinearLayout>
     <com.handmark.pulltorefresh.library.PullToRefreshListView
         android:id="@+id/pull_refresh_list"
         android:layout_width="fill_parent"
@@ -16,6 +24,7 @@
         android:fastScrollEnabled="false"
         android:footerDividersEnabled="false"
         android:headerDividersEnabled="false"
+        android:layout_above="@id/ll_bottom_layout"
         android:smoothScrollbar="true" />
 
     <TextView
@@ -28,14 +37,7 @@
         android:textColor="@color/text_gray_color"
         android:textSize="18sp" />
 
-    <LinearLayout 
-        android:layout_alignParentBottom="true"
-        android:visibility="gone"
-        android:id="@+id/ll_bottom_layout"
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:orientation="vertical"
-        ></LinearLayout>
+  
     
     <include
         android:id="@+id/showloading_layout_view"

@@ -139,7 +139,12 @@ public class ProductManagerFragmentForOnLine extends BaseFragment {
 				status, new HttpCallBackInterface() {
 					@Override
 					public void http_Success(Object obj) {
-						pull_refresh_list.onRefreshComplete();
+						pull_refresh_list.postDelayed(new Runnable() {
+		                    @Override
+		                    public void run() {
+		                    	pull_refresh_list.onRefreshComplete();
+		                    }
+		            }, 1000);
 						BuyerProductManagerListBack bean = (BuyerProductManagerListBack) obj;
 						if (isRefresh) {
 							if(bean.getData().getItems()!=null && bean.getData().getItems().size()>0){

@@ -67,7 +67,12 @@ public class BoradRewardActivity extends BaseActivityWithTopView{
 				mList.addAll(mList);
 				adapter.notifyDataSetChanged();
 				ListViewUtils.setListViewHeightBasedOnChildren(lv);
-				pulltorefreshscrollview.onRefreshComplete();
+				pulltorefreshscrollview.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                    	pulltorefreshscrollview.onRefreshComplete();
+                    }
+            }, 1000);
 			}
 		});
 		tv_reward_title = getView(R.id.tv_reward_title);

@@ -48,7 +48,10 @@ public class ApplyResultActivity extends BaseActivityWithTopView implements OnCl
 			tv_content.setText("提现申请已提交，请等待处理");
 			tv_comment.setText("预计到账时间XXX");
 		}
-		
+		if("withdrawGoods".equals(flag)){//提现货款
+			tv_content.setText("货款提现申请已提交，请等待处理");
+			tv_comment.setText("预计到账时间XXX");
+		}
 	}
 	@Override
 	public void onClick(View v) {

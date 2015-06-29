@@ -4,9 +4,12 @@ import java.util.List;
 
 import android.content.Context;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
+import android.widget.Toast;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
 
@@ -50,7 +53,7 @@ public class HuoKuanIncomeAndOutGoingAdapter extends BaseAdapterWithUtil {
 	@SuppressWarnings("null")
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
-		Holder holder;
+		final Holder holder;
 		if(convertView == null){
 			holder = new Holder();
 			convertView = View.inflate(ctx, R.layout.huokuan_income_and_outgoing_item, null);
@@ -60,28 +63,12 @@ public class HuoKuanIncomeAndOutGoingAdapter extends BaseAdapterWithUtil {
 			holder.tv_order_number_title = (TextView) convertView.findViewById(R.id.tv_order_number_title);
 			holder.tv_order_muber = (TextView) convertView.findViewById(R.id.tv_order_muber);
 			holder.tv_date = (TextView) convertView.findViewById(R.id.tv_date);
-			holder.cb = (CheckBox) convertView.findViewById(R.id.cb);
-			holder.cb.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-				
-				@Override
-				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-					if(isChecked){
-						((HuoKuanIncomingAndOutgoingsActivity)ctx).setIds(mList.get(position).getOrderNo());
-						prices= prices+Double.parseDouble(mList.get(position).getAmount());
-						((HuoKuanIncomingAndOutgoingsActivity)ctx).setHuoKuanCount(prices+"");
-					}else{
-						((HuoKuanIncomingAndOutgoingsActivity)ctx).removeIds(mList.get(position).getOrderNo());
-						prices= prices - Double.parseDouble(mList.get(position).getAmount());
-						((HuoKuanIncomingAndOutgoingsActivity)ctx).setHuoKuanCount(prices+"");
-					}
-					
-				}
-			});
+			holder.iv_check = (ImageView) convertView.findViewById(R.id.iv_check);
 			if(tag == 0){//可提现
-				holder.cb.setVisibility(View.VISIBLE);
+				holder.iv_check.setVisibility(View.VISIBLE);
 				holder.tv_status.setVisibility(View.GONE);
 			}else{
-				holder.cb.setVisibility(View.GONE);
+				holder.iv_check.setVisibility(View.GONE);
 				holder.tv_status.setVisibility(View.VISIBLE);
 			}
 			FontManager.changeFonts(ctx, holder.tv_earning_money_title,holder.tv_money_number,
@@ -90,6 +77,32 @@ public class HuoKuanIncomeAndOutGoingAdapter extends BaseAdapterWithUtil {
 		}else{
 			holder = (Holder) convertView.getTag();
 		}
+		
+		
+		if(!mList.get(position).isChecked()){
+			holder.iv_check.setBackgroundResource(R.drawable.radio_normal);
+		}else{
+			holder.iv_check.setBackgroundResource(R.drawable.radio_selected);
+		}
+		holder.iv_check.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Toast.makeText(ctx, Double.parseDouble(mList.get(position).getAmount())+"", 1000).show();
+				if(mList.get(position).isChecked()){
+					mList.get(position).setChecked(false);
+					((HuoKuanIncomingAndOutgoingsActivity)ctx).removeIds(mList.get(position).getOrderNo());
+					prices= prices - Double.parseDouble(mList.get(position).getAmount());
+					((HuoKuanIncomingAndOutgoingsActivity)ctx).setHuoKuanCount("提现货款"+ToolsUtil.DounbleToString_2(prices)+"元");
+				}else{
+					mList.get(position).setChecked(true);
+					((HuoKuanIncomingAndOutgoingsActivity)ctx).setIds(mList.get(position).getOrderNo());
+					prices= prices+Double.parseDouble(mList.get(position).getAmount());
+					((HuoKuanIncomingAndOutgoingsActivity)ctx).setHuoKuanCount("提现货款"+ToolsUtil.DounbleToString_2(prices)+"元");
+				}
+				notifyDataSetChanged();
+			}
+		});
+		
 		holder.tv_money_number.setText(ToolsUtil.nullToString(mList.get(position).getAmount()));
 		holder.tv_status.setText(ToolsUtil.nullToString(mList.get(position).getStatusName()));
 		holder.tv_order_muber.setText(ToolsUtil.nullToString(mList.get(position).getOrderNo()));
@@ -106,7 +119,7 @@ public class HuoKuanIncomeAndOutGoingAdapter extends BaseAdapterWithUtil {
 		TextView tv_order_number_title;//货号
 		TextView tv_money_number;//规格
 		TextView tv_status;//规格
-		CheckBox cb;
+		ImageView iv_check;
 	}
 
 }

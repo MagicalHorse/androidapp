@@ -50,6 +50,7 @@ public class Constants {
 	public static final String TOKEN = "token";// 随机数
 	public static final String PAGE = "Page";// 第几页，页码
 	public static final String AMOUNT = "Amount";// 账户
+	public static final String ORDERNOS = "orderNos";//订单号
 	public static final String INCOMESTATUS = "IncomeStatus";// 收入明细状态
 	public static final String INCOMETRANSFERSTATUS = "IncomeTransferStatus";// 收入明细状态
 	public static final String PAGESIZE = "Pagesize";// 页size

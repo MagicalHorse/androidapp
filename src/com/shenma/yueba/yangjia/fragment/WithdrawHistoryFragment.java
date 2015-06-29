@@ -154,7 +154,12 @@ public class WithdrawHistoryFragment extends BaseFragment {
 		httpControl.getIncomeHistory(page, Constants.PageSize, type+"", new HttpCallBackInterface() {
 			@Override
 			public void http_Success(Object obj) {
-				pull_refresh_list.onRefreshComplete();
+				pull_refresh_list.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                    	pull_refresh_list.onRefreshComplete();
+                    }
+            }, 1000);
 				IncomeHistoryBackBean bean = (IncomeHistoryBackBean) obj;
 				adapter = new WithDrawHistoryAdapter(getActivity(), mList, 0);
 				if (isRefresh) {
