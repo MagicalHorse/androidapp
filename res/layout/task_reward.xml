@@ -9,7 +9,7 @@
 
      <View
         style="@style/style_horizontal_line"
-        android:layout_marginTop="10dip" />
+       />
     
     
     

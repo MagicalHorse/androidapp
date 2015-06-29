@@ -45,6 +45,7 @@ public class RewardDetailActivity extends BaseActivityWithTopView{
 	private BroadRewardAdapter adapter;
 	private List<HistoryItem> mList = new ArrayList<HistoryItem>();
 	private String promotionId;//奖励id
+	private TextView tv_nodata;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -76,6 +77,7 @@ public class RewardDetailActivity extends BaseActivityWithTopView{
 				pulltorefreshscrollview.onRefreshComplete();
 			}
 		});
+		tv_nodata = getView(R.id.tv_nodata);
 		tv_reward_title = getView(R.id.tv_reward_title);
 		tv_reward_introduce = getView(R.id.tv_reward_introduce);
 		tv_progress_content = getView(R.id.tv_progress_content);
@@ -86,7 +88,7 @@ public class RewardDetailActivity extends BaseActivityWithTopView{
 		lv.setAdapter(adapter);
 		ListViewUtils.setListViewHeightBasedOnChildren(lv);
 		FontManager.changeFonts(mContext, tv_reward_title,
-				tv_reward_introduce, tv_progress_content, tv_progress_title, tv_history_title);
+				tv_reward_introduce, tv_progress_content, tv_progress_title, tv_history_title,tv_nodata);
 	}
 
 	
@@ -104,9 +106,15 @@ public class RewardDetailActivity extends BaseActivityWithTopView{
 					String tip = bean.getData().getTip();
 					tv_reward_introduce.setText(desc);
 					tv_progress_content.setText(tip);
-					mList.addAll(bean.getData().getHistory());
-					adapter.notifyDataSetChanged();
-					ListViewUtils.setListViewHeightBasedOnChildren(lv);
+					if(bean.getData().getHistory()!=null && bean.getData().getHistory().size()!=0){
+						tv_nodata.setVisibility(View.GONE);
+						mList.addAll(bean.getData().getHistory());
+						adapter.notifyDataSetChanged();
+						ListViewUtils.setListViewHeightBasedOnChildren(lv);
+					}else{
+						tv_nodata.setVisibility(View.VISIBLE);
+					}
+				
 				}
 			}
 			

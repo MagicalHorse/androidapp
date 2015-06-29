@@ -21,6 +21,7 @@ import com.shenma.yueba.baijia.activity.UserConfigActivity;
 import com.shenma.yueba.baijia.fragment.BaseFragment;
 import com.shenma.yueba.util.CustomProgressDialog;
 import com.shenma.yueba.util.FontManager;
+import com.shenma.yueba.util.ShareUtil;
 import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.yangjia.activity.StoreIntroduceActivity;
@@ -123,6 +124,7 @@ public class MeFragmentForYangJia extends BaseFragment implements
 			startActivity(storeIntroduceIntent);
 			break;
 		case R.id.tv_invite_buyer:// 邀请买手
+			ShareUtil.shareAll(getActivity(), "我市内容", "我是url", "http://img3.3lian.com/2014/c2/61/d/17.jpg");
 			break;
 		case R.id.tv_to_baijia:// 我要败家
 			CustomProgressDialog dialog = new CustomProgressDialog(

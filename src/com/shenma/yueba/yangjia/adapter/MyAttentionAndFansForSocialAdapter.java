@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.adapter.BaseAdapterWithUtil;
+import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.RoundImageView;
 import com.shenma.yueba.yangjia.modle.AttationAndFansItemBean;
 
@@ -58,6 +59,8 @@ public class MyAttentionAndFansForSocialAdapter extends BaseAdapterWithUtil {
 					.findViewById(R.id.tv_fans_count);
 			holder.tv_attention = (TextView) convertView
 					.findViewById(R.id.tv_attention);
+			holder.tv_has_attention = (TextView) convertView
+					.findViewById(R.id.tv_has_attention);
 			holder.tv_attention.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -75,9 +78,16 @@ public class MyAttentionAndFansForSocialAdapter extends BaseAdapterWithUtil {
 		}
 		
 		MyApplication.getInstance().getImageLoader().displayImage(mList.get(position).getUserLogo(), holder.riv_head);
-		holder.tv_attention.setText(mList.get(position).getFavoiteCount());
-//		holder.tv_fans_count.setText(mList.get(position).getFansCount());
-//		holder.tv_attention.setText(mList.get(position).getFavoiteCount());
+		holder.tv_name.setText(ToolsUtil.nullToString(mList.get(position).getUserName()));
+		holder.tv_fans_count.setText("粉丝 "+ToolsUtil.nullToString(mList.get(position).getFansCount()));
+		holder.tv_atttention_count.setText("关注  "+ToolsUtil.nullToString(mList.get(position).getFavoiteCount()));
+		if(mList.get(position).isFavorite()){
+			holder.tv_has_attention.setVisibility(View.VISIBLE);
+			holder.tv_attention.setVisibility(View.GONE);
+		}else{
+			holder.tv_has_attention.setVisibility(View.GONE);
+			holder.tv_attention.setVisibility(View.VISIBLE);
+		}
 		return convertView;
 	}
 
@@ -87,6 +97,7 @@ public class MyAttentionAndFansForSocialAdapter extends BaseAdapterWithUtil {
 		TextView tv_atttention_count;
 		TextView tv_fans_count;
 		TextView tv_attention;
+		TextView tv_has_attention;
 	}
 
 }
