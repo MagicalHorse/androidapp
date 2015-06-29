@@ -37,12 +37,12 @@ public class ShareUtil {
 	public static void shareAll(final Activity activity, final String content,
 			final String url, final String imgurl) {
 		List<String> list = new ArrayList<String>();
-		if (SharedUtil.getWeiboQQ(activity)) {
-			list.add("腾讯微博");
-		}
-		if (SharedUtil.getWeiboSina(activity)) {
-			list.add("新浪微博");
-		}
+//		if (SharedUtil.getWeiboQQ(activity)) {
+//			list.add("腾讯微博");
+//		}
+//		if (SharedUtil.getWeiboSina(activity)) {
+//			list.add("新浪微博");
+//		}
 		if (SharedUtil.getWeixinFriends(activity)) {
 			list.add("微信好友");
 		}
@@ -196,12 +196,12 @@ public class ShareUtil {
 	public static void getShareDialog(final Context ctx,final String content,
 			final String url, final String imgurl){
 		final List<String> list = new ArrayList<String>();
-		if (SharedUtil.getWeiboQQ(ctx)) {
-			list.add("腾讯微博");
-		}
-		if (SharedUtil.getWeiboSina(ctx)) {
-			list.add("新浪微博");
-		}
+//		if (SharedUtil.getWeiboQQ(ctx)) {
+//			list.add("腾讯微博");
+//		}
+//		if (SharedUtil.getWeiboSina(ctx)) {
+//			list.add("新浪微博");
+//		}
 		if (SharedUtil.getWeixinFriends(ctx)) {
 			list.add("微信好友");
 		}

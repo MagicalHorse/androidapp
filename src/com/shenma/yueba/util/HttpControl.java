@@ -1071,6 +1071,19 @@ public class HttpControl {
 				httpCallBack, IncomeHistoryBackBean.class, true, false);
 	}
 	
+	/**
+	 * 货款提现
+	 * 
+	 * @return void
+	 * **/
+	public void withdrawGoods(String orderNos,
+			final HttpCallBackInterface httpCallBack, Context context) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put(Constants.ORDERNOS, orderNos);
+		BasehttpSend(map, context, HttpConstants.METHOD_ASSISTANT_WithdrawGoods,
+				httpCallBack, IncomeHistoryBackBean.class, true, false);
+	}
+	
 	
 	
 
@@ -1998,8 +2011,8 @@ public class HttpControl {
 					SharedUtil.user_IsBindMobile, userInfo.isIsBindMobile());
 			SharedUtil.setBooleanPerfernece(context,
 					SharedUtil.user_IsBindWeiXin, userInfo.isIsBindWeiXin());
-			
-			
+			SharedUtil.setBooleanPerfernece(context,
+					SharedUtil.user_canPush, userInfo.isIsBindWeiXin());
 			JpushUtils jpushUtils = new JpushUtils(context);
 			jpushUtils.setAlias(SharedUtil.getStringPerfernece(context, SharedUtil.user_id));//设置别名
 		}
@@ -2151,6 +2164,23 @@ public class HttpControl {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put(Constants.MOBILE, mobile);
 		BasehttpSend(map, context, HttpConstants.METHOD_BINDMOBILE,
+				httpCallBack, BaseRequest.class, showDialog,
+				false);
+	}
+	
+	/**
+	 * 修改推送状态
+	 * @param state
+	 * @param httpCallBack
+	 * @param context
+	 * @param showDialog
+	 */
+	public void changePushState(String state,
+			final HttpCallBackInterface httpCallBack, Context context,
+			boolean showDialog) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put(Constants.STATE, state);
+		BasehttpSend(map, context, HttpConstants.changePushState,
 				httpCallBack, BaseRequest.class, showDialog,
 				false);
 	}

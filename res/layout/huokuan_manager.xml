@@ -11,8 +11,20 @@
         android:id="@+id/view_line_top"
         style="@style/style_horizontal_line"
         android:layout_below="@id/title" />
-
+    <TextView
+        android:id="@+id/tv_in_and_out"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:gravity="center"
+        android:padding="15dip"
+        android:text="货款收支"
+        android:textColor="@color/main_color"
+        android:textSize="22sp" />
+    
     <LinearLayout
+        android:layout_above="@id/tv_in_and_out"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/view_line_top"
@@ -196,16 +208,5 @@
         </LinearLayout>
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/tv_in_and_out"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@color/white"
-        android:gravity="center"
-        android:padding="15dip"
-        android:text="货款收支"
-        android:textColor="@color/main_color"
-        android:textSize="22sp" />
 
 </RelativeLayout>

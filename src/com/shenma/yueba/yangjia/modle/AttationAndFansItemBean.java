@@ -9,7 +9,7 @@ public class AttationAndFansItemBean extends SortModel{
 	private String FavoiteCount;//他关注的人数
 	private String FansCount;//他的粉丝数
 	private String UserId;//他关注的人数
-	private String isFavorite;//我是否已经关注
+	private boolean isFavorite;//我是否已经关注
 	private String CreateTime;// 创建时间
 	private boolean isChecked;//是否选择
 	public String getUserLogo() {
@@ -42,10 +42,12 @@ public class AttationAndFansItemBean extends SortModel{
 	public void setUserId(String userId) {
 		UserId = userId;
 	}
-	public String getIsFavorite() {
+
+	
+	public boolean isFavorite() {
 		return isFavorite;
 	}
-	public void setIsFavorite(String isFavorite) {
+	public void setFavorite(boolean isFavorite) {
 		this.isFavorite = isFavorite;
 	}
 	public String getCreateTime() {
