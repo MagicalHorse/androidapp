@@ -40,6 +40,7 @@ import com.shenma.yueba.view.SelectePhotoType;
 import com.shenma.yueba.yangjia.activity.AboutActivity;
 import com.shenma.yueba.yangjia.activity.ModifyNickNameActivity;
 
+
 /*****
  * 用户设置
  * 
