@@ -567,6 +567,12 @@ public class HttpConstants {
 	
 	public static String GETMYCIRCLE = Circle+ "GetMyGroup";
 	
+	/**
+	 * 修改推送状态
+	 */
+	
+	public static String changePushState = USERURL+ "changePushState";
+	
 	
 	/**
 	 * 败家 -我的圈子

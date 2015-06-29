@@ -37,8 +37,6 @@ import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.util.WXLoginUtil;
 import com.shenma.yueba.view.RoundImageView;
 import com.shenma.yueba.view.SelectePhotoType;
-import com.shenma.yueba.view.SwitchButton;
-import com.shenma.yueba.view.SwitchButton.OnChangedListener;
 import com.shenma.yueba.yangjia.activity.AboutActivity;
 import com.shenma.yueba.yangjia.activity.ModifyNickNameActivity;
 
@@ -62,7 +60,7 @@ public class UserConfigActivity extends BaseActivityWithTopView implements
 	private TextView tv_nickname_value;
 	private TextView rv_rename_password;
 	private TextView tv_message_setting;
-	private SwitchButton switchButton;
+	private ImageView switchButton;
 	private TextView tv_bind_phone_title;
 	private TextView tv_bind_phone_value;
 	private TextView tv_bind_wechat_title;
@@ -102,6 +100,22 @@ public class UserConfigActivity extends BaseActivityWithTopView implements
 
 		tv_message_setting = getView(R.id.tv_message_setting);
 		switchButton = getView(R.id.switchButton);
+		if (SharedUtil.getBooleanPerfernece(mContext, SharedUtil.user_canPush)) {// 打开的
+			switchButton.setBackgroundResource(R.drawable.on);
+		} else {
+			switchButton.setBackgroundResource(R.drawable.off);
+		}
+		switchButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (SharedUtil.getBooleanPerfernece(mContext,
+						SharedUtil.user_canPush)) {// 打开的
+					changePushState("0");
+				} else {
+					changePushState("1");
+				}
+			}
+		});
 		tv_bind_phone_title = getView(R.id.tv_bind_phone_title);
 		tv_bind_phone_value = getView(R.id.tv_bind_phone_value);
 		tv_bind_wechat_title = getView(R.id.tv_bind_wechat_title);
@@ -232,8 +246,8 @@ public class UserConfigActivity extends BaseActivityWithTopView implements
 		}
 		if (requestCode == Constants.REQUESTCODE
 				&& resultCode == Constants.RESULTCODE) {// 修改昵称返回
-//			String newName = data.getStringExtra("newName");
-//			tv_nickname_value.setText(ToolsUtil.nullToString(newName));
+			// String newName = data.getStringExtra("newName");
+			// tv_nickname_value.setText(ToolsUtil.nullToString(newName));
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 
@@ -300,7 +314,8 @@ public class UserConfigActivity extends BaseActivityWithTopView implements
 
 	@Override
 	protected void onResume() {
-		tv_nickname_value.setText(SharedUtil.getStringPerfernece(mContext, SharedUtil.user_names));
+		tv_nickname_value.setText(SharedUtil.getStringPerfernece(mContext,
+				SharedUtil.user_names));
 		tv_bind_phone_value.setText(SharedUtil.getBooleanPerfernece(mContext,
 				SharedUtil.user_IsBindMobile) ? "已绑定" : "未绑定");
 		tv_bind_wechat_value.setText(SharedUtil.getBooleanPerfernece(mContext,
@@ -324,16 +339,16 @@ public class UserConfigActivity extends BaseActivityWithTopView implements
 			startActivity(intentModifyPassword);
 			break;
 		case R.id.rl_bind_phone:// 绑定手机号
-			 if (SharedUtil.getBooleanPerfernece(mContext,
-			 SharedUtil.user_IsBindMobile)) {
-			 Toast.makeText(mContext, "手机号已绑定", 1000).show();
-			 } else {
-			// 绑定手机号
-			Intent intentBindPhone = new Intent(UserConfigActivity.this,
-					FindPasswordActivity.class);
-			intentBindPhone.putExtra("from", "bindPhone");
-			startActivity(intentBindPhone);
-			 }
+			if (SharedUtil.getBooleanPerfernece(mContext,
+					SharedUtil.user_IsBindMobile)) {
+				Toast.makeText(mContext, "手机号已绑定", 1000).show();
+			} else {
+				// 绑定手机号
+				Intent intentBindPhone = new Intent(UserConfigActivity.this,
+						FindPasswordActivity.class);
+				intentBindPhone.putExtra("from", "bindPhone");
+				startActivity(intentBindPhone);
+			}
 			break;
 		case R.id.rl_bind_wechat:// 绑定微信
 			if (SharedUtil.getBooleanPerfernece(mContext,
@@ -359,4 +374,34 @@ public class UserConfigActivity extends BaseActivityWithTopView implements
 
 	}
 
+	/**
+	 * 修改推送状态
+	 * 
+	 * @param state
+	 */
+	private void changePushState(final String state) {
+		HttpControl httpControl = new HttpControl();
+		httpControl.changePushState(state, new HttpCallBackInterface() {
+			@Override
+			public void http_Success(Object obj) {
+				if ("0".equals(state)) {// 关闭
+					SharedUtil.setBooleanPerfernece(mContext,
+							SharedUtil.user_canPush, false);
+					switchButton.setBackgroundResource(R.drawable.off);
+					Toast.makeText(mContext, "已关闭", 1000).show();
+				} else {
+					SharedUtil.setBooleanPerfernece(mContext,
+							SharedUtil.user_canPush, true);
+					switchButton.setBackgroundResource(R.drawable.on);
+					Toast.makeText(mContext, "开启", 1000).show();
+				}
+			}
+
+			@Override
+			public void http_Fails(int error, String msg) {
+				// TODO Auto-generated method stub
+
+			}
+		}, mContext, true);
+	}
 }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/main_bg"
-    android:id="@+id/parent"
     android:orientation="vertical" >
 
     <LinearLayout
@@ -68,7 +68,6 @@
                         android:layout_marginLeft="10dip" />
 
                     <RelativeLayout
-                        
                         android:id="@+id/rl_nickName"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
@@ -143,12 +142,11 @@
                     <View style="@style/style_horizontal_line" />
 
                     <RelativeLayout
-                        android:paddingTop="5dip"
-                        android:paddingBottom="5dip"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
+                        android:paddingBottom="5dip"
                         android:paddingLeft="10dip"
-                         >
+                        android:paddingTop="5dip" >
 
                         <TextView
                             android:id="@+id/tv_message_setting"
@@ -158,15 +156,14 @@
                             android:text="消息免打扰"
                             android:textSize="18sp" />
 
-                        <com.shenma.yueba.view.SwitchButton
+                        <ImageView
                             android:id="@+id/switchButton"
-                            android:layout_width="120dip"
+                            android:layout_width="70dip"
                             android:layout_height="40dip"
-                          android:layout_centerVertical="true"
                             android:layout_alignParentRight="true"
-                            android:text="@null"
-                            android:textSize="18sp"
-                           />
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="10dip"
+                            android:background="@drawable/on" />
                     </RelativeLayout>
                 </LinearLayout>
 
