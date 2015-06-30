@@ -1,6 +1,7 @@
 package com.shenma.yueba.yangjia.activity;
 
 import java.io.File;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +25,7 @@ import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.TagImageView;
+import com.shenma.yueba.yangjia.modle.StateBean;
 import com.shenma.yueba.yangjia.modle.TagListBean;
 
 /**
@@ -48,6 +50,7 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 	private TextView tv_publish;
 	private LinearLayout ll_pictures_container;
 	private List<Map<String, Double>> tagList;
+	private List<View> littleImageViewList = new LinkedList<View>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +100,7 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 
 	private void setImageView() {
 		for (int i = 0; i < 3; i++) {
+			StateBean bean = new StateBean();
 			View view = View.inflate(mContext, R.layout.tag_imageview, null);
 			TagImageView layout_tag_image = (TagImageView) view.findViewById(R.id.layout_tag_image);
 			ImageView iv_pic = (ImageView) view.findViewById(R.id.iv_pic);
@@ -104,6 +108,7 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 			params.height = ToolsUtil.getDisplayWidth(mContext)/3-10;
 			params.width = ToolsUtil.getDisplayWidth(mContext)/3-10;
 			iv_pic.setLayoutParams(params);
+			bean.setPosition(i);
 //			for (int j = 0; j <tagList.size(); j++) {
 //				double x= tagList.get(j).get("x");
 //				double y = tagList.get(j).get("y");
@@ -112,12 +117,34 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 //			}
 			if(new File(FileUtils.getRootPath()+"/tagPic/"+"tagPic"+i+".jpg").exists()){
 				iv_pic.setImageBitmap(BitmapFactory.decodeFile(FileUtils.getRootPath()+"/tagPic/"+"tagPic"+i+".jpg"));
+				bean.setSetPic(true);
 			}else{
 				iv_pic.setBackgroundResource(R.drawable.ic_launcher);
 			}
+			if(tagList!=null && tagList.size()>0){
+				bean.setSetTag(true);
+			}
+			iv_pic.setTag(bean);
 			ll_pictures_container.addView(view);
 			
 		}
+		
+		for (int i = 0; i < ll_pictures_container.getChildCount(); i++) {
+			littleImageViewList.add(ll_pictures_container.getChildAt(i));
+		}
+//		for (int i = 0; i < littleImageViewList.size(); i++) {
+//			littleImageViewList.get(i).findViewById(R.id.iv_pic).setOnClickListener(new OnClickListener() {
+//				@Override
+//				public void onClick(View v) {
+//					if(((StateBean)littleImageViewList.get(i).findViewById(R.id.iv_pic).getTag()).getPosition()!=littleImageViewList.size()){
+//						
+//					}
+//					
+//				}
+//			});
+//			
+//		}
+		
 		
 	}
 

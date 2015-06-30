@@ -43,6 +43,7 @@ import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.camera.CameraAty;
 import com.shenma.yueba.camera2.ActivityCapture;
 import com.shenma.yueba.util.CustomProgressDialog;
+import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.yangjia.fragment.CartFragment;
 import com.shenma.yueba.yangjia.fragment.IndexFragmentForYangJia;
 import com.shenma.yueba.yangjia.fragment.MeFragmentForYangJia;
@@ -188,6 +189,7 @@ private void showDialog() {
 			dialog.cancel();
 		}
 	});
+	FontManager.changeFonts(MainActivityForYangJia.this, bt_kxp,bt_publish);
 	// 因为我们用的是windows的方法，所以不管ok活cancel都要加上“dialog.cancel()”这句话，
 	// 不然有程序崩溃的可能，仅仅是一种可能，但我们还是要排除这一点，对吧？
 	// 用AlertDialog的两个Button，即使监听里什么也不写，点击后也是会吧dialog关掉的，不信的同学可以去试下
