@@ -140,12 +140,20 @@ public class ChatActivity extends RoboActivity implements OnClickListener,OnChic
 	RequestProductDetailsInfoBean bean;
 	CreateOrderDialog createOrderDialog;
 	String circleId=null;//圈子ID
+	int buyerId=-1;//买手ID
 	RelativeLayout chat_product_head_layout_include;//商品信息
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_chat);
+		buyerId=this.getIntent().getIntExtra("buyerId", -1);
+		if(buyerId<0)
+		{
+			MyApplication.getInstance().showMessage(this, "数据错误");
+			finish();
+			return;
+		}
 		initView();
 		initDataFromHistory();
 	}

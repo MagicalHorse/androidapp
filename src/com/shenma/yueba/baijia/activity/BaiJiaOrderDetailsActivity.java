@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.shenma.yueba.ChatActivity;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.adapter.BaiJiaOrderListAdapter.OrderControlListener;
@@ -147,6 +148,9 @@ LinearLayout baijia_orderdetails_footer_right_linearlayout;//按钮的父对象
 		switch(v.getId())
 		{
 		case R.id.baijia_orderdetails_lianxibuyer_textview://联系买手
+			Intent intentbuter=new Intent(BaiJiaOrderDetailsActivity.this,ChatActivity.class);
+			intentbuter.putExtra("buyerId", bean.getData().getBuyerId());
+			startActivity(intentbuter);
 			break;
 		case R.id.riv_customer_head://头像
 			Intent iconIntent=new Intent(BaiJiaOrderDetailsActivity.this,ShopMainActivity.class);

@@ -9,10 +9,8 @@
         android:layout_height="match_parent" >
 
         <com.handmark.pulltorefresh.library.PullToRefreshListView
-            android:layout_marginLeft="@dimen/shop_main_width5_dimen"
-            android:layout_marginRight="@dimen/shop_main_width5_dimen"
-            android:divider="@color/white"
-            android:dividerHeight="@dimen/shop_main_width5_dimen"
+            android:paddingLeft="@dimen/shop_main_width2_dimen"
+            android:paddingRight="@dimen/shop_main_width2_dimen"
             android:id="@+id/baijia_contact_listview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

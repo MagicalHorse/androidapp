@@ -71,6 +71,7 @@ public class BuyerStreetFragment extends Fragment {
 	LinearLayout baijia_head_layout;
 	//最新上新
 	TextView buyersteet_newtextview;
+	RelativeLayout baijiasteetfragmnet_layout_head_viewpager_relativelayout;
 	View parentview;
 	PullToRefreshScrollView pulltorefreshscrollview;
 	ViewPager baijiasteetfragmnet_layout_head_viewpager;
@@ -172,6 +173,7 @@ public class BuyerStreetFragment extends Fragment {
 	}
 
 	void initView(View v) {
+		baijiasteetfragmnet_layout_head_viewpager_relativelayout=(RelativeLayout)v.findViewById(R.id.baijiasteetfragmnet_layout_head_viewpager_relativelayout);
 		buyersteet_newtextview=(TextView)v.findViewById(R.id.buyersteet_newtextview);
 		baijia_head_layout = (LinearLayout) v
 				.findViewById(R.id.baijia_head_layout);
@@ -260,7 +262,6 @@ public class BuyerStreetFragment extends Fragment {
 					public void http_Success(Object obj) {
 						buyersteet_newtextview.setText("最新上新");
 						FontManager.changeFonts(getActivity(), buyersteet_newtextview);
-						pulltorefreshscrollview.onRefreshComplete();
 						if (obj != null && obj instanceof RequestProductListInfoBean) {
 							RequestProductListInfoBean bean = (RequestProductListInfoBean) obj;
 							HomeProductListInfoBean data = bean.getData();
@@ -351,7 +352,8 @@ public class BuyerStreetFragment extends Fragment {
 		getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
 		int width=dm.widthPixels;
 		int height=width/2;
-		baijiasteetfragmnet_layout_head_viewpager.setLayoutParams(new RelativeLayout.LayoutParams(width, height));
+		baijiasteetfragmnet_layout_head_viewpager_relativelayout.setLayoutParams(new LinearLayout.LayoutParams(width, height));
+		((RelativeLayout.LayoutParams)baijia_head_layout.getLayoutParams()).bottomMargin=40;
 		pagerAdapter = new ScrollViewPagerAdapter(imageViewlist);
 		baijiasteetfragmnet_layout_head_viewpager.setAdapter(pagerAdapter);
 		if (imageViewlist.size() > 0) {

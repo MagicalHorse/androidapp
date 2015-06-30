@@ -280,7 +280,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:drawableTop="@drawable/circle_default"
-            android:textSize="@dimen/textsize13sp"
+            android:textSize="@dimen/textsize11sp"
             android:text="联系买手" />
         
         <TextView
@@ -292,7 +292,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:drawableTop="@drawable/priceshare"
-            android:textSize="@dimen/textsize13sp"
+            android:textSize="@dimen/textsize11sp"
             android:text="现金分享" />
         </LinearLayout>
         

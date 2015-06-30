@@ -4,6 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:paddingTop="@dimen/shop_main_lineheight10_dimen"
+    android:paddingBottom="@dimen/shop_main_lineheight10_dimen"
     android:orientation="vertical" >
 
     <RelativeLayout
@@ -83,7 +85,7 @@
         android:id="@+id/baijia_tab1_item_productcontent_imageview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scaleType="fitXY"/>
+        android:scaleType="fitCenter"/>
 
     <TextView
         android:textSize="@dimen/textsize10sp"
@@ -93,6 +95,7 @@
         android:layout_marginTop="@dimen/shop_main_width5_dimen" />
 
     <RelativeLayout
+        android:paddingRight="@dimen/shop_main_lineheight10_dimen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" >

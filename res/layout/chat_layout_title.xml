@@ -36,7 +36,7 @@
         android:layout_marginRight="10dp"
         android:gravity="center"
         android:text="设置"
-        android:visibility="visible" />
+        android:visibility="gone" />
 
     <com.shenma.yueba.view.RoundImageView
         android:id="@+id/riv_top_right"

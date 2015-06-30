@@ -71,7 +71,7 @@ public class SameCityAdapter extends BaseAdapterWithUtil {
 			holder.brandlist_item_imageview1=(ImageView)convertView.findViewById(R.id.brandlist_item_imageview1);
 			holder.brandlist_item_imageview2=(ImageView)convertView.findViewById(R.id.brandlist_item_imageview2);
 			holder.brandlist_item_imageview3=(ImageView)convertView.findViewById(R.id.brandlist_item_imageview3);
-		    DisplayMetrics dm=new DisplayMetrics();
+		    /*DisplayMetrics dm=new DisplayMetrics();
 			((Activity)ctx).getWindowManager().getDefaultDisplay().getMetrics(dm);
 			int imgwidth=dm.widthPixels/3;
 			if(imgwidth>0)
@@ -83,7 +83,7 @@ public class SameCityAdapter extends BaseAdapterWithUtil {
 				holder.brandlist_item_imageview1.setLayoutParams(layoutParams);
 				holder.brandlist_item_imageview2.setLayoutParams(layoutParams);
 				holder.brandlist_item_imageview3.setLayoutParams(layoutParams);
-			}
+			}*/
 			holder.tv_attention.setOnClickListener(new OnClickListener() {
 				
 				@Override

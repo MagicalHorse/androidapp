@@ -57,7 +57,7 @@ FragmentManager fragmentManager;
 		meFragmentForBaiJia=new MeFragmentForBaiJia();
 		
 		fragment_list.add(new FragmentBean("主页",R.drawable.baijia_home_icon,indexFragmentForBaiJia));
-		fragment_list.add(new FragmentBean("圈子",R.drawable.baijia_circle_cion,circleFragment));
+		fragment_list.add(new FragmentBean("圈子",R.drawable.footercircle,circleFragment));
 		fragment_list.add(new FragmentBean("消息",R.drawable.baijia_message_icon,messageFragment));
 		fragment_list.add(new FragmentBean("发现",R.drawable.baijia_search_icon,findFragment));
 		fragment_list.add(new FragmentBean("我",R.drawable.baijia_mine_icon,meFragmentForBaiJia));

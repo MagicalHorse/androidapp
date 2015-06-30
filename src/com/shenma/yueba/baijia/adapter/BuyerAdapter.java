@@ -88,9 +88,10 @@ public class BuyerAdapter extends BaseAdapter{
 					.findViewById(R.id.baijia_tab1_item_productcontent_imageview);
 			DisplayMetrics displayMetrics=new DisplayMetrics();
             activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-			int height=(displayMetrics.widthPixels/2);
+			int height=displayMetrics.widthPixels;
 			holder.baijia_tab1_item_productcontent_imageview.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height));
 			setOnclickListener(holder.baijia_tab1_item_productcontent_imageview);
+			
 			holder.buyersteetfragmeng_item_price_textview = (TextView) convertView
 					.findViewById(R.id.buyersteetfragmeng_item_price_textview);
 			holder.approvebuyerdetails_attention_textview=(TextView)convertView.findViewById(R.id.approvebuyerdetails_attention_textview);
@@ -256,6 +257,7 @@ public class BuyerAdapter extends BaseAdapter{
 				    break; 
 				case R.id.buyersteetfragmeng_item_siliao_button://私聊
 					Intent intentsiliao=new Intent(activity,ChatActivity.class);
+					intentsiliao.putExtra("buyerId", (Integer)v.getTag());
 					activity.startActivity(intentsiliao);
 					break;
 				case R.id.buyersteetfragmeng_item_share_button://分享

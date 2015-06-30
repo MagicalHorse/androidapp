@@ -37,6 +37,9 @@
             android:layout_marginTop="5dip"
             android:gravity="center_horizontal"
             android:text="邀请好友"
+            android:singleLine="true"
+            android:ellipsize="marquee"
+            android:textSize="@dimen/textsize11sp"
             android:textColor="@color/text_gray_color" />
     </RelativeLayout>
 

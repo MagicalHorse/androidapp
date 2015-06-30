@@ -144,6 +144,7 @@ public class CircleView extends BaseView{
 					long arg3) {
 				MyCircleInfo myCircleInfo=items.get(arg2);
 				Intent intent=new Intent(activity,ChatActivity.class);
+				intent.putExtra("buyerId", 0);
 				intent.putExtra("circleId", Integer.toString(myCircleInfo.getId()));
 				activity.startActivity(intent);
 			}
