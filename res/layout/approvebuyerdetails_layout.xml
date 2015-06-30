@@ -18,6 +18,7 @@
             android:orientation="vertical" >
 
             <RelativeLayout
+                android:paddingBottom="@dimen/shop_main_width15_dimen"
                 android:id="@+id/approvebuyerdetails_head_relativelayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
@@ -35,26 +36,26 @@
                 <!-- 头像 -->
 
                 <com.shenma.yueba.view.RoundImageView
+                    android:layout_marginTop="@dimen/shop_main_width5_dimen"
                     android:id="@+id/approvebuyerdetails_icon_imageview"
                     android:layout_width="@dimen/shop_main_iconwidth80_dimen"
                     android:layout_height="@dimen/shop_main_iconwidth80_dimen"
-                    android:layout_centerInParent="true"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/shop_main_width2_dimen"
+                    android:layout_centerHorizontal="true"
                     android:src="@drawable/default_pic" />
                 <!-- 店名 -->
 
                 <TextView
+                    android:layout_marginTop="@dimen/shop_main_lineheight8_dimen"
                     android:id="@+id/approvebuyerdetails_name_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/approvebuyerdetails_icon_imageview"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="@dimen/shop_main_marginleft30_dimen"
                     android:text="名字"
                     android:textSize="@dimen/textsize15sp" />
 
                 <RelativeLayout
+                    android:layout_marginTop="@dimen/shop_main_lineheight8_dimen"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@id/approvebuyerdetails_name_textview"
@@ -104,8 +105,7 @@
                 android:layout_width="match_parent"
                 android:paddingLeft="@dimen/shop_main_width5_dimen"
                 android:paddingRight="@dimen/shop_main_width5_dimen"
-                android:layout_height="@dimen/shop_main_width300_dimen"
-                android:layout_marginTop="@dimen/shop_main_width5_dimen" >
+                android:layout_height="@dimen/shop_main_width300_dimen">
 
                 <android.support.v4.view.ViewPager
                     android:id="@+id/appprovebuyer_viewpager"
