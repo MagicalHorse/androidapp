@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -19,6 +20,8 @@ import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.activity.BaseActivityWithTopView;
 import com.shenma.yueba.util.FileUtils;
 import com.shenma.yueba.util.FontManager;
+import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.TagImageView;
 import com.shenma.yueba.yangjia.modle.TagListBean;
@@ -48,6 +51,7 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.publish_product);
 		super.onCreate(savedInstanceState);
 		getIntentData();
@@ -56,13 +60,20 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 
 	private void getIntentData() {
 		TagListBean bean = (TagListBean) getIntent().getSerializableExtra("tagListBean");
-		 tagList = bean.getTagList();
+		tagList = bean.getTagList();
 		
 		
 		
 	}
 
 	private void initView() {
+		setTitle("发布商品");
+		setLeftTextView(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				PublishProductActivity.this.finish();
+			}
+		});
 		ll_pictures_container = getView(R.id.ll_pictures_container);
 		setImageView();
 		tv_product_number = getView(R.id.tv_product_number);
@@ -110,6 +121,14 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 		
 	}
 
+	
+	private void publishProduct(){
+		HttpControl httpControl = new HttpControl();
+//		httpControl.createBuyerProductInfo(bean, httpCallBack, context)
+	}
+	
+	
+	
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {

@@ -1013,12 +1013,13 @@ public class HttpControl {
 	 * @return void
 	 * **/
 	public void getOrderList(int Page, String Pagesize,
-			String OrderProductType, String Status,
+			String OrderProductType, String Status,String CustomerId,
 			final HttpCallBackInterface httpCallBack, Context context,
 			boolean showDialog) {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put(Constants.PAGE, Integer.toString(Page));
 		map.put(Constants.PAGESIZE, Pagesize);
+		map.put(Constants.CustomerId, CustomerId);
 		map.put(Constants.OrderProductType, OrderProductType);
 		map.put(Constants.STATUS, Status);
 		BasehttpSend(map, context,

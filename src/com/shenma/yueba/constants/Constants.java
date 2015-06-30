@@ -57,6 +57,7 @@ public class Constants {
 	public static final String ID = "Id";
 	public static final String USERIDSTR = "useridstr";
 	public static final String ORDER_NO = "OrderNo";
+	public static final String CustomerId = "CustomerId";
 	public static final String OrderProductType = "OrderProductType";
 	public static final String STATUS = "Status";
 	public static final String GROUPID = "groupid";

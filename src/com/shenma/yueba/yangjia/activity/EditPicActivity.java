@@ -102,6 +102,7 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 		iv_pic.setImageBitmap(result);
 	}
 
+	
 	private void initView() {
 		setTitle("编辑图片");
 		setLeftTextView(new OnClickListener() {

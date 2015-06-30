@@ -3,9 +3,11 @@ package com.shenma.yueba.yangjia.adapter;
 import java.util.List;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.shenma.yueba.R;
@@ -13,6 +15,7 @@ import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.adapter.BaseAdapterWithUtil;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.RoundImageView;
+import com.shenma.yueba.yangjia.activity.SalesManagerForBuyerActivity;
 import com.shenma.yueba.yangjia.modle.AttationAndFansItemBean;
 
 public class MyAttentionAndFansForSocialAdapter extends BaseAdapterWithUtil {
@@ -20,6 +23,7 @@ public class MyAttentionAndFansForSocialAdapter extends BaseAdapterWithUtil {
 
 	public MyAttentionAndFansForSocialAdapter(Context ctx, List<AttationAndFansItemBean> mList) {
 		super(ctx);
+		this.ctx = ctx;
 		this.mList = mList;
 	}
 
@@ -43,7 +47,7 @@ public class MyAttentionAndFansForSocialAdapter extends BaseAdapterWithUtil {
 
 	@SuppressWarnings("null")
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public View getView(final int position, View convertView, ViewGroup parent) {
 		final Holder holder;
 		if (convertView == null) {
 			holder = new Holder();
@@ -53,6 +57,8 @@ public class MyAttentionAndFansForSocialAdapter extends BaseAdapterWithUtil {
 					.findViewById(R.id.riv_head);
 			holder.tv_name = (TextView) convertView
 					.findViewById(R.id.tv_name);
+			holder.iv_order = (ImageView) convertView
+					.findViewById(R.id.iv_order);
 			holder.tv_atttention_count = (TextView) convertView
 					.findViewById(R.id.tv_atttention_count);
 			holder.tv_fans_count = (TextView) convertView
@@ -61,6 +67,15 @@ public class MyAttentionAndFansForSocialAdapter extends BaseAdapterWithUtil {
 					.findViewById(R.id.tv_attention);
 			holder.tv_has_attention = (TextView) convertView
 					.findViewById(R.id.tv_has_attention);
+			holder.iv_order.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					String customerId = mList.get(position).getUserId();
+					Intent intentSaleManager = new Intent(ctx,SalesManagerForBuyerActivity.class);
+					intentSaleManager.putExtra("customerId", customerId);
+					ctx.startActivity(intentSaleManager);
+				}
+			});
 			holder.tv_attention.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -92,6 +107,7 @@ public class MyAttentionAndFansForSocialAdapter extends BaseAdapterWithUtil {
 	}
 
 	class Holder {
+		ImageView iv_order;
 		RoundImageView riv_head;
 		TextView tv_name;
 		TextView tv_atttention_count;
