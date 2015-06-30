@@ -41,7 +41,7 @@ public class ItemCustomerFragment extends BaseFragment {
 	private String orderProductType;
 	private String status;
 	public TextView tv_nodata;
-
+	private String customerId;
 	@SuppressLint("ValidFragment")
 	public ItemCustomerFragment(int tag) {
 		this.tag = tag;
@@ -64,14 +64,14 @@ public class ItemCustomerFragment extends BaseFragment {
 				public void onPullDownToRefresh(PullToRefreshBase refreshView) {
 					page = 1;
 					isRefresh = true;
-					getDataFromNet(false,getActivity());
+					getDataFromNet(customerId,false,getActivity());
 				}
 
 				@Override
 				public void onPullUpToRefresh(PullToRefreshBase refreshView) {
 					page++;
 					isRefresh = false;
-					getDataFromNet(false,getActivity());
+					getDataFromNet(customerId,false,getActivity());
 				}
 			});
 			rlv.setOnItemClickListener(new OnItemClickListener() {
@@ -94,7 +94,7 @@ public class ItemCustomerFragment extends BaseFragment {
 		return rootView;
 	}
 
-	public void getData(int tag, Context ctx) {
+	public void getData(String customerId,int tag, Context ctx) {
 		this.tag = tag;
 		if (tag == 0) {// 全部订单
 			orderProductType = "";
@@ -121,15 +121,16 @@ public class ItemCustomerFragment extends BaseFragment {
 				return;
 			}
 		}
-		getDataFromNet(true,ctx);
+		getDataFromNet(customerId,true,ctx);
 	}
 
 	
 	
-	private void getDataFromNet(boolean showDialog,Context ctx){
+	private void getDataFromNet(String customerId,boolean showDialog,Context ctx){
+		this.customerId = customerId;
 		HttpControl hControl = new HttpControl();
 		hControl.getOrderList(page, Constants.PageSize, orderProductType,
-				status, new HttpCallBackInterface() {
+				status, customerId,new HttpCallBackInterface() {
 
 					@Override
 					public void http_Success(Object obj) {

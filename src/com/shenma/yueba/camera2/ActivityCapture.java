@@ -198,7 +198,7 @@ public class ActivityCapture extends Activity implements View.OnClickListener,
 					// Debug.debug("width--:" + options.outWidth + "  height--:"
 					// + options.outHeight);
 					options.inJustDecodeBounds = false;
-					options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+					options.inPreferredConfig = Bitmap.Config.ARGB_4444;
 					// 此处就把图片压缩了
 					// options.inSampleSize = Math.max(options.outWidth
 					// / kPhotoMaxSaveSideLen, options.outHeight

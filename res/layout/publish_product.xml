@@ -24,13 +24,13 @@
             android:orientation="vertical" >
 
             <LinearLayout
-                android:padding="10dip"
                 android:id="@+id/ll_pictures_container"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dip"
                 android:background="@color/white"
-                android:orientation="horizontal" >
+                android:orientation="horizontal"
+                android:padding="10dip" >
             </LinearLayout>
 
             <View
@@ -218,16 +218,25 @@
         </LinearLayout>
     </ScrollView>
 
-    <TextView
-        android:id="@+id/tv_publish"
+    <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@color/white"
-        android:gravity="center"
-        android:padding="10dip"
-        android:text="发布"
-        android:textColor="@color/main_color"
-        android:textSize="18sp" />
+           android:layout_alignParentBottom="true"
+        android:orientation="vertical" >
+
+        <View style="@style/style_horizontal_line" />
+
+        <TextView
+            android:id="@+id/tv_publish"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+         
+            android:background="@color/white"
+            android:gravity="center"
+            android:padding="15dip"
+            android:text="发布"
+            android:textColor="@color/main_color"
+            android:textSize="18sp" />
+    </LinearLayout>
 
 </RelativeLayout>

@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -21,6 +22,7 @@ import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.FindPasswordActivity;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.yangjia.fragment.ItemCustomerFragment;
 
@@ -49,6 +51,7 @@ public class SalesManagerForBuyerActivity extends BaseFragmentActivity implement
 	private ViewPager sales_manager_pager;
 	private ArrayList<ImageView> cursorImageList = new ArrayList<ImageView>();
 	private ArrayList<TextView> titleTextList = new ArrayList<TextView>();
+	private String customerId = "";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,9 +60,16 @@ public class SalesManagerForBuyerActivity extends BaseFragmentActivity implement
 		setContentView(R.layout.sales_manager_layout_for_buyer);
 		super.onCreate(savedInstanceState);
 		setFragmentList();
+		getIntentData();
 		initView();
 		initViewPager();
-		fragmentList.get(0).getData(0,SalesManagerForBuyerActivity.this);
+		fragmentList.get(0).getData(customerId,0,SalesManagerForBuyerActivity.this);
+	}
+
+	private void getIntentData() {
+		if(!TextUtils.isEmpty(getIntent().getStringExtra("customerId"))){
+			customerId = getIntent().getStringExtra("customerId");
+		}
 	}
 
 	private void initView() {
@@ -110,7 +120,7 @@ public class SalesManagerForBuyerActivity extends BaseFragmentActivity implement
 			 * 页面跳转完成后调用的方法
 			 */
 			public void onPageSelected(int arg0) {
-				fragmentList.get(arg0).getData(arg0,SalesManagerForBuyerActivity.this);
+				fragmentList.get(arg0).getData(customerId,arg0,SalesManagerForBuyerActivity.this);
 				for (int i = 0; i < fragmentList.size(); i++) {
 					if(arg0 != i){
 						fragmentList.get(arg0).tv_nodata.setVisibility(View.GONE);
