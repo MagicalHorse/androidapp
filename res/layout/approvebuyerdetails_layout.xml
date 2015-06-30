@@ -102,26 +102,29 @@
             <RelativeLayout
                 android:id="@+id/appprovebuyer_viewpager_relativelayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/shop_main_width5_dimen"
+                android:paddingRight="@dimen/shop_main_width5_dimen"
+                android:layout_height="@dimen/shop_main_width300_dimen"
                 android:layout_marginTop="@dimen/shop_main_width5_dimen" >
 
                 <android.support.v4.view.ViewPager
                     android:id="@+id/appprovebuyer_viewpager"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/shop_main_width300_dimen"
+                    android:layout_height="match_parent"
                     android:visibility="visible" />
 
                 <LinearLayout
+                    android:layout_alignParentBottom="true"
                     android:id="@+id/appprovebuyer_viewpager_footer_linerlayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginBottom="@dimen/shop_main_width5_dimen"
+                    android:layout_marginBottom="10dp"
                     android:gravity="center"
                     android:orientation="horizontal" />
             </RelativeLayout>
 
             <RelativeLayout
+                android:layout_marginTop="@dimen/shop_main_width5_dimen"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
 

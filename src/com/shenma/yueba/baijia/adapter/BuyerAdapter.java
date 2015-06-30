@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.sax.StartElementListener;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.shenma.yueba.ChatActivity;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.ApproveBuyerDetailsActivity;
@@ -26,6 +28,7 @@ import com.shenma.yueba.baijia.modle.ProductsInfoBean;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
+import com.shenma.yueba.util.ShareUtil;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.MyGridView;
 import com.shenma.yueba.view.RoundImageView;
@@ -101,8 +104,7 @@ public class BuyerAdapter extends BaseAdapter{
 			holder.buyersteetfragment_item_footer_linearlyout=(LinearLayout)convertView.findViewById(R.id.buyersteetfragment_item_footer_linearlyout);
             holder.buyersteetfragment_item_footer_linearlyout_content_textview=(TextView)convertView.findViewById(R.id.buyersteetfragment_item_footer_linearlyout_content_textview);
 			
-			holder.buyersteetfragmeng_item_share_button = (Button) convertView
-					.findViewById(R.id.buyersteetfragmeng_item_share_button);
+			holder.buyersteetfragmeng_item_share_button = (Button) convertView.findViewById(R.id.buyersteetfragmeng_item_share_button);
 			setOnclickListener(holder.buyersteetfragmeng_item_share_button);
 			convertView.setTag(holder);
 			holder.approvebuyerdetails_attentionvalue_gridview=(MyGridView)convertView.findViewById(R.id.approvebuyerdetails_attentionvalue_gridview);
@@ -155,7 +157,7 @@ public class BuyerAdapter extends BaseAdapter{
 		holder.buyersteetfragmeng_item_siliao_button.setTag(productsInfoBean.getBuyerid());
 		
 		//分享
-		holder.buyersteetfragmeng_item_share_button.setTag(productsInfoBean.getBuyerid());
+		holder.buyersteetfragmeng_item_share_button.setTag(productsInfoBean);
         
 		//商品名称
 		holder.baijia_tab1_item_productname_textview.setText(productsInfoBean.getBuyerName());
@@ -172,7 +174,7 @@ public class BuyerAdapter extends BaseAdapter{
 		initPic(productsInfoBean.getBuyerLogo(), holder.customImage,R.drawable.test002);
 		ProductPicInfoBean productPicInfoBean = productsInfoBean.getProductPic();
 		//发布时间
-		holder.baijia_tab1_item_time_textview.setText(ToolsUtil.getTime(productsInfoBean.getCreateTime()));
+		holder.baijia_tab1_item_time_textview.setText(ToolsUtil.nullToString(productsInfoBean.getCreateTime()));
 		//产品描述
 		holder.buyersteetfragmeng_item_desc_textview.setText(productsInfoBean.getProductName());
 		//商品内容图片
@@ -251,10 +253,21 @@ public class BuyerAdapter extends BaseAdapter{
 						}
 						
 					}
-				    break;
+				    break; 
 				case R.id.buyersteetfragmeng_item_siliao_button://私聊
+					Intent intentsiliao=new Intent(activity,ChatActivity.class);
+					activity.startActivity(intentsiliao);
 					break;
 				case R.id.buyersteetfragmeng_item_share_button://分享
+					if(v.getTag()!=null && v.getTag() instanceof ProductsInfoBean)
+					{
+						ProductsInfoBean bean=(ProductsInfoBean)v.getTag();
+						String content="";
+						String url="";
+						String icon=ToolsUtil.getImage(ToolsUtil.nullToString(bean.getProductPic().getName()), 320, 0);
+						shareUrl(content, url, icon);
+					}
+					
 					break;
 				}
 				
@@ -312,5 +325,16 @@ public class BuyerAdapter extends BaseAdapter{
 	void initPic(final String url, final ImageView iv, final int image) {
 		Log.i("TAG", "URL:"+url);
 		MyApplication.getInstance().getImageLoader().displayImage(url, iv, MyApplication.getInstance().getDisplayImageOptions());
+	}
+	
+	/********
+	 *  分享
+	 *  @param content String 内容提示
+	 *  @param url String 链接地址
+	 *  @param icon String 图片地址
+	 * ****/
+	void shareUrl(String content,String url,String icon)
+	{
+		ShareUtil.shareAll(activity, "我市内容", "我是url", "http://img3.3lian.com/2014/c2/61/d/17.jpg");
 	}
 }

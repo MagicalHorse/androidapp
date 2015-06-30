@@ -23,6 +23,11 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:background="@drawable/search" />
+        
+        <View 
+            android:layout_below="@+id/baijia_fragment_tab1_head_linearlayout"
+            style="@style/style_horizontal_line"
+            />
     </RelativeLayout>
 
     <android.support.v4.view.ViewPager
