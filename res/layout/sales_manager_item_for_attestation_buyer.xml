@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:background="@color/white"
+    android:orientation="vertical"
     android:padding="10dip" >
 
     <LinearLayout
@@ -29,17 +29,18 @@
             android:textSize="16sp" />
     </LinearLayout>
 
-
-    <View style="@style/style_horizontal_line" />
-    <include layout="@layout/order_list_product_item"/>
-	<LinearLayout 
-	    android:id="@+id/ll_more_product_infomation"
-	    android:layout_height="wrap_content"
-	    android:layout_width="fill_parent"
-	    android:orientation="vertical"
-	    ></LinearLayout>
     <View style="@style/style_horizontal_line" />
 
+    <include layout="@layout/order_list_product_item" />
+
+    <LinearLayout
+        android:id="@+id/ll_more_product_infomation"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+    </LinearLayout>
+
+    <View style="@style/style_horizontal_line" />
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -64,6 +65,26 @@
             android:text="实付：￥1200.00"
             android:textColor="@color/black"
             android:textSize="15sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/ll_bottom"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <View style="@style/style_horizontal_line" />
+
+        <TextView
+            android:id="@+id/tv_bottom"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="10dip"
+            android:text="@null"
+            android:textColor="@color/blue"
+            android:textSize="17sp" />
     </LinearLayout>
 
 </LinearLayout>

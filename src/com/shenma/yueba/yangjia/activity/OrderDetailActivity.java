@@ -58,7 +58,7 @@ public class OrderDetailActivity extends BaseActivityWithTopView {
 	}
 
 	private void initView() {
-		setTitle("销售管理");
+		setTitle("订单详情");
 		setLeftTextView(new OnClickListener() {
 			@Override
 			public void onClick(View v) {

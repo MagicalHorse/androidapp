@@ -27,6 +27,8 @@ import com.shenma.yueba.baijia.activity.ApplyResultActivity;
 import com.shenma.yueba.baijia.fragment.BaseFragment;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.SharedUtil;
+import com.shenma.yueba.util.WXLoginUtil;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.yangjia.activity.ApplyWithdrawActivity;
 import com.shenma.yueba.yangjia.activity.OrderDetailActivity;
@@ -239,13 +241,19 @@ public class HuoKuanIncomeAndOutGoingFragment extends BaseFragment implements On
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.tv_bottom://提现货款
-			if(ids!=null&& ids.size()>0){
-				withdraw();
-			}else{
+			if(!SharedUtil.getBooleanPerfernece(getActivity(), SharedUtil.user_IsBindWeiXin)){
+				Toast.makeText(getActivity(), "正在绑定微信", 1000).show();
+				// 绑定手机号
+				WXLoginUtil wxLoginUtil = new WXLoginUtil(getActivity());
+				wxLoginUtil.initWeiChatLogin(false);
+				return;
+			}
+			if(ids ==null || ids.size()==0){
 				Toast.makeText(getActivity(), "请选择提现订单", 1000).show();
+			}else{
+				withdraw();
 			}
 			break;
-
 		default:
 			break;
 		}
