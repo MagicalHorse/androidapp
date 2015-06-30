@@ -267,12 +267,11 @@ public class BuyerStreetFragment extends Fragment {
 							if (data != null) {
 								currpage=data.getPageindex();
 								int totalPage = data.getTotalpaged();
-								if (currpage >= totalPage) {
-									pulltorefreshscrollview
-											.setMode(Mode.PULL_FROM_START);
+								/*if (currpage >= totalPage) {
+									pulltorefreshscrollview.setMode(Mode.PULL_FROM_START);
 								} else {
 									pulltorefreshscrollview.setMode(Mode.BOTH);
-								}
+								}*/
 								switch (type) {
 								case 0:
 									falshData(data);

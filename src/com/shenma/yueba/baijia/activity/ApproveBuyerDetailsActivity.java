@@ -27,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.RelativeLayout.LayoutParams;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -128,12 +129,13 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView impleme
 		
 		appprovebuyer_viewpager_footer_linerlayout = (LinearLayout) findViewById(R.id.appprovebuyer_viewpager_footer_linerlayout);
 		appprovebuyer_viewpager = (ViewPager) findViewById(R.id.appprovebuyer_viewpager);
+		RelativeLayout appprovebuyer_viewpager_relativelayout=(RelativeLayout)findViewById(R.id.appprovebuyer_viewpager_relativelayout);
 		DisplayMetrics dm = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(dm);
 		int width = dm.widthPixels;
-		int height = width / 2;
-		//appprovebuyer_viewpager.setLayoutParams(new RelativeLayout.LayoutParams(width, height));
-
+		int height =width;
+		appprovebuyer_viewpager_relativelayout.setLayoutParams(new LinearLayout.LayoutParams(width, height));
+		
 		appprovebuyer_viewpager.setOnTouchListener(new OnTouchListener() {
 
 			@Override
@@ -348,6 +350,7 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView impleme
 	 * **/
 	void addTabImageView(int size, int value) {
 		appprovebuyer_viewpager_footer_linerlayout.removeAllViews();
+		((RelativeLayout.LayoutParams)appprovebuyer_viewpager_footer_linerlayout.getLayoutParams()).bottomMargin=40;
 		for (int i = 0; i < size; i++) {
 			View v = new View(ApproveBuyerDetailsActivity.this);
 			v.setBackgroundResource(R.drawable.tabround_background);

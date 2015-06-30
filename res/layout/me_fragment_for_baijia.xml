@@ -42,7 +42,7 @@
                 android:layout_marginTop="5dip"
                 android:text="@null"
                 android:textColor="@color/white"
-                android:textSize="23sp" />
+                android:textSize="@dimen/textsize15sp" />
 
             <TextView
                 android:id="@+id/tv_style"
@@ -82,16 +82,22 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="bottom"
-                    android:hint="0"
+                    android:text="0"
+                    android:textColor="@color/color_textgray"
+                    android:ellipsize="end"
+                    android:textSize="@dimen/textsize12sp"
                     android:singleLine="true" />
 
                 <TextView
+                    android:paddingTop="@dimen/shop_main_width3_dimen"
                     android:id="@+id/shop_main_attention_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="top"
-                    android:hint="@string/shop_attention_str" />
+                    android:textSize="@dimen/textsize12sp"
+                    android:textColor="@color/color_textgray"
+                    android:text="@string/shop_attention_str"/>
             </LinearLayout>
 
             <!-- 圆形 -->
@@ -112,16 +118,22 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="bottom"
-                    android:hint="0"
+                    android:text="0"
+                    android:ellipsize="end"
+                    android:textColor="@color/color_textgray"
+                    android:textSize="@dimen/textsize12sp"
                     android:singleLine="true" />
 
                 <TextView
+                    android:paddingTop="@dimen/shop_main_width3_dimen"
                     android:id="@+id/shop_main_fans_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="top"
-                    android:hint="@string/shop_fans_str" />
+                    android:textSize="@dimen/textsize12sp"
+                    android:textColor="@color/color_textgray"
+                    android:text="@string/shop_fans_str" />
             </LinearLayout>
 
             <!-- 圆形 -->
@@ -138,21 +150,27 @@
                 <!-- 赞 -->
 
                 <TextView
+                    android:textSize="@dimen/textsize12sp"
                     android:id="@+id/shop_main_praisevalue_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="bottom"
-                    android:hint="0"
+                    android:text="0"
+                    android:textColor="@color/color_textgray"
+                    android:ellipsize="end"
                     android:singleLine="true" />
 
                 <TextView
+                    android:paddingTop="@dimen/shop_main_width3_dimen"
+                    android:textSize="@dimen/textsize12sp"
                     android:id="@+id/shop_main_praise_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="top"
-                    android:hint="圈子" />
+                    android:textColor="@color/color_textgray"
+                    android:text="圈子" />
             </LinearLayout>
         </LinearLayout>
 
@@ -183,12 +201,17 @@
                     android:textSize="13dip" />
 
                 <TextView
-                    android:layout_marginRight="@dimen/shop_main_width5_dimen"
+                    android:gravity="center"
+                    android:background="@drawable/redandwhileround_background"
+                    android:layout_marginRight="@dimen/shop_main_lineheight8_dimen"
                     android:id="@+id/tv_all_order_count_textview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_alignParentRight="true"
-                    android:textSize="@dimen/textsize12sp"
+                    android:textSize="@dimen/textsize9sp"
+                    android:maxLength="3"
+                    android:singleLine="true"
+                    android:ellipsize="end"
                     android:text="0" />
             </RelativeLayout>
 
@@ -211,12 +234,17 @@
                     android:textSize="13dip" />
 
                 <TextView
-                    android:layout_marginRight="@dimen/shop_main_width5_dimen"
-                    android:textSize="@dimen/textsize12sp"
+                    android:gravity="center"
+                    android:background="@drawable/redandwhileround_background"
+                    android:layout_marginRight="@dimen/shop_main_lineheight8_dimen"
                     android:id="@+id/tv_waiting_for_send_count_textview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_alignParentRight="true"
+                    android:textSize="@dimen/textsize9sp"
+                    android:maxLength="3"
+                    android:singleLine="true"
+                    android:ellipsize="end"
                     android:text="0" />
             </RelativeLayout>
 
@@ -239,12 +267,17 @@
                     android:textSize="13dip" />
 
                 <TextView
-                    android:layout_marginRight="@dimen/shop_main_width5_dimen"
-                    android:textSize="@dimen/textsize12sp"
+                    android:gravity="center"
+                    android:background="@drawable/redandwhileround_background"
+                    android:layout_marginRight="@dimen/shop_main_lineheight8_dimen"
                     android:id="@+id/tv_waiting_for_recieve_count_textview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_alignParentRight="true"
+                    android:textSize="@dimen/textsize9sp"
+                    android:maxLength="3"
+                    android:singleLine="true"
+                    android:ellipsize="end"
                     android:text="0" />
             </RelativeLayout>
 
@@ -267,12 +300,17 @@
                     android:textSize="13dip" />
 
                 <TextView
-                    android:layout_marginRight="@dimen/shop_main_width5_dimen"
-                    android:textSize="@dimen/textsize12sp"
+                    android:gravity="center"
+                    android:background="@drawable/redandwhileround_background"
+                    android:layout_marginRight="@dimen/shop_main_lineheight8_dimen"
                     android:id="@+id/tv_pick_by_myself_count_textview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_alignParentRight="true"
+                    android:textSize="@dimen/textsize9sp"
+                    android:maxLength="3"
+                    android:singleLine="true"
+                    android:ellipsize="end"
                     android:text="0" />
             </RelativeLayout>
         </LinearLayout>

@@ -32,6 +32,7 @@
     <dimen name="textsize8sp">8sp</dimen>
     <dimen name="textsize9sp">9sp</dimen>
     <dimen name="textsize10sp">10sp</dimen>
+    <dimen name="textsize11sp">11sp</dimen>
     <dimen name="textsize12sp">12sp</dimen>
     <dimen name="textsize13sp">13sp</dimen>
     <dimen name="textsize15sp">15sp</dimen>

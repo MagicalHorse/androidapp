@@ -23,12 +23,14 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnPullEventListener;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.State;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.lidroid.xutils.BitmapUtils;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.ShopMainActivity;
 import com.shenma.yueba.baijia.adapter.BuyerAdapter;
+import com.shenma.yueba.baijia.adapter.ScrollViewPagerAdapter;
 import com.shenma.yueba.baijia.modle.BannersInfoBean;
 import com.shenma.yueba.baijia.modle.FragmentBean;
 import com.shenma.yueba.baijia.modle.MyHomeProductListInfoBean;
@@ -44,9 +46,8 @@ public class MyBuyerFragment extends Fragment {
 	List<FragmentBean> fragment_list = new ArrayList<FragmentBean>();
 	List<View> footer_list = new ArrayList<View>();
 	FragmentManager fragmentManager;
-	ListView baijia_contact_listview;
+	PullToRefreshListView baijia_contact_listview;
 	View parentview;
-	PullToRefreshScrollView pulltorefreshscrollview;
 	LayoutInflater inflater;
 	LinearLayout showloading_layout_view;
 	Timer timer;
@@ -92,39 +93,38 @@ public class MyBuyerFragment extends Fragment {
 	}
 
 	void initPullView() {
-		pulltorefreshscrollview = (PullToRefreshScrollView)parentview.findViewById(R.id.pulltorefreshscrollview);
+		baijia_contact_listview = (PullToRefreshListView)parentview.findViewById(R.id.baijia_contact_listview);
+		
 		// 设置标签显示的内容
-		pulltorefreshscrollview.getLoadingLayoutProxy().setPullLabel("下拉刷新");
-		pulltorefreshscrollview.getLoadingLayoutProxy().setRefreshingLabel(
+		baijia_contact_listview.getLoadingLayoutProxy().setPullLabel("下拉刷新");
+		baijia_contact_listview.getLoadingLayoutProxy().setRefreshingLabel(
 				"刷新中。。。");
-		pulltorefreshscrollview.getLoadingLayoutProxy().setReleaseLabel("松开刷新");
-		pulltorefreshscrollview.setMode(Mode.BOTH);
-		pulltorefreshscrollview
-				.setOnPullEventListener(new OnPullEventListener<ScrollView>() {
+		baijia_contact_listview.getLoadingLayoutProxy().setReleaseLabel("松开刷新");
+		baijia_contact_listview.setMode(Mode.BOTH);
+		baijia_contact_listview.setOnPullEventListener(new OnPullEventListener<ListView>() {
 
-					@Override
-					public void onPullEvent(
-							PullToRefreshBase<ScrollView> refreshView,
-							State state, Mode direction) {
-						if (direction == Mode.PULL_FROM_START) {
-							pulltorefreshscrollview.getLoadingLayoutProxy()
-									.setPullLabel("上拉刷新");
-							pulltorefreshscrollview.getLoadingLayoutProxy()
-									.setRefreshingLabel("刷新中。。。");
-							pulltorefreshscrollview.getLoadingLayoutProxy()
-									.setReleaseLabel("松开刷新");
-						} else if (direction == Mode.PULL_FROM_END) {
-							pulltorefreshscrollview.getLoadingLayoutProxy()
-									.setPullLabel("下拉加载");
-							pulltorefreshscrollview.getLoadingLayoutProxy()
-									.setRefreshingLabel("加载中。。。");
-							pulltorefreshscrollview.getLoadingLayoutProxy()
-									.setReleaseLabel("松开加载");
-						}
-					}
-				});
+			@Override
+			public void onPullEvent(PullToRefreshBase<ListView> refreshView,
+					State state, Mode direction) {
+				if (direction == Mode.PULL_FROM_START) {
+					baijia_contact_listview.getLoadingLayoutProxy()
+							.setPullLabel("上拉刷新");
+					baijia_contact_listview.getLoadingLayoutProxy()
+							.setRefreshingLabel("刷新中。。。");
+					baijia_contact_listview.getLoadingLayoutProxy()
+							.setReleaseLabel("松开刷新");
+				} else if (direction == Mode.PULL_FROM_END) {
+					baijia_contact_listview.getLoadingLayoutProxy()
+							.setPullLabel("下拉加载");
+					baijia_contact_listview.getLoadingLayoutProxy()
+							.setRefreshingLabel("加载中。。。");
+					baijia_contact_listview.getLoadingLayoutProxy()
+							.setReleaseLabel("松开加载");
+				}
+			}
+		});
 
-		pulltorefreshscrollview.setOnRefreshListener(new OnRefreshListener2() {
+		baijia_contact_listview.setOnRefreshListener(new OnRefreshListener2() {
 
 			@Override
 			public void onPullDownToRefresh(PullToRefreshBase refreshView) {
@@ -143,7 +143,6 @@ public class MyBuyerFragment extends Fragment {
 		showloading_layout_view = (LinearLayout) v
 				.findViewById(R.id.showloading_layout_view);
 		showloading_layout_view.setVisibility(View.GONE);
-		baijia_contact_listview = (ListView) v.findViewById(R.id.baijia_contact_listview);
 		buyerAdapter=new BuyerAdapter(Products, getActivity());
 		baijia_contact_listview.setAdapter(buyerAdapter);
 		baijia_contact_listview
@@ -186,19 +185,21 @@ public class MyBuyerFragment extends Fragment {
 
 					@Override
 					public void http_Success(Object obj) {
-						pulltorefreshscrollview.onRefreshComplete();
+						baijia_contact_listview.postDelayed(new Runnable() {
+							
+							@Override
+							public void run() {
+								baijia_contact_listview.onRefreshComplete();
+							}
+						}, 1000);
+						
 						if (obj != null && obj instanceof MyRequestProductListInfoBean) {
 							MyRequestProductListInfoBean bean = (MyRequestProductListInfoBean) obj;
 							MyHomeProductListInfoBean data = bean.getData();
 							if (data != null) {
 								int totalPage = data.getTotalpaged();
 								currpage=data.getPageindex();
-								if (currpage >= totalPage) {
-									pulltorefreshscrollview
-											.setMode(Mode.PULL_FROM_START);
-								} else {
-									pulltorefreshscrollview.setMode(Mode.BOTH);
-								}
+								
 								switch (type) {
 								case 0:
 									falshData(data);
@@ -217,7 +218,13 @@ public class MyBuyerFragment extends Fragment {
 
 					@Override
 					public void http_Fails(int error, String msg) {
-						pulltorefreshscrollview.onRefreshComplete();
+                    baijia_contact_listview.postDelayed(new Runnable() {
+							
+							@Override
+							public void run() {
+								baijia_contact_listview.onRefreshComplete();
+							}
+						}, 1000);
 						MyApplication.getInstance().showMessage(getActivity(),
 								msg);
 					}
@@ -237,8 +244,6 @@ public class MyBuyerFragment extends Fragment {
 			Products.addAll(item.getProducts());
 		}
 		buyerAdapter.notifyDataSetChanged();
-		ListViewUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
-		pulltorefreshscrollview.onRefreshComplete();
 	}
 
 	/***
@@ -256,9 +261,8 @@ public class MyBuyerFragment extends Fragment {
 		{
 			Products.addAll(item.getProducts());
 		}
-		ListViewUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
-		pulltorefreshscrollview.onRefreshComplete();
-
+		buyerAdapter=new BuyerAdapter(Products, getActivity());
+		baijia_contact_listview.setAdapter(buyerAdapter);
 	}
 	
 	/*****
