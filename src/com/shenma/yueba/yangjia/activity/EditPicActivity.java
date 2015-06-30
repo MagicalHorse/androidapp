@@ -72,6 +72,7 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 	int starty = 0;
 	private LinearLayout ll_top;
 	private Bitmap result;
+	private Bitmap resultCache;
 	private int position = 0;
 
 	@Override
@@ -86,9 +87,19 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 	}
 
 	private void getIntentData() {
-		uri = getIntent().getParcelableExtra("uri");
-		iv_pic.setImageBitmap(getBitmap(uri));
-		result = getBitmap(uri);
+		if("camera".equals(getIntent().getStringExtra("from"))){//相机
+			File dir = new File(FileUtils.getRootPath()+"/tagPic/");
+			if(!dir.exists()){
+				if(!dir.exists()) 
+					dir.mkdir(); 
+			}
+			 result = BitmapFactory.decodeFile(FileUtils.getRootPath()+"/tagPic/"+"joybar_camera"+".jpg");
+		}else if("picture".equals(getIntent().getStringExtra("from"))){
+			uri = getIntent().getParcelableExtra("uri");
+			result = getBitmap(uri);
+		}
+		resultCache = result;
+		iv_pic.setImageBitmap(result);
 	}
 
 	private void initView() {
@@ -96,7 +107,7 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 		setLeftTextView(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				EditPicActivity.this.finish();
+				onBackPressed();
 			}
 		});
 		ll_top = getView(R.id.ll_top);
@@ -171,7 +182,7 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 		}
 		try {
 			FileOutputStream out = new FileOutputStream(file);
-			EditPicActivity.this.result.compress(Bitmap.CompressFormat.JPEG,
+			EditPicActivity.this.resultCache.compress(Bitmap.CompressFormat.JPEG,
 					100, out);
 			out.flush();
 			out.close();
@@ -273,9 +284,14 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 		gallery.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> arg0, View arg1,
 					int position, long id) {
-				IImageFilter filter = (IImageFilter) filterAdapter
-						.getItem(position);
-				new processImageTask(EditPicActivity.this, filter).execute();
+				if(position == 0){
+					resultCache = result;
+					iv_pic.setImageBitmap(resultCache);
+				}else{
+					IImageFilter filter = (IImageFilter) filterAdapter
+							.getItem(position);
+					new processImageTask(EditPicActivity.this, filter).execute();
+				}
 			}
 		});
 	}
@@ -301,8 +317,7 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 				// Bitmap bitmap =
 				// BitmapFactory.decodeResource(activity.getResources(),
 				// R.drawable.image);
-				Bitmap bitmap = BitmapFactory.decodeStream(getInputStream(uri));
-				img = new Image(bitmap);
+				img = new Image(result);
 				if (filter != null) {
 					img = filter.process(img);
 					img.copyPixelsFromBuffer();
@@ -329,7 +344,7 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 			if (result != null) {
 				super.onPostExecute(result);
 				iv_pic.setImageBitmap(result);
-				EditPicActivity.this.result = result;
+				EditPicActivity.this.resultCache = result;
 			}
 		}
 	}

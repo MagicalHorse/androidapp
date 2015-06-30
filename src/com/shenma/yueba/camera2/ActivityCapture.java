@@ -3,6 +3,7 @@ package com.shenma.yueba.camera2;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -44,7 +45,9 @@ import android.widget.Toast;
 import com.shenma.yueba.R;
 import com.shenma.yueba.util.BitmapUtil;
 import com.shenma.yueba.util.Debug;
+import com.shenma.yueba.util.FileUtils;
 import com.shenma.yueba.util.PathManager;
+import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.yangjia.activity.AddTagActivity;
 import com.shenma.yueba.yangjia.activity.EditPicActivity;
 
@@ -53,7 +56,7 @@ import com.shenma.yueba.yangjia.activity.EditPicActivity;
 public class ActivityCapture extends Activity implements View.OnClickListener,
 		CaptureSensorsObserver.RefocuseListener {
 	private ImageView bnToggleCamera;
-	private ImageView bt_light;
+	public  ImageView bt_light;
     public final static String IMAGE_URI = "iamge_uri";
 	public final static String ACTION_CROP_IMAGE = "android.intent.action.CROP";
 	public final static String CROP_IMAGE_URI = "crop_image_uri";
@@ -61,6 +64,7 @@ public class ActivityCapture extends Activity implements View.OnClickListener,
 	private final int ONE_M = ONE_K * ONE_K;
 	private final int MAX_AVATAR_SIZE = 2 * ONE_M; // 2M
 	private ImageView bnCapture;
+	private ImageView iv_close;
 	public final static int REQ_CODE_LOCALE_BG = 202;
 	private FrameLayout framelayoutPreview;
 	private CameraPreview preview;
@@ -117,7 +121,6 @@ public class ActivityCapture extends Activity implements View.OnClickListener,
 	protected void onPause() {
 		super.onPause();
 		releaseCamera(); // release the camera immediately on pause event
-
 		observer.stop();
 		_orientationEventListener.disable();
 	}
@@ -148,6 +151,7 @@ public class ActivityCapture extends Activity implements View.OnClickListener,
 		bnCapture = (ImageView) findViewById(R.id.bnCapture);
 		framelayoutPreview = (FrameLayout) findViewById(R.id.cameraPreview);
 		focuseView = findViewById(R.id.viewFocuse);
+		iv_close = (ImageView) findViewById(R.id.iv_close);
 	}
 
 	protected void initViews() {
@@ -175,6 +179,7 @@ public class ActivityCapture extends Activity implements View.OnClickListener,
 	}
 
 	protected void setListeners() {
+		iv_close.setOnClickListener(this);
 		tv_little_pic.setOnClickListener(this);
 		bnToggleCamera.setOnClickListener(this);
 		bt_light.setOnClickListener(this);
@@ -269,11 +274,13 @@ public class ActivityCapture extends Activity implements View.OnClickListener,
 						// initViews();
 						// setListeners();
 						// setupDevice();
-						finish();
-						camera.startPreview();
-						Intent intent = new Intent(ActivityCapture.this,
-								EditPicActivity.class);
-						startActivity(intent);
+						if(saveBitmapToFile(finalBitmap)){
+							finish();
+							Intent intent = new Intent(ActivityCapture.this,
+									EditPicActivity.class);
+							intent.putExtra("from", "camera");
+							startActivity(intent);
+						}
 					}
 				});
 				//
@@ -291,6 +298,39 @@ public class ActivityCapture extends Activity implements View.OnClickListener,
 		};
 	}
 
+	
+	
+	private boolean saveBitmapToFile(Bitmap bitmap) {
+		File dir = new File(FileUtils.getRootPath()+"/tagPic/");
+		if(!dir.exists()){
+			if(!dir.exists()) 
+				dir.mkdir(); 
+		}
+		File file = new File(dir, "joybar_camera"+".jpg");
+		if(file.exists()){
+			file.delete();
+		}
+		try {
+			FileOutputStream out = new FileOutputStream(file);
+			bitmap.compress(Bitmap.CompressFormat.JPEG,
+					100, out);
+			out.flush();
+			out.close();
+			return true;
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+
+	}
+	
+	
+	
 	// 根据拍照的图片来剪裁
 	private Bitmap cropPhotoImage(Bitmap bmp) {
 		int dw = bmp.getWidth();
@@ -422,6 +462,17 @@ public class ActivityCapture extends Activity implements View.OnClickListener,
 		framelayoutPreview.addView(cropBorderView, params2);
 		observer.start();
 		_orientationEventListener.enable();
+		List<String> flashModes = camParmeters.getSupportedFlashModes();
+		// Check if camera flash exists
+		if (flashModes == null) {
+			// Use the screen as a flashlight (next best thing)
+			return;
+		}
+		String flashMode = camParmeters.getFlashMode();
+			if (flashModes.contains(Parameters.FLASH_MODE_AUTO)) {
+				camParmeters.setFlashMode(Parameters.FLASH_MODE_AUTO);
+				camera.setParameters(camParmeters);
+			}
 	}
 
 	@Override
@@ -431,13 +482,17 @@ public class ActivityCapture extends Activity implements View.OnClickListener,
 			switchCamera();
 			break;
 		case R.id.bt_light:// 闪光灯
-			turnLightOn(camera);
+			turnLightOn(camera,bt_light);
 			break;
 		case R.id.bnCapture:
 			bnCaptureClicked();
 			break;
 		case R.id.tv_little_pic:// 选择图库
 			getLocalImage(REQ_CODE_LOCALE_BG);
+			break;
+		case R.id.iv_close://关闭相机
+			ActivityCapture.this.finish();
+			break;
 		}
 	}
 
@@ -759,7 +814,7 @@ public class ActivityCapture extends Activity implements View.OnClickListener,
 		}
 	}
 
-	public static void turnLightOn(Camera mCamera) {
+	public static void turnLightOn(Camera mCamera,ImageView bt) {
 		if (mCamera == null) {
 			return;
 		}
@@ -777,6 +832,7 @@ public class ActivityCapture extends Activity implements View.OnClickListener,
 		if (Parameters.FLASH_MODE_OFF.equals(flashMode)) {// 如果是关闭，就设置为自动
 			// Turn on the flash
 			if (flashModes.contains(Parameters.FLASH_MODE_AUTO)) {
+				bt.setBackgroundResource(R.drawable.ic_camera_top_bar_flash_auto_normal);
 				parameters.setFlashMode(Parameters.FLASH_MODE_AUTO);
 				mCamera.setParameters(parameters);
 			} else {
@@ -784,6 +840,7 @@ public class ActivityCapture extends Activity implements View.OnClickListener,
 		} else if (Parameters.FLASH_MODE_AUTO.equals(flashMode)) {// 如果是自动，就设置为开启
 			// Turn off the flash
 			if (flashModes.contains(Parameters.FLASH_MODE_TORCH)) {
+				bt.setBackgroundResource(R.drawable.ic_camera_top_bar_flash_on_normal);
 				parameters.setFlashMode(Parameters.FLASH_MODE_TORCH);
 				mCamera.setParameters(parameters);
 			} else {
@@ -792,6 +849,7 @@ public class ActivityCapture extends Activity implements View.OnClickListener,
 		} else if (Parameters.FLASH_MODE_TORCH.equals(flashMode)) {// 如果是开启，就设置为关闭
 			// Turn off the flash
 			if (flashModes.contains(Parameters.FLASH_MODE_OFF)) {
+				bt.setBackgroundResource(R.drawable.ic_camera_top_bar_flash_off_normal);
 				parameters.setFlashMode(Parameters.FLASH_MODE_OFF);
 				mCamera.setParameters(parameters);
 			} else {
@@ -883,6 +941,7 @@ public class ActivityCapture extends Activity implements View.OnClickListener,
 
 			
 			Intent editPicIntent = new Intent(ActivityCapture.this,EditPicActivity.class);
+			editPicIntent.putExtra("from", "picture");
 			editPicIntent.putExtra("uri", uri);
 			startActivity(editPicIntent);
 			

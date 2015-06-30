@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.shenma.yueba.R;
@@ -62,6 +63,8 @@ public class SalesManagerForAttestationBuyerAdapter extends BaseAdapterWithUtil 
 			holder.tv_same_product_count = (TextView) convertView.findViewById(R.id.tv_same_product_count);
 			holder.tv_huohao = (TextView) convertView.findViewById(R.id.tv_huohao);
 			holder.tv_guige = (TextView) convertView.findViewById(R.id.tv_guige);
+			holder.ll_bottom = (LinearLayout) convertView.findViewById(R.id.ll_bottom);
+			holder.tv_bottom = (TextView) convertView.findViewById(R.id.tv_bottom);
 			FontManager.changeFonts(ctx, holder.tv_order_number,holder.tv_order_status,
 					holder.tv_money_payed,holder.tv_product_name,holder.tv_price,holder.tv_description,
 					holder.tv_same_product_count,holder.tv_huohao,holder.tv_guige,holder.tv_commission);
@@ -83,8 +86,8 @@ public class SalesManagerForAttestationBuyerAdapter extends BaseAdapterWithUtil 
 					holder.tv_price.setText(TextUtils.isEmpty(productItme.getPrice())?"":productItme.getPrice()+"￥");
 					holder.tv_product_name.setText(TextUtils.isEmpty(productItme.getBrandName())?"":productItme.getBrandName());
 					holder.tv_description.setText(TextUtils.isEmpty(productItme.getName())?"":productItme.getName());
-					holder.tv_same_product_count.setText(TextUtils.isEmpty(productItme.getCount())?"":""+productItme.getCount());
-					holder.tv_huohao.setText(TextUtils.isEmpty(productItme.getStoreItemNo())?"X":"货号："+productItme.getStoreItemNo());
+					holder.tv_same_product_count.setText(TextUtils.isEmpty(productItme.getCount())?"":"X"+productItme.getCount());
+					holder.tv_huohao.setText(TextUtils.isEmpty(productItme.getStoreItemNo())?"":"货号："+productItme.getStoreItemNo());
 					holder.tv_guige.setText(TextUtils.isEmpty(productItme.getSizeName())?"":"规格："+productItme.getSizeName());
 				}
 			}
@@ -119,6 +122,8 @@ public class SalesManagerForAttestationBuyerAdapter extends BaseAdapterWithUtil 
 		TextView tv_huohao;//货号
 		TextView tv_guige;//规格
 		TextView tv_commission;//规格
+		LinearLayout ll_bottom;
+		TextView tv_bottom;
 	}
 
 }

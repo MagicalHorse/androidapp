@@ -42,6 +42,7 @@ import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.camera.CameraAty;
 import com.shenma.yueba.camera2.ActivityCapture;
+import com.shenma.yueba.util.CustomProgressDialog;
 import com.shenma.yueba.yangjia.fragment.CartFragment;
 import com.shenma.yueba.yangjia.fragment.IndexFragmentForYangJia;
 import com.shenma.yueba.yangjia.fragment.MeFragmentForYangJia;
@@ -64,7 +65,6 @@ public final class MainActivityForYangJia extends FragmentActivity {
 	
 	private LinkedList<String> mListItems;
 	private ArrayAdapter<String> mAdapter;
-	
 	private FragmentTabHost mTabHost;
 //	// 定义数组来存放按钮图片
 	private int mImageViewArray[] = { R.drawable.tab_index_selector,
@@ -170,15 +170,16 @@ private void showDialog() {
 	bt_kxp.setOnClickListener(new OnClickListener() {
 		@Override
 		public void onClick(View v) {
+			dialog.cancel();
 			// 跳转到开下票的界面
 			Intent intentXP = new Intent(MainActivityForYangJia.this,KaiXiaoPiaoActivity.class);
 			startActivity(intentXP);
-			dialog.cancel();
 		}
 	});
 	bt_publish.setOnClickListener(new OnClickListener() {
 		@Override
 		public void onClick(View v) {
+			Toast.makeText(getApplicationContext(), "相机初始化中...", 1000).show();
 			// 跳转到到自定义相机
 //			Intent intentCamera = new Intent(MainActivityForYangJia.this,CameraAty.class);
 //			startActivity(intentCamera);
