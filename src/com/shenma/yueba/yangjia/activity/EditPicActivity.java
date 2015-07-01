@@ -38,6 +38,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.BaseActivityWithTopView;
 import com.shenma.yueba.camera2.ActivityCapture;
 import com.shenma.yueba.constants.Constants;
@@ -49,6 +50,7 @@ import com.shenma.yueba.filter.RainBowFilter;
 import com.shenma.yueba.filter.SepiaFilter;
 import com.shenma.yueba.filter.XRadiationFilter;
 import com.shenma.yueba.util.FileUtils;
+import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.TagImageView;
 import com.shenma.yueba.yangjia.modle.TagListBean;
@@ -73,7 +75,6 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 	private LinearLayout ll_top;
 	private Bitmap result;
 	private Bitmap resultCache;
-	private int position = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -81,28 +82,38 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 		setContentView(R.layout.edit_pic);
 		super.onCreate(savedInstanceState);
 		initView();
+	
+
+	}
+	
+	@Override
+	protected void onResume() {
 		getIntentData();
 		LoadImageFilter();
-
+		super.onResume();
 	}
 
 	private void getIntentData() {
-		if("camera".equals(getIntent().getStringExtra("from"))){//相机
-			File dir = new File(FileUtils.getRootPath()+"/tagPic/");
-			if(!dir.exists()){
-				if(!dir.exists()) 
-					dir.mkdir(); 
+		if("camera".equals(MyApplication.getInstance().getPublishUtil().getFrom())){//来自相机
+			File dir = new File(FileUtils.getRootPath() + "/tagPic/");
+			if (!dir.exists()) {
+				dir.mkdirs();
 			}
-			 result = BitmapFactory.decodeFile(FileUtils.getRootPath()+"/tagPic/"+"joybar_camera"+".jpg");
-		}else if("picture".equals(getIntent().getStringExtra("from"))){
-			uri = getIntent().getParcelableExtra("uri");
+			String index = MyApplication.getInstance().getPublishUtil().getIndex();
+			result = BitmapFactory.decodeFile(FileUtils.getRootPath()
+					+ "/tagPic/" + "joybar_camera"+ index+".png");
+		}else if("picture".equals(MyApplication.getInstance().getPublishUtil().getFrom())){//来自图库
+			Uri uri = MyApplication.getInstance().getPublishUtil().getUri();
 			result = getBitmap(uri);
+		}else if("publish".equals(MyApplication.getInstance().getPublishUtil().getFrom())){//发布商品返回
+			String index = MyApplication.getInstance().getPublishUtil().getIndex();
+			result = BitmapFactory.decodeFile(FileUtils.getRootPath()
+					+ "/tagPic/" + "tagPic"+ index+".png");
 		}
 		resultCache = result;
 		iv_pic.setImageBitmap(result);
-	}
+		}
 
-	
 	private void initView() {
 		setTitle("编辑图片");
 		setLeftTextView(new OnClickListener() {
@@ -130,7 +141,7 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.tv_next:// 下一步
-			saveBitmapToFile(position);
+			saveBitmapToFile();
 			tagList.clear();
 			List<Map<String, Integer>> positionList = layout_tag_image
 					.getPositionList();
@@ -171,22 +182,28 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 		}
 	}
 
-	private void saveBitmapToFile(int position) {
-		File dir = new File(FileUtils.getRootPath()+"/tagPic/");
-		if(!dir.exists()){
-			if(!dir.exists()) 
-				dir.mkdir(); 
+	private void saveBitmapToFile() {
+		File dir = new File(FileUtils.getRootPath() + "/tagPic/");
+		if (!dir.exists()) {
+			if (!dir.exists())
+				dir.mkdir();
 		}
-		File file = new File(dir, "tagPic"+position+".jpg");
-		if(file.exists()){
+		File file = new File(dir, "tagPic" + MyApplication.getInstance().getPublishUtil().getIndex() + ".png");
+		File file_yuan = new File(dir, "tagPic_yuan" + MyApplication.getInstance().getPublishUtil().getIndex() + ".png");
+		if (file.exists()) {
 			file.delete();
 		}
 		try {
 			FileOutputStream out = new FileOutputStream(file);
-			EditPicActivity.this.resultCache.compress(Bitmap.CompressFormat.JPEG,
-					100, out);
+			FileOutputStream out_yuan = new FileOutputStream(file_yuan);
+			EditPicActivity.this.resultCache.compress(
+					Bitmap.CompressFormat.PNG, 100, out);
+			EditPicActivity.this.result.compress(Bitmap.CompressFormat.PNG,
+					100, out_yuan);
 			out.flush();
 			out.close();
+			out_yuan.flush();
+			out_yuan.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -285,13 +302,14 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 		gallery.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> arg0, View arg1,
 					int position, long id) {
-				if(position == 0){
+				if (position == 0) {
 					resultCache = result;
 					iv_pic.setImageBitmap(resultCache);
-				}else{
+				} else {
 					IImageFilter filter = (IImageFilter) filterAdapter
 							.getItem(position);
-					new processImageTask(EditPicActivity.this, filter).execute();
+					new processImageTask(EditPicActivity.this, filter)
+							.execute();
 				}
 			}
 		});
