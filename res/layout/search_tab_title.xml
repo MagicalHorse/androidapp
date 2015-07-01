@@ -24,6 +24,7 @@
             android:textSize="@dimen/title_text_size" />
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/tv_tag"
             android:layout_width="0dip"
             android:layout_height="fill_parent"
@@ -69,7 +70,7 @@
             android:layout_marginRight="5dip"
             android:layout_weight="1"
             android:background="@drawable/line_title"
-            android:visibility="invisible" />
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/iv_cursor_right"

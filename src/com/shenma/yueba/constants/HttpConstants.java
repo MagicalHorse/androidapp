@@ -12,6 +12,7 @@ public class HttpConstants {
 	private static String BUYER = baseUrl + "Buyer/";// 买手相关的接口
 	private static String Order = baseUrl + "Order/";// 订单相关的接口
 	private static String Circle = baseUrl + "Community/";// 圈子相关的接口
+	private static String SEARCH = baseUrl + "Search/";// 搜索
 	private static String Promotion = baseUrl + "Promotion/";//活动相关
 	private static String weixinBaseUrl = "https://api.mch.weixin.qq.com/";//微信接口
 	private static String weixinPAYUrl = weixinBaseUrl+"pay/";//微信支付接口
@@ -623,4 +624,11 @@ public class HttpConstants {
 	 * 获取买手的商品列表、上新商品列表
 	 * **/
 	public static String METHOD_GETUSERPRODUCTLIST = PRODUCT+ "GetUserProductList";
+	
+	/*****
+	 *根据品牌名称检索品牌
+	 * **/
+	public static String METHOD_SEARCH = SEARCH+ "Search";
+	
+	
 }

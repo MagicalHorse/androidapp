@@ -19,7 +19,7 @@
             android:id="@+id/pulltorefreshscrollview"
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
-            
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -33,7 +33,7 @@
                     <android.support.v4.view.ViewPager
                         android:id="@+id/baijiasteetfragmnet_layout_head_viewpager"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
+                        android:layout_height="match_parent" />
 
                     <LinearLayout
                         android:id="@+id/baijia_head_layout"
@@ -49,10 +49,14 @@
                     android:id="@+id/buyersteet_newtextview"
                     style="@style/text_title_style"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/shop_main_width5_dimen"
                     android:layout_marginRight="@dimen/shop_main_width5_dimen"
-                    android:text="" />
+                    android:paddingBottom="@dimen/shop_main_lineheight8_dimen"
+                    android:paddingTop="@dimen/shop_main_lineheight8_dimen"
+                    android:text=""
+                    android:textColor="@color/color_textgray"
+                    android:textSize="@dimen/textsize11sp" />
 
                 <View style="@style/style_horizontal_line" />
 
@@ -66,10 +70,10 @@
         </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
 
         <include
-            android:visibility="gone"
             android:id="@+id/showloading_layout_view"
             android:layout_centerInParent="true"
-            layout="@layout/showloading_layout" />
+            layout="@layout/showloading_layout"
+            android:visibility="gone" />
     </RelativeLayout>
 
 </LinearLayout>
