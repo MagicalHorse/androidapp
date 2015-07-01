@@ -7,6 +7,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -354,7 +355,7 @@ public class BuyerStreetFragment extends Fragment {
 		int height=width/2;
 		baijiasteetfragmnet_layout_head_viewpager_relativelayout.setLayoutParams(new LinearLayout.LayoutParams(width, height));
 		((RelativeLayout.LayoutParams)baijia_head_layout.getLayoutParams()).bottomMargin=40;
-		pagerAdapter = new ScrollViewPagerAdapter(imageViewlist);
+		pagerAdapter = new ScrollViewPagerAdapter(getActivity(),imageViewlist);
 		baijiasteetfragmnet_layout_head_viewpager.setAdapter(pagerAdapter);
 		if (imageViewlist.size() > 0) {
 			setcurrItem(0);

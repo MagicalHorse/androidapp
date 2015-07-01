@@ -49,7 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="叮当猫"
-            android:textSize="22sp" />
+            android:textSize="@dimen/textsize15sp" />
 
         <TextView
             android:id="@+id/tv_msg"
@@ -60,7 +60,7 @@
             android:singleLine="true"
             android:text="您有一盘猫食还未领取"
             android:textColor="@color/text_gray_color"
-            android:textSize="18sp" />
+            android:textSize="@dimen/textsize12sp" />
     </RelativeLayout>
 
 </LinearLayout>

@@ -3,6 +3,9 @@ package com.shenma.yueba.baijia.adapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.shenma.yueba.R;
+
+import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.util.Log;
 import android.view.View;
@@ -18,8 +21,10 @@ import android.widget.ImageView.ScaleType;
 
 public class ScrollViewPagerAdapter extends PagerAdapter{
 List<ImageView> imageViewlist=new ArrayList<ImageView>();
-	public ScrollViewPagerAdapter(List<ImageView> imageViewlist)
+Context context;
+	public ScrollViewPagerAdapter(Context context,List<ImageView> imageViewlist)
 	{
+		this.context=context;
 		this.imageViewlist=imageViewlist;
 	}
 	
@@ -46,6 +51,7 @@ List<ImageView> imageViewlist=new ArrayList<ImageView>();
 		int a=position % imageViewlist.size();
 		Log.i("TAG", "A:"+a);
 		ImageView imageview=(ImageView)imageViewlist.get(a);
+		imageview.setBackgroundColor(context.getResources().getColor(R.color.color_lightgrey));
 		if (imageview.getParent() != null) {
 			((ViewGroup) imageview.getParent()).removeView(imageview);
 		}

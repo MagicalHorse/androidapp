@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -85,7 +86,7 @@ public class MyCircleView extends BaseView{
 	{
 		pull_refresh_list=(PullToRefreshListView)view.findViewById(R.id.pull_refresh_list);
 		showloading_layout_view=(LinearLayout)view.findViewById(R.id.showloading_layout_view);
-		pull_refresh_list.setMode(Mode.PULL_FROM_START);
+		//pull_refresh_list.setMode(Mode.PULL_FROM_START);
 		 
 		pull_refresh_list.setOnPullEventListener(new OnPullEventListener<ListView>() {
 
@@ -144,6 +145,7 @@ public class MyCircleView extends BaseView{
 	
 	void requestFalshData()
 	{
+		Log.i("TAG", "----->>请求数据");
 		sendHttp(1,0);
 	}
 	
@@ -183,7 +185,7 @@ public class MyCircleView extends BaseView{
 	 * **/
 	void sendHttp(int page,final int type)
 	{
-		httpCntrol.getMyCircle(page, pageSize, showDialog, new HttpCallBackInterface() {
+		httpCntrol.getMyCircle(page, 10000, showDialog, new HttpCallBackInterface() {
 			
 			@Override
 			public void http_Success(Object obj) {
@@ -202,11 +204,11 @@ public class MyCircleView extends BaseView{
 						   }
 						}
 						int totalPage = bean.getTotalpaged();
-						if (currPage >= totalPage) {
+						/*if (currPage >= totalPage) {
 							pull_refresh_list.setMode(Mode.PULL_FROM_START);
 						} else {
 							pull_refresh_list.setMode(Mode.BOTH);
-						}
+						}*/
 						switch (type) {
 						case 0:
 							falshData(bean.getData());
@@ -233,10 +235,10 @@ public class MyCircleView extends BaseView{
 
 	@Override
 	public void firstInitData() {
-		if(isFirst)
+		/*if(isFirst)
 		{
 			requestFalshData();
-		}
-		
+		}*/
+		requestFalshData();
 	}
 }

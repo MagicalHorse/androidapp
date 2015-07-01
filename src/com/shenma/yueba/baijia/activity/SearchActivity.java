@@ -93,7 +93,7 @@ public class SearchActivity extends FragmentActivity implements OnClickListener 
 			viewpager_search.setCurrentItem(1);
 			break;
 		case R.id.tv_buyer:// 买手
-			viewpager_search.setCurrentItem(2);
+			viewpager_search.setCurrentItem(1);
 			break;
 		default:
 			break;
@@ -107,7 +107,7 @@ public class SearchActivity extends FragmentActivity implements OnClickListener 
 		tagFragment = new TagFragment();
 		buyerFragment = new BuyerFragment();
 		fragmentList.add(brandFragment);
-		fragmentList.add(tagFragment);
+		//fragmentList.add(tagFragment);
 		fragmentList.add(buyerFragment);
 		myFragmentPagerAdapter = new MyFragmentPagerAdapter(
 				getSupportFragmentManager(), fragmentList);
@@ -126,20 +126,19 @@ public class SearchActivity extends FragmentActivity implements OnClickListener 
 			 * 页面跳转完成后调用的方法
 			 */
 			public void onPageSelected(int arg0) {
-				if (arg0 == 0) {
+				
+				switch(arg0)
+				{
+				case 0:
 					iv_cursor_left.setVisibility(View.VISIBLE);
-					iv_cursor_center.setVisibility(View.INVISIBLE);
+					//iv_cursor_center.setVisibility(View.INVISIBLE);
 					iv_cursor_right.setVisibility(View.INVISIBLE);
-				}
-				if (arg0 == 1) {
+					break;
+				case 1:
 					iv_cursor_left.setVisibility(View.INVISIBLE);
-					iv_cursor_center.setVisibility(View.VISIBLE);
-					iv_cursor_right.setVisibility(View.INVISIBLE);
-				}
-				if (arg0 == 2) {
-					iv_cursor_left.setVisibility(View.INVISIBLE);
-					iv_cursor_center.setVisibility(View.INVISIBLE);
+					//iv_cursor_center.setVisibility(View.INVISIBLE);
 					iv_cursor_right.setVisibility(View.VISIBLE);
+					break;
 				}
 
 			}

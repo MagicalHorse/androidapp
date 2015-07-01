@@ -69,6 +69,12 @@ public class CircleFragment extends Fragment{
 	public void onResume() {
 		
 		super.onResume();
+		if(currid>-1 && currid<fragment_list.size())
+		{
+			BaseView bv=(BaseView)fragment_list.get(currid).getFragment();
+			bv.firstInitData();
+		}
+		
         
 	}
 	
@@ -141,10 +147,7 @@ public class CircleFragment extends Fragment{
 			
 			@Override
 			public void onPageSelected(int arg0) {
-				setTextColor(arg0);
-				BaseView bv=(BaseView)fragment_list.get(arg0).getFragment();
-				bv.firstInitData();
-				
+				setCurrView(arg0);
 			}
 			
 			@Override
@@ -170,8 +173,14 @@ public class CircleFragment extends Fragment{
 		{
 			return;
 		}
+		currid=i;
 		setTextColor(i);
 		baijia_fragment_tab1_pagerview.setCurrentItem(i);
+		if(currid>-1 && currid<fragment_list.size())
+		{
+			BaseView bv=(BaseView)fragment_list.get(currid).getFragment();
+			bv.firstInitData();
+		}
 	}
 	
 	

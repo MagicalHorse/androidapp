@@ -301,7 +301,7 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView impleme
 				viewlist.add(iv);
 				initPic(ToolsUtil.getImage(str_array[i], 320, 0), iv);
 			}
-			customPagerAdapter = new ScrollViewPagerAdapter(viewlist);
+			customPagerAdapter = new ScrollViewPagerAdapter(ApproveBuyerDetailsActivity.this,viewlist);
 			appprovebuyer_viewpager.setAdapter(customPagerAdapter);
 			setcurrItem(0);
 			startTimeToViewPager();
