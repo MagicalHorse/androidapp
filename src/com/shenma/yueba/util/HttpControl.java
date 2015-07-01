@@ -1547,15 +1547,18 @@ public class HttpControl {
 	
 	/**
 	 * 根据品牌名称检索品牌
-	 * 
+	 * @param currPage int 当前页
+	 * @param pageSize  int 条数
 	 * @param httpCallBack HttpCallBackInterface 回调接口
 	 * @param context  Context
 	 * @param state int 0: 搜索品牌列表, 1:搜索买手列表
      * @param  key  string类型，关键字
 	 * @return void
 	 * **/
-	public void searchbrandList(int state,String key,final HttpCallBackInterface httpCallBack, Context context) {
+	public void searchbrandList(int currPage,int pageSize, int state,String key,final HttpCallBackInterface httpCallBack, Context context) {
 		Map<String, String> map = new HashMap<String, String>();
+		map.put(Constants.PAGE, Integer.toString(currPage));
+		map.put(Constants.PAGESIZE, Integer.toString(pageSize));
 		map.put("state", Integer.toString(state));
 		map.put("key", key);
 		BasehttpSend(map, context, HttpConstants.METHOD_SEARCH,httpCallBack, RequestBrandSearchInfoBean.class, true, false);
