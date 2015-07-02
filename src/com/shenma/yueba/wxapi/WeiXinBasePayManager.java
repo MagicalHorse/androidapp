@@ -229,7 +229,9 @@ public abstract class WeiXinBasePayManager {
 		for (int i = 0; i < params.size(); i++) {
 			sb.append("<"+ params.get(i).getName() + ">");
 
-			sb.append(PREFIX_CDATA +params.get(i).getValue()+SUFFIX_CDATA);
+			sb.append(PREFIX_CDATA);
+			sb.append(params.get(i).getValue());
+			sb.append(SUFFIX_CDATA);
 			sb.append("</" + params.get(i).getName() + ">");
 		}
 		sb.append("</xml>");

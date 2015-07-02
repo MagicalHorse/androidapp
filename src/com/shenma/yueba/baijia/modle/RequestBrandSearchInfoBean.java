@@ -9,11 +9,11 @@ public class RequestBrandSearchInfoBean extends BaseRequest{
 
 	BrandSearchInfoBean data=new BrandSearchInfoBean();
 
-	private BrandSearchInfoBean getData() {
+	public BrandSearchInfoBean getData() {
 		return data;
 	}
 
-	private void setData(BrandSearchInfoBean data) {
+	public void setData(BrandSearchInfoBean data) {
 		this.data = data;
 	}
 }

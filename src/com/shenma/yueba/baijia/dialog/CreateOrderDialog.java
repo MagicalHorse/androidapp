@@ -260,7 +260,7 @@ public class CreateOrderDialog extends AlertDialog implements android.view.View.
 			FontManager.changeFonts(context, btn);
 			btn.setText(prioductSizesInfoBean.getSize());
 			btn.setTag(prioductSizesInfoBean);
-			btn.setTextSize(12);
+			btn.setTextSize(8);
 			btn.setBackgroundResource(R.drawable.gridviewitem_background);
 			btn.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, (int)context.getResources().getDimension(R.dimen.shop_main_marginleft30_dimen)));
 			//btn.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, AbsListView.LayoutParams.WRAP_CONTENT));

@@ -191,6 +191,7 @@ int maxValue=0;
 				{
 					MyApplication.getInstance().showMessage(ApplyForRefundActivity.this, "申请成功");
 					setResult(200, ApplyForRefundActivity.this.getIntent().putExtra("PAYRESULT", "SUCESS"));
+					finish();
 				}
 			}
 			
