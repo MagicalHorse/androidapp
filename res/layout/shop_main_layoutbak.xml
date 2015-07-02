@@ -24,4 +24,7 @@
             layout="@layout/pubuliu_layout" />
     </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
 
+    <include 
+        android:layout_centerInParent="true"
+        layout="@layout/nodata_layout"/>
 </RelativeLayout>

@@ -30,5 +30,7 @@
         android:visibility="gone"
         android:layout_centerInParent="true"
         layout="@layout/showloading_layout" />
+    
+    <include layout="@layout/nodata_layout"/>
 
 </RelativeLayout>

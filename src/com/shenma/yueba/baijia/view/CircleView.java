@@ -88,7 +88,7 @@ public class CircleView extends BaseView{
 		 /*pulltorefreshscrollview.getLoadingLayoutProxy().setPullLabel("下拉刷新");  
 		 pulltorefreshscrollview.getLoadingLayoutProxy().setRefreshingLabel("刷新中。。。");  
 		 pulltorefreshscrollview.getLoadingLayoutProxy().setReleaseLabel("松开刷新");*/
-		baijia_quanzi_layout_tanb1_gridbview.setMode(Mode.PULL_FROM_START);
+		baijia_quanzi_layout_tanb1_gridbview.setMode(Mode.BOTH);
 		 
 		baijia_quanzi_layout_tanb1_gridbview.setOnPullEventListener(new OnPullEventListener<GridView>() {
 
@@ -236,12 +236,10 @@ public class CircleView extends BaseView{
 		showloading_layout_view.setVisibility(View.GONE);
 		baseAdapter.notifyDataSetChanged();
 		//ListUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
-		baijia_quanzi_layout_tanb1_gridbview.onRefreshComplete();
 	}
 	
 	void falshData(MyCircleInfoBean bean)
 	{
-		showDialog=false;
 		isFirst=false;
 		currPage++;
 		items.clear();
@@ -252,45 +250,59 @@ public class CircleView extends BaseView{
 		showloading_layout_view.setVisibility(View.GONE);
 		baseAdapter.notifyDataSetChanged();
 		
-		baijia_quanzi_layout_tanb1_gridbview.onRefreshComplete();
-		
 	}
 	
 	
-	void sendHttp(int page,final int type)
+	void sendHttp(final int page,final int type)
 	{
+		ToolsUtil.showNoDataView(activity, false);
 		httpCntrol.getRecommendGroup(page, pageSize, showDialog, new HttpCallBackInterface() {
 			
 			@Override
 			public void http_Success(Object obj) {
+				currPage=page;
+				showDialog=false;
+				baijia_quanzi_layout_tanb1_gridbview.onRefreshComplete();
 				if(obj!=null && obj instanceof RequestMyCircleInfoBean)
 				{
 					RequestMyCircleInfoBean bean=(RequestMyCircleInfoBean)obj;
 					if (bean != null) {
-						currPage=bean.getPageindex();
-						if(currPage==1)
-						{
-							if(bean.getData()==null)
+						if(bean.getData()==null || bean.getData().getItems()==null || bean.getData().getItems().size()==0)
 						   {
-								MyApplication.getInstance().showMessage(activity, "还没有信息");
-								return;
+							    if(page==1)
+							    {
+							    	baijia_quanzi_layout_tanb1_gridbview.setMode(Mode.PULL_FROM_START);
+								    ToolsUtil.showNoDataView(activity, true);
+							    }
+								
+						   }else
+						   {
+							   if(page==1)
+							    {
+							    	baijia_quanzi_layout_tanb1_gridbview.setMode(Mode.PULL_FROM_START);
+							    }
+							   int totalPage = bean.getTotalpaged();
+								if (currPage >= totalPage) {
+									baijia_quanzi_layout_tanb1_gridbview.setMode(Mode.PULL_FROM_START);
+									MyApplication.getInstance().showMessage(activity, activity.getResources().getString(R.string.lastpagedata_str));
+								} else {
+									baijia_quanzi_layout_tanb1_gridbview.setMode(Mode.BOTH);
+								}
+								switch (type) {
+								case 0:
+									falshData(bean.getData());
+									break;
+								case 1:
+									addData(bean.getData());
+									break;
+								}
 						   }
-						}
-						int totalPage = bean.getTotalpaged();
-						if (currPage >= totalPage) {
-							baijia_quanzi_layout_tanb1_gridbview.setMode(Mode.PULL_FROM_START);
-						} else {
-							baijia_quanzi_layout_tanb1_gridbview.setMode(Mode.BOTH);
-						}
-						switch (type) {
-						case 0:
-							falshData(bean.getData());
-							break;
-						case 1:
-							addData(bean.getData());
-							break;
-						}
+						
 					} else {
+						if(page==1)
+						{
+							ToolsUtil.showNoDataView(activity, true);
+						}
 						MyApplication.getInstance().showMessage(
 								activity, "没有任何数据");
 					}
@@ -301,6 +313,7 @@ public class CircleView extends BaseView{
 			@Override
 			public void http_Fails(int error, String msg) {
 				MyApplication.getInstance().showMessage(activity, msg);
+				baijia_quanzi_layout_tanb1_gridbview.onRefreshComplete();
 			}
 		},activity );
 	}

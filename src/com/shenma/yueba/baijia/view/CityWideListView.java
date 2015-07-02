@@ -29,6 +29,7 @@ import com.shenma.yueba.baijia.modle.RequestBrandInfoBean;
 import com.shenma.yueba.baijia.modle.SameCityBean;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 
 /**  
@@ -151,7 +152,6 @@ public class CityWideListView extends BaseView{
 		showloading_layout_view.setVisibility(View.GONE);
 		msgAdapter.notifyDataSetChanged();
 		//ListUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
-		pull_refresh_list.onRefreshComplete();
 	}
 	
 	void falshData(BrandCityWideInfoBean brandCityWideInfoBean)
@@ -167,7 +167,6 @@ public class CityWideListView extends BaseView{
 		msgAdapter.notifyDataSetChanged();
 		
 		//ListUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
-		pull_refresh_list.onRefreshComplete();
 		
 	}
 	
@@ -175,31 +174,35 @@ public class CityWideListView extends BaseView{
 	 * @param page int 访问页
 	 * @param type 0：刷新 1：加载
 	 * **/
-	void sendHttp(int page,final int type)
+	void sendHttp(final int page,final int type)
 	{
+		ToolsUtil.showNoDataView(activity, false);
 		httpCntrol.getBrandCity_Wide(page, pageSize, CityId, showDialog,new HttpCallBackInterface() {
 			
 			@Override
 			public void http_Success(Object obj) {
-				pull_refresh_list.onRefreshComplete();
 				showDialog=false;
+				pull_refresh_list.onRefreshComplete();
+				currPage=page;
 				if(obj!=null && obj instanceof RequestBrandCityWideInfoBean)
 				{
 					RequestBrandCityWideInfoBean bean=(RequestBrandCityWideInfoBean)obj;
-					if (bean != null && bean.getData()!=null) {
-						BrandCityWideInfoBean brandCityWideInfoBean=bean.getData();
-						currPage=brandCityWideInfoBean.getPageindex();
-						if(currPage==1)
+					if(bean.getData()==null || bean.getData().getItems()==null || bean.getData().getItems().size()==0)
+					{
+						if(page==1)
 						{
-							if(bean.getData()==null)
-						   {
-								MyApplication.getInstance().showMessage(activity, "还没有信息");
-								return;
-						   }
+							pull_refresh_list.setMode(Mode.PULL_FROM_START);
+							ToolsUtil.showNoDataView(activity, true);
 						}
-						
-						int totalPage = brandCityWideInfoBean.getTotalpaged();
+					}else 
+					{
+						if(page==1)
+						{
+							pull_refresh_list.setMode(Mode.PULL_FROM_START);
+						}
+						int totalPage = bean.getData().getTotalpaged();
 						if (currPage >= totalPage) {
+							MyApplication.getInstance().showMessage(activity, activity.getResources().getString(R.string.lastpagedata_str));
 							pull_refresh_list.setMode(Mode.PULL_FROM_START);
 						} else {
 							pull_refresh_list.setMode(Mode.BOTH);
@@ -212,17 +215,23 @@ public class CityWideListView extends BaseView{
 							addData(bean.getData());
 							break;
 						}
+					}
+					
 					} else {
+						if(page==1)
+						{
+							ToolsUtil.showNoDataView(activity, true);
+						}
 						MyApplication.getInstance().showMessage(
 								activity, "没有任何数据");
 					}
-				}
 				
 			}
 			
 			@Override
 			public void http_Fails(int error, String msg) {
 				pull_refresh_list.onRefreshComplete();
+				
 				MyApplication.getInstance().showMessage(activity, msg);
 			}
 		},activity );

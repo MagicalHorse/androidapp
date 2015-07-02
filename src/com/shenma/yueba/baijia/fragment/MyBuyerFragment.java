@@ -28,6 +28,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.lidroid.xutils.BitmapUtils;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.activity.MyCollectionActivity;
 import com.shenma.yueba.baijia.activity.ShopMainActivity;
 import com.shenma.yueba.baijia.adapter.BuyerAdapter;
 import com.shenma.yueba.baijia.adapter.ScrollViewPagerAdapter;
@@ -41,6 +42,7 @@ import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.ListViewUtils;
+import com.shenma.yueba.util.ToolsUtil;
 
 public class MyBuyerFragment extends Fragment {
 	List<FragmentBean> fragment_list = new ArrayList<FragmentBean>();
@@ -179,26 +181,42 @@ public class MyBuyerFragment extends Fragment {
 	 * @param page int 访问页数
 	 * @param type int 0 刷新 1 加载
 	 * ***/
-	void sendRequestData(int page,final int type) {
+	void sendRequestData(final int page,final int type) {
 		Log.i("TAG", "currpage="+page+"   pagesize="+pagesize);
+		ToolsUtil.showNoDataView(getActivity(), false);
 		httpContril.getMyBuyerListData(page, pagesize,new HttpCallBackInterface() {
 
 					@Override
 					public void http_Success(Object obj) {
-						baijia_contact_listview.postDelayed(new Runnable() {
-							
-							@Override
-							public void run() {
-								baijia_contact_listview.onRefreshComplete();
-							}
-						}, 1000);
-						
+						ishow=false;
+						baijia_contact_listview.onRefreshComplete();
+						currpage=page;
 						if (obj != null && obj instanceof MyRequestProductListInfoBean) {
 							MyRequestProductListInfoBean bean = (MyRequestProductListInfoBean) obj;
 							MyHomeProductListInfoBean data = bean.getData();
-							if (data != null) {
+							if(data==null || data.getItems()==null)
+							{
+								if(page==1)
+								{
+									baijia_contact_listview.setMode(Mode.PULL_FROM_START);
+									ToolsUtil.showNoDataView(getActivity(), true);
+								}
+							}else
+							{
+								
 								int totalPage = data.getTotalpaged();
-								currpage=data.getPageindex();
+								if(page==1)
+								{
+									baijia_contact_listview.setMode(Mode.PULL_FROM_START);
+								}
+								if(currpage>=totalPage)
+								{
+									MyApplication.getInstance().showMessage(getActivity(), getActivity().getResources().getString(R.string.lastpagedata_str));
+									baijia_contact_listview.setMode(Mode.PULL_FROM_START);
+								}else
+								{
+									baijia_contact_listview.setMode(Mode.BOTH);
+								}
 								
 								switch (type) {
 								case 0:
@@ -208,25 +226,22 @@ public class MyBuyerFragment extends Fragment {
 									addData(data);
 									break;
 								}
-							} else {
-								MyApplication.getInstance().showMessage(
-										getActivity(), "没有任何数据");
 							}
-
 						}
+							else {
+								MyApplication.getInstance().showMessage(getActivity(), "没有任何数据");
+								if(page==1)
+								{
+									ToolsUtil.showNoDataView(getActivity(), true);
+								}
+							}
+                           
 					}
 
 					@Override
 					public void http_Fails(int error, String msg) {
-                    baijia_contact_listview.postDelayed(new Runnable() {
-							
-							@Override
-							public void run() {
-								baijia_contact_listview.onRefreshComplete();
-							}
-						}, 1000);
-						MyApplication.getInstance().showMessage(getActivity(),
-								msg);
+						baijia_contact_listview.onRefreshComplete();
+						MyApplication.getInstance().showMessage(getActivity(),msg);
 					}
 				}, getActivity(),ishow,false);
 	}
@@ -235,13 +250,15 @@ public class MyBuyerFragment extends Fragment {
 	 * 加载数据
 	 * **/
 	void addData(MyHomeProductListInfoBean data) {
-		currpage++;
-		ishow=false;
-		showloading_layout_view.setVisibility(View.GONE);
+		//showloading_layout_view.setVisibility(View.GONE);
 		MyProductListInfoBean item = data.getItems();
 		if(item.getProducts()!=null)
 		{
-			Products.addAll(item.getProducts());
+			if(item.getProducts().size()>0)
+			{
+				currpage++;
+				Products.addAll(item.getProducts());
+			}
 		}
 		buyerAdapter.notifyDataSetChanged();
 	}
@@ -250,19 +267,22 @@ public class MyBuyerFragment extends Fragment {
 	 * 刷新viewpager数据
 	 * ***/
 	void falshData(MyHomeProductListInfoBean data) {
-		currpage++;
-		ishow=false;
-		showloading_layout_view.setVisibility(View.GONE);
+		//showloading_layout_view.setVisibility(View.GONE);
 		MyProductListInfoBean item = data.getItems();
 		Banners.clear();
 		Products.clear();
 		
-		if(item.getProducts()!=null)
+		if(item.getProducts()!=null )
 		{
-			Products.addAll(item.getProducts());
+			if(item.getProducts().size()>0)
+			{
+				currpage++;
+				Products.addAll(item.getProducts());
+			}
 		}
 		buyerAdapter=new BuyerAdapter(Products, getActivity());
 		baijia_contact_listview.setAdapter(buyerAdapter);
+		buyerAdapter.notifyDataSetChanged();
 	}
 	
 	/*****

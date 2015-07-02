@@ -137,8 +137,7 @@ public class SearchActivity extends FragmentActivity implements OnClickListener 
 		fragmentList.add(brandFragment);
 		//fragmentList.add(tagFragment);
 		fragmentList.add(buyerFragment);
-		myFragmentPagerAdapter = new MyFragmentPagerAdapter(
-				getSupportFragmentManager(), fragmentList);
+		myFragmentPagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager(), fragmentList);
 
 	}
 	

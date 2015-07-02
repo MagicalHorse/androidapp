@@ -21,6 +21,8 @@
             android:id="@+id/showloading_layout_view"
             android:layout_centerInParent="true"
             layout="@layout/showloading_layout" />
+        
+        <include layout="@layout/nodata_layout"/>
     </RelativeLayout>
 
 </LinearLayout>

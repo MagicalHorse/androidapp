@@ -70,7 +70,7 @@ public class BuyerStreetFragment extends Fragment {
 	TextView focus_textview;
 	// tab原点的 父视图
 	LinearLayout baijia_head_layout;
-	//最新上新
+	// 最新上新
 	TextView buyersteet_newtextview;
 	RelativeLayout baijiasteetfragmnet_layout_head_viewpager_relativelayout;
 	View parentview;
@@ -86,28 +86,29 @@ public class BuyerStreetFragment extends Fragment {
 	// 每页显示的条数
 	int pagesize = Constants.PAGESIZE_VALUE;
 	int maxcount = 8;
-	//是否显示进度条
-	boolean ishow=false;
+	// 是否显示进度条
+	boolean ishow = false;
 	List<BannersInfoBean> Banners = new ArrayList<BannersInfoBean>();
 	// 商品信息列表
 	List<ProductsInfoBean> Products = new ArrayList<ProductsInfoBean>();
 	BitmapUtils bitmapUtils;
-    List<ImageView> imageViewlist=new ArrayList<ImageView>();
-    BuyerAdapter buyerAdapter;
-    
+	List<ImageView> imageViewlist = new ArrayList<ImageView>();
+	BuyerAdapter buyerAdapter;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		this.inflater = inflater;
 		if (parentview == null) {
-			ishow=true;
-			parentview = inflater.inflate(R.layout.buyersteetfragment_layout, null);
+			ishow = true;
+			parentview = inflater.inflate(R.layout.buyersteetfragment_layout,
+					null);
 			bitmapUtils = new BitmapUtils(getActivity());
 			initPullView();
 			initView(parentview);
 			requestFalshData();
 		}
-		ViewGroup vp = (ViewGroup)parentview.getParent();
+		ViewGroup vp = (ViewGroup) parentview.getParent();
 		if (vp != null) {
 			vp.removeView(parentview);
 		}
@@ -127,10 +128,12 @@ public class BuyerStreetFragment extends Fragment {
 	}
 
 	void initPullView() {
-		pulltorefreshscrollview = (PullToRefreshScrollView)parentview.findViewById(R.id.pulltorefreshscrollview);
+		pulltorefreshscrollview = (PullToRefreshScrollView) parentview
+				.findViewById(R.id.pulltorefreshscrollview);
 		// 设置标签显示的内容
 		pulltorefreshscrollview.getLoadingLayoutProxy().setPullLabel("下拉刷新");
-		pulltorefreshscrollview.getLoadingLayoutProxy().setRefreshingLabel("刷新中。。。");
+		pulltorefreshscrollview.getLoadingLayoutProxy().setRefreshingLabel(
+				"刷新中。。。");
 		pulltorefreshscrollview.getLoadingLayoutProxy().setReleaseLabel("松开刷新");
 		pulltorefreshscrollview.setMode(Mode.BOTH);
 		pulltorefreshscrollview
@@ -174,8 +177,10 @@ public class BuyerStreetFragment extends Fragment {
 	}
 
 	void initView(View v) {
-		baijiasteetfragmnet_layout_head_viewpager_relativelayout=(RelativeLayout)v.findViewById(R.id.baijiasteetfragmnet_layout_head_viewpager_relativelayout);
-		buyersteet_newtextview=(TextView)v.findViewById(R.id.buyersteet_newtextview);
+		baijiasteetfragmnet_layout_head_viewpager_relativelayout = (RelativeLayout) v
+				.findViewById(R.id.baijiasteetfragmnet_layout_head_viewpager_relativelayout);
+		buyersteet_newtextview = (TextView) v
+				.findViewById(R.id.buyersteet_newtextview);
 		baijia_head_layout = (LinearLayout) v
 				.findViewById(R.id.baijia_head_layout);
 		focus_textview = (TextView) v.findViewById(R.id.focus_textview);
@@ -186,7 +191,8 @@ public class BuyerStreetFragment extends Fragment {
 				.findViewById(R.id.baijia_contact_listview);
 		baijiasteetfragmnet_layout_head_viewpager = (ViewPager) v
 				.findViewById(R.id.baijiasteetfragmnet_layout_head_viewpager);
-		baijiasteetfragmnet_layout_head_viewpager.setOnPageChangeListener(new OnPageChangeListener() {
+		baijiasteetfragmnet_layout_head_viewpager
+				.setOnPageChangeListener(new OnPageChangeListener() {
 
 					@Override
 					public void onPageSelected(int arg0) {
@@ -205,39 +211,42 @@ public class BuyerStreetFragment extends Fragment {
 					}
 				});
 
-		baijiasteetfragmnet_layout_head_viewpager.setOnTouchListener(new OnTouchListener() {
+		baijiasteetfragmnet_layout_head_viewpager
+				.setOnTouchListener(new OnTouchListener() {
 
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
+					@Override
+					public boolean onTouch(View v, MotionEvent event) {
 
-				switch (event.getAction()) {
-				case MotionEvent.ACTION_DOWN:
-					stopTimerToViewPager();
-					break;
-				case MotionEvent.ACTION_UP:
-					startTimeToViewPager();
-					break;
-				}
-				return false;
-			}
-		});
-		
-		baijia_contact_listview.setOnItemClickListener(new OnItemClickListener() {
+						switch (event.getAction()) {
+						case MotionEvent.ACTION_DOWN:
+							stopTimerToViewPager();
+							break;
+						case MotionEvent.ACTION_UP:
+							startTimeToViewPager();
+							break;
+						}
+						return false;
+					}
+				});
+
+		baijia_contact_listview
+				.setOnItemClickListener(new OnItemClickListener() {
 
 					@Override
 					public void onItemClick(AdapterView<?> arg0, View arg1,
 							int arg2, long arg3) {
-						Intent intent = new Intent(getActivity(),ShopMainActivity.class);
+						Intent intent = new Intent(getActivity(),
+								ShopMainActivity.class);
 						startActivity(intent);
 					}
 				});
 	}
-	
+
 	/******
 	 * 上啦加载数据
 	 * ***/
 	void requestData() {
-		sendRequestData(currpage,1);
+		sendRequestData(currpage, 1);
 	}
 
 	/******
@@ -246,34 +255,54 @@ public class BuyerStreetFragment extends Fragment {
 	void requestFalshData() {
 		stopTimerToViewPager();
 		currid = -1;
-		sendRequestData(1,0);
+		sendRequestData(1, 0);
 
 	}
 
 	/******
 	 * 与网络通信请求数据
-	 * @param page int 当前页
-	 * @param type int 0 刷新 1 加载
+	 * 
+	 * @param page
+	 *            int 当前页
+	 * @param type
+	 *            int 0 刷新 1 加载
 	 * ***/
-	void sendRequestData(int page,final int type) {
-		Log.i("TAG", "currpage="+page+"   pagesize="+pagesize);
-		httpContril.getProduceHomeListData(page, pagesize,new HttpCallBackInterface() {
+	void sendRequestData(final int page, final int type) {
+		ToolsUtil.showNoDataView(getActivity(), false);// 设置隐藏
+		Log.i("TAG", "currpage=" + page + "   pagesize=" + pagesize);
+		httpContril.getProduceHomeListData(page, pagesize,
+				new HttpCallBackInterface() {
 
 					@Override
 					public void http_Success(Object obj) {
-						buyersteet_newtextview.setText("最新上新");
-						FontManager.changeFonts(getActivity(), buyersteet_newtextview);
-						if (obj != null && obj instanceof RequestProductListInfoBean) {
+						currpage = page;
+						ishow = false;
+                        buyersteet_newtextview.setText("最新上新");
+						FontManager.changeFonts(getActivity(),buyersteet_newtextview);
+						if (obj != null&& obj instanceof RequestProductListInfoBean) {
 							RequestProductListInfoBean bean = (RequestProductListInfoBean) obj;
 							HomeProductListInfoBean data = bean.getData();
-							if (data != null) {
-								currpage=data.getPageindex();
-								int totalPage = data.getTotalpaged();
-								/*if (currpage >= totalPage) {
+							if(data==null || data.getItems()==null)
+							{
+								if(page==1)
+								{
 									pulltorefreshscrollview.setMode(Mode.PULL_FROM_START);
+									ToolsUtil.showNoDataView(getActivity(), true);
+								}
+							}else 
+							{
+								if(page==1)
+								{
+									pulltorefreshscrollview.setMode(Mode.PULL_FROM_START);
+								}
+								
+								int totalPage = data.getTotalpaged();
+								if (currpage >= totalPage) {
+									pulltorefreshscrollview.setMode(Mode.PULL_FROM_START);
+									MyApplication.getInstance().showMessage(getActivity(), getActivity().getResources().getString(R.string.lastpagedata_str));
 								} else {
 									pulltorefreshscrollview.setMode(Mode.BOTH);
-								}*/
+								}
 								switch (type) {
 								case 0:
 									falshData(data);
@@ -282,12 +311,16 @@ public class BuyerStreetFragment extends Fragment {
 									addData(data);
 									break;
 								}
+							}
+								
 							} else {
-								MyApplication.getInstance().showMessage(
-										getActivity(), "没有任何数据");
+								if (page == 1) {
+									ToolsUtil.showNoDataView(getActivity(),true);
+								}
+								MyApplication.getInstance().showMessage(getActivity(), "没有任何数据");
+								 
 							}
 
-						}
 					}
 
 					@Override
@@ -296,20 +329,22 @@ public class BuyerStreetFragment extends Fragment {
 						MyApplication.getInstance().showMessage(getActivity(),
 								msg);
 					}
-				}, getActivity(),ishow,true);
+				}, getActivity(), ishow, true);
 	}
 
 	/***
 	 * 加载数据
 	 * **/
 	void addData(HomeProductListInfoBean data) {
-		currpage++;
-		ishow=false;
 		showloading_layout_view.setVisibility(View.GONE);
 		ProductListInfoBean item = data.getItems();
-		if(item.getProducts()!=null)
-		{
-			Products.addAll(item.getProducts());
+		if (item.getProducts() != null) {
+			if(item.getProducts().size()>0)
+			{
+				currpage++;
+				Products.addAll(item.getProducts());
+			}
+			
 		}
 		buyerAdapter.notifyDataSetChanged();
 		ListViewUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
@@ -320,8 +355,7 @@ public class BuyerStreetFragment extends Fragment {
 	 * 刷新viewpager数据
 	 * ***/
 	void falshData(HomeProductListInfoBean data) {
-		currpage++;
-		ishow=false;
+		
 		showloading_layout_view.setVisibility(View.GONE);
 		currid = -1;
 		ProductListInfoBean item = data.getItems();
@@ -332,43 +366,55 @@ public class BuyerStreetFragment extends Fragment {
 		if (item != null && item.getBanners() != null) {
 			Banners = item.getBanners();
 			for (int i = 0; i < Banners.size(); i++) {
-				ImageView imageView =new ImageView(getActivity());
-				imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+				ImageView imageView = new ImageView(getActivity());
+				imageView.setLayoutParams(new ViewGroup.LayoutParams(
+						ViewGroup.LayoutParams.MATCH_PARENT,
+						ViewGroup.LayoutParams.MATCH_PARENT));
 				imageView.setTag(Banners.get(i));
 				imageViewlist.add(imageView);
-				initPic(ToolsUtil.nullToString(ToolsUtil.getImage(Banners.get(i).getPic(), 320, 0)), imageView);
+				initPic(ToolsUtil.nullToString(ToolsUtil.getImage(Banners
+						.get(i).getPic(), 320, 0)), imageView);
 				imageView.setOnClickListener(new OnClickListener() {
-					
+
 					@Override
 					public void onClick(View v) {
-						BannersInfoBean bannersInfoBean=(BannersInfoBean)v.getTag();
-						Intent intent=new Intent(getActivity(),WebActivity.class);
+						BannersInfoBean bannersInfoBean = (BannersInfoBean) v
+								.getTag();
+						Intent intent = new Intent(getActivity(),
+								WebActivity.class);
 						intent.putExtra("url", bannersInfoBean.getLink());
 						startActivity(intent);
 					}
 				});
 			}
 		}
-		DisplayMetrics dm=new DisplayMetrics();
-		getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
-		int width=dm.widthPixels;
-		int height=width/2;
-		baijiasteetfragmnet_layout_head_viewpager_relativelayout.setLayoutParams(new LinearLayout.LayoutParams(width, height));
-		((RelativeLayout.LayoutParams)baijia_head_layout.getLayoutParams()).bottomMargin=40;
-		pagerAdapter = new ScrollViewPagerAdapter(getActivity(),imageViewlist);
-		baijiasteetfragmnet_layout_head_viewpager.setAdapter(pagerAdapter);
 		if (imageViewlist.size() > 0) {
-			setcurrItem(0);
+			DisplayMetrics dm = new DisplayMetrics();
+			getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
+			int width = dm.widthPixels;
+			int height = width / 2;
+			baijiasteetfragmnet_layout_head_viewpager_relativelayout
+					.setLayoutParams(new LinearLayout.LayoutParams(width,
+							height));
+			((RelativeLayout.LayoutParams) baijia_head_layout.getLayoutParams()).bottomMargin = 40;
+			pagerAdapter = new ScrollViewPagerAdapter(getActivity(),
+					imageViewlist);
+			baijiasteetfragmnet_layout_head_viewpager.setAdapter(pagerAdapter);
+			if (imageViewlist.size() > 0) {
+				setcurrItem(0);
+			}
+			startTimeToViewPager();
 		}
-		startTimeToViewPager();
-		
-		if(item.getProducts()!=null)
-		{
-			Products.addAll(item.getProducts());
+		if (item.getProducts() != null ) {
+			if(item.getProducts().size()>0)
+			{
+				currpage++;
+				Products.addAll(item.getProducts());
+			}
 		}
-		buyerAdapter=new BuyerAdapter(Products, getActivity());
+		buyerAdapter = new BuyerAdapter(Products, getActivity());
 		baijia_contact_listview.setAdapter(buyerAdapter);
-		//重新计算listview的高度
+		// 重新计算listview的高度
 		ListViewUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
 		pulltorefreshscrollview.onRefreshComplete();
 
@@ -430,8 +476,7 @@ public class BuyerStreetFragment extends Fragment {
 	 * 启动自动滚动
 	 * **/
 	void startTimeToViewPager() {
-		if(true)
-		{
+		if (true) {
 			return;
 		}
 		stopTimerToViewPager();
@@ -481,12 +526,15 @@ public class BuyerStreetFragment extends Fragment {
 		}
 	}
 
-	
 	/****
 	 * 加载图片
 	 * */
 	void initPic(final String url, final ImageView iv) {
-		Log.i("TAG", "URL:"+url);
-		MyApplication.getInstance().getImageLoader().displayImage(url, iv, MyApplication.getInstance().getDisplayImageOptions());
+		Log.i("TAG", "URL:" + url);
+		MyApplication
+				.getInstance()
+				.getImageLoader()
+				.displayImage(url, iv,
+						MyApplication.getInstance().getDisplayImageOptions());
 	}
 }

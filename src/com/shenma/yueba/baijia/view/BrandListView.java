@@ -29,6 +29,7 @@ import com.shenma.yueba.baijia.modle.RequestBrandInfoBean;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
+import com.shenma.yueba.util.ToolsUtil;
 
 /**  
  * @author gyj  
@@ -158,7 +159,6 @@ public class BrandListView extends BaseView{
 		}
 		showloading_layout_view.setVisibility(View.GONE);
 		brandAdapter.notifyDataSetChanged();
-		pull_refresh_list.onRefreshComplete();
 	}
 	
 	void falshData(BrandInfoBean bean)
@@ -174,7 +174,6 @@ public class BrandListView extends BaseView{
 		brandAdapter.notifyDataSetChanged();
 		
 		//ListUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
-		pull_refresh_list.onRefreshComplete();
 		
 	}
 	
@@ -182,30 +181,35 @@ public class BrandListView extends BaseView{
 	 * @param page int 访问页面
 	 * @param type int 0：刷新 1 加载
 	 * ***/
-	void sendHttp(int page,final int type)
+	void sendHttp(final int page,final int type)
 	{
+		ToolsUtil.showNoDataView(activity, view,false);
 		httpCntrol.getBrandProductList(page, pageSize, showDialog, new HttpCallBackInterface() {
 			
 			@Override
 			public void http_Success(Object obj) {
 				pull_refresh_list.onRefreshComplete();
+				currPage=page;
+				showDialog=false;
 				if(obj!=null && obj instanceof RequestBrandInfoBean)
 				{
 					RequestBrandInfoBean bean=(RequestBrandInfoBean)obj;
-					if (bean != null && bean.getData()!=null) {
-						BrandInfoBean brandInfoBean=bean.getData();
-						int currPage=brandInfoBean.getPageindex();
-						if(currPage==1)
+					if(bean.getData()==null || bean.getData().getItems()==null || bean.getData().getItems().size()==0)
+					{
+						if(page==1)
 						{
-							if(bean.getData()==null)
-						   {
-								MyApplication.getInstance().showMessage(activity, "还没有信息");
-								return;
-						   }
+							pull_refresh_list.setMode(Mode.PULL_FROM_START);
+							ToolsUtil.showNoDataView(activity,view ,true);
 						}
-						
-						int totalPage = brandInfoBean.getTotalpaged();
+					}else 
+					{
+						if(page==1)
+						{
+							pull_refresh_list.setMode(Mode.PULL_FROM_START);
+						}
+						int totalPage = bean.getData().getTotalpaged();
 						if (currPage >= totalPage) {
+							MyApplication.getInstance().showMessage(activity, activity.getResources().getString(R.string.lastpagedata_str));
 							pull_refresh_list.setMode(Mode.PULL_FROM_START);
 						} else {
 							pull_refresh_list.setMode(Mode.BOTH);
@@ -218,10 +222,15 @@ public class BrandListView extends BaseView{
 							addData(bean.getData());
 							break;
 						}
+						
+					}
 					} else {
+						if(page==1)
+						{
+							ToolsUtil.showNoDataView(activity,view, true);
+						}
 						MyApplication.getInstance().showMessage(activity, "没有任何数据");
 					}
-				}
 				
 			}
 			

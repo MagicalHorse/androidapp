@@ -24,6 +24,7 @@ import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
+import com.shenma.yueba.util.ToolsUtil;
 
 /**
  * @author gyj
@@ -96,9 +97,9 @@ public class ShopPuBuliuFragment extends Fragment implements
 	 * @param type
 	 *            int 0:刷新 1：加载
 	 * ****/
-	void sendHttp(int page,final int type)
+	void sendHttp(final int page,final int type)
 	{
-		
+		ToolsUtil.showNoDataView(getActivity(), false);
 		httpControl.GetBaijiaGetUserProductList(userID,page, pageSize, Filter, false, new HttpCallBackInterface() {
 			
 			@Override
@@ -106,13 +107,24 @@ public class ShopPuBuliuFragment extends Fragment implements
 				refreshComplete();
 				if(obj==null || !(obj instanceof RequestMyFavoriteProductListInfoBean) || ((RequestMyFavoriteProductListInfoBean)obj).getData()==null)
 				{
+					if(page==1)
+					{
+						ToolsUtil.showNoDataView(getActivity(), true);
+					}
 					return;
 				}else
 				{
 					RequestMyFavoriteProductListInfoBean bean=(RequestMyFavoriteProductListInfoBean)obj;
 					MyFavoriteProductListInfoBean myFavoriteProductListInfoBean=bean.getData();
 					currPage=myFavoriteProductListInfoBean.getPageindex();
-				
+				    if(page==1)
+				    {
+				    	if(myFavoriteProductListInfoBean.getItems()==null || myFavoriteProductListInfoBean.getItems().size()==0)
+				    	{
+				    		ToolsUtil.showNoDataView(getActivity(), true);
+				    	}
+				    }
+					
 				switch(type)
 				{
 				case 0:

@@ -29,6 +29,7 @@ import com.shenma.yueba.baijia.view.MyCircleView;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 
 /**  
@@ -159,7 +160,7 @@ public class CircleListActivity extends BaseActivityWithTopView{
 		showloading_layout_view.setVisibility(View.GONE);
 		myCircleAdapter.notifyDataSetChanged();
 		
-		pull_refresh_list.onRefreshComplete();
+		
 		
 	}
 	
@@ -168,41 +169,55 @@ public class CircleListActivity extends BaseActivityWithTopView{
 	 * @param type int 0：刷新  1：加载
 	 * 
 	 * **/
-	void sendHttp(int page,final int type)
+	void sendHttp(final int page,final int type)
 	{
 		httpCntrol.getMyCircle(page, pageSize, showDialog, new HttpCallBackInterface() {
 			
 			@Override
 			public void http_Success(Object obj) {
+				pull_refresh_list.onRefreshComplete();
 				showDialog=false;
+				currPage=page;
 				if(obj!=null && obj instanceof RequestMyCircleInfoBean)
 				{
 					RequestMyCircleInfoBean bean=(RequestMyCircleInfoBean)obj;
 					if (bean != null) {
-						currPage=bean.getPageindex();
-						if(currPage==1)
+						if(bean.getData()==null || bean.getData().getItems()==null || bean.getData().getItems().size()==0)
 						{
-							if(bean.getData()==null)
-						   {
-								MyApplication.getInstance().showMessage(CircleListActivity.this, "还没有订单");
-								return;
-						   }
+							if(page==1)
+							{
+								pull_refresh_list.setMode(Mode.PULL_FROM_START);
+								ToolsUtil.showNoDataView(CircleListActivity.this, true);
+							}
+						}else
+						{
+							if(page==1)
+							{
+								pull_refresh_list.setMode(Mode.PULL_FROM_START);
+							}
+							int totalPage = bean.getTotalpaged();
+							if (currPage >= totalPage) {
+								MyApplication.getInstance().showMessage(CircleListActivity.this, CircleListActivity.this.getResources().getString(R.string.lastpagedata_str));
+								pull_refresh_list.setMode(Mode.PULL_FROM_START);
+							} else {
+								pull_refresh_list.setMode(Mode.BOTH);
+							}
+							switch (type) {
+							case 0:
+								falshData(bean.getData());
+								break;
+							case 1:
+								addData(bean.getData());
+								break;
+							}
+							
 						}
-						int totalPage = bean.getTotalpaged();
-						if (currPage >= totalPage) {
-							pull_refresh_list.setMode(Mode.PULL_FROM_START);
-						} else {
-							pull_refresh_list.setMode(Mode.BOTH);
-						}
-						switch (type) {
-						case 0:
-							falshData(bean.getData());
-							break;
-						case 1:
-							addData(bean.getData());
-							break;
-						}
+						
 					} else {
+						if(page==1)
+						{
+							ToolsUtil.showNoDataView(CircleListActivity.this,view, true);
+						}
 						MyApplication.getInstance().showMessage(CircleListActivity.this, "没有任何数据");
 					}
 				}

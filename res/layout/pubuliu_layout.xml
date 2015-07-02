@@ -1,26 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_marginTop="@dimen/shop_main_width3_dimen"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
+    android:layout_marginTop="@dimen/shop_main_width3_dimen"
     android:padding="@dimen/shop_main_width5_dimen" >
 
     <LinearLayout
-        android:id="@+id/pubuliy_left_linearlayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical" >
-    </LinearLayout>
+        android:orientation="horizontal" >
 
-    <LinearLayout
-        android:id="@+id/pubuliy_right_linearlayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/shop_main_width5_dimen"
-        android:layout_weight="1"
-        android:orientation="vertical" >
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/pubuliy_left_linearlayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+        </LinearLayout>
 
-</LinearLayout>
+        <LinearLayout
+            android:id="@+id/pubuliy_right_linearlayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/shop_main_width5_dimen"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+        </LinearLayout>
+    </LinearLayout>
+   
+</RelativeLayout>

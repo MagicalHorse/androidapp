@@ -29,6 +29,7 @@ import com.shenma.yueba.baijia.modle.RequestMyCircleInfoBean;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
+import com.shenma.yueba.util.ToolsUtil;
 
 /**
  * 我的买手
@@ -86,7 +87,7 @@ public class MyCircleView extends BaseView{
 	{
 		pull_refresh_list=(PullToRefreshListView)view.findViewById(R.id.pull_refresh_list);
 		showloading_layout_view=(LinearLayout)view.findViewById(R.id.showloading_layout_view);
-		//pull_refresh_list.setMode(Mode.PULL_FROM_START);
+		pull_refresh_list.setMode(Mode.BOTH);
 		 
 		pull_refresh_list.setOnPullEventListener(new OnPullEventListener<ListView>() {
 
@@ -152,6 +153,7 @@ public class MyCircleView extends BaseView{
 	
 	void addData(MyCircleInfoBean bean)
 	{
+		isFirst=false;
 		currPage++;
 		if(bean.getItems()!=null)
 		{
@@ -159,7 +161,6 @@ public class MyCircleView extends BaseView{
 		}
 		showloading_layout_view.setVisibility(View.GONE);
 		myCircleAdapter.notifyDataSetChanged();
-		pull_refresh_list.onRefreshComplete();
 	}
 	
 	void falshData(MyCircleInfoBean bean)
@@ -174,8 +175,6 @@ public class MyCircleView extends BaseView{
 		showloading_layout_view.setVisibility(View.GONE);
 		myCircleAdapter.notifyDataSetChanged();
 		
-		pull_refresh_list.onRefreshComplete();
-		
 	}
 	
 	/******
@@ -183,41 +182,54 @@ public class MyCircleView extends BaseView{
 	 * @param type int 0：刷新  1：加载
 	 * 
 	 * **/
-	void sendHttp(int page,final int type)
+	void sendHttp(final int page,final int type)
 	{
+		ToolsUtil.showNoDataView(activity, false);
 		httpCntrol.getMyCircle(page, 10000, showDialog, new HttpCallBackInterface() {
 			
 			@Override
 			public void http_Success(Object obj) {
 				showDialog=false;
+				pull_refresh_list.onRefreshComplete();
+				currPage=page;
 				if(obj!=null && obj instanceof RequestMyCircleInfoBean)
 				{
 					RequestMyCircleInfoBean bean=(RequestMyCircleInfoBean)obj;
 					if (bean != null) {
-						currPage=bean.getPageindex();
-						if(currPage==1)
+						if(bean.getData()==null || bean.getData().getItems()==null || bean.getData().getItems().size()==0)
 						{
-							if(bean.getData()==null)
-						   {
-								MyApplication.getInstance().showMessage(activity, "还没有订单");
-								return;
-						   }
-						}
-						int totalPage = bean.getTotalpaged();
-						/*if (currPage >= totalPage) {
-							pull_refresh_list.setMode(Mode.PULL_FROM_START);
-						} else {
-							pull_refresh_list.setMode(Mode.BOTH);
-						}*/
-						switch (type) {
-						case 0:
-							falshData(bean.getData());
-							break;
-						case 1:
-							addData(bean.getData());
-							break;
+							if(page==1)
+							{
+								pull_refresh_list.setMode(Mode.PULL_FROM_START);
+								ToolsUtil.showNoDataView(activity, true);
+							}
+						}else
+						{
+							if(page==1)
+							{
+								pull_refresh_list.setMode(Mode.PULL_FROM_START);
+							}
+							int totalPage = bean.getTotalpaged();
+							if (currPage >= totalPage) {
+								MyApplication.getInstance().showMessage(activity, activity.getResources().getString(R.string.lastpagedata_str));
+								pull_refresh_list.setMode(Mode.PULL_FROM_START);
+							} else {
+								pull_refresh_list.setMode(Mode.BOTH);
+							}
+							switch (type) {
+							case 0:
+								falshData(bean.getData());
+								break;
+							case 1:
+								addData(bean.getData());
+								break;
+							}
 						}
 					} else {
+						if(page==1)
+						{
+							ToolsUtil.showNoDataView(activity, true);
+						}
 						MyApplication.getInstance().showMessage(
 								activity, "没有任何数据");
 					}
@@ -227,6 +239,7 @@ public class MyCircleView extends BaseView{
 			
 			@Override
 			public void http_Fails(int error, String msg) {
+				pull_refresh_list.onRefreshComplete();
 				MyApplication.getInstance().showMessage(activity, msg);
 			}
 		},activity );

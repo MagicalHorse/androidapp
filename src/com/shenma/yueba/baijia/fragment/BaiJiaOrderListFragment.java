@@ -30,6 +30,7 @@ import com.shenma.yueba.baijia.modle.BaiJiaOrderListInfoBean;
 import com.shenma.yueba.baijia.modle.RequestBaiJiaOrderListInfoBean;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.umeng.socialize.utils.Log;
 
@@ -167,44 +168,42 @@ public class BaiJiaOrderListFragment extends Fragment implements
 	 * @param type
 	 *            int 0 刷新 1 加载
 	 * ***/
-	void sendRequestData(int page, final int type) {
+	void sendRequestData(final int page, final int type) {
+		ToolsUtil.showNoDataView(getActivity(), false);
 		Log.i("TAG", "currpage=" + page + "   pagesize=" + pagersize);
 		httpControl.getBaijiaOrderList(page, pagersize, state, ishow,
 				new HttpCallBackInterface() {
 
 					@Override
 					public void http_Success(Object obj) {
-						pull_refresh_list.postDelayed(new Runnable() {
-
-							@Override
-							public void run() {
-								pull_refresh_list.onRefreshComplete();
-							}
-						}, 1000);
-						if (obj != null
-								&& obj instanceof RequestBaiJiaOrderListInfoBean) {
+						pull_refresh_list.onRefreshComplete();
+						currpage=page;
+						ishow = false;
+						if (obj != null&& obj instanceof RequestBaiJiaOrderListInfoBean) {
 							requestBaiJiaOrderListInfoBean = (RequestBaiJiaOrderListInfoBean) obj;
-							BaiJiaOrderListInfoBean bean = requestBaiJiaOrderListInfoBean
-									.getData();
-
-							if (bean != null) {
-								if (currpage == 1) {
-									if (bean.getItems() == null
-											|| bean.getItems().size() == 0) {
-										MyApplication.getInstance()
-												.showMessage(getActivity(),
-														"还没有订单");
-										return;
-									}
+							BaiJiaOrderListInfoBean bean = requestBaiJiaOrderListInfoBean.getData();
+							if(bean==null || bean.getItems()==null || bean.getItems().size()==0)
+							{
+								if(page==1)
+								{
+									pull_refresh_list.setMode(Mode.PULL_FROM_START);
+									ToolsUtil.showNoDataView(getActivity(),true);
 								}
-								currpage = bean.getPageindex();
-								int totalPage = bean.getTotalpaged();
-								/*
-								 * if (currpage >= totalPage) {
-								 * pull_refresh_list
-								 * .setMode(Mode.PULL_FROM_START); } else {
-								 * pull_refresh_list.setMode(Mode.BOTH); }
-								 */
+							}else
+							{
+							   if(page==1)
+							   {
+								   pull_refresh_list.setMode(Mode.PULL_FROM_START);
+							   }
+							   
+							   int totalPage = bean.getTotalpaged();
+
+								if (currpage >= totalPage) {
+									MyApplication.getInstance().showMessage(getActivity(), getActivity().getResources().getString(R.string.lastpagedata_str));
+									pull_refresh_list.setMode(Mode.PULL_FROM_START);
+								} else {
+									pull_refresh_list.setMode(Mode.BOTH);
+								}
 								switch (type) {
 								case 0:
 									falshData(bean);
@@ -213,25 +212,22 @@ public class BaiJiaOrderListFragment extends Fragment implements
 									addData(bean);
 									break;
 								}
-							} else {
-								MyApplication.getInstance().showMessage(
-										getActivity(), "没有任何数据");
 							}
-						}
+
+							} else {
+								if(page==1)
+								{
+									ToolsUtil.showNoDataView(getActivity(), true);
+								}
+								MyApplication.getInstance().showMessage(getActivity(), "没有任何数据");
+							}
 
 					}
 
 					@Override
 					public void http_Fails(int error, String msg) {
-						MyApplication.getInstance().showMessage(getActivity(),
-								msg);
-						pull_refresh_list.postDelayed(new Runnable() {
-
-							@Override
-							public void run() {
-								pull_refresh_list.onRefreshComplete();
-							}
-						}, 1000);
+						MyApplication.getInstance().showMessage(getActivity(),msg);
+						pull_refresh_list.onRefreshComplete();
 					}
 				}, getActivity());
 

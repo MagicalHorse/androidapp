@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ImageView.ScaleType;
 
@@ -82,12 +83,12 @@ public class MyCollectionActivity extends BaseActivityWithTopView{
 				MyCollectionActivity.this.finish();
 			}
 		});
-		LinearLayout pubuliu_layout_include=(LinearLayout)findViewById(R.id.pubuliu_layout_include);
+		RelativeLayout pubuliu_layout_include=(RelativeLayout)findViewById(R.id.pubuliu_layout_include);
 		initPuBuView(pubuliu_layout_include);
 		pubuliy_left_linearlayout=(LinearLayout)findViewById(R.id.pubuliy_left_linearlayout);
 		pubuliy_right_linearlayout=(LinearLayout)findViewById(R.id.pubuliy_right_linearlayout);
 		shop_main_layout_title_pulltorefreshscrollview=(PullToRefreshScrollView)findViewById(R.id.shop_main_layout_title_pulltorefreshscrollview);
-		shop_main_layout_title_pulltorefreshscrollview.setMode(Mode.PULL_FROM_START);
+		shop_main_layout_title_pulltorefreshscrollview.setMode(Mode.BOTH);
 		shop_main_layout_title_pulltorefreshscrollview.setOnRefreshListener(new OnRefreshListener2() {
 
 			@Override
@@ -122,9 +123,12 @@ public class MyCollectionActivity extends BaseActivityWithTopView{
 	 * ***/
 	void addData(MyFavoriteProductListInfoBean bean)
 	{
+		if(bean.getItems()==null || bean.getItems().size()==0)
+		{
+			return;
+		}
 		currPage++;
 		onaddData(bean.getItems());
-		shop_main_layout_title_pulltorefreshscrollview.onRefreshComplete();
 	}
 	
 	/****
@@ -132,11 +136,14 @@ public class MyCollectionActivity extends BaseActivityWithTopView{
 	 * ***/
 	void falshData(MyFavoriteProductListInfoBean bean)
 	{
+		if(bean.getItems()==null || bean.getItems().size()==0)
+		{
+			return;
+		}
 		currPage++;
 		pubuliy_right_linearlayout.removeAllViews();
 		pubuliy_left_linearlayout.removeAllViews();
 		onResher(bean.getItems());
-		shop_main_layout_title_pulltorefreshscrollview.onRefreshComplete();
 	}
 	
         
@@ -150,43 +157,51 @@ public class MyCollectionActivity extends BaseActivityWithTopView{
      * @param page int 访问页
      * @param type int 0: 刷新  1:加载更多
      * **/
-    void sendHttp(int page,final int type)
+    void sendHttp(final int page,final int type)
 	{
+    	ToolsUtil.showNoDataView(MyCollectionActivity.this, false);
     	Log.i("TAG", "currpage="+page+"   pagesize="+pageSize);
 		httpCntrol.getMyFavoriteProductList(page, pageSize, showDialog, new HttpCallBackInterface() {
 			
 			@Override
 			public void http_Success(Object obj) {
+				currPage=page;
 				shop_main_layout_title_pulltorefreshscrollview.onRefreshComplete();
+				showDialog=false;
 				if(obj!=null && obj instanceof RequestMyFavoriteProductListInfoBean)
 				{
 					RequestMyFavoriteProductListInfoBean bean=(RequestMyFavoriteProductListInfoBean)obj;
 					if (bean != null) {
-						if(currPage==1)
+						if(bean.getData()==null || bean.getData().getItems()==null || bean.getData().getItems().size()==0)
 						{
-							if(bean.getData()==null)
-						   {
-								MyApplication.getInstance().showMessage(MyCollectionActivity.this, "还没有信息");
-								return;
-						   }
-						}
-					    currPage=bean.getData().getPageindex();
-						int totalPage = bean.getData().getTotalpaged();
-						if (currPage >= totalPage) {
-							shop_main_layout_title_pulltorefreshscrollview.setMode(Mode.PULL_FROM_START);
-							MyApplication.getInstance().showMessage(MyCollectionActivity.this, "最后一页数据");
-						} else {
-							shop_main_layout_title_pulltorefreshscrollview.setMode(Mode.BOTH);
-						}
-						switch (type) {
-						case 0:
-							falshData(bean.getData());
-							break;
-						case 1:
-							addData(bean.getData());
-							break;
+							if(page==1)
+							{
+								shop_main_layout_title_pulltorefreshscrollview.setMode(Mode.PULL_FROM_START);
+								ToolsUtil.showNoDataView(MyCollectionActivity.this, true);
+							}
+						}else
+						{
+							int totalPage = bean.getData().getTotalpaged();
+							if (currPage >= totalPage) {
+								shop_main_layout_title_pulltorefreshscrollview.setMode(Mode.PULL_FROM_START);
+								MyApplication.getInstance().showMessage(MyCollectionActivity.this, MyCollectionActivity.this.getResources().getString(R.string.lastpagedata_str));
+							} else {
+								shop_main_layout_title_pulltorefreshscrollview.setMode(Mode.BOTH);
+							}
+							switch (type) {
+							case 0:
+								falshData(bean.getData());
+								break;
+							case 1:
+								addData(bean.getData());
+								break;
+							}
 						}
 					} else {
+						if(page==1)
+						{
+							ToolsUtil.showNoDataView(MyCollectionActivity.this, true);
+						}
 						MyApplication.getInstance().showMessage(MyCollectionActivity.this, "没有任何数据");
 					}
 				}

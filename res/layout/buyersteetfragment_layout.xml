@@ -33,7 +33,7 @@
                     <android.support.v4.view.ViewPager
                         android:id="@+id/baijiasteetfragmnet_layout_head_viewpager"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="wrap_content" />
 
                     <LinearLayout
                         android:id="@+id/baijia_head_layout"
@@ -74,6 +74,8 @@
             android:layout_centerInParent="true"
             layout="@layout/showloading_layout"
             android:visibility="gone" />
+        <!-- 无数据视图 -->
+        <include layout="@layout/nodata_layout"/>
     </RelativeLayout>
 
 </LinearLayout>

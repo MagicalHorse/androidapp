@@ -33,6 +33,7 @@ import com.shenma.yueba.baijia.modle.BrandSearchInfoBean;
 import com.shenma.yueba.baijia.modle.RequestBrandSearchInfoBean;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 
 /**
@@ -96,7 +97,7 @@ public class BuyerFragment extends BaseFragment{
 		});
 		searchBuyerAdapter=new SearchBuyerAdapter(getActivity(), mList);
 		pull_refresh_list.setAdapter(searchBuyerAdapter);
-		pull_refresh_list.setMode(Mode.BOTH);
+		pull_refresh_list.setMode(Mode.DISABLED);
 		 
 		pull_refresh_list.setOnPullEventListener(new OnPullEventListener<ListView>() {
 
@@ -146,6 +147,12 @@ public class BuyerFragment extends BaseFragment{
 	 * **/
 	 void requestData()
 	{
+		 if(key.equals(""))
+		 {
+			 MyApplication.getInstance().showMessage(getActivity(), "请输入关键字");
+			 pull_refresh_list.onRefreshComplete();
+			 return;
+		 }
 		sendHttp(1,currPage, state, key);
 	}
 	
@@ -154,6 +161,12 @@ public class BuyerFragment extends BaseFragment{
 	 * **/
 	void requestFalshData()
 	{
+		if(key.equals(""))
+		 {
+			 MyApplication.getInstance().showMessage(getActivity(), "请输入关键字");
+			 pull_refresh_list.onRefreshComplete();
+			 return;
+		 }
 		sendHttp(0,1, state, key);
 	}
 	
@@ -212,18 +225,38 @@ public class BuyerFragment extends BaseFragment{
 	 * ***/
 	void sendHttp(final int type ,final int page,int state,String key)
 	{
+		ToolsUtil.showNoDataView(getActivity(),view ,false);
 		httpControl.searchbrandList(page,Constants.PAGESIZE_VALUE, state,key,ishowStatus, new HttpCallBackInterface() {
 			
 			@Override
 			public void http_Success(Object obj) {
+				pull_refresh_list.onRefreshComplete();
 				currPage=page;
+				ishowStatus=false;
 				if(obj!=null)
 				{
 					RequestBrandSearchInfoBean bean=(RequestBrandSearchInfoBean)obj;
 					BrandSearchInfoBean brandSearchInfoBean=bean.getData();
-					if(brandSearchInfoBean!=null || brandSearchInfoBean.getItems()!=null)
+					if(brandSearchInfoBean==null || brandSearchInfoBean.getItems()==null || brandSearchInfoBean.getItems().size()==0)
 					{
-						currPage=brandSearchInfoBean.getPageindex();
+						if(page==1)
+						{
+							pull_refresh_list.setMode(Mode.PULL_FROM_START);
+							ToolsUtil.showNoDataView(getActivity(),view ,true);
+						}
+					}else
+					{
+						if(page==1)
+						{
+							pull_refresh_list.setMode(Mode.PULL_FROM_START);
+						}
+						int totalPage = bean.getData().getTotalpaged();
+						if (currPage >= totalPage) {
+							MyApplication.getInstance().showMessage(getActivity(), getActivity().getResources().getString(R.string.lastpagedata_str));
+							pull_refresh_list.setMode(Mode.PULL_FROM_START);
+						} else {
+							pull_refresh_list.setMode(Mode.BOTH);
+						}
 						switch(type)
 						{
 						case 0:
@@ -233,29 +266,21 @@ public class BuyerFragment extends BaseFragment{
 							addData(brandSearchInfoBean.getItems());
 							break;
 						}
-					}else
-					{
-						if(currPage==1)
-						{
-							http_Fails(500, "没有数据");
-						}
+						
 					}
-				}else
-				{
-					http_Fails(500, "获取数据失败");
+				} else {
+					if(page==1)
+					{
+						ToolsUtil.showNoDataView(getActivity(),view, true);
+					}
+					MyApplication.getInstance().showMessage(getActivity(), "没有任何数据");
 				}
 			}
 			
 			@Override
 			public void http_Fails(int error, String msg) {
 				MyApplication.getInstance().showMessage(getActivity(), msg);
-                 pull_refresh_list.postDelayed(new Runnable() {
-					
-					@Override
-					public void run() {
-						pull_refresh_list.onRefreshComplete();
-					}
-				}, 1000);
+				pull_refresh_list.onRefreshComplete();
 			}
 		}, getActivity());
 	}
@@ -270,6 +295,7 @@ public class BuyerFragment extends BaseFragment{
 		searchBuyerAdapter=new SearchBuyerAdapter(getActivity(), mList);
 		pull_refresh_list.setAdapter(searchBuyerAdapter);
 		this.key=key;
+		mList.clear();
 		requestFalshData();
 	}
 }
