@@ -47,6 +47,7 @@ import com.alibaba.sdk.android.oss.model.AccessControlList;
 import com.alibaba.sdk.android.oss.model.ClientConfiguration;
 import com.alibaba.sdk.android.oss.model.TokenGenerator;
 import com.alibaba.sdk.android.oss.util.OSSToolKit;
+import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.yangjia.modle.AliYunKeyBackBean;
@@ -752,5 +753,67 @@ public class ToolsUtil {
             }
         }
         return statusHeight;
+    }
+    
+    /****
+     * 显示 或隐藏 无数据试图
+     * @param activity Activity 俯视图
+     * @param status boolean 是否显示  true 显示  false 不显示
+     * ***/
+    public static void showNoDataView(final Activity activity,final boolean status)
+    {
+    	if(activity!=null)
+    	{
+    		activity.runOnUiThread(new Runnable() {
+				
+				@Override
+				public void run() {
+					View v=activity.findViewById(R.id.nodata_layout_textview);
+			    	if(v!=null)
+			    	{
+			    		FontManager.changeFonts(activity, v);
+			    		if(status)
+			    		{
+			    			v.setVisibility(View.VISIBLE);
+			    		}else
+			    		{
+			    			v.setVisibility(View.GONE);
+			    		}
+			    	}
+					
+				}
+			});
+    	}
+    }
+    
+    /****
+     * 显示 或隐藏 无数据试图
+     * @param activity Activity 俯视图
+     * @param status boolean 是否显示  true 显示  false 不显示
+     * ***/
+    public static void showNoDataView(final Activity activity,final View parentView,final boolean status)
+    {
+    	if(activity!=null)
+    	{
+    		activity.runOnUiThread(new Runnable() {
+				
+				@Override
+				public void run() {
+					View v=parentView.findViewById(R.id.nodata_layout_textview);
+			    	if(v!=null)
+			    	{
+			    		FontManager.changeFonts(activity, v);
+			    		if(status)
+			    		{
+			    			v.setVisibility(View.VISIBLE);
+			    		}else
+			    		{
+			    			v.setVisibility(View.GONE);
+			    		}
+			    	}
+					
+				}
+			});
+    	}
     }
 }
