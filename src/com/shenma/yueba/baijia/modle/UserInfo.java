@@ -8,6 +8,7 @@ import java.io.Serializable;
  */
 
 public class UserInfo implements Serializable {
+	private String level;//用户级别
 	private boolean IsBindMobile;// 是否绑定手机号
 	private boolean IsBindWeiXin;// 是否绑定微信号
 	private String Description;// 店铺说明
@@ -24,7 +25,6 @@ public class UserInfo implements Serializable {
 	String nickname = "";// 昵称,
 	String mobile = "";// 18500518027,
 	String email = "";// ,
-	int level;// 1,
 	String logo = "";// http;////123.57.77.5;//9550/customerportrait/default,
 	String logo_full = "";// http;////123.57.77.5;//9550/customerportrait/default_100x100.jpg,
 	String logobg_s = "";// http;////123.57.77.5;//9550/customerbg/default,
@@ -125,11 +125,14 @@ public class UserInfo implements Serializable {
 		this.email = email;
 	}
 
-	public int getLevel() {
+
+	
+
+	public String getLevel() {
 		return level;
 	}
 
-	public void setLevel(int level) {
+	public void setLevel(String level) {
 		this.level = level;
 	}
 
