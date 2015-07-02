@@ -1553,15 +1553,16 @@ public class HttpControl {
 	 * @param context  Context
 	 * @param state int 0: 搜索品牌列表, 1:搜索买手列表
      * @param  key  string类型，关键字
+     * @param ishowStatus boolean 是否显示等待对话框 true 是  false否
 	 * @return void
 	 * **/
-	public void searchbrandList(int currPage,int pageSize, int state,String key,final HttpCallBackInterface httpCallBack, Context context) {
+	public void searchbrandList(int currPage,int pageSize, int state,String key,boolean ishowStatus,final HttpCallBackInterface httpCallBack, Context context) {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put(Constants.PAGE, Integer.toString(currPage));
 		map.put(Constants.PAGESIZE, Integer.toString(pageSize));
 		map.put("state", Integer.toString(state));
 		map.put("key", key);
-		BasehttpSend(map, context, HttpConstants.METHOD_SEARCH,httpCallBack, RequestBrandSearchInfoBean.class, true, false);
+		BasehttpSend(map, context, HttpConstants.METHOD_SEARCH,httpCallBack, RequestBrandSearchInfoBean.class, ishowStatus, false);
 	}
 	
 	/**
@@ -2188,6 +2189,7 @@ public class HttpControl {
 				httpCallBack, BaseRequest.class, showDialog,
 				false);
 	}
+	
 	
 	/**
 	 * 修改推送状态
