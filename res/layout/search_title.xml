@@ -40,19 +40,21 @@
                 android:hint="请输入关键字"
                 android:imeOptions="actionSearch"
                 android:padding="3dip"
+                android:textSize="@dimen/textsize12sp"
                 android:paddingLeft="5dip" />
         </LinearLayout>
 
         <Button
             android:id="@+id/bt_search"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/shop_main_marginleft30_dimen"
             android:background="@drawable/shape_main_color_button"
             android:paddingBottom="5dip"
             android:paddingLeft="10dip"
             android:paddingRight="10dip"
             android:paddingTop="5dip"
             android:text="搜索"
+            android:textSize="@dimen/textsize12sp"
             android:textColor="@color/white" />
     </LinearLayout>
 
