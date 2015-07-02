@@ -39,6 +39,7 @@ import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.TagImageView;
 import com.shenma.yueba.yangjia.modle.StateBean;
 import com.shenma.yueba.yangjia.modle.TagListBean;
+import com.shenma.yueba.yangjia.modle.TagsBean;
 
 /**
  * 发布商品
@@ -62,7 +63,7 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 	private TextView tv_add_guige;
 	private TextView tv_publish;
 	private LinearLayout ll_pictures_container;
-	private List<Map<String, Double>> tagList;
+	private List<TagsBean> tagList;
 	private List<View> littleImageViewList = new LinkedList<View>();
 	private List<StateBean> dataList = new ArrayList<StateBean>();
 	private List<View> GuigeViewList = new LinkedList<View>();
@@ -82,8 +83,7 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 	private void getIntentData() {
 		TagListBean bean = (TagListBean) getIntent().getSerializableExtra("tagListBean");
 		tagList = bean.getTagList();
-		
-		
+		MyApplication.getInstance().getPublishUtil().getBean().getImages().get(Integer.valueOf(MyApplication.getInstance().getPublishUtil().getIndex())).setTags(tagList);
 		
 	}
 
@@ -135,11 +135,14 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 							MyApplication.getInstance().getPublishUtil().setFrom("publish");
 							MyApplication.getInstance().getPublishUtil().setIndex(index+"");
 							startActivity(intent);
+							PublishProductActivity.this.finish();
+							
 						}else{
 							Intent intent = new Intent(PublishProductActivity.this, ActivityCapture.class);
 							MyApplication.getInstance().getPublishUtil().setFrom("publish");
 							MyApplication.getInstance().getPublishUtil().setIndex(index+"");
 							startActivity(intent);
+							PublishProductActivity.this.finish();
 						}
 					}
 				}
@@ -254,7 +257,6 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 		 bean.setSizes(Sizes);
 		 bean.setDesc(et_introduce.getText().toString().trim());
 		 bean.setSku_Code(et_product_number.getText().toString().trim());
-		 ProductImagesBean productImageBean = new ProductImagesBean();
 		
 	}
 	/**
@@ -339,20 +341,22 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 					if (progressDialog.isShowing()) {
 						progressDialog.dismiss();
 					}
-					
-					String imageName1 = pic1.substring(pic1.lastIndexOf("/") + 1,pic1.length());
-					String imageName2 = pic1.substring(pic2.lastIndexOf("/") + 1,pic2.length());
-					String imageName3 = pic1.substring(pic3.lastIndexOf("/") + 1,pic3.length());
-					
 					if(new File(FileUtils.getRootPath()+"/tagPic/"+"tagPic0.png").exists()){
+						String imageName1 = pic1.substring(pic1.lastIndexOf("/") + 1,pic1.length());
+						 MyApplication.getInstance().getPublishUtil().getBean().getImages().get(0).setImageUrl(imageName1);
 						new File(FileUtils.getRootPath()+"/tagPic/"+"tagPic0.png").delete();
 					}
 					if(new File(FileUtils.getRootPath()+"/tagPic/"+"tagPic1.png").exists()){
+						String imageName2 = pic2.substring(pic2.lastIndexOf("/") + 1,pic2.length());
+						 MyApplication.getInstance().getPublishUtil().getBean().getImages().get(0).setImageUrl(imageName2);
 						new File(FileUtils.getRootPath()+"/tagPic/"+"tagPic1.png").delete();
 					}
 					if(new File(FileUtils.getRootPath()+"/tagPic/"+"tagPic2.png").exists()){
+						String imageName3 = pic3.substring(pic3.lastIndexOf("/") + 1,pic3.length());
+						 MyApplication.getInstance().getPublishUtil().getBean().getImages().get(0).setImageUrl(imageName3);
 						new File(FileUtils.getRootPath()+"/tagPic/"+"tagPic2.png").delete();
 					}
+					
 				default:
 					break;
 				}

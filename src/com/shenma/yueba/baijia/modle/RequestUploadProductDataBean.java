@@ -1,6 +1,9 @@
 package com.shenma.yueba.baijia.modle;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import android.media.Image;
 
 import com.shenma.yueba.util.ProductImagesBean;
 import com.shenma.yueba.util.SizeBean;

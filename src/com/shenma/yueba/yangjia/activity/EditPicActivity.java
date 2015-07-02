@@ -54,6 +54,7 @@ import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.TagImageView;
 import com.shenma.yueba.yangjia.modle.TagListBean;
+import com.shenma.yueba.yangjia.modle.TagsBean;
 
 /**
  * 编辑图片
@@ -168,10 +169,17 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 				map.put("y", y);
 				tagList.add(map);
 			}
-			TagListBean bean = new TagListBean();
-			bean.setTagList(tagList);
+			List<TagsBean> tagLists = new ArrayList<TagsBean>();
+			for (int i = 0; i < tagList.size(); i++) {
+				TagsBean tagsBean = new TagsBean();
+				tagsBean.setPosX(""+tagList.get(i).get("x"));
+				tagsBean.setPosY(""+tagList.get(i).get("y"));
+				tagLists.add(tagsBean);
+			}
+			TagListBean resultBean = new TagListBean();
+			resultBean.setTagList(tagLists);
 			Intent intent = new Intent(mContext, PublishProductActivity.class);
-			intent.putExtra("tagListBean", bean);
+			intent.putExtra("tagListBean", resultBean);
 			startActivity(intent);
 			break;
 		case R.id.iv_pic:// 图片的点击事件
