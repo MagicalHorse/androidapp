@@ -48,7 +48,7 @@ public class SearchActivity extends FragmentActivity implements OnClickListener 
 	private TextView tv_brand;//品牌
 	private TextView tv_tag;//标签
 	private TextView tv_buyer;//买手
-	
+	int currID=-1;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		MyApplication.getInstance().addActivity(this);//加入回退栈
@@ -87,13 +87,18 @@ public class SearchActivity extends FragmentActivity implements OnClickListener 
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.tv_brand:// 品牌
+			currID=0;
 			viewpager_search.setCurrentItem(0);
 			break;
 		case R.id.tv_tag:// 标签
-			viewpager_search.setCurrentItem(1);
+			//viewpager_search.setCurrentItem(1);
 			break;
 		case R.id.tv_buyer:// 买手
+			currID=1;
 			viewpager_search.setCurrentItem(1);
+			break;
+		case R.id.bt_search://搜索按钮
+			searchData();
 			break;
 		default:
 			break;
@@ -101,10 +106,33 @@ public class SearchActivity extends FragmentActivity implements OnClickListener 
 
 	}
 	
+	/****
+	 * 查询数据
+	 * **/
+	void searchData()
+	{
+		String value=et_search.getText().toString().trim();
+		if(value==null || value.equals(""))
+		{
+			return;
+		}
+		if(currID>-1 &&  currID<fragmentList.size())
+		{
+			switch(currID)
+			{
+			case 0:
+				brandFragment.searchData(value);
+				break;
+			case 1:
+				buyerFragment.searchData(value);
+				break;
+			}
+		}
+	}
 	
 	private void initFragment() {
 		brandFragment = new BrandFragment();
-		tagFragment = new TagFragment();
+		//tagFragment = new TagFragment();
 		buyerFragment = new BuyerFragment();
 		fragmentList.add(brandFragment);
 		//fragmentList.add(tagFragment);
@@ -116,6 +144,7 @@ public class SearchActivity extends FragmentActivity implements OnClickListener 
 	
 	private void initViewPager() {
 		viewpager_search.setAdapter(myFragmentPagerAdapter);
+		currID=0;
 		viewpager_search.setCurrentItem(0);
 		viewpager_search.setOnPageChangeListener(new OnPageChangeListener() {
 
@@ -126,7 +155,7 @@ public class SearchActivity extends FragmentActivity implements OnClickListener 
 			 * 页面跳转完成后调用的方法
 			 */
 			public void onPageSelected(int arg0) {
-				
+				currID=arg0;
 				switch(arg0)
 				{
 				case 0:
@@ -146,7 +175,6 @@ public class SearchActivity extends FragmentActivity implements OnClickListener 
 			@Override
 			public void onPageScrollStateChanged(int arg0) {
 				
-
 			}
 		});
 

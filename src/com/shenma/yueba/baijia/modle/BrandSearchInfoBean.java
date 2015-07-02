@@ -11,46 +11,49 @@ import java.util.List;
  */
 
 public class BrandSearchInfoBean implements Serializable{
-List<BrandSearchInfo> item=new ArrayList<BrandSearchInfo>();
+
 int pageindex;
 int pagesize;
 int totalcount;
 int totalpaged;
 boolean ispaged=false;
-private List<BrandSearchInfo> getItem() {
-	return item;
+List<BrandSearchInfo> items=new ArrayList<BrandSearchInfo>();
+
+
+public List<BrandSearchInfo> getItems() {
+	return items;
 }
-private void setItem(List<BrandSearchInfo> item) {
-	this.item = item;
+public void setItems(List<BrandSearchInfo> items) {
+	this.items = items;
 }
-private int getPageindex() {
+public int getPageindex() {
 	return pageindex;
 }
-private void setPageindex(int pageindex) {
+public void setPageindex(int pageindex) {
 	this.pageindex = pageindex;
 }
-private int getPagesize() {
+public int getPagesize() {
 	return pagesize;
 }
-private void setPagesize(int pagesize) {
+public void setPagesize(int pagesize) {
 	this.pagesize = pagesize;
 }
-private int getTotalcount() {
+public int getTotalcount() {
 	return totalcount;
 }
-private void setTotalcount(int totalcount) {
+public void setTotalcount(int totalcount) {
 	this.totalcount = totalcount;
 }
-private int getTotalpaged() {
+public int getTotalpaged() {
 	return totalpaged;
 }
-private void setTotalpaged(int totalpaged) {
+public void setTotalpaged(int totalpaged) {
 	this.totalpaged = totalpaged;
 }
-private boolean isIspaged() {
+public boolean isIspaged() {
 	return ispaged;
 }
-private void setIspaged(boolean ispaged) {
+public void setIspaged(boolean ispaged) {
 	this.ispaged = ispaged;
 }
 

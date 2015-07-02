@@ -12,23 +12,23 @@ public class BrandSearchInfo implements Serializable{
 	int Id;
     String Name=""; //名称
     String Logo="";//头像
-	private int getId() {
+	public int getId() {
 		return Id;
 	}
-	private void setId(int id) {
+	public void setId(int id) {
 		Id = id;
 	}
-	private String getName() {
+	public String getName() {
 		return Name;
 	}
-	private void setName(String name) {
+	public void setName(String name) {
 		Name = name;
 	}
-	private String getLogo() {
+	public String getLogo() {
 		return Logo;
 	}
-	private void setLogo(String logo) {
+	public void setLogo(String logo) {
 		Logo = logo;
 	}
-
+	
 }

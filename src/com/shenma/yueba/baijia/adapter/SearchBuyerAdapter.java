@@ -9,13 +9,19 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.adapter.ImageTextlAdapter.Holder;
 import com.shenma.yueba.baijia.modle.BrandListBean;
+import com.shenma.yueba.baijia.modle.BrandSearchInfo;
+import com.shenma.yueba.util.ToolsUtil;
+import com.shenma.yueba.view.RoundImageView;
 import com.shenma.yueba.view.imageshow.CustomImageView;
 
 public class SearchBuyerAdapter extends BaseAdapterWithUtil {
-	private List<BrandListBean> mList;
-	public SearchBuyerAdapter(Context ctx,List<BrandListBean> mList) {
+	private List<BrandSearchInfo> mList;
+	public SearchBuyerAdapter(Context ctx,List<BrandSearchInfo> mList) {
 		super(ctx);
+		this.ctx=ctx;
 		this.mList = mList;
 	}
 	
@@ -44,19 +50,29 @@ public class SearchBuyerAdapter extends BaseAdapterWithUtil {
 			holder = new Holder();
 			convertView=RelativeLayout.inflate(ctx, R.layout.search_buyer_item_layout, null);
 			holder.search_buyer_item_textview = (TextView)convertView.findViewById(R.id.search_buyer_item_textview);
-			holder.search_buyer_item_imageview = (CustomImageView)convertView.findViewById(R.id.search_buyer_item_imageview);
+			ToolsUtil.setFontStyle(ctx, convertView, R.id.search_buyer_item_textview);
+			holder.search_buyer_item_imageview = (RoundImageView)convertView.findViewById(R.id.search_buyer_item_imageview);
 			convertView.setTag(holder);
 		}else{
 			holder = (Holder) convertView.getTag();
 		}
+		setValue(holder, position);
 		return convertView;
 	}
 	
 	
 	class Holder{
 		TextView search_buyer_item_textview;
-		CustomImageView search_buyer_item_imageview;
+		RoundImageView search_buyer_item_imageview;
 		
 	}
 
+	
+	void setValue(Holder holder,int position)
+	{
+		BrandSearchInfo brandSearchInfo=mList.get(position);
+		String url=ToolsUtil.getImage(ToolsUtil.nullToString(brandSearchInfo.getLogo()), 320, 0);
+		MyApplication.getInstance().getImageLoader().displayImage(url, holder.search_buyer_item_imageview, MyApplication.getInstance().getDisplayImageOptions());
+		holder.search_buyer_item_textview.setText(brandSearchInfo.getName());
+	}
 }

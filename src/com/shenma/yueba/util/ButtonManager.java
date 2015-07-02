@@ -57,7 +57,7 @@ public final static String SHENSULOADING="申诉中";//5
 			break;
 		//申请退款
 		case 3:
-			view_list.add(createWaitPayButton(activity, 1));//撤销退款
+			//view_list.add(createWaitPayButton(activity, 1));//撤销退款
 			//撤销退款
 			break;
 		}

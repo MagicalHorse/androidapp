@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:zhy="http://schemas.android.com/apk/res/com.shenma.yueba"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal" 
@@ -10,14 +9,14 @@
 
     <!-- 头像 -->
 
-    <com.shenma.yueba.view.imageshow.CustomImageView
+    <com.shenma.yueba.view.RoundImageView
         android:id="@+id/search_buyer_item_imageview"
         android:layout_width="@dimen/user_config_iconwidth50_dimen"
         android:layout_height="@dimen/user_config_iconwidth50_dimen"
-        zhy:src="@drawable/test002"/>
+        android:src="@drawable/default_pic"/>
 
     <TextView
-        android:layout_marginLeft="@dimen/margin_left_and_right"
+        android:layout_marginLeft="@dimen/shop_main_width5_dimen"
         android:gravity="center_vertical"
         android:id="@+id/search_buyer_item_textview"
         android:layout_width="match_parent"

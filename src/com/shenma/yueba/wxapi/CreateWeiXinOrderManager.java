@@ -141,7 +141,8 @@ public class CreateWeiXinOrderManager extends WeiXinBasePayManager{
             List<NameValuePair> packageParams = new LinkedList<NameValuePair>();
    			packageParams.add(new BasicNameValuePair("appid", Constants.APP_ID));
    			packageParams.add(new BasicNameValuePair("body", (String)map.get("messageTitle")));
-   			//packageParams.add(new BasicNameValuePair("body","111"));
+   			//packageParams.add(new BasicNameValuePair("body","商品名称")); 
+   			//packageParams.add(new BasicNameValuePair("detail", (String)map.get("messageDetail")));//详细
    			packageParams.add(new BasicNameValuePair("mch_id", Constants.MCH_ID));
    			packageParams.add(new BasicNameValuePair("nonce_str", nonceStr));
    			packageParams.add(new BasicNameValuePair("notify_url", com.shenma.yueba.constants.Constants.WX_NOTIFY_URL));
@@ -157,7 +158,7 @@ public class CreateWeiXinOrderManager extends WeiXinBasePayManager{
 
 
    		   String xmlstring =toXml(packageParams);
-
+            xmlstring=new String(xmlstring.getBytes(), "ISO8859-1");
    			return xmlstring;
 
    		} catch (Exception e) {

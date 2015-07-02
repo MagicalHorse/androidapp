@@ -3,14 +3,17 @@ package com.shenma.yueba.baijia.fragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.AdapterView.OnItemClickListener;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
@@ -19,8 +22,18 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.State;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.activity.BaijiaBrandListActivity;
+import com.shenma.yueba.baijia.activity.ShopMainActivity;
+import com.shenma.yueba.baijia.adapter.ImageTextlAdapter;
 import com.shenma.yueba.baijia.adapter.SearchBuyerAdapter;
 import com.shenma.yueba.baijia.modle.BrandListBean;
+import com.shenma.yueba.baijia.modle.BrandSearchInfo;
+import com.shenma.yueba.baijia.modle.BrandSearchInfoBean;
+import com.shenma.yueba.baijia.modle.RequestBrandSearchInfoBean;
+import com.shenma.yueba.constants.Constants;
+import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 
 /**
  * 买手
@@ -30,19 +43,28 @@ import com.shenma.yueba.baijia.modle.BrandListBean;
 public class BuyerFragment extends BaseFragment{
 
 	private SearchBuyerAdapter searchBuyerAdapter;
-	private List<BrandListBean> mList = new ArrayList<BrandListBean>();
+	private List<BrandSearchInfo> mList = new ArrayList<BrandSearchInfo>();
 	private View view;
 	private PullToRefreshListView pull_refresh_list;
 	LinearLayout showloading_layout_view;
+	HttpControl httpControl=new HttpControl();
+	int state=1;
+	String key="";
+	int currPage=0;
+	boolean ishowStatus=false;
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+	}
 	
-	/*@Override
+	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		
 		if (view == null) {
 			view = inflater.inflate(R.layout.refresh_listview_without_title_layout, null);
 			initPullView();
-			requestFalshData();
+			//requestFalshData();
 		}
 		
 		// 缓存的rootView需要判断是否已经被加过parent，如果有parent需要从parent删除，要不然会发生这个rootview已经有parent的错误。
@@ -57,6 +79,23 @@ public class BuyerFragment extends BaseFragment{
 	{
 		pull_refresh_list=(PullToRefreshListView)view.findViewById(R.id.pull_refresh_list);
 		showloading_layout_view=(LinearLayout)view.findViewById(R.id.showloading_layout_view);
+		pull_refresh_list.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				if((arg2-1)>=0 && (arg2-1)<mList.size())
+				{
+					BrandSearchInfo brandSearchInfo=mList.get(arg2-1);
+					Intent intent=new Intent(getActivity(),ShopMainActivity.class);
+					intent.putExtra("DATA", brandSearchInfo.getId());
+					getActivity().startActivity(intent);
+				}
+				
+			}
+		});
+		searchBuyerAdapter=new SearchBuyerAdapter(getActivity(), mList);
+		pull_refresh_list.setAdapter(searchBuyerAdapter);
 		pull_refresh_list.setMode(Mode.BOTH);
 		 
 		pull_refresh_list.setOnPullEventListener(new OnPullEventListener<ListView>() {
@@ -99,76 +138,138 @@ public class BuyerFragment extends BaseFragment{
 				requestData();
 			}
 		});
-		searchBuyerAdapter=new SearchBuyerAdapter(getActivity(), mList);
-		pull_refresh_list.setAdapter(searchBuyerAdapter);
+		
 	}
 	
-	
-	void requestData()
+	/***
+	 * 请求
+	 * **/
+	 void requestData()
 	{
-		pull_refresh_list.setRefreshing();
-		new Thread()
-		{
-			public void run() {
-				SystemClock.sleep(100);
-				getActivity().runOnUiThread(new Runnable() {
-					
-					@Override
-					public void run() {
-						
-						addData();
-					}
-				});
-			};
-		}.start();
+		sendHttp(1,currPage, state, key);
 	}
 	
+	/***
+	 * 刷新
+	 * **/
 	void requestFalshData()
 	{
-		pull_refresh_list.setRefreshing();
-		new Thread()
-		{
+		sendHttp(0,1, state, key);
+	}
+	
+	/***
+	 * 加载更多数据
+	 * **/
+	void addData(List<BrandSearchInfo> item)
+	{
+		ishowStatus=false;
+		pull_refresh_list.postDelayed(new Runnable() {
+			
+			@Override
 			public void run() {
-				SystemClock.sleep(100);
-				getActivity().runOnUiThread(new Runnable() {
+				pull_refresh_list.onRefreshComplete();
+			}
+		}, 1000);
+		currPage++;
+		if(item!=null)
+		{
+			mList.addAll(item);
+		}
+		
+		showloading_layout_view.setVisibility(View.GONE);
+		searchBuyerAdapter.notifyDataSetChanged();
+		//ListUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
+	}
+	
+	/***
+	 * 刷新数据
+	 * **/
+	void falshData(List<BrandSearchInfo> item)
+	{
+		ishowStatus=false;
+		pull_refresh_list.onRefreshComplete();
+		currPage++;
+		mList.clear();
+		if(item!=null)
+		{
+			mList.addAll(item);
+		}
+		
+		showloading_layout_view.setVisibility(View.GONE);
+		searchBuyerAdapter.notifyDataSetChanged();
+		
+		//ListUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
+		
+		
+	}
+	
+	/******
+	 * 访问网络
+	 * @param type int 类型 0：刷新  1： 加载
+	 * @param page int 当前页
+	 * @param state  int 0: 搜索品牌列表, 1:搜索买手列表
+	 * @param key  string类型，关键字
+	 * ***/
+	void sendHttp(final int type ,final int page,int state,String key)
+	{
+		httpControl.searchbrandList(page,Constants.PAGESIZE_VALUE, state,key,ishowStatus, new HttpCallBackInterface() {
+			
+			@Override
+			public void http_Success(Object obj) {
+				currPage=page;
+				if(obj!=null)
+				{
+					RequestBrandSearchInfoBean bean=(RequestBrandSearchInfoBean)obj;
+					BrandSearchInfoBean brandSearchInfoBean=bean.getData();
+					if(brandSearchInfoBean!=null || brandSearchInfoBean.getItems()!=null)
+					{
+						currPage=brandSearchInfoBean.getPageindex();
+						switch(type)
+						{
+						case 0:
+							falshData(brandSearchInfoBean.getItems());
+							break;
+						case 1:
+							addData(brandSearchInfoBean.getItems());
+							break;
+						}
+					}else
+					{
+						if(currPage==1)
+						{
+							http_Fails(500, "没有数据");
+						}
+					}
+				}else
+				{
+					http_Fails(500, "获取数据失败");
+				}
+			}
+			
+			@Override
+			public void http_Fails(int error, String msg) {
+				MyApplication.getInstance().showMessage(getActivity(), msg);
+                 pull_refresh_list.postDelayed(new Runnable() {
 					
 					@Override
 					public void run() {
-						
-						falshData();
+						pull_refresh_list.onRefreshComplete();
 					}
-				});
-			};
-		}.start();
+				}, 1000);
+			}
+		}, getActivity());
 	}
 	
-	
-	void addData()
+	public void searchData(String key)
 	{
-		for(int i=0;i<10;i++)
+		if(key==null || key.equals(""))
 		{
-			mList.add(new BrandListBean());
-			
+			return;
 		}
-		showloading_layout_view.setVisibility(View.GONE);
-		searchBuyerAdapter.notifyDataSetChanged();
-		//ListUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
-		pull_refresh_list.onRefreshComplete();
+		ishowStatus=true;
+		searchBuyerAdapter=new SearchBuyerAdapter(getActivity(), mList);
+		pull_refresh_list.setAdapter(searchBuyerAdapter);
+		this.key=key;
+		requestFalshData();
 	}
-	
-	void falshData()
-	{
-		mList.clear();
-		for(int i=0;i<10;i++)
-		{
-			mList.add(new BrandListBean());
-			
-		}
-		showloading_layout_view.setVisibility(View.GONE);
-		searchBuyerAdapter.notifyDataSetChanged();
-		
-		//ListUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
-		pull_refresh_list.onRefreshComplete();
-		
-	}*/
 }

@@ -16,7 +16,7 @@ public class HttpConstants {
 	private static String Promotion = baseUrl + "Promotion/";//活动相关
 	private static String weixinBaseUrl = "https://api.mch.weixin.qq.com/";//微信接口
 	private static String weixinPAYUrl = weixinBaseUrl+"pay/";//微信支付接口
-	
+	private static String weixinPAYCallBackUrl = baseUrl+"Payment/";//微信支平台回调
 	
 	
 	
@@ -630,5 +630,9 @@ public class HttpConstants {
 	 * **/
 	public static String METHOD_SEARCH = SEARCH+ "Search";
 	
+	/*****
+	 *微信支付回调url
+	 * **/
+	public static String METHOD_WEIXINCALLURL = weixinPAYCallBackUrl+ "WeiXinPayResult";
 	
 }

@@ -10,12 +10,16 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.shenma.yueba.R;
-import com.shenma.yueba.baijia.modle.BrandListBean;
+import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.modle.BrandSearchInfo;
+import com.shenma.yueba.util.ToolsUtil;
 
 public class ImageTextlAdapter extends BaseAdapterWithUtil {
-	private List<BrandListBean> mList;
-	public ImageTextlAdapter(Context ctx,List<BrandListBean> mList) {
+	private List<BrandSearchInfo> mList;
+	Context ctx;
+	public ImageTextlAdapter(Context ctx,List<BrandSearchInfo> mList) {
 		super(ctx);
+		this.ctx=ctx;
 		this.mList = mList;
 	}
 
@@ -45,10 +49,12 @@ public class ImageTextlAdapter extends BaseAdapterWithUtil {
 			convertView=RelativeLayout.inflate(ctx, R.layout.imagetext_item_layout, null);
 			holder.imagetext_item_imageview = (ImageView)convertView.findViewById(R.id.imagetext_item_imageview);
 			holder.imagetext_item_textview = (TextView)convertView.findViewById(R.id.imagetext_item_textview);
+			ToolsUtil.setFontStyle(ctx,convertView, R.id.imagetext_item_textview);
 			convertView.setTag(holder);
 		}else{
 			holder = (Holder) convertView.getTag();
 		}
+		setValue(holder,position);
 		return convertView;
 	}
 	
@@ -57,6 +63,14 @@ public class ImageTextlAdapter extends BaseAdapterWithUtil {
 		ImageView imagetext_item_imageview;
 		TextView imagetext_item_textview;
 		
+	}
+	
+	void setValue(Holder holder,int position)
+	{
+		BrandSearchInfo brandSearchInfo=mList.get(position);
+		String url=ToolsUtil.getImage(ToolsUtil.nullToString(brandSearchInfo.getLogo()), 320, 0);
+		MyApplication.getInstance().getImageLoader().displayImage(url, holder.imagetext_item_imageview, MyApplication.getInstance().getDisplayImageOptions());
+		holder.imagetext_item_textview.setText(brandSearchInfo.getName());
 	}
 
 }
