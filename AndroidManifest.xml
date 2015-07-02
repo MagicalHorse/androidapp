@@ -272,6 +272,7 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
                 android:screenOrientation="landscape"
                 android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+                android:launchMode="singleTask"
                 android:windowSoftInputMode="adjustResize|stateHidden" >
         </activity>
         <activity
@@ -288,6 +289,7 @@
         </activity>
           <activity
             android:name="com.shenma.yueba.yangjia.activity.EditPicActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" >
         </activity>
            <activity
@@ -483,6 +485,7 @@
         <!-- 添加圈子 -->
         <activity
             android:name="com.shenma.yueba.yangjia.activity.AddCircleActivity"
+             android:launchMode="singleTask"
             android:screenOrientation="portrait" >
         </activity>
         <!-- 奖励详情 -->

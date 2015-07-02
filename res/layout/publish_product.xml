@@ -200,6 +200,13 @@
                         android:background="@drawable/star" />
                 </LinearLayout>
 
+                <LinearLayout 
+                    android:id="@+id/ll_guige_container"
+                    android:layout_height="wrap_content"
+                    android:layout_width="fill_parent"
+                    android:orientation="vertical"
+                    ></LinearLayout>
+                
                 <View
                     style="@style/style_horizontal_line"
                     android:layout_marginLeft="10dip" />
@@ -212,6 +219,7 @@
                     android:gravity="center"
                     android:padding="10dip"
                     android:text="添加规格库存"
+                    android:layout_marginBottom="80dip"
                     android:textColor="@color/blue"
                     android:textSize="18sp" />
             </LinearLayout>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="10dip" >
+
+                    <EditText
+                        android:id="@+id/et_guige"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/shape_linearlayout10"
+                        android:padding="5dip"
+                        android:hint="规格"
+                        android:textColor="@color/text_gray_color"
+                        android:textSize="18sp" />
+
+                    <EditText
+                        android:id="@+id/et_kucun"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dip"
+                        android:layout_weight="1"
+                        android:background="@drawable/shape_linearlayout10"
+                        android:padding="5dip"
+                        android:hint="库存"
+                        android:textColor="@color/text_gray_color"
+                        android:textSize="18sp" />
+
+                    <ImageView
+                        android:id="@+id/iv_delete"
+                        android:visibility="visible"
+                        android:layout_width="15dip"
+                        android:layout_height="15dip"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dip"
+                        android:background="@drawable/delete_icon" />
+                </LinearLayout>
+

@@ -49,6 +49,7 @@ import com.shenma.yueba.baijia.activity.LoginAndRegisterActivity;
 import com.shenma.yueba.baijia.modle.UserRequestBean;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.db.DBHelper;
+import com.shenma.yueba.util.PublishPicUtil;
 import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.util.ToolsUtil;
 
@@ -76,7 +77,7 @@ public class MyApplication extends Application {
 	private UserRequestBean userRequestBean;
 	private Typeface tf;
 	SocketManger socketManger;
-
+	private PublishPicUtil publishPicUtil;
 
 	@Override
 	public void onCreate() {
@@ -94,6 +95,14 @@ public class MyApplication extends Application {
 				DBHelper.class);
 	}
 
+	
+	
+	public PublishPicUtil getPublishUtil(){
+		if(publishPicUtil == null){
+			publishPicUtil = PublishPicUtil.getInstance();
+		}
+		return publishPicUtil;
+	}
 
 	private void initJpush() {
 		// 初始化 JPush。如果已经初始化，但没有登录成功，则执行重新登录。

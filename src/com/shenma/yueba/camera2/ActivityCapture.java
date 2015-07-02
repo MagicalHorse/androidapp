@@ -43,10 +43,12 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.util.BitmapUtil;
 import com.shenma.yueba.util.Debug;
 import com.shenma.yueba.util.FileUtils;
 import com.shenma.yueba.util.PathManager;
+import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.yangjia.activity.AddTagActivity;
 import com.shenma.yueba.yangjia.activity.EditPicActivity;
@@ -56,8 +58,8 @@ import com.shenma.yueba.yangjia.activity.EditPicActivity;
 public class ActivityCapture extends Activity implements View.OnClickListener,
 		CaptureSensorsObserver.RefocuseListener {
 	private ImageView bnToggleCamera;
-	public  ImageView bt_light;
-    public final static String IMAGE_URI = "iamge_uri";
+	public ImageView bt_light;
+	public final static String IMAGE_URI = "iamge_uri";
 	public final static String ACTION_CROP_IMAGE = "android.intent.action.CROP";
 	public final static String CROP_IMAGE_URI = "crop_image_uri";
 	private final int ONE_K = 1024;
@@ -274,12 +276,13 @@ public class ActivityCapture extends Activity implements View.OnClickListener,
 						// initViews();
 						// setListeners();
 						// setupDevice();
-						if(saveBitmapToFile(finalBitmap)){
-							finish();
+						if (saveBitmapToFile(finalBitmap)) {
+							MyApplication.getInstance().getPublishUtil()
+									.setFrom("camera");
 							Intent intent = new Intent(ActivityCapture.this,
 									EditPicActivity.class);
-							intent.putExtra("from", "camera");
 							startActivity(intent);
+							finish();
 						}
 					}
 				});
@@ -298,22 +301,24 @@ public class ActivityCapture extends Activity implements View.OnClickListener,
 		};
 	}
 
-	
-	
 	private boolean saveBitmapToFile(Bitmap bitmap) {
-		File dir = new File(FileUtils.getRootPath()+"/tagPic/");
-		if(!dir.exists()){
-			if(!dir.exists()) 
-				dir.mkdir(); 
+		File dir = new File(FileUtils.getRootPath() + "/tagPic/");
+		if (!dir.exists()) {
+			if (!dir.exists())
+				dir.mkdir();
 		}
-		File file = new File(dir, "joybar_camera"+".jpg");
-		if(file.exists()){
+		if ("".equals(MyApplication.getInstance().getPublishUtil().getIndex())) {
+			MyApplication.getInstance().getPublishUtil().setIndex("0");
+		}
+		File file = new File(dir, "joybar_camera"
+				+ MyApplication.getInstance().getPublishUtil().getIndex()
+				+ ".png");
+		if (file.exists()) {
 			file.delete();
 		}
 		try {
 			FileOutputStream out = new FileOutputStream(file);
-			bitmap.compress(Bitmap.CompressFormat.JPEG,
-					100, out);
+			bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
 			out.flush();
 			out.close();
 			return true;
@@ -328,9 +333,7 @@ public class ActivityCapture extends Activity implements View.OnClickListener,
 		}
 
 	}
-	
-	
-	
+
 	// 根据拍照的图片来剪裁
 	private Bitmap cropPhotoImage(Bitmap bmp) {
 		int dw = bmp.getWidth();
@@ -469,10 +472,10 @@ public class ActivityCapture extends Activity implements View.OnClickListener,
 			return;
 		}
 		String flashMode = camParmeters.getFlashMode();
-			if (flashModes.contains(Parameters.FLASH_MODE_AUTO)) {
-				camParmeters.setFlashMode(Parameters.FLASH_MODE_AUTO);
-				camera.setParameters(camParmeters);
-			}
+		if (flashModes.contains(Parameters.FLASH_MODE_AUTO)) {
+			camParmeters.setFlashMode(Parameters.FLASH_MODE_AUTO);
+			camera.setParameters(camParmeters);
+		}
 	}
 
 	@Override
@@ -482,7 +485,7 @@ public class ActivityCapture extends Activity implements View.OnClickListener,
 			switchCamera();
 			break;
 		case R.id.bt_light:// 闪光灯
-			turnLightOn(camera,bt_light);
+			turnLightOn(camera, bt_light);
 			break;
 		case R.id.bnCapture:
 			bnCaptureClicked();
@@ -490,7 +493,7 @@ public class ActivityCapture extends Activity implements View.OnClickListener,
 		case R.id.tv_little_pic:// 选择图库
 			getLocalImage(REQ_CODE_LOCALE_BG);
 			break;
-		case R.id.iv_close://关闭相机
+		case R.id.iv_close:// 关闭相机
 			ActivityCapture.this.finish();
 			break;
 		}
@@ -814,7 +817,7 @@ public class ActivityCapture extends Activity implements View.OnClickListener,
 		}
 	}
 
-	public static void turnLightOn(Camera mCamera,ImageView bt) {
+	public static void turnLightOn(Camera mCamera, ImageView bt) {
 		if (mCamera == null) {
 			return;
 		}
@@ -912,42 +915,39 @@ public class ActivityCapture extends Activity implements View.OnClickListener,
 			return;
 		}
 		Uri uri = data.getParcelableExtra(CROP_IMAGE_URI);
-//		Log.d("lzc", "uri=========================>" + uri.toString());
-//		Bitmap photo = getBitmap(uri);
-//		Drawable drawable = new BitmapDrawable(photo);
-//		// Drawable drawable = bd.;
-//		// imageView.setBackgroundDrawable(drawable);
-//		if (photo != null) {
-//
-//			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//			photo.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-//
-//			byte[] datas = null;
-//			try {
-//				datas = baos.toByteArray();
-//				baos.flush();
-//				baos.close();
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-//
-//			if (datasException(datas)) {
-//				return;
-//			}
-//
-//			// 保存头像
-//			// 字符参数部分
-//			saveAvatar(datas);
+		// Log.d("lzc", "uri=========================>" + uri.toString());
+		// Bitmap photo = getBitmap(uri);
+		// Drawable drawable = new BitmapDrawable(photo);
+		// // Drawable drawable = bd.;
+		// // imageView.setBackgroundDrawable(drawable);
+		// if (photo != null) {
+		//
+		// ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		// photo.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+		//
+		// byte[] datas = null;
+		// try {
+		// datas = baos.toByteArray();
+		// baos.flush();
+		// baos.close();
+		// } catch (IOException e) {
+		// e.printStackTrace();
+		// }
+		//
+		// if (datasException(datas)) {
+		// return;
+		// }
+		//
+		// // 保存头像
+		// // 字符参数部分
+		// saveAvatar(datas);
+		MyApplication.getInstance().getPublishUtil().setFrom("picture");
+		MyApplication.getInstance().getPublishUtil().setUri(uri);
+		Intent editPicIntent = new Intent(ActivityCapture.this,
+				EditPicActivity.class);
+		startActivity(editPicIntent);
 
-			
-			Intent editPicIntent = new Intent(ActivityCapture.this,EditPicActivity.class);
-			editPicIntent.putExtra("from", "picture");
-			editPicIntent.putExtra("uri", uri);
-			startActivity(editPicIntent);
-			
-			
-			
-		}
+	}
 
 	/**
 	 * 此处写方法描述
