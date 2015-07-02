@@ -14,6 +14,7 @@ import android.text.TextUtils;
 public class SharedUtil {
 	public static final String install_flag = "install_flag";
 	public static final String user_id = "user_id";//登录用户id
+	public static final String user_level = "level";//用户级别
 	public static final String store_id = "store_id";
 	public static final String user_name = "user_name";//登录用户名称
 	public static final String user_names = "user_names";//登录用户昵称

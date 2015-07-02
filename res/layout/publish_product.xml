@@ -109,6 +109,7 @@
                         android:ems="10"
                         android:gravity="center_vertical"
                         android:hint="请输入"
+                        android:digits="0123456789."
                         android:paddingLeft="5dip"
                         android:textSize="18sp" >
                     </EditText>
@@ -178,7 +179,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/shape_linearlayout10"
                         android:padding="5dip"
-                        android:text="规格"
+                        android:hint="规格"
                         android:textColor="@color/text_gray_color"
                         android:textSize="18sp" />
 
@@ -190,7 +191,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/shape_linearlayout10"
                         android:padding="5dip"
-                        android:text="库存"
+                        android:hint="库存"
                         android:textColor="@color/text_gray_color"
                         android:textSize="18sp" />
 
@@ -238,7 +239,6 @@
             android:id="@+id/tv_publish"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-         
             android:background="@color/white"
             android:gravity="center"
             android:padding="15dip"

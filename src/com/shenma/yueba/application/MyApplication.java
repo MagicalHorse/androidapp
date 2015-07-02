@@ -167,6 +167,15 @@ public class MyApplication extends Application {
 		System.exit(0);
 	}
 
+	
+	public void finishActivity(Class clazz){
+		for (int i = 0; i < activityList.size(); i++) {
+			if(activityList.get(i).getClass() == clazz){
+				activityList.get(i).finish();
+			}
+		}
+	}
+	
 	/**
 	 * 将堆栈中的所有activity移除
 	 */

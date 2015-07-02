@@ -46,6 +46,12 @@ public class RequestUploadProductDataBean {
 		Sizes = sizes;
 	}
 	public List<ProductImagesBean> getImages() {
+		if(Images == null){
+			Images = new ArrayList<ProductImagesBean>();
+			Images.add(new ProductImagesBean());
+			Images.add(new ProductImagesBean());
+			Images.add(new ProductImagesBean());
+		}
 		return Images;
 	}
 	public void setImages(List<ProductImagesBean> images) {

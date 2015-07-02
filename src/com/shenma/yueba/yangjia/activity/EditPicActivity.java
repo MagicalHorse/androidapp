@@ -91,6 +91,7 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 	protected void onResume() {
 		getIntentData();
 		LoadImageFilter();
+		MyApplication.getInstance().addActivity(mContext);
 		super.onResume();
 	}
 
@@ -103,16 +104,19 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 			String index = MyApplication.getInstance().getPublishUtil().getIndex();
 			result = BitmapFactory.decodeFile(FileUtils.getRootPath()
 					+ "/tagPic/" + "joybar_camera"+ index+".png");
+			resultCache = result;
 		}else if("picture".equals(MyApplication.getInstance().getPublishUtil().getFrom())){//来自图库
 			Uri uri = MyApplication.getInstance().getPublishUtil().getUri();
 			result = getBitmap(uri);
+			resultCache = result;
 		}else if("publish".equals(MyApplication.getInstance().getPublishUtil().getFrom())){//发布商品返回
 			String index = MyApplication.getInstance().getPublishUtil().getIndex();
 			result = BitmapFactory.decodeFile(FileUtils.getRootPath()
+					+ "/tagPic/" + "tagPic_yuan"+ index+".png");
+			resultCache = BitmapFactory.decodeFile(FileUtils.getRootPath()
 					+ "/tagPic/" + "tagPic"+ index+".png");
 		}
-		resultCache = result;
-		iv_pic.setImageBitmap(result);
+		iv_pic.setImageBitmap(resultCache);
 		}
 
 	private void initView() {
@@ -181,6 +185,7 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 			Intent intent = new Intent(mContext, PublishProductActivity.class);
 			intent.putExtra("tagListBean", resultBean);
 			startActivity(intent);
+//			EditPicActivity.this.finish();
 			break;
 		case R.id.iv_pic:// 图片的点击事件
 			showDialog();

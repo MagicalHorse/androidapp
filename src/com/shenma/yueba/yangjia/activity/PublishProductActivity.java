@@ -33,6 +33,7 @@ import com.shenma.yueba.util.CustomProgressDialog;
 import com.shenma.yueba.util.FileUtils;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.ProductImagesBean;
 import com.shenma.yueba.util.SizeBean;
 import com.shenma.yueba.util.ToolsUtil;
@@ -49,7 +50,7 @@ import com.shenma.yueba.yangjia.modle.TagsBean;
  */
 public class PublishProductActivity extends BaseActivityWithTopView implements
 		OnClickListener {
-	public String pic1, pic2, pic3,pic;
+	public String pic1, pic2, pic3, pic;
 	private LinearLayout ll_guige_container;
 	private TextView tv_product_number;
 	private EditText et_product_number;
@@ -71,6 +72,7 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 	private List<SizeBean> Sizes = new LinkedList<SizeBean>();
 	private CustomProgressDialog progressDialog;
 	private int upPicProgress = 0;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -81,10 +83,17 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 	}
 
 	private void getIntentData() {
-		TagListBean bean = (TagListBean) getIntent().getSerializableExtra("tagListBean");
+		TagListBean bean = (TagListBean) getIntent().getSerializableExtra(
+				"tagListBean");
 		tagList = bean.getTagList();
-		MyApplication.getInstance().getPublishUtil().getBean().getImages().get(Integer.valueOf(MyApplication.getInstance().getPublishUtil().getIndex())).setTags(tagList);
-		
+		MyApplication
+				.getInstance()
+				.getPublishUtil()
+				.getBean()
+				.getImages()
+				.get(Integer.valueOf(MyApplication.getInstance()
+						.getPublishUtil().getIndex())).setTags(tagList);
+
 	}
 
 	private void initView() {
@@ -122,151 +131,170 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 		for (int i = 0; i < 3; i++) {
 			StateBean bean = new StateBean();
 			View view = View.inflate(mContext, R.layout.tag_imageview, null);
-			TagImageView layout_tag_image = (TagImageView) view.findViewById(R.id.layout_tag_image);
+			TagImageView layout_tag_image = (TagImageView) view
+					.findViewById(R.id.layout_tag_image);
 			ImageView iv_pic = (ImageView) view.findViewById(R.id.iv_pic);
 			iv_pic.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					StateBean bean  = (StateBean) v.getTag();
-					if(dataList.contains(bean)){
+					StateBean bean = (StateBean) v.getTag();
+					if (dataList.contains(bean)) {
 						index = dataList.indexOf(bean);
-						if(bean.isSetPic()){
-							Intent intent = new Intent(PublishProductActivity.this, EditPicActivity.class);
-							MyApplication.getInstance().getPublishUtil().setFrom("publish");
-							MyApplication.getInstance().getPublishUtil().setIndex(index+"");
-							startActivity(intent);
-							PublishProductActivity.this.finish();
-							
-						}else{
-							Intent intent = new Intent(PublishProductActivity.this, ActivityCapture.class);
-							MyApplication.getInstance().getPublishUtil().setFrom("publish");
-							MyApplication.getInstance().getPublishUtil().setIndex(index+"");
-							startActivity(intent);
-							PublishProductActivity.this.finish();
+						boolean canClick = true;
+						for (int j = 0; j < index; j++) {
+							if (dataList.get(j).isSetPic()) {
+								continue;
+							} else {
+								canClick = false;
+							}
 						}
+						if (canClick) {
+							if (bean.isSetPic()) {
+								Intent intent = new Intent(
+										PublishProductActivity.this,
+										EditPicActivity.class);
+								MyApplication.getInstance().getPublishUtil()
+										.setFrom("publish");
+								MyApplication.getInstance().getPublishUtil()
+										.setIndex(index + "");
+								startActivity(intent);
+								PublishProductActivity.this.finish();
+
+							} else {
+								Intent intent = new Intent(
+										PublishProductActivity.this,
+										ActivityCapture.class);
+								MyApplication.getInstance().getPublishUtil()
+										.setFrom("publish");
+								MyApplication.getInstance().getPublishUtil()
+										.setIndex(index + "");
+								MyApplication.getInstance().finishActivity(
+										EditPicActivity.class);
+								startActivity(intent);
+								PublishProductActivity.this.finish();
+							}
+						} else {
+							Toast.makeText(mContext, "请按顺序添加图片", 1000).show();
+						}
+
 					}
 				}
 			});
-			RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-			params.height = ToolsUtil.getDisplayWidth(mContext)/3-10;
-			params.width = ToolsUtil.getDisplayWidth(mContext)/3-10;
+			RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+					LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+			params.height = ToolsUtil.getDisplayWidth(mContext) / 3 - 10;
+			params.width = ToolsUtil.getDisplayWidth(mContext) / 3 - 10;
 			iv_pic.setLayoutParams(params);
 			bean.setPosition(i);
-//			for (int j = 0; j <tagList.size(); j++) {
-//				double x= tagList.get(j).get("x");
-//				double y = tagList.get(j).get("y");
-//				
-//				layout_tag_image.addTextTag("aaaa",((int)((iv_pic.getX()+iv_pic.getWidth())*x)), ((int)(iv_pic.getHeight()*y)));
-//			}
-			
-			if(new File(FileUtils.getRootPath()+"/tagPic/"+"tagPic"+i+".png").exists()){
-				iv_pic.setImageBitmap(BitmapFactory.decodeFile(FileUtils.getRootPath()+"/tagPic/"+"tagPic"+i+".png"));
+			// for (int j = 0; j <tagList.size(); j++) {
+			// double x= tagList.get(j).get("x");
+			// double y = tagList.get(j).get("y");
+			//
+			// layout_tag_image.addTextTag("aaaa",((int)((iv_pic.getX()+iv_pic.getWidth())*x)),
+			// ((int)(iv_pic.getHeight()*y)));
+			// }
+
+			if (new File(FileUtils.getRootPath() + "/tagPic/" + "tagPic" + i
+					+ ".png").exists()) {
+				iv_pic.setImageBitmap(BitmapFactory.decodeFile(FileUtils
+						.getRootPath() + "/tagPic/" + "tagPic" + i + ".png"));
 				bean.setSetPic(true);
-			}else{
+			} else {
 				iv_pic.setBackgroundResource(R.drawable.ic_launcher);
 			}
-			if(tagList!=null && tagList.size()>0){
+			if (tagList != null && tagList.size() > 0) {
 				bean.setSetTag(true);
 			}
 			iv_pic.setTag(bean);
 			dataList.add(bean);
 			ll_pictures_container.addView(view);
-			
+
 		}
-		
+
 		for (int i = 0; i < ll_pictures_container.getChildCount(); i++) {
 			littleImageViewList.add(ll_pictures_container.getChildAt(i));
 		}
-//		for (int i = 0; i < littleImageViewList.size(); i++) {
-//			littleImageViewList.get(i).findViewById(R.id.iv_pic).setOnClickListener(new OnClickListener() {
-//				@Override
-//				public void onClick(View v) {
-//					if(((StateBean)littleImageViewList.get(i).findViewById(R.id.iv_pic).getTag()).getPosition()!=littleImageViewList.size()){
-//						
-//					}
-//					
-//				}
-//			});
-//			
-//		}
-		
-		
+		// for (int i = 0; i < littleImageViewList.size(); i++) {
+		// littleImageViewList.get(i).findViewById(R.id.iv_pic).setOnClickListener(new
+		// OnClickListener() {
+		// @Override
+		// public void onClick(View v) {
+		// if(((StateBean)littleImageViewList.get(i).findViewById(R.id.iv_pic).getTag()).getPosition()!=littleImageViewList.size()){
+		//
+		// }
+		//
+		// }
+		// });
+		//
+		// }
+
 	}
 
-	
-	private void publishProduct(){
+	private void publishProduct() {
 		HttpControl httpControl = new HttpControl();
-//		httpControl.createBuyerProductInfo(bean, httpCallBack, context)
+		httpControl.createBuyerProductInfo(MyApplication.getInstance()
+				.getPublishUtil().getBean(), new HttpCallBackInterface() {
+			@Override
+			public void http_Success(Object obj) {
+				Toast.makeText(mContext, "发布成功",1000).show();
+
+			}
+
+			@Override
+			public void http_Fails(int error, String msg) {
+				// TODO Auto-generated method stub
+
+			}
+		}, PublishProductActivity.this);
 	}
-	
-	
-	
+
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.tv_add_guige://添加规格
+		case R.id.tv_add_guige:// 添加规格
 			for (int i = 0; i < ll_guige_container.getChildCount(); i++) {
 				ll_guige_container.getChildAt(i).setTag(i);
 			}
 			View view = View.inflate(mContext, R.layout.guige_item, null);
 			view.setTag(ll_guige_container.getChildCount());
-			final ImageView iv_delete = (ImageView) view.findViewById(R.id.iv_delete);
+			final ImageView iv_delete = (ImageView) view
+					.findViewById(R.id.iv_delete);
 			iv_delete.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					int tag = (Integer) ((View)iv_delete.getParent()).getTag();
+					int tag = (Integer) ((View) iv_delete.getParent()).getTag();
 					for (int i = 0; i < ll_guige_container.getChildCount(); i++) {
-						if(tag == (Integer)ll_guige_container.getChildAt(i).getTag()){
+						if (tag == (Integer) ll_guige_container.getChildAt(i)
+								.getTag()) {
 							ll_guige_container.removeViewAt(i);
-							
+
 						}
 					}
-					
+
 				}
 			});
 			ll_guige_container.addView(view);
 			break;
-		case R.id.tv_publish://发布商品
+		case R.id.tv_publish:// 发布商品
 			uploadImage();
-			//publishPoroduct();
 			break;
 		default:
 			break;
 		}
 
 	}
-	
-	/**
-	 * 发布商品
-	 */
-	private void publishPoroduct(){
-		if(TextUtils.isEmpty(et_product_number.getText().toString().trim())){
-			Toast.makeText(mContext, "货号不能为空", 1000).show();
-			return;
-		}
-		if(TextUtils.isEmpty(et_price.getText().toString().trim())){
-			Toast.makeText(mContext, "价格不能为空", 1000).show();
-			return;
-		}
-		if(TextUtils.isEmpty(et_introduce.getText().toString().trim())){
-			Toast.makeText(mContext, "商品介绍不能为空", 1000).show();
-			return;
-		}
-		getGuiGeAndKuCun();
-		 RequestUploadProductDataBean bean = MyApplication.getInstance().getPublishUtil().getBean();
-		 bean.setSizes(Sizes);
-		 bean.setDesc(et_introduce.getText().toString().trim());
-		 bean.setSku_Code(et_product_number.getText().toString().trim());
-		
-	}
+
 	/**
 	 * 获取规格尺寸
 	 */
-	private void getGuiGeAndKuCun(){
+	private void getGuiGeAndKuCun() {
 		for (int i = 0; i < ll_guige_container.getChildCount(); i++) {
-			EditText et_guige = (EditText) ll_guige_container.getChildAt(i).findViewById(R.id.et_guige);
-			EditText et_kucun = (EditText) ll_guige_container.getChildAt(i).findViewById(R.id.et_kucun);
-			if(TextUtils.isEmpty(et_guige.getText().toString().trim()) || TextUtils.isEmpty(et_kucun.getText().toString().trim()) ){
+			EditText et_guige = (EditText) ll_guige_container.getChildAt(i)
+					.findViewById(R.id.et_guige);
+			EditText et_kucun = (EditText) ll_guige_container.getChildAt(i)
+					.findViewById(R.id.et_kucun);
+			if (TextUtils.isEmpty(et_guige.getText().toString().trim())
+					|| TextUtils.isEmpty(et_kucun.getText().toString().trim())) {
 				Toast.makeText(mContext, "请将库存规格填写完整", 1000).show();
 				break;
 			}
@@ -274,34 +302,59 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 			bean.setGuiGe(et_guige.getText().toString().trim());
 			bean.setKuCun(et_kucun.getText().toString().trim());
 			Sizes.add(bean);
-			
 		}
-		
+
 	}
-	
-	
+
 	private void uploadImage() {
-		if(new File(FileUtils.getRootPath()+"/tagPic/"+"tagPic0.png").exists()){
-			pic1 = FileUtils.getRootPath()+"/tagPic/"+"tagPic0.png";
+		if (new File(FileUtils.getRootPath() + "/tagPic/" + "tagPic0.png")
+				.exists()) {
+			pic1 = FileUtils.getRootPath() + "/tagPic/" + "tagPic0.png";
 			pic = pic1;
 		}
-		if(new File(FileUtils.getRootPath()+"/tagPic/"+"tagPic1.png").exists()){
-			pic2 = FileUtils.getRootPath()+"/tagPic/"+"tagPic1.png";
+		if (new File(FileUtils.getRootPath() + "/tagPic/" + "tagPic1.png")
+				.exists()) {
+			pic2 = FileUtils.getRootPath() + "/tagPic/" + "tagPic1.png";
 		}
-		if(new File(FileUtils.getRootPath()+"/tagPic/"+"tagPic2.png").exists()){
-			pic3 = FileUtils.getRootPath()+"/tagPic/"+"tagPic2.png";
+		if (new File(FileUtils.getRootPath() + "/tagPic/" + "tagPic2.png")
+				.exists()) {
+			pic3 = FileUtils.getRootPath() + "/tagPic/" + "tagPic2.png";
 		}
+		if (TextUtils.isEmpty(pic1) && TextUtils.isEmpty(pic2)
+				&& TextUtils.isEmpty(pic3)) {
+			Toast.makeText(mContext, "商品图片不能为空", 1000).show();
+			return;
+		}
+		if (TextUtils.isEmpty(et_product_number.getText().toString().trim())) {
+			Toast.makeText(mContext, "货号不能为空", 1000).show();
+			return;
+		}
+		if (TextUtils.isEmpty(et_price.getText().toString().trim())) {
+			Toast.makeText(mContext, "价格不能为空", 1000).show();
+			return;
+		}
+		if (TextUtils.isEmpty(et_introduce.getText().toString().trim())) {
+			Toast.makeText(mContext, "商品介绍不能为空", 1000).show();
+			return;
+		}
+		getGuiGeAndKuCun();
+		RequestUploadProductDataBean bean = MyApplication.getInstance()
+				.getPublishUtil().getBean();
+		bean.setSizes(Sizes);
+		bean.setDesc(et_introduce.getText().toString().trim());
+		bean.setSku_Code(et_product_number.getText().toString().trim());
+
 		if (!progressDialog.isShowing()) {
 			progressDialog.show();
 		}
 		HttpControl httpControl = new HttpControl();
-		if(upPicProgress == 0){
+		if (upPicProgress == 0) {
 			pic = pic1;
 		}
-		if(upPicProgress == 1){
+		if (upPicProgress == 1) {
 			pic = pic2;
 		}
-		if(upPicProgress == 2){
+		if (upPicProgress == 2) {
 			pic = pic3;
 		}
 		httpControl.syncUpload(pic, new SaveCallback() {
@@ -323,40 +376,54 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 				switch (upPicProgress) {
 				case 0:// 第一张图片上传完毕
 					upPicProgress = 1;
-					if(!TextUtils.isEmpty(pic2)){
+					if (!TextUtils.isEmpty(pic2)) {
 						uploadImage();
-					}else{
-						//上传商品
+					} else {
+						publishProduct();
 					}
 					break;
 				case 1:// 第二张上传完毕
 					upPicProgress = 2;
-					if(!TextUtils.isEmpty(pic3)){
+					if (!TextUtils.isEmpty(pic3)) {
 						uploadImage();
-					}else{
-						//上传商品
+					} else {
+						publishProduct();
 					}
 					break;
 				case 2:// 第三张上传完毕
 					if (progressDialog.isShowing()) {
 						progressDialog.dismiss();
 					}
-					if(new File(FileUtils.getRootPath()+"/tagPic/"+"tagPic0.png").exists()){
-						String imageName1 = pic1.substring(pic1.lastIndexOf("/") + 1,pic1.length());
-						 MyApplication.getInstance().getPublishUtil().getBean().getImages().get(0).setImageUrl(imageName1);
-						new File(FileUtils.getRootPath()+"/tagPic/"+"tagPic0.png").delete();
+					if (new File(FileUtils.getRootPath() + "/tagPic/"
+							+ "tagPic0.png").exists()) {
+						String imageName1 = pic1.substring(
+								pic1.lastIndexOf("/") + 1, pic1.length());
+						MyApplication.getInstance().getPublishUtil().getBean()
+								.getImages().get(0).setImageUrl(imageName1);
+						new File(FileUtils.getRootPath() + "/tagPic/"
+								+ "tagPic0.png").delete();
 					}
-					if(new File(FileUtils.getRootPath()+"/tagPic/"+"tagPic1.png").exists()){
-						String imageName2 = pic2.substring(pic2.lastIndexOf("/") + 1,pic2.length());
-						 MyApplication.getInstance().getPublishUtil().getBean().getImages().get(0).setImageUrl(imageName2);
-						new File(FileUtils.getRootPath()+"/tagPic/"+"tagPic1.png").delete();
+					if (new File(FileUtils.getRootPath() + "/tagPic/"
+							+ "tagPic1.png").exists()) {
+						String imageName2 = pic2.substring(
+								pic2.lastIndexOf("/") + 1, pic2.length());
+						MyApplication.getInstance().getPublishUtil().getBean()
+								.getImages().get(0).setImageUrl(imageName2);
+						new File(FileUtils.getRootPath() + "/tagPic/"
+								+ "tagPic1.png").delete();
 					}
-					if(new File(FileUtils.getRootPath()+"/tagPic/"+"tagPic2.png").exists()){
-						String imageName3 = pic3.substring(pic3.lastIndexOf("/") + 1,pic3.length());
-						 MyApplication.getInstance().getPublishUtil().getBean().getImages().get(0).setImageUrl(imageName3);
-						new File(FileUtils.getRootPath()+"/tagPic/"+"tagPic2.png").delete();
+					if (new File(FileUtils.getRootPath() + "/tagPic/"
+							+ "tagPic2.png").exists()) {
+						String imageName3 = pic3.substring(
+								pic3.lastIndexOf("/") + 1, pic3.length());
+						MyApplication.getInstance().getPublishUtil().getBean()
+								.getImages().get(0).setImageUrl(imageName3);
+						new File(FileUtils.getRootPath() + "/tagPic/"
+								+ "tagPic2.png").delete();
 					}
-					
+					FileUtils.delAllFile(FileUtils.getRootPath() + "/tagPic/");
+					MyApplication.getInstance().getPublishUtil().setBean(null);
+
 				default:
 					break;
 				}
@@ -364,4 +431,4 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 			}
 		});
 	}
-}	
+}

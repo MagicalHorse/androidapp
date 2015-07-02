@@ -19,6 +19,9 @@ public class PublishPicUtil {
 		return instance;
 	}
 	public RequestUploadProductDataBean getBean() {
+		if(bean == null){
+			bean = new RequestUploadProductDataBean();
+		}
 		return bean;
 	}
 	public void setBean(RequestUploadProductDataBean bean) {

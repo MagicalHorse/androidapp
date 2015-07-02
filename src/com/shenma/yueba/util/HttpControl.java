@@ -50,6 +50,7 @@ import com.shenma.yueba.baijia.modle.RequestMyFavoriteProductListInfoBean;
 import com.shenma.yueba.baijia.modle.RequestMyInfoBean;
 import com.shenma.yueba.baijia.modle.RequestProductDetailsInfoBean;
 import com.shenma.yueba.baijia.modle.RequestProductListInfoBean;
+import com.shenma.yueba.baijia.modle.RequestUploadProductDataBean;
 import com.shenma.yueba.baijia.modle.RequestUploadProductInfoBean;
 import com.shenma.yueba.baijia.modle.RequestUserInfoBean;
 import com.shenma.yueba.baijia.modle.ResponseUploadProductInfoBean;
@@ -1241,7 +1242,16 @@ public class HttpControl {
 		BasehttpSend(map, context, HttpConstants.METHOD_CIRCLE_EXITGROUP,httpCallBack, BaseRequest.class, showDialog, false);
 	}
 	
-	
+	public void createBuyerProductInfo(
+			RequestUploadProductDataBean requestUploadProductDataBean,
+			final HttpCallBackInterface httpCallBack, Context context) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("data",
+				BaseGsonUtils.getObjectToJson(requestUploadProductDataBean));
+		BasehttpSend(map, context, HttpConstants.METHOD_PRODUCTMANAGER_CREATE,
+				httpCallBack, BaseRequest.class, true, false);
+	}
+
 	
 	/**
 	 * 删除圈子
@@ -2006,6 +2016,8 @@ public class HttpControl {
 			UserInfo userInfo = bean.getData();
 			SharedUtil.setStringPerfernece(context, SharedUtil.user_id,
 					Integer.toString(userInfo.getId()));
+			SharedUtil.setStringPerfernece(context, SharedUtil.user_level,
+					userInfo.getLevel());
 			SharedUtil.setStringPerfernece(context, SharedUtil.user_name,
 					userInfo.getName());
 			SharedUtil.setStringPerfernece(context, SharedUtil.user_names,
