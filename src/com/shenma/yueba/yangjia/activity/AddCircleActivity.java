@@ -113,40 +113,40 @@ public class AddCircleActivity extends BaseActivityWithTopView implements
 
 	}
 
-	public void createCircle2() {
-		HttpUtils httpUtils = new HttpUtils();
-		RequestParams map = new RequestParams();
-		HttpControl httpControl = new HttpControl();
-		map.addBodyParameter(Constants.NAME, et_circle_name.getText()
-				.toString().trim());
-		map.addBodyParameter(Constants.LOGO, littlePicPath_cache.substring(
-				littlePicPath_cache.lastIndexOf("/") + 1,
-				littlePicPath_cache.length()));
-		httpUtils.send(HttpMethod.POST,
-				HttpConstants.METHOD_CIRCLE_GETBUYERGROUPS, map,
-				new RequestCallBack<String>() {
-					@Override
-					public void onSuccess(ResponseInfo<String> responseInfo) {
-						progressDialog.dismiss();
-						BaseRequest resultBean = ParserJson
-								.parserBase(responseInfo.result);
-						if (200 == resultBean.getStatusCode()) {// 返回成功
-							Toast.makeText(mContext, "创建成功", 1000).show();
-							setResult(Constants.RESULTCODE);
-							AddCircleActivity.this.finish();
-						} else {
-							Toast.makeText(mContext, resultBean.getMessage(),
-									1000).show();
-						}
-					}
-
-					@Override
-					public void onFailure(HttpException error, String msg) {
-						// progressDialog.dismiss();
-						Toast.makeText(mContext, "创建失败！", 1000).show();
-					}
-				});
-	}
+//	public void createCircle2() {
+//		HttpUtils httpUtils = new HttpUtils();
+//		RequestParams map = new RequestParams();
+//		HttpControl httpControl = new HttpControl();
+//		map.addBodyParameter(Constants.NAME, et_circle_name.getText()
+//				.toString().trim());
+//		map.addBodyParameter(Constants.LOGO, littlePicPath_cache.substring(
+//				littlePicPath_cache.lastIndexOf("/") + 1,
+//				littlePicPath_cache.length()));
+//		httpUtils.send(HttpMethod.POST,
+//				HttpConstants.METHOD_CIRCLE_GETBUYERGROUPS, map,
+//				new RequestCallBack<String>() {
+//					@Override
+//					public void onSuccess(ResponseInfo<String> responseInfo) {
+//						progressDialog.dismiss();
+//						BaseRequest resultBean = ParserJson
+//								.parserBase(responseInfo.result);
+//						if (200 == resultBean.getStatusCode()) {// 返回成功
+//							Toast.makeText(mContext, "创建成功", 1000).show();
+//							setResult(Constants.RESULTCODE);
+//							AddCircleActivity.this.finish();
+//						} else {
+//							Toast.makeText(mContext, resultBean.getMessage(),
+//									1000).show();
+//						}
+//					}
+//
+//					@Override
+//					public void onFailure(HttpException error, String msg) {
+//						// progressDialog.dismiss();
+//						Toast.makeText(mContext, "创建失败！", 1000).show();
+//					}
+//				});
+//	}
 
 	public void createCircle() {
 		HttpControl httpContorl = new HttpControl();
