@@ -11,6 +11,8 @@ public class OrderItem {
 	private String InCome;
 	private String Amount;
 	private String CreateTime;
+	private String GoodsAmount;//货款金额
+	private String IsGoodsPick;//是否已经提款
 	private List<ProductItemBean> Products;
 	public String getOrderNo() {
 		return OrderNo;
@@ -53,6 +55,18 @@ public class OrderItem {
 	}
 	public void setProducts(List<ProductItemBean> products) {
 		Products = products;
+	}
+	public String getGoodsAmount() {
+		return GoodsAmount;
+	}
+	public void setGoodsAmount(String goodsAmount) {
+		GoodsAmount = goodsAmount;
+	}
+	public String getIsGoodsPick() {
+		return IsGoodsPick;
+	}
+	public void setIsGoodsPick(String isGoodsPick) {
+		IsGoodsPick = isGoodsPick;
 	}
 	
 	
