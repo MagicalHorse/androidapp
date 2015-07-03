@@ -37,6 +37,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.style.ImageSpan;
 import android.util.Base64;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -153,13 +154,13 @@ public class ChatActivity extends RoboActivity implements OnClickListener,OnChic
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_chat);
-		buyerId=this.getIntent().getIntExtra("buyerId", -1);
+		/*buyerId=this.getIntent().getIntExtra("buyerId", -1);
 		if(buyerId<0)
 		{
 			MyApplication.getInstance().showMessage(this, "数据错误");
 			finish();
 			return;
-		}
+		}*/
 		initView();
 		initDataFromHistory();
 	}
@@ -550,16 +551,14 @@ public class ChatActivity extends RoboActivity implements OnClickListener,OnChic
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		if (resultCode == Activity.RESULT_OK)
+		switch(requestCode)
 		{
-			switch(requestCode)
-			{
-			case 200:
-				cameraCallBack(data);//相机回调
-				break;
-			case 300://链接回调
-				break;
-			}
+		case 200:
+			cameraCallBack(data);//相机回调
+			break;
+		case 300://链接回调
+			Log.i("TAG", "1111111111111");
+			break;
 		}
 	}
 	
@@ -629,8 +628,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,OnChic
 	 * 显示表情
 	 */
 	private void showFace() {
-		iv_emoticons_normal
-				.setBackgroundResource(R.drawable.chatting_biaoqing_btn_enable);
+		iv_emoticons_normal.setBackgroundResource(R.drawable.chatting_biaoqing_btn_enable);
 		iv_emoticons_normal.setTag(1);
 		fView.setVisibility(View.VISIBLE);
 	}

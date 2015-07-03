@@ -19,6 +19,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.OnPullEventListener;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.State;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.shenma.yueba.ChatActivity;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.CircleInfoActivity;
@@ -130,9 +131,10 @@ public class MyCircleView extends BaseView{
 
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,long arg3) {
-				MyCircleInfo myCircleInfo=items.get(arg2-1);
-				Intent intent=new Intent(activity,CircleInfoActivity.class);
-				intent.putExtra("circleId",Integer.toString(myCircleInfo.getId()));
+				MyCircleInfo myCircleInfo=items.get(arg2);
+				Intent intent=new Intent(activity,ChatActivity.class);
+				intent.putExtra("buyerId", 0);
+				intent.putExtra("circleId", Integer.toString(myCircleInfo.getId()));
 				activity.startActivity(intent);
 			}
 		});

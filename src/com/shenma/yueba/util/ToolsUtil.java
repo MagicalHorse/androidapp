@@ -303,7 +303,7 @@ public class ToolsUtil {
 							.get(str2);
 					Drawable d = context.getResources().getDrawable(face);
 					if (d != null) {
-						d.setBounds(0, 0, 25, 25);// 设置表情图片的显示大小
+						d.setBounds(0, 0, 80, 80);// 设置表情图片的显示大小
 						ImageSpan span = new ImageSpan(d,
 								ImageSpan.ALIGN_BOTTOM);
 						value.setSpan(span, k, m,

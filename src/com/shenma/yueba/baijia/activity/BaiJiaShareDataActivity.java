@@ -64,10 +64,11 @@ public class BaiJiaShareDataActivity extends BaseActivityWithTopView{
 				List<BaiJiaShareInfoBean>  check_list=getCheckList();
 				if(check_list==null || check_list.size()==0)
 				{
-					MyApplication.getInstance().showMessage(BaiJiaShareDataActivity.this, "请先选择分享的数据");
+					MyApplication.getInstance().showMessage(BaiJiaShareDataActivity.this, "没人任何选中项");
 				}else
 				{
 					setResult(300, BaiJiaShareDataActivity.this.getIntent());
+					finish();
 				}
 				
 			}
@@ -159,6 +160,8 @@ public class BaiJiaShareDataActivity extends BaseActivityWithTopView{
 		{
 			bean_array.addAll(bean);
 		}
+		adapter=new BaiJiaShareDataAdapter(this,bean_array);
+		sharedata_layout_pulltorefreshlistview.setAdapter(adapter);
 		adapter.notifyDataSetChanged();
 		sharedata_layout_pulltorefreshlistview.onRefreshComplete();
 	}
