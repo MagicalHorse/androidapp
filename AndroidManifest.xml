@@ -405,6 +405,12 @@
             android:name="com.shenma.yueba.baijia.activity.ShopMainActivity"
             android:screenOrientation="portrait" >
         </activity>
+        
+        <!-- 分享列表页 -->
+        <activity
+            android:name="com.shenma.yueba.baijia.activity.BaiJiaShareDataActivity"
+            android:screenOrientation="portrait" >
+        </activity>
 
         <!-- 支付方式选择页面 -->
         <activity

@@ -14,17 +14,21 @@ package com.shenma.yueba;
  * limitations under the License.
  */
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import roboguice.activity.RoboActivity;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.ClipboardManager;
 import android.text.Editable;
 import android.text.Spannable;
@@ -32,6 +36,7 @@ import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.style.ImageSpan;
+import android.util.Base64;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -53,6 +58,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.AffirmOrderActivity;
+import com.shenma.yueba.baijia.activity.BaiJiaShareDataActivity;
 import com.shenma.yueba.baijia.activity.CircleInfoActivity;
 import com.shenma.yueba.baijia.adapter.ChattingListViewAdapter;
 import com.shenma.yueba.baijia.dialog.CreateOrderDialog;
@@ -503,23 +509,106 @@ public class ChatActivity extends RoboActivity implements OnClickListener,OnChic
 				Toast.makeText(ChatActivity.this, "网络不可用", 1000).show();
 				return;
 			}
-			dbhelper.saveTextMsg(MyPreference.getStringValue(ChatActivity.this,
-					Constants.USERID), "", content, "false", "true",
-					Constants.NORMAL, ToolsUtil.getCurrentTime());
+			dbhelper.saveTextMsg(MyPreference.getStringValue(ChatActivity.this,Constants.USERID), "", content, "false", "true",Constants.NORMAL, ToolsUtil.getCurrentTime());
 			// dbhelper.saveLastMsg(
 			// MyPreference.getStringValue(ChatActivity.this,Constants.USERID),
 			// PublicMethod.spitJidBeforeAt(jid), content, "false",
 			// "true", Constants.NORMAL, PublicMethod.getCurrentTime());
 			// xmppservice.sendMsg(jid, content);
-			setListDate(MyPreference.getStringValue(ChatActivity.this,
-					Constants.USERID), "111", content, "false", "true",
-					ToolsUtil.getCurrentTime());
+			setListDate(MyPreference.getStringValue(ChatActivity.this,Constants.USERID), "111", content, "false", "true",ToolsUtil.getCurrentTime());
 			mEditTextContent.setText("");
+			break;
+		case R.id.btn_camera://拍照
+			openCamera();
+			break;
+		case R.id.btn_picture://照片
+			openPicture();
+		    break;
+		case R.id.btn_link://链接
+			openLink();
+		    break;
+		case R.id.btn_collention://收藏
+			openCollention();
+		    break;
 		default:
 			break;
 		}
 
 	}
+	
+	/****
+	 * 打开照相机并回去返回的图片 
+	 * **/
+	void openCamera()
+	{
+		Intent intent=new Intent();
+		intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+		startActivityForResult(intent, 200);  
+
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (resultCode == Activity.RESULT_OK)
+		{
+			switch(requestCode)
+			{
+			case 200:
+				cameraCallBack(data);//相机回调
+				break;
+			case 300://链接回调
+				break;
+			}
+		}
+	}
+	
+	/****
+	 * 相机回调
+	 * **/
+	void cameraCallBack(Intent data)
+	{
+		if(data!=null)
+		{
+			Bundle bundle = data.getExtras();  
+            Bitmap bitmap = (Bitmap) bundle.get("data");// 获取相机返回的数据，并转换为Bitmap图片格式  
+            if(bitmap!=null)
+            {
+            	ByteArrayOutputStream baos = new ByteArrayOutputStream();    
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                String str= Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT);
+            }
+		}
+	}
+	
+	
+	
+	/****
+	 * 打开照图片 
+	 * **/
+	void openPicture()
+	{
+		
+	}
+	
+	/****
+	 * 链接
+	 * **/
+	void openLink()
+	{
+		Intent intent=new Intent(ChatActivity.this,BaiJiaShareDataActivity.class);
+		startActivityForResult(intent, 300);
+	}
+	
+	/****
+	 * 收藏
+	 * **/
+	void openCollention()
+	{
+		
+	}
+	
+	
 
 	/**
 	 * 将自己发送的普通文字消息刷新到listview上
