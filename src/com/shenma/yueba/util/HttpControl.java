@@ -1533,6 +1533,20 @@ public class HttpControl {
 	}
 	
 	
+	/**
+	 * 获取消息列表
+	 * @param page int 当前页
+     *  @param pagesize int 页大小
+     * @return void
+	 * **/
+	public void GetBaijiaMessageList(int page,int pagesize,boolean showDialog, final HttpCallBackInterface httpCallBack,Context context) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put(Constants.PAGE, Integer.toString(page));
+		map.put(Constants.PAGESIZE, Integer.toString(pagesize));
+		BasehttpSend(map, context, HttpConstants.METHOD_GETMESSAGELIST,httpCallBack, BaseRequest.class, showDialog,false);
+	}
+	
+	
 	
 	
 	/**

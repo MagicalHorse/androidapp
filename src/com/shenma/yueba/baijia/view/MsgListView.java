@@ -18,8 +18,12 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.State;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.adapter.MsgAdapter;
 import com.shenma.yueba.baijia.modle.MsgBean;
+import com.shenma.yueba.constants.Constants;
+import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 
 /**  
  * @author gyj  
@@ -31,7 +35,11 @@ public class MsgListView {
 	static MsgListView msgListView;
 	Activity activity;
 	LayoutInflater layoutInflater;
-	
+	boolean showDialog=true;
+	// 当前页
+	int currpage = Constants.CURRPAGE_VALUE;
+	// 每页显示的条数
+	int pagesize = Constants.PAGESIZE_VALUE;
 	private List<MsgBean> mList = new ArrayList<MsgBean>();
 	private View view;
 	private PullToRefreshListView pull_refresh_list;
@@ -179,7 +187,31 @@ public class MsgListView {
 		msgAdapter.notifyDataSetChanged();
 		
 		//ListUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
-		pull_refresh_list.onRefreshComplete();
 		
+		
+	}
+	
+	/******
+	 * 访问网络
+	 * @param page int 当问的页数
+	 * @param type int 类型
+	 * ***/
+	void sendHttp(final int page,final int type)
+	{
+		HttpControl httpControl=new HttpControl();
+		httpControl.GetBaijiaMessageList(page, pagesize, showDialog, new HttpCallBackInterface() {
+			
+			@Override
+			public void http_Success(Object obj) {
+				showDialog=false;
+				pull_refresh_list.onRefreshComplete();
+			}
+			
+			@Override
+			public void http_Fails(int error, String msg) {
+				pull_refresh_list.onRefreshComplete();
+				MyApplication.getInstance().showMessage(activity, msg);
+			}
+		}, activity);
 	}
 }

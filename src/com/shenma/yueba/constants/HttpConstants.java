@@ -626,6 +626,11 @@ public class HttpConstants {
 	public static String METHOD_GETUSERPRODUCTLIST = PRODUCT+ "GetUserProductList";
 	
 	/*****
+	 * 获取败家消息列表
+	 * **/
+	public static String METHOD_GETMESSAGELIST = Circle+ "GetMessageList";
+	
+	/*****
 	 *根据品牌名称检索品牌
 	 * **/
 	public static String METHOD_SEARCH = SEARCH+ "Search";
