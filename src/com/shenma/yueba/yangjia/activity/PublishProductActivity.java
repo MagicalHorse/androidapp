@@ -237,13 +237,12 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 			@Override
 			public void http_Success(Object obj) {
 				Toast.makeText(mContext, "发布成功",1000).show();
-
+				FileUtils.delAllFile(FileUtils.getRootPath() + "/tagPic/");
 			}
 
 			@Override
 			public void http_Fails(int error, String msg) {
-				// TODO Auto-generated method stub
-
+				Toast.makeText(mContext, msg, 1000).show();
 			}
 		}, PublishProductActivity.this);
 	}
@@ -316,15 +315,22 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 			Toast.makeText(mContext, "商品介绍不能为空", 1000).show();
 			return;
 		}
+		Sizes.clear();
+		SizeBean bean1 = new SizeBean();
 		String guige = et_guige.getText().toString().trim();
 		if(TextUtils.isEmpty(guige)){
 			Toast.makeText(mContext, "规格不能为空", 1000).show();
 			return;
+		}else{
+			bean1.setGuiGe(guige);
 		}
 		String kucun = et_kucun.getText().toString().trim();
 		if(TextUtils.isEmpty(kucun)){
 			Toast.makeText(mContext, "库存不能为空", 1000).show();
 			return;
+		}else{
+			bean1.setKuCun(kucun);
+			Sizes.add(bean1);
 		}
 		
 		for (int i = 0; i < ll_guige_container.getChildCount(); i++) {
@@ -347,6 +353,7 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 		}
 		RequestUploadProductDataBean bean = MyApplication.getInstance()
 				.getPublishUtil().getBean();
+		bean.setPrice(et_price.getText().toString().trim());
 		bean.setSizes(Sizes);
 		bean.setDesc(et_introduce.getText().toString().trim());
 		bean.setSku_Code(et_product_number.getText().toString().trim());
@@ -383,18 +390,40 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 				switch (upPicProgress) {
 				case 0:// 第一张图片上传完毕
 					upPicProgress = 1;
+					if (new File(FileUtils.getRootPath() + "/tagPic/"
+							+ "tagPic0.png").exists()) {
+						String imageName1 = pic1.substring(
+								pic1.lastIndexOf("/") + 1, pic1.length());
+						MyApplication.getInstance().getPublishUtil().getBean()
+								.getImages().get(0).setImageUrl(imageName1);
+					}
 					if (!TextUtils.isEmpty(pic2)) {
 						uploadImage();
 					} else {
-						publishProduct();
+						runOnUiThread(new Runnable() {
+							public void run() {
+								publishProduct();
+							}
+						});
+					
 					}
 					break;
 				case 1:// 第二张上传完毕
+					if (new File(FileUtils.getRootPath() + "/tagPic/"
+							+ "tagPic1.png").exists()) {
+						String imageName2 = pic2.substring(
+								pic2.lastIndexOf("/") + 1, pic2.length());
+						MyApplication.getInstance().getPublishUtil().getBean()
+								.getImages().get(1).setImageUrl(imageName2);
+					}
 					upPicProgress = 2;
 					if (!TextUtils.isEmpty(pic3)) {
 						uploadImage();
-					} else {
-						publishProduct();
+					} else {	runOnUiThread(new Runnable() {
+						public void run() {
+							publishProduct();
+						}
+					});
 					}
 					break;
 				case 2:// 第三张上传完毕
@@ -402,35 +431,18 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 						progressDialog.dismiss();
 					}
 					if (new File(FileUtils.getRootPath() + "/tagPic/"
-							+ "tagPic0.png").exists()) {
-						String imageName1 = pic1.substring(
-								pic1.lastIndexOf("/") + 1, pic1.length());
-						MyApplication.getInstance().getPublishUtil().getBean()
-								.getImages().get(0).setImageUrl(imageName1);
-						new File(FileUtils.getRootPath() + "/tagPic/"
-								+ "tagPic0.png").delete();
-					}
-					if (new File(FileUtils.getRootPath() + "/tagPic/"
-							+ "tagPic1.png").exists()) {
-						String imageName2 = pic2.substring(
-								pic2.lastIndexOf("/") + 1, pic2.length());
-						MyApplication.getInstance().getPublishUtil().getBean()
-								.getImages().get(0).setImageUrl(imageName2);
-						new File(FileUtils.getRootPath() + "/tagPic/"
-								+ "tagPic1.png").delete();
-					}
-					if (new File(FileUtils.getRootPath() + "/tagPic/"
 							+ "tagPic2.png").exists()) {
 						String imageName3 = pic3.substring(
 								pic3.lastIndexOf("/") + 1, pic3.length());
 						MyApplication.getInstance().getPublishUtil().getBean()
-								.getImages().get(0).setImageUrl(imageName3);
-						new File(FileUtils.getRootPath() + "/tagPic/"
-								+ "tagPic2.png").delete();
+								.getImages().get(2).setImageUrl(imageName3);
 					}
-					FileUtils.delAllFile(FileUtils.getRootPath() + "/tagPic/");
 					MyApplication.getInstance().getPublishUtil().setBean(null);
-
+					runOnUiThread(new Runnable() {
+						public void run() {
+							publishProduct();
+						}
+					});
 				default:
 					break;
 				}
