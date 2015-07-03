@@ -130,7 +130,7 @@ public class Constants {
 	public static String USER_MOBILE = "user_mobile";// 用户电话
 	public static String STOREENVIRO = "store_enviro";// 店名环境
 	public static String TELEPHONENUM = "telephoneNum";// 电话号码
-	public static String LEVEL = "level";// 用户id
+	public static String LEVEL = "level";// 用户id 1  普通用户  4  专柜买手    8 认证买手
 	public static String AREA = "area";// 地区
 
 	public static String USERNAME = "username";// 用戶名

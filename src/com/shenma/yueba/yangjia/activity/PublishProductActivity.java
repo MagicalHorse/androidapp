@@ -182,8 +182,8 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 			});
 			RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
 					LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-			params.height = ToolsUtil.getDisplayWidth(mContext) / 3 - 10;
-			params.width = ToolsUtil.getDisplayWidth(mContext) / 3 - 10;
+			params.height = ToolsUtil.getDisplayWidth(mContext) / 3 - ToolsUtil.dip2px(mContext, 15);
+			params.width = ToolsUtil.getDisplayWidth(mContext) / 3 - ToolsUtil.dip2px(mContext, 15);
 			iv_pic.setLayoutParams(params);
 			bean.setPosition(i);
 			// for (int j = 0; j <tagList.size(); j++) {
@@ -200,7 +200,7 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 						.getRootPath() + "/tagPic/" + "tagPic" + i + ".png"));
 				bean.setSetPic(true);
 			} else {
-				iv_pic.setBackgroundResource(R.drawable.ic_launcher);
+				iv_pic.setBackgroundResource(R.drawable.default_pic);
 			}
 			if (tagList != null && tagList.size() > 0) {
 				bean.setSetTag(true);
@@ -284,27 +284,6 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 
 	}
 
-	/**
-	 * 获取规格尺寸
-	 */
-	private void getGuiGeAndKuCun() {
-		for (int i = 0; i < ll_guige_container.getChildCount(); i++) {
-			EditText et_guige = (EditText) ll_guige_container.getChildAt(i)
-					.findViewById(R.id.et_guige);
-			EditText et_kucun = (EditText) ll_guige_container.getChildAt(i)
-					.findViewById(R.id.et_kucun);
-			if (TextUtils.isEmpty(et_guige.getText().toString().trim())
-					|| TextUtils.isEmpty(et_kucun.getText().toString().trim())) {
-				Toast.makeText(mContext, "请将库存规格填写完整", 1000).show();
-				break;
-			}
-			SizeBean bean = new SizeBean();
-			bean.setGuiGe(et_guige.getText().toString().trim());
-			bean.setKuCun(et_kucun.getText().toString().trim());
-			Sizes.add(bean);
-		}
-
-	}
 
 	private void uploadImage() {
 		if (new File(FileUtils.getRootPath() + "/tagPic/" + "tagPic0.png")
@@ -337,7 +316,35 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 			Toast.makeText(mContext, "商品介绍不能为空", 1000).show();
 			return;
 		}
-		getGuiGeAndKuCun();
+		String guige = et_guige.getText().toString().trim();
+		if(TextUtils.isEmpty(guige)){
+			Toast.makeText(mContext, "规格不能为空", 1000).show();
+			return;
+		}
+		String kucun = et_kucun.getText().toString().trim();
+		if(TextUtils.isEmpty(kucun)){
+			Toast.makeText(mContext, "库存不能为空", 1000).show();
+			return;
+		}
+		
+		for (int i = 0; i < ll_guige_container.getChildCount(); i++) {
+			EditText et_guige = (EditText) ll_guige_container.getChildAt(i)
+					.findViewById(R.id.et_guige);
+			EditText et_kucun = (EditText) ll_guige_container.getChildAt(i)
+					.findViewById(R.id.et_kucun);
+			if (TextUtils.isEmpty(et_guige.getText().toString().trim())
+					|| TextUtils.isEmpty(et_kucun.getText().toString().trim())) {
+				Toast.makeText(mContext, "请将库存规格填写完整", 1000).show();
+				return;
+			}
+			SizeBean bean = new SizeBean();
+			if(!TextUtils.isEmpty(et_guige.getText().toString().trim())){
+				bean.setGuiGe(et_guige.getText().toString().trim());
+			}
+			
+			bean.setKuCun(et_kucun.getText().toString().trim());
+			Sizes.add(bean);
+		}
 		RequestUploadProductDataBean bean = MyApplication.getInstance()
 				.getPublishUtil().getBean();
 		bean.setSizes(Sizes);
