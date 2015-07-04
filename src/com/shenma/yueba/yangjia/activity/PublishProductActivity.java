@@ -123,7 +123,7 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 		FontManager.changeFonts(mContext, tv_product_number, et_product_number,
 				tv_price_title, et_price, tv_yuan, et_introduce, tv_retain,
 				et_guige, et_kucun, tv_add_guige, tv_publish);
-		progressDialog = new CustomProgressDialog(mContext);
+		progressDialog = new CustomProgressDialog(mContext).createDialog(mContext);
 
 	}
 
@@ -231,6 +231,9 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 	}
 
 	private void publishProduct() {
+		if(progressDialog.isShowing()){
+			progressDialog.dismiss();
+		}
 		HttpControl httpControl = new HttpControl();
 		httpControl.createBuyerProductInfo(MyApplication.getInstance()
 				.getPublishUtil().getBean(), new HttpCallBackInterface() {
@@ -370,6 +373,10 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 		}
 		if (upPicProgress == 2) {
 			pic = pic3;
+		}
+		if(TextUtils.isEmpty(pic)){
+			Toast.makeText(mContext, "商品图片不能为空", 1000).show();
+			return ;
 		}
 		httpControl.syncUpload(pic, new SaveCallback() {
 
