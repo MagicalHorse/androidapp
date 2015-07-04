@@ -111,7 +111,7 @@ public class MyCircleForSocialFragment extends BaseFragment {
                     public void run() {
                     	pull_refresh_list.onRefreshComplete();
                     }
-            }, 1000);
+            }, 100);
 				CircleListBackBean bean = (CircleListBackBean) obj;
 				if (isRefresh) {
 					if(bean!=null && bean.getData()!=null && bean.getData().getItems()!=null&& bean.getData().getItems().size()>0){

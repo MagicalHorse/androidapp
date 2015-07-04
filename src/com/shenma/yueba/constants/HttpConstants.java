@@ -143,6 +143,11 @@ public class HttpConstants {
 	public static String METHOD_BRANDMANAGEER_DETAIL = PRODUCT + "GetProductListByBrandId";
 
 	
+	/**
+	 * 复制商品
+	 */
+	public static String METHOD_PRODUCT_COPY = PRODUCT + "Copy";
+
 
 	/**
 	 * 根据名称搜索标签

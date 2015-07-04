@@ -22,6 +22,7 @@ import com.shenma.yueba.baijia.adapter.ProductManagerFragmentForOnLineAdapter;
 import com.shenma.yueba.baijia.fragment.BaseFragment;
 import com.shenma.yueba.baijia.modle.ProductManagerForOnLineBean;
 import com.shenma.yueba.constants.Constants;
+import com.shenma.yueba.inter.RefreshProductListInter;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.yangjia.modle.BuyerProductManagerListBack;
@@ -33,7 +34,7 @@ import com.shenma.yueba.yangjia.modle.BuyerProductManagerListBack;
  * 
  */
 @SuppressLint("ValidFragment")
-public class ProductManagerFragmentForOnLine extends BaseFragment {
+public class ProductManagerFragmentForOnLine extends BaseFragment implements RefreshProductListInter{
 	private int type;// 1表示在线，2表示即将下线，0表示已经下线
 
 	@SuppressLint("ValidFragment")
@@ -76,7 +77,7 @@ public class ProductManagerFragmentForOnLine extends BaseFragment {
 					.findViewById(R.id.pull_refresh_list);
 			pull_refresh_list.setMode(Mode.BOTH);
 			adapter = new ProductManagerFragmentForOnLineAdapter(getActivity(),
-					mList, type);
+					mList, type,ProductManagerFragmentForOnLine.this);
 			pull_refresh_list.setAdapter(adapter);
 			pull_refresh_list.setOnRefreshListener(new OnRefreshListener2() {
 
@@ -144,7 +145,7 @@ public class ProductManagerFragmentForOnLine extends BaseFragment {
 		                    public void run() {
 		                    	pull_refresh_list.onRefreshComplete();
 		                    }
-		            }, 1000);
+		            }, 100);
 						BuyerProductManagerListBack bean = (BuyerProductManagerListBack) obj;
 						if (isRefresh) {
 							if(bean.getData().getItems()!=null && bean.getData().getItems().size()>0){
@@ -170,6 +171,18 @@ public class ProductManagerFragmentForOnLine extends BaseFragment {
 					}
 				}, ctx, isRefresh, true);
 
+	}
+
+	@Override
+	public void refreshOnLineProduct(int flag) {
+		if(flag == 0){
+			getProductListForOnLine(true, 1, getActivity(), 1);//获取在线商品
+		}else if(flag == 1){
+			getProductListForOnLine(true, 1, getActivity(), 2);//获取即将下限商品
+		}else if(flag == 2){
+			getProductListForOnLine(true, 1, getActivity(), 0);//获取下限商品
+		}
+	
 	}
 
 }
