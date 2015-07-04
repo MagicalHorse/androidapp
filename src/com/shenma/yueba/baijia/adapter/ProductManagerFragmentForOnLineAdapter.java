@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,6 +22,7 @@ import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.ShareUtil;
 import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.util.ToolsUtil;
+import com.shenma.yueba.yangjia.activity.PublishProductActivity;
 import com.shenma.yueba.yangjia.fragment.ProductManagerFragmentForOnLine;
 
 public class ProductManagerFragmentForOnLineAdapter extends BaseAdapterWithUtil {
@@ -121,9 +123,9 @@ public class ProductManagerFragmentForOnLineAdapter extends BaseAdapterWithUtil 
 
 				@Override
 				public void onClick(View v) {
-
 					if (flag == 1 || flag == 2) {// 修改
-
+                       Intent intent = new Intent(ctx, PublishProductActivity.class);
+                       ctx.startActivity(intent);
 					} else if (flag == 0) {// 删除
 						deleteProduct(position, mList.get(position)
 								.getProductId());

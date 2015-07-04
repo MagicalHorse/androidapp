@@ -4,27 +4,29 @@
     android:layout_height="wrap_content"
     android:orientation="vertical" >
 
-
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="200dip"
-        android:orientation="horizontal"
-        android:gravity="center_horizontal|top" >
+        android:gravity="center_horizontal|top"
+        android:orientation="horizontal" >
 
         <Button
             android:id="@+id/bt_band"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="85dip"
+            android:layout_height="85dip"
             android:layout_marginRight="30dp"
-            android:text="品牌标签" />
+            android:background="@drawable/round_background_maincolor"
+            android:text="品牌标签"
+            android:textColor="@color/white" />
 
         <Button
             android:id="@+id/bt_product"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="85dip"
+            android:layout_height="85dip"
             android:layout_marginLeft="30dp"
-            android:text="商品标签" />
-
+            android:background="@drawable/round_background_maincolor"
+            android:text="商品标签"
+            android:textColor="@color/white" />
     </LinearLayout>
 
 </LinearLayout>
