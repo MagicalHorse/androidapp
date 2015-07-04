@@ -395,6 +395,14 @@ public class HttpConstants {
 			+ "GetOrderList";
 	
 	/**
+	 * 确认退款
+	 */
+	
+	public static String METHOD_ORDER_RMAConfirm = Order
+			+ "RMAConfirm";
+	  
+	
+	/**
 	 * 获取订单详情
 	 */
 	

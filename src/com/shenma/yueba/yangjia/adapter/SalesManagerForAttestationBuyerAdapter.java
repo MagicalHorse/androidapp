@@ -5,6 +5,7 @@ import java.util.List;
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -13,7 +14,9 @@ import android.widget.TextView;
 import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.adapter.BaseAdapterWithUtil;
 import com.shenma.yueba.util.FontManager;
+import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.ToolsUtil;
+import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.yangjia.modle.OrderItem;
 import com.shenma.yueba.yangjia.modle.ProductItemBean;
 
@@ -44,11 +47,12 @@ public class SalesManagerForAttestationBuyerAdapter extends BaseAdapterWithUtil 
 		// TODO Auto-generated method stub
 		return position;
 	}
-
+	
+	
 	@SuppressWarnings("null")
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
-		Holder holder;
+	public View getView(final int position, View convertView, ViewGroup parent) {
+		final Holder holder;
 		if(convertView == null){
 			holder = new Holder();
 			convertView = View.inflate(ctx, R.layout.sales_manager_item_for_attestation_buyer, null);
@@ -65,6 +69,16 @@ public class SalesManagerForAttestationBuyerAdapter extends BaseAdapterWithUtil 
 			holder.tv_guige = (TextView) convertView.findViewById(R.id.tv_guige);
 			holder.ll_bottom = (LinearLayout) convertView.findViewById(R.id.ll_bottom);
 			holder.tv_bottom = (TextView) convertView.findViewById(R.id.tv_bottom);
+			holder.tv_bottom.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					if("充值并退款".equals(holder.tv_bottom.getText().toString().trim())){
+						
+					}else if("确认退款".equals(holder.tv_bottom.getText().toString().trim())){
+						confirmBack(position);
+					}
+				}
+			});
 			FontManager.changeFonts(ctx, holder.tv_order_number,holder.tv_order_status,
 					holder.tv_money_payed,holder.tv_product_name,holder.tv_price,holder.tv_description,
 					holder.tv_same_product_count,holder.tv_huohao,holder.tv_guige,holder.tv_commission);
@@ -74,10 +88,27 @@ public class SalesManagerForAttestationBuyerAdapter extends BaseAdapterWithUtil 
 		}
 		OrderItem item = mList.get(position);
 		if(item!=null){
+			if(0 == tag){//全部订单
+				holder.tv_commission.setText(TextUtils.isEmpty(item.getInCome())?"":"佣金：￥"+item.getInCome());
+				ToolsUtil.setTextColorBlackAndRed(holder.tv_money_payed, "实付：￥", ToolsUtil.getTextColorRed(item.getAmount()));
+			}else if(1 == tag){//待付款
+				holder.tv_commission.setText(TextUtils.isEmpty(item.getInCome())?"":"佣金：￥"+item.getInCome());
+				ToolsUtil.setTextColorBlackAndRed(holder.tv_money_payed, "实付：￥", ToolsUtil.getTextColorRed(item.getAmount()));
+			}else if(2 == tag){//专柜自提
+				holder.tv_commission.setText(TextUtils.isEmpty(item.getInCome())?"":"佣金：￥"+item.getInCome());
+				ToolsUtil.setTextColorBlackAndRed(holder.tv_money_payed, "实付：￥", ToolsUtil.getTextColorRed(item.getAmount()));
+			}else if(3 == tag){//售后服务
+				holder.tv_commission.setText(TextUtils.isEmpty(item.getInCome())?"":"退还佣金：￥"+item.getInCome());
+				ToolsUtil.setTextColorBlackAndRed(holder.tv_money_payed, "退款金额：￥", ToolsUtil.getTextColorRed(item.getAmount()));
+				holder.ll_bottom.setVisibility(View.VISIBLE);
+				if(mList.get(position).isIsGoodsPick()){//已经提款
+					holder.tv_bottom.setText("充值并退款");
+				}else{//还未提款
+					holder.tv_bottom.setText("确认退款");
+				}
+			}
 			holder.tv_order_number.setText(TextUtils.isEmpty(item.getOrderNo())?"":"订单号："+item.getOrderNo());
 			holder.tv_order_status.setText(TextUtils.isEmpty(item.getStatusName())?"":item.getStatusName());
-			holder.tv_commission.setText(TextUtils.isEmpty(item.getInCome())?"":"佣金：￥"+item.getInCome());
-			ToolsUtil.setTextColorBlackAndRed(holder.tv_money_payed, "实付：￥", ToolsUtil.getTextColorRed(item.getAmount()));
 			if(item.getProducts()!=null && item.getProducts().size()>0){//说明有商品
 				List<ProductItemBean>  products = item.getProducts();
 				ProductItemBean productItme = products.get(0);
@@ -93,22 +124,31 @@ public class SalesManagerForAttestationBuyerAdapter extends BaseAdapterWithUtil 
 			}
 			
 		}
-	
-		
-		
-		if(0 == tag){//全部订单
-			
-		}else if(1 == tag){//待付款
-			
-		}else if(2 == tag){//专柜自提
-			
-		}else if(3 == tag){//售后服务
-			
-		}
-		
 		return convertView;
 	}
 	
+	
+	/**
+	 * 确认退款
+	 * @param position
+	 */
+	private void confirmBack(int position){
+		HttpControl httpControl = new HttpControl();
+		httpControl.comformBack(mList.get(position).getOrderNo(), new HttpCallBackInterface() {
+			
+			@Override
+			public void http_Success(Object obj) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void http_Fails(int error, String msg) {
+				// TODO Auto-generated method stub
+				
+			}
+		}, ctx, true);
+	}
 	
 	class Holder{
 		TextView tv_order_number;//订单号

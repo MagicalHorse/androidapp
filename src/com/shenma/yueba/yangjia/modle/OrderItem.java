@@ -12,7 +12,7 @@ public class OrderItem {
 	private String Amount;
 	private String CreateTime;
 	private String GoodsAmount;//货款金额
-	private String IsGoodsPick;//是否已经提款
+	private boolean IsGoodsPick;//是否已经提款
 	private List<ProductItemBean> Products;
 	public String getOrderNo() {
 		return OrderNo;
@@ -62,12 +62,13 @@ public class OrderItem {
 	public void setGoodsAmount(String goodsAmount) {
 		GoodsAmount = goodsAmount;
 	}
-	public String getIsGoodsPick() {
+	public boolean isIsGoodsPick() {
 		return IsGoodsPick;
 	}
-	public void setIsGoodsPick(String isGoodsPick) {
+	public void setIsGoodsPick(boolean isGoodsPick) {
 		IsGoodsPick = isGoodsPick;
 	}
+
 	
 	
 	

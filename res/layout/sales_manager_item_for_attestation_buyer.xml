@@ -68,11 +68,11 @@
     </LinearLayout>
 
     <LinearLayout
-        android:visibility="gone"
         android:id="@+id/ll_bottom"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:visibility="gone" >
 
         <View style="@style/style_horizontal_line" />
 
@@ -86,5 +86,6 @@
             android:textColor="@color/blue"
             android:textSize="17sp" />
     </LinearLayout>
+
 
 </LinearLayout>

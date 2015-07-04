@@ -1029,6 +1029,21 @@ public class HttpControl {
 				OrderListBackBean.class, showDialog, false);
 	}
 	
+	/**
+	 * 确认退款
+	 * @return void
+	 * **/
+	public void comformBack(String orderId,
+			final HttpCallBackInterface httpCallBack, Context context,
+			boolean showDialog) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put(Constants.ORDER_NO, orderId);
+		BasehttpSend(map, context,
+				HttpConstants.METHOD_ORDER_RMAConfirm, httpCallBack,
+				OrderListBackBean.class, showDialog, false);
+	}
+	
+	
 	
 
 	/**
