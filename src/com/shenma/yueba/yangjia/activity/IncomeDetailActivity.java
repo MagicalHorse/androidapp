@@ -150,13 +150,13 @@ public class IncomeDetailActivity extends BaseFragmentActivity implements
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.tv_buyer_street:// 买手街
+		case R.id.tv_can_getmoney:// 可提现
 			viewpager_main.setCurrentItem(0);
 			break;
-		case R.id.tv_they_say:// 他们说
+		case R.id.tv_freezing:// 冻结中
 			viewpager_main.setCurrentItem(1);
 			break;
-		case R.id.tv_my_buyer:// 我的买手
+		case R.id.tv_disabled:// 无效
 			viewpager_main.setCurrentItem(2);
 			break;
 		default:
