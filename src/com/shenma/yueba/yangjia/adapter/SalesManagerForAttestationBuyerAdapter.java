@@ -3,6 +3,7 @@ package com.shenma.yueba.yangjia.adapter;
 import java.util.List;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -13,7 +14,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.baijia.activity.AffirmOrderActivity;
+import com.shenma.yueba.baijia.activity.BaijiaPayActivity;
 import com.shenma.yueba.baijia.adapter.BaseAdapterWithUtil;
+import com.shenma.yueba.baijia.modle.CreatOrderInfoBean;
+import com.shenma.yueba.baijia.modle.RequestCreatOrderInfoBean;
 import com.shenma.yueba.inter.RefreshOrderListener;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
@@ -77,7 +82,13 @@ public class SalesManagerForAttestationBuyerAdapter extends BaseAdapterWithUtil 
 				@Override
 				public void onClick(View v) {
 					if("充值并退款".equals(holder.tv_bottom.getText().toString().trim())){
-						
+						CreatOrderInfoBean bean = new CreatOrderInfoBean();
+						bean.setOrderNo("RMA"+mList.get(position).getOrderNo());
+						bean.setTotalAmount(Double.parseDouble(mList.get(position).getAmount()));
+						Intent intent=new Intent(ctx,BaijiaPayActivity.class);
+						intent.putExtra("PAYDATA",bean);
+						intent.putExtra("MessageTitle", "退款订单号："+mList.get(position).getOrderNo());
+						ctx.startActivity(intent);
 					}else if("确认退款".equals(holder.tv_bottom.getText().toString().trim())){
 						confirmBack(position);
 					}

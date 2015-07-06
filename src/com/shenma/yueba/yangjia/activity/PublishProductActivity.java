@@ -235,6 +235,12 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 			progressDialog.dismiss();
 		}
 		HttpControl httpControl = new HttpControl();
+		List<ProductImagesBean> imageList =  MyApplication.getInstance().getPublishUtil().getBean().getImages();
+		for (int i = 0; i < imageList.size(); i++) {
+			if(TextUtils.isEmpty(imageList.get(i).getImageUrl())){
+				MyApplication.getInstance().getPublishUtil().getBean().getImages().remove(i);
+			}
+		}
 		httpControl.createBuyerProductInfo(MyApplication.getInstance()
 				.getPublishUtil().getBean(), new HttpCallBackInterface() {
 			@Override
@@ -325,14 +331,14 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 			Toast.makeText(mContext, "规格不能为空", 1000).show();
 			return;
 		}else{
-			bean1.setGuiGe(guige);
+			bean1.setName(guige);
 		}
 		String kucun = et_kucun.getText().toString().trim();
 		if(TextUtils.isEmpty(kucun)){
 			Toast.makeText(mContext, "库存不能为空", 1000).show();
 			return;
 		}else{
-			bean1.setKuCun(kucun);
+			bean1.setInventory(kucun);
 			Sizes.add(bean1);
 		}
 		
@@ -348,10 +354,10 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 			}
 			SizeBean bean = new SizeBean();
 			if(!TextUtils.isEmpty(et_guige.getText().toString().trim())){
-				bean.setGuiGe(et_guige.getText().toString().trim());
+				bean.setName(et_guige.getText().toString().trim());
 			}
 			
-			bean.setKuCun(et_kucun.getText().toString().trim());
+			bean.setInventory(et_kucun.getText().toString().trim());
 			Sizes.add(bean);
 		}
 		RequestUploadProductDataBean bean = MyApplication.getInstance()

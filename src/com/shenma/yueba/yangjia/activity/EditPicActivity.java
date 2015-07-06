@@ -76,6 +76,7 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 	private LinearLayout ll_top;
 	private Bitmap result;
 	private Bitmap resultCache;
+	private ArrayList<String> tagNameList =new ArrayList<String>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -178,6 +179,7 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 				TagsBean tagsBean = new TagsBean();
 				tagsBean.setPosX(""+tagList.get(i).get("x"));
 				tagsBean.setPosY(""+tagList.get(i).get("y"));
+				tagsBean.setName(tagNameList.get(i));
 				tagLists.add(tagsBean);
 			}
 			TagListBean resultBean = new TagListBean();
@@ -237,7 +239,7 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 				String name = bundle.getString("name");
 				String type = bundle.getString("type");
 				layout_tag_image.addTextTag(name, startx, starty);
-
+				tagNameList.add(name);
 			}
 		}
 		super.onActivityResult(requestCode, resultCode, data);

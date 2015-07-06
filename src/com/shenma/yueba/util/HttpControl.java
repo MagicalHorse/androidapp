@@ -1281,7 +1281,7 @@ public class HttpControl {
 			RequestUploadProductDataBean requestUploadProductDataBean,
 			final HttpCallBackInterface httpCallBack, Context context) {
 		Map<String, String> map = new HashMap<String, String>();
-		map.put("data",
+		map.put("json",
 				BaseGsonUtils.getObjectToJson(requestUploadProductDataBean));
 		BasehttpSend(map, context, HttpConstants.METHOD_PRODUCTMANAGER_CREATE,
 				httpCallBack, BaseRequest.class, true, false);

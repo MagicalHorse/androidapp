@@ -14,7 +14,7 @@ public class PathManager {
 
 	//存储剪裁后的图片的文件夹
 	public static File getCropPhotoDir() {
-		String path = FileUtils.getRootPath() + "/nimei/crop/";
+		String path = FileUtils.getRootPath() + "/tagPic/crop/";
 		File file = new File(path);
 		if (!file.exists()) {
 			file.mkdirs();
