@@ -1,9 +1,8 @@
 package com.shenma.yueba.yangjia.modle;
 
-public class TagsBean {
+import java.io.Serializable;
 
-	
-	
+public class TagsBean implements Serializable{
 	private String Name;
 	private String PosX;
 	private String PosY;

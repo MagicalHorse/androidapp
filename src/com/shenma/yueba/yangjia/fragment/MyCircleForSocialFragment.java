@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.shenma.yueba.ChatActivity;
 import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.activity.CircleInfoActivity;
 import com.shenma.yueba.baijia.fragment.BaseFragment;
@@ -61,10 +62,13 @@ public class MyCircleForSocialFragment extends BaseFragment {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int pos,
 					long arg3) {
-				Intent intent = new Intent(getActivity(),CircleInfoActivity.class);
+//				Intent intent = new Intent(getActivity(),CircleInfoActivity.class);
+//				intent.putExtra("circleId", mList.get(pos-1).getId());
+//				intent.putExtra("from", "1");//1表示来自养家中的圈子管理
+//				getActivity().startActivityForResult(intent, Constants.REQUESTCODE);
+				Intent intent = new Intent(getActivity(),ChatActivity.class);
 				intent.putExtra("circleId", mList.get(pos-1).getId());
-				intent.putExtra("from", "1");//1表示来自养家中的圈子管理
-				getActivity().startActivityForResult(intent, Constants.REQUESTCODE);
+				startActivity(intent);
 			}
 		});
 		pull_refresh_list.setOnRefreshListener(new OnRefreshListener2() {
@@ -107,7 +111,7 @@ public class MyCircleForSocialFragment extends BaseFragment {
                     public void run() {
                     	pull_refresh_list.onRefreshComplete();
                     }
-            }, 1000);
+            }, 100);
 				CircleListBackBean bean = (CircleListBackBean) obj;
 				if (isRefresh) {
 					if(bean!=null && bean.getData()!=null && bean.getData().getItems()!=null&& bean.getData().getItems().size()>0){

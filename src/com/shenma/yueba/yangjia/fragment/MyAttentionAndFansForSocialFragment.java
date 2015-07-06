@@ -100,7 +100,7 @@ public class MyAttentionAndFansForSocialFragment extends BaseFragment {
                     public void run() {
                     	pull_refresh_list.onRefreshComplete();
                     }
-            }, 1000);
+            }, 100);
 				AttationAndFansListBackBean bean = (AttationAndFansListBackBean) obj;
 				if (isRefresh) {
 					if(bean!=null && bean.getData()!=null && bean.getData().getItems()!=null && bean.getData().getItems().size()>0){

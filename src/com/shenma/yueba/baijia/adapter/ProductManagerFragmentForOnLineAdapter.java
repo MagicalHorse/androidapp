@@ -2,7 +2,9 @@ package com.shenma.yueba.baijia.adapter;
 
 import java.util.List;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -13,22 +15,26 @@ import android.widget.Toast;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.modle.ProductManagerForOnLineBean;
+import com.shenma.yueba.inter.RefreshProductListInter;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
+import com.shenma.yueba.util.ShareUtil;
+import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.util.ToolsUtil;
+import com.shenma.yueba.yangjia.activity.PublishProductActivity;
 import com.shenma.yueba.yangjia.fragment.ProductManagerFragmentForOnLine;
 
-public class ProductManagerFragmentForOnLineAdapter extends BaseAdapterWithUtil
-		implements OnClickListener {
+public class ProductManagerFragmentForOnLineAdapter extends BaseAdapterWithUtil {
 	private List<ProductManagerForOnLineBean> mList;
 	private int flag;
-
+	private RefreshProductListInter inter;
 	public ProductManagerFragmentForOnLineAdapter(Context ctx,
-			List<ProductManagerForOnLineBean> mList, int flag) {
+			List<ProductManagerForOnLineBean> mList, int flag,RefreshProductListInter inter) {
 		super(ctx);
 		this.mList = mList;
 		this.flag = flag;
+		this.inter = inter;
 	}
 
 	@Override
@@ -80,27 +86,49 @@ public class ProductManagerFragmentForOnLineAdapter extends BaseAdapterWithUtil
 					.findViewById(R.id.tv_button3);
 			holder.tv_button4 = (TextView) convertView
 					.findViewById(R.id.tv_button4);
+		
 			holder.tv_button1.setOnClickListener(new OnClickListener() {
-				
 				@Override
 				public void onClick(View v) {
-					if (flag == 1 || flag == 2) {// 上架
-						setOnLineOrOffLine(position,mList.get(position).getProductId(), 1);
-					} else if (flag == 0) {// 下架
-						setOnLineOrOffLine(position,mList.get(position).getProductId(), 0);
+					if (flag == 1 || flag == 2) {// 下架
+						setOnLineOrOffLine(position, mList.get(position)
+								.getProductId(), 0);
+					} else if (flag == 0) {// 上架
+						setOnLineOrOffLine(position, mList.get(position)
+								.getProductId(), 1);
+					}
+				}
+			});
+
+			holder.tv_button2.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					if ("复制".equals(((TextView) v).getText().toString().trim())) {
+						productCopy(mList.get(position).getProductId());
+					}
+				}
+			});
+
+			holder.tv_button3.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					if ("分享".equals(((TextView) v).getText().toString().trim())) {
+						ShareUtil.shareAll((Activity)ctx, "我市内容", "我是url", "http://img3.3lian.com/2014/c2/61/d/17.jpg");
+						
 					}
 				}
 			});
 			
 			holder.tv_button4.setOnClickListener(new OnClickListener() {
-				
+
 				@Override
 				public void onClick(View v) {
-
 					if (flag == 1 || flag == 2) {// 修改
-						
+                       Intent intent = new Intent(ctx, PublishProductActivity.class);
+                       ctx.startActivity(intent);
 					} else if (flag == 0) {// 删除
-						deleteProduct(position, mList.get(position).getProductId());
+						deleteProduct(position, mList.get(position)
+								.getProductId());
 					}
 				}
 			});
@@ -131,9 +159,9 @@ public class ProductManagerFragmentForOnLineAdapter extends BaseAdapterWithUtil
 			holder.tv_button4.setText("删除");
 		}
 
-		if(TextUtils.isEmpty(mList.get(position).getPic())){
-			bitmapUtils.display(holder.iv_product,"aaa");
-		}else{
+		if (TextUtils.isEmpty(mList.get(position).getPic())) {
+			bitmapUtils.display(holder.iv_product, "aaa");
+		} else {
 			bitmapUtils.display(holder.iv_product,
 					ToolsUtil.getImage(mList.get(position).getPic(), 120, 0));
 		}
@@ -165,90 +193,97 @@ public class ProductManagerFragmentForOnLineAdapter extends BaseAdapterWithUtil
 		TextView tv_button4;
 	}
 
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.tv_button1:
-			
-			break;
-		case R.id.tv_button2:// 复制
-
-			break;
-
-		case R.id.tv_button3:// 分享
-
-			break;
-
-		case R.id.tv_button4:
-			if (flag == 0 || flag == 1) {// 修改
-
-			} else if (flag == 2) {// 删除
-
-			}
-			break;
-
-		default:
-			break;
-		}
-
-	}
 	
-	
-	
-	
+
 	/**
-	 * 上线/下线接口
-	 * @param orderId
-	 * @param status
+	 * 复制商品
 	 */
-	private void setOnLineOrOffLine(final int position,String id,final int status){
+	private void productCopy(String productId) {
 		HttpControl httpControl = new HttpControl();
-		httpControl.setProductOnLineOrOffLine(id, status, new HttpCallBackInterface() {
-			
+		httpControl.productCopy(productId, new HttpCallBackInterface() {
 			@Override
 			public void http_Success(Object obj) {
-				Toast.makeText(ctx, status ==1?"上线成功":"下线成功", 1000).show();
-				mList.remove(position);
-				notifyDataSetChanged();
+				Toast.makeText(ctx, "复制成功", 1000).show();
+				if(flag ==1){//在线商品
+					inter.refreshOnLineProduct(0);
+				}
+				if(flag == 2){//即将下线
+					inter.refreshOnLineProduct(1);
+				}
+				if(flag == 0){//下线商品
+					inter.refreshOnLineProduct(2);
+				}
 			}
-			
+
 			@Override
 			public void http_Fails(int error, String msg) {
-				// TODO Auto-generated method stub
-				
+				Toast.makeText(ctx, msg, 1000).show();
+
 			}
-		}, ctx, true, true);
-		
-		
+		}, ctx);
+
 	}
-	
-	
-	
+
 	/**
-	 * 删除商品接口
+	 * 上线/下线接口
+	 * 
 	 * @param orderId
 	 * @param status
 	 */
-	private void deleteProduct(final int position,String id){
+	private void setOnLineOrOffLine(final int position, String id,
+			final int status) {
+		HttpControl httpControl = new HttpControl();
+		httpControl.setProductOnLineOrOffLine(id, status,
+				new HttpCallBackInterface() {
+
+					@Override
+					public void http_Success(Object obj) {
+						Toast.makeText(ctx, status == 1 ? "上线成功" : "下架成功", 1000)
+								.show();
+						if(flag ==1){//在线商品
+							inter.refreshOnLineProduct(0);
+						}
+						if(flag == 2){//即将下线
+							inter.refreshOnLineProduct(1);
+						}
+						if(flag == 0){//下线商品
+							inter.refreshOnLineProduct(2);
+						}
+						notifyDataSetChanged();
+					}
+
+					@Override
+					public void http_Fails(int error, String msg) {
+						// TODO Auto-generated method stub
+
+					}
+				}, ctx, true, true);
+
+	}
+
+	/**
+	 * 删除商品接口
+	 * 
+	 * @param orderId
+	 * @param status
+	 */
+	private void deleteProduct(final int position, String id) {
 		HttpControl httpControl = new HttpControl();
 		httpControl.deleteProduct(id, new HttpCallBackInterface() {
-			
+
 			@Override
 			public void http_Success(Object obj) {
 				Toast.makeText(ctx, "删除成功", 1000).show();
-				mList.remove(position);
-				notifyDataSetChanged();
+				inter.refreshOnLineProduct(2);
 			}
-			
+
 			@Override
 			public void http_Fails(int error, String msg) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		}, ctx, true, true);
-		
-		
+
 	}
-	
-	
+
 }

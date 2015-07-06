@@ -97,6 +97,7 @@ public class AddTagActivity extends BaseActivityWithTopView implements TextWatch
 		});
 		iv_delete = getView(R.id.iv_delete);
 		iv_delete.setOnClickListener(this);
+		iv_delete.setVisibility(View.GONE);
 		et_search = getView(R.id.et_search);
 		et_search.addTextChangedListener(this);
 		pull_refresh_list = getView(R.id.pull_refresh_list);

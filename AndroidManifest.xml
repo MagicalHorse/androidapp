@@ -491,7 +491,6 @@
         <!-- 添加圈子 -->
         <activity
             android:name="com.shenma.yueba.yangjia.activity.AddCircleActivity"
-             android:launchMode="singleTask"
             android:screenOrientation="portrait" >
         </activity>
         <!-- 奖励详情 -->

@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
+import android.R.integer;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.os.Handler;
@@ -985,6 +986,25 @@ public class HttpControl {
 				RequestUploadProductInfoBean.class, true, false);
 	}
 
+	
+
+	/**
+	 * 获取订单列表
+	 * 
+	 * @return void
+	 * **/
+	public void productCopy(String productId,
+			final HttpCallBackInterface httpCallBack, Context context
+			) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put(Constants.PRODUCTID, productId);
+		BasehttpSend(map, context,
+				HttpConstants.METHOD_PRODUCT_COPY, httpCallBack,
+				BaseRequest.class, true, false);
+	}
+	
+	
+	
 	/**
 	 * 修改商品信息(买手)
 	 * 
@@ -1028,6 +1048,21 @@ public class HttpControl {
 				HttpConstants.METHOD_ORDER_GETALLORDERFORBUYER, httpCallBack,
 				OrderListBackBean.class, showDialog, false);
 	}
+	
+	/**
+	 * 确认退款
+	 * @return void
+	 * **/
+	public void comformBack(String orderId,
+			final HttpCallBackInterface httpCallBack, Context context,
+			boolean showDialog) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put(Constants.ORDER_NO, orderId);
+		BasehttpSend(map, context,
+				HttpConstants.METHOD_ORDER_RMAConfirm, httpCallBack,
+				OrderListBackBean.class, showDialog, false);
+	}
+	
 	
 	
 
@@ -1112,7 +1147,7 @@ public class HttpControl {
 			final HttpCallBackInterface httpCallBack, Context context) {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put(Constants.PAGE, Integer.toString(page));
-		map.put(Constants.PAGESIZE, Constants.PageSize);
+		map.put(Constants.PAGESIZE, Integer.MAX_VALUE+"");
 		BasehttpSend(map, context, HttpConstants.METHOD_CIRCLE_GETBUYERGROUPS,
 				httpCallBack, CircleListBackBean.class, showDialog, false);
 	}
