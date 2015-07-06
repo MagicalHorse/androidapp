@@ -22,6 +22,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.fragment.BaseFragment;
 import com.shenma.yueba.constants.Constants;
+import com.shenma.yueba.inter.RefreshOrderListener;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.yangjia.activity.OrderDetailActivity;
@@ -30,7 +31,7 @@ import com.shenma.yueba.yangjia.modle.OrderItem;
 import com.shenma.yueba.yangjia.modle.OrderListBackBean;
 
 @SuppressLint("ValidFragment")
-public class ItemCustomerFragment extends BaseFragment {
+public class ItemCustomerFragment extends BaseFragment implements RefreshOrderListener{
 	private View rootView;// 缓存Fragment view
 	private PullToRefreshListView rlv;
 	private List<OrderItem> mList = new ArrayList<OrderItem>();
@@ -80,7 +81,7 @@ public class ItemCustomerFragment extends BaseFragment {
 						int arg2, long arg3) {
 					Intent intent = new Intent(getActivity(),
 							OrderDetailActivity.class);
-					intent.putExtra("orderId", mList.get(arg2).getOrderNo());
+					intent.putExtra("orderId", mList.get(arg2-1).getOrderNo());
 					startActivity(intent);
 
 				}
@@ -147,7 +148,7 @@ public class ItemCustomerFragment extends BaseFragment {
 								mList.clear();
 								mList.addAll(bean.getData().getOrderlist());
 								adapter = new SalesManagerForAttestationBuyerAdapter(
-										getActivity(), mList, tag);
+										getActivity(), mList, tag,ItemCustomerFragment.this);
 								rlv.setAdapter(adapter);
 							}else{
 								tv_nodata.setVisibility(View.VISIBLE);
@@ -170,5 +171,10 @@ public class ItemCustomerFragment extends BaseFragment {
 						Toast.makeText(getActivity(), msg, 1000).show();
 					}
 				}, ctx,showDialog);
+	}
+
+	@Override
+	public void refreshOrderList(int index) {
+		getData(customerId, index, getActivity());
 	}
 }

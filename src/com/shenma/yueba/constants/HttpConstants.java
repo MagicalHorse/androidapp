@@ -412,8 +412,7 @@ public class HttpConstants {
 	 */
 	
 	public static String METHOD_ORDER_GETORDERDETAIL = Order
-			+ "GetOrderDetail";
-	
+			+ "GetBuyerOrderDetail";
 	/**
 	 * 社交管理--获取圈子列表
 	 */
