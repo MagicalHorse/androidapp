@@ -91,6 +91,16 @@ public class SalesManagerForAttestationBuyerAdapter extends BaseAdapterWithUtil 
 			if(0 == tag){//全部订单
 				holder.tv_commission.setText(TextUtils.isEmpty(item.getInCome())?"":"佣金：￥"+item.getInCome());
 				ToolsUtil.setTextColorBlackAndRed(holder.tv_money_payed, "实付：￥", ToolsUtil.getTextColorRed(item.getAmount()));
+				if("3".equals(mList.get(position).getStatus()) && mList.get(position).isIsNeedRma()){
+					holder.ll_bottom.setVisibility(View.VISIBLE);
+					if(mList.get(position).isIsGoodsPick()){//订单状态为退货处理中
+						holder.tv_bottom.setText("充值并退款");
+					}else{//还未提款
+						holder.tv_bottom.setText("确认退款");
+					}
+				}else{
+					holder.ll_bottom.setVisibility(View.GONE);
+				}
 			}else if(1 == tag){//待付款
 				holder.tv_commission.setText(TextUtils.isEmpty(item.getInCome())?"":"佣金：￥"+item.getInCome());
 				ToolsUtil.setTextColorBlackAndRed(holder.tv_money_payed, "实付：￥", ToolsUtil.getTextColorRed(item.getAmount()));
@@ -100,11 +110,15 @@ public class SalesManagerForAttestationBuyerAdapter extends BaseAdapterWithUtil 
 			}else if(3 == tag){//售后服务
 				holder.tv_commission.setText(TextUtils.isEmpty(item.getInCome())?"":"退还佣金：￥"+item.getInCome());
 				ToolsUtil.setTextColorBlackAndRed(holder.tv_money_payed, "退款金额：￥", ToolsUtil.getTextColorRed(item.getAmount()));
-				holder.ll_bottom.setVisibility(View.VISIBLE);
-				if(mList.get(position).isIsGoodsPick()){//已经提款
-					holder.tv_bottom.setText("充值并退款");
-				}else{//还未提款
-					holder.tv_bottom.setText("确认退款");
+				if(mList.get(position).isIsNeedRma()){
+					holder.ll_bottom.setVisibility(View.VISIBLE);
+					if(mList.get(position).isIsGoodsPick()){//已经提款
+						holder.tv_bottom.setText("充值并退款");
+					}else{//还未提款
+						holder.tv_bottom.setText("确认退款");
+					}
+				}else{
+					holder.ll_bottom.setVisibility(View.GONE);
 				}
 			}
 			holder.tv_order_number.setText(TextUtils.isEmpty(item.getOrderNo())?"":"订单号："+item.getOrderNo());

@@ -13,6 +13,7 @@ public class OrderItem {
 	private String CreateTime;
 	private String GoodsAmount;//货款金额
 	private boolean IsGoodsPick;//是否已经提款
+	private boolean IsNeedRma;//是否显示退款相关
 	private List<ProductItemBean> Products;
 	public String getOrderNo() {
 		return OrderNo;
@@ -67,6 +68,12 @@ public class OrderItem {
 	}
 	public void setIsGoodsPick(boolean isGoodsPick) {
 		IsGoodsPick = isGoodsPick;
+	}
+	public boolean isIsNeedRma() {
+		return IsNeedRma;
+	}
+	public void setIsNeedRma(boolean isNeedRma) {
+		IsNeedRma = isNeedRma;
 	}
 
 	

@@ -2221,6 +2221,7 @@ public class HttpControl {
 			boolean showDialog) {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put(Constants.JSON, jsonStr);
+		map.put("appid",Constants.WX_APP_ID);
 		BasehttpSend(map, context, HttpConstants.METHOD_wxLogin,
 				httpCallBack, UserRequestBean.class, showDialog,
 				false);
