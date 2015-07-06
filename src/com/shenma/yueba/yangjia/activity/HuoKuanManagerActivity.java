@@ -147,33 +147,33 @@ public class HuoKuanManagerActivity extends BaseActivityWithTopView implements
 					tv_had_withdraw_money.setText("￥"+ToolsUtil.nullToString(bean.getData().getPickedAmount()));
 					try {
 						hadProgress = (int) Double.parseDouble(ToolsUtil.nullToString(bean.getData().getPickedPercent()));
-						if(hadProgress == 0){
-							hadProgress = 2;
-						}
+//						if(hadProgress == 0){
+//							hadProgress = 2;
+//						}
 					} catch (Exception e) {
 						hadProgress = 0;
 					}
 					try {
 						canProgress = (int) Double.parseDouble(ToolsUtil.nullToString(bean.getData().getCanPickPercent()));
-						if(canProgress == 0){
-							canProgress = 2;
-						}
+//						if(canProgress == 0){
+//							canProgress = 2;
+//						}
 					} catch (Exception e) {
 						canProgress = 0;
 					}
 					try {
 						freezeProgress = (int) Double.parseDouble(ToolsUtil.nullToString(bean.getData().getFrozenPercent()));
-						if(freezeProgress == 0){
-							freezeProgress = 2;
-						}
+//						if(freezeProgress == 0){
+//							freezeProgress = 2;
+//						}
 					} catch (Exception e) {
 						freezeProgress = 0;
 					}
 					try {
 						backProgress = (int) Double.parseDouble(ToolsUtil.nullToString(bean.getData().getRmaPercent()));
-						if(backProgress == 0){
-							backProgress = 2;
-						}
+//						if(backProgress == 0){
+//							backProgress = 2;
+//						}
 					} catch (Exception e) {
 						backProgress = 0;
 					}
