@@ -142,6 +142,7 @@
                         android:background="@null"
                         android:drawableLeft="@null"
                         android:gravity="top"
+                        android:maxLength="100"
                         android:hint="给力的商品特点..."
                         android:minLines="3"
                         android:paddingLeft="5dip"
@@ -155,7 +156,7 @@
                         android:gravity="right"
                         android:paddingBottom="5dip"
                         android:paddingRight="10dip"
-                        android:text="13字"
+                        android:text="@null"
                         android:textColor="@color/text_gray_color" />
                 </LinearLayout>
             </LinearLayout>
@@ -192,6 +193,7 @@
                         android:background="@drawable/shape_linearlayout10"
                         android:padding="5dip"
                         android:hint="库存"
+                        android:inputType="number"
                         android:textColor="@color/text_gray_color"
                         android:textSize="18sp" />
 

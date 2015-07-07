@@ -81,6 +81,7 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		MyApplication.getInstance().addActivity(this);
 		setContentView(R.layout.edit_pic);
 		super.onCreate(savedInstanceState);
 		initView();

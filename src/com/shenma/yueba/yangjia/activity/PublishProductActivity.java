@@ -9,7 +9,9 @@ import java.util.Map;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
@@ -72,6 +74,7 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 	private List<SizeBean> Sizes = new LinkedList<SizeBean>();
 	private CustomProgressDialog progressDialog;
 	private int upPicProgress = 0;
+	private int maxSize = 100;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +117,26 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 		tv_yuan = getView(R.id.tv_yuan);
 		et_introduce = getView(R.id.et_introduce);
 		tv_retain = getView(R.id.tv_retain);
+		tv_retain.setText(maxSize+"字");
+		et_introduce.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				tv_retain.setText(maxSize-s.length()+"字");
+			}
+			
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void afterTextChanged(Editable s) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		et_guige = getView(R.id.et_guige);
 		et_kucun = getView(R.id.et_kucun);
 		tv_add_guige = getView(R.id.tv_add_guige);
@@ -247,6 +270,12 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 			public void http_Success(Object obj) {
 				Toast.makeText(mContext, "发布成功",1000).show();
 				FileUtils.delAllFile(FileUtils.getRootPath() + "/tagPic/");
+				PublishProductActivity.this.finish();
+				MyApplication.getInstance().getPublishUtil().setBean(null);
+				MyApplication.getInstance().getPublishUtil().setIndex("0");
+				MyApplication.getInstance().getPublishUtil().setFrom("");
+				MyApplication.getInstance().getPublishUtil().setUri(null);
+				MyApplication.getInstance().finishActivity(EditPicActivity.class);
 			}
 
 			@Override
