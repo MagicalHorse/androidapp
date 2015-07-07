@@ -647,22 +647,6 @@ public class HttpConstants {
 	 * **/
 	public static String METHOD_SEARCH = SEARCH+ "Search";
 	
-	
-	/*****
-	 *获取圈子房间号
-	 * **/
-	public static String METHOD_GETROOMID = Circle+ "GetRoom";
-	
-	
-	/*****
-	 *获取房间消息
-	 * **/
-	public static String METHOD_GETROOMMESSAE = Circle+ "GetMessages";
-	
-	
-	
-	
-	
 	/*****
 	 *微信支付回调url
 	 * **/
