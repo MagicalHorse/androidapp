@@ -1,8 +1,13 @@
 package im.form;
 
 import im.control.ChatBaseManager;
+import im.control.SocketManger.SocketManagerListener;
 
 import java.io.Serializable;
+
+import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.util.SharedUtil;
+import com.shenma.yueba.util.ToolsUtil;
 
 /**  
  * @author gyj  
@@ -12,11 +17,19 @@ import java.io.Serializable;
 
 public abstract class  BaseChatBean implements Serializable{
 
+	public BaseChatBean(ChatType chattype,String type)
+	{
+		this.chattype=chattype;
+		this.type=type;
+	}
+	
+	
 	public enum ChatType
 	{
 		link_type,//链接信息
 		pic_type,//图片信息
-		text_trype//文本信息
+		text_trype,//文本信息
+		notice_type//推广信息
 	}
 	
 	
@@ -37,8 +50,49 @@ public abstract class  BaseChatBean implements Serializable{
 	
 	SendStatus sendStatus=SendStatus.send_unsend;
 	ChatType chattype;//信息类型
+	String userName="";
+	String logo="";
+	int productId;
+	String type="";
+	String creationDate="";
+	String sharelink="";
 	
-	
+	public String getSharelink() {
+		return sharelink;
+	}
+	public void setSharelink(String sharelink) {
+		this.sharelink = sharelink;
+	}
+	public String getCreationDate() {
+		return creationDate;
+	}
+	public void setCreationDate(String creationDate) {
+		this.creationDate = creationDate;
+	}
+	public int getProductId() {
+		return productId;
+	}
+	public void setProductId(int productId) {
+		this.productId = productId;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	public String getLogo() {
+		return logo;
+	}
+	public void setLogo(String logo) {
+		this.logo = logo;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 	public ChatType getChattype() {
 		return chattype;
 	}
@@ -92,9 +146,57 @@ public abstract class  BaseChatBean implements Serializable{
 	/******
 	 * 发送数据
 	 * ***/
-	public abstract void sendData();
+	public abstract void sendData(SocketManagerListener listener);
 	/***
 	 * 赋值 讲 接收到的消息数据 进行赋值
 	 * **/
 	public abstract void setValue(Object bean);
+	
+	/*****
+	 * 通用信息赋值
+	 * ***/
+	public void setParentView(Object obj)
+	{
+		if(obj!=null && obj instanceof RequestMessageBean)
+		{
+			RequestMessageBean bean=(RequestMessageBean)obj;
+			from_id=bean.getFromUserId();
+			to_id=bean.getToUserId();
+			room_No=bean.getRoomId();
+			type=bean.getType();
+			userName=bean.getUserName();
+			productId=bean.getProductId();
+			content=bean.getBody();
+			logo=bean.getLogo();
+			creationDate=ToolsUtil.nullToString(bean.getCreationDate());
+			productId=bean.getProductId();
+			String user_id=SharedUtil.getStringPerfernece(MyApplication.getInstance().getApplicationContext(),SharedUtil.user_id);
+			if(user_id.equals(Integer.toString(from_id)))
+			{
+				isoneself=true;
+			}else
+			{
+				isoneself=false;
+			}
+			
+			sendStatus=SendStatus.send_sucess;
+		}
+	}
+	
+	/*****
+	 * 获取 传递消息的对象
+	 * ****/
+	public MessageBean getMessageBean()
+	{
+		MessageBean bean=new MessageBean();
+		bean.setBody((String)content);
+		bean.setFromUserId(Integer.toString(from_id));
+		bean.setProductId(Integer.toString(productId));
+		bean.setToUserId(Integer.toString(to_id));
+		bean.setType(type);
+		bean.setUserName(userName);
+		bean.setLogo(logo);
+		bean.setSharelink((String)content);
+		return bean;
+	}
 }
