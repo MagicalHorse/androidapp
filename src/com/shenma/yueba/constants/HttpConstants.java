@@ -412,8 +412,7 @@ public class HttpConstants {
 	 */
 	
 	public static String METHOD_ORDER_GETORDERDETAIL = Order
-			+ "GetOrderDetail";
-	
+			+ "GetBuyerOrderDetail";
 	/**
 	 * 社交管理--获取圈子列表
 	 */
@@ -647,6 +646,21 @@ public class HttpConstants {
 	 *根据品牌名称检索品牌
 	 * **/
 	public static String METHOD_SEARCH = SEARCH+ "Search";
+	
+	/*****
+	 *获取圈子房间号
+	 * **/
+	public static String METHOD_GETROOMID = Circle+ "GetRoom";
+	
+	
+	/*****
+	 *获取房间消息
+	 * **/
+	public static String METHOD_GETROOMMESSAE = Circle+ "GetMessages";
+	
+	
+	
+	
 	
 	/*****
 	 *微信支付回调url
