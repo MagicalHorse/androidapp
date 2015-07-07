@@ -114,8 +114,7 @@ public class ProductManagerFragmentForOnLineAdapter extends BaseAdapterWithUtil 
 				@Override
 				public void onClick(View v) {
 					if ("分享".equals(((TextView) v).getText().toString().trim())) {
-						ShareUtil.shareAll((Activity)ctx, "我市内容", "我是url", "http://img3.3lian.com/2014/c2/61/d/17.jpg");
-						
+						ShareUtil.shareAll((Activity)ctx, mList.get(position).getBrandName(), mList.get(position).getShareLink(), mList.get(position).getDetail().getImages().get(0).getImageUrl()+"_240x0.jpg");
 					}
 				}
 			});

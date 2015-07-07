@@ -315,12 +315,13 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 		HttpControl httpControl = new HttpControl();
 		List<ProductImagesBean> imageList = MyApplication.getInstance()
 				.getPublishUtil().getBean().getImages();
+		List<ProductImagesBean> cacheImageList = new ArrayList<ProductImagesBean>();
 		for (int i = 0; i < imageList.size(); i++) {
-			if (TextUtils.isEmpty(imageList.get(i).getImageUrl())) {
-				MyApplication.getInstance().getPublishUtil().getBean()
-						.getImages().remove(i);
+			if (!TextUtils.isEmpty(imageList.get(i).getImageUrl())) {
+				cacheImageList.add(imageList.get(i));
 			}
 		}
+		MyApplication.getInstance().getPublishUtil().getBean().setImages(cacheImageList);
 		httpControl.createBuyerProductInfo(MyApplication.getInstance()
 				.getPublishUtil().getBean(), new HttpCallBackInterface() {
 			@Override
