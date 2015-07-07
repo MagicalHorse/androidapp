@@ -11,7 +11,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-import android.R.integer;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.os.Handler;
@@ -46,11 +45,15 @@ import com.shenma.yueba.baijia.modle.RequestBrandInfoInfoBean;
 import com.shenma.yueba.baijia.modle.RequestBrandSearchInfoBean;
 import com.shenma.yueba.baijia.modle.RequestComputeAmountInfoBean;
 import com.shenma.yueba.baijia.modle.RequestCreatOrderInfoBean;
+import com.shenma.yueba.baijia.modle.RequestImMessageInfoBean;
+import com.shenma.yueba.baijia.modle.RequestMsgListInfoBean;
 import com.shenma.yueba.baijia.modle.RequestMyCircleInfoBean;
 import com.shenma.yueba.baijia.modle.RequestMyFavoriteProductListInfoBean;
 import com.shenma.yueba.baijia.modle.RequestMyInfoBean;
 import com.shenma.yueba.baijia.modle.RequestProductDetailsInfoBean;
 import com.shenma.yueba.baijia.modle.RequestProductListInfoBean;
+import com.shenma.yueba.baijia.modle.RequestRoomInfo;
+import com.shenma.yueba.baijia.modle.RequestRoomInfoBean;
 import com.shenma.yueba.baijia.modle.RequestUploadProductDataBean;
 import com.shenma.yueba.baijia.modle.RequestUploadProductInfoBean;
 import com.shenma.yueba.baijia.modle.RequestUserInfoBean;
@@ -1281,7 +1284,7 @@ public class HttpControl {
 			RequestUploadProductDataBean requestUploadProductDataBean,
 			final HttpCallBackInterface httpCallBack, Context context) {
 		Map<String, String> map = new HashMap<String, String>();
-		map.put("data",
+		map.put("json",
 				BaseGsonUtils.getObjectToJson(requestUploadProductDataBean));
 		BasehttpSend(map, context, HttpConstants.METHOD_PRODUCTMANAGER_CREATE,
 				httpCallBack, BaseRequest.class, true, false);
@@ -1623,6 +1626,69 @@ public class HttpControl {
 		map.put("key", key);
 		BasehttpSend(map, context, HttpConstants.METHOD_SEARCH,httpCallBack, RequestBrandSearchInfoBean.class, ishowStatus, false);
 	}
+	
+	
+	/**
+	 * 获取房间号,如果没有则创建房间
+	 * @param  groupId  int 圈子编号  如果是私聊 则传0，如果是群聊，则传圈子编号
+	 * @param  fromUser int 用户编号     如果是私聊则传用户编号，如果是群聊则传0    fromuserId,toUserId不用区分顺序  
+     * @param  toUser  int 用户编号       如果是私聊则传用户编号，如果是群聊则传0
+	 * @param httpCallBack HttpCallBackInterface 回调接口
+	 * @param context  Context
+     * @param ishowStatus boolean 是否显示等待对话框 true 是  false否
+	 * @return void
+	 * **/
+	public void getRoom_Id(int groupId,int fromUser,int toUser,boolean ishowStatus,final HttpCallBackInterface httpCallBack, Context context) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("groupId", Integer.toString(groupId));
+		map.put("fromUser", Integer.toString(fromUser));
+		map.put("toUser", Integer.toString(toUser));
+		BasehttpSend(map, context, HttpConstants.METHOD_GETROOMID,httpCallBack, RequestRoomInfoBean.class, ishowStatus, false);
+	}
+	
+	
+	/**
+	 * 获取某个房间的历史聊天信息
+	 * @param  roomId   int 圈子编号 
+	 * @param  lastMessageId string  其实消息id   可不传(传递 -1 则后太不传递该字段)
+     * @param  page  int 当前页
+     * @param  pageSize  没有显示的个数
+	 * @param httpCallBack HttpCallBackInterface 回调接口
+	 * @param context  Context
+     * @param ishowStatus boolean 是否显示等待对话框 true 是  false否
+	 * @return void
+	 * **/
+	public void getRoomMessage(int roomId,int lastMessageId,int page,int pageSize,boolean ishowStatus,final HttpCallBackInterface httpCallBack, Context context) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("roomId", Integer.toString(roomId));
+		if(lastMessageId>0)
+		{
+			map.put("lastMessageId", Integer.toString(lastMessageId));
+		}
+		map.put(Constants.PAGE, Integer.toString(page));
+		map.put(Constants.PAGESIZE, Integer.toString(pageSize));
+		BasehttpSend(map, context, HttpConstants.METHOD_GETROOMMESSAE,httpCallBack, RequestImMessageInfoBean.class, ishowStatus, false);
+	}
+	
+	
+	/**
+	 * 获取消息
+     * @param  page  int 当前页
+     * @param  pageSize  没有显示的个数
+	 * @param httpCallBack HttpCallBackInterface 回调接口
+	 * @param context  Context
+     * @param ishowStatus boolean 是否显示等待对话框 true 是  false否
+	 * @return void
+	 * **/
+	public void getMessagesList(int page,int pageSize,boolean ishowStatus,final HttpCallBackInterface httpCallBack, Context context) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put(Constants.PAGE, Integer.toString(page));
+		map.put(Constants.PAGESIZE, Integer.toString(pageSize));
+		BasehttpSend(map, context, HttpConstants.METHOD_GETROOMMESSAE,httpCallBack, RequestImMessageInfoBean.class, ishowStatus, false);
+	}
+	
+	
+	
 	
 	/**
 	 * 设置关注或取消关注
