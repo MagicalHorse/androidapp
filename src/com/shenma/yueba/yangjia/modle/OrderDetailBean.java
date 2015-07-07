@@ -5,7 +5,6 @@ import com.shenma.yueba.baijia.modle.BaseRequest;
 public class OrderDetailBean extends BaseRequest{
 
 	
-	
 	private String OrderNo;	//订单编号
 	private String StatusName;//订单状态
 	private String TotalAmount; //总金额

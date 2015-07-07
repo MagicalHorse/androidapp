@@ -3,6 +3,7 @@ package com.shenma.yueba.yangjia.adapter;
 import java.util.List;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -10,9 +11,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.baijia.activity.AffirmOrderActivity;
+import com.shenma.yueba.baijia.activity.BaijiaPayActivity;
 import com.shenma.yueba.baijia.adapter.BaseAdapterWithUtil;
+import com.shenma.yueba.baijia.modle.CreatOrderInfoBean;
+import com.shenma.yueba.baijia.modle.RequestCreatOrderInfoBean;
+import com.shenma.yueba.inter.RefreshOrderListener;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.ToolsUtil;
@@ -23,10 +30,12 @@ import com.shenma.yueba.yangjia.modle.ProductItemBean;
 public class SalesManagerForAttestationBuyerAdapter extends BaseAdapterWithUtil {
 	private List<OrderItem> mList;
 	private int tag;//标记不同的订单状态
-	public SalesManagerForAttestationBuyerAdapter(Context ctx,List<OrderItem> mList,int tag) {
+	private RefreshOrderListener lisner;
+	public SalesManagerForAttestationBuyerAdapter(Context ctx,List<OrderItem> mList,int tag,RefreshOrderListener lisner) {
 		super(ctx);
 		this.mList = mList;
 		this.tag = tag;
+		this.lisner = lisner;
 	}
 
 	@Override
@@ -73,7 +82,13 @@ public class SalesManagerForAttestationBuyerAdapter extends BaseAdapterWithUtil 
 				@Override
 				public void onClick(View v) {
 					if("充值并退款".equals(holder.tv_bottom.getText().toString().trim())){
-						
+						CreatOrderInfoBean bean = new CreatOrderInfoBean();
+						bean.setOrderNo("RMA"+mList.get(position).getOrderNo());
+						bean.setTotalAmount(Double.parseDouble(mList.get(position).getAmount()));
+						Intent intent=new Intent(ctx,BaijiaPayActivity.class);
+						intent.putExtra("PAYDATA",bean);
+						intent.putExtra("MessageTitle", "退款订单号："+mList.get(position).getOrderNo());
+						ctx.startActivity(intent);
 					}else if("确认退款".equals(holder.tv_bottom.getText().toString().trim())){
 						confirmBack(position);
 					}
@@ -146,19 +161,18 @@ public class SalesManagerForAttestationBuyerAdapter extends BaseAdapterWithUtil 
 	 * 确认退款
 	 * @param position
 	 */
-	private void confirmBack(int position){
+	private void confirmBack(final int position){
 		HttpControl httpControl = new HttpControl();
 		httpControl.comformBack(mList.get(position).getOrderNo(), new HttpCallBackInterface() {
-			
 			@Override
 			public void http_Success(Object obj) {
-				// TODO Auto-generated method stub
-				
+				Toast.makeText(ctx, "退款成功", 1000).show();
+				lisner.refreshOrderList(tag);
 			}
 			
 			@Override
 			public void http_Fails(int error, String msg) {
-				// TODO Auto-generated method stub
+				Toast.makeText(ctx, msg, 1000).show();
 				
 			}
 		}, ctx, true);

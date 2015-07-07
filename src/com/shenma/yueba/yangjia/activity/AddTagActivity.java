@@ -121,7 +121,7 @@ public class AddTagActivity extends BaseActivityWithTopView implements TextWatch
 				AddTagActivity.this.finish(); 
 			}
 		});
-		FontManager.changeFonts(mContext, et_search);
+		FontManager.changeFonts(mContext,tv_top_title, et_search);
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package com.shenma.yueba.baijia.modle;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +15,7 @@ import com.shenma.yueba.util.SizeBean;
  * 程序的简单说明  上传商品信息 返回的数据
  */
 
-public class RequestUploadProductDataBean {
+public class RequestUploadProductDataBean implements Serializable{
 
 	private String Price;//价格
 	private String Desc;

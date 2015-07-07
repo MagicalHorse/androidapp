@@ -151,13 +151,13 @@ public class WithdrawHistoryActivity extends BaseFragmentActivity implements
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.tv_buyer_street:// 买手街
+		case R.id.tv_handling:// 处理中
 			viewpager_main.setCurrentItem(0);
 			break;
-		case R.id.tv_they_say:// 他们说
+		case R.id.tv_application_complete:// 申请完成
 			viewpager_main.setCurrentItem(1);
 			break;
-		case R.id.tv_my_buyer:// 我的买手
+		case R.id.tv_application_disabled:// 申请失效
 			viewpager_main.setCurrentItem(2);
 			break;
 		default:

@@ -1,24 +1,24 @@
 package com.shenma.yueba.util;
 
-public class SizeBean {
+import java.io.Serializable;
 
-	private String guiGe;
-	private String kuCun;
+public class SizeBean implements Serializable{
 
-	public String getGuiGe() {
-		return guiGe;
+	private String name;
+	private String Inventory;
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getInventory() {
+		return Inventory;
+	}
+	public void setInventory(String inventory) {
+		Inventory = inventory;
 	}
 
-	public void setGuiGe(String guiGe) {
-		this.guiGe = guiGe;
-	}
-
-	public String getKuCun() {
-		return kuCun;
-	}
-
-	public void setKuCun(String kuCun) {
-		this.kuCun = kuCun;
-	}
+	
 
 }

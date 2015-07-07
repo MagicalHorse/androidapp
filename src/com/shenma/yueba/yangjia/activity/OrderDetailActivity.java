@@ -1,10 +1,12 @@
 package com.shenma.yueba.yangjia.activity;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
@@ -84,6 +86,17 @@ public class OrderDetailActivity extends BaseActivityWithTopView {
 		tv_get_address_title = (TextView) findViewById(R.id.tv_get_address_title);
 		tv_get_address_content = (TextView) findViewById(R.id.tv_get_address_content);
 		tv_connection = (TextView) findViewById(R.id.tv_connection);
+		tv_connection.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				String phone = tv_customer_phone_content.getText().toString().trim();
+				if(TextUtils.isEmpty(phone)){
+					Toast.makeText(mContext, "暂无联系电话", 1000).show();
+				}else{
+					ToolsUtil.callActivity(mContext, phone);
+				}
+			}
+		});
 		FontManager.changeFonts(mContext, order_no_title, order_no_content,
 				order_wating_title, order_wating_content, order_money_title,
 				order_money_count, tv_shifu, order_commission_title,
