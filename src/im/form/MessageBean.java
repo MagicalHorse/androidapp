@@ -14,7 +14,21 @@ public class MessageBean implements Serializable{
 	String fromUserType="";//用户类型
 	String type="";//所在的组（私聊 ，群聊）
 	String body="";//信息内容
+	String logo="";//图片
+	String sharelink="";
 	
+	public String getSharelink() {
+		return sharelink;
+	}
+	public void setSharelink(String sharelink) {
+		this.sharelink = sharelink;
+	}
+	public String getLogo() {
+		return logo;
+	}
+	public void setLogo(String logo) {
+		this.logo = logo;
+	}
 	public String getBody() {
 		return body;
 	}

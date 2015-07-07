@@ -72,7 +72,11 @@ public class CircleFragment extends Fragment{
 		if(currid>-1 && currid<fragment_list.size())
 		{
 			BaseView bv=(BaseView)fragment_list.get(currid).getFragment();
-			bv.firstInitData();
+			if(bv!=null)
+			{
+				bv.firstInitData(getActivity());
+			}
+			
 		}
 		
         
@@ -84,8 +88,8 @@ public class CircleFragment extends Fragment{
 		/*Fragment recommendedCircleFragment=new RecommendedCircleFragment();
 		Fragment myCircleFragment=new MyCircleFragment();
 		*/
-		fragment_list.add(new FragmentBean("推荐圈子", -1, CircleView.the()));
-		fragment_list.add(new FragmentBean("我的圈子", -1, MyCircleView.the()));
+		fragment_list.add(new FragmentBean("推荐圈子", -1, CircleView.the(getActivity())));
+		fragment_list.add(new FragmentBean("我的圈子", -1, MyCircleView.the(getActivity())));
 		
 		baijia_fragment_tab1_head_linearlayout=(LinearLayout)v.findViewById(R.id.baijia_fragment_tab1_head_linearlayout);
 		for(int i=0;i<fragment_list.size();i++)
@@ -179,7 +183,7 @@ public class CircleFragment extends Fragment{
 		if(currid>-1 && currid<fragment_list.size())
 		{
 			BaseView bv=(BaseView)fragment_list.get(currid).getFragment();
-			bv.firstInitData();
+			bv.firstInitData(getActivity());
 		}
 	}
 	

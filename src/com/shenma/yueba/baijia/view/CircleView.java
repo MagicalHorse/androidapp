@@ -54,12 +54,14 @@ public class CircleView extends BaseView{
 	boolean showDialog=true;
 	boolean isFirst=true;
 	HttpControl httpCntrol=new HttpControl();
-	public static CircleView the()
+	public static CircleView the(Activity activity)
 	{
 		if(quanziControlView==null)
 		{
 			quanziControlView=new CircleView();
 		}
+		quanziControlView.activity=activity;
+		
 		return quanziControlView;
 	}
 
@@ -73,7 +75,7 @@ public class CircleView extends BaseView{
 			v=inflater.inflate(R.layout.circleview_layout, null);
 			initPullView();
 			initView(v);
-			firstInitData();
+			firstInitData(activity);
 		}
 		baijia_quanzi_layout_tanb1_gridbview.setFocusable(false);
 		baijia_quanzi_layout_tanb1_gridbview.setFocusableInTouchMode(false);
@@ -144,8 +146,8 @@ public class CircleView extends BaseView{
 					long arg3) {
 				MyCircleInfo myCircleInfo=items.get(arg2);
 				Intent intent=new Intent(activity,ChatActivity.class);
-				intent.putExtra("buyerId", 0);
-				intent.putExtra("circleId", Integer.toString(myCircleInfo.getId()));
+				intent.putExtra("Chat_Type", ChatActivity.chat_type_group);
+				intent.putExtra("circleId", myCircleInfo.getId());
 				activity.startActivity(intent);
 			}
 		});
@@ -321,8 +323,9 @@ public class CircleView extends BaseView{
 	/*****
 	 * 首次加载
 	 * ***/
-	public void firstInitData()
+	public void firstInitData(Activity activity)
 	{
+		this.activity=activity;
 		if(isFirst)
 		{
 			requestFalshData();

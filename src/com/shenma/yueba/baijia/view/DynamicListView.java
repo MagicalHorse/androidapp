@@ -5,7 +5,6 @@ import java.util.List;
 
 import android.app.Activity;
 import android.os.SystemClock;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -20,6 +19,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.adapter.MsgAdapter;
 import com.shenma.yueba.baijia.modle.MsgBean;
+import com.shenma.yueba.baijia.modle.MsgListInfo;
 
 /**  
  * @author gyj  
@@ -32,7 +32,7 @@ public class DynamicListView {
 	Activity activity;
 	LayoutInflater layoutInflater;
 	
-	private List<MsgBean> mList = new ArrayList<MsgBean>();
+	private List<MsgListInfo> mList = new ArrayList<MsgListInfo>();
 	private View view;
 	private PullToRefreshListView pull_refresh_list;
 	LinearLayout showloading_layout_view;
@@ -153,7 +153,7 @@ public class DynamicListView {
 	{
 		for(int i=0;i<10;i++)
 		{
-			mList.add(new MsgBean());
+			//mList.add(new MsgBean());
 			
 		}
 		showloading_layout_view.setVisibility(View.GONE);
@@ -167,7 +167,7 @@ public class DynamicListView {
 		mList.clear();
 		for(int i=0;i<10;i++)
 		{
-			mList.add(new MsgBean());
+			//mList.add(new MsgBean());
 			
 		}
 		showloading_layout_view.setVisibility(View.GONE);

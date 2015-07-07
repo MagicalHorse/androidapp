@@ -70,7 +70,7 @@ public class BrandListView extends BaseView{
 			layoutInflater=activity.getLayoutInflater();
 			initView();
 			initPullView();
-			firstInitData();
+			firstInitData(activity);
 			//requestFalshData();
 		}
 		return view;
@@ -243,7 +243,8 @@ public class BrandListView extends BaseView{
 	}
 
 	@Override
-	public void firstInitData() {
+	public void firstInitData(Activity activity) {
+		this.activity=activity;
 		if(isfirst)
 		{
 			requestFalshData();

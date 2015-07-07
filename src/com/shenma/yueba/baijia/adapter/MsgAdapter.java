@@ -8,18 +8,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
-import com.shenma.yueba.baijia.modle.MsgBean;
-import com.shenma.yueba.baijia.modle.RecommendedCircleBean;
+import com.shenma.yueba.baijia.modle.MsgListInfo;
 import com.shenma.yueba.util.FontManager;
-import com.shenma.yueba.util.PhotoUtils;
-import com.shenma.yueba.view.RoundImageView;
 
 public class MsgAdapter extends BaseAdapterWithUtil {
-	private List<MsgBean> mList;
-	public MsgAdapter(Context ctx,List<MsgBean> mList) {
+	private List<MsgListInfo> mList;
+	public MsgAdapter(Context ctx,List<MsgListInfo> mList) {
 		super(ctx);
 		this.mList = mList;
 	}
