@@ -1,6 +1,8 @@
 package com.shenma.yueba.util;
 
-public class SizeBean {
+import java.io.Serializable;
+
+public class SizeBean implements Serializable{
 
 	private String name;
 	private String Inventory;

@@ -85,7 +85,6 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 		setContentView(R.layout.edit_pic);
 		super.onCreate(savedInstanceState);
 		initView();
-	
 
 	}
 	
@@ -105,7 +104,7 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 			}
 			String index = MyApplication.getInstance().getPublishUtil().getIndex();
 			result = BitmapFactory.decodeFile(FileUtils.getRootPath()
-					+ "/tagPic/" + "joybar_camera"+ index+".png");
+					+ "/tagPic/" + "joybar_camera"+ SharedUtil.getUserId(mContext)+index+".png");
 			resultCache = result;
 		}else if("picture".equals(MyApplication.getInstance().getPublishUtil().getFrom())){//来自图库
 			Uri uri = MyApplication.getInstance().getPublishUtil().getUri();
@@ -114,9 +113,9 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 		}else if("publish".equals(MyApplication.getInstance().getPublishUtil().getFrom())){//发布商品返回
 			String index = MyApplication.getInstance().getPublishUtil().getIndex();
 			result = BitmapFactory.decodeFile(FileUtils.getRootPath()
-					+ "/tagPic/" + "tagPic_yuan"+ index+".png");
+					+ "/tagPic/" + "tagPic_yuan"+SharedUtil.getUserId(mContext)+ index+".png");
 			resultCache = BitmapFactory.decodeFile(FileUtils.getRootPath()
-					+ "/tagPic/" + "tagPic"+ index+".png");
+					+ "/tagPic/" + "tagPic"+SharedUtil.getUserId(mContext)+ index+".png");
 		}
 		iv_pic.setImageBitmap(resultCache);
 		}
@@ -202,10 +201,10 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 		File dir = new File(FileUtils.getRootPath() + "/tagPic/");
 		if (!dir.exists()) {
 			if (!dir.exists())
-				dir.mkdir();
+				dir.mkdirs();
 		}
-		File file = new File(dir, "tagPic" + MyApplication.getInstance().getPublishUtil().getIndex() + ".png");
-		File file_yuan = new File(dir, "tagPic_yuan" + MyApplication.getInstance().getPublishUtil().getIndex() + ".png");
+		File file = new File(dir, "tagPic"+SharedUtil.getUserId(mContext)+ MyApplication.getInstance().getPublishUtil().getIndex() + ".png");
+		File file_yuan = new File(dir, "tagPic_yuan"+SharedUtil.getUserId(mContext) + MyApplication.getInstance().getPublishUtil().getIndex() + ".png");
 		if (file.exists()) {
 			file.delete();
 		}

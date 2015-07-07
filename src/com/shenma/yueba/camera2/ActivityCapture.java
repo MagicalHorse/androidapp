@@ -311,7 +311,7 @@ public class ActivityCapture extends Activity implements View.OnClickListener,
 			MyApplication.getInstance().getPublishUtil().setIndex("0");
 		}
 		File file = new File(dir, "joybar_camera"
-				+ MyApplication.getInstance().getPublishUtil().getIndex()
+				+SharedUtil.getUserId(ActivityCapture.this)+ MyApplication.getInstance().getPublishUtil().getIndex()
 				+ ".png");
 		if (file.exists()) {
 			file.delete();

@@ -1,11 +1,12 @@
 package com.shenma.yueba.util;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.shenma.yueba.yangjia.modle.TagsBean;
 
-public class ProductImagesBean {
+public class ProductImagesBean implements Serializable{
 
 	
 	private String ImageUrl;

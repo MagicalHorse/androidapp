@@ -50,7 +50,7 @@ public class ProductManagerActivity extends BaseFragmentActivity implements
 		initView();
 		initFragment();
 		initViewPager();
-		productManagerFragmentForOnLine.getData(1,ProductManagerActivity.this);
+		productManagerFragmentForOnLine.getData(0,ProductManagerActivity.this);
 		super.onCreate(arg0);
 	}
 

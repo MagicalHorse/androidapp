@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.modle.ProductManagerForOnLineBean;
+import com.shenma.yueba.baijia.modle.RequestUploadProductDataBean;
 import com.shenma.yueba.inter.RefreshProductListInter;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
@@ -125,6 +126,7 @@ public class ProductManagerFragmentForOnLineAdapter extends BaseAdapterWithUtil 
 				public void onClick(View v) {
 					if (flag == 1 || flag == 2) {// 修改
                        Intent intent = new Intent(ctx, PublishProductActivity.class);
+                       intent.putExtra("data", mList.get(position).getDetail());
                        ctx.startActivity(intent);
 					} else if (flag == 0) {// 删除
 						deleteProduct(position, mList.get(position)

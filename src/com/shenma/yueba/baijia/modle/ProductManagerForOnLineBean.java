@@ -1,6 +1,7 @@
 package com.shenma.yueba.baijia.modle;
 
 public class ProductManagerForOnLineBean {
+	
 	private String Pic;//商品图片
 	private String ProductName;//商品名称
 	private String ProductId;//商品编号
@@ -9,7 +10,9 @@ public class ProductManagerForOnLineBean {
 	private String ExpireTime;//下架时间
 	private String StoreItemNo;//货号
 	private String Price;//价格
-
+	private String UpdateDate;
+	private String ShareLink;
+	private RequestUploadProductDataBean Detail;
 	public String getPic() {
 		return Pic;
 	}
@@ -57,6 +60,24 @@ public class ProductManagerForOnLineBean {
 	}
 	public void setPrice(String price) {
 		Price = price;
+	}
+	public String getUpdateDate() {
+		return UpdateDate;
+	}
+	public void setUpdateDate(String updateDate) {
+		UpdateDate = updateDate;
+	}
+	public String getShareLink() {
+		return ShareLink;
+	}
+	public void setShareLink(String shareLink) {
+		ShareLink = shareLink;
+	}
+	public RequestUploadProductDataBean getDetail() {
+		return Detail;
+	}
+	public void setDetail(RequestUploadProductDataBean detail) {
+		Detail = detail;
 	}
 	
 	
