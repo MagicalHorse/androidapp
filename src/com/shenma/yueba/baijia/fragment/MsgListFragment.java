@@ -12,7 +12,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.adapter.MsgAdapter;
-import com.shenma.yueba.baijia.modle.MsgBean;
+import com.shenma.yueba.baijia.modle.MsgListInfo;
 
 
 /**
@@ -22,7 +22,7 @@ import com.shenma.yueba.baijia.modle.MsgBean;
  */
 public class MsgListFragment extends BaseFragment {
 	private MsgAdapter msgAdapter;
-	private List<MsgBean> mList = new ArrayList<MsgBean>();
+	private List<MsgListInfo> mList = new ArrayList<MsgListInfo>();
 	private View view;
 	private PullToRefreshListView pull_refresh_list;
 	@Override

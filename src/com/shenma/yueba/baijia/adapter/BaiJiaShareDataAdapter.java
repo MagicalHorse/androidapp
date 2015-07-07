@@ -25,6 +25,7 @@ import com.shenma.yueba.util.ToolsUtil;
  */
 
 public class BaiJiaShareDataAdapter extends BaseAdapter{
+	int maxCount=3;
 	List<BaiJiaShareInfoBean> bean_array=new ArrayList<BaiJiaShareInfoBean>();
 	Context context;
 	public BaiJiaShareDataAdapter(Context context,List<BaiJiaShareInfoBean> bean_array)
@@ -66,6 +67,13 @@ public class BaiJiaShareDataAdapter extends BaseAdapter{
 				
 				@Override
 				public void onClick(View v) {
+					//获取已经选中的个数
+					if(getCheckCount()>=maxCount)
+					{
+						MyApplication.getInstance().showMessage(context, "一次最多分享"+maxCount);
+						return;
+					}
+					
 					if(v.getTag()!=null)
 					{
 						BaiJiaShareInfoBean bean=(BaiJiaShareInfoBean)v.getTag();
@@ -111,6 +119,21 @@ public class BaiJiaShareDataAdapter extends BaseAdapter{
 		}
 		MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.getImage(ToolsUtil.nullToString(bean.getLogo()), 320, 0), holder.baijiashare_layout_item_icon_imageview, MyApplication.getInstance().getDisplayImageOptions());
 		holder.baijiashare_layout_item_name_textview.setText(ToolsUtil.nullToString(bean.getName()));
+		//holder.baijiashare_layout_item_name_textview.setText("111");
 		holder.baijiashare_layout_item_price_textview.setText("￥"+Double.toString(bean.getPrice()));
 	}
+	
+	int getCheckCount()
+	{
+		int checked=0;
+		for(int i=0;i<bean_array.size();i++)
+		{
+			if(bean_array.get(i).isIscheck())
+			{
+				checked++;
+			}
+		}
+		return checked;
+	}
+	
 }

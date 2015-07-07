@@ -13,5 +13,5 @@ public abstract class BaseView{
 
 	
 	public abstract View getView(Activity activity);
-	public abstract void firstInitData();
+	public abstract void firstInitData(Activity activity);
 }

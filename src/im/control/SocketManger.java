@@ -51,7 +51,7 @@ public class SocketManger {
 	public void contentSocket() {
 		if (socket != null && socket.connected()) {
 			// 断开
-			disContentSocket();
+			//disContentSocket();
 			return;
 		}
 		try {
@@ -112,9 +112,12 @@ public class SocketManger {
 			mssageBean_list.add(messageBean);
 		}
 		if (isConnect()) {
-			 Map<String, String> data2=getMap(messageBean);
+			// Map<String, String> data2=getMap(messageBean);
+			 Gson gson=new Gson();
+			 String json=gson.toJson(messageBean);
+			 Log.i("TAG",json);
 			try {
-				socket.emit("sendMessage", new JSONObject(data2), new Ack() {
+				socket.emit("sendMessage", new JSONObject(json), new Ack() {
 
 					@Override
 					public void call(Object... arg0) {
@@ -156,10 +159,10 @@ public class SocketManger {
 				if (listener != null) {
 					listener.connectSucess(arg0);
 				}
-				for(int i=0;i<mssageBean_list.size();i++)
+				/*for(int i=0;i<mssageBean_list.size();i++)
 				{
 					sendMsg(mssageBean_list.get(i));
-				}
+				}*/
 				Log.i("TAG", "Socket.EVENT_CONNECT");
 			}
 		});
@@ -275,9 +278,13 @@ public class SocketManger {
 	 * @param bean RoomBean 信息
 	 * ***/
 	public void inroon(String owner,RoomBean bean) {
-		Map<String, String> data2=getMap(bean);
+		//Map<String, String> data2=getMap(bean);
+		//Log.i("TAG", new JSONObject(data2).toString());
+		Gson gson=new Gson();
+		String json=gson.toJson(bean);
+		Log.i("TAG", json);
 		try {
-			socket.emit("join room", owner, new JSONObject(data2), new Ack() {
+			socket.emit("join room", owner, new JSONObject(json), new Ack() {
 
 				@Override
 				public void call(Object... arg0) {
@@ -296,33 +303,6 @@ public class SocketManger {
 
 		void disconnectSucess(Object... obj);
 
-		void sendMsgListener(Object obj);
-	}
-
-	/***
-	 * 遍历对象属性
-	 * **/
-	Map<String, String> getMap(Object obj)
-	{
-		Map<String, String> map=new HashMap<String, String>();
-		if(obj!=null)
-		{
-			Field[] field_array =obj.getClass().getDeclaredFields();
-			for(int i=0;i<field_array.length;i++)
-			{
-				Field field=field_array[i];
-				String name=field.getName();
-				String typename=field.getGenericType().toString();
-				try
-				{
-				String value=(String)field.get(obj);
-				map.put(name, value);
-				}catch(Exception e)
-				{
-					
-				}
-			}
-		}
-		return map;
+		void sendMsgListener(Object obj);//接收消息
 	}
 }

@@ -86,7 +86,15 @@ public class CircleInfoActivity extends BaseActivityWithTopView implements
 	}
 
 	private void getIntentData() {
-		cricleId = getIntent().getStringExtra("circleId");
+		int _id=getIntent().getIntExtra("circleId", -1);
+		cricleId = Integer.toString(_id);
+		if(_id<0)
+		{
+			MyApplication.getInstance().showMessage(this, "参数错误");
+			finish();
+			return;
+			
+		}
 		from = getIntent().getStringExtra("from");
 	}
 

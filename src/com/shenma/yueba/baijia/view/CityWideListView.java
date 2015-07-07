@@ -238,7 +238,8 @@ public class CityWideListView extends BaseView{
 	}
 
 	@Override
-	public void firstInitData() {
+	public void firstInitData(Activity activity) {
+		this.activity=activity;
 		if(isfirst)
 		{
 			requestFalshData();

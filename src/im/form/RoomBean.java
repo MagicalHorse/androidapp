@@ -10,6 +10,14 @@ public class RoomBean {
 	String   token= "";
 	String  type= "public";
 	String userName= "gyj";
+	int[] users;
+	
+	public int[] getUsers() {
+		return users;
+	}
+	public void setUsers(int[] users) {
+		this.users = users;
+	}
 	public String getOwner() {
 		return owner;
 	}

@@ -54,12 +54,13 @@ public class MyCircleView extends BaseView{
 	List<MyCircleInfo> items=new ArrayList<MyCircleInfo>();
 	boolean isFirst=true;
 	
-	public static MyCircleView the()
+	public static MyCircleView the(Activity activity)
 	{
 		if(myCircleView==null)
 		{
 			myCircleView=new MyCircleView();
 		}
+		myCircleView.activity=activity;
 		return myCircleView;
 	}
 	
@@ -133,8 +134,8 @@ public class MyCircleView extends BaseView{
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,long arg3) {
 				MyCircleInfo myCircleInfo=items.get(arg2);
 				Intent intent=new Intent(activity,ChatActivity.class);
-				intent.putExtra("buyerId", 0);
-				intent.putExtra("circleId", Integer.toString(myCircleInfo.getId()));
+				intent.putExtra("Chat_Type", ChatActivity.chat_type_group);
+				intent.putExtra("circleId",myCircleInfo.getId());
 				activity.startActivity(intent);
 			}
 		});
@@ -249,11 +250,12 @@ public class MyCircleView extends BaseView{
 
 
 	@Override
-	public void firstInitData() {
+	public void firstInitData(Activity activity) {
 		/*if(isFirst)
 		{
 			requestFalshData();
 		}*/
+		this.activity=activity;
 		requestFalshData();
 	}
 }

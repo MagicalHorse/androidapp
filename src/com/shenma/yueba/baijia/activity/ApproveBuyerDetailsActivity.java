@@ -185,7 +185,8 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView impleme
 	void startActivity()
 	{
 		Intent intent=new Intent(ApproveBuyerDetailsActivity.this,ChatActivity.class);
-		intent.putExtra("buyerId", bean.getData().getBuyerId());
+		intent.putExtra("Chat_Type", ChatActivity.chat_type_private);
+		intent.putExtra("toUser_id", bean.getData().getBuyerId());
 		intent.putExtra("DATA", bean);
 		startActivity(intent);
 	}

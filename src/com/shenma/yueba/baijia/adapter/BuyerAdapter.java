@@ -257,7 +257,8 @@ public class BuyerAdapter extends BaseAdapter{
 				    break; 
 				case R.id.buyersteetfragmeng_item_siliao_button://私聊
 					Intent intentsiliao=new Intent(activity,ChatActivity.class);
-					intentsiliao.putExtra("buyerId", (Integer)v.getTag());
+					intentsiliao.putExtra("Chat_Type", ChatActivity.chat_type_private);
+					intentsiliao.putExtra("toUser_id", (Integer)v.getTag());
 					activity.startActivity(intentsiliao);
 					break;
 				case R.id.buyersteetfragmeng_item_share_button://分享

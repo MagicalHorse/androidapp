@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/shop_main_lineheight10_dimen"
+    android:orientation="vertical" >
+
+    <com.shenma.yueba.view.RoundImageView
+        android:id="@+id/chat_layout_item_leftimg_icon_roundimageview"
+        android:layout_width="@dimen/user_config_iconwidth60_dimen"
+        android:layout_height="@dimen/user_config_iconwidth60_dimen"
+        android:src="@drawable/default_pic" />
+
+    <RelativeLayout
+        android:layout_marginLeft="@dimen/shop_main_width5_dimen"
+        android:layout_marginRight="@dimen/user_config_iconwidth40_dimen"
+        android:layout_marginTop="@dimen/shop_main_marginleft30_dimen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/chat_layout_item_leftimg_icon_roundimageview" >
+
+        <ImageView
+            android:id="@+id/chat_layout_item_leftimg_msg_imageview"
+            android:layout_width="@dimen/shop_main_width200_dimen"
+            android:layout_height="@dimen/shop_main_width200_dimen"
+            android:background="@drawable/left"
+            android:padding="@dimen/shop_main_width25_dimen"
+            android:scaleType="fitCenter"
+            android:src="@drawable/default_pic" />
+    </RelativeLayout>
+
+</RelativeLayout>

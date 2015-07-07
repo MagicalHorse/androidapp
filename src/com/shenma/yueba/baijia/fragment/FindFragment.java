@@ -153,7 +153,7 @@ public class FindFragment extends Fragment{
 			@Override
 			public void onPageSelected(int arg0) {
 				setTextColor(arg0);
-				((BaseView)fragment_list.get(arg0).getFragment()).firstInitData();
+				((BaseView)fragment_list.get(arg0).getFragment()).firstInitData(getActivity());
 			}
 			
 			@Override
