@@ -647,6 +647,7 @@ public class HttpConstants {
 	 * **/
 	public static String METHOD_SEARCH = SEARCH+ "Search";
 	
+	
 	/*****
 	 *获取圈子房间号
 	 * **/
