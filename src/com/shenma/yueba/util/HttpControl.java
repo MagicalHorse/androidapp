@@ -76,6 +76,7 @@ import com.shenma.yueba.yangjia.modle.FansBackListForInviteCirlce;
 import com.shenma.yueba.yangjia.modle.HuoKuanListBackBean;
 import com.shenma.yueba.yangjia.modle.IncomeDetailBackBean;
 import com.shenma.yueba.yangjia.modle.IncomeHistoryBackBean;
+import com.shenma.yueba.yangjia.modle.KaiXiaoPiaoBackBean;
 import com.shenma.yueba.yangjia.modle.OrderDetailBackBean;
 import com.shenma.yueba.yangjia.modle.OrderListBackBean;
 import com.shenma.yueba.yangjia.modle.RewardDetailBackBean;
@@ -1047,6 +1048,25 @@ public class HttpControl {
 				HttpConstants.METHOD_ORDER_RMAConfirm, httpCallBack,
 				OrderListBackBean.class, showDialog, false);
 	}
+	
+	
+	
+	
+	/**
+	 * 开小票
+	 * @return void
+	 * **/
+	public void createGeneralOrder(String price,String saleCode,
+			final HttpCallBackInterface httpCallBack, Context context,
+			boolean showDialog) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put(Constants.PRICE, price);
+		map.put(Constants.SALECODE, saleCode);
+		BasehttpSend(map, context,
+				HttpConstants.METHOD_ORDER_CREATEGENERALORDER, httpCallBack,
+				KaiXiaoPiaoBackBean.class, showDialog, false);
+	}
+	
 	
 	
 	

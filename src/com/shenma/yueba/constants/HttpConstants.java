@@ -410,6 +410,13 @@ public class HttpConstants {
 	public static String METHOD_ORDER_RMAConfirm = Order
 			+ "RMAConfirm";
 	  
+	/**
+	 * 开小票
+	 */
+	public static String METHOD_ORDER_CREATEGENERALORDER = Order
+			+ "CreateGeneralOrder";
+	  
+	
 	
 	/**
 	 * 获取订单详情

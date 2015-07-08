@@ -280,7 +280,7 @@ public class ProductManagerFragmentForOnLineAdapter extends BaseAdapterWithUtil 
 
 			@Override
 			public void http_Fails(int error, String msg) {
-				// TODO Auto-generated method stub
+			
 
 			}
 		}, ctx, true, true);

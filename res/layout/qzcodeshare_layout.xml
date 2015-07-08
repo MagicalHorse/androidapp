@@ -1,100 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:zzy="http://schemas.android.com/apk/res/com.shenma.yueba"
-    android:layout_gravity="center"
-    android:gravity="center"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-   
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:paddingBottom="@dimen/shop_main_iconwidth80_dimen"
     android:paddingLeft="@dimen/margin_left_and_right"
     android:paddingRight="@dimen/margin_left_and_right"
-    android:paddingTop="@dimen/shop_main_iconwidth80_dimen"
-    android:paddingBottom="@dimen/shop_main_iconwidth80_dimen"
-    
-    >
-   <RelativeLayout 
-       android:layout_margin="@dimen/shop_main_lineheight10_dimen"
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       android:background="@color/color_lightgrey"
-       android:padding="@dimen/shop_main_width25_dimen"
-       >
-    
-    <com.shenma.yueba.view.imageshow.CustomImageView
-        android:id="@+id/qzcodeshare_layouyt_customview"
-        android:layout_width="@dimen/user_config_iconwidth50_dimen"
-        android:layout_height="@dimen/user_config_iconwidth50_dimen" 
-        zzy:src="@drawable/default_pic"
-        />
+    android:paddingTop="@dimen/shop_main_iconwidth80_dimen" >
 
     <RelativeLayout
-        android:id="@+id/qacodeshare_headn_relativelayout"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/user_config_iconwidth60_dimen"
-        android:layout_marginLeft="@dimen/shop_main_width5_dimen"
-        android:layout_toRightOf="@id/qzcodeshare_layouyt_customview" >
-
-        <TextView
-            android:id="@+id/qzcodeshare_layouyt_name_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="xxx" />
-
-        <TextView
-            android:id="@+id/qzcodeshare_layouyt_count_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_below="@id/qzcodeshare_layouyt_name_textview"
-            android:text="成员:" />
-
-        <TextView
-            android:id="@+id/qzcodeshare_layouyt_countvalue_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/qzcodeshare_layouyt_name_textview"
-            android:layout_alignParentBottom="true"
-            android:layout_toRightOf="@id/qzcodeshare_layouyt_count_textview"
-            android:hint="0" />
-    </RelativeLayout>
-
-    <ImageView 
-        android:layout_margin="@dimen/shop_main_width15_dimen"
-        android:layout_marginTop="@dimen/shop_main_width15_dimen"
-        android:padding="@dimen/shop_main_width15_dimen"
-        android:layout_centerHorizontal="true"
-        android:background="@color/white"
-        android:layout_below="@id/qzcodeshare_layouyt_customview"
-        android:layout_above="@+id/qzcodeshare_layout_title_textview"
-        android:id="@+id/qzcodeshare_layout_content_imageview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/erweima"
-        />
-    <TextView
-        android:id="@+id/qzcodeshare_layout_title_textview"
-        android:layout_above="@+id/qzcodeshare_layout_share_button"
-        android:layout_centerHorizontal="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="点击分享给你的好友吧"
-        />
-    
-    <Button
-        android:layout_centerHorizontal="true"
-        android:id="@+id/qzcodeshare_layout_share_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:text="分享"
-        />
+        android:layout_margin="@dimen/shop_main_lineheight10_dimen"
+        android:background="@color/color_lightgrey"
+        android:padding="10dip" >
+
+        <com.shenma.yueba.view.imageshow.CustomImageView
+            android:id="@+id/qzcodeshare_layouyt_customview"
+            android:layout_width="60dip"
+            android:layout_height="60dip"
+            zzy:src="@drawable/default_pic" />
+
+        <RelativeLayout
+            android:id="@+id/qacodeshare_headn_relativelayout"
+            android:layout_width="match_parent"
+            android:layout_height="60dip"
+            android:layout_marginLeft="@dimen/shop_main_width5_dimen"
+            android:layout_toRightOf="@id/qzcodeshare_layouyt_customview"
+            android:paddingBottom="5dip"
+            android:paddingLeft="5dip"
+            android:paddingTop="5dip" >
+
+            <TextView
+                android:singleLine="true"
+                android:id="@+id/qzcodeshare_layouyt_name_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                   android:text="@null"
+                   android:textColor="@color/text_gray_color"
+                android:textSize="15sp" />
+
+            <TextView
+                android:singleLine="true"
+                android:id="@+id/qzcodeshare_layouyt_count_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:text="@null"
+                android:textColor="@color/red_text_color"
+                android:textSize="15sp" />
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/qzcodeshare_layout_content_imageview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/qzcodeshare_layout_title_textview"
+            android:layout_below="@id/qzcodeshare_layouyt_customview"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="@dimen/shop_main_width15_dimen"
+            android:layout_marginTop="@dimen/shop_main_width15_dimen"
+            android:background="@color/white"
+            android:padding="@dimen/shop_main_width15_dimen"
+            android:src="@null" />
+
+        <TextView
+            android:id="@+id/qzcodeshare_layout_title_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_above="@+id/qzcodeshare_layout_share_button"
+            android:layout_centerHorizontal="true"
+            android:text="点击分享给你的好友吧" />
+
+        <Button
+            android:id="@+id/qzcodeshare_layout_share_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:visibility="gone"
+            android:layout_centerHorizontal="true"
+            android:text="分享" />
     </RelativeLayout>
+
     <ImageView
-        android:layout_alignParentRight="true"
+        android:id="@+id/qzcodeshare_layouyt_close_imageview"
         android:layout_width="@dimen/shop_main_marginleft30_dimen"
         android:layout_height="@dimen/shop_main_marginleft30_dimen"
-        android:id="@+id/qzcodeshare_layouyt_close_imageview"
-        android:src="@drawable/close_icon"
+        android:layout_alignParentRight="true"
         android:scaleType="fitCenter"
-        />
+        android:src="@drawable/close_icon" />
+
 </RelativeLayout>

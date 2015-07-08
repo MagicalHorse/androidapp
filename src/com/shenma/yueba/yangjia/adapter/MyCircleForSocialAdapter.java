@@ -55,16 +55,16 @@ public class MyCircleForSocialAdapter extends BaseAdapterWithUtil {
 					.findViewById(R.id.tv_circle_name);
 			holder.tv_attention_count = (TextView) convertView
 					.findViewById(R.id.tv_attention_count);
-			
-			MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.getImage(mList.get(position).getLogo(), 120, 0), holder.iv_circle_head, MyApplication.getInstance().getRoundDisplayImageOptions());
-			holder.tv_circle_name.setText(ToolsUtil.nullToString(mList.get(position).getName()));
-			holder.tv_attention_count.setText("关注："+ToolsUtil.nullToString(mList.get(position).getUserCount()));
-			FontManager.changeFonts(ctx, holder.tv_circle_name,
-					holder.tv_attention_count);
 			convertView.setTag(holder);
 		} else {
 			holder = (Holder) convertView.getTag();
 		}
+
+		MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.getImage(mList.get(position).getLogo(), 120, 0), holder.iv_circle_head, MyApplication.getInstance().getRoundDisplayImageOptions());
+		holder.tv_circle_name.setText(ToolsUtil.nullToString(mList.get(position).getName()));
+		holder.tv_attention_count.setText("关注："+ToolsUtil.nullToString(mList.get(position).getUserCount()));
+		FontManager.changeFonts(ctx, holder.tv_circle_name,
+				holder.tv_attention_count);
 		return convertView;
 	}
 

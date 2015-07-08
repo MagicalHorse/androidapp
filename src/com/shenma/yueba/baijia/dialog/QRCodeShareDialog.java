@@ -1,8 +1,12 @@
 package com.shenma.yueba.baijia.dialog;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,6 +15,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.util.Base64Coder;
+import com.shenma.yueba.util.FontManager;
+import com.shenma.yueba.yangjia.modle.kaixiaoPiaoBean;
 
 /**  
  * @author gyj  
@@ -22,10 +29,13 @@ public class QRCodeShareDialog extends Dialog implements android.view.View.OnCli
 	Context context;
 	RelativeLayout ll;
 	ImageView qzcodeshare_layouyt_close_imageview;
+	TextView qzcodeshare_layouyt_name_textview;
 	TextView qzcodeshare_layout_title_textview;
 	Button qzcodeshare_layout_share_button;
-	Object obj;
-	public QRCodeShareDialog(Context context,Object obj) {
+	kaixiaoPiaoBean obj;
+	private TextView qzcodeshare_layouyt_count_textview;
+	private ImageView qzcodeshare_layout_content_imageview;
+	public QRCodeShareDialog(Context context,kaixiaoPiaoBean obj) {
 		super(context, R.style.MyDialog);
 		requestWindowFeature(getWindow().FEATURE_NO_TITLE);
 		this.context=context;
@@ -46,11 +56,18 @@ public class QRCodeShareDialog extends Dialog implements android.view.View.OnCli
 	void initView()
 	{
 		qzcodeshare_layouyt_close_imageview=(ImageView)ll.findViewById(R.id.qzcodeshare_layouyt_close_imageview);
+		qzcodeshare_layout_content_imageview = (ImageView)ll.findViewById(R.id.qzcodeshare_layout_content_imageview);
 		qzcodeshare_layout_title_textview=(TextView)ll.findViewById(R.id.qzcodeshare_layout_title_textview);
+		qzcodeshare_layouyt_name_textview=(TextView)ll.findViewById(R.id.qzcodeshare_layouyt_name_textview);
+		qzcodeshare_layouyt_count_textview = (TextView)ll.findViewById(R.id.qzcodeshare_layouyt_count_textview);
 		qzcodeshare_layout_share_button=(Button)ll.findViewById(R.id.qzcodeshare_layout_share_button);
 		qzcodeshare_layout_share_button.setOnClickListener(this);
 		qzcodeshare_layouyt_close_imageview.setOnClickListener(this);
-		
+		qzcodeshare_layouyt_name_textview.setText("订单号："+obj.getOrderNo());
+		qzcodeshare_layouyt_count_textview.setText("￥"+obj.getAmount());
+		byte[] bytes = Base64Coder.decode(obj.getQrCode());
+		qzcodeshare_layout_content_imageview.setImageBitmap(BitmapFactory.decodeByteArray(bytes, 0, bytes.length));
+		FontManager.changeFonts(context,qzcodeshare_layouyt_name_textview,qzcodeshare_layouyt_count_textview);
 	}
 	
 	@Override

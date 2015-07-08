@@ -339,6 +339,7 @@ public class Constants {
 	public static final String DISCOUNT = "discount";
 	public static final String PRICERANGE = "priceRange";
 	public static final String PRICE = "price";
+	public static final String SALECODE = "saleCode";
 	public static final String STORE_TITLE = "title_store";
 	public static final String MASS_TITLE = "title_masseur";
 	public static final String STORE_CONTENT = "note_store";
