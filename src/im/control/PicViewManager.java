@@ -1,10 +1,14 @@
 package im.control;
 
 import im.form.BaseChatBean;
+import im.form.PicChatBean;
 import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
@@ -31,7 +35,13 @@ public class PicViewManager extends ChatBaseManager{
 	}
 	PicView_Type type=PicView_Type.left;
 	RoundImageView chat_layout_item_leftimg_icon_roundimageview;//头像
-	ImageView chat_layout_item_leftimg_msg_imageview;//信息
+	ImageView chat_layout_item_leftimg_msg_imageview;//图片
+	TextView chat_layout_item_leftmsg_name_textview;//名称
+	TextView chat_layout_item_leftmsg_time_textview;//时间
+	LinearLayout chat_layout_item_leftimg_progress_linearlayout;//进度俯视图
+	ProgressBar chat_layout_item_leftimg_progress_progressbar;//进度条
+	TextView chat_layout_item_leftimg_progress_textview;//进度文本
+	
 	RelativeLayout ll;
 	/*******
 	 * 初始化左侧视图
@@ -54,6 +64,12 @@ public class PicViewManager extends ChatBaseManager{
 		
 		chat_layout_item_leftimg_icon_roundimageview=(RoundImageView)ll.findViewById(R.id.chat_layout_item_leftimg_icon_roundimageview);
 		chat_layout_item_leftimg_msg_imageview=(ImageView)ll.findViewById(R.id.chat_layout_item_leftimg_msg_imageview);
+		chat_layout_item_leftmsg_name_textview=(TextView)ll.findViewById(R.id.chat_layout_item_leftmsg_name_textview);
+		chat_layout_item_leftmsg_time_textview=(TextView)ll.findViewById(R.id.chat_layout_item_leftmsg_time_textview);
+		
+		chat_layout_item_leftimg_progress_linearlayout=(LinearLayout)ll.findViewById(R.id.chat_layout_item_leftimg_progress_linearlayout);
+		chat_layout_item_leftimg_progress_progressbar=(ProgressBar)ll.findViewById(R.id.chat_layout_item_leftimg_progress_progressbar);
+		chat_layout_item_leftimg_progress_textview=(TextView)ll.findViewById(R.id.chat_layout_item_leftimg_progress_textview);
 	}
 	@Override
 	public void isshow(boolean b,BaseChatBean bean) {
@@ -64,10 +80,25 @@ public class PicViewManager extends ChatBaseManager{
 		{
 			ll.setVisibility(View.GONE);
 		}
-		if(bean!=null)
+		if(bean!=null && bean instanceof PicChatBean)
 		{
-			MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.nullToString(bean.getLogo()), chat_layout_item_leftimg_icon_roundimageview, MyApplication.getInstance().getDisplayImageOptions());
+			PicChatBean picbean=(PicChatBean)bean;
+			chat_layout_item_leftmsg_name_textview.setText(ToolsUtil.nullToString(picbean.getUserName()));
+			chat_layout_item_leftmsg_time_textview.setText(ToolsUtil.nullToString(picbean.getCreationDate()));
+			MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.nullToString(picbean.getLogo()), chat_layout_item_leftimg_icon_roundimageview, MyApplication.getInstance().getDisplayImageOptions());
+			MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.nullToString(picbean.getPicaddress()), chat_layout_item_leftimg_msg_imageview, MyApplication.getInstance().getDisplayImageOptions());
+			
 			//图片
+			if(!picbean.isUpload() && picbean.isSuccess())//如果上传完成则  隐藏进度
+			{
+				chat_layout_item_leftimg_icon_roundimageview.setVisibility(View.GONE);
+			}else
+			{
+				chat_layout_item_leftimg_icon_roundimageview.setVisibility(View.VISIBLE);
+			}
+			
+			
 		}
+		 
 	}
 }

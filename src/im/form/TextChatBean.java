@@ -4,6 +4,8 @@ import im.control.SocketManger;
 import im.control.SocketManger.SocketManagerListener;
 import im.form.BaseChatBean.ChatType;
 
+import android.content.Context;
+
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.util.ToolsUtil;
@@ -16,8 +18,8 @@ import com.shenma.yueba.util.ToolsUtil;
 
 public class TextChatBean extends BaseChatBean{
 
-	public TextChatBean() {
-		super(ChatType.text_trype,RequestMessageBean.type_empty);
+	public TextChatBean(Context context) {
+		super(ChatType.text_trype,RequestMessageBean.type_empty,context);
 	}
 
 	@Override

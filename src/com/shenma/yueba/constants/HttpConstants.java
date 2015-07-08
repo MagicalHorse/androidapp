@@ -658,6 +658,11 @@ public class HttpConstants {
 	 * **/
 	public static String METHOD_GETROOMMESSAE = Circle+ "GetMessages";
 	
+	/*****
+	 *聊天发送图片
+	 * **/
+	public static String METHOD_UPOADLCHATIMAGE = Circle+ "UploadChatImage";
+	
 	
 	/*****
 	 *微信支付回调url

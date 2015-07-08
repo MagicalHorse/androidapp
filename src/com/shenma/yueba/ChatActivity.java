@@ -19,12 +19,12 @@ import im.control.SocketManger.SocketManagerListener;
 import im.form.BaseChatBean;
 import im.form.NoticeChatBean;
 import im.form.PicChatBean;
+import im.form.PicChatBean.PicChatBean_Listener;
 import im.form.ProductChatBean;
 import im.form.RequestMessageBean;
 import im.form.RoomBean;
 import im.form.TextChatBean;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -37,13 +37,10 @@ import roboguice.activity.RoboActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.SystemClock;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.Spannable;
@@ -51,7 +48,6 @@ import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.style.ImageSpan;
-import android.util.Base64;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -70,8 +66,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.alibaba.sdk.android.oss.callback.SaveCallback;
-import com.alibaba.sdk.android.oss.model.OSSException;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.shenma.yueba.application.MyApplication;
@@ -408,7 +402,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 	 * 设置 文本信息内容
 	 * ****/
 	void setTextMsgData(String str) {
-		BaseChatBean msgbean = new TextChatBean();
+		BaseChatBean msgbean = new TextChatBean(ChatActivity.this);
 		setSendValue(msgbean,str);
 	}
 	
@@ -422,7 +416,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 		  for(int i=0;i<check_list.size();i++)
 		  {
 			  BaiJiaShareInfoBean sharebean=check_list.get(i);
-			  BaseChatBean msgbean=new ProductChatBean();
+			  BaseChatBean msgbean=new ProductChatBean(ChatActivity.this);
 			  msgbean.setProductId(sharebean.getId());
 			  setSendValue(msgbean,ToolsUtil.nullToString(sharebean.getLogo()));
 			
@@ -618,50 +612,30 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
    * ***/
   void upLoadPic(String imageLocalPath)
   {
-	  final PicChatBean baseChatBean=new PicChatBean();
-	  baseChatBean.setPicaddress(imageLocalPath);
 	  if(imageLocalPath==null)
 	  {
 		  return;
 	  }
-	  setSendValue(baseChatBean, "");
-	  httpControl.syncUpload(imageLocalPath, new SaveCallback() {
+	  final PicChatBean baseChatBean=new PicChatBean(ChatActivity.this);
+	  baseChatBean.setListener(new PicChatBean_Listener() {
 		
 		@Override
-		public void onProgress(String arg0, int arg1, int arg2) {
-			//上传进度
-			baseChatBean.setProgress(arg1);
-			baseChatBean.setMaxProgress(arg2);
-			baseChatBean.setUpload(true);
-			ChatActivity.this.runOnUiThread(new Runnable() {
-				
-				@Override
-				public void run() {
-					chattingAdapter.notifyDataSetChanged();
-				}
-			});
+		public void pic_showMsg(String msg) {
+			MyApplication.getInstance().showMessage(ChatActivity.this, msg);
 		}
 		
 		@Override
-		public void onFailure(String arg0, OSSException arg1) {
-			MyApplication.getInstance().showMessage(ChatActivity.this, arg0);
-		}
-		
-		@Override
-		public void onSuccess(String arg0) {
-			//上传完成 发送数据
-			baseChatBean.setAli_content(arg0);
-			baseChatBean.setUpload(false);
-			baseChatBean.setSuccess(true);
-            ChatActivity.this.runOnUiThread(new Runnable() {
-				
-				@Override
-				public void run() {
-					chattingAdapter.notifyDataSetChanged();
-				}
-			});
+		public void pic_notifaction() {
+			if(chattingAdapter!=null)
+			{
+				chattingAdapter.notifyDataSetChanged();
+			}
 		}
 	});
+	  
+	  baseChatBean.setPicaddress(imageLocalPath);
+	  
+	  setSendValue(baseChatBean, "");
 	  
   }
   
@@ -860,15 +834,15 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 			String type = bean.getType();
 			if (type.equals(RequestMessageBean.type_img))// 如果是图片
 			{
-				baseChatBean = new PicChatBean();
+				baseChatBean = new PicChatBean(ChatActivity.this);
 			} else if (type.equals(RequestMessageBean.type_produtc_img))// 如果是商品图片
 			{
-				baseChatBean = new ProductChatBean();
+				baseChatBean = new ProductChatBean(ChatActivity.this);
 			} else if (type.equals(RequestMessageBean.notice))// 如果是广播
 			{
 
 			} else {
-				baseChatBean = new TextChatBean();
+				baseChatBean = new TextChatBean(ChatActivity.this);
 
 			}
 			// 通知更新
@@ -1060,22 +1034,22 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 			String type = items.get(i).getType();
 			if (type.equals(RequestMessageBean.type_img))// 如果是 图片
 			{
-				BaseChatBean bean = new PicChatBean();
+				BaseChatBean bean = new PicChatBean(ChatActivity.this);
 				bean.setValue(items.get(i));
 				addListData(true, bean);
 			} else if (type.equals(RequestMessageBean.type_produtc_img))// 是商品图片
 			{
-				BaseChatBean bean = new ProductChatBean();
+				BaseChatBean bean = new ProductChatBean(ChatActivity.this);
 				bean.setValue(items.get(i));
 				addListData(true, bean);
 			} else if (type.equals(RequestMessageBean.notice))// 广播
 			{
-				BaseChatBean bean = new NoticeChatBean();
+				BaseChatBean bean = new NoticeChatBean(ChatActivity.this);
 				bean.setValue(items.get(i));
 				addListData(true, bean);
 			} else if (type.equals(RequestMessageBean.type_empty))// 文本信息
 			{
-				BaseChatBean bean = new TextChatBean();
+				BaseChatBean bean = new TextChatBean(ChatActivity.this);
 				bean.setValue(items.get(i));
 				addListData(true, bean);
 			}

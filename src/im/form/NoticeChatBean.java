@@ -1,5 +1,6 @@
 package im.form;
 
+import android.content.Context;
 import im.control.SocketManger.SocketManagerListener;
 
 /**  
@@ -9,9 +10,9 @@ import im.control.SocketManger.SocketManagerListener;
  */
 
 public class NoticeChatBean extends BaseChatBean{
-
-	public NoticeChatBean() {
-		super(ChatType.notice_type,RequestMessageBean.notice);
+  
+	public NoticeChatBean(Context context) {
+		super(ChatType.notice_type,RequestMessageBean.notice,context);
 	}
 
 	@Override

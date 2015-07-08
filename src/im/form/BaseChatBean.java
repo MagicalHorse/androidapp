@@ -5,6 +5,8 @@ import im.control.SocketManger.SocketManagerListener;
 
 import java.io.Serializable;
 
+import android.content.Context;
+
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.util.ToolsUtil;
@@ -16,11 +18,12 @@ import com.shenma.yueba.util.ToolsUtil;
  */
 
 public abstract class  BaseChatBean implements Serializable{
-
-	public BaseChatBean(ChatType chattype,String type)
+	Context context;
+	public BaseChatBean(ChatType chattype,String type,Context context)
 	{
 		this.chattype=chattype;
 		this.type=type;
+		this.context=context;
 	}
 	
 	
