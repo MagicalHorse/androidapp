@@ -23,6 +23,7 @@ import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.modle.FragmentBean;
 import com.shenma.yueba.baijia.view.DynamicListView;
 import com.shenma.yueba.baijia.view.MsgListView;
+import com.shenma.yueba.util.FontManager;
 
 public class MessageFragment extends Fragment{
 	List<FragmentBean> fragment_list=new ArrayList<FragmentBean>();
@@ -83,6 +84,7 @@ public class MessageFragment extends Fragment{
 		{
 			RelativeLayout rl=(RelativeLayout)RelativeLayout.inflate(getActivity(), R.layout.tab_line_layout, null);
 			TextView tv=(TextView)rl.findViewById(R.id.tab_line_textview);
+			FontManager.changeFonts(getActivity(), tv);
 			rl.setTag(i);
 			rl.setOnClickListener(new OnClickListener() {
 				
@@ -137,7 +139,15 @@ public class MessageFragment extends Fragment{
 			
 			@Override
 			public void onPageSelected(int arg0) {
-				
+				switch(arg0)
+				{
+				case 0:
+					MsgListView.the().firstData();
+					break;
+				case 1:
+					DynamicListView.the().firstData();
+					break;
+				}
 				setTextColor(arg0);
 			}
 			

@@ -197,7 +197,7 @@ public class CircleListActivity extends BaseActivityWithTopView{
 							}
 							int totalPage = bean.getTotalpaged();
 							if (currPage >= totalPage) {
-								MyApplication.getInstance().showMessage(CircleListActivity.this, CircleListActivity.this.getResources().getString(R.string.lastpagedata_str));
+								//MyApplication.getInstance().showMessage(CircleListActivity.this, CircleListActivity.this.getResources().getString(R.string.lastpagedata_str));
 								pull_refresh_list.setMode(Mode.PULL_FROM_START);
 							} else {
 								pull_refresh_list.setMode(Mode.BOTH);

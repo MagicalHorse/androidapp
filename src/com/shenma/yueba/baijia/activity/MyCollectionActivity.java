@@ -184,7 +184,7 @@ public class MyCollectionActivity extends BaseActivityWithTopView{
 							int totalPage = bean.getData().getTotalpaged();
 							if (currPage >= totalPage) {
 								shop_main_layout_title_pulltorefreshscrollview.setMode(Mode.PULL_FROM_START);
-								MyApplication.getInstance().showMessage(MyCollectionActivity.this, MyCollectionActivity.this.getResources().getString(R.string.lastpagedata_str));
+								//MyApplication.getInstance().showMessage(MyCollectionActivity.this, MyCollectionActivity.this.getResources().getString(R.string.lastpagedata_str));
 							} else {
 								shop_main_layout_title_pulltorefreshscrollview.setMode(Mode.BOTH);
 							}

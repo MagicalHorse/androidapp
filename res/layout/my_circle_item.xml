@@ -36,6 +36,7 @@
         android:paddingTop="3dip" >
 
         <TextView
+            android:gravity="right"
             android:id="@+id/tv_time"
             android:layout_width="@dimen/shop_main_width120_dimen"
             android:layout_height="wrap_content"

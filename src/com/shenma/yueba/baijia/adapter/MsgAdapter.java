@@ -12,6 +12,8 @@ import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.modle.MsgListInfo;
 import com.shenma.yueba.util.FontManager;
+import com.shenma.yueba.util.ToolsUtil;
+import com.shenma.yueba.view.RoundImageView;
 
 public class MsgAdapter extends BaseAdapterWithUtil {
 	private List<MsgListInfo> mList;
@@ -23,7 +25,7 @@ public class MsgAdapter extends BaseAdapterWithUtil {
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return 10;
+		return mList.size();
 	}
 
 	@Override
@@ -38,14 +40,13 @@ public class MsgAdapter extends BaseAdapterWithUtil {
 		return position;
 	}
 
-	@SuppressWarnings("null")
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		Holder holder;
 		if(convertView == null){
 			holder = new Holder();
 			convertView = View.inflate(ctx, R.layout.msg_item, null);
-			holder.iv_msg = (ImageView) convertView.findViewById(R.id.iv_msg);
+			holder.iv_msg = (RoundImageView)convertView.findViewById(R.id.iv_msg);
 			holder.tv_name = (TextView) convertView.findViewById(R.id.tv_name);
 			holder.tv_time = (TextView) convertView.findViewById(R.id.tv_time);
 			holder.tv_msg = (TextView) convertView.findViewById(R.id.tv_msg);
@@ -56,15 +57,24 @@ public class MsgAdapter extends BaseAdapterWithUtil {
 		}else{
 			holder = (Holder) convertView.getTag();
 		}
+		setValue(holder,position);
 		return convertView;
 	}
 	
 	
 	class Holder{
-		ImageView iv_msg;
+		RoundImageView iv_msg;
 		TextView tv_name;
 		TextView tv_time;
 		TextView tv_msg;
 	}
 
+	void setValue(Holder holder, int position)
+	{
+		MsgListInfo msgListInf=	mList.get(position);
+		MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.nullToString(msgListInf.getLogo()), holder.iv_msg, MyApplication.getInstance().getDisplayImageOptions());
+		holder.tv_name.setText(ToolsUtil.nullToString(msgListInf.getName()));
+		holder.tv_time.setText(ToolsUtil.nullToString(msgListInf.getUpdateTime()));
+		holder.tv_msg.setText(ToolsUtil.nullToString(msgListInf.getUnReadMessage()));
+	}
 }

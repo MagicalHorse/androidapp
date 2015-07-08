@@ -452,7 +452,9 @@
         <!-- 聊天界面 -->
         <activity
             android:name="com.shenma.yueba.ChatActivity"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait" 
+            android:launchMode="singleTask"
+            >
         </activity>
         <!-- 店铺介绍界面 -->
         <activity

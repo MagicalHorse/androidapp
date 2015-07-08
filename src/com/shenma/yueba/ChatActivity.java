@@ -134,11 +134,13 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_chat);
-		userName = SharedUtil.getStringPerfernece(getApplicationContext(),
-				SharedUtil.user_names);
+		//我的昵称
+		userName = SharedUtil.getStringPerfernece(getApplicationContext(),SharedUtil.user_names);
+		//我的头像
 		usericon = SharedUtil.getStringPerfernece(this, SharedUtil.user_logo);
 		if(this.getIntent().getStringExtra("Chat_NAME")!=null)//名字
 		{
+			//圈子名称 或 私聊用户名称
 			chat_name=this.getIntent().getStringExtra("Chat_NAME");
 		}
 		if (this.getIntent().getStringExtra("Chat_Type") == null)// 获取聊天类型
@@ -147,13 +149,13 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 			finish();
 			return;
 		}
-
+		//获取 聊天类型（即 群聊/私聊）
 		chat_type = this.getIntent().getStringExtra("Chat_Type");
+		//如果是群聊
 		if (chat_type.endsWith(chat_type_group)) {
+			//获取圈子ID
 			circleId = this.getIntent().getIntExtra("circleId", -1);
-			
-
-		} else if (chat_type.endsWith(chat_type_private)) {
+		} else if (chat_type.endsWith(chat_type_private)) {//如果是私聊
 
 			// 私聊 获取 toUser_id
 			toUser_id = this.getIntent().getIntExtra("toUser_id", -1);
@@ -165,6 +167,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 
 		}
 		initView();
+		//我的 userid
 		formUser_id = Integer.parseInt(SharedUtil.getStringPerfernece(this,SharedUtil.user_id));
 		// 设置购买商品信息 视图
 		setProduct();
@@ -348,18 +351,46 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 
 	@Override
 	protected void onNewIntent(Intent intent) {
-		// 点击notification bar进入聊天页面，保证只有一个聊天页面
 		// 如果 重新进入页面 判断 是否进入的是同一个 圈子 如果不是 则 关闭页面 重新打开
-		int username_id = intent.getIntExtra("circleId", 0);
-		if (username_id > 0) {
-			if (circleId == username_id)
-				super.onNewIntent(intent);
-			else {
-				finish();
+		String newchat_type = this.getIntent().getStringExtra("Chat_Type");
+		//如果是群聊
+	    if(newchat_type.equals(chat_type) && chat_type.equals(chat_type_group))
+	    {
+	    	//获取圈子di
+	    	int newcircleId = this.getIntent().getIntExtra("circleId", -1);
+	    	//如果当前圈子id相等 则进行页面重新初始化
+	    	if(newcircleId > 0 && newcircleId==circleId)
+	    	{
+	    		//如股票房间号不存在
+	    		if(roomId<0)
+	    		{
+	    			ishowStatus=true;
+	    			getRoomdId(circleId, formUser_id, toUser_id);
+	    		}
+	    	}else
+	    	{
+	    		super.onNewIntent(intent);
+	    		finish();
 				startActivity(intent);
-			}
-		}
-
+	    	}
+	    }else if(newchat_type.equals(chat_type) && chat_type.equals(chat_type_private))//如果是私聊
+	    {
+	    	int newtoUser_id = this.getIntent().getIntExtra("toUser_id", -1);
+	    	if(newtoUser_id>0 && newtoUser_id==toUser_id)
+	    	{
+	    		//如股票房间号不存在
+	    		if(roomId<0)
+	    		{
+	    			ishowStatus=true;
+	    			getRoomdId(circleId, formUser_id, toUser_id);
+	    		}
+	    	}else
+	    	{
+	    		super.onNewIntent(intent);
+	    		finish();
+				startActivity(intent);
+	    	}
+	    }
 	}
 
 	@Override
@@ -728,14 +759,14 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 		d.setBounds(0, 0, 50, 50);// 设置表情图片的显示大小
 		ImageSpan span = new ImageSpan(d, ImageSpan.ALIGN_BOTTOM);
 		ss.setSpan(span, 0, arg2.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-		mEditTextContent.getText().insert(mEditTextContent.getSelectionStart(),
-				ss);
+		mEditTextContent.getText().insert(mEditTextContent.getSelectionStart(),ss);
 	}
 
 	/*****
-	 * 设置商品信息
+	 * 设置商品信息(如果存在商品信息)
 	 * ***/
 	void setProduct() {
+		//判断是否传递了商品的信息
 		if (this.getIntent().getSerializableExtra("DATA") == null) {
 			chat_product_head_layout_include.setVisibility(View.GONE);
 			return;

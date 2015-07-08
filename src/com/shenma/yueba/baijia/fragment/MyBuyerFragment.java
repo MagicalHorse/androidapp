@@ -211,7 +211,7 @@ public class MyBuyerFragment extends Fragment {
 								}
 								if(currpage>=totalPage)
 								{
-									MyApplication.getInstance().showMessage(getActivity(), getActivity().getResources().getString(R.string.lastpagedata_str));
+									//MyApplication.getInstance().showMessage(getActivity(), getActivity().getResources().getString(R.string.lastpagedata_str));
 									baijia_contact_listview.setMode(Mode.PULL_FROM_START);
 								}else
 								{

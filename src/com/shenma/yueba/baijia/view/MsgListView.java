@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
-import android.os.SystemClock;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
@@ -17,17 +19,16 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.OnPullEventListener;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.State;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.shenma.yueba.ChatActivity;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.adapter.MsgAdapter;
-import com.shenma.yueba.baijia.modle.BaiJiaOrderListInfoBean;
-import com.shenma.yueba.baijia.modle.MsgBean;
 import com.shenma.yueba.baijia.modle.MsgListInfo;
 import com.shenma.yueba.baijia.modle.RequestMsgListInfoBean;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.HttpControl;
-import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
+import com.shenma.yueba.util.ToolsUtil;
 
 /**  
  * @author gyj  
@@ -40,6 +41,7 @@ public class MsgListView {
 	Activity activity;
 	LayoutInflater layoutInflater;
 	boolean showDialog=true;
+	boolean isfirstStatus=false;
 	// 当前页
 	int currpage = Constants.CURRPAGE_VALUE;
 	// 每页显示的条数
@@ -66,7 +68,7 @@ public class MsgListView {
 			layoutInflater=activity.getLayoutInflater();
 			initView();
 			initPullView();
-			requestFalshData();
+			firstData();
 		}
 		return view;
 	}
@@ -81,7 +83,20 @@ public class MsgListView {
 		pull_refresh_list=(PullToRefreshListView)view.findViewById(R.id.pull_refresh_list);
 		showloading_layout_view=(LinearLayout)view.findViewById(R.id.showloading_layout_view);
 		pull_refresh_list.setMode(Mode.BOTH);
-		 
+		pull_refresh_list.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,long arg3) {
+				MsgListInfo msgListInfo=mList.get(arg2-1);
+				Intent intent=new Intent(activity,ChatActivity.class);
+				intent.putExtra("Chat_Type", ChatActivity.chat_type_private);//类型 圈子 还是私聊
+				intent.putExtra("Chat_NAME",msgListInfo.getName());//名字
+				intent.putExtra("toUser_id",msgListInfo.getId());//touser_id
+				activity.startActivity(intent);
+			}
+		});
+		
+		
 		pull_refresh_list.setOnPullEventListener(new OnPullEventListener<ListView>() {
 
 			@Override
@@ -138,6 +153,7 @@ public class MsgListView {
 	 * 请求刷新数据
 	 * ***/
 	public void requestFalshData() {
+		isfirstStatus=true;
 		sendHttp(1, 0);
 	}
 	
@@ -150,13 +166,15 @@ public class MsgListView {
 	 * ***/
 	void sendHttp(final int page,final int type)
 	{
-		currpage=page;
-		ToolsUtil.showNoDataView(activity, false);
+		
+		ToolsUtil.showNoDataView(activity, view, false);
 		HttpControl httpControl=new HttpControl();
 		httpControl.GetBaijiaMessageList(page, pagesize, showDialog, new HttpCallBackInterface() {
 			
 			@Override
 			public void http_Success(Object obj) {
+				isfirstStatus=false;
+				currpage=page;
 				showDialog=false;
 				pull_refresh_list.onRefreshComplete();
 				if(obj!=null && obj instanceof RequestMsgListInfoBean)
@@ -166,7 +184,7 @@ public class MsgListView {
 					{
 						if(page==1)
 						{
-							ToolsUtil.showNoDataView(activity, true);
+							ToolsUtil.showNoDataView(activity, view, true);
 						}
 					}else
 					{
@@ -178,7 +196,7 @@ public class MsgListView {
 						   int totalPage = msgbean.getData().getTotalpaged();
 
 							if (currpage >= totalPage) {
-								MyApplication.getInstance().showMessage(activity, activity.getResources().getString(R.string.lastpagedata_str));
+								//MyApplication.getInstance().showMessage(activity, activity.getResources().getString(R.string.lastpagedata_str));
 								pull_refresh_list.setMode(Mode.PULL_FROM_START);
 							} else {
 								pull_refresh_list.setMode(Mode.BOTH);
@@ -196,7 +214,7 @@ public class MsgListView {
 				}else {
 					if(page==1)
 					{
-						ToolsUtil.showNoDataView(activity, true);
+						ToolsUtil.showNoDataView(activity, view,  true);
 					}
 					MyApplication.getInstance().showMessage(activity, "没有任何数据");
 				}
@@ -204,6 +222,7 @@ public class MsgListView {
 			
 			@Override
 			public void http_Fails(int error, String msg) {
+				isfirstStatus=false;
 				MyApplication.getInstance().showMessage(activity,msg);
 				pull_refresh_list.onRefreshComplete();
 			}
@@ -236,5 +255,14 @@ public class MsgListView {
 		if (msgAdapter != null) {
 			msgAdapter.notifyDataSetChanged();
 		}
+	}
+	
+	public void firstData()
+	{
+	   if(isfirstStatus)
+	   {
+		   return ;
+	   }
+	   requestFalshData();
 	}
 }
