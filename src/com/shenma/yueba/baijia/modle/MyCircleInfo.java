@@ -13,21 +13,36 @@ public class MyCircleInfo implements Serializable{
 	int Id;
 	String Name="";
 	String Logo="";//圈子头像
-	int MemberCount;//人数",
-    String Address="";//地址"
-
-	public int getMemberCount() {
-		return MemberCount;
+	int UnReadCount;//未读数
+    String UnReadMessage="";
+    String UnReadLastTime="";
+    String RoomId="";
+    
+	public int getUnReadCount() {
+		return UnReadCount;
 	}
-	public void setMemberCount(int memberCount) {
-		MemberCount = memberCount;
+	public void setUnReadCount(int unReadCount) {
+		UnReadCount = unReadCount;
 	}
-	public String getAddress() {
-		return Address;
+	public String getUnReadMessage() {
+		return UnReadMessage;
 	}
-	public void setAddress(String address) {
-		Address = address;
+	public void setUnReadMessage(String unReadMessage) {
+		UnReadMessage = unReadMessage;
 	}
+	public String getUnReadLastTime() {
+		return UnReadLastTime;
+	}
+	public void setUnReadLastTime(String unReadLastTime) {
+		UnReadLastTime = unReadLastTime;
+	}
+	public String getRoomId() {
+		return RoomId;
+	}
+	public void setRoomId(String roomId) {
+		RoomId = roomId;
+	}
+	
 	public String getLogo() {
 		return Logo;
 	}

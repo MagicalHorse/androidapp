@@ -33,7 +33,7 @@
         android:id="@+id/tv_circle_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="欧美高端女包"
+        android:text=""
         android:maxLines="2"
         android:singleLine="true"
         android:ellipsize="end"
@@ -46,7 +46,7 @@
         android:layout_height="wrap_content"
         android:singleLine="true"
         android:ellipsize="end"
-        android:text="人数4320"
+        android:text=""
         android:textSize="@dimen/textsize11sp" />
 
     <TextView
@@ -56,7 +56,7 @@
         android:layout_height="wrap_content"
         android:drawableLeft="@drawable/address"
         android:gravity="bottom"
-        android:text="王府井百货"
+        android:text=""
         android:ellipsize="end"
         android:textColor="#999999"
         android:textSize="@dimen/textsize10sp" />

@@ -65,9 +65,9 @@ public class BaiJiaMyCircleAdapter extends BaseAdapterWithUtil {
 		MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.nullToString(myCircleInfo.getLogo()), holder.iv_head,  MyApplication.getInstance().getDisplayImageOptions());
 		
 		holder.tv_product_name.setText(ToolsUtil.nullToString(myCircleInfo.getName()));
-		holder.tv_msg_count.setText(Integer.toString(myCircleInfo.getMemberCount()));
-		holder.tv_time.setText("");
-		holder.tv_msg.setText("");
+		holder.tv_msg_count.setText(Integer.toString(myCircleInfo.getUnReadCount()));
+		holder.tv_time.setText(myCircleInfo.getUnReadLastTime());
+		holder.tv_msg.setText(myCircleInfo.getUnReadMessage());
 		
 		return convertView;
 	}

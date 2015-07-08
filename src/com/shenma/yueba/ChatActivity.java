@@ -25,22 +25,17 @@ import im.form.RequestMessageBean;
 import im.form.RoomBean;
 import im.form.TextChatBean;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
 import roboguice.activity.RoboActivity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
+import android.database.Cursor;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
+import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.Spannable;
@@ -84,6 +79,7 @@ import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.NetUtils;
+import com.shenma.yueba.util.PhotoUtils;
 import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.util.SoftKeyboardUtil;
 import com.shenma.yueba.util.ToolsUtil;
@@ -96,8 +92,6 @@ import com.shenma.yueba.view.faceview.FaceView.OnChickCallback;
  */
 public class ChatActivity extends RoboActivity implements OnClickListener,
 		OnChickCallback, OnScrollListener, SocketManagerListener {
-	public static final int Result_code_Pic = 200;// 打开图片库
-	public static final int Result_code_camera = 300;// 打开照相机
 	public static final int Result_code_link = 400;// 链接
 	public static final int Result_code_collection = 500;// 收藏
 	LinkedList<BaseChatBean> bean_list = new LinkedList<BaseChatBean>();// 消息列表
@@ -132,6 +126,9 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 	String usericon = "";
 	RequestRoomInfo requestRoomInfo;
     String chat_name="";
+    TextView tv_top_title;
+    String littlePicPath;
+	String littlePicPath_cache;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -140,7 +137,6 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 		userName = SharedUtil.getStringPerfernece(getApplicationContext(),
 				SharedUtil.user_names);
 		usericon = SharedUtil.getStringPerfernece(this, SharedUtil.user_logo);
-		initView();
 		if(this.getIntent().getStringExtra("Chat_NAME")!=null)//名字
 		{
 			chat_name=this.getIntent().getStringExtra("Chat_NAME");
@@ -155,15 +151,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 		chat_type = this.getIntent().getStringExtra("Chat_Type");
 		if (chat_type.endsWith(chat_type_group)) {
 			circleId = this.getIntent().getIntExtra("circleId", -1);
-			// 群聊
-			if (circleId > 0) {
-				// 显示设置
-				tv_top_right.setVisibility(View.VISIBLE);
-			} else {
-				// 隐藏设置
-				tv_top_right.setVisibility(View.GONE);
-
-			}
+			
 
 		} else if (chat_type.endsWith(chat_type_private)) {
 
@@ -176,8 +164,8 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 			}
 
 		}
-		formUser_id = Integer.parseInt(SharedUtil.getStringPerfernece(this,
-				SharedUtil.user_id));
+		initView();
+		formUser_id = Integer.parseInt(SharedUtil.getStringPerfernece(this,SharedUtil.user_id));
 		// 设置购买商品信息 视图
 		setProduct();
 		// 获取房间号
@@ -190,9 +178,10 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 	 * initView
 	 */
 	protected void initView() {
-		TextView tv_top_title=(TextView)findViewById(R.id.tv_top_title);
+		tv_top_title=(TextView)findViewById(R.id.tv_top_title);
 		tv_top_title.setText(chat_name);
 		tv_top_title.setVisibility(View.VISIBLE);
+		FontManager.changeFonts(this, tv_top_title);
 		chat_product_head_layout_include = (RelativeLayout) findViewById(R.id.chat_product_head_layout_include);
 		tv_top_right = (TextView) findViewById(R.id.tv_top_right);
 		tv_top_right.setOnClickListener(this);
@@ -268,6 +257,16 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 
 			}
 		});
+		
+		// 群聊
+					if (circleId > 0) {
+						// 显示设置
+						tv_top_right.setVisibility(View.VISIBLE);
+					} else {
+						// 隐藏设置
+						tv_top_right.setVisibility(View.GONE);
+
+					}
 
 	}
 
@@ -479,11 +478,14 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		switch (requestCode) {
-		case Result_code_camera:
-			cameraCallBack(data);// 相机回调
+		case PhotoUtils.INTENT_REQUEST_CODE_CAMERA:
+			cameraCallBack(data,resultCode);// 相机回调
 			break;
-		case Result_code_Pic:
-			picCallBack(data);// 图片回调
+		case PhotoUtils.INTENT_REQUEST_CODE_ALBUM:
+			picCallBack(data,resultCode);// 图片回调
+			break;
+		case PhotoUtils.INTENT_REQUEST_CODE_CROP:
+			clipCallBack(data, resultCode);
 			break;
 		case Result_code_link:// 链接回调
 			linkOrCollectCallBack(data);
@@ -498,84 +500,85 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 	 * 打开照相机并回去返回的图片
 	 * **/
 	void openCamera() {
-		Intent intent = new Intent();
+		/*Intent intent = new Intent();
 		intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
-		startActivityForResult(intent, Result_code_camera);
+		startActivityForResult(intent, Result_code_camera);*/
+		if (ToolsUtil.isAvailableSpace(ChatActivity.this)) {
+			littlePicPath = PhotoUtils.takePicture(ChatActivity.this);
+		}
 
 	}
 
 	/****
 	 * 相机回调
 	 * **/
-	void cameraCallBack(Intent data) {
-		if (data != null) {
-			Bundle bundle = data.getExtras();
-			Bitmap bitmap = (Bitmap) bundle.get("data");// 获取相机返回的数据，并转换为Bitmap图片格式
-			if (bitmap != null) {
-				//获取存储地址
-			    String imageLocalPath=getSaveImageAddress(bitmap);
-				upLoadPic(imageLocalPath);
+	void cameraCallBack(Intent data,int resultCode ) {
+		if (resultCode == RESULT_OK) {
+			if (littlePicPath != null) {
+				upLoadPic(littlePicPath);
 			}
-			
 		}
 	}
 	
-	
-	/*****
-	 * 获取图片存储地址
-	 * ****/
-	String getSaveImageAddress(Bitmap bitmap)
-	{
-		long filename=new Date().getTime();
-        String path=Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getPath()+"yueba/head/";
-        String allPath=path+filename+".jpg";
-        File pathfile=new File(path);
-        if(!pathfile.exists())
-        {
-        	pathfile.mkdirs();
-        }
-		File outputImage = new File(allPath);
-		try {
-			if(outputImage.exists()) {
- 				outputImage.delete();
-			}
-			FileOutputStream fileout=new FileOutputStream(outputImage);
-			bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileout);
-		} catch(IOException e) {
-			e.printStackTrace();
-			return null;
-		}
-		return allPath;
-	}
 
 	/****
 	 * 打开照图片
 	 * **/
 	void openPicture() {
-		Intent intent;
-		if (Build.VERSION.SDK_INT < 19) {
-			intent = new Intent(Intent.ACTION_GET_CONTENT);
-			intent.setType("image/*");
-
-		} else {
-			intent = new Intent(
-					Intent.ACTION_PICK,
-					android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+		if (ToolsUtil.isAvailableSpace(ChatActivity.this)) {
+			PhotoUtils.selectPhoto(ChatActivity.this);
 		}
-		startActivityForResult(intent, Result_code_Pic);
 	}
 
+	/**
+	 * 裁剪返回
+	 * */
+	void clipCallBack(Intent data,int resultCode)
+	{
+		if (resultCode == RESULT_OK) {
+			if(littlePicPath_cache!=null)
+			{
+				upLoadPic(littlePicPath_cache);
+			}
+
+		}
+	}
+	
+	
 	/****
 	 * 图片回调
 	 * **/
-	void picCallBack(Intent data) {
-		if (data != null) {
-			Bundle bundle = data.getExtras();
-			Bitmap bitmap = (Bitmap) bundle.get("data");// 获取相机返回的数据，并转换为Bitmap图片格式
-			if (bitmap != null) {
-				//获取存储地址
-			    String imageLocalPath=getSaveImageAddress(bitmap);
-				upLoadPic(imageLocalPath);
+	void picCallBack(Intent data,int resultCode) {
+		// 调用相册返回
+		if (resultCode == RESULT_OK) {
+			if (data.getData() == null) {
+				return;
+			}
+			Uri uri = data.getData();
+			String[] proj = { MediaStore.Images.Media.DATA };
+			Cursor cursor = managedQuery(uri, proj, null, null, null);
+			if (cursor != null) {
+				int column_index = cursor
+						.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+				if (cursor.getCount() > 0 && cursor.moveToFirst()) {
+					littlePicPath = cursor.getString(column_index);
+					if(littlePicPath!=null)
+					{
+						upLoadPic(littlePicPath);
+					}
+					/*// 裁剪之后存储的路径
+					littlePicPath_cache = Environment
+							.getExternalStorageDirectory().toString()
+							+ File.separator
+							+ UUID.randomUUID().toString()
+							+ "littlePic.jpg";
+					// 裁剪图片
+					startActivityForResult(PhotoUtils.getZoomIntent(Uri
+							.fromFile(new File(littlePicPath)), Uri
+							.fromFile(FileUtils
+									.createNewFile(littlePicPath_cache))),
+							PhotoUtils.INTENT_REQUEST_CODE_CROP);*/
+				}
 			}
 		}
 	}
@@ -619,7 +622,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
    * ***/
   void upLoadPic(String imageLocalPath)
   {
-	  if(imageLocalPath==null)
+	  if(imageLocalPath==null ||imageLocalPath.equals("") )
 	  {
 		  return;
 	  }
@@ -627,16 +630,31 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 	  baseChatBean.setListener(new PicChatBean_Listener() {
 		
 		@Override
-		public void pic_showMsg(String msg) {
-			MyApplication.getInstance().showMessage(ChatActivity.this, msg);
+		public void pic_showMsg(final String msg) {
+			ChatActivity.this.runOnUiThread(new Runnable() {
+				
+				@Override
+				public void run() {
+					MyApplication.getInstance().showMessage(ChatActivity.this, msg);
+				}
+			});
+			
 		}
 		
 		@Override
 		public void pic_notifaction() {
-			if(chattingAdapter!=null)
-			{
-				chattingAdapter.notifyDataSetChanged();
-			}
+			ChatActivity.this.runOnUiThread(new Runnable() {
+				
+				@Override
+				public void run() {
+					if(chattingAdapter!=null)
+					{
+						chattingAdapter.notifyDataSetChanged();
+						//chat_list.invalidate();
+					}
+				}
+			});
+			
 		}
 	});
 	  

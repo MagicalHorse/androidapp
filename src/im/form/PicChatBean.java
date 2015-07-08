@@ -3,6 +3,7 @@ package im.form;
 import im.control.SocketManger;
 import im.control.SocketManger.SocketManagerListener;
 import android.content.Context;
+import android.os.SystemClock;
 
 import com.alibaba.sdk.android.oss.callback.SaveCallback;
 import com.alibaba.sdk.android.oss.model.OSSException;
@@ -21,7 +22,7 @@ public class PicChatBean extends BaseChatBean{
 int progress=0;//上传进度
 int maxProgress=0;//总进度
 boolean isUpload=false;//是否上传或下载中
-boolean isSuccess=false;//是否完成
+boolean isSuccess=true;//是否完成
 boolean isFails=false;//是否上传失败
 String picaddress="";//本地图片的地址
 String ali_content;//阿里云返回的数据
@@ -106,6 +107,10 @@ public void setPicaddress(String picaddress) {
 		content=url;
 		MessageBean bean=getMessageBean();
 		SocketManger.the(sockerManagerlistener).sendMsg(bean);
+		if(listener!=null)
+		{
+			listener.pic_notifaction();
+		}
 	}
 	
 	
@@ -128,6 +133,11 @@ public void setPicaddress(String picaddress) {
 						String url=bean.getImageurl();
 						//发送数据通知
 						sendIm(url);
+						isSuccess=true;
+						if(listener!=null)
+						{
+							listener.pic_notifaction();
+						}
 					}else
 					{
 						http_Fails(500, "上传成功获取地址失败");
@@ -145,7 +155,9 @@ public void setPicaddress(String picaddress) {
 		}, context);
 	}
 	
-	
+	/****
+	 * 上传阿里
+	 * **/
 	void UploadAlI()
 	{
 		HttpControl httpControl=new HttpControl();
@@ -157,6 +169,7 @@ public void setPicaddress(String picaddress) {
 				isFails=false;
 				progress=arg1;
 				maxProgress=arg2;
+				isSuccess=false;
 				isUpload=true;
 				if(listener!=null)
 				{
@@ -180,7 +193,7 @@ public void setPicaddress(String picaddress) {
 				isFails=false;
 				ali_content=arg0;
 				isUpload=false;
-				isSuccess=true;
+				content=arg0;
 				if(listener!=null)
 				{
 					listener.pic_notifaction();
