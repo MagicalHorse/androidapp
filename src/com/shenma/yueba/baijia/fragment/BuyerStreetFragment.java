@@ -299,7 +299,7 @@ public class BuyerStreetFragment extends Fragment {
 								int totalPage = data.getTotalpaged();
 								if (currpage >= totalPage) {
 									pulltorefreshscrollview.setMode(Mode.PULL_FROM_START);
-									MyApplication.getInstance().showMessage(getActivity(), getActivity().getResources().getString(R.string.lastpagedata_str));
+									//MyApplication.getInstance().showMessage(getActivity(), getActivity().getResources().getString(R.string.lastpagedata_str));
 								} else {
 									pulltorefreshscrollview.setMode(Mode.BOTH);
 								}

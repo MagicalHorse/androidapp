@@ -252,7 +252,7 @@ public class BuyerFragment extends BaseFragment{
 						}
 						int totalPage = bean.getData().getTotalpaged();
 						if (currPage >= totalPage) {
-							MyApplication.getInstance().showMessage(getActivity(), getActivity().getResources().getString(R.string.lastpagedata_str));
+							//MyApplication.getInstance().showMessage(getActivity(), getActivity().getResources().getString(R.string.lastpagedata_str));
 							pull_refresh_list.setMode(Mode.PULL_FROM_START);
 						} else {
 							pull_refresh_list.setMode(Mode.BOTH);

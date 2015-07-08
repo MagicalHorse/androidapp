@@ -199,7 +199,7 @@ public class BaiJiaOrderListFragment extends Fragment implements
 							   int totalPage = bean.getTotalpaged();
 
 								if (currpage >= totalPage) {
-									MyApplication.getInstance().showMessage(getActivity(), getActivity().getResources().getString(R.string.lastpagedata_str));
+									//MyApplication.getInstance().showMessage(getActivity(), getActivity().getResources().getString(R.string.lastpagedata_str));
 									pull_refresh_list.setMode(Mode.PULL_FROM_START);
 								} else {
 									pull_refresh_list.setMode(Mode.BOTH);

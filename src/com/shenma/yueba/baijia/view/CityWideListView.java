@@ -202,7 +202,7 @@ public class CityWideListView extends BaseView{
 						}
 						int totalPage = bean.getData().getTotalpaged();
 						if (currPage >= totalPage) {
-							MyApplication.getInstance().showMessage(activity, activity.getResources().getString(R.string.lastpagedata_str));
+							//MyApplication.getInstance().showMessage(activity, activity.getResources().getString(R.string.lastpagedata_str));
 							pull_refresh_list.setMode(Mode.PULL_FROM_START);
 						} else {
 							pull_refresh_list.setMode(Mode.BOTH);

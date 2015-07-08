@@ -651,7 +651,7 @@ public class HttpConstants {
 	/*****
 	 * 获取败家消息列表
 	 * **/
-	public static String METHOD_GETMESSAGELIST = Circle+ "GetMessageList";
+	public static String METHOD_GETMESSAGELIST = Circle+ "GetMessagesList";
 	
 	/*****
 	 *根据品牌名称检索品牌

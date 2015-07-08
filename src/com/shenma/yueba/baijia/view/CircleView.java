@@ -287,7 +287,7 @@ public class CircleView extends BaseView{
 							   int totalPage = bean.getTotalpaged();
 								if (currPage >= totalPage) {
 									baijia_quanzi_layout_tanb1_gridbview.setMode(Mode.PULL_FROM_START);
-									MyApplication.getInstance().showMessage(activity, activity.getResources().getString(R.string.lastpagedata_str));
+									//MyApplication.getInstance().showMessage(activity, activity.getResources().getString(R.string.lastpagedata_str));
 								} else {
 									baijia_quanzi_layout_tanb1_gridbview.setMode(Mode.BOTH);
 								}

@@ -233,7 +233,7 @@ public class BaiJiaShareDataActivity extends BaseActivityWithTopView{
 	{
     	int userID=Integer.parseInt(SharedUtil.getStringPerfernece(this, SharedUtil.user_id));
     	ToolsUtil.showNoDataView(BaiJiaShareDataActivity.this, false);
-		httpControl.GetBaijiaGetUserProductList(userID,page, pageSize, 0, false, new HttpCallBackInterface() {
+		httpControl.GetBaijiaGetUserProductList(userID,page, pageSize, 0, showDialog, new HttpCallBackInterface() {
 			
 			@Override
 			public void http_Success(Object obj) {
@@ -270,7 +270,7 @@ public class BaiJiaShareDataActivity extends BaseActivityWithTopView{
 					int totalPage = bean.getData().getTotalpaged();
 					if (currPage >= totalPage) {
 						sharedata_layout_pulltorefreshlistview.setMode(Mode.PULL_FROM_START);
-						MyApplication.getInstance().showMessage(BaiJiaShareDataActivity.this, BaiJiaShareDataActivity.this.getResources().getString(R.string.lastpagedata_str));
+						//MyApplication.getInstance().showMessage(BaiJiaShareDataActivity.this, BaiJiaShareDataActivity.this.getResources().getString(R.string.lastpagedata_str));
 					} else {
 						sharedata_layout_pulltorefreshlistview.setMode(Mode.BOTH);
 					}

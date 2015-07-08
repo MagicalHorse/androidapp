@@ -47,6 +47,7 @@ import com.shenma.yueba.baijia.modle.RequestBrandSearchInfoBean;
 import com.shenma.yueba.baijia.modle.RequestComputeAmountInfoBean;
 import com.shenma.yueba.baijia.modle.RequestCreatOrderInfoBean;
 import com.shenma.yueba.baijia.modle.RequestImMessageInfoBean;
+import com.shenma.yueba.baijia.modle.RequestMsgListInfoBean;
 import com.shenma.yueba.baijia.modle.RequestMyCircleInfoBean;
 import com.shenma.yueba.baijia.modle.RequestMyFavoriteProductListInfoBean;
 import com.shenma.yueba.baijia.modle.RequestMyInfoBean;
@@ -1611,7 +1612,7 @@ public class HttpControl {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put(Constants.PAGE, Integer.toString(page));
 		map.put(Constants.PAGESIZE, Integer.toString(pagesize));
-		BasehttpSend(map, context, HttpConstants.METHOD_GETMESSAGELIST,httpCallBack, BaseRequest.class, showDialog,false);
+		BasehttpSend(map, context, HttpConstants.METHOD_GETMESSAGELIST,httpCallBack, RequestMsgListInfoBean.class, showDialog,false);
 	}
 	
 	

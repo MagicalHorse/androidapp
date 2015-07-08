@@ -114,6 +114,14 @@ public class MessageFragmentForYangJia extends BaseFragment implements OnClickLi
 			 * 页面跳转完成后调用的方法
 			 */
 			public void onPageSelected(int arg0) {
+				switch(arg0)
+				{
+				case 0:
+					msgListFragment.firstData();
+					break;
+				case 1:
+					break;
+				}
 				if (arg0 == 1) {
 					iv_cursor_right.setVisibility(View.VISIBLE);
 					iv_cursor_left.setVisibility(View.INVISIBLE);
@@ -127,8 +135,7 @@ public class MessageFragmentForYangJia extends BaseFragment implements OnClickLi
 
 			@Override
 			public void onPageScrollStateChanged(int arg0) {
-				// TODO Auto-generated method stub
-
+				
 			}
 		});
 
