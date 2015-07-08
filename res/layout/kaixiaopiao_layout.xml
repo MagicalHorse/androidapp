@@ -20,9 +20,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical" >
 
-                <View
-                    style="@style/style_horizontal_line"
-                    android:layout_marginTop="15dip" />
+                <View style="@style/style_horizontal_line" />
 
                 <View style="@style/style_horizontal_line" />
 
@@ -61,9 +59,10 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/help" />
+                        android:background="@drawable/tanhao" />
 
                     <TextView
+                        android:layout_marginLeft="5dip"
                         android:id="@+id/tv_tishi"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
@@ -76,7 +75,7 @@
     <TextView
         android:id="@+id/tv_facetoface_product"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dip"
         android:layout_alignParentBottom="true"
         android:background="@color/white"
         android:gravity="center"

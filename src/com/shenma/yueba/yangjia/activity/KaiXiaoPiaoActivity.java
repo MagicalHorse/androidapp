@@ -55,8 +55,8 @@ public class KaiXiaoPiaoActivity extends BaseActivityWithTopView implements
 		tv_tishi = (TextView) findViewById(R.id.tv_tishi);
 		tv_facetoface_product = (TextView) findViewById(R.id.tv_facetoface_product);
 		tv_facetoface_product.setOnClickListener(this);
-		FontManager.changeFonts(this, et_product_number, et_product_price,
-				tv_tishi);
+		FontManager.changeFonts(this, tv_top_title,et_product_number, et_product_price,
+				tv_tishi,tv_facetoface_product);
 	}
 
 	@Override

@@ -5,14 +5,14 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:gravity="center"
-    android:paddingBottom="@dimen/shop_main_iconwidth80_dimen"
+    android:paddingBottom="15dip"
     android:paddingLeft="@dimen/margin_left_and_right"
     android:paddingRight="@dimen/margin_left_and_right"
-    android:paddingTop="@dimen/shop_main_iconwidth80_dimen" >
+    android:paddingTop="15dip" >
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="@dimen/shop_main_lineheight10_dimen"
         android:background="@color/color_lightgrey"
         android:padding="10dip" >
@@ -57,14 +57,12 @@
         <ImageView
             android:id="@+id/qzcodeshare_layout_content_imageview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_above="@+id/qzcodeshare_layout_title_textview"
             android:layout_below="@id/qzcodeshare_layouyt_customview"
             android:layout_centerHorizontal="true"
-            android:layout_margin="@dimen/shop_main_width15_dimen"
-            android:layout_marginTop="@dimen/shop_main_width15_dimen"
+            android:padding="5dip"
             android:background="@color/white"
-            android:padding="@dimen/shop_main_width15_dimen"
             android:src="@null" />
 
         <TextView

@@ -280,7 +280,7 @@ public class ProductManagerFragmentForOnLineAdapter extends BaseAdapterWithUtil 
 
 			@Override
 			public void http_Fails(int error, String msg) {
-			
+				Toast.makeText(ctx, msg, 1000).show();
 
 			}
 		}, ctx, true, true);

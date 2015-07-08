@@ -127,15 +127,6 @@ public final class MainActivityForYangJia extends FragmentActivity {
 			mTabHost.addTab(tabSpec, fragmentArray[i], null);
 		}
 		mTabHost.getTabWidget().setDividerDrawable(null);  //去掉tab之间的竖线
-		mTabHost.setOnTabChangedListener(new OnTabChangeListener() {
-			
-			public void onTabChanged(String tabId) {
-				Toast.makeText(MainActivityForYangJia.this,"切换了", 1000).show();
-				
-			}
-		});
-		
-		
 	}
 	
 /**
