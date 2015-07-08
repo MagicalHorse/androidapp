@@ -85,6 +85,7 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 	private int maxSize = 100;
 	private String imageEndStr = "_240x0.jpg";
 	private boolean onePicLoadFinished, twoPicLoadFinished, ThreePicFinished;
+	private String productId;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -100,10 +101,17 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 				"tagListBean");
 		RequestUploadProductDataBean detailBean = (RequestUploadProductDataBean) getIntent()
 				.getSerializableExtra("data");
+		productId = getIntent().getStringExtra("id");
+		if(TextUtils.isEmpty(productId) && TextUtils.isEmpty(MyApplication.getInstance().getPublishUtil().getBean().getId())){//说明是修改商品
+			tv_publish.setText("发布");
+		}else{
+			tv_publish.setText("修改");
+		}
 		// 修改商品
 		if (detailBean != null) {
 			FileUtils.delAllFile(FileUtils.getRootPath() + "/tagPic/");
 			MyApplication.getInstance().getPublishUtil().setBean(detailBean);
+			MyApplication.getInstance().getPublishUtil().getBean().setId(productId);
 			List<ProductImagesBean> imagesList = MyApplication.getInstance()
 					.getPublishUtil().getBean().getImages();
 			if (imagesList != null && imagesList.size() > 0) {
@@ -323,26 +331,52 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 			}
 		}
 		MyApplication.getInstance().getPublishUtil().getBean().setImages(cacheImageList);
-		httpControl.createBuyerProductInfo(MyApplication.getInstance()
-				.getPublishUtil().getBean(), new HttpCallBackInterface() {
-			@Override
-			public void http_Success(Object obj) {
-				Toast.makeText(mContext, "发布成功", 1000).show();
-//				FileUtils.delAllFile(FileUtils.getRootPath() + "/tagPic/");
-				PublishProductActivity.this.finish();
-				MyApplication.getInstance().getPublishUtil().setBean(null);
-				MyApplication.getInstance().getPublishUtil().setIndex("0");
-				MyApplication.getInstance().getPublishUtil().setFrom("");
-				MyApplication.getInstance().getPublishUtil().setUri(null);
-				MyApplication.getInstance().finishActivity(
-						EditPicActivity.class);
-			}
+		
+		String id = MyApplication.getInstance().getPublishUtil().getBean().getId();
+		if(TextUtils.isEmpty(id)){
+			httpControl.createBuyerProductInfo(MyApplication.getInstance()
+					.getPublishUtil().getBean(), new HttpCallBackInterface() {
+				@Override
+				public void http_Success(Object obj) {
+					Toast.makeText(mContext, "发布成功", 1000).show();
+//					FileUtils.delAllFile(FileUtils.getRootPath() + "/tagPic/");
+					PublishProductActivity.this.finish();
+					MyApplication.getInstance().getPublishUtil().setBean(null);
+					MyApplication.getInstance().getPublishUtil().setIndex("0");
+					MyApplication.getInstance().getPublishUtil().setFrom("");
+					MyApplication.getInstance().getPublishUtil().setUri(null);
+					MyApplication.getInstance().finishActivity(
+							EditPicActivity.class);
+				}
 
-			@Override
-			public void http_Fails(int error, String msg) {
-				Toast.makeText(mContext, msg, 1000).show();
-			}
-		}, PublishProductActivity.this);
+				@Override
+				public void http_Fails(int error, String msg) {
+					Toast.makeText(mContext, msg, 1000).show();
+				}
+			}, PublishProductActivity.this);
+		}else{
+			httpControl.updateBuyerProductInfo(MyApplication.getInstance()
+					.getPublishUtil().getBean(), new HttpCallBackInterface() {
+				@Override
+				public void http_Success(Object obj) {
+					Toast.makeText(mContext, "修改成功", 1000).show();
+//					FileUtils.delAllFile(FileUtils.getRootPath() + "/tagPic/");
+					PublishProductActivity.this.finish();
+					MyApplication.getInstance().getPublishUtil().setBean(null);
+					MyApplication.getInstance().getPublishUtil().setIndex("0");
+					MyApplication.getInstance().getPublishUtil().setFrom("");
+					MyApplication.getInstance().getPublishUtil().setUri(null);
+					MyApplication.getInstance().finishActivity(
+							EditPicActivity.class);
+				}
+				@Override
+				public void http_Fails(int error, String msg) {
+					Toast.makeText(mContext, msg, 1000).show();
+				}
+			}, PublishProductActivity.this);
+			
+		}
+		
 	}
 
 	@Override
@@ -548,7 +582,7 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 						MyApplication.getInstance().getPublishUtil().getBean()
 								.getImages().get(2).setImageUrl(imageName3);
 					}
-					MyApplication.getInstance().getPublishUtil().setBean(null);
+//					MyApplication.getInstance().getPublishUtil().setBean(null);
 					runOnUiThread(new Runnable() {
 						public void run() {
 							publishProduct();

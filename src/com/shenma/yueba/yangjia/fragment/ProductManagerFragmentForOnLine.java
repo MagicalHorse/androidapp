@@ -148,8 +148,8 @@ public class ProductManagerFragmentForOnLine extends BaseFragment implements Ref
 		            }, 100);
 						BuyerProductManagerListBack bean = (BuyerProductManagerListBack) obj;
 						if (isRefresh) {
+							mList.clear();
 							if(bean.getData().getItems()!=null && bean.getData().getItems().size()>0){
-								mList.clear();
 								mList.addAll(bean.getData().getItems());
 							}else{
 								tv_nodata.setVisibility(View.VISIBLE);
