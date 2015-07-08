@@ -654,6 +654,11 @@ public class HttpConstants {
 	public static String METHOD_GETMESSAGELIST = Circle+ "GetMessagesList";
 	
 	/*****
+	 * 获取用户动态
+	 * **/
+	public static String METHOD_GETUSERDYNAMIC = Circle+ "UserDynamic";
+	
+	/*****
 	 *根据品牌名称检索品牌
 	 * **/
 	public static String METHOD_SEARCH = SEARCH+ "Search";

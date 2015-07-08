@@ -67,6 +67,8 @@ public class MessageFragmentForYangJia extends BaseFragment implements OnClickLi
 		return view;
 	}
 
+	
+	
 	private void initViewPager() {
 		viewpager_circle.setAdapter(myFragmentPagerAdapter);
 		viewpager_circle.setCurrentItem(0);
@@ -120,6 +122,7 @@ public class MessageFragmentForYangJia extends BaseFragment implements OnClickLi
 					msgListFragment.firstData();
 					break;
 				case 1:
+					dynamicFragment.firstData();
 					break;
 				}
 				if (arg0 == 1) {

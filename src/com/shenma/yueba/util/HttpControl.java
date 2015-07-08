@@ -58,6 +58,7 @@ import com.shenma.yueba.baijia.modle.RequestTuiJianCircleInfoBean;
 import com.shenma.yueba.baijia.modle.RequestUploadChatImageInfoBean;
 import com.shenma.yueba.baijia.modle.RequestUploadProductDataBean;
 import com.shenma.yueba.baijia.modle.RequestUploadProductInfoBean;
+import com.shenma.yueba.baijia.modle.RequestUserDynamicInfoBean;
 import com.shenma.yueba.baijia.modle.RequestUserInfoBean;
 import com.shenma.yueba.baijia.modle.ResponseUploadProductInfoBean;
 import com.shenma.yueba.baijia.modle.StoreListBackBean;
@@ -1591,7 +1592,18 @@ public class HttpControl {
 		BasehttpSend(map, context, HttpConstants.METHOD_GETMESSAGELIST,httpCallBack, RequestMsgListInfoBean.class, showDialog,false);
 	}
 	
-	
+	/**
+	 *获取用户动态
+	 * @param page int 当前页
+     *  @param pagesize int 页大小
+     * @return void
+	 * **/
+	public void GetBaijiaUserDynamic(int page,int pagesize,boolean showDialog, final HttpCallBackInterface httpCallBack,Context context) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put(Constants.PAGE, Integer.toString(page));
+		map.put(Constants.PAGESIZE, Integer.toString(pagesize));
+		BasehttpSend(map, context, HttpConstants.METHOD_GETUSERDYNAMIC,httpCallBack, RequestUserDynamicInfoBean.class, showDialog,false);
+	}
 	
 	
 	/**

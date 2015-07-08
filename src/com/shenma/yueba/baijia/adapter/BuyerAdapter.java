@@ -174,6 +174,10 @@ public class BuyerAdapter extends BaseAdapter{
 		//下载买家头像
 		initPic(productsInfoBean.getBuyerLogo(), holder.customImage,R.drawable.test002);
 		ProductPicInfoBean productPicInfoBean = productsInfoBean.getProductPic();
+		if(productPicInfoBean==null)
+		{
+			productPicInfoBean=new ProductPicInfoBean();
+		}
 		//发布时间
 		holder.baijia_tab1_item_time_textview.setText(ToolsUtil.nullToString(productsInfoBean.getCreateTime()));
 		//产品描述
@@ -189,9 +193,10 @@ public class BuyerAdapter extends BaseAdapter{
 			holder.buyersteetfragment_item_footer_linearlyout.setVisibility(View.VISIBLE);
 			holder.buyersteetfragment_item_footer_linearlyout_content_textview.setText(ToolsUtil.nullToString(productsInfoBean.getPromotion().getDescriptionText()));
 		}
-		
+		String pic_name=productPicInfoBean.getName();
+		Log.i("TAG", "pic_name="+pic_name);
 		//加载商品图片
-		initPic(ToolsUtil.getImage(productPicInfoBean.getName(), 640, 0), holder.baijia_tab1_item_productcontent_imageview, R.drawable.default_pic);
+		initPic(ToolsUtil.getImage(ToolsUtil.nullToString(pic_name), 640, 0), holder.baijia_tab1_item_productcontent_imageview, R.drawable.default_pic);
 		LikeUsersInfoBean userinfo=productsInfoBean.getLikeUsers();
 		if(userinfo!=null && userinfo.getUsers()!=null)
 		{

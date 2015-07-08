@@ -2,7 +2,6 @@ package com.shenma.yueba.baijia.fragment;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -17,14 +16,13 @@ import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.ShopMainActivity.PubuliuFragmentListener;
 import com.shenma.yueba.baijia.modle.MyFavoriteProductListInfo;
 import com.shenma.yueba.baijia.modle.MyFavoriteProductListInfoBean;
-import com.shenma.yueba.baijia.modle.MyFavoriteProductListPic;
 import com.shenma.yueba.baijia.modle.RequestMyFavoriteProductListInfoBean;
 import com.shenma.yueba.baijia.view.PubuliuManager;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.HttpControl;
-import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.ToolsUtil;
+import com.umeng.socialize.utils.Log;
 
 /**
  * @author gyj
@@ -40,12 +38,11 @@ public class ShopPuBuliuFragment extends Fragment implements
 	View parentView;
 	PubuliuManager pm;
 	HttpControl httpControl = new HttpControl();
-	int Filter;
+	int Filter;//int 0:全部商品,1:上新商品 2:我收藏的商品（用于买家显示）
 	int userID;
 	List<MyFavoriteProductListInfo> item = new ArrayList<MyFavoriteProductListInfo>();
 	/*****
-	 * @param Filter
-	 *            int 0:刷新 1：加载
+	 * @param Filter int 0:全部商品,1:上新商品
 	 * ***/
 	public ShopPuBuliuFragment(int Filter,int userID) {
 		this.Filter = Filter;
@@ -80,17 +77,38 @@ public class ShopPuBuliuFragment extends Fragment implements
 	@Override
 	public void onPuBuliuRefersh() {
 		refreshLoading();
-		sendHttp(1, 0);
+		switch(Filter)
+		{
+		case 0:
+		case 1:
+			sendHttp(1, 0);
+			break;
+		case 2:
+			sendMyCollectHttp(1, 0);
+			break;
+		}
+		
 	}
 
 	@Override
 	public void onPuBuliuaddData() {
 		refreshLoading();
-		sendHttp(currPage, 1);
+		
+		switch(Filter)
+		{
+		case 0:
+		case 1:
+			sendHttp(currPage, 1);
+			break;
+		case 2:
+			sendMyCollectHttp(currPage, 1);
+			break;
+		}
+		
 	}
 
 	/******
-	 * 访问网络
+	 * 访问网络获取 全部商品或上新商品
 	 * 
 	 * @param page
 	 *            访问的页数
@@ -144,7 +162,8 @@ public class ShopPuBuliuFragment extends Fragment implements
 			}
 		}, getActivity());
 	}
-
+	
+	
 	/***
 	 * 刷新数据完成
 	 * ***/
@@ -215,5 +234,61 @@ public class ShopPuBuliuFragment extends Fragment implements
 		 ((PullToRefreshScrollView)v).setRefreshing(); 
 		 }*/
 		 
+	}
+	
+	
+	
+	/***
+     * 加载数据获取我收藏的商品
+     * @param page int 访问页
+     * @param type int 0: 刷新  1:加载更多
+     * **/
+    void sendMyCollectHttp(final int page,final int type)
+	{
+    	ToolsUtil.showNoDataView(getActivity(), false);
+    	Log.i("TAG", "currpage="+page+"   pagesize="+pageSize);
+    	httpControl.getMyFavoriteProductList(page, pageSize, false, new HttpCallBackInterface() {
+			
+			@Override
+			public void http_Success(Object obj) {
+				refreshComplete();
+				if(obj==null || !(obj instanceof RequestMyFavoriteProductListInfoBean) || ((RequestMyFavoriteProductListInfoBean)obj).getData()==null)
+				{
+					if(page==1)
+					{
+						ToolsUtil.showNoDataView(getActivity(), true);
+					}
+					return;
+				}else
+				{
+					RequestMyFavoriteProductListInfoBean bean=(RequestMyFavoriteProductListInfoBean)obj;
+					MyFavoriteProductListInfoBean myFavoriteProductListInfoBean=bean.getData();
+					currPage=myFavoriteProductListInfoBean.getPageindex();
+				    if(page==1)
+				    {
+				    	if(myFavoriteProductListInfoBean.getItems()==null || myFavoriteProductListInfoBean.getItems().size()==0)
+				    	{
+				    		ToolsUtil.showNoDataView(getActivity(), true);
+				    	}
+				    }
+					
+				switch(type)
+				{
+				case 0:
+					onRefresh(myFavoriteProductListInfoBean.getItems());
+					break;
+				case 1:
+					onAddData(myFavoriteProductListInfoBean.getItems());
+					break;
+				}
+				}
+			}
+			
+			@Override
+			public void http_Fails(int error, String msg) {
+				refreshComplete();
+				MyApplication.getInstance().showMessage(getActivity(), msg);
+			}
+		}, getActivity());
 	}
 }

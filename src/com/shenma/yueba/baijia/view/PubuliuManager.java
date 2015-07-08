@@ -91,6 +91,10 @@ public class PubuliuManager {
     			MyFavoriteProductListInfo bean=item.get(i);
     			int witdh=pubuliy_left_linearlayout.getWidth();
     			MyFavoriteProductListPic myFavoriteProductListPic=bean.getPic();
+    			if(myFavoriteProductListPic==null)
+    			{
+    				myFavoriteProductListPic=new MyFavoriteProductListPic();
+    			}
     			int height=(int)(witdh*myFavoriteProductListPic.getRatio());
     			View parentview=LinearLayout.inflate(context, R.layout.pubuliu_item_layout, null);
     			//价格

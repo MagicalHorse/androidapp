@@ -68,10 +68,16 @@ public class MsgListFragment extends BaseFragment {
 		if (parent != null) {
 			parent.removeView(view);
 		}
-		firstData();
 		return view;
 	}
 	
+	@Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		firstData();
+		Log.i("msg", "msg1");
+	}
 	
 	void initPullView()
 	{
@@ -141,6 +147,7 @@ public class MsgListFragment extends BaseFragment {
 	 * 请求加载数据
 	 * ***/
 	public void requestData() {
+		isfirststatus=true;
 		sendHttp(currpage, 1);
 	}
 
@@ -148,6 +155,7 @@ public class MsgListFragment extends BaseFragment {
 	 * 请求刷新数据
 	 * ***/
 	public void requestFalshData() {
+		isfirststatus=true;
 		sendHttp(1, 0);
 	}
 	
@@ -257,7 +265,6 @@ public class MsgListFragment extends BaseFragment {
 		{
 			return;
 		}
-		isfirststatus=true;
 		requestFalshData();
 	}
 	

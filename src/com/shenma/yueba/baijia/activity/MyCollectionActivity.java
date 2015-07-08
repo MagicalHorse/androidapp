@@ -153,7 +153,7 @@ public class MyCollectionActivity extends BaseActivityWithTopView{
     }
     
     /***
-     * 加载数据
+     * 加载数据获取我收藏的商品
      * @param page int 访问页
      * @param type int 0: 刷新  1:加载更多
      * **/

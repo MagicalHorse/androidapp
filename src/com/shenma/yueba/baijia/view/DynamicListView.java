@@ -22,9 +22,11 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.shenma.yueba.ChatActivity;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.adapter.DynamicAdapter;
 import com.shenma.yueba.baijia.adapter.MsgAdapter;
 import com.shenma.yueba.baijia.modle.MsgListInfo;
-import com.shenma.yueba.baijia.modle.RequestMsgListInfoBean;
+import com.shenma.yueba.baijia.modle.RequestUserDynamicInfoBean;
+import com.shenma.yueba.baijia.modle.UserDynamicInfo;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
@@ -46,11 +48,11 @@ public class DynamicListView {
 	int currpage = Constants.CURRPAGE_VALUE;
 	// 每页显示的条数
 	int pagesize = Constants.PAGESIZE_VALUE;
-	private List<MsgListInfo> mList = new ArrayList<MsgListInfo>();
+	private List<UserDynamicInfo> mList = new ArrayList<UserDynamicInfo>();
 	private View view;
 	private PullToRefreshListView pull_refresh_list;
 	LinearLayout showloading_layout_view;
-	MsgAdapter msgAdapter;
+	DynamicAdapter msgAdapter;
 	public static DynamicListView the()
 	{
 		if(msgListView==null)
@@ -68,7 +70,7 @@ public class DynamicListView {
 			layoutInflater=activity.getLayoutInflater();
 			initView();
 			initPullView();
-			firstData();
+			//firstData();
 		}
 		return view;
 	}
@@ -87,12 +89,12 @@ public class DynamicListView {
 
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,long arg3) {
-				MsgListInfo msgListInfo=mList.get(arg2-1);
+				/*UserDynamicInfo msgListInfo=mList.get(arg2-1);
 				Intent intent=new Intent(activity,ChatActivity.class);
 				intent.putExtra("Chat_Type", ChatActivity.chat_type_private);//类型 圈子 还是私聊
 				intent.putExtra("Chat_NAME",msgListInfo.getName());//名字
 				intent.putExtra("toUser_id",msgListInfo.getId());//touser_id
-				activity.startActivity(intent);
+				activity.startActivity(intent);*/
 			}
 		});
 		
@@ -137,7 +139,7 @@ public class DynamicListView {
 				requestData();
 			}
 		});
-		msgAdapter=new MsgAdapter(activity, mList);
+		msgAdapter=new DynamicAdapter(activity, mList);
 		pull_refresh_list.setAdapter(msgAdapter);
 	}
 	
@@ -169,7 +171,7 @@ public class DynamicListView {
 		
 		ToolsUtil.showNoDataView(activity, view, false);
 		HttpControl httpControl=new HttpControl();
-		httpControl.GetBaijiaMessageList(page, pagesize, showDialog, new HttpCallBackInterface() {
+		httpControl.GetBaijiaUserDynamic(page, pagesize, showDialog, new HttpCallBackInterface() {
 			
 			@Override
 			public void http_Success(Object obj) {
@@ -177,9 +179,9 @@ public class DynamicListView {
 				currpage=page;
 				showDialog=false;
 				pull_refresh_list.onRefreshComplete();
-				if(obj!=null && obj instanceof RequestMsgListInfoBean)
+				if(obj!=null && obj instanceof RequestUserDynamicInfoBean)
 				{
-					RequestMsgListInfoBean msgbean=(RequestMsgListInfoBean)obj;
+					RequestUserDynamicInfoBean msgbean=(RequestUserDynamicInfoBean)obj;
 					if(msgbean.getData()==null || msgbean.getData().getItems()==null || msgbean.getData().getItems().size()==0)
 					{
 						if(page==1)
@@ -233,7 +235,7 @@ public class DynamicListView {
 	/***
 	 * 刷新viewpager数据
 	 * ***/
-	void falshData(List<MsgListInfo> msg_list) {
+	void falshData(List<UserDynamicInfo> msg_list) {
 		currpage++;
 		if (mList != null) {
 			mList.clear();
@@ -248,7 +250,7 @@ public class DynamicListView {
 	/***
 	 * 加载数据
 	 * **/
-	void addData(List<MsgListInfo> msg_list) {
+	void addData(List<UserDynamicInfo> msg_list) {
 		if (mList != null) {
 			mList.addAll(msg_list);
 		}

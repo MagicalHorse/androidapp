@@ -67,7 +67,20 @@ public class MessageFragment extends Fragment{
 	public void onResume() {
 		
 		super.onResume();
-        
+		if(currid>-1)
+		{
+		switch(currid)
+		{
+		case 0:
+			MsgListView.the().firstData();
+			break;
+		case 1:
+			DynamicListView.the().firstData();
+			break;
+		 }
+		setTextColor(currid); 
+		}
+		
 	}
 	
 	
@@ -148,7 +161,7 @@ public class MessageFragment extends Fragment{
 					DynamicListView.the().firstData();
 					break;
 				}
-				setTextColor(arg0);
+				setCurrView(arg0);
 			}
 			
 			@Override
@@ -174,6 +187,7 @@ public class MessageFragment extends Fragment{
 		{
 			return;
 		}
+		currid=i;
 		setTextColor(i);
 		baijia_fragment_tab1_pagerview.setCurrentItem(i);
 	}

@@ -21,7 +21,6 @@ import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.fragment.ShopPuBuliuFragment;
-import com.shenma.yueba.baijia.modle.BrandCityWideInfo;
 import com.shenma.yueba.baijia.modle.FragmentBean;
 import com.shenma.yueba.baijia.modle.RequestUserInfoBean;
 import com.shenma.yueba.baijia.modle.UserInfoBean;
@@ -407,10 +406,15 @@ public class ShopMainActivity extends FragmentActivity {
     	shop_main_fansvalue_textview.setText(ToolsUtil.nullToString(userInfoBean.getFollowerCount()+""));
     	shop_main_praisevalue_textview.setText(ToolsUtil.nullToString(userInfoBean.getCommunityCount()+""));
     	shap_main_description1_textview.setText(ToolsUtil.nullToString(userInfoBean.getDescription()));
-    	ShopPuBuliuFragment shopPuBuliuFragment1=new ShopPuBuliuFragment(0,userID);
-		ShopPuBuliuFragment ShopPuBuliuFragment2=new ShopPuBuliuFragment(1,userID);
-		fragmentBean_list.add(new FragmentBean("商品", -1, shopPuBuliuFragment1));
-		fragmentBean_list.add(new FragmentBean("上新", -1, ShopPuBuliuFragment2));
+    	
+    	String user_level=SharedUtil.getStringPerfernece(this, SharedUtil.user_level);
+    	if("8".equals(user_level))//认证买手
+    	{
+    		initBuyerPuBu();
+    	}else if("1".equals(user_level))//普通买手
+    	{
+    		initUserPuBu();
+    	}
     	
     	for(int i=0;i<fragmentBean_list.size();i++)
 		{
@@ -437,9 +441,34 @@ public class ShopMainActivity extends FragmentActivity {
 				shop_stay_layout_tabline_relativelayout.setVisibility(View.GONE);
 			}
 		}
+    	
+    	if(fragmentBean_list.size()==1)
+    	{
+    		shop_main_head_layout_tab_linearlayout.setVisibility(View.GONE);
+    	}
     	if(view_list.size()>0)
 		{
 		   setItem(true,0);
 		}
+    }
+    
+    /*****
+     * 加载买手瀑布显示信息
+     * **/
+    void initBuyerPuBu()
+    {
+    	ShopPuBuliuFragment shopPuBuliuFragment1=new ShopPuBuliuFragment(0,userID);
+		ShopPuBuliuFragment ShopPuBuliuFragment2=new ShopPuBuliuFragment(1,userID);
+		fragmentBean_list.add(new FragmentBean("商品", -1, shopPuBuliuFragment1));
+		fragmentBean_list.add(new FragmentBean("上新", -1, ShopPuBuliuFragment2));
+    }
+    
+    /*****
+     * 加载普通用户瀑布显示信息
+     * **/
+    void initUserPuBu()
+    {
+    	ShopPuBuliuFragment shopPuBuliuFragment3=new ShopPuBuliuFragment(2,userID);
+		fragmentBean_list.add(new FragmentBean("我的收藏", -1, shopPuBuliuFragment3));
     }
 }
