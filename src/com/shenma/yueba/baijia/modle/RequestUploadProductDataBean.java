@@ -16,7 +16,7 @@ import com.shenma.yueba.util.SizeBean;
  */
 
 public class RequestUploadProductDataBean implements Serializable{
-
+	private String Id;
 	private String Price;//价格
 	private String Desc;
 	private String Sku_Code;
@@ -57,6 +57,12 @@ public class RequestUploadProductDataBean implements Serializable{
 	}
 	public void setImages(List<ProductImagesBean> images) {
 		Images = images;
+	}
+	public String getId() {
+		return Id;
+	}
+	public void setId(String id) {
+		Id = id;
 	}
 	
 	

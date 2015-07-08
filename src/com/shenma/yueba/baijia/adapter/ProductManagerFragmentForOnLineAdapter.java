@@ -125,6 +125,7 @@ public class ProductManagerFragmentForOnLineAdapter extends BaseAdapterWithUtil 
 				public void onClick(View v) {
 					if (flag == 1 || flag == 2) {// 修改
                        Intent intent = new Intent(ctx, PublishProductActivity.class);
+                       intent.putExtra("id", mList.get(position).getProductId());
                        intent.putExtra("data", mList.get(position).getDetail());
                        ctx.startActivity(intent);
 					} else if (flag == 0) {// 删除
