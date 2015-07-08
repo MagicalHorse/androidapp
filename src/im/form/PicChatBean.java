@@ -3,12 +3,9 @@ package im.form;
 import im.control.SocketManger;
 import im.control.SocketManger.SocketManagerListener;
 import android.content.Context;
-import android.os.SystemClock;
 
 import com.alibaba.sdk.android.oss.callback.SaveCallback;
 import com.alibaba.sdk.android.oss.model.OSSException;
-import com.shenma.yueba.ChatActivity;
-import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.modle.RequestUploadChatImageInfo;
 import com.shenma.yueba.baijia.modle.RequestUploadChatImageInfoBean;
 import com.shenma.yueba.util.HttpControl;
@@ -25,6 +22,7 @@ int progress=0;//上传进度
 int maxProgress=0;//总进度
 boolean isUpload=false;//是否上传或下载中
 boolean isSuccess=false;//是否完成
+boolean isFails=false;//是否上传失败
 String picaddress="";//本地图片的地址
 String ali_content;//阿里云返回的数据
 PicChatBean_Listener listener;
@@ -156,6 +154,7 @@ public void setPicaddress(String picaddress) {
 			@Override
 			public void onProgress(String arg0, int arg1, int arg2) {
 				//上传进度
+				isFails=false;
 				progress=arg1;
 				maxProgress=arg2;
 				isUpload=true;
@@ -168,6 +167,7 @@ public void setPicaddress(String picaddress) {
 			
 			@Override
 			public void onFailure(String arg0, OSSException arg1) {
+				isFails=true;
 				if(listener!=null)
 				{
 					listener.pic_showMsg(arg0);
@@ -177,6 +177,7 @@ public void setPicaddress(String picaddress) {
 			@Override
 			public void onSuccess(String arg0) {
 				//上传完成 发送数据
+				isFails=false;
 				ali_content=arg0;
 				isUpload=false;
 				isSuccess=true;

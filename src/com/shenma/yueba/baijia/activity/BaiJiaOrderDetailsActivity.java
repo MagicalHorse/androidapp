@@ -150,6 +150,7 @@ LinearLayout baijia_orderdetails_footer_right_linearlayout;//按钮的父对象
 		case R.id.baijia_orderdetails_lianxibuyer_textview://联系买手
 			Intent intentbuter=new Intent(BaiJiaOrderDetailsActivity.this,ChatActivity.class);
 			intentbuter.putExtra("Chat_Type", ChatActivity.chat_type_private);
+			intentbuter.putExtra("Chat_NAME",bean.getData().getBuyerName());//圈子名字
 			intentbuter.putExtra("toUser_id", bean.getData().getBuyerId());
 			startActivity(intentbuter);
 			break;

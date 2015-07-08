@@ -155,7 +155,7 @@ public class BuyerAdapter extends BaseAdapter{
 	void initValue(Holder holder,ProductsInfoBean productsInfoBean)
 	{
 		//私聊
-		holder.buyersteetfragmeng_item_siliao_button.setTag(productsInfoBean.getBuyerid());
+		holder.buyersteetfragmeng_item_siliao_button.setTag(productsInfoBean);
 		
 		//分享
 		holder.buyersteetfragmeng_item_share_button.setTag(productsInfoBean);
@@ -256,10 +256,16 @@ public class BuyerAdapter extends BaseAdapter{
 					}
 				    break; 
 				case R.id.buyersteetfragmeng_item_siliao_button://私聊
-					Intent intentsiliao=new Intent(activity,ChatActivity.class);
-					intentsiliao.putExtra("Chat_Type", ChatActivity.chat_type_private);
-					intentsiliao.putExtra("toUser_id", (Integer)v.getTag());
-					activity.startActivity(intentsiliao);
+					if(v.getTag()!=null && v.getTag() instanceof ProductsInfoBean)
+					{
+						ProductsInfoBean bean=(ProductsInfoBean)v.getTag();
+						Intent intentsiliao=new Intent(activity,ChatActivity.class);
+						intentsiliao.putExtra("Chat_Type", ChatActivity.chat_type_private);
+						intentsiliao.putExtra("Chat_NAME",bean.getBuyerName());//圈子名字
+						intentsiliao.putExtra("toUser_id", bean.getBuyerid());
+						activity.startActivity(intentsiliao);
+					}
+					
 					break;
 				case R.id.buyersteetfragmeng_item_share_button://分享
 					if(v.getTag()!=null && v.getTag() instanceof ProductsInfoBean)

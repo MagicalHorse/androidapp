@@ -67,7 +67,9 @@ public class MyCircleForSocialFragment extends BaseFragment {
 //				intent.putExtra("from", "1");//1表示来自养家中的圈子管理
 //				getActivity().startActivityForResult(intent, Constants.REQUESTCODE);
 				Intent intent = new Intent(getActivity(),ChatActivity.class);
-				intent.putExtra("circleId", mList.get(pos-1).getId());
+				intent.putExtra("Chat_Type", ChatActivity.chat_type_group);
+				intent.putExtra("Chat_NAME",mList.get(pos-1).getName());//圈子名字
+				intent.putExtra("circleId", Integer.parseInt(mList.get(pos-1).getId()));
 				startActivity(intent);
 			}
 		});

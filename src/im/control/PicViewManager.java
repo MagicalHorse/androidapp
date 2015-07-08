@@ -96,8 +96,11 @@ public class PicViewManager extends ChatBaseManager{
 			{
 				chat_layout_item_leftimg_icon_roundimageview.setVisibility(View.VISIBLE);
 			}
-			
-			
+			//计算上传进度
+			int currcount=picbean.getProgress();
+			int maxcount=picbean.getMaxProgress();
+			int value=(int)(((float)currcount/(float)maxcount)*100);
+			chat_layout_item_leftimg_progress_textview.setText(value+"%");
 		}
 		 
 	}

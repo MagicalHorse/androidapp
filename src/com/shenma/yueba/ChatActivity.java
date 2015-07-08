@@ -131,7 +131,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 	String userName = "";
 	String usericon = "";
 	RequestRoomInfo requestRoomInfo;
-
+    String chat_name="";
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -141,6 +141,10 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 				SharedUtil.user_names);
 		usericon = SharedUtil.getStringPerfernece(this, SharedUtil.user_logo);
 		initView();
+		if(this.getIntent().getStringExtra("Chat_NAME")!=null)//名字
+		{
+			chat_name=this.getIntent().getStringExtra("Chat_NAME");
+		}
 		if (this.getIntent().getStringExtra("Chat_Type") == null)// 获取聊天类型
 		{
 			MyApplication.getInstance().showMessage(this, "数据错误");
@@ -150,7 +154,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 
 		chat_type = this.getIntent().getStringExtra("Chat_Type");
 		if (chat_type.endsWith(chat_type_group)) {
-			circleId = this.getIntent().getIntExtra("circleId", 0);
+			circleId = this.getIntent().getIntExtra("circleId", -1);
 			// 群聊
 			if (circleId > 0) {
 				// 显示设置
@@ -186,6 +190,9 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 	 * initView
 	 */
 	protected void initView() {
+		TextView tv_top_title=(TextView)findViewById(R.id.tv_top_title);
+		tv_top_title.setText(chat_name);
+		tv_top_title.setVisibility(View.VISIBLE);
 		chat_product_head_layout_include = (RelativeLayout) findViewById(R.id.chat_product_head_layout_include);
 		tv_top_right = (TextView) findViewById(R.id.tv_top_right);
 		tv_top_right.setOnClickListener(this);

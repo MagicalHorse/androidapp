@@ -186,7 +186,8 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView impleme
 	{
 		Intent intent=new Intent(ApproveBuyerDetailsActivity.this,ChatActivity.class);
 		intent.putExtra("Chat_Type", ChatActivity.chat_type_private);
-		intent.putExtra("toUser_id", bean.getData().getBuyerId());
+		intent.putExtra("Chat_NAME",bean.getData().getBuyerName());//圈子名字
+		intent.putExtra("toUser_id", bean.getData().getBuyerId());//私聊的话需要传对方id
 		intent.putExtra("DATA", bean);
 		startActivity(intent);
 	}
