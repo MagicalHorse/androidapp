@@ -4,19 +4,20 @@ import java.io.Serializable;
 
 public class SizeBean implements Serializable{
 
-	private String name;
+	private String Name;
 	private String Inventory;
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
+	
 	public String getInventory() {
 		return Inventory;
 	}
 	public void setInventory(String inventory) {
 		Inventory = inventory;
+	}
+	public String getName() {
+		return Name;
+	}
+	public void setName(String name) {
+		Name = name;
 	}
 
 	
