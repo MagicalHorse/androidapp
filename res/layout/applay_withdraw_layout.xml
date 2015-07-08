@@ -80,7 +80,7 @@
     
     <TextView 
         android:id="@+id/tv_sure"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/bottom_item_height"
         android:layout_width="fill_parent"
         android:text="确认提现"
         android:background="@color/white"

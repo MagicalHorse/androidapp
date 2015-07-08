@@ -8,6 +8,8 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
@@ -26,6 +28,9 @@ public class SetNewPasswordActivity extends BaseActivityWithTopView implements O
 	private EditText et_new_repassword;
 	private EditText et_old_password;
 	private Button bt_sure;
+	private TextView tv_old_password_title;
+	private TextView tv_new_password_title;
+	private TextView tv_confirm_passwrod;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,12 +54,15 @@ public class SetNewPasswordActivity extends BaseActivityWithTopView implements O
 		tv_top_right.setText("完成");
 		tv_top_right.setVisibility(View.VISIBLE);
 		tv_top_right.setOnClickListener(this);
+		tv_old_password_title = getView(R.id.tv_old_password_title);
+		tv_new_password_title = getView(R.id.tv_new_password_title);
+		tv_confirm_passwrod = getView(R.id.tv_confirm_passwrod);
 		et_old_password=(EditText)findViewById(R.id.et_old_password);
 		et_new_password = (EditText) findViewById(R.id.et_new_password);
 		et_new_repassword = (EditText) findViewById(R.id.et_new_repassword);
 		//bt_sure = (Button) findViewById(R.id.bt_sure);
 		//bt_sure.setOnClickListener(this);
-		FontManager.changeFonts(mContext, et_new_password,et_new_repassword,bt_sure,tv_top_title,et_old_password);
+		FontManager.changeFonts(mContext, tv_old_password_title,tv_new_password_title,tv_confirm_passwrod,tv_top_right,et_new_password,et_new_repassword,bt_sure,tv_top_title,et_old_password);
 	}
 
 	@Override
@@ -93,6 +101,7 @@ public class SetNewPasswordActivity extends BaseActivityWithTopView implements O
 				
 				@Override
 				public void http_Success(Object obj) {
+					Toast.makeText(mContext, "修改成功", 1000).show();
 					Intent intentLogin = new Intent(mContext,SplashActivity.class);
 					startActivity(intentLogin);
 					MyApplication.getInstance().removeAllActivity();

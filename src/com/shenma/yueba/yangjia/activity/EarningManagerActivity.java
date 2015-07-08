@@ -81,7 +81,7 @@ public class EarningManagerActivity extends BaseActivityWithTopView implements O
 		tv_withdraw_cash_history.setOnClickListener(this);
 		FontManager.changeFonts(mContext, tv_top_title,tv_earnings_today_title,tv_today_income,tv_withdraw_cash_title,
 				tv_withdraw_cash_money,tv_withdraw_cash_history,tv_apply_withdraw,tv_total_income_title
-				,tv_total_income_money);
+				,tv_total_income_money,tv_income_detail);
 	}
 
 	@Override

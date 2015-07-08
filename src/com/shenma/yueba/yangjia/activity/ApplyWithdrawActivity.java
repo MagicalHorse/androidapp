@@ -63,7 +63,7 @@ public class ApplyWithdrawActivity extends BaseActivityWithTopView implements
 		tv_sure = getView(R.id.tv_sure);
 		tv_sure.setOnClickListener(this);
 		FontManager.changeFonts(mContext, tv_retan_money, et_money, tv_yuan,
-				tv_introduce);
+				tv_introduce,tv_sure);
 	}
 
 	@Override

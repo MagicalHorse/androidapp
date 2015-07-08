@@ -16,7 +16,7 @@
   <dimen name="index_center_size_font">17sp</dimen>
   <dimen name="index_little_size_font">16sp</dimen>
   <dimen name="corsur_margin">10dip</dimen>
-  
+  <dimen name="bottom_item_height">60dip</dimen>
   
   
   
