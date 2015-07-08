@@ -53,6 +53,7 @@ import com.shenma.yueba.baijia.modle.RequestMyInfoBean;
 import com.shenma.yueba.baijia.modle.RequestProductDetailsInfoBean;
 import com.shenma.yueba.baijia.modle.RequestProductListInfoBean;
 import com.shenma.yueba.baijia.modle.RequestRoomInfoBean;
+import com.shenma.yueba.baijia.modle.RequestTuiJianCircleInfoBean;
 import com.shenma.yueba.baijia.modle.RequestUploadChatImageInfoBean;
 import com.shenma.yueba.baijia.modle.RequestUploadProductDataBean;
 import com.shenma.yueba.baijia.modle.RequestUploadProductInfoBean;
@@ -1476,7 +1477,7 @@ public class HttpControl {
 		map.put(Constants.PAGE, Integer.toString(currPage));
 		map.put(Constants.PAGESIZE, Integer.toString(pageSize));
 		BasehttpSend(map, context, HttpConstants.GETRECOMMENDGROUP,
-				httpCallBack, RequestMyCircleInfoBean.class, showDialog, false);
+				httpCallBack, RequestTuiJianCircleInfoBean.class, showDialog, false);
 	}
 
 	/**

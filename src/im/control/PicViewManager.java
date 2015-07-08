@@ -86,15 +86,19 @@ public class PicViewManager extends ChatBaseManager{
 			chat_layout_item_leftmsg_name_textview.setText(ToolsUtil.nullToString(picbean.getUserName()));
 			chat_layout_item_leftmsg_time_textview.setText(ToolsUtil.nullToString(picbean.getCreationDate()));
 			MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.nullToString(picbean.getLogo()), chat_layout_item_leftimg_icon_roundimageview, MyApplication.getInstance().getDisplayImageOptions());
-			MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.nullToString(picbean.getPicaddress()), chat_layout_item_leftimg_msg_imageview, MyApplication.getInstance().getDisplayImageOptions());
+			if(picbean.isSuccess())
+			{
+				MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.nullToString((String)picbean.getContent()), chat_layout_item_leftimg_msg_imageview, MyApplication.getInstance().getDisplayImageOptions());
+			}
+			
 			
 			//图片
 			if(!picbean.isUpload() && picbean.isSuccess())//如果上传完成则  隐藏进度
 			{
-				chat_layout_item_leftimg_icon_roundimageview.setVisibility(View.GONE);
+				chat_layout_item_leftimg_progress_linearlayout.setVisibility(View.GONE);
 			}else
 			{
-				chat_layout_item_leftimg_icon_roundimageview.setVisibility(View.VISIBLE);
+				chat_layout_item_leftimg_progress_linearlayout.setVisibility(View.VISIBLE);
 			}
 			//计算上传进度
 			int currcount=picbean.getProgress();

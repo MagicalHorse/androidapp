@@ -25,12 +25,12 @@ import com.handmark.pulltorefresh.library.PullToRefreshGridView;
 import com.shenma.yueba.ChatActivity;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
-import com.shenma.yueba.baijia.activity.ApproveBuyerDetailsActivity;
-import com.shenma.yueba.baijia.activity.CircleInfoActivity;
 import com.shenma.yueba.baijia.modle.FragmentBean;
 import com.shenma.yueba.baijia.modle.MyCircleInfo;
-import com.shenma.yueba.baijia.modle.MyCircleInfoBean;
 import com.shenma.yueba.baijia.modle.RequestMyCircleInfoBean;
+import com.shenma.yueba.baijia.modle.RequestTuiJianCircleInfoBean;
+import com.shenma.yueba.baijia.modle.TuiJianCircleInfo;
+import com.shenma.yueba.baijia.modle.TuiJianCircleInfoBean;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
@@ -47,7 +47,7 @@ public class CircleView extends BaseView{
 	View v;
 	PullToRefreshGridView baijia_quanzi_layout_tanb1_gridbview;
 	LinearLayout showloading_layout_view;
-	List<MyCircleInfo> items=new ArrayList<MyCircleInfo>();
+	List<TuiJianCircleInfo> items=new ArrayList<TuiJianCircleInfo>();
 	LayoutInflater inflater;
 	int currPage=Constants.CURRPAGE_VALUE;
 	int pageSize=Constants.PAGESIZE_VALUE;
@@ -144,7 +144,7 @@ public class CircleView extends BaseView{
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
-				MyCircleInfo myCircleInfo=items.get(arg2);
+				TuiJianCircleInfo myCircleInfo=items.get(arg2);
 				Intent intent=new Intent(activity,ChatActivity.class);
 				intent.putExtra("Chat_Type", ChatActivity.chat_type_group);
 				intent.putExtra("Chat_NAME",myCircleInfo.getName());//圈子名字
@@ -198,7 +198,7 @@ public class CircleView extends BaseView{
 				holder=(Holder)convertView.getTag();
 				
 			}
-			MyCircleInfo myCircleInfo=items.get(position);
+			TuiJianCircleInfo myCircleInfo=items.get(position);
 			MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.nullToString(myCircleInfo.getLogo()), holder.riv);
 			holder.tv_circle_name.setText(ToolsUtil.nullToString(myCircleInfo.getName()));
 			holder.tv_count.setText(myCircleInfo.getMemberCount()+"");
@@ -228,7 +228,7 @@ public class CircleView extends BaseView{
 	}
 	
 	
-	void addData(MyCircleInfoBean bean)
+	void addData(TuiJianCircleInfoBean bean)
 	{
 		showDialog=false;
 		currPage++;
@@ -241,7 +241,7 @@ public class CircleView extends BaseView{
 		//ListUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
 	}
 	
-	void falshData(MyCircleInfoBean bean)
+	void falshData(TuiJianCircleInfoBean bean)
 	{
 		isFirst=false;
 		currPage++;
@@ -266,9 +266,9 @@ public class CircleView extends BaseView{
 				currPage=page;
 				showDialog=false;
 				baijia_quanzi_layout_tanb1_gridbview.onRefreshComplete();
-				if(obj!=null && obj instanceof RequestMyCircleInfoBean)
+				if(obj!=null && obj instanceof RequestTuiJianCircleInfoBean)
 				{
-					RequestMyCircleInfoBean bean=(RequestMyCircleInfoBean)obj;
+					RequestTuiJianCircleInfoBean bean=(RequestTuiJianCircleInfoBean)obj;
 					if (bean != null) {
 						if(bean.getData()==null || bean.getData().getItems()==null || bean.getData().getItems().size()==0)
 						   {
