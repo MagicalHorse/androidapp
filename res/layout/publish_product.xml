@@ -106,10 +106,11 @@
                         android:layout_height="fill_parent"
                         android:layout_weight="1"
                         android:background="@null"
+                        android:digits="0123456789."
                         android:ems="10"
                         android:gravity="center_vertical"
                         android:hint="请输入"
-                        android:digits="0123456789."
+                        android:inputType="number"
                         android:paddingLeft="5dip"
                         android:textSize="18sp" >
                     </EditText>
@@ -142,8 +143,8 @@
                         android:background="@null"
                         android:drawableLeft="@null"
                         android:gravity="top"
-                        android:maxLength="100"
                         android:hint="给力的商品特点..."
+                        android:maxLength="100"
                         android:minLines="3"
                         android:paddingLeft="5dip"
                         android:paddingTop="5dip"
@@ -179,8 +180,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@drawable/shape_linearlayout10"
-                        android:padding="5dip"
                         android:hint="规格"
+                        android:padding="5dip"
                         android:textColor="@color/text_gray_color"
                         android:textSize="18sp" />
 
@@ -191,25 +192,28 @@
                         android:layout_marginLeft="15dip"
                         android:layout_weight="1"
                         android:background="@drawable/shape_linearlayout10"
-                        android:padding="5dip"
                         android:hint="库存"
                         android:inputType="number"
+                            android:digits="0123456789"
+                        android:padding="5dip"
                         android:textColor="@color/text_gray_color"
                         android:textSize="18sp" />
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="15dip"
+                        android:layout_height="15dip"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dip"
                         android:background="@drawable/star" />
                 </LinearLayout>
 
-                <LinearLayout 
+                <LinearLayout
                     android:id="@+id/ll_guige_container"
-                    android:layout_height="wrap_content"
                     android:layout_width="fill_parent"
-                    android:orientation="vertical"
-                    ></LinearLayout>
-                
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+                </LinearLayout>
+
                 <View
                     style="@style/style_horizontal_line"
                     android:layout_marginLeft="10dip" />
@@ -218,11 +222,11 @@
                     android:id="@+id/tv_add_guige"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="80dip"
                     android:background="@color/white"
                     android:gravity="center"
                     android:padding="10dip"
                     android:text="添加规格库存"
-                    android:layout_marginBottom="80dip"
                     android:textColor="@color/blue"
                     android:textSize="18sp" />
             </LinearLayout>
@@ -232,7 +236,7 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-           android:layout_alignParentBottom="true"
+        android:layout_alignParentBottom="true"
         android:orientation="vertical" >
 
         <View style="@style/style_horizontal_line" />

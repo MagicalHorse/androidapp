@@ -125,6 +125,7 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 						View view = View.inflate(mContext, R.layout.guige_item, null);
 						EditText et_guige = (EditText) view.findViewById(R.id.et_guige);
 						EditText et_kucun = (EditText) view.findViewById(R.id.et_kucun);
+						FontManager.changeFonts(mContext, et_guige,et_kucun);
 						et_guige.setText(sizeList.get(i).getName());
 						et_kucun.setText(sizeList.get(i).getInventory());
 						ll_guige_container.addView(view);
@@ -196,7 +197,7 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 		tv_publish = getView(R.id.tv_publish);
 		tv_add_guige.setOnClickListener(this);
 		tv_publish.setOnClickListener(this);
-		FontManager.changeFonts(mContext, tv_product_number, et_product_number,
+		FontManager.changeFonts(mContext, tv_top_title,tv_product_number, et_product_number,
 				tv_price_title, et_price, tv_yuan, et_introduce, tv_retain,
 				et_guige, et_kucun, tv_add_guige, tv_publish);
 		progressDialog = new CustomProgressDialog(mContext)
@@ -352,6 +353,8 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 				ll_guige_container.getChildAt(i).setTag(i);
 			}
 			View view = View.inflate(mContext, R.layout.guige_item, null);
+			EditText et_guige = (EditText) view.findViewById(R.id.et_guige);
+			EditText et_kucun = (EditText) view.findViewById(R.id.et_kucun);
 			view.setTag(ll_guige_container.getChildCount());
 			final ImageView iv_delete = (ImageView) view
 					.findViewById(R.id.iv_delete);
@@ -369,6 +372,7 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 
 				}
 			});
+			FontManager.changeFonts(mContext, et_guige,et_kucun);
 			ll_guige_container.addView(view);
 			break;
 		case R.id.tv_publish:// 发布商品

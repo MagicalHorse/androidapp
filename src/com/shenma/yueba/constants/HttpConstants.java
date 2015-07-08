@@ -148,6 +148,10 @@ public class HttpConstants {
 	 */
 	public static String METHOD_PRODUCT_COPY = PRODUCT + "Copy";
 
+	/**
+	 * 修改商品
+	 */
+	public static String METHOD_PRODUCT_UPDATE = PRODUCT + "Update";
 
 	/**
 	 * 根据名称搜索标签

@@ -752,6 +752,10 @@ public class HttpControl {
 				httpCallBack, BaseRequest.class, refresh, canCancle);
 	}
 
+	
+	
+	
+	
 	/**
 	 * 设置店铺说明
 	 * @param description  店铺说明
@@ -965,30 +969,8 @@ public class HttpControl {
 				httpCallBack, RequestProductDetailsInfoBean.class, true, false);
 	}
 
-	/**
-	 * 上传商品信息(买手)
-	 * 
-	 * @param httpCallBack
-	 *            HttpCallBackInterface 回调接口
-	 * @param context
-	 *            Context
-	 * @param ProductId
-	 *            int商品编号
-	 * @param ReadType
-	 *            int商品读取操作类型 可为空 1：记录本商品点击数
-	 * @return void
-	 * **/
-	public void createBuyerProductInfo(ResponseUploadProductInfoBean bean,
-			final HttpCallBackInterface httpCallBack, Context context) {
-		String responsejsonstr = BaseGsonUtils.getObjectToJson(bean);
-		if (responsejsonstr == null) {
-			httpCallBack.http_Fails(500, "发送数据错误");
-		}
-		basehttpSendToJson(responsejsonstr, null, context,
-				HttpConstants.METHOD_PRODUCTMANAGER_CREATE, httpCallBack,
-				RequestUploadProductInfoBean.class, true, false);
-	}
-
+	
+	
 	
 
 	/**
@@ -1280,6 +1262,14 @@ public class HttpControl {
 		BasehttpSend(map, context, HttpConstants.METHOD_CIRCLE_EXITGROUP,httpCallBack, BaseRequest.class, showDialog, false);
 	}
 	
+	
+	
+	/**
+	 * 上新商品
+	 * @param requestUploadProductDataBean
+	 * @param httpCallBack
+	 * @param context
+	 */
 	public void createBuyerProductInfo(
 			RequestUploadProductDataBean requestUploadProductDataBean,
 			final HttpCallBackInterface httpCallBack, Context context) {
@@ -1291,11 +1281,30 @@ public class HttpControl {
 	}
 
 	
+	
+	
+	/**
+	 * 修改商品
+	 * @param requestUploadProductDataBean
+	 * @param httpCallBack
+	 * @param context
+	 */
+	public void updateBuyerProductInfo(
+			RequestUploadProductDataBean requestUploadProductDataBean,
+			final HttpCallBackInterface httpCallBack, Context context) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("json",
+				BaseGsonUtils.getObjectToJson(requestUploadProductDataBean));
+		BasehttpSend(map, context, HttpConstants.METHOD_PRODUCTMANAGER_UPDATE,
+				httpCallBack, BaseRequest.class, true, false);
+	}
+
+	
 	/**
 	 * 删除圈子
 	 * 
 	 * @return void
-	 * **/ 
+	 * **/
 	public void deleteCircle(String circleId, String logo, boolean showDialog,
 			final HttpCallBackInterface httpCallBack, Context context) {
 		Map<String, String> map = new HashMap<String, String>();
