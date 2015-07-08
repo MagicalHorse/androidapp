@@ -991,30 +991,6 @@ public class HttpControl {
 	}
 	
 	
-	
-	/**
-	 * 修改商品信息(买手)
-	 * 
-	 * @param httpCallBack
-	 *            HttpCallBackInterface 回调接口
-	 * @param context
-	 *            Context
-	 * @param ProductId
-	 *            int商品编号
-	 * @param ReadType
-	 *            int商品读取操作类型 可为空 1：记录本商品点击数
-	 * @return void
-	 * **/
-	public void updateBuyerProductInfo(ResponseUploadProductInfoBean bean,
-			final HttpCallBackInterface httpCallBack, Context context) {
-		String responsejsonstr = BaseGsonUtils.getObjectToJson(bean);
-		if (responsejsonstr == null) {
-			httpCallBack.http_Fails(500, "发送数据错误");
-		}
-		basehttpSendToJson(responsejsonstr, null, context,
-				HttpConstants.METHOD_PRODUCTMANAGER_UPDATE, httpCallBack,
-				RequestUploadProductInfoBean.class, true, false);
-	}
 
 	/**
 	 * 获取订单列表
