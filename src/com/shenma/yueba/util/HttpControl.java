@@ -53,6 +53,7 @@ import com.shenma.yueba.baijia.modle.RequestMyInfoBean;
 import com.shenma.yueba.baijia.modle.RequestProductDetailsInfoBean;
 import com.shenma.yueba.baijia.modle.RequestProductListInfoBean;
 import com.shenma.yueba.baijia.modle.RequestRoomInfoBean;
+import com.shenma.yueba.baijia.modle.RequestUploadChatImageInfoBean;
 import com.shenma.yueba.baijia.modle.RequestUploadProductDataBean;
 import com.shenma.yueba.baijia.modle.RequestUploadProductInfoBean;
 import com.shenma.yueba.baijia.modle.RequestUserInfoBean;
@@ -1668,6 +1669,19 @@ public class HttpControl {
 		BasehttpSend(map, context, HttpConstants.METHOD_GETROOMMESSAE,httpCallBack, RequestImMessageInfoBean.class, ishowStatus, false);
 	}
 	
+	/**
+	 * 聊天发送图片
+	 * @param  "imageurl":  图片网址
+	 * @param httpCallBack HttpCallBackInterface 回调接口
+	 * @param context  Context
+     * @param ishowStatus boolean 是否显示等待对话框 true 是  false否
+	 * @return void
+	 * **/
+	public void getUploadChatImage(String imageurl,boolean ishowStatus,final HttpCallBackInterface httpCallBack, Context context) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("imageurl", imageurl);
+		BasehttpSend(map, context, HttpConstants.METHOD_UPOADLCHATIMAGE,httpCallBack, RequestUploadChatImageInfoBean.class, ishowStatus, false);
+	}
 	
 	
 	/**

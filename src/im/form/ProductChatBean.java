@@ -1,5 +1,6 @@
 package im.form;
 
+import android.content.Context;
 import im.control.SocketManger;
 import im.control.SocketManger.SocketManagerListener;
 import im.form.BaseChatBean.SendStatus;
@@ -11,12 +12,11 @@ import im.form.BaseChatBean.SendStatus;
  */
 
 public class ProductChatBean extends BaseChatBean{
-
 	/******
 	 * @param product_id  int 商品的id
 	 * ****/
-	public ProductChatBean() {
-		super(ChatType.link_type,RequestMessageBean.type_produtc_img);
+	public ProductChatBean(Context context) {
+		super(ChatType.link_type,RequestMessageBean.type_produtc_img,context);
 	}
 
 	@Override
