@@ -24,7 +24,7 @@
         android:id="@+id/qzcodeshare_layouyt_customview"
         android:layout_width="@dimen/user_config_iconwidth50_dimen"
         android:layout_height="@dimen/user_config_iconwidth50_dimen" 
-        zzy:src="@drawable/a"
+        zzy:src="@drawable/default_pic"
         />
 
     <RelativeLayout
