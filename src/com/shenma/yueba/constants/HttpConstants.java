@@ -668,6 +668,17 @@ public class HttpConstants {
 	 * **/
 	public static String METHOD_GETROOMID = Circle+ "GetRoom";
 	
+	/*****
+	 *分享商品
+	 * **/
+	public static String METHOD_PRODUCT_CREATESHARE = PRODUCT+ "CreateShare";
+	
+	
+	/*****
+	 *现金分享  （分享订单分享订单可获得红包）
+	 * **/
+	public static String METHOD_ORDER_CREATESHARE = Order+ "CreateShare";
+	
 	
 	/*****
 	 *获取房间消息

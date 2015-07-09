@@ -1665,6 +1665,43 @@ public class HttpControl {
 	}
 	
 	
+	
+	/**
+	 *  分享商品
+	 * @param  parentshareid int  此分享的父分享编号 可空
+     * @param  productid int  商品编号
+	 * @param httpCallBack HttpCallBackInterface 回调接口
+	 * @param context  Context
+     * @param ishowStatus boolean 是否显示等待对话框 true 是  false否
+	 * @return void
+	 * **/
+	public void createProductShare(int productid,boolean ishowStatus,final HttpCallBackInterface httpCallBack, Context context) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("productid", Integer.toString(productid));
+		map.put("parentshareid", "");
+		BasehttpSend(map, context, HttpConstants.METHOD_PRODUCT_CREATESHARE,httpCallBack, BaseRequest.class, ishowStatus, false);
+	}
+	
+	/**
+	 *  现金分享 分享订单分享订单可获得红包
+	 * @param  ParentShareId int  分享来源的分享编号 可为空
+     * @param  OrderNo String  商品编号
+	 * @param httpCallBack HttpCallBackInterface 回调接口
+	 * @param context  Context
+     * @param ishowStatus boolean 是否显示等待对话框 true 是  false否
+	 * @return void
+	 * **/
+	public void createOrderShare(String OrderNo,boolean ishowStatus,final HttpCallBackInterface httpCallBack, Context context) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("OrderNo", OrderNo);
+		map.put("parentshareid", "");
+		BasehttpSend(map, context, HttpConstants.METHOD_ORDER_CREATESHARE,httpCallBack, BaseRequest.class, ishowStatus, false);
+	}
+	
+	
+	
+	
+	
 	/**
 	 * 获取某个房间的历史聊天信息
 	 * @param  roomId   int 圈子编号 
@@ -1676,9 +1713,9 @@ public class HttpControl {
      * @param ishowStatus boolean 是否显示等待对话框 true 是  false否
 	 * @return void
 	 * **/
-	public void getRoomMessage(int roomId,int lastMessageId,int page,int pageSize,boolean ishowStatus,final HttpCallBackInterface httpCallBack, Context context) {
+	public void getRoomMessage(String roomId,int lastMessageId,int page,int pageSize,boolean ishowStatus,final HttpCallBackInterface httpCallBack, Context context) {
 		Map<String, String> map = new HashMap<String, String>();
-		map.put("roomId", Integer.toString(roomId));
+		map.put("roomId", roomId);
 		if(lastMessageId>0)
 		{
 			map.put("lastMessageId", Integer.toString(lastMessageId));
