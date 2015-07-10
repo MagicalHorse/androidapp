@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -13,6 +15,8 @@ import android.widget.TextView;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.activity.ApproveBuyerDetailsActivity;
+import com.shenma.yueba.baijia.activity.BaiJiaOrderDetailsActivity;
 import com.shenma.yueba.baijia.modle.BaiJiaOrdeDetailsInfoBean;
 import com.shenma.yueba.baijia.modle.OrderPromotions;
 import com.shenma.yueba.util.FontManager;
@@ -63,6 +67,19 @@ List<BaiJiaOrdeDetailsInfoBean> obj_list=new ArrayList<BaiJiaOrdeDetailsInfoBean
 			holder.affirmorder_item_productcount_textview=(TextView)convertView.findViewById(R.id.affirmorder_item_productcount_textview);
 			holder.affirmorder_item_productprice_textview=(TextView)convertView.findViewById(R.id.affirmorder_item_productprice_textview);
 			holder.affirmorder_item_icon_imageview=(ImageView)convertView.findViewById(R.id.affirmorder_item_icon_imageview);
+			holder.affirmorder_item_icon_imageview.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					if(v.getTag()!=null && v.getTag() instanceof BaiJiaOrdeDetailsInfoBean)
+					{
+					BaiJiaOrdeDetailsInfoBean bean=(BaiJiaOrdeDetailsInfoBean)v.getTag();
+					Intent intent=new Intent(context,ApproveBuyerDetailsActivity.class);
+					intent.putExtra("productID", bean.getProductId());
+					context.startActivity(intent);
+					}
+				}
+			});
 			holder.productinfolist_layout_huodong_linearlayout=(LinearLayout)convertView.findViewById(R.id.productinfolist_layout_huodong_linearlayout);
 			
 			convertView.setTag(holder);
@@ -87,18 +104,19 @@ List<BaiJiaOrdeDetailsInfoBean> obj_list=new ArrayList<BaiJiaOrdeDetailsInfoBean
  
  void setValue(Holder holder,int position)
  {
+	 holder.productinfolist_layout_huodong_linearlayout.removeAllViews();
 	 BaiJiaOrdeDetailsInfoBean baiJiaOrdeDetailsInfoBean= obj_list.get(position);
+	 holder.affirmorder_item_icon_imageview.setTag(baiJiaOrdeDetailsInfoBean);
 	 MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.getImage(ToolsUtil.nullToString(baiJiaOrdeDetailsInfoBean.getProductPic()), 320, 0), holder.affirmorder_item_icon_imageview, MyApplication.getInstance().getDisplayImageOptions());
 	 holder.affirmorder_item_productname_textview.setText(ToolsUtil.nullToString(baiJiaOrdeDetailsInfoBean.getProductName()));
 	 holder.affirmorder_item_productsize_textview.setText(ToolsUtil.nullToString(baiJiaOrdeDetailsInfoBean.getSizeName()+"  "+baiJiaOrdeDetailsInfoBean.getSizeValue()));
 	 holder.affirmorder_item_productcount_textview.setText(ToolsUtil.nullToString("x"+baiJiaOrdeDetailsInfoBean.getProductCount()));
 	 holder.affirmorder_item_productprice_textview.setText(ToolsUtil.nullToString("￥"+baiJiaOrdeDetailsInfoBean.getPrice()));
-	 if(baiJiaOrdeDetailsInfoBean.getPromotions()!=null)
+	 List<OrderPromotions> promotion_array=baiJiaOrdeDetailsInfoBean.getPromotions();
+	 
+	 if(promotion_array!=null)
 	 {
-		 addHuoDong(holder.productinfolist_layout_huodong_linearlayout,baiJiaOrdeDetailsInfoBean.getPromotions());
-	 }else
-	 {
-		 holder.productinfolist_layout_huodong_linearlayout.removeAllViews();
+		 addHuoDong(holder.productinfolist_layout_huodong_linearlayout,promotion_array);
 	 }
  }
  
@@ -109,8 +127,10 @@ List<BaiJiaOrdeDetailsInfoBean> obj_list=new ArrayList<BaiJiaOrdeDetailsInfoBean
 	 {
 		 View v=gethuoDongView();
 		 TextView tv=(TextView)v.findViewById(R.id.buyersteetfragment_item_footer_linearlyout_content_textview);
-		 tv.setText(ToolsUtil.nullToString(huodonglist.get(i).getPromotionName() +" "+huodonglist.get(i).getAmount()));
-		 ll.addView(v, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+		 tv.setText(ToolsUtil.nullToString(huodonglist.get(i).getPromotionName() +" 立减 "+huodonglist.get(i).getAmount()+"元"));
+		 LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+		 params.topMargin=5;
+		 ll.addView(v,params);
 	 }
  }
  

@@ -20,6 +20,7 @@
             android:id="@+id/baijia_orderlayout_item_nickname_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="@dimen/textsize14sp"
             android:text="" />
 
         <TextView
@@ -27,6 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:textSize="@dimen/textsize14sp"
             android:text=""
             android:textColor="@color/red" />
     </RelativeLayout>
@@ -44,9 +46,10 @@
         android:paddingTop="@dimen/shop_main_lineheight8_dimen" >
 
         <TextView
-            android:id="@+id/baijia_orderlayout_item_producecount_textview"
+            android:id="@+id/orderlist_item_desc_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="@dimen/textsize14sp"
             android:text="" />
 
         <TextView
@@ -54,6 +57,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/baijia_orderlayout_item_pricevalue_textview"
+            android:textSize="@dimen/textsize14sp"
             android:text="实付:￥" />
 
         <TextView
@@ -61,6 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:textSize="@dimen/textsize14sp"
             android:text="" />
     </RelativeLayout>
 

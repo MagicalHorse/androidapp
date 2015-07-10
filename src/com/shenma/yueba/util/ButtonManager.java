@@ -193,4 +193,6 @@ public final static String SHENSULOADING="申诉中";//5
 		intent.putExtra("DATA", baiJiaOrderListInfo);
 		((Activity)context).startActivityForResult(intent, 200);
 	}
+	
+
 }

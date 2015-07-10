@@ -125,7 +125,7 @@ public class SameCityAdapter extends BaseAdapterWithUtil {
 			holder.tv_attention.setText("取消关注");
 		}else
 		{
-			holder.tv_attention.setText("关    注");
+			holder.tv_attention.setText(" 关注  ");
 		}
 		
 		String[] pic_array=brandCityWideInfo.getPic();
@@ -209,7 +209,7 @@ public class SameCityAdapter extends BaseAdapterWithUtil {
 					switch(Status)
 					{
 					case 0:
-						((TextView)v).setText("关    注");
+						((TextView)v).setText(" 关注  ");
 						brandCityWideInfo.setIsFavorite(false);
 						break;
 					case 1:

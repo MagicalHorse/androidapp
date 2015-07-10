@@ -5,53 +5,69 @@
     android:orientation="horizontal"
     android:padding="10dip" >
 
+    <RelativeLayout 
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
     <com.shenma.yueba.view.RoundImageView
+        android:layout_centerVertical="true"
         android:id="@+id/iv_dynamic_icon"
         android:layout_width="@dimen/user_config_iconwidth60_dimen"
         android:layout_height="@dimen/user_config_iconwidth60_dimen"
         android:src="@drawable/default_pic"/>
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:paddingBottom="3dip"
-        android:paddingLeft="10dip"
-        android:paddingTop="3dip" >
-
+    <LinearLayout 
+        android:layout_centerVertical="true"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="5dp"
+        android:layout_toLeftOf="@+id/iv_dynamic_img"
+        android:layout_toRightOf="@id/iv_dynamic_icon"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
         <TextView
+            android:gravity="left|center_vertical"
+            android:layout_weight="1"
             android:id="@+id/tv_name"
-            android:layout_width="@dimen/shop_main_iconwidth80_dimen"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:text="叮当猫"
-            android:textSize="@dimen/textsize16sp" />
+            android:textSize="@dimen/textsize14sp" />
 
         <TextView
-            android:layout_toRightOf="@+id/tv_name"
+            android:layout_marginTop="@dimen/shop_main_width5_dimen"
+            android:gravity="left|center_vertical"
+            android:layout_weight="1"
             android:id="@+id/tv_dynamic_type"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/tv_name"
-            android:layout_marginLeft="5dip"
-            android:layout_toLeftOf="@+id/iv_dynamic_img"
+            android:singleLine="true"
+            android:layout_height="match_parent"
             android:text="加入圈子"
             android:textColor="@color/text_gray_color"
             android:textSize="@dimen/textsize13sp" />
 
         <TextView
+            android:layout_marginTop="@dimen/shop_main_width5_dimen"
+            android:gravity="left|center_vertical"
+            android:layout_weight="1"
             android:id="@+id/tv_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:text="2019-01-29 19:39"
             android:textColor="@color/text_gray_color"
             android:textSize="@dimen/textsize12sp" />
-
-        <ImageView
+        
+    </LinearLayout>
+    
+    <ImageView
+            android:layout_centerVertical="true"
             android:id="@+id/iv_dynamic_img"
             android:layout_width="50dip"
             android:layout_height="50dip"
             android:layout_alignParentRight="true"
             android:background="@drawable/default_pic" />
-    </RelativeLayout>
-
+    
+   </RelativeLayout>
 </LinearLayout>

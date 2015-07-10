@@ -8,8 +8,9 @@
     <include
         android:id="@+id/baijia_orderdetails_layout_head"
         layout="@layout/title_for_common" />
-
+    
     <ScrollView
+        android:layout_marginBottom="15dip"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/baijia_orderdetails_layout_footer"
@@ -267,7 +268,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="15dip"
         android:background="@color/white"
         android:minHeight="@dimen/shop_main_marginleft30_dimen"
         android:orientation="horizontal"
@@ -291,12 +291,12 @@
                 android:textSize="@dimen/textsize11sp" />
 
             <TextView
+                android:layout_marginLeft="20dp"
                 android:id="@+id/baijia_orderdetails_xjfx_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/shop_main_lineheight8_dimen"
                 android:drawableTop="@drawable/priceshare"
                 android:gravity="center"
                 android:text="现金分享"

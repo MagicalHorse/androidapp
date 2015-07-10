@@ -4,12 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -21,16 +18,16 @@ import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.adapter.BaiJiaOrderListAdapter.OrderControlListener;
 import com.shenma.yueba.baijia.adapter.BaijiaOrderDetailsAdapter;
-import com.shenma.yueba.baijia.fragment.BaiJiaOrderListFragment;
 import com.shenma.yueba.baijia.modle.BaiJiaOrdeDetailsInfoBean;
 import com.shenma.yueba.baijia.modle.BaiJiaOrderListInfo;
+import com.shenma.yueba.baijia.modle.ProductInfoBean;
 import com.shenma.yueba.baijia.modle.RequestBaiJiaOrdeDetailsInfoBean;
 import com.shenma.yueba.util.ButtonManager;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.ListViewUtils;
 import com.shenma.yueba.util.ShareUtil;
-import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.ShareUtil.ShareListener;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.RoundImageView;
@@ -116,27 +113,12 @@ LinearLayout baijia_orderdetails_footer_right_linearlayout;//按钮的父对象
 		riv_customer_head=(RoundImageView)parentView.findViewById(R.id.riv_customer_head);
 		riv_customer_head.setOnClickListener(this);
 		baijia_orderdetails_layout_lsitview=(ListView)parentView.findViewById(R.id.baijia_orderdetails_layout_lsitview);
-		baijiaOrderDetailsAdapter=new BaijiaOrderDetailsAdapter(this, obj_list);
-		baijia_orderdetails_layout_lsitview.setAdapter(baijiaOrderDetailsAdapter);
+		
 		baijia_orderdetails_lianxibuyer_textview=(TextView)parentView.findViewById(R.id.baijia_orderdetails_lianxibuyer_textview);
 		baijia_orderdetails_lianxibuyer_textview.setOnClickListener(this);
 		baijia_orderdetails_xjfx_textview=(TextView)parentView.findViewById(R.id.baijia_orderdetails_xjfx_textview);
 		baijia_orderdetails_xjfx_textview.setOnClickListener(this);
 		setFont();
-		baijia_orderdetails_layout_lsitview.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
-				if(obj_list.size()>0)
-				{
-					BaiJiaOrdeDetailsInfoBean bean=obj_list.get(arg2);
-					Intent intent=new Intent(BaiJiaOrderDetailsActivity.this,ApproveBuyerDetailsActivity.class);
-					intent.putExtra("productID", bean.getProductId());
-					startActivity(intent);
-				}
-			}
-		});
 	}
 	
 	/****
@@ -240,25 +222,54 @@ LinearLayout baijia_orderdetails_footer_right_linearlayout;//按钮的父对象
 	 * ***/
 	void buttonControl(View btn)
 	{
-		if(btn==null || btn.getTag()==null || !(btn.getTag() instanceof BaiJiaOrderListInfo))
+		if(btn==null || btn.getTag()==null || !(btn.getTag() instanceof BaiJiaOrdeDetailsInfoBean))
         {
         	return;
         }
-		BaiJiaOrderListInfo baiJiaOrderListInfo=(BaiJiaOrderListInfo)btn.getTag();
+		BaiJiaOrdeDetailsInfoBean baiJiaOrderListInfo=(BaiJiaOrdeDetailsInfoBean)btn.getTag();
 		String str=((Button)btn).getText().toString();
 		if(str.equals(ButtonManager.WAITPAY))//如果是等待支付
 		{
-			ButtonManager.payOrder(this, baiJiaOrderListInfo);
+			//数据转换
+			BaiJiaOrderListInfo info=dataTrasition(baiJiaOrderListInfo);
+			ButtonManager.payOrder(this, info);
 		}else if(str.equals(ButtonManager.CANCELPAY))//撤销退款
 		{
 			ButtonManager.cancelRefund(this);
 		}else if(str.equals(ButtonManager.QUERENTIHUO))//确认提货
 		{
-			ButtonManager.affirmPUG(this, baiJiaOrderListInfo, this);
+			//数据转换
+			BaiJiaOrderListInfo info=dataTrasition(baiJiaOrderListInfo);
+			ButtonManager.affirmPUG(this, info, this);
 		}else if(str.equals(ButtonManager.SHENQINGTUIKUAN))//申请退款
 		{
-			ButtonManager.applyforRefund(this, baiJiaOrderListInfo);
+			//数据转换
+			BaiJiaOrderListInfo info=dataTrasition(baiJiaOrderListInfo);
+			ButtonManager.applyforRefund(this, info);
 		}
+	}
+	
+	
+	BaiJiaOrderListInfo dataTrasition(BaiJiaOrdeDetailsInfoBean baiJiaOrderListInfo)
+	{
+		BaiJiaOrderListInfo info=new BaiJiaOrderListInfo();
+		info.setAddress(baiJiaOrderListInfo.getPickAddress());
+		info.setAmount(baiJiaOrderListInfo.getOrderAmount());
+		info.setBuyerName(baiJiaOrderListInfo.getBuyerName());
+		info.setCreateDate(baiJiaOrderListInfo.getCreateDate());
+		info.setOrderNo(baiJiaOrderListInfo.getOrderNo());
+		info.setOrderProductCount(baiJiaOrderListInfo.getProductCount());
+		info.setOrderStatus(baiJiaOrderListInfo.getOrderStatus());
+		info.setOrderStatusStr(baiJiaOrderListInfo.getOrderStatusName());
+		ProductInfoBean productInfoBean=new ProductInfoBean();
+		productInfoBean.setImage(baiJiaOrderListInfo.getProductPic());
+		productInfoBean.setName(baiJiaOrderListInfo.getProductName());
+		productInfoBean.setPrice(baiJiaOrderListInfo.getPrice());
+		productInfoBean.setProductCount(baiJiaOrderListInfo.getProductCount());
+		productInfoBean.setProductId(baiJiaOrderListInfo.getProductId());
+		info.setProduct(productInfoBean);
+		
+		return info;
 	}
 	
 	
@@ -310,7 +321,6 @@ LinearLayout baijia_orderdetails_footer_right_linearlayout;//按钮的父对象
 		tv_get_address_content.setText(ToolsUtil.nullToString(baiJiaOrdeDetailsInfoBean.getPickAddress()));
 		MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.nullToString(baiJiaOrdeDetailsInfoBean.getBuyerLogo()), riv_customer_head, MyApplication.getInstance().getDisplayImageOptions());
 		obj_list.add(baiJiaOrdeDetailsInfoBean);
-		baijiaOrderDetailsAdapter.notifyDataSetChanged();
 		//根据订单状态 设置按钮
 		List<View> view_list=ButtonManager.getButton(this, bean.getData().getOrderStatus());
 		baijia_orderdetails_footer_right_linearlayout.removeAllViews();
@@ -324,13 +334,18 @@ LinearLayout baijia_orderdetails_footer_right_linearlayout;//按钮的父对象
 					Button btn=(Button)button.findViewById(R.id.baijia_orderdetails_sqtk_button);
 					FontManager.changeFonts(this, btn);
 					btn.setOnClickListener(this);
-					btn.setTag(bean);
+					BaiJiaOrdeDetailsInfoBean infobean=bean.getData();
+					btn.setTag(infobean);
 					LinearLayout.LayoutParams param=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-					param.leftMargin=10;
+					param.leftMargin=5;
 					baijia_orderdetails_footer_right_linearlayout.addView(button,param);
 				}
 			}
 		}
+		baijiaOrderDetailsAdapter=new BaijiaOrderDetailsAdapter(this, obj_list);
+		baijia_orderdetails_layout_lsitview.setAdapter(baijiaOrderDetailsAdapter);
+		baijiaOrderDetailsAdapter.notifyDataSetChanged();
+		
 		ListViewUtils.setListViewHeightBasedOnChildren(baijia_orderdetails_layout_lsitview);
 	}
 
