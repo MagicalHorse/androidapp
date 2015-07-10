@@ -47,7 +47,8 @@
 
     <Button
         android:id="@+id/chat_product_head_layout_button"
-        android:layout_width="@dimen/shop_main_iconwidth80_dimen"
+        android:textColor="@color/white"
+                android:layout_width="@dimen/shop_main_iconwidth80_dimen"
         android:layout_height="@dimen/shop_main_marginleft30_dimen"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"

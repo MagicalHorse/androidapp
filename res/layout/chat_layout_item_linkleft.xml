@@ -22,11 +22,10 @@
 
         <TextView
             android:id="@+id/chat_layout_item_leftmsg_name_textview"
+            style="@style/chat_name_time_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/shop_main_lineheight8_dimen"
-            android:text=""
-            android:textSize="@dimen/textsize11sp" />
+            android:layout_marginLeft="@dimen/shop_main_lineheight8_dimen" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -36,32 +35,30 @@
             android:padding="@dimen/shop_main_lineheight8_dimen" >
 
             <ImageView
-                android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/shop_main_width5_dimen"
                 android:id="@+id/chat_layout_item_leftmsg_productimg_textview"
                 android:layout_width="@dimen/shop_main_iconwidth80_dimen"
                 android:layout_height="@dimen/shop_main_iconwidth80_dimen"
+                android:layout_gravity="top"
+                android:layout_marginLeft="@dimen/shop_main_width5_dimen"
                 android:background="@color/color_lightgrey"
                 android:scaleType="fitCenter"
                 android:src="@drawable/default_pic" />
 
             <TextView
-                android:layout_marginLeft="@dimen/shop_main_lineheight8_dimen"
-                android:layout_gravity="center"
                 android:id="@+id/chat_layout_item_leftmsg_msg_textview"
+                style="@style/chat_text_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/textsize9sp"
-                 />
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/shop_main_lineheight8_dimen" />
         </LinearLayout>
 
         <TextView
             android:id="@+id/chat_layout_item_leftmsg_time_textview"
+            style="@style/chat_name_time_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/shop_main_lineheight8_dimen"
-            android:text=""
-            android:textSize="@dimen/textsize9sp" />
+            android:layout_marginLeft="@dimen/shop_main_lineheight8_dimen" />
     </LinearLayout>
 
 </RelativeLayout>
