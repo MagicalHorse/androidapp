@@ -27,6 +27,8 @@ import com.shenma.yueba.R;
  */
 public class TagImageView extends RelativeLayout {
 	
+	
+	private ArrayList<String> tagNameList =new ArrayList<String>();//姓名的集合
 	private int i;
 	/** 上下文对象 */
 	private Context context;
@@ -67,20 +69,33 @@ public class TagImageView extends RelativeLayout {
 	public void addTextTag(String content, int tagX, int tagY) {
 		if (tagViewList == null)
 			tagViewList = new ArrayList<View>();
-		LayoutInflater mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		View view = mInflater.inflate(R.layout.tag, null);
-		TextView text = (TextView) view.findViewById(R.id.tag_text);
-		RelativeLayout layout = (RelativeLayout) view.findViewById(R.id.tag_layout);
-		text.setText(content);
-		layout.setTag(i++);
-		setTagViewOnTouchListener(layout);
-		this.addView(layout);
-		setTagViewPosition(layout, tagX, tagY);
-		tagViewList.add(layout);
-		Map<String, Integer> tagsPositonMap = new HashMap<String, Integer>();
-		tagsPositonMap.put("x", tagX);
-		tagsPositonMap.put("y", tagY);
-		positionList.add(tagsPositonMap);
+		boolean isAdd = true;
+		if(tagNameList.contains(content)){
+			for (int i = 0; i < positionList.size(); i++) {
+				if(tagX == positionList.get(i).get("x") && tagY == positionList.get(i).get("x")){
+					isAdd = false;
+					break;
+				}
+			}
+		}
+		if(isAdd){
+			LayoutInflater mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			View view = mInflater.inflate(R.layout.tag, null);
+			TextView text = (TextView) view.findViewById(R.id.tag_text);
+			RelativeLayout layout = (RelativeLayout) view.findViewById(R.id.tag_layout);
+			text.setText(content);
+			layout.setTag(i++);
+			setTagViewOnTouchListener(layout);
+			this.addView(layout);
+			setTagViewPosition(layout, tagX, tagY);
+			tagViewList.add(layout);
+			Map<String, Integer> tagsPositonMap = new HashMap<String, Integer>();
+			tagsPositonMap.put("x", tagX);
+			tagsPositonMap.put("y", tagY);
+			positionList.add(tagsPositonMap);
+			tagNameList.add(content);
+		}
+	
 	}
 
 	/**
@@ -202,8 +217,18 @@ public class TagImageView extends RelativeLayout {
 		return positionList;
 	}
 
+	
+	
 
 	
+	public ArrayList<String> getTagNameList() {
+		return tagNameList;
+	}
+
+	public void setTagNameList(ArrayList<String> tagNameList) {
+		this.tagNameList = tagNameList;
+	}
+
 	/**
 	 * 清除所有标签
 	 * 

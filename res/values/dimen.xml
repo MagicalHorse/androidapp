@@ -18,8 +18,8 @@
   <dimen name="corsur_margin">10dip</dimen>
   <dimen name="bottom_item_height">60dip</dimen>
   
-  
-  
+  <dimen name="title_text_normal_size">17sp</dimen>
+   <dimen name="title_text_selected_size">20sp</dimen>
   
   
       <!-- Default screen margins, per the Android Design guidelines. -->

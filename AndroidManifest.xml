@@ -488,6 +488,7 @@
           <!-- 提现历史 -->
         <activity
             android:name="com.shenma.yueba.yangjia.activity.PublishProductActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" >
         </activity>
         <!-- 添加圈子 -->

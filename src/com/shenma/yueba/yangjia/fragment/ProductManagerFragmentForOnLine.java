@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -89,6 +90,7 @@ public class ProductManagerFragmentForOnLine extends BaseFragment implements Ref
 							type);
 				}
 
+				
 				@Override
 				public void onPullUpToRefresh(PullToRefreshBase refreshView) {
 					page++;

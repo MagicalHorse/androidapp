@@ -131,6 +131,6 @@
             android:padding="8dip"
             android:text="@null" />
     </LinearLayout>
-
+ <View style="@style/style_horizontal_line" />
 
 </LinearLayout>

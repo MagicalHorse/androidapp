@@ -210,11 +210,14 @@ public class MeFragmentForBaiJia extends BaseFragment implements OnClickListener
 		shop_main_attentionvalue_textview.setText(myInfoBean.getFollowingCount()+"");
 		shop_main_fansvalue_textview.setText(myInfoBean.getFollowerCount()+"");
 		shop_main_praisevalue_textview.setText(myInfoBean.getCommunityCount()+"");
-		
-		tv_all_order_count_textview.setText(myInfoBean.getAllOrderCount()+"");
-		tv_waiting_for_send_count_textview.setText(myInfoBean.getWaitPaymentOrderCount()+"");
-		tv_waiting_for_recieve_count_textview.setText(myInfoBean.getPickedSelfOrderCount()+"");
-		tv_pick_by_myself_count_textview.setText(myInfoBean.getAfterSaleOrderCount()+"");
+		tv_all_order_count_textview.setVisibility(View.VISIBLE);
+		tv_waiting_for_send_count_textview.setVisibility(View.VISIBLE);
+		tv_waiting_for_recieve_count_textview.setVisibility(View.VISIBLE);
+		tv_pick_by_myself_count_textview.setVisibility(View.VISIBLE);
+		tv_all_order_count_textview.setText(ToolsUtil.setOrderCount(myInfoBean.getAllOrderCount()+""));
+		tv_waiting_for_send_count_textview.setText(ToolsUtil.setOrderCount(myInfoBean.getWaitPaymentOrderCount()+""));
+		tv_waiting_for_recieve_count_textview.setText(ToolsUtil.setOrderCount(myInfoBean.getPickedSelfOrderCount()+""));
+		tv_pick_by_myself_count_textview.setText(ToolsUtil.setOrderCount(myInfoBean.getAfterSaleOrderCount()+""));
 	}
 	
 	/***

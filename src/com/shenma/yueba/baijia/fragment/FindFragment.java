@@ -27,6 +27,7 @@ import com.shenma.yueba.baijia.modle.FragmentBean;
 import com.shenma.yueba.baijia.view.BaseView;
 import com.shenma.yueba.baijia.view.BrandListView;
 import com.shenma.yueba.baijia.view.CityWideListView;
+import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.FontManager;
 
 public class FindFragment extends Fragment{
@@ -209,11 +210,13 @@ public class FindFragment extends Fragment{
 			View v=(View)rl.findViewById(R.id.tab_line_view);
 			if(i==value)
 			{
+				tv.setTextSize(Constants.title_text_selected_size);
 			  tv.setTextColor(this.getResources().getColor(R.color.color_deeoyellow));
 		      v.setVisibility(View.VISIBLE);
 			}else
 			{
-				tv.setTextColor(this.getResources().getColor(R.color.black));
+				tv.setTextSize(Constants.title_text_normal_size);
+				tv.setTextColor(this.getResources().getColor(R.color.text_gray_color));
 				v.setVisibility(View.INVISIBLE);
 			}
 			

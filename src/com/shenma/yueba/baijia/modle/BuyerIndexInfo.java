@@ -1,8 +1,8 @@
 package com.shenma.yueba.baijia.modle;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+
+import com.shenma.yueba.yangjia.modle.Share;
 
 /**
  * @author gyj
@@ -18,6 +18,7 @@ public class BuyerIndexInfo extends BaseRequest implements Serializable {
 	private Order order;
 	private Income income;
 	private Goodsamount goodsamount;
+	private Share share;
 	public Product getProduct() {
 		return product;
 	}
@@ -62,6 +63,12 @@ public class BuyerIndexInfo extends BaseRequest implements Serializable {
 	}
 	public void setGoodsamount(Goodsamount goodsamount) {
 		this.goodsamount = goodsamount;
+	}
+	public Share getShare() {
+		return share;
+	}
+	public void setShare(Share share) {
+		this.share = share;
 	}
 
 
