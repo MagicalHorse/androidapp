@@ -379,7 +379,7 @@ public class IndexFragmentForYangJia extends BaseFragment implements
 		case R.id.bt_top_right:
 //			SocicalShareUtil shareUtil = new SocicalShareUtil(getActivity());
 //			shareUtil.showShareDialog();
-			ShareUtil.shareAll(getActivity(), "我市内容", "我是url", "http://img3.3lian.com/2014/c2/61/d/17.jpg");
+			ShareUtil.shareAll(getActivity(), "我市内容", "我是url", "http://img3.3lian.com/2014/c2/61/d/17.jpg",null);
 		default:
 			break;
 		}

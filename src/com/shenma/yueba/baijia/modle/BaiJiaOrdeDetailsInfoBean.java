@@ -1,6 +1,8 @@
 package com.shenma.yueba.baijia.modle;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**  
  * @author gyj  
@@ -26,8 +28,30 @@ public class BaiJiaOrdeDetailsInfoBean implements Serializable{
 	String OrderStatusName="";// 订单状态描述
 	String CreateDate="";// 创建时间
 	String BuyerLogo="";//买手头像
+	boolean IsShareable;// 是否可以分享
+    String ShareLink="";//分享连接
+    List<OrderPromotions> Promotions=new ArrayList<OrderPromotions>();//活动信息
 
 	
+	
+	public List<OrderPromotions> getPromotions() {
+		return Promotions;
+	}
+	public void setPromotions(List<OrderPromotions> promotions) {
+		Promotions = promotions;
+	}
+	public boolean isIsShareable() {
+		return IsShareable;
+	}
+	public void setIsShareable(boolean isShareable) {
+		IsShareable = isShareable;
+	}
+	public String getShareLink() {
+		return ShareLink;
+	}
+	public void setShareLink(String shareLink) {
+		ShareLink = shareLink;
+	}
 	public String getBuyerLogo() {
 		return BuyerLogo;
 	}

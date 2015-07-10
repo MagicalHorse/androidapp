@@ -83,13 +83,13 @@ public class ShareUtil {
 							{
 								shareListener.sharedListener_sucess();
 							}
-							Toast.makeText(activity, "分享成功", Toast.LENGTH_SHORT).show();
+							//Toast.makeText(activity, "分享成功", Toast.LENGTH_SHORT).show();
 						} else {
 							if(shareListener!=null)
 							{
-								shareListener.sharedListener_Fails();
+								shareListener.sharedListener_Fails("分享失败");
 							}
-							Toast.makeText(activity, "分享失败", Toast.LENGTH_SHORT).show();
+							//Toast.makeText(activity, "分享失败", Toast.LENGTH_SHORT).show();
 						}
 					}
 				});
@@ -122,16 +122,17 @@ public class ShareUtil {
 							{
 								shareListener.sharedListener_sucess();
 							}
-							Toast.makeText(activity, "分享成功", Toast.LENGTH_SHORT).show();
+							//Toast.makeText(activity, "分享成功", Toast.LENGTH_SHORT).show();
 						} else {
 							if(shareListener!=null)
 							{
-								shareListener.sharedListener_Fails();
+								shareListener.sharedListener_Fails("分享失败");
 							}
-							Toast.makeText(activity, "分享失败", Toast.LENGTH_SHORT).show();
+							//Toast.makeText(activity, "分享失败", Toast.LENGTH_SHORT).show();
 						}
 					}
 
+					
 					@Override
 					public void onStart() {
 						
@@ -262,6 +263,6 @@ public class ShareUtil {
 	public interface ShareListener
 	{
 		void sharedListener_sucess();//分享成
-		void sharedListener_Fails();//分享失败
+		void sharedListener_Fails(String msg);//分享失败
 	}
 }

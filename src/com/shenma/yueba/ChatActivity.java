@@ -120,7 +120,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 	int toUser_id;
 	int circleId;// 圈子id
 	int currPage = Constants.CURRPAGE_VALUE;
-	int roomId = -1;
+	String roomId = null;
 	String owner;
 	String userName = "";
 	String usericon = "";
@@ -362,7 +362,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 	    	if(newcircleId > 0 && newcircleId==circleId)
 	    	{
 	    		//如股票房间号不存在
-	    		if(roomId<0)
+	    		if(roomId==null || roomId.equals(""))
 	    		{
 	    			ishowStatus=true;
 	    			getRoomdId(circleId, formUser_id, toUser_id);
@@ -379,7 +379,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 	    	if(newtoUser_id>0 && newtoUser_id==toUser_id)
 	    	{
 	    		//如股票房间号不存在
-	    		if(roomId<0)
+	    		if(roomId==null || roomId.equals(""))
 	    		{
 	    			ishowStatus=true;
 	    			getRoomdId(circleId, formUser_id, toUser_id);
@@ -474,7 +474,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 		bean.setContent(content);
 		bean.setFrom_id(formUser_id);
 		bean.setTo_id(toUser_id);
-		bean.setRoom_No(Integer.toString(roomId));
+		bean.setRoom_No(roomId);
 		bean.setUserName(userName);
 		bean.setIsoneself(true);
 		bean.sendData(this);// 发送数据
@@ -935,7 +935,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 			// 加入房间
 			RoomBean roomBean = new RoomBean();
 			roomBean.setOwner(owner);
-			roomBean.setRoom_id(Integer.toString(roomId));
+			roomBean.setRoom_id(roomId);
 			roomBean.setTitle(requestRoomInfo.getTitle());
 			roomBean.setUserName(userName);
 			roomBean.setType(chat_type);
@@ -1025,7 +1025,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 	 * @param pageSize
 	 *            int 每页大小
 	 * ***/
-	void getMessageRecord(int roomId, int lastMessageId, final int page,
+	void getMessageRecord(String roomId, int lastMessageId, final int page,
 			int pageSize) {
 		httpControl.getRoomMessage(roomId, lastMessageId, page, pageSize,
 				ishowStatus, new HttpCallBackInterface() {

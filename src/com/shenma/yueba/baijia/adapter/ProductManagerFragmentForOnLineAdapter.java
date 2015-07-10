@@ -14,25 +14,27 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.modle.BaseRequest;
 import com.shenma.yueba.baijia.modle.ProductManagerForOnLineBean;
-import com.shenma.yueba.baijia.modle.RequestUploadProductDataBean;
 import com.shenma.yueba.inter.RefreshProductListInter;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.ShareUtil;
-import com.shenma.yueba.util.SharedUtil;
+import com.shenma.yueba.util.ShareUtil.ShareListener;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.yangjia.activity.PublishProductActivity;
-import com.shenma.yueba.yangjia.fragment.ProductManagerFragmentForOnLine;
 
 public class ProductManagerFragmentForOnLineAdapter extends BaseAdapterWithUtil {
 	private List<ProductManagerForOnLineBean> mList;
 	private int flag;
 	private RefreshProductListInter inter;
+	Context ctx;
 	public ProductManagerFragmentForOnLineAdapter(Context ctx,
 			List<ProductManagerForOnLineBean> mList, int flag,RefreshProductListInter inter) {
 		super(ctx);
+		this.ctx=ctx;
 		this.mList = mList;
 		this.flag = flag;
 		this.inter = inter;
@@ -40,19 +42,19 @@ public class ProductManagerFragmentForOnLineAdapter extends BaseAdapterWithUtil 
 
 	@Override
 	public int getCount() {
-		// TODO Auto-generated method stub
+		
 		return mList.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		// TODO Auto-generated method stub
+		
 		return mList.get(position);
 	}
 
 	@Override
 	public long getItemId(int position) {
-		// TODO Auto-generated method stub
+		
 		return position;
 	}
 
@@ -114,7 +116,18 @@ public class ProductManagerFragmentForOnLineAdapter extends BaseAdapterWithUtil 
 				@Override
 				public void onClick(View v) {
 					if ("分享".equals(((TextView) v).getText().toString().trim())) {
-						ShareUtil.shareAll((Activity)ctx, mList.get(position).getBrandName(), mList.get(position).getShareLink(), mList.get(position).getDetail().getImages().get(0).getImageUrl()+"_240x0.jpg");
+						ShareUtil.shareAll((Activity)ctx, mList.get(position).getBrandName(), mList.get(position).getShareLink(), mList.get(position).getDetail().getImages().get(0).getImageUrl()+"_240x0.jpg",new ShareListener() {
+							
+							@Override
+							public void sharedListener_sucess() {
+								requestShared(Integer.parseInt(mList.get(position).getProductId()));
+							}
+							
+							@Override
+							public void sharedListener_Fails(String msg) {
+								MyApplication.getInstance().showMessage(ctx, msg);
+							}
+						});
 					}
 				}
 			});
@@ -256,7 +269,7 @@ public class ProductManagerFragmentForOnLineAdapter extends BaseAdapterWithUtil 
 
 					@Override
 					public void http_Fails(int error, String msg) {
-						// TODO Auto-generated method stub
+						
 
 					}
 				}, ctx, true, true);
@@ -286,6 +299,32 @@ public class ProductManagerFragmentForOnLineAdapter extends BaseAdapterWithUtil 
 			}
 		}, ctx, true, true);
 
+	}
+	
+	
+	/*****
+	 * 分享成功后 回调
+	 * ****/
+	void requestShared(int productid)
+	{
+		HttpControl httpControl=new HttpControl();
+		httpControl.createProductShare(productid, false, new HttpCallBackInterface() {
+			
+			@Override
+			public void http_Success(Object obj) {
+				if(obj!=null && obj instanceof BaseRequest)
+				{
+					MyApplication.getInstance().showMessage(ctx, "分享成功");
+				}else{
+					MyApplication.getInstance().showMessage(ctx, "分享失败");
+				}
+			}
+			
+			@Override
+			public void http_Fails(int error, String msg) {
+				MyApplication.getInstance().showMessage(ctx, msg);
+			}
+		},ctx);
 	}
 
 }

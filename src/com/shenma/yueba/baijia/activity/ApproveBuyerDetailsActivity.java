@@ -70,6 +70,7 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView impleme
 	// 商品id;
 	int productID = -1;
 	HttpControl httpControl = new HttpControl();
+	RelativeLayout appprovebuyer_viewpager_relativelayout;
 	// 商品信息对象
 	ProductsDetailsInfoBean Data;
 	// 头像
@@ -124,7 +125,7 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView impleme
 		
 		appprovebuyer_viewpager_footer_linerlayout = (LinearLayout) findViewById(R.id.appprovebuyer_viewpager_footer_linerlayout);
 		appprovebuyer_viewpager = (ViewPager) findViewById(R.id.appprovebuyer_viewpager);
-		RelativeLayout appprovebuyer_viewpager_relativelayout=(RelativeLayout)findViewById(R.id.appprovebuyer_viewpager_relativelayout);
+		appprovebuyer_viewpager_relativelayout=(RelativeLayout)findViewById(R.id.appprovebuyer_viewpager_relativelayout);
 		DisplayMetrics dm = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(dm);
 		int width = dm.widthPixels;
@@ -309,6 +310,9 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView impleme
 			startTimeToViewPager();
 			
 			
+		}else
+		{
+			appprovebuyer_viewpager_relativelayout.setVisibility(View.VISIBLE);
 		}
 		ProductsDetailsPromotion productsDetailsPromotion=Data.getPromotion();
 		if(productsDetailsPromotion!=null)

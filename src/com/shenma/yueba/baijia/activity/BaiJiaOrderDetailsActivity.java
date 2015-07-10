@@ -28,7 +28,10 @@ import com.shenma.yueba.baijia.modle.RequestBaiJiaOrdeDetailsInfoBean;
 import com.shenma.yueba.util.ButtonManager;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.ListViewUtils;
+import com.shenma.yueba.util.ShareUtil;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
+import com.shenma.yueba.util.ShareUtil.ShareListener;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.RoundImageView;
 
@@ -89,6 +92,7 @@ LinearLayout baijia_orderdetails_footer_right_linearlayout;//按钮的父对象
 				
 			}
 		});
+		
 		baijia_orderdetails_footer_right_linearlayout=(LinearLayout)parentView.findViewById(R.id.baijia_orderdetails_footer_right_linearlayout);
 		//订单编号
 		order_no_content=(TextView)parentView.findViewById(R.id.order_no_content);
@@ -159,6 +163,7 @@ LinearLayout baijia_orderdetails_footer_right_linearlayout;//按钮的父对象
 			startActivity(iconIntent);
 			break;
 		case R.id.baijia_orderdetails_xjfx_textview://现金分享
+			shareUrl();
 			break;
 		case R.id.tv_customer_phone_content://买手手机号
 		case R.id.tv_customer_phone_imageview://买手手机号
@@ -175,6 +180,60 @@ LinearLayout baijia_orderdetails_footer_right_linearlayout;//按钮的父对象
 		}
 		
 	}
+	
+	
+	
+	
+	/********
+	 *  分享
+	 *  @param content String 内容提示
+	 *  @param url String 链接地址
+	 *  @param icon String 图片地址
+	 * ****/
+	void shareUrl()
+	{
+		final BaiJiaOrdeDetailsInfoBean infobean=bean.getData();
+		
+		ShareUtil.shareAll(BaiJiaOrderDetailsActivity.this, "我市内容", infobean.getShareLink(), infobean.getProductName(),new ShareListener() {
+			
+			@Override
+			public void sharedListener_sucess() {
+				requestShared(infobean.getOrderNo());
+			}
+			
+			@Override
+			public void sharedListener_Fails(String msg) {
+				MyApplication.getInstance().showMessage(BaiJiaOrderDetailsActivity.this, msg);
+			}
+		});
+	}
+	
+	
+	void requestShared(final String OrderNo)
+	{
+		HttpControl httpControl=new HttpControl();
+		httpControl.createOrderShare(OrderNo, false, new HttpCallBackInterface() {
+			
+			@Override
+			public void http_Success(Object obj) {
+				if(obj!=null)
+				{
+					MyApplication.getInstance().showMessage(BaiJiaOrderDetailsActivity.this, "分享成功");
+				}else
+				{
+					http_Fails(500, "分享失败");
+				}
+			}
+			
+			@Override
+			public void http_Fails(int error, String msg) {
+				MyApplication.getInstance().showMessage(BaiJiaOrderDetailsActivity.this, msg);
+			}
+		}, BaiJiaOrderDetailsActivity.this);
+	}
+	
+	
+	
 	
 	/****
 	 * 按钮控制
@@ -272,7 +331,7 @@ LinearLayout baijia_orderdetails_footer_right_linearlayout;//按钮的父对象
 				}
 			}
 		}
-		
+		ListViewUtils.setListViewHeightBasedOnChildren(baijia_orderdetails_layout_lsitview);
 	}
 
 	@Override

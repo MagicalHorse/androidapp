@@ -11,7 +11,7 @@ import java.util.List;
  */
 
 public class RequestRoomInfo implements Serializable{
-	int id;//房间id
+	String id;//房间id
     String title;
     String owner;//创建人di
     //String[] users;//圈内成员id
@@ -28,10 +28,10 @@ public class RequestRoomInfo implements Serializable{
 	public void setUserList(List<Integer> userList) {
 		this.userList = userList;
 	}
-	public int getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	public String getTitle() {

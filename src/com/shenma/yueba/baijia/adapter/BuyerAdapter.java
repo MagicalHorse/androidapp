@@ -5,7 +5,6 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.sax.StartElementListener;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -22,6 +21,7 @@ import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.ApproveBuyerDetailsActivity;
 import com.shenma.yueba.baijia.activity.ShopMainActivity;
+import com.shenma.yueba.baijia.modle.BaseRequest;
 import com.shenma.yueba.baijia.modle.LikeUsersInfoBean;
 import com.shenma.yueba.baijia.modle.ProductPicInfoBean;
 import com.shenma.yueba.baijia.modle.ProductsInfoBean;
@@ -29,6 +29,7 @@ import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.ShareUtil;
+import com.shenma.yueba.util.ShareUtil.ShareListener;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.MyGridView;
 import com.shenma.yueba.view.RoundImageView;
@@ -98,14 +99,14 @@ public class BuyerAdapter extends BaseAdapter{
 			setOnclickListener(holder.approvebuyerdetails_attention_textview);
 			holder.buyersteetfragmeng_item_desc_textview=(TextView) convertView
 					.findViewById(R.id.buyersteetfragmeng_item_desc_textview);
-			holder.buyersteetfragmeng_item_siliao_button = (Button) convertView
+			holder.buyersteetfragmeng_item_siliao_button = (TextView) convertView
 					.findViewById(R.id.buyersteetfragmeng_item_siliao_button);
 			setOnclickListener(holder.buyersteetfragmeng_item_siliao_button);
 			//广告图片
 			holder.buyersteetfragment_item_footer_linearlyout=(LinearLayout)convertView.findViewById(R.id.buyersteetfragment_item_footer_linearlyout);
             holder.buyersteetfragment_item_footer_linearlyout_content_textview=(TextView)convertView.findViewById(R.id.buyersteetfragment_item_footer_linearlyout_content_textview);
 			
-			holder.buyersteetfragmeng_item_share_button = (Button) convertView.findViewById(R.id.buyersteetfragmeng_item_share_button);
+			holder.buyersteetfragmeng_item_share_button = (TextView) convertView.findViewById(R.id.buyersteetfragmeng_item_share_button);
 			setOnclickListener(holder.buyersteetfragmeng_item_share_button);
 			convertView.setTag(holder);
 			holder.approvebuyerdetails_attentionvalue_gridview=(MyGridView)convertView.findViewById(R.id.approvebuyerdetails_attentionvalue_gridview);
@@ -136,7 +137,7 @@ public class BuyerAdapter extends BaseAdapter{
 		// 商品描述
 		ImageView baijia_tab1_item_productcontent_imageview;
 		// 私聊 与 分享按钮
-		Button buyersteetfragmeng_item_siliao_button,
+		TextView buyersteetfragmeng_item_siliao_button,
 				buyersteetfragmeng_item_share_button;
 		// 关注人列表
 		MyGridView approvebuyerdetails_attentionvalue_gridview;
@@ -276,10 +277,10 @@ public class BuyerAdapter extends BaseAdapter{
 					if(v.getTag()!=null && v.getTag() instanceof ProductsInfoBean)
 					{
 						ProductsInfoBean bean=(ProductsInfoBean)v.getTag();
-						String content="";
-						String url="";
+						String content=bean.getProductName();
+						String url=bean.getShareLink();
 						String icon=ToolsUtil.getImage(ToolsUtil.nullToString(bean.getProductPic().getName()), 320, 0);
-						shareUrl(content, url, icon);
+						shareUrl(bean.getProductId(),content, url, icon);
 					}
 					
 					break;
@@ -347,8 +348,44 @@ public class BuyerAdapter extends BaseAdapter{
 	 *  @param url String 链接地址
 	 *  @param icon String 图片地址
 	 * ****/
-	void shareUrl(String content,String url,String icon)
+	void shareUrl(final int productid,String content,String url,String icon)
 	{
-		ShareUtil.shareAll(activity, "我市内容", "我是url", "http://img3.3lian.com/2014/c2/61/d/17.jpg");
+		ShareUtil.shareAll(activity, "我市内容", url, icon,new ShareListener() {
+			
+			@Override
+			public void sharedListener_sucess() {
+				requestShared(productid);
+			}
+			
+			@Override
+			public void sharedListener_Fails(String msg) {
+				MyApplication.getInstance().showMessage(activity, msg);
+			}
+		});
+	}
+	
+	/*****
+	 * 分享成功后 回调
+	 * ****/
+	void requestShared(int productid)
+	{
+		HttpControl httpControl=new HttpControl();
+		httpControl.createProductShare(productid, false, new HttpCallBackInterface() {
+			
+			@Override
+			public void http_Success(Object obj) {
+				if(obj!=null && obj instanceof BaseRequest)
+				{
+					MyApplication.getInstance().showMessage(activity, "分享成功");
+				}else{
+					MyApplication.getInstance().showMessage(activity, "分享失败");
+				}
+			}
+			
+			@Override
+			public void http_Fails(int error, String msg) {
+				MyApplication.getInstance().showMessage(activity, msg);
+			}
+		},activity );
 	}
 }

@@ -37,7 +37,7 @@
         android:maxLines="2"
         android:singleLine="true"
         android:ellipsize="end"
-        android:textSize="@dimen/textsize13sp" />
+        android:textSize="@dimen/textsize15sp" />
 
     <TextView
         android:layout_marginTop="@dimen/shop_main_width5_dimen"
@@ -47,7 +47,7 @@
         android:singleLine="true"
         android:ellipsize="end"
         android:text=""
-        android:textSize="@dimen/textsize11sp" />
+        android:textSize="@dimen/textsize13sp" />
 
     <TextView
         android:layout_marginTop="@dimen/shop_main_width5_dimen"
@@ -59,6 +59,6 @@
         android:text=""
         android:ellipsize="end"
         android:textColor="#999999"
-        android:textSize="@dimen/textsize10sp" />
+        android:textSize="@dimen/textsize12sp" />
 
 </LinearLayout>

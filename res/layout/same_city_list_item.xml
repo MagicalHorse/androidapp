@@ -32,7 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="小猫猫"
-                android:textSize="@dimen/textsize15sp" />
+                android:textSize="@dimen/textsize16sp" />
 
             <TextView
                 android:layout_marginTop="@dimen/shop_main_width2_dimen"
@@ -41,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:text="王府井百货--GIVN"
                 android:textColor="@color/text_gray_color"
-                android:textSize="@dimen/textsize11sp" />
+                android:textSize="@dimen/textsize13sp" />
         </LinearLayout>
 
         <TextView
@@ -55,7 +55,7 @@
             android:paddingLeft="10dip"
             android:paddingRight="10dip"
             android:paddingTop="5dip"
-            android:textSize="@dimen/textsize12sp"
+            android:textSize="@dimen/textsize13sp"
             android:text="关注" />
     </RelativeLayout>
 

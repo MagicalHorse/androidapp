@@ -23,7 +23,7 @@
             android:layout_width="@dimen/shop_main_iconwidth80_dimen"
             android:layout_height="wrap_content"
             android:text="叮当猫"
-            android:textSize="@dimen/textsize13sp" />
+            android:textSize="@dimen/textsize16sp" />
 
         <TextView
             android:layout_toRightOf="@+id/tv_name"
@@ -35,7 +35,7 @@
             android:layout_toLeftOf="@+id/iv_dynamic_img"
             android:text="加入圈子"
             android:textColor="@color/text_gray_color"
-            android:textSize="@dimen/textsize11sp" />
+            android:textSize="@dimen/textsize13sp" />
 
         <TextView
             android:id="@+id/tv_time"
@@ -44,7 +44,7 @@
             android:layout_alignParentBottom="true"
             android:text="2019-01-29 19:39"
             android:textColor="@color/text_gray_color"
-            android:textSize="@dimen/textsize10sp" />
+            android:textSize="@dimen/textsize12sp" />
 
         <ImageView
             android:id="@+id/iv_dynamic_img"

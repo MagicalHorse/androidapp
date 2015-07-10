@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.modle.BaiJiaOrdeDetailsInfoBean;
+import com.shenma.yueba.baijia.modle.OrderPromotions;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.ToolsUtil;
 
@@ -62,6 +63,8 @@ List<BaiJiaOrdeDetailsInfoBean> obj_list=new ArrayList<BaiJiaOrdeDetailsInfoBean
 			holder.affirmorder_item_productcount_textview=(TextView)convertView.findViewById(R.id.affirmorder_item_productcount_textview);
 			holder.affirmorder_item_productprice_textview=(TextView)convertView.findViewById(R.id.affirmorder_item_productprice_textview);
 			holder.affirmorder_item_icon_imageview=(ImageView)convertView.findViewById(R.id.affirmorder_item_icon_imageview);
+			holder.productinfolist_layout_huodong_linearlayout=(LinearLayout)convertView.findViewById(R.id.productinfolist_layout_huodong_linearlayout);
+			
 			convertView.setTag(holder);
 			FontManager.changeFonts(context,holder.affirmorder_item_productname_textview,holder.affirmorder_item_productsize_textview,holder.affirmorder_item_productcount_textview,holder.affirmorder_item_productprice_textview);
 		}else
@@ -74,6 +77,7 @@ List<BaiJiaOrdeDetailsInfoBean> obj_list=new ArrayList<BaiJiaOrdeDetailsInfoBean
 
  class	Holder 
  {
+	 LinearLayout productinfolist_layout_huodong_linearlayout;//活动
 	 ImageView affirmorder_item_icon_imageview;//商品图片
 	 TextView affirmorder_item_productname_textview;//商品名称
 	 TextView affirmorder_item_productsize_textview;//尺寸大小等信息
@@ -89,7 +93,32 @@ List<BaiJiaOrdeDetailsInfoBean> obj_list=new ArrayList<BaiJiaOrdeDetailsInfoBean
 	 holder.affirmorder_item_productsize_textview.setText(ToolsUtil.nullToString(baiJiaOrdeDetailsInfoBean.getSizeName()+"  "+baiJiaOrdeDetailsInfoBean.getSizeValue()));
 	 holder.affirmorder_item_productcount_textview.setText(ToolsUtil.nullToString("x"+baiJiaOrdeDetailsInfoBean.getProductCount()));
 	 holder.affirmorder_item_productprice_textview.setText(ToolsUtil.nullToString("￥"+baiJiaOrdeDetailsInfoBean.getPrice()));
-	 
+	 if(baiJiaOrdeDetailsInfoBean.getPromotions()!=null)
+	 {
+		 addHuoDong(holder.productinfolist_layout_huodong_linearlayout,baiJiaOrdeDetailsInfoBean.getPromotions());
+	 }else
+	 {
+		 holder.productinfolist_layout_huodong_linearlayout.removeAllViews();
+	 }
+ }
+ 
+ 
+ void addHuoDong(LinearLayout ll,List<OrderPromotions> huodonglist)
+ {
+	 for(int i=0;i<huodonglist.size();i++)
+	 {
+		 View v=gethuoDongView();
+		 TextView tv=(TextView)v.findViewById(R.id.buyersteetfragment_item_footer_linearlyout_content_textview);
+		 tv.setText(ToolsUtil.nullToString(huodonglist.get(i).getPromotionName() +" "+huodonglist.get(i).getAmount()));
+		 ll.addView(v, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+	 }
+ }
+ 
+ 
+ View gethuoDongView()
+ {
+	 LinearLayout huodong=(LinearLayout)LinearLayout.inflate(context, R.layout.huodong_layout, null);
+	 return huodong;
  }
  
 }

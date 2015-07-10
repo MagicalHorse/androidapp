@@ -52,7 +52,7 @@
                     android:layout_below="@id/approvebuyerdetails_icon_imageview"
                     android:layout_centerHorizontal="true"
                     android:text="名字"
-                    android:textSize="@dimen/textsize15sp" />
+                    android:textSize="@dimen/textsize18sp" />
 
                 <RelativeLayout
                     android:layout_marginTop="@dimen/shop_main_lineheight8_dimen"
@@ -68,7 +68,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="成交:"
-                        android:textSize="@dimen/textsize10sp" />
+                        android:textSize="@dimen/textsize14sp" />
 
                     <TextView
                         android:id="@+id/appprovebuyerdetails_textvalue1_textview"
@@ -77,7 +77,7 @@
                         android:layout_alignTop="@id/appprovebuyerdetails_text1"
                         android:layout_toRightOf="@id/appprovebuyerdetails_text1"
                         android:text=""
-                        android:textSize="@dimen/textsize10sp" />
+                        android:textSize="@dimen/textsize14sp" />
 
                     <TextView
                         android:id="@+id/appprovebuyerdetails_text2"
@@ -85,7 +85,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/appprovebuyerdetails_text1"
                         android:text="好评:"
-                        android:textSize="@dimen/textsize10sp" />
+                        android:textSize="@dimen/textsize14sp" />
 
                     <TextView
                         android:id="@+id/appprovebuyerdetails_text2value_textview"
@@ -96,11 +96,12 @@
                         android:layout_toRightOf="@id/appprovebuyerdetails_text2"
                         android:text=""
                         android:textColor="@color/red"
-                        android:textSize="@dimen/textsize10sp" />
+                        android:textSize="@dimen/textsize14sp" />
                 </RelativeLayout>
             </RelativeLayout>
 
             <RelativeLayout
+                android:visibility="visible"
                 android:id="@+id/appprovebuyer_viewpager_relativelayout"
                 android:layout_width="match_parent"
                 android:paddingLeft="@dimen/shop_main_width5_dimen"
@@ -149,7 +150,7 @@
                     android:layout_marginTop="@dimen/shop_main_width2_dimen"
                     android:text="*商品只支持商城自提"
                     android:textColor="@color/red"
-                    android:textSize="@dimen/textsize10sp" />
+                    android:textSize="@dimen/textsize12sp" />
             </RelativeLayout>
 
             <TextView
@@ -157,6 +158,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/margin_left_and_right"
+                android:paddingRight="@dimen/margin_left_and_right"
                 android:textColor="@color/black"
                 android:textSize="@dimen/textsize18sp" />
 
@@ -172,7 +174,7 @@
                     android:paddingLeft="@dimen/margin_left_and_right"
                     android:text="自提地点:"
                     android:textColor="@color/color_textgray"
-                    android:textSize="@dimen/textsize12sp" />
+                    android:textSize="@dimen/textsize14sp" />
 
                 <TextView
                     android:id="@+id/approvebuyerdetails_addressvalue_textview"
@@ -181,7 +183,7 @@
                     android:layout_marginTop="@dimen/shop_main_width5_dimen"
                     android:layout_toRightOf="@id/approvebuyerdetails_address_textview"
                     android:textColor="@color/color_textgray"
-                    android:textSize="@dimen/textsize12sp" />
+                    android:textSize="@dimen/textsize14sp" />
             </RelativeLayout>
 
             <View
@@ -202,6 +204,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/shop_main_width3_dimen"
+                    android:layout_marginRight="@dimen/shop_main_width3_dimen"
                     android:layout_marginTop="@dimen/shop_main_width3_dimen"
                     android:orientation="horizontal" >
 
@@ -219,13 +222,14 @@
                         android:layout_marginLeft="@dimen/shop_main_width3_dimen"
                         android:text=""
                         android:textColor="@color/color_textgray"
-                        android:textSize="@dimen/textsize10sp" />
+                        android:textSize="@dimen/textsize13sp" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/shop_main_width3_dimen"
+                    android:layout_marginRight="@dimen/shop_main_width3_dimen"
                     android:layout_marginTop="@dimen/shop_main_width3_dimen"
                     android:orientation="horizontal" >
 
@@ -242,7 +246,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/shop_main_width3_dimen"
                         android:textColor="@color/color_textgray"
-                        android:textSize="@dimen/textsize10sp" />
+                        android:textSize="@dimen/textsize13sp" />
                 </LinearLayout>
             </LinearLayout>
 

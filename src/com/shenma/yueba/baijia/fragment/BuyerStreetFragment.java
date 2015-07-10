@@ -248,12 +248,11 @@ public class BuyerStreetFragment extends Fragment {
 	void sendRequestData(final int page, final int type) {
 		ToolsUtil.showNoDataView(getActivity(), false);// 设置隐藏
 		Log.i("TAG", "currpage=" + page + "   pagesize=" + pagesize);
-		httpContril.getProduceHomeListData(page, pagesize,
-				new HttpCallBackInterface() {
+		httpContril.getProduceHomeListData(page, pagesize,new HttpCallBackInterface() {
 
 					@Override
 					public void http_Success(Object obj) {
-						//pulltorefreshscrollview.onRefreshComplete();
+						pulltorefreshscrollview.onRefreshComplete();
 						currpage = page;
 						ishow = false;
                         buyersteet_newtextview.setText("最新上新");
@@ -345,13 +344,10 @@ public class BuyerStreetFragment extends Fragment {
 			Banners = item.getBanners();
 			for (int i = 0; i < Banners.size(); i++) {
 				ImageView imageView = new ImageView(getActivity());
-				imageView.setLayoutParams(new ViewGroup.LayoutParams(
-						ViewGroup.LayoutParams.MATCH_PARENT,
-						ViewGroup.LayoutParams.MATCH_PARENT));
+				imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT));
 				imageView.setTag(Banners.get(i));
 				imageViewlist.add(imageView);
-				initPic(ToolsUtil.nullToString(ToolsUtil.getImage(Banners
-						.get(i).getPic(), 320, 0)), imageView);
+				initPic(ToolsUtil.nullToString(ToolsUtil.getImage(Banners.get(i).getPic(), 320, 0)), imageView);
 				imageView.setOnClickListener(new OnClickListener() {
 
 					@Override
@@ -371,12 +367,9 @@ public class BuyerStreetFragment extends Fragment {
 			getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
 			int width = dm.widthPixels;
 			int height = width / 2;
-			baijiasteetfragmnet_layout_head_viewpager_relativelayout
-					.setLayoutParams(new LinearLayout.LayoutParams(width,
-							height));
+			baijiasteetfragmnet_layout_head_viewpager_relativelayout.setLayoutParams(new LinearLayout.LayoutParams(width,height));
 			((RelativeLayout.LayoutParams) baijia_head_layout.getLayoutParams()).bottomMargin = 40;
-			pagerAdapter = new ScrollViewPagerAdapter(getActivity(),
-					imageViewlist);
+			pagerAdapter = new ScrollViewPagerAdapter(getActivity(),imageViewlist);
 			baijiasteetfragmnet_layout_head_viewpager.setAdapter(pagerAdapter);
 			if (imageViewlist.size() > 0) {
 				setcurrItem(0);
@@ -393,10 +386,10 @@ public class BuyerStreetFragment extends Fragment {
 		
 		buyerAdapter = new BuyerAdapter(Products, getActivity());
 		baijia_contact_listview.setAdapter(buyerAdapter);
-		buyerAdapter.notifyDataSetChanged();
+		//buyerAdapter.notifyDataSetChanged();
 		// 重新计算listview的高度
 		ListViewUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
-		pulltorefreshscrollview.onRefreshComplete();
+		//pulltorefreshscrollview.onRefreshComplete();
 
 	}
 

@@ -59,11 +59,11 @@ public class BaiJiaShareDataAdapter extends BaseAdapter{
 		{
 			holder=new Holder();
 			convertView=(RelativeLayout)LinearLayout.inflate(context, R.layout.baijiashare_layout_item, null);
-			holder.baijiashare_layout_item_head_imageview=(ImageView)convertView.findViewById(R.id.baijiashare_layout_item_head_imageview);
-			holder.baijiashare_layout_item_icon_imageview=(ImageView)convertView.findViewById(R.id.baijiashare_layout_item_icon_imageview);
-			holder.baijiashare_layout_item_name_textview=(TextView)convertView.findViewById(R.id.baijiashare_layout_item_name_textview);
-			holder.baijiashare_layout_item_price_textview=(TextView)convertView.findViewById(R.id.baijiashare_layout_item_price_textview);
-			holder.baijiashare_layout_item_head_imageview.setOnClickListener(new OnClickListener() {
+			holder.baijiashare_layout_item_heads_imageview=(ImageView)convertView.findViewById(R.id.baijiashare_layout_item_heads_imageview);
+			holder.baijiashare_layout_item_icons_imageview=(ImageView)convertView.findViewById(R.id.baijiashare_layout_item_icons_imageview);
+			holder.baijiashare_layout_item_names_textview=(TextView)convertView.findViewById(R.id.baijiashare_layout_item_names_textview);
+			holder.baijiashare_layout_item_prices_textview=(TextView)convertView.findViewById(R.id.baijiashare_layout_item_prices_textview);
+			holder.baijiashare_layout_item_heads_imageview.setOnClickListener(new OnClickListener() {
 				
 				@Override
 				public void onClick(View v) {
@@ -94,33 +94,33 @@ public class BaiJiaShareDataAdapter extends BaseAdapter{
 		{
 			holder=(Holder)convertView.getTag();
 		}
-		setValue(holder,position);
+	    setValue(holder,position);
 		return convertView;
 	}
 
 	class Holder
 	{
-		ImageView baijiashare_layout_item_head_imageview;
-		ImageView baijiashare_layout_item_icon_imageview;
-		TextView baijiashare_layout_item_name_textview;
-		TextView baijiashare_layout_item_price_textview;
+		ImageView baijiashare_layout_item_heads_imageview;
+		ImageView baijiashare_layout_item_icons_imageview;
+		TextView baijiashare_layout_item_names_textview;
+		TextView baijiashare_layout_item_prices_textview;
 	}
 	
 	void setValue(Holder holder,int position)
 	{
 		BaiJiaShareInfoBean bean =bean_array.get(position);
-		holder.baijiashare_layout_item_head_imageview.setTag(bean);
+		holder.baijiashare_layout_item_heads_imageview.setTag(bean);
 		if(bean.isIscheck())
 		{
-			holder.baijiashare_layout_item_head_imageview.setSelected(true);
+			holder.baijiashare_layout_item_heads_imageview.setSelected(true);
 		}else
 		{
-			holder.baijiashare_layout_item_head_imageview.setSelected(false);
+			holder.baijiashare_layout_item_heads_imageview.setSelected(false);
 		}
-		MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.getImage(ToolsUtil.nullToString(bean.getLogo()), 320, 0), holder.baijiashare_layout_item_icon_imageview, MyApplication.getInstance().getDisplayImageOptions());
-		holder.baijiashare_layout_item_name_textview.setText(ToolsUtil.nullToString(bean.getName()));
+		MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.getImage(ToolsUtil.nullToString(bean.getLogo()), 320, 0), holder.baijiashare_layout_item_icons_imageview, MyApplication.getInstance().getDisplayImageOptions());
+		holder.baijiashare_layout_item_names_textview.setText(ToolsUtil.nullToString(bean.getName()));
 		//holder.baijiashare_layout_item_name_textview.setText("111");
-		holder.baijiashare_layout_item_price_textview.setText("￥"+Double.toString(bean.getPrice()));
+		holder.baijiashare_layout_item_prices_textview.setText("￥"+Double.toString(bean.getPrice()));
 	}
 	
 	int getCheckCount()
