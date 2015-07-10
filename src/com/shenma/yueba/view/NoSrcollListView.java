@@ -10,6 +10,7 @@ import android.widget.ListView;
  * 程序的简单说明  
  */
 
+
 public class NoSrcollListView extends ListView{
 
         public NoSrcollListView(Context context, AttributeSet attrs) {
