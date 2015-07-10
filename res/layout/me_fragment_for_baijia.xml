@@ -202,8 +202,8 @@
 
                 <TextView
                     android:id="@+id/tv_all_order_count_textview"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:visibility="gone"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="10dip"
@@ -236,8 +236,8 @@
 
                 <TextView
                     android:id="@+id/tv_waiting_for_send_count_textview"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                      android:visibility="gone"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="10dip"
@@ -270,8 +270,8 @@
 
                 <TextView
                     android:id="@+id/tv_waiting_for_recieve_count_textview"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="10dip"
                     android:background="@drawable/redandwhileround_background"
@@ -304,8 +304,8 @@
 
                 <TextView
                     android:id="@+id/tv_pick_by_myself_count_textview"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="10dip"
                     android:background="@drawable/redandwhileround_background"

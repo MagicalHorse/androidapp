@@ -10,6 +10,7 @@ import android.widget.TextView.BufferType;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.RoundImageView;
 
@@ -62,6 +63,8 @@ public class LinkViewManager extends ChatBaseManager {
 		chat_layout_item_leftmsg_time_textview = (TextView) ll.findViewById(R.id.chat_layout_item_leftmsg_time_textview);
 		chat_layout_item_leftmsg_msg_textview = (TextView) ll.findViewById(R.id.chat_layout_item_leftmsg_msg_textview);
 		chat_layout_item_leftmsg_productimg_textview = (ImageView) ll.findViewById(R.id.chat_layout_item_leftmsg_productimg_textview);
+
+		FontManager.changeFonts(context, chat_layout_item_leftmsg_name_textview,chat_layout_item_leftmsg_time_textview,chat_layout_item_leftmsg_msg_textview,chat_layout_item_leftmsg_productimg_textview);
 	}
 
 	/*****

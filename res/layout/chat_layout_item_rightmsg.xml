@@ -13,37 +13,38 @@
         android:src="@drawable/default_pic" />
 
     <LinearLayout
-        android:gravity="right"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/user_config_iconwidth40_dimen"
         android:layout_marginRight="@dimen/shop_main_width5_dimen"
         android:layout_marginTop="@dimen/shop_main_width15_dimen"
         android:layout_toLeftOf="@id/chat_layout_item_leftmsg_icon_roundimageview"
+        android:gravity="right"
         android:orientation="vertical" >
 
         <TextView
-            android:layout_marginRight="@dimen/shop_main_lineheight8_dimen"
             android:id="@+id/chat_layout_item_leftmsg_name_textview"
+            style="@style/chat_name_time_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/textsize11sp"
-            android:text=""
-            />
+            android:layout_marginRight="@dimen/shop_main_lineheight8_dimen" />
+
         <TextView
-            android:padding="@dimen/shop_main_lineheight8_dimen"
+            android:layout_marginTop="3dip"
+            android:layout_marginBottom="2dip"
             android:id="@+id/chat_layout_item_leftmsg_msg_textview"
+            style="@style/chat_text_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/right" />
+            android:background="@drawable/right"
+            android:padding="@dimen/shop_main_lineheight8_dimen" />
+
         <TextView
-            android:layout_marginRight="@dimen/shop_main_lineheight8_dimen"
             android:id="@+id/chat_layout_item_leftmsg_time_textview"
+            style="@style/chat_name_time_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/textsize9sp"
-            android:text=""
-            />
+            android:layout_marginRight="@dimen/shop_main_lineheight8_dimen" />
     </LinearLayout>
 
 </RelativeLayout>

@@ -28,9 +28,9 @@
                 android:id="@+id/chat_layout_item_leftmsg_name_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                style="@style/chat_text_style"
                 android:layout_marginLeft="@dimen/shop_main_lineheight8_dimen"
-                android:text=""
-                android:textSize="@dimen/textsize11sp" />
+                />
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -68,8 +68,7 @@
                         android:id="@+id/chat_layout_item_leftimg_progress_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/textsize10sp"
-                        android:text="111"
+                         style="@style/chat_text_style"
                         />
                 </LinearLayout>
             </RelativeLayout>
@@ -79,8 +78,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/shop_main_lineheight8_dimen"
-                android:text=""
-                android:textSize="@dimen/textsize9sp" />
+                  style="@style/chat_text_style"/>
         </LinearLayout>
     </RelativeLayout>
 
