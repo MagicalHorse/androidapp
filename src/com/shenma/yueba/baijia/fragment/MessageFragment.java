@@ -23,6 +23,7 @@ import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.modle.FragmentBean;
 import com.shenma.yueba.baijia.view.DynamicListView;
 import com.shenma.yueba.baijia.view.MsgListView;
+import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.FontManager;
 
 public class MessageFragment extends Fragment{
@@ -218,11 +219,13 @@ public class MessageFragment extends Fragment{
 			View v=(View)rl.findViewById(R.id.tab_line_view);
 			if(i==value)
 			{
+				tv.setTextSize(Constants.title_text_selected_size);
 			  tv.setTextColor(this.getResources().getColor(R.color.color_deeoyellow));
 		      v.setVisibility(View.VISIBLE);
 			}else
 			{
-				tv.setTextColor(this.getResources().getColor(R.color.black));
+				tv.setTextSize(Constants.title_text_normal_size);
+				tv.setTextColor(this.getResources().getColor(R.color.text_gray_color));
 				v.setVisibility(View.INVISIBLE);
 			}
 			

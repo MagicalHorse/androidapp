@@ -70,7 +70,7 @@ public class IndexFragmentForYangJia extends BaseFragment implements
 	
 	private ImageView iv_qr_code;
 	private TextView tv_qr_name;
-	
+	private BuyerIndexInfo data;
 	private ArrayList<String> urlList = new ArrayList<String>();
 	
 	private TextView tv_huokuan_title;
@@ -379,7 +379,7 @@ public class IndexFragmentForYangJia extends BaseFragment implements
 		case R.id.bt_top_right:
 //			SocicalShareUtil shareUtil = new SocicalShareUtil(getActivity());
 //			shareUtil.showShareDialog();
-			ShareUtil.shareAll(getActivity(), "我市内容", "我是url", "http://img3.3lian.com/2014/c2/61/d/17.jpg",null);
+			ShareUtil.shareAll(getActivity(), data.getShare().getDesc(),  data.getShare().getShare_link(),  data.getShare().getLogo(),null);
 		default:
 			break;
 		}
@@ -395,11 +395,12 @@ public class IndexFragmentForYangJia extends BaseFragment implements
 		HttpControl httpControl=new HttpControl();
 		httpControl.getBuyerIndexInfo(new HttpCallBackInterface() {
 			
+
 			@Override
 			public void http_Success(Object obj) {
 				mPullRefreshScrollView.onRefreshComplete();
 				BuyerIndexInfoBean bean = (BuyerIndexInfoBean) obj;
-				BuyerIndexInfo data = bean.getData();
+				data = bean.getData();
 				
 				
 				

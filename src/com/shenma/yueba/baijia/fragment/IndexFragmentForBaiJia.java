@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.modle.FragmentBean;
+import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.FontManager;
 /******
  * @author gyj
@@ -179,10 +180,12 @@ public class IndexFragmentForBaiJia extends Fragment{
 			if(i==value)
 			{
 			  tv.setTextColor(this.getResources().getColor(R.color.color_deeoyellow));
+			  tv.setTextSize(Constants.title_text_selected_size);
 		      v.setVisibility(View.VISIBLE);
 			}else
 			{
-				tv.setTextColor(this.getResources().getColor(R.color.black));
+				tv.setTextColor(this.getResources().getColor(R.color.text_gray_color));
+				  tv.setTextSize(Constants.title_text_normal_size);
 				v.setVisibility(View.INVISIBLE);
 			}
 			

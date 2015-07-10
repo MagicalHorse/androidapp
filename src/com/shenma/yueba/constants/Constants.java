@@ -14,6 +14,9 @@ public class Constants {
 	public static final int RESULTCODE = 101;
 	public static final int RESULTCODE2 = 102;
 
+	public static final int title_text_normal_size = 17;
+	public static final int title_text_selected_size = 20;
+	
 	// 网络请求的字段
 	public static final String HTTPCHANNEL = "channel";// 附加参数
 	public static final String ANDROID = "Android";// 附加参数

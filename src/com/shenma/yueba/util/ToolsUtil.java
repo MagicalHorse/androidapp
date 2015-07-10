@@ -817,4 +817,15 @@ public class ToolsUtil {
 			});
     	}
     }
+    
+    
+    /**
+     * 设置订单个数
+     */
+    public static String setOrderCount(String count){
+    	if(!TextUtils.isEmpty(count) && count.length()>=3){
+    		return "...";
+    	}
+		return count;
+    }
 }

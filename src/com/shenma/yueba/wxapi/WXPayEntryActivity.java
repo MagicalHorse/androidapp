@@ -4,6 +4,8 @@ package com.shenma.yueba.wxapi;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
@@ -50,6 +52,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler{
 			switch(resp.errCode)
 			{
 			case 0://成功
+				Log.i("order", "--0---"+resp.errCode+""+resp.errStr);
 				//MyApplication.getInstance().showMessage(WXPayEntryActivity.this, "  case:"+0);
 				
 				//MyApplication.getInstance().showMessage(WXPayEntryActivity.this,"支付成功");
@@ -59,7 +62,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler{
 				sendBroadCast("SUCESS");
 				break;
 			case -1://错误
-				
+				Log.i("order", "-   -1---"+resp.errCode+""+resp.errStr);
 				String errmsg=resp.errStr;
 				if(errmsg==null || errmsg.equals(""))
 				{
@@ -69,6 +72,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler{
 				finish();
 				break;
 			case -2://用户取消
+				Log.i("order", "--  -2---"+resp.errCode+""+resp.errStr);
 				MyApplication.getInstance().showMessage(WXPayEntryActivity.this,"已取消支付");
 				finish();
 				break;

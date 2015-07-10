@@ -241,6 +241,13 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 										EditPicActivity.class);
 								MyApplication.getInstance().getPublishUtil()
 										.setFrom("publish");
+								if(!(""+index).equals(MyApplication.getInstance().getPublishUtil().getIndex())){
+									MyApplication.getInstance().getPublishUtil()
+									.setOtherPic(true);
+								}else{
+									MyApplication.getInstance().getPublishUtil()
+									.setOtherPic(false);
+								}
 								MyApplication.getInstance().getPublishUtil()
 										.setIndex(index + "");
 								startActivity(intent);
