@@ -39,7 +39,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="bottom"
-                android:textSize="@dimen/textsize16sp" />
+                android:textSize="@dimen/textsize14sp" />
 
             <RelativeLayout
                 android:layout_margin="3dp"
@@ -65,13 +65,15 @@
                     android:layout_toLeftOf="@+id/baijia_tab1_item_time_textview"
                     android:layout_toRightOf="@id/baijia_tab1_item_productaddress_imageview"
                     android:gravity="top|left"
-                    android:textSize="@dimen/textsize14sp" />
+                    android:singleLine="true"
+                    android:textColor="@color/text_gray_color"
+                    android:textSize="@dimen/textsize12sp" />
 
                 <TextView
                     android:singleLine="true"
                     android:ellipsize="end"
                     android:id="@+id/baijia_tab1_item_time_textview"
-                    android:layout_width="@dimen/user_config_iconwidth60_dimen"
+                    android:layout_width="@dimen/user_config_iconwidth75_dimen"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
                     android:layout_marginLeft="@dimen/shop_main_width15_dimen"
@@ -169,7 +171,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/red"
-            android:textSize="@dimen/textsize12sp"
+            android:textSize="@dimen/textsize11sp"
             />
     </LinearLayout>
 </LinearLayout>

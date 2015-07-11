@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -192,7 +191,7 @@ public class BuyerAdapter extends BaseAdapter{
 		}else
 		{
 			holder.buyersteetfragment_item_footer_linearlyout.setVisibility(View.VISIBLE);
-			holder.buyersteetfragment_item_footer_linearlyout_content_textview.setText(ToolsUtil.nullToString(productsInfoBean.getPromotion().getDescriptionText()));
+			holder.buyersteetfragment_item_footer_linearlyout_content_textview.setText(ToolsUtil.nullToString(productsInfoBean.getPromotion().getDescriptionText())+" "+productsInfoBean.getPromotion().getTipText());
 		}
 		String pic_name=productPicInfoBean.getName();
 		Log.i("TAG", "pic_name="+pic_name);

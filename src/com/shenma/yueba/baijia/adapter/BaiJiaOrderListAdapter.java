@@ -86,8 +86,8 @@ public class BaiJiaOrderListAdapter extends BaseAdapter {
 					.findViewById(R.id.affirmorder_item_productcount_textview);
 			holder.affirmorder_item_productprice_textview = (TextView) arg1
 					.findViewById(R.id.affirmorder_item_productprice_textview);
-			holder.baijia_orderlayout_item_producecount_textview = (TextView) arg1
-					.findViewById(R.id.baijia_orderlayout_item_producecount_textview);
+			holder.orderlist_item_desc_textview = (TextView) arg1
+					.findViewById(R.id.orderlist_item_desc_textview);
 			holder.baijia_orderlayout_item_pricevalue_textview = (TextView) arg1
 					.findViewById(R.id.baijia_orderlayout_item_pricevalue_textview);
 			holder.baijia_orderlayout_item_price_textview = (TextView) arg1
@@ -120,7 +120,8 @@ public class BaiJiaOrderListAdapter extends BaseAdapter {
 
 		if(bean==null)
 		{
-			holder.baijia_orderlayout_item_nickname_textview.setText(ToolsUtil
+			bean=new BaiJiaOrderListInfo();
+			/*holder.baijia_orderlayout_item_nickname_textview.setText(ToolsUtil
 					.nullToString(buyerName));
 			holder.baijia_orderlayout_item_status_textview.setText(ToolsUtil
 					.nullToString(orderStatus));
@@ -138,9 +139,10 @@ public class BaiJiaOrderListAdapter extends BaseAdapter {
 			holder.affirmorder_item_icon_imageview
 					.setImageResource(R.drawable.default_pic);
 			holder.affirmorder_item_icon_imageview.setTag(null);
+			holder.orderlist_item_desc_textview.setText("总共"+bean.getOrderProductCount()+"件商品");
 			initPic(holder.affirmorder_item_icon_imageview,ToolsUtil.getImage(productUrl, 320, 0));
 			setButtonStatus(holder,bean);
-			return;
+			return;*/
 		}
 		
 		
@@ -184,6 +186,7 @@ public class BaiJiaOrderListAdapter extends BaseAdapter {
 				.setImageResource(R.drawable.default_pic);
 		holder.affirmorder_item_icon_imageview.setTag(productInfoBean
 				.getProductId());
+		holder.orderlist_item_desc_textview.setText("总共"+bean.getOrderProductCount()+"件商品");
 		initPic(holder.affirmorder_item_icon_imageview,ToolsUtil.getImage(productUrl, 320, 0));
 		setButtonStatus(holder,bean);
 	}
@@ -196,7 +199,7 @@ public class BaiJiaOrderListAdapter extends BaseAdapter {
 		TextView affirmorder_item_productsize_textview;// 产品尺寸规格
 		TextView affirmorder_item_productcount_textview;// 产品数量
 		TextView affirmorder_item_productprice_textview;// 产品单价
-		TextView baijia_orderlayout_item_producecount_textview;// 产品件数
+		TextView orderlist_item_desc_textview;// 产品件数
 		TextView baijia_orderlayout_item_pricevalue_textview;// 产品总计
 		TextView baijia_orderlayout_item_price_textview;// 实付提示
 		TextView baijia_orderdetails_lianxibuyer_textview;// 地址
@@ -238,7 +241,7 @@ public class BaiJiaOrderListAdapter extends BaseAdapter {
 				R.id.affirmorder_item_productsize_textview,
 				R.id.affirmorder_item_productcount_textview,
 				R.id.affirmorder_item_productprice_textview,
-				R.id.baijia_orderlayout_item_producecount_textview,
+				R.id.orderlist_item_desc_textview,
 				R.id.baijia_orderlayout_item_pricevalue_textview);
 	}
 
