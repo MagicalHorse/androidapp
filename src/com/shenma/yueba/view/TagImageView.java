@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
 
 /**
  * 标签自定义控件类
@@ -35,6 +36,8 @@ public class TagImageView extends RelativeLayout {
 	/** 存放子空间 tag view 的集合 */
 	private List<View> tagViewList;
 	private List<Map<String, Integer>> positionList = new ArrayList<Map<String,Integer>>();
+	private int xx;
+	private int yy;
 	public TagImageView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		this.context = context;
@@ -69,16 +72,16 @@ public class TagImageView extends RelativeLayout {
 	public void addTextTag(String content, int tagX, int tagY) {
 		if (tagViewList == null)
 			tagViewList = new ArrayList<View>();
-		boolean isAdd = true;
-		if(tagNameList.contains(content)){
-			for (int i = 0; i < positionList.size(); i++) {
-				if(tagX == positionList.get(i).get("x") && tagY == positionList.get(i).get("x")){
-					isAdd = false;
-					break;
-				}
-			}
-		}
-		if(isAdd){
+//		boolean isAdd = true;
+//		if(tagNameList.contains(content)){
+//			for (int i = 0; i < positionList.size(); i++) {
+//				if(tagX == positionList.get(i).get("x") && tagY == positionList.get(i).get("x")){
+//					isAdd = false;
+//					break;
+//				}
+//			}
+//		}
+//		if(isAdd){
 			LayoutInflater mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			View view = mInflater.inflate(R.layout.tag, null);
 			TextView text = (TextView) view.findViewById(R.id.tag_text);
@@ -94,7 +97,7 @@ public class TagImageView extends RelativeLayout {
 			tagsPositonMap.put("y", tagY);
 			positionList.add(tagsPositonMap);
 			tagNameList.add(content);
-		}
+//		}
 	
 	}
 
@@ -134,13 +137,14 @@ public class TagImageView extends RelativeLayout {
 						// 获取移动后的位置
 						startx = (int) event.getRawX();
 						starty = (int) event.getRawY();
+						
 						break;
 					case MotionEvent.ACTION_UP:
 						Toast.makeText(getContext(), ""+layoutView.getTag(), 1000).show();
 						for (int i = 0; i < tagViewList.size(); i++) {
 								if(i == (Integer)layoutView.getTag()){
-									positionList.get(i).put("x", startx);
-									positionList.get(i).put("y", starty);
+									positionList.get(i).put("x", xx);
+									positionList.get(i).put("y", yy);
 								}
 							}
 						break;
@@ -152,6 +156,11 @@ public class TagImageView extends RelativeLayout {
 
 	}
 
+	
+	public void setIToZero(){
+		i = 0;
+	}
+	
 	/**
 	 * 
 	 * 设置标签的位置
@@ -169,6 +178,13 @@ public class TagImageView extends RelativeLayout {
 	 *            y方向移动的距离
 	 */
 	private void setTagViewPosition(View tagView, int dx, int dy) {
+		
+		
+		xx = dx;
+		yy = dy;
+		
+		Toast.makeText(getContext(), "x:"+xx+"---y:"+yy, 1000).show();
+		
 		int parentWidth = this.getWidth();
 		int parentHeight = this.getHeight();
 
@@ -188,12 +204,22 @@ public class TagImageView extends RelativeLayout {
 		int right = left + tagView.getWidth();
 		int bottom = top + tagView.getHeight();
 		tagView.layout(left, top, right, bottom);
+		
+		
 		RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) tagView.getLayoutParams();
 		params.leftMargin = left;
 		params.topMargin = top;
 		tagView.setLayoutParams(params);
 	}
 
+	
+	
+	public void clearViewList(){
+		if(tagViewList!=null){
+			tagViewList.clear();
+		}
+	}
+	
 	/**
 	 * @return the tagViewList
 	 */

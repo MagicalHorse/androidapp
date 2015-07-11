@@ -670,6 +670,11 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 
 	}
 	
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		super.onBackPressed();
+	}
 	
 //	
 //	@Override

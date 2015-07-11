@@ -128,7 +128,7 @@ public class CircleInfoActivity extends BaseActivityWithTopView implements
 		//adapter = new MyCircleInfoAdapter(mContext, mList,cricleId);
 		//gv_circle.setAdapter(adapter);
 		FontManager.changeFonts(mContext, tv_cirlce_head_title,
-				tv_cirlce_name_title, tv_circle_title, tv_circle_name,bt_action);
+				tv_cirlce_name_title, tv_circle_title, tv_circle_name,bt_action,tv_top_title);
 
 	}
 	

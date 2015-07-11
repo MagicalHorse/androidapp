@@ -143,7 +143,7 @@ public class UserConfigActivity extends BaseActivityWithTopView implements
 		FontManager.changeFonts(this, tv_top_title, tv_nickname_title,
 				tv_nickname_value, rv_rename_password, tv_message_setting,
 				tv_bind_phone_title, tv_bind_phone_value, tv_bind_wechat_title,
-				tv_bind_wechat_value, user_config_exit_button, tv_about);
+				tv_bind_wechat_value, user_config_exit_button, tv_about,tv_head);
 	}
 
 	/**

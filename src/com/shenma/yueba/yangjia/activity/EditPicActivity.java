@@ -93,18 +93,47 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 	
 	
 	@Override
+	protected void onNewIntent(Intent intent) {
+		// TODO Auto-generated method stub
+		super.onNewIntent(intent);
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (Constants.REQUESTCODE == requestCode
+				&& Constants.RESULTCODE == resultCode) {
+			if (data != null) {
+				Bundle bundle = data.getExtras();
+				String id = bundle.getString("id");
+				String name = bundle.getString("name");
+				String type = bundle.getString("type");
+				layout_tag_image.addTextTag(name, startx, starty);
+				positionList = layout_tag_image.getPositionList();//获取标签位置信息
+				tagNameList = layout_tag_image.getTagNameList();//获取标签文字列表
+				savetagCacheInfo(Integer.valueOf(MyApplication.getInstance().getPublishUtil().getIndex()));//缓存标签名称和位置，用于再次回来该页面显示用
+			}
+		}
+		super.onActivityResult(requestCode, resultCode, data);
+	}
+	
+	@Override
 	protected void onRestart() {
 		Log.i("edit","onRestart");
-		if(MyApplication.getInstance().getPublishUtil().isOtherPic()){
+		layout_tag_image.setIToZero();
+//		layout_tag_image.clearViewList();
+		layout_tag_image.clearTagView();
+		layout_tag_image.getPositionList().clear();
+		layout_tag_image.getTagNameList().clear();
+//		if(MyApplication.getInstance().getPublishUtil().isOtherPic()){
 			ArrayList<List<TagCacheBean>> allTagCacheList= MyApplication.getInstance().getPublishUtil().getTagCacheList();
 			List<TagCacheBean> tagCacheList =  allTagCacheList.get(Integer.valueOf(MyApplication.getInstance().getPublishUtil().getIndex()));
 			for (int i = 0; i < tagCacheList.size(); i++) {
 				String name = tagCacheList.get(i).getName();
 				int x = tagCacheList.get(i).getX();
 				int y = tagCacheList.get(i).getY();
-				layout_tag_image.addTextTag(name, startx, starty);
+				layout_tag_image.addTextTag(name, x, y);
 			}
-		}
+//		}
 		
 		super.onRestart();
 	}
@@ -175,6 +204,7 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 			positionList = layout_tag_image.getPositionList();//获取标签位置信息
 			tagNameList = layout_tag_image.getTagNameList();//获取标签文字列表
 			savetagCacheInfo(Integer.valueOf(MyApplication.getInstance().getPublishUtil().getIndex()));//缓存标签名称和位置，用于再次回来该页面显示用
+			//savetagCacheInfo(Integer.valueOf(MyApplication.getInstance().getPublishUtil().getIndex()));//缓存标签名称和位置，用于再次回来该页面显示用
 			getUploadTagInfo();//获取要提交的标签信息
 			TagListBean resultBean = new TagListBean();
 			resultBean.setTagList(setUploadTagInfoToStanderStyle());//将要提交的标签信息转化成需要的格式
@@ -275,20 +305,7 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 
 	}
 
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (Constants.REQUESTCODE == requestCode
-				&& Constants.RESULTCODE == resultCode) {
-			if (data != null) {
-				Bundle bundle = data.getExtras();
-				String id = bundle.getString("id");
-				String name = bundle.getString("name");
-				String type = bundle.getString("type");
-				layout_tag_image.addTextTag(name, startx, starty);
-			}
-		}
-		super.onActivityResult(requestCode, resultCode, data);
-	}
+
 
 	/**
 	 * 此处写方法描述

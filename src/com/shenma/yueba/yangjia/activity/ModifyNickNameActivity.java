@@ -59,7 +59,7 @@ public class ModifyNickNameActivity extends BaseActivityWithTopView {
 				modifyNickName();
 			}
 		});
-		FontManager.changeFonts(mContext, et_modify_nick_name, tv_top_title);
+		FontManager.changeFonts(mContext, et_modify_nick_name, tv_top_title,tv_top_right);
 	}
 
 	/**

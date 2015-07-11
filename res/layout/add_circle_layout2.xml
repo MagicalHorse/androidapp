@@ -31,7 +31,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_toLeftOf="@+id/imageView1"
                 android:scaleType="fitXY"
-                android:src="@drawable/default_pic" />
+                android:src="@drawable/default_pic"/>
 
             <TextView
                 android:id="@+id/tv_add_title"

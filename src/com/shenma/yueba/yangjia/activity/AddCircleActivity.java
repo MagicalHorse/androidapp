@@ -88,7 +88,7 @@ public class AddCircleActivity extends BaseActivityWithTopView implements
 		riv_circle_head = getView(R.id.riv_circle_head);
 		ll_logo = getView(R.id.ll_logo);
 		ll_logo.setOnClickListener(this);
-		FontManager.changeFonts(mContext, et_circle_name, tv_create);
+		FontManager.changeFonts(mContext, et_circle_name, tv_create,tv_top_title,tv_add_title);
 	}
 
 	@Override
