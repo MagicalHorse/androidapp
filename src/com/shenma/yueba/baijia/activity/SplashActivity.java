@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.view.Window;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.UpdateManager;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.util.ToolsUtil;
 
@@ -23,7 +24,8 @@ public class SplashActivity extends BaseActivity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.loading_layout);
 		MyApplication.getInstance().addActivity(this);
-		
+		UpdateManager mUpdateManager = new UpdateManager(SplashActivity.this,"1.0.1");
+		mUpdateManager.startUpdate();
 		handler.postDelayed(new Runnable() {
 			@Override
 			public void run() {
