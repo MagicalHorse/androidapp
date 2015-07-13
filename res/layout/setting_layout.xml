@@ -252,10 +252,20 @@
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/tv_about"
+                    android:id="@+id/tv_check_update"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dip"
+                    android:background="@color/white"
+                    android:drawableRight="@drawable/arrow_right"
+                    android:padding="15dip"
+                    android:text="检查更新"
+                    android:textSize="18sp" />
+                                    <View style="@style/style_horizontal_line" />
+                <TextView
+                    android:id="@+id/tv_about"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
                     android:background="@color/white"
                     android:drawableRight="@drawable/arrow_right"
                     android:padding="15dip"
@@ -271,6 +281,7 @@
                     android:layout_marginTop="15dp"
                     android:background="@drawable/user_config_exit_button_background"
                     android:text="@string/user_config_exit_str"
+                    android:layout_marginBottom="15dip"
                     android:textColor="@color/white" />
             </LinearLayout>
         </ScrollView>
