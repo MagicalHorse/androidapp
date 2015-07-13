@@ -88,6 +88,8 @@ public class PicViewManager extends ChatBaseManager{
 			}
 		});
 	}
+	
+	
 	@Override
 	public void isshow(boolean b,BaseChatBean bean) {
 		if(b)
