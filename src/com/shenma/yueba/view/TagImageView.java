@@ -18,7 +18,7 @@ import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 
 /**
- * ±êÇ©×Ô¶¨Òå¿Ø¼şÀà
+ * æ ‡ç­¾è‡ªå®šä¹‰æ§ä»¶ç±»
  * 
  * @Description
  * @author zhou wan
@@ -29,11 +29,11 @@ import com.shenma.yueba.application.MyApplication;
 public class TagImageView extends RelativeLayout {
 	
 	
-	private ArrayList<String> tagNameList =new ArrayList<String>();//ĞÕÃûµÄ¼¯ºÏ
+	private ArrayList<String> tagNameList =new ArrayList<String>();//å§“åçš„é›†åˆ
 	private int i;
-	/** ÉÏÏÂÎÄ¶ÔÏó */
+	/** ä¸Šä¸‹æ–‡å¯¹è±¡ */
 	private Context context;
-	/** ´æ·Å×Ó¿Õ¼ä tag view µÄ¼¯ºÏ */
+	/** å­˜æ”¾å­ç©ºé—´ tag view çš„é›†åˆ */
 	private List<View> tagViewList;
 	private List<Map<String, Integer>> positionList = new ArrayList<Map<String,Integer>>();
 	private int xx;
@@ -54,20 +54,20 @@ public class TagImageView extends RelativeLayout {
 	}
 
 	/**
-	 * Ìí¼Ó±êÇ©
+	 * æ·»åŠ æ ‡ç­¾
 	 * 
 	 * 
 	 * @version 1.0
-	 * @createTime 2015-1-30,ÉÏÎç11:50:02
-	 * @updateTime 2015-1-30,ÉÏÎç11:50:02
+	 * @createTime 2015-1-30,ä¸Šåˆ11:50:02
+	 * @updateTime 2015-1-30,ä¸Šåˆ11:50:02
 	 * @createAuthor zhou wan
 	 * @updateAuthor
 	 * @updateInfo
 	 * @param content
 	 * @param x
-	 *            xÖáµÄÎ»ÖÃ
+	 *            xè½´çš„ä½ç½®
 	 * @param y
-	 *            yÖáµÄÎ»ÖÃ
+	 *            yè½´çš„ä½ç½®
 	 */
 	public void addTextTag(String content, int tagX, int tagY) {
 		if (tagViewList == null)
@@ -102,16 +102,16 @@ public class TagImageView extends RelativeLayout {
 	}
 
 	/**
-	 * ¸ø±êÇ©Ìí¼ÓOnTouch¼àÌı
+	 * ç»™æ ‡ç­¾æ·»åŠ OnTouchç›‘å¬
 	 * 
 	 * @version 1.0
-	 * @createTime 2015-2-2,ÉÏÎç11:06:11
-	 * @updateTime 2015-2-2,ÉÏÎç11:06:11
+	 * @createTime 2015-2-2,ä¸Šåˆ11:06:11
+	 * @updateTime 2015-2-2,ä¸Šåˆ11:06:11
 	 * @createAuthor zhou wan
 	 * @updateAuthor
-	 * @updateInfo (´Ë´¦ÊäÈëĞŞ¸ÄÄÚÈİ,ÈôÎŞĞŞ¸Ä¿É²»Ğ´.)
+	 * @updateInfo (æ­¤å¤„è¾“å…¥ä¿®æ”¹å†…å®¹,è‹¥æ— ä¿®æ”¹å¯ä¸å†™.)
 	 * @param layoutView
-	 *            ±êÇ©View
+	 *            æ ‡ç­¾View
 	 */
 	public void setTagViewOnTouchListener(final RelativeLayout layoutView) {
 		layoutView.setOnTouchListener(new OnTouchListener() {
@@ -127,14 +127,14 @@ public class TagImageView extends RelativeLayout {
 						starty = (int) event.getRawY();
 						break;
 					case MotionEvent.ACTION_MOVE:
-						// »ñÈ¡ÊÖÖ¸ÒÆ¶¯µÄ¾àÀë
+						// è·å–æ‰‹æŒ‡ç§»åŠ¨çš„è·ç¦»
 						int x = (int) event.getRawX();
 						int y = (int) event.getRawY();
 						int dx = x - startx;
 						int dy = y - starty;
-						// ¸ü¸ÄimageViewÔÚ´°ÌåµÄÎ»ÖÃ
+						// æ›´æ”¹imageViewåœ¨çª—ä½“çš„ä½ç½®
 						setTagViewPosition(v, dx, dy);
-						// »ñÈ¡ÒÆ¶¯ºóµÄÎ»ÖÃ
+						// è·å–ç§»åŠ¨åçš„ä½ç½®
 						startx = (int) event.getRawX();
 						starty = (int) event.getRawY();
 						
@@ -163,19 +163,19 @@ public class TagImageView extends RelativeLayout {
 	
 	/**
 	 * 
-	 * ÉèÖÃ±êÇ©µÄÎ»ÖÃ
+	 * è®¾ç½®æ ‡ç­¾çš„ä½ç½®
 	 * 
 	 * @version 1.0
-	 * @createTime 2015-1-30,ÉÏÎç11:49:33
-	 * @updateTime 2015-1-30,ÉÏÎç11:49:33
+	 * @createTime 2015-1-30,ä¸Šåˆ11:49:33
+	 * @updateTime 2015-1-30,ä¸Šåˆ11:49:33
 	 * @createAuthor zhou wan
 	 * @updateAuthor
 	 * @updateInfo
 	 * @param v
 	 * @param dx
-	 *            x·½ÏòÒÆ¶¯¾àÀë
+	 *            xæ–¹å‘ç§»åŠ¨è·ç¦»
 	 * @param dy
-	 *            y·½ÏòÒÆ¶¯µÄ¾àÀë
+	 *            yæ–¹å‘ç§»åŠ¨çš„è·ç¦»
 	 */
 	private void setTagViewPosition(View tagView, int dx, int dy) {
 		
@@ -256,14 +256,14 @@ public class TagImageView extends RelativeLayout {
 	}
 
 	/**
-	 * Çå³ıËùÓĞ±êÇ©
+	 * æ¸…é™¤æ‰€æœ‰æ ‡ç­¾
 	 * 
 	 * @version 1.0
-	 * @createTime 2015-2-2,ÏÂÎç3:10:15
-	 * @updateTime 2015-2-2,ÏÂÎç3:10:15
+	 * @createTime 2015-2-2,ä¸‹åˆ3:10:15
+	 * @updateTime 2015-2-2,ä¸‹åˆ3:10:15
 	 * @createAuthor zhou wan
 	 * @updateAuthor
-	 * @updateInfo (´Ë´¦ÊäÈëĞŞ¸ÄÄÚÈİ,ÈôÎŞĞŞ¸Ä¿É²»Ğ´.)
+	 * @updateInfo (æ­¤å¤„è¾“å…¥ä¿®æ”¹å†…å®¹,è‹¥æ— ä¿®æ”¹å¯ä¸å†™.)
 	 */
 	public void clearTagView() {
 		if (tagViewList != null && tagViewList.size() > 0) {
