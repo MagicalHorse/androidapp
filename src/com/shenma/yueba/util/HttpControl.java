@@ -11,7 +11,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-import android.R.integer;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.os.Handler;
@@ -36,6 +35,7 @@ import com.shenma.yueba.baijia.modle.BuyerIndexInfoBean;
 import com.shenma.yueba.baijia.modle.CityListBackBean;
 import com.shenma.yueba.baijia.modle.CityListRequestBean;
 import com.shenma.yueba.baijia.modle.HuoKuanManagerBackBean;
+import com.shenma.yueba.baijia.modle.ModifyLogoBackBean;
 import com.shenma.yueba.baijia.modle.MyRequestProductListInfoBean;
 import com.shenma.yueba.baijia.modle.ProvinceCityListBeanRequest;
 import com.shenma.yueba.baijia.modle.RequestBaiJiaOrdeDetailsInfoBean;
@@ -57,10 +57,8 @@ import com.shenma.yueba.baijia.modle.RequestRoomInfoBean;
 import com.shenma.yueba.baijia.modle.RequestTuiJianCircleInfoBean;
 import com.shenma.yueba.baijia.modle.RequestUploadChatImageInfoBean;
 import com.shenma.yueba.baijia.modle.RequestUploadProductDataBean;
-import com.shenma.yueba.baijia.modle.RequestUploadProductInfoBean;
 import com.shenma.yueba.baijia.modle.RequestUserDynamicInfoBean;
 import com.shenma.yueba.baijia.modle.RequestUserInfoBean;
-import com.shenma.yueba.baijia.modle.ResponseUploadProductInfoBean;
 import com.shenma.yueba.baijia.modle.StoreListBackBean;
 import com.shenma.yueba.baijia.modle.TagListBackBean;
 import com.shenma.yueba.baijia.modle.UserInfo;
@@ -171,7 +169,7 @@ public class HttpControl {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put(Constants.LOGO, logo);
 		BasehttpSend(map, context, HttpConstants.changeUserLogo, httpCallBack,
-				BaseRequest.class, true, false);
+				ModifyLogoBackBean.class, true, false);
 	}
 	
 	
@@ -2375,6 +2373,7 @@ public class HttpControl {
 	 * @param context
 	 * @param showDialog
 	 */
+	
 	public void changePushState(String state,
 			final HttpCallBackInterface httpCallBack, Context context,
 			boolean showDialog) {
