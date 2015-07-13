@@ -2373,7 +2373,6 @@ public class HttpControl {
 	 * @param context
 	 * @param showDialog
 	 */
-	
 	public void changePushState(String state,
 			final HttpCallBackInterface httpCallBack, Context context,
 			boolean showDialog) {

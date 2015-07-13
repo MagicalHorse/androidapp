@@ -73,7 +73,7 @@ public class UserIconAdapter extends BaseAdapter {
 		width=width/maxCount;
 		Log.i("TAG", "WIDTH:"+width);
 		//riv.setLayoutParams(new AbsListView.LayoutParams(width, width));
-		riv.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, AbsListView.LayoutParams.MATCH_PARENT));
+		riv.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.WRAP_CONTENT, AbsListView.LayoutParams.WRAP_CONTENT));
 		if (position == (maxCount - 1)) {
 			riv.setImageResource(R.drawable.test003);
 		} else {

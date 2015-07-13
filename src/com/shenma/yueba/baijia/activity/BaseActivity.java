@@ -32,7 +32,7 @@ public class BaseActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mContext = this;
-		dialog = new CustomProgressDialog(this);
+		dialog = new CustomProgressDialog(this).createDialog(mContext);
 	}
 	
 	protected void showBottomDialog(){

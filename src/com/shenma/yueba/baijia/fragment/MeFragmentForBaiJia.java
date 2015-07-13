@@ -4,7 +4,6 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -182,11 +181,13 @@ public class MeFragmentForBaiJia extends BaseFragment implements OnClickListener
 				Toast.makeText(getActivity(), "申请审核中，请耐心等待...", Toast.LENGTH_LONG).show();
 			}else if("-2".equals(SharedUtil.getAuditStatus(getActivity()))){//还未审核，可以进入
 				Intent buyerCertificaitonIntent = new Intent(getActivity(),BuyerCertificationActivity1.class);
+				buyerCertificaitonIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 				startActivity(buyerCertificaitonIntent);
 			}else if("-1".equals(SharedUtil.getAuditStatus(getActivity()))){
 				Toast.makeText(getActivity(), "您的审核已被拒绝，请三天后重试...", Toast.LENGTH_LONG).show();
 			}else if("1".equals(SharedUtil.getAuditStatus(getActivity()))){
-				startActivity(new Intent(getActivity(), MainActivityForYangJia.class));
+				Intent intentyangjia=new Intent(getActivity(), MainActivityForYangJia.class);
+				startActivity(intentyangjia);
 			}
 //			Intent buyerCertificaitonIntent = new Intent(getActivity(),BuyerCertificationActivity1.class);
 //			startActivity(buyerCertificaitonIntent);
