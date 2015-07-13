@@ -249,7 +249,7 @@ public class AddCircleActivity extends BaseActivityWithTopView implements
 								.fromFile(new File(littlePicPath)), Uri
 								.fromFile(FileUtils
 										.createNewFile(littlePicPath_cache)),
-								5, 8), PhotoUtils.INTENT_REQUEST_CODE_CROP);
+								1, 1), PhotoUtils.INTENT_REQUEST_CODE_CROP);
 					}
 				}
 			}

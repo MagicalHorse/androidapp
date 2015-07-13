@@ -114,8 +114,8 @@ public class PhotoUtils {
 		Intent intent = new Intent("com.android.camera.action.CROP");
 		intent.setDataAndType(uri, "image/*");
 		intent.putExtra("crop", "true");// 下面这个crop=true是设置在开启的Intent中设置显示的VIEW可裁剪
-		intent.putExtra("aspectX", 8);// aspectX aspectY 是宽高的比例
-		intent.putExtra("aspectY",5);;
+		intent.putExtra("aspectX", 1);// aspectX aspectY 是宽高的比例
+		intent.putExtra("aspectY",1);;
 		intent.putExtra("outputX", 800);// outputX outputY 是裁剪图片宽高
 		intent.putExtra("outputY", 800);
 		intent.putExtra("scale", true);

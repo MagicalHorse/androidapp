@@ -68,6 +68,7 @@ public class UserConfigActivity extends BaseActivityWithTopView implements
 	private TextView tv_bind_wechat_value;
 	private TextView tv_about;
 	private Button user_config_exit_button;
+	private TextView tv_check_update;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +96,8 @@ public class UserConfigActivity extends BaseActivityWithTopView implements
 		tv_head = getView(R.id.tv_head);
 		people_config_str2_imageview = getView(R.id.people_config_str2_imageview);
 
+		tv_check_update = getView(R.id.tv_check_update);
+		tv_check_update.setOnClickListener(this);
 		tv_nickname_title = getView(R.id.tv_nickname_title);
 		tv_nickname_value = getView(R.id.tv_nickname_value);
 		rv_rename_password = getView(R.id.rv_rename_password);
@@ -143,7 +146,7 @@ public class UserConfigActivity extends BaseActivityWithTopView implements
 		FontManager.changeFonts(this, tv_top_title, tv_nickname_title,
 				tv_nickname_value, rv_rename_password, tv_message_setting,
 				tv_bind_phone_title, tv_bind_phone_value, tv_bind_wechat_title,
-				tv_bind_wechat_value, user_config_exit_button, tv_about,tv_head);
+				tv_bind_wechat_value, user_config_exit_button, tv_about,tv_head,tv_check_update);
 	}
 
 	/**
@@ -332,6 +335,9 @@ public class UserConfigActivity extends BaseActivityWithTopView implements
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
+		case R.id.tv_check_update://检查更新
+			
+			break;
 		case R.id.rl_head:// 修改头像
 			showBottomDialog();
 			break;
