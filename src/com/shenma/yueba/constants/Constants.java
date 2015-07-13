@@ -176,14 +176,14 @@ public class Constants {
 	public static String SDCARDPATH = Environment.getExternalStorageDirectory()
 			+ "/";
 	// 存贮图片的app文件夹名
-	public final static String APP_WENJIANJIA = "anmoke/";
+	public final static String APP_WENJIANJIA = "joybar/";
 	public final static String APP_WENJIANJIA_PIC = "anmoke/chatpic/";// 聊天的圖片
 	public final static String SD = Constants.SDCARDPATH
 			+ Constants.APP_WENJIANJIA;
 	public final static String SD_PIC = Constants.SDCARDPATH
 			+ Constants.APP_WENJIANJIA_PIC;
 	// apk新版本要存的名字
-	public final static String apkName = "petforandroid" + ".apk";
+	public final static String apkName = "joybar" + ".apk";
 
 	// 本地图片存贮后缀名
 	public final static String IMG_USER_EXTENSION_PNG = "u.png";// 原图

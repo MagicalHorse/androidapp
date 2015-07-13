@@ -17,6 +17,8 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
@@ -828,4 +830,29 @@ public class ToolsUtil {
     	}
 		return count;
     }
+    
+    
+	public static String getVersionCode(Context ctx) {
+		PackageInfo info = null;
+		try {
+			info = ctx.getPackageManager().getPackageInfo(ctx.getPackageName(),
+					0);
+		} catch (NameNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return info.versionCode + "";
+	}
+
+	public static String getVersionName(Context ctx) {
+		PackageInfo info = null;
+		try {
+			info = ctx.getPackageManager().getPackageInfo(ctx.getPackageName(),
+					0);
+		} catch (NameNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return info.versionName + "";
+	}
 }
