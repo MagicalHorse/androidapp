@@ -65,7 +65,17 @@ public class BaiJiaMyCircleAdapter extends BaseAdapterWithUtil {
 		MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.nullToString(myCircleInfo.getLogo()), holder.iv_head,  MyApplication.getInstance().getDisplayImageOptions());
 		
 		holder.tv_product_name.setText(ToolsUtil.nullToString(myCircleInfo.getName()));
-		holder.tv_msg_count.setText(Integer.toString(myCircleInfo.getUnReadCount()));
+		int count=myCircleInfo.getUnReadCount();
+		if(count>0)
+		{
+			holder.tv_msg_count.setText(Integer.toString(count));
+			holder.tv_msg_count.setVisibility(View.VISIBLE);
+		}else
+		{
+			holder.tv_msg_count.setText(Integer.toString(count));
+			holder.tv_msg_count.setVisibility(View.GONE);
+		}
+		
 		holder.tv_time.setText(myCircleInfo.getUnReadLastTime());
 		holder.tv_msg.setText(myCircleInfo.getUnReadMessage());
 		

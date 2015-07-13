@@ -23,6 +23,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.BaijiaBrandListActivity;
+import com.shenma.yueba.baijia.activity.CircleListActivity;
 import com.shenma.yueba.baijia.adapter.ImageTextlAdapter;
 import com.shenma.yueba.baijia.modle.BrandSearchInfo;
 import com.shenma.yueba.baijia.modle.BrandSearchInfoBean;
@@ -102,16 +103,15 @@ public class BrandFragment extends BaseFragment{
 					State state, Mode direction) {
 				//设置标签显示的内容
 				 
-				if(direction==Mode.PULL_FROM_START)
-				{
-					pull_refresh_list.getLoadingLayoutProxy().setPullLabel("上拉刷新");  
-					pull_refresh_list.getLoadingLayoutProxy().setRefreshingLabel("刷新中。。。");  
-					pull_refresh_list.getLoadingLayoutProxy().setReleaseLabel("松开刷新");
-				}else if(direction==Mode.PULL_FROM_END)
-				{
-					pull_refresh_list.getLoadingLayoutProxy().setPullLabel("下拉加载");  
-					pull_refresh_list.getLoadingLayoutProxy().setRefreshingLabel("加载中。。。");  
-					pull_refresh_list.getLoadingLayoutProxy().setReleaseLabel("松开加载");
+				// 设置标签显示的内容
+				if (direction == Mode.PULL_FROM_START) {
+					pull_refresh_list.getLoadingLayoutProxy().setPullLabel(getActivity().getResources().getString(R.string.Refreshonstr));
+					pull_refresh_list.getLoadingLayoutProxy().setRefreshingLabel(getActivity().getResources().getString(R.string.Refreshloadingstr));
+					pull_refresh_list.getLoadingLayoutProxy().setReleaseLabel(getActivity().getResources().getString(R.string.Loosentherefresh));
+				} else if (direction == Mode.PULL_FROM_END) {
+					pull_refresh_list.getLoadingLayoutProxy().setPullLabel(getActivity().getResources().getString(R.string.Thedropdownloadstr));
+					pull_refresh_list.getLoadingLayoutProxy().setRefreshingLabel(getActivity().getResources().getString(R.string.RefreshLoadingstr));
+					pull_refresh_list.getLoadingLayoutProxy().setReleaseLabel(getActivity().getResources().getString(R.string.Loosentheloadstr));
 				}
 			}
 		});

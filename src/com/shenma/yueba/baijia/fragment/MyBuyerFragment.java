@@ -16,7 +16,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ScrollView;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
@@ -24,14 +23,11 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.OnPullEventListener;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.State;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.lidroid.xutils.BitmapUtils;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
-import com.shenma.yueba.baijia.activity.MyCollectionActivity;
 import com.shenma.yueba.baijia.activity.ShopMainActivity;
 import com.shenma.yueba.baijia.adapter.BuyerAdapter;
-import com.shenma.yueba.baijia.adapter.ScrollViewPagerAdapter;
 import com.shenma.yueba.baijia.modle.BannersInfoBean;
 import com.shenma.yueba.baijia.modle.FragmentBean;
 import com.shenma.yueba.baijia.modle.MyHomeProductListInfoBean;
@@ -41,7 +37,6 @@ import com.shenma.yueba.baijia.modle.ProductsInfoBean;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
-import com.shenma.yueba.util.ListViewUtils;
 import com.shenma.yueba.util.ToolsUtil;
 
 public class MyBuyerFragment extends Fragment {
@@ -96,32 +91,22 @@ public class MyBuyerFragment extends Fragment {
 
 	void initPullView() {
 		baijia_contact_listview = (PullToRefreshListView)parentview.findViewById(R.id.baijia_contact_listview);
-		
-		// 设置标签显示的内容
-		baijia_contact_listview.getLoadingLayoutProxy().setPullLabel("下拉刷新");
-		baijia_contact_listview.getLoadingLayoutProxy().setRefreshingLabel(
-				"刷新中。。。");
-		baijia_contact_listview.getLoadingLayoutProxy().setReleaseLabel("松开刷新");
 		baijia_contact_listview.setMode(Mode.BOTH);
 		baijia_contact_listview.setOnPullEventListener(new OnPullEventListener<ListView>() {
 
 			@Override
 			public void onPullEvent(PullToRefreshBase<ListView> refreshView,
 					State state, Mode direction) {
+				
+				// 设置标签显示的内容
 				if (direction == Mode.PULL_FROM_START) {
-					baijia_contact_listview.getLoadingLayoutProxy()
-							.setPullLabel("上拉刷新");
-					baijia_contact_listview.getLoadingLayoutProxy()
-							.setRefreshingLabel("刷新中。。。");
-					baijia_contact_listview.getLoadingLayoutProxy()
-							.setReleaseLabel("松开刷新");
+					baijia_contact_listview.getLoadingLayoutProxy().setPullLabel(getActivity().getResources().getString(R.string.Refreshonstr));
+					baijia_contact_listview.getLoadingLayoutProxy().setRefreshingLabel(getActivity().getResources().getString(R.string.Refreshloadingstr));
+					baijia_contact_listview.getLoadingLayoutProxy().setReleaseLabel(getActivity().getResources().getString(R.string.Loosentherefresh));
 				} else if (direction == Mode.PULL_FROM_END) {
-					baijia_contact_listview.getLoadingLayoutProxy()
-							.setPullLabel("下拉加载");
-					baijia_contact_listview.getLoadingLayoutProxy()
-							.setRefreshingLabel("加载中。。。");
-					baijia_contact_listview.getLoadingLayoutProxy()
-							.setReleaseLabel("松开加载");
+					baijia_contact_listview.getLoadingLayoutProxy().setPullLabel(getActivity().getResources().getString(R.string.Thedropdownloadstr));
+					baijia_contact_listview.getLoadingLayoutProxy().setRefreshingLabel(getActivity().getResources().getString(R.string.RefreshLoadingstr));
+					baijia_contact_listview.getLoadingLayoutProxy().setReleaseLabel(getActivity().getResources().getString(R.string.Loosentheloadstr));
 				}
 			}
 		});

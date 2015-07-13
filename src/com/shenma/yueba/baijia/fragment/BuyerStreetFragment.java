@@ -124,9 +124,6 @@ public class BuyerStreetFragment extends Fragment {
 	void initPullView() {
 		pulltorefreshscrollview = (PullToRefreshScrollView) parentview.findViewById(R.id.pulltorefreshscrollview);
 		// 设置标签显示的内容
-		pulltorefreshscrollview.getLoadingLayoutProxy().setPullLabel("下拉刷新");
-		pulltorefreshscrollview.getLoadingLayoutProxy().setRefreshingLabel("刷新中。。。");
-		pulltorefreshscrollview.getLoadingLayoutProxy().setReleaseLabel("松开刷新");
 		pulltorefreshscrollview.setMode(Mode.BOTH);
 		pulltorefreshscrollview.setOnPullEventListener(new OnPullEventListener<ScrollView>() {
 
@@ -134,20 +131,15 @@ public class BuyerStreetFragment extends Fragment {
 					public void onPullEvent(
 							PullToRefreshBase<ScrollView> refreshView,
 							State state, Mode direction) {
+						// 设置标签显示的内容
 						if (direction == Mode.PULL_FROM_START) {
-							pulltorefreshscrollview.getLoadingLayoutProxy()
-									.setPullLabel("上拉刷新");
-							pulltorefreshscrollview.getLoadingLayoutProxy()
-									.setRefreshingLabel("刷新中。。。");
-							pulltorefreshscrollview.getLoadingLayoutProxy()
-									.setReleaseLabel("松开刷新");
+							pulltorefreshscrollview.getLoadingLayoutProxy().setPullLabel(getActivity().getResources().getString(R.string.Refreshonstr));
+							pulltorefreshscrollview.getLoadingLayoutProxy().setRefreshingLabel(getActivity().getResources().getString(R.string.Refreshloadingstr));
+							pulltorefreshscrollview.getLoadingLayoutProxy().setReleaseLabel(getActivity().getResources().getString(R.string.Loosentherefresh));
 						} else if (direction == Mode.PULL_FROM_END) {
-							pulltorefreshscrollview.getLoadingLayoutProxy()
-									.setPullLabel("下拉加载");
-							pulltorefreshscrollview.getLoadingLayoutProxy()
-									.setRefreshingLabel("加载中。。。");
-							pulltorefreshscrollview.getLoadingLayoutProxy()
-									.setReleaseLabel("松开加载");
+							pulltorefreshscrollview.getLoadingLayoutProxy().setPullLabel(getActivity().getResources().getString(R.string.Thedropdownloadstr));
+							pulltorefreshscrollview.getLoadingLayoutProxy().setRefreshingLabel(getActivity().getResources().getString(R.string.RefreshLoadingstr));
+							pulltorefreshscrollview.getLoadingLayoutProxy().setReleaseLabel(getActivity().getResources().getString(R.string.Loosentheloadstr));
 						}
 					}
 				});
@@ -275,9 +267,9 @@ public class BuyerStreetFragment extends Fragment {
 								}
 								
 								int totalPage = data.getTotalpaged();
-								if (currpage >= totalPage) {
+								if (currpage >= totalPage && totalPage!=1) {
 									//pulltorefreshscrollview.setMode(Mode.PULL_FROM_START);
-									//MyApplication.getInstance().showMessage(getActivity(), getActivity().getResources().getString(R.string.lastpagedata_str));
+									MyApplication.getInstance().showMessage(getActivity(), getActivity().getResources().getString(R.string.lastpagedata_str));
 								} else {
 									//pulltorefreshscrollview.setMode(Mode.BOTH);
 								}
