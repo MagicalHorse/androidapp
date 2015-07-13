@@ -29,6 +29,7 @@ import com.shenma.yueba.application.MyApplication;
 public class TagImageView extends RelativeLayout {
 	
 	
+	
 	private ArrayList<String> tagNameList =new ArrayList<String>();//姓名的集合
 	private int i;
 	/** 上下文对象 */
