@@ -3,7 +3,9 @@ package im.control;
 import im.form.BaseChatBean;
 import im.form.PicChatBean;
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -12,6 +14,7 @@ import android.widget.TextView;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.activity.ApproveBuyerDetailsActivity;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.RoundImageView;
 
@@ -70,7 +73,23 @@ public class PicViewManager extends ChatBaseManager{
 		chat_layout_item_leftimg_progress_linearlayout=(LinearLayout)ll.findViewById(R.id.chat_layout_item_leftimg_progress_linearlayout);
 		chat_layout_item_leftimg_progress_progressbar=(ProgressBar)ll.findViewById(R.id.chat_layout_item_leftimg_progress_progressbar);
 		chat_layout_item_leftimg_progress_textview=(TextView)ll.findViewById(R.id.chat_layout_item_leftimg_progress_textview);
+		ll.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				if(v.getTag()!=null && v.getTag() instanceof BaseChatBean)
+				{
+					BaseChatBean bean=(BaseChatBean)v.getTag();
+					Intent intent=new Intent(context,ApproveBuyerDetailsActivity.class);
+					intent.putExtra("productID", bean.getProductId());
+					context.startActivity(intent);
+				}
+				
+			}
+		});
 	}
+	
+	
 	@Override
 	public void isshow(boolean b,BaseChatBean bean) {
 		if(b)
@@ -80,6 +99,7 @@ public class PicViewManager extends ChatBaseManager{
 		{
 			ll.setVisibility(View.GONE);
 		}
+		ll.setTag(bean);
 		if(bean!=null && bean instanceof PicChatBean)
 		{
 			PicChatBean picbean=(PicChatBean)bean;
