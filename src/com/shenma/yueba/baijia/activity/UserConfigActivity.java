@@ -25,6 +25,8 @@ import com.alibaba.sdk.android.oss.callback.SaveCallback;
 import com.alibaba.sdk.android.oss.model.OSSException;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.modle.ModifyLogoBackBean;
+import com.shenma.yueba.baijia.modle.ModifyLogoBean;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.CustomProgressDialog;
 import com.shenma.yueba.util.FileUtils;
@@ -85,7 +87,7 @@ public class UserConfigActivity extends BaseActivityWithTopView implements
 	 * 
 	 * **/
 	void initView() {
-		progressDialog = new CustomProgressDialog(mContext);
+		progressDialog = new CustomProgressDialog(mContext).createDialog(mContext);
 		setTitle("设置");
 		setLeftTextView(new OnClickListener() {
 			@Override
@@ -299,6 +301,11 @@ public class UserConfigActivity extends BaseActivityWithTopView implements
 												.decodeFile(littlePicPath_cache);
 										people_config_str2_imageview
 												.setImageBitmap(bm);
+										ModifyLogoBackBean bean = (ModifyLogoBackBean) obj;
+										ModifyLogoBean logoBean = bean.getData();
+										if(logoBean!=null &&logoBean.getLogo()!=null){
+											SharedUtil.setHeadImage(mContext, logoBean.getLogo());
+										}
 									}
 
 									@Override

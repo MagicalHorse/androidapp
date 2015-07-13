@@ -24,7 +24,7 @@ public class SplashActivity extends BaseActivity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.loading_layout);
 		MyApplication.getInstance().addActivity(this);
-		UpdateManager mUpdateManager = new UpdateManager(SplashActivity.this,"1.0.1");
+		UpdateManager mUpdateManager = new UpdateManager(mContext, "1.0.1", "http://www.joybar/aaa.apk", "title", "content");
 		mUpdateManager.startUpdate();
 		handler.postDelayed(new Runnable() {
 			@Override

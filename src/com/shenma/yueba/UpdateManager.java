@@ -32,10 +32,11 @@ import com.shenma.yueba.util.ToolsUtil;
 
 public class UpdateManager implements View.OnClickListener {
 	private Context mContext;
-	// 提示语
-	private String updateMsg = "有最新的软件包哦，亲快下载吧~";
-	// 返回的安装包url
-	private String apkUrl = "www.joybar.com/aaa.apk"; // petandroid1.apk
+
+	private String newVersionPath;// 更新的新版本链接地址
+	private String updateTitle;// 更新题目
+	private String updateContent;// 更新内容
+	private String NewVersion;// 传过来的新版本号
 	private Dialog downloadDialog;
 	/* 下载包安装路径 */
 	private static final String savePath = Constants.SD;
@@ -47,17 +48,18 @@ public class UpdateManager implements View.OnClickListener {
 	private int progress;
 	private Thread downLoadThread;
 	private boolean interceptFlag = false;
-	private String NewVersion;// 传过来的新版本号
-	private AlertDialog dialog;
+
+	private ProgressBar progress_bar;// 更新进度条
+	private AlertDialog promptdialog, downDialog;
 	private ProgressDialog pd;
 
-	public UpdateManager(Context context, String NewVersion) {
+	public UpdateManager(Context context, String NewVersion,
+			String newVersionPath, String updateTitle, String updateContent) {
+		this.newVersionPath = newVersionPath;
+		this.updateTitle = updateTitle;
+		this.updateContent = updateContent;
 		this.mContext = context;
 		this.NewVersion = NewVersion;
-		pd = new ProgressDialog(context);
-		pd.setMessage("更新中...");
-		pd.setCanceledOnTouchOutside(false);
-
 	}
 
 	private Handler mHandler = new Handler() {
@@ -65,7 +67,7 @@ public class UpdateManager implements View.OnClickListener {
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
 			case DOWN_UPDATE:
-				// mProgress.setProgress(progress);
+				progress_bar.setProgress(progress);
 				break;
 			case DOWN_OVER:
 				// 安装
@@ -79,22 +81,28 @@ public class UpdateManager implements View.OnClickListener {
 		};
 	};
 
+	/**
+	 * 显示升级提示框
+	 */
 	public void startUpdate() {
-		if (haveUpdate(NewVersion)) {
-			dialog = new AlertDialog.Builder(mContext).create();
-			dialog.getWindow().setGravity(Gravity.CENTER);
-			dialog.show();
-			dialog.getWindow().setContentView(showNoticeDialog());
-		}
+		promptdialog = new AlertDialog.Builder(mContext).create();
+		promptdialog.getWindow().setGravity(Gravity.CENTER);
+		promptdialog.show();
+		promptdialog.getWindow().setContentView(showNoticeDialog());
 	}
 
+	/**
+	 * 升级提示框view
+	 * 
+	 * @return
+	 */
 	private View showNoticeDialog() {
 		LayoutInflater factory = LayoutInflater.from(mContext);
 		View view = factory.inflate(R.layout.exitdialog, null);
 		TextView title = (TextView) view.findViewById(R.id.zfb_text_title);
 		TextView content = (TextView) view.findViewById(R.id.dialog_content);
 		title.setText("软件版本更新");
-		content.setText("有最新的软件包哦，亲快下载吧!");
+		content.setText(updateContent);
 		Button ok = (Button) view.findViewById(R.id.ok);
 		ok.setText("确定");
 		Button cancel = (Button) view.findViewById(R.id.canel);
@@ -104,33 +112,30 @@ public class UpdateManager implements View.OnClickListener {
 		return view;
 	}
 
-	private void showDownloadDialog() {
-		AlertDialog.Builder builder = new Builder(mContext);
-		builder.setTitle("软件版本更新");
-		final LayoutInflater inflater = LayoutInflater.from(mContext);
-		View v = inflater.inflate(R.layout.progress, null);
-		mProgress = (ProgressBar) v.findViewById(R.id.progress);
-		builder.setView(v);
-		builder.setNeutralButton("取消", new OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.dismiss();
-				interceptFlag = true;
-			}
-		});
-		downloadDialog = builder.create();
-		// downloadDialog.show();
-
+	/**
+	 * 显示升级中的进度
+	 * 
+	 * @return
+	 */
+	private View showDownloadDialog() {
 		downloadApk();
+		LayoutInflater factory = LayoutInflater.from(mContext);
+		View view = factory.inflate(R.layout.down_progress_dialog, null);
+		TextView tv_title = (TextView) view.findViewById(R.id.tv_title);
+		TextView bt_quit = (TextView) view.findViewById(R.id.bt_quit);
+		bt_quit.setOnClickListener(this);
+		progress_bar = (ProgressBar) view.findViewById(R.id.progress);
+		tv_title.setText("更新中...");
+		Button bt_backgroud = (Button) view.findViewById(R.id.bt_backgroud);
+		bt_backgroud.setOnClickListener(this);
+		return view;
 	}
 
 	private Runnable mdownApkRunnable = new Runnable() {
 		@Override
 		public void run() {
 			try {
-				String down_url = apkUrl + NewVersion.replaceAll("\\.", "_")
-						+ "/pet.apk";
-				URL url = new URL(down_url);
+				URL url = new URL(newVersionPath);
 				HttpURLConnection conn = (HttpURLConnection) url
 						.openConnection();
 				conn.setRequestProperty("Accept-Encoding", "identity");
@@ -147,23 +152,22 @@ public class UpdateManager implements View.OnClickListener {
 				String apkFile = saveFileName;
 				File ApkFile = new File(apkFile);
 				FileOutputStream fos = new FileOutputStream(ApkFile);
-
 				int count = 0;
 				byte buf[] = new byte[1024];
 				do {
 					int numread = is.read(buf);
-					// count += numread;
-					// progress =(int)(((float)count / length) * 100);
+					count += numread;
+					progress = (int) (((float) count / length) * 100);
 					// 更新进度
-					// mHandler.sendEmptyMessage(DOWN_UPDATE);
-					// if(numread <= 0){
-					// 下载完成通知安装
-					// mHandler.sendEmptyMessage(DOWN_OVER);
-					// break;
-					// }
+					mHandler.sendEmptyMessage(DOWN_UPDATE);
+					if (numread <= 0) {
+						// 下载完成通知安装
+						mHandler.sendEmptyMessage(DOWN_OVER);
+						break;
+					}
 					fos.write(buf, 0, numread);
 				} while (!interceptFlag);// 点击取消就停止下载.
-				mHandler.sendEmptyMessage(DOWN_OVER);
+				// mHandler.sendEmptyMessage(DOWN_OVER);
 				fos.close();
 				is.close();
 			} catch (MalformedURLException e) {
@@ -180,13 +184,6 @@ public class UpdateManager implements View.OnClickListener {
 	 * @param url
 	 */
 	private void downloadApk() {
-		pd.show();
-		pd.setOnDismissListener(new OnDismissListener() {
-			@Override
-			public void onDismiss(DialogInterface dialog) {
-				interceptFlag = true;
-			}
-		});
 		downLoadThread = new Thread(mdownApkRunnable);
 		downLoadThread.start();
 	}
@@ -211,13 +208,18 @@ public class UpdateManager implements View.OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.ok:
-			dialog.cancel();
-			showDownloadDialog();
+			promptdialog.cancel();
+			downDialog = new AlertDialog.Builder(mContext).create();
+			downDialog.getWindow().setGravity(Gravity.CENTER);
+			downDialog.show();
+			downDialog.getWindow().setContentView(showDownloadDialog());
 			break;
 		case R.id.canel:
-			dialog.cancel();
+			promptdialog.cancel();
 			break;
-
+		case R.id.bt_quit:// 停止下载
+			interceptFlag = true;
+			break;
 		default:
 			break;
 		}

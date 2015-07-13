@@ -3,10 +3,12 @@ package com.shenma.yueba.yangjia.fragment;
 import java.util.ArrayList;
 
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -33,12 +35,13 @@ import com.shenma.yueba.baijia.modle.Goodsamount;
 import com.shenma.yueba.baijia.modle.Income;
 import com.shenma.yueba.baijia.modle.Order;
 import com.shenma.yueba.baijia.modle.Product;
+import com.shenma.yueba.util.Base64Coder;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.ShareUtil;
 import com.shenma.yueba.util.ToolsUtil;
-import com.shenma.yueba.view.imageshow.ImageShowActivity;
+import com.shenma.yueba.yangjia.activity.BigImageShowActivity;
 import com.shenma.yueba.yangjia.activity.EarningManagerActivity;
 import com.shenma.yueba.yangjia.activity.HuoKuanManagerActivity;
 import com.shenma.yueba.yangjia.activity.ProductManagerActivity;
@@ -60,7 +63,8 @@ public class IndexFragmentForYangJia extends BaseFragment implements
 	private MyBuyerFragment myBuyerFragment;// 我的买手
 	private ArrayList<Fragment> fragmentList = new ArrayList<Fragment>();
 	private MyFragmentPagerAdapter myFragmentPagerAdapter;
-
+	private String codeUrl;
+	private String shopName;
 	private Income income;
 	
 	private BitmapUtils bitmapUtils;
@@ -68,7 +72,6 @@ public class IndexFragmentForYangJia extends BaseFragment implements
 	private ImageView iv_qr_code;
 	private TextView tv_qr_name;
 	private BuyerIndexInfo data;
-	private ArrayList<String> urlList = new ArrayList<String>();
 	
 	private TextView tv_huokuan_title;
 	private TextView tv_today_huokuan_title;
@@ -322,10 +325,19 @@ public class IndexFragmentForYangJia extends BaseFragment implements
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.iv_qr_code://查看二維碼大图
-			Intent imageShowIntent = new Intent(getActivity(), ImageShowActivity.class);
-			imageShowIntent.putStringArrayListExtra(ImageShowActivity.BIGIMAGES,urlList);
-			imageShowIntent.putExtra(ImageShowActivity.IMAGE_INDEX, 0);
-			getActivity().startActivity(imageShowIntent);
+			if(!TextUtils.isEmpty(codeUrl)){
+				Intent intent = new Intent(getActivity(), BigImageShowActivity.class);
+				intent.putExtra("title", tv_qr_name.getText().toString().trim());
+				intent.putExtra("imageUrl", codeUrl);
+				startActivity(intent);
+			}else{
+				Toast.makeText(getActivity(), "二维码为空", 1000).show();
+			}
+//			Intent imageShowIntent = new Intent(getActivity(), ImageShowActivity.class);
+//			imageShowIntent.putStringArrayListExtra(ImageShowActivity.BIGIMAGES,urlList);
+//			imageShowIntent.putExtra("type", "base64");
+//			imageShowIntent.putExtra(ImageShowActivity.IMAGE_INDEX, 0);
+//			getActivity().startActivity(imageShowIntent);
 			break;
 		case R.id.rl_huokuan:// 货款管理
 			
@@ -387,17 +399,13 @@ public class IndexFragmentForYangJia extends BaseFragment implements
 				mPullRefreshScrollView.onRefreshComplete();
 				BuyerIndexInfoBean bean = (BuyerIndexInfoBean) obj;
 				data = bean.getData();
-				
-				
-				
-				String codeUrl = data.getBarcode();
-				String shopName = data.getShopname();
+				codeUrl = data.getBarcode();
+				shopName = data.getShopname();
 				Goodsamount goodsamount = data.getGoodsamount();
 				tv_today_huokuan_money.setText(ToolsUtil.nullToString(goodsamount.getTodaygoodsamount()));
 				tv_all_huokuan_money.setText(ToolsUtil.nullToString(goodsamount.getTotalgoodsamount()));
-				
-				bitmapUtils.display(iv_qr_code, codeUrl);
-				urlList.add(codeUrl);
+				byte[] bytes = Base64Coder.decode(codeUrl);
+				iv_qr_code.setImageBitmap(BitmapFactory.decodeByteArray(bytes, 0, bytes.length));
 				tv_qr_name.setText(ToolsUtil.nullToString(shopName));
 				
 				//处理返回来的数据
