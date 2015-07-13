@@ -8,12 +8,11 @@
         android:minSdkVersion="8"
         android:targetSdkVersion="19" />
 
-    
     <permission
         android:name="com.shenma.yueba.permission.JPUSH_MESSAGE"
         android:protectionLevel="signature" />
-  
-    <!-- Required  一些系统要求的权限，如访问网络等-->
+
+    <!-- Required  一些系统要求的权限，如访问网络等 -->
     <uses-permission android:name="com.shenma.yueba.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -25,10 +24,8 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>  
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
-    
-    
     <!-- Optional for location -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -36,9 +33,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-    
-    
-    
+
     <!-- Required  一些系统要求的权限，如访问网络等 -->
     <uses-permission android:name="com.aebiz.sdmail.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
@@ -180,7 +175,7 @@
             android:name="com.tencent.connect.common.AssistActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        
+
         <!-- 微信支付回调 -->
         <activity
             android:name=".wxapi.WXPayEntryActivity"
@@ -196,6 +191,9 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
             android:name="com.shenma.yueba.yangjia.activity.MainActivityForYangJia"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.shenma.yueba.yangjia.activity.BigImageShowActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.shenma.yueba.yangjia.activity.BoradRewardActivity"
@@ -266,14 +264,14 @@
             android:name="com.shenma.yueba.yangjia.activity.HuoKuanIncomingAndOutgoingsActivity"
             android:screenOrientation="portrait" >
         </activity>
-         <!-- 货款收支 -->
+        <!-- 货款收支 -->
         <activity
             android:name="com.shenma.yueba.camera2.ActivityCapture"
             android:configChanges="keyboardHidden|orientation|screenSize"
-                android:screenOrientation="landscape"
-                android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-                android:launchMode="singleTask"
-                android:windowSoftInputMode="adjustResize|stateHidden" >
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
         </activity>
         <activity
             android:name="com.shenma.yueba.yangjia.activity.HuoKuanManagerActivity"
@@ -287,12 +285,12 @@
             android:name="com.shenma.yueba.yangjia.activity.KaiXiaoPiaoActivity"
             android:screenOrientation="portrait" >
         </activity>
-          <activity
+        <activity
             android:name="com.shenma.yueba.yangjia.activity.EditPicActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" >
         </activity>
-           <activity
+        <activity
             android:name="com.shenma.yueba.yangjia.activity.AddTagActivity"
             android:screenOrientation="portrait" >
         </activity>
@@ -311,7 +309,7 @@
         <activity
             android:name="com.shenma.yueba.crop.CropActivity"
             android:screenOrientation="portrait" >
-             <intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.CROP" />
 
                 <category android:name="android.intent.category.DEFAULT" />
@@ -360,7 +358,7 @@
             android:name="com.shenma.yueba.baijia.activity.BaiJiaOrderDetailsActivity"
             android:screenOrientation="portrait" >
         </activity>
-        
+
         <!-- 败家订单申请退页面 -->
         <activity
             android:name="com.shenma.yueba.baijia.activity.ApplyForRefundActivity"
@@ -405,7 +403,7 @@
             android:name="com.shenma.yueba.baijia.activity.ShopMainActivity"
             android:screenOrientation="portrait" >
         </activity>
-        
+
         <!-- 分享列表页 -->
         <activity
             android:name="com.shenma.yueba.baijia.activity.BaiJiaShareDataActivity"
@@ -415,10 +413,9 @@
         <!-- 支付方式选择页面 -->
         <activity
             android:name="com.shenma.yueba.baijia.activity.BaijiaPayActivity"
-            android:screenOrientation="portrait" 
             android:exported="true"
             android:launchMode="singleTop"
-            >
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -452,9 +449,8 @@
         <!-- 聊天界面 -->
         <activity
             android:name="com.shenma.yueba.ChatActivity"
-            android:screenOrientation="portrait" 
             android:launchMode="singleTask"
-            >
+            android:screenOrientation="portrait" >
         </activity>
         <!-- 店铺介绍界面 -->
         <activity
@@ -485,7 +481,7 @@
             android:name="com.shenma.yueba.yangjia.activity.WithdrawHistoryActivity"
             android:screenOrientation="portrait" >
         </activity>
-          <!-- 提现历史 -->
+        <!-- 提现历史 -->
         <activity
             android:name="com.shenma.yueba.yangjia.activity.PublishProductActivity"
             android:launchMode="singleTask"
@@ -559,117 +555,102 @@
                 <action android:name="android.intent.action.USER_PRESENT" />
             </intent-filter>
         </receiver>
-        
+
         <!-- 微信微信支付服务 -->
-        <receiver
-            android:name="net.sourceforge.simcpux.AppRegister">
+        <receiver android:name="net.sourceforge.simcpux.AppRegister" >
             <intent-filter>
                 <action android:name="com.tencent.mm.plugin.openapi.Intent.ACTION_REFRESH_WXAPP" />
             </intent-filter>
         </receiver>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-     <!-- Required SDK核心功能-->
+
+        <!-- Required SDK核心功能 -->
         <activity
             android:name="cn.jpush.android.ui.PushActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:configChanges="orientation|keyboardHidden" >
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
             <intent-filter>
                 <action android:name="cn.jpush.android.ui.PushActivity" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="com.shenma.yueba" />
             </intent-filter>
         </activity>
-        <!-- Required  SDK核心功能-->
+        <!-- Required  SDK核心功能 -->
         <service
             android:name="cn.jpush.android.service.DownloadService"
             android:enabled="true"
             android:exported="false" >
         </service>
-    
-        
-        <!-- Required SDK 核心功能-->
+
+        <!-- Required SDK 核心功能 -->
         <service
             android:name="cn.jpush.android.service.PushService"
             android:enabled="true"
-            android:exported="false">
+            android:exported="false" >
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.REGISTER" />
                 <action android:name="cn.jpush.android.intent.REPORT" />
                 <action android:name="cn.jpush.android.intent.PushService" />
                 <action android:name="cn.jpush.android.intent.PUSH_TIME" />
-                
             </intent-filter>
         </service>
-        
-        <!-- Required SDK核心功能-->
+
+        <!-- Required SDK核心功能 -->
         <receiver
             android:name="cn.jpush.android.service.PushReceiver"
             android:enabled="true" >
-             <intent-filter android:priority="1000">
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" />   <!--Required  显示通知栏 -->
+            <intent-filter android:priority="1000" >
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" />
+ <!-- Required  显示通知栏 -->
                 <category android:name="com.shenma.yueba" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.USER_PRESENT" />
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
-             <!-- Optional -->
+            <!-- Optional -->
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_ADDED" />
                 <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
                 <data android:scheme="package" />
             </intent-filter>
-   
         </receiver>
-        
-        <!-- Required SDK核心功能-->
+
+        <!-- Required SDK核心功能 -->
         <receiver android:name="cn.jpush.android.service.AlarmReceiver" />
-        
-        <!-- User defined.  For test only  用户自定义的广播接收器-->
-       <receiver
+
+        <!-- User defined.  For test only  用户自定义的广播接收器 -->
+        <receiver
             android:name="com.shenma.yueba.broadcaseReceiver.MyReceiver"
-            android:enabled="true">
+            android:enabled="true" >
             <intent-filter>
-                <action android:name="cn.jpush.android.intent.REGISTRATION" /> Required  用户注册SDK的intent
-                <action android:name="cn.jpush.android.intent.UNREGISTRATION" />  
-                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" /> Required  用户接收SDK消息的intent
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" /> Required  用户接收SDK通知栏信息的intent
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" /> Required  用户打开自定义通知栏的intent
-                <action android:name="cn.jpush.android.intent.ACTION_RICHPUSH_CALLBACK" /> Optional 用户接受Rich Push Javascript 回调函数的intent
-                <action android:name="cn.jpush.android.intent.CONNECTION" />接收网络变化 连接/断开 since 1.6.3
+                <action android:name="cn.jpush.android.intent.REGISTRATION" />
+ Required  用户注册SDK的intent
+                <action android:name="cn.jpush.android.intent.UNREGISTRATION" />
+                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" />
+ Required  用户接收SDK消息的intent
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" />
+ Required  用户接收SDK通知栏信息的intent
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />
+ Required  用户打开自定义通知栏的intent
+                <action android:name="cn.jpush.android.intent.ACTION_RICHPUSH_CALLBACK" />
+ Optional 用户接受Rich Push Javascript 回调函数的intent
+                <action android:name="cn.jpush.android.intent.CONNECTION" />
+接收网络变化 连接/断开 since 1.6.3
                 <category android:name="com.shenma.yueba" />
             </intent-filter>
         </receiver>
- 
-        
+
         <!-- Required  . Enable it you can get statistics data with channel -->
-        <meta-data android:name="JPUSH_CHANNEL" android:value="developer-default"/>
-        <meta-data android:name="JPUSH_APPKEY" android:value="bd04e24380b02b787b18d013" /> <!--  </>值来自开发者平台取得的AppKey-->
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+        <meta-data
+            android:name="JPUSH_CHANNEL"
+            android:value="developer-default" />
+        <meta-data
+            android:name="JPUSH_APPKEY"
+            android:value="bd04e24380b02b787b18d013" />
+ <!-- </>值来自开发者平台取得的AppKey -->
+
     </application>
 
 </manifest>

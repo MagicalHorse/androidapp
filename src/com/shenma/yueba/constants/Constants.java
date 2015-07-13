@@ -183,7 +183,7 @@ public class Constants {
 	public final static String SD_PIC = Constants.SDCARDPATH
 			+ Constants.APP_WENJIANJIA_PIC;
 	// apk新版本要存的名字
-	public final static String apkName = "joybar" + ".apk";
+	public final static String apkName = "joybar.apk";
 
 	// 本地图片存贮后缀名
 	public final static String IMG_USER_EXTENSION_PNG = "u.png";// 原图
