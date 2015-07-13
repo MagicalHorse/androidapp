@@ -22,7 +22,7 @@
         android:id="@+id/orderpay_dialog_layout_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="查询订单支付状态。。。"
+        android:text="查询订单支付状态..."
         />
     
     <TextView 

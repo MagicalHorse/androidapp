@@ -2,7 +2,9 @@ package im.control;
 
 import im.form.BaseChatBean;
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -10,6 +12,7 @@ import android.widget.TextView.BufferType;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.activity.ApproveBuyerDetailsActivity;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.RoundImageView;
@@ -54,6 +57,20 @@ public class LinkViewManager extends ChatBaseManager {
 			break;
 		}
 
+		ll.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				if(v.getTag()!=null)
+				{
+					BaseChatBean bean=(BaseChatBean)v.getTag();
+					Intent intent=new Intent(context,ApproveBuyerDetailsActivity.class);
+					intent.putExtra("productID", bean.getProductId());
+					context.startActivity(intent);
+				}
+				
+			}
+		});
 		infaterView();
 	}
 
@@ -76,6 +93,7 @@ public class LinkViewManager extends ChatBaseManager {
 		} else {
 			ll.setVisibility(View.GONE);
 		}
+		ll.setTag(bean);
 		String contecnt_str=ToolsUtil.getImage(ToolsUtil.nullToString((String)bean.getContent()), 320, 0);
 		chat_layout_item_leftmsg_name_textview.setText(ToolsUtil.nullToString(bean.getUserName()));
 		chat_layout_item_leftmsg_time_textview.setText(ToolsUtil.nullToString(bean.getCreationDate()));

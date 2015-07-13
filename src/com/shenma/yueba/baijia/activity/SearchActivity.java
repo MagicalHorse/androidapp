@@ -8,8 +8,8 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
-import android.view.Window;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -21,7 +21,6 @@ import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.adapter.MyFragmentPagerAdapter;
 import com.shenma.yueba.baijia.fragment.BrandFragment;
 import com.shenma.yueba.baijia.fragment.BuyerFragment;
-import com.shenma.yueba.baijia.fragment.TagFragment;
 import com.shenma.yueba.util.FontManager;
 
 
@@ -34,7 +33,6 @@ import com.shenma.yueba.util.FontManager;
 public class SearchActivity extends FragmentActivity implements OnClickListener {
 	
 	private BrandFragment brandFragment;// 品牌
-	private TagFragment tagFragment;// 标签
 	private BuyerFragment buyerFragment;// 买手
 	private ArrayList<Fragment> fragmentList = new ArrayList<Fragment>();
 	private ViewPager viewpager_search;
@@ -132,10 +130,8 @@ public class SearchActivity extends FragmentActivity implements OnClickListener 
 	
 	private void initFragment() {
 		brandFragment = new BrandFragment();
-		//tagFragment = new TagFragment();
 		buyerFragment = new BuyerFragment();
 		fragmentList.add(brandFragment);
-		//fragmentList.add(tagFragment);
 		fragmentList.add(buyerFragment);
 		myFragmentPagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager(), fragmentList);
 

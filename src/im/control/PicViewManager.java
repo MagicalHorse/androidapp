@@ -73,20 +73,7 @@ public class PicViewManager extends ChatBaseManager{
 		chat_layout_item_leftimg_progress_linearlayout=(LinearLayout)ll.findViewById(R.id.chat_layout_item_leftimg_progress_linearlayout);
 		chat_layout_item_leftimg_progress_progressbar=(ProgressBar)ll.findViewById(R.id.chat_layout_item_leftimg_progress_progressbar);
 		chat_layout_item_leftimg_progress_textview=(TextView)ll.findViewById(R.id.chat_layout_item_leftimg_progress_textview);
-		ll.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				if(v.getTag()!=null && v.getTag() instanceof BaseChatBean)
-				{
-					BaseChatBean bean=(BaseChatBean)v.getTag();
-					Intent intent=new Intent(context,ApproveBuyerDetailsActivity.class);
-					intent.putExtra("productID", bean.getProductId());
-					context.startActivity(intent);
-				}
-				
-			}
-		});
+		
 	}
 	
 	
@@ -99,7 +86,6 @@ public class PicViewManager extends ChatBaseManager{
 		{
 			ll.setVisibility(View.GONE);
 		}
-		ll.setTag(bean);
 		if(bean!=null && bean instanceof PicChatBean)
 		{
 			PicChatBean picbean=(PicChatBean)bean;

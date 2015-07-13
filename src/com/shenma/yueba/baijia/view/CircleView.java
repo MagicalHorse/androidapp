@@ -85,11 +85,6 @@ public class CircleView extends BaseView{
 	void initPullView()
 	{
 		baijia_quanzi_layout_tanb1_gridbview=(PullToRefreshGridView)v.findViewById(R.id.baijia_quanzi_layout_tanb1_gridbview);
-		 //设置标签显示的内容
-		 //pulltorefreshscrollview.getLoadingLayoutProxy().setLastUpdatedLabel("lastUpdateLabel");   
-		 /*pulltorefreshscrollview.getLoadingLayoutProxy().setPullLabel("下拉刷新");  
-		 pulltorefreshscrollview.getLoadingLayoutProxy().setRefreshingLabel("刷新中。。。");  
-		 pulltorefreshscrollview.getLoadingLayoutProxy().setReleaseLabel("松开刷新");*/
 		baijia_quanzi_layout_tanb1_gridbview.setMode(Mode.BOTH);
 		 
 		baijia_quanzi_layout_tanb1_gridbview.setOnPullEventListener(new OnPullEventListener<GridView>() {
@@ -98,16 +93,15 @@ public class CircleView extends BaseView{
 			public void onPullEvent(PullToRefreshBase<GridView> refreshView,
 					State state, Mode direction) {
 				
-				if(direction==Mode.PULL_FROM_START)
-				{
-					baijia_quanzi_layout_tanb1_gridbview.getLoadingLayoutProxy().setPullLabel("上拉刷新");  
-					baijia_quanzi_layout_tanb1_gridbview.getLoadingLayoutProxy().setRefreshingLabel("刷新中。。。");  
-					baijia_quanzi_layout_tanb1_gridbview.getLoadingLayoutProxy().setReleaseLabel("松开刷新");
-				}else if(direction==Mode.PULL_FROM_END)
-				{
-					baijia_quanzi_layout_tanb1_gridbview.getLoadingLayoutProxy().setPullLabel("下拉加载");  
-					baijia_quanzi_layout_tanb1_gridbview.getLoadingLayoutProxy().setRefreshingLabel("加载中。。。");  
-					baijia_quanzi_layout_tanb1_gridbview.getLoadingLayoutProxy().setReleaseLabel("松开加载");
+				// 设置标签显示的内容
+				if (direction == Mode.PULL_FROM_START) {
+					baijia_quanzi_layout_tanb1_gridbview.getLoadingLayoutProxy().setPullLabel(activity.getResources().getString(R.string.Refreshonstr));
+					baijia_quanzi_layout_tanb1_gridbview.getLoadingLayoutProxy().setRefreshingLabel(activity.getResources().getString(R.string.Refreshloadingstr));
+					baijia_quanzi_layout_tanb1_gridbview.getLoadingLayoutProxy().setReleaseLabel(activity.getResources().getString(R.string.Loosentherefresh));
+				} else if (direction == Mode.PULL_FROM_END) {
+					baijia_quanzi_layout_tanb1_gridbview.getLoadingLayoutProxy().setPullLabel(activity.getResources().getString(R.string.Thedropdownloadstr));
+					baijia_quanzi_layout_tanb1_gridbview.getLoadingLayoutProxy().setRefreshingLabel(activity.getResources().getString(R.string.RefreshLoadingstr));
+					baijia_quanzi_layout_tanb1_gridbview.getLoadingLayoutProxy().setReleaseLabel(activity.getResources().getString(R.string.Loosentheloadstr));
 				}
 			}
 		});

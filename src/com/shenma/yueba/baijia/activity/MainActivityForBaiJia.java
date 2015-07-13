@@ -3,7 +3,6 @@ package com.shenma.yueba.baijia.activity;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.opengl.Visibility;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -23,7 +22,6 @@ import com.shenma.yueba.baijia.fragment.IndexFragmentForBaiJia;
 import com.shenma.yueba.baijia.fragment.MeFragmentForBaiJia;
 import com.shenma.yueba.baijia.fragment.MessageFragment;
 import com.shenma.yueba.baijia.modle.FragmentBean;
-import com.shenma.yueba.util.FontManager;
 
 public class MainActivityForBaiJia extends FragmentActivity {
 FrameLayout baijia_main_framelayout;

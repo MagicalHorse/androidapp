@@ -17,7 +17,7 @@
     <string name="shop_commodity_str">商品</string>
     <string name="shop_commoditynew_str">上新</string>
     <string name="shop_circle_str">圈子</string>
-    <string name="lastpagedata_str"></string>
+    <string name="lastpagedata_str">没有更多信息</string>
     
     <string name="shop_description1_str">夏天眨眼就到了，瘦身，美白，防晒......小月亮门准备好了吗？！</string>
     <string name="shop_description2_str">猫猫出品必出精品。还有没来得及了解纪梵希的亲,赶快加猫猫的圈子,这是个好机会哦。</string>
@@ -30,6 +30,14 @@
     
     <string name="app_tip">提示</string>
     <string name="getting_prepayid">正在获取订单信息...</string>
+    
+    <!-- 刷新提示信息 -->
+    <string name="Refreshonstr">上拉刷新</string>
+    <string name="Refreshloadingstr">刷新中...</string>
+    <string name="Loosentherefresh">松开刷新</string>
+    <string name="Thedropdownloadstr">下拉加载</string>
+    <string name="RefreshLoadingstr">加载中...</string>
+    <string name="Loosentheloadstr">松开加载</string>
     
     
     

@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -27,7 +26,6 @@ import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.adapter.MyFragmentPagerAdapter;
 import com.shenma.yueba.baijia.fragment.BaseFragment;
 import com.shenma.yueba.baijia.fragment.MyBuyerFragment;
-import com.shenma.yueba.baijia.fragment.TheySayFragment;
 import com.shenma.yueba.baijia.modle.BuyerIndexInfo;
 import com.shenma.yueba.baijia.modle.BuyerIndexInfoBean;
 import com.shenma.yueba.baijia.modle.Favorite;
@@ -59,7 +57,6 @@ public class IndexFragmentForYangJia extends BaseFragment implements
 	private Button bt_cart;
 	private ViewPager viewpager_main;
 	private BuyerStreetFragment buyerStreetFragment;// 买手街
-	private TheySayFragment theySayFragment;// 他们说
 	private MyBuyerFragment myBuyerFragment;// 我的买手
 	private ArrayList<Fragment> fragmentList = new ArrayList<Fragment>();
 	private MyFragmentPagerAdapter myFragmentPagerAdapter;
@@ -281,17 +278,6 @@ public class IndexFragmentForYangJia extends BaseFragment implements
 				tv_all_huokuan_title,tv_all_huokuan_money,tv_all_huokuan_yuan);
 	}
 
-	private void initFragment() {
-		buyerStreetFragment = new BuyerStreetFragment();
-		theySayFragment = new TheySayFragment();
-		myBuyerFragment = new MyBuyerFragment();
-		fragmentList.add(buyerStreetFragment);
-		fragmentList.add(theySayFragment);
-		fragmentList.add(myBuyerFragment);
-		myFragmentPagerAdapter = new MyFragmentPagerAdapter(
-				getChildFragmentManager(), fragmentList);
-
-	}
 
 	private void initViewPager() {
 		viewpager_main.setAdapter(myFragmentPagerAdapter);
