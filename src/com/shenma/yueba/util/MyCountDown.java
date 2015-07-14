@@ -30,9 +30,9 @@ public class MyCountDown extends CountDownTimer {
 	@Override
 	public void onTick(long millisUntilFinished) {
 		if (view instanceof Button) {
-			((Button) view).setText(millisUntilFinished / 1000 + "\"");
+			((Button) view).setText(millisUntilFinished / 1000 + "");
 		} else if (view instanceof TextView) {
-			((TextView) view).setText(millisUntilFinished / 1000 + "\"");
+			((TextView) view).setText(millisUntilFinished / 1000 + "");
 		}
 	}
 
