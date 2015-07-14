@@ -248,8 +248,7 @@ public class AddCircleActivity extends BaseActivityWithTopView implements
 						startActivityForResult(PhotoUtils.getZoomIntent(Uri
 								.fromFile(new File(littlePicPath)), Uri
 								.fromFile(FileUtils
-										.createNewFile(littlePicPath_cache)),
-								1, 1), PhotoUtils.INTENT_REQUEST_CODE_CROP);
+										.createNewFile(littlePicPath_cache))), PhotoUtils.INTENT_REQUEST_CODE_CROP);
 					}
 				}
 			}
