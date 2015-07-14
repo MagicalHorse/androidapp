@@ -113,17 +113,19 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
 
 						@Override
 						public void http_Success(Object obj) {
-
-							if (obj != null && obj instanceof UserRequestBean) {
-								UserRequestBean bean = (UserRequestBean) obj;
-								httpControl.setLoginInfo(getActivity(), bean);
+							String flag = getActivity().getIntent().getStringExtra("flag");
+							UserRequestBean bean = (UserRequestBean) obj;
+							httpControl.setLoginInfo(getActivity(), bean);
+							if("needLogin".equals(flag)){
+								
+							}else if (obj != null && obj instanceof UserRequestBean) {
 								Intent intent = new Intent(getActivity(),MainActivityForBaiJia.class);
 								intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 								JpushUtils jpushUtils = new JpushUtils(getActivity());
 								jpushUtils.setAlias(bean.getData().getId()+"");
 								startActivity(intent);
-								getActivity().finish();
 							}
+							getActivity().finish();
 						}
 
 						@Override
