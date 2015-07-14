@@ -5,18 +5,18 @@
     android:gravity="center_vertical"
     android:orientation="horizontal"
     android:background="@color/white"
-    android:minHeight="@dimen/user_config_iconwidth60_dimen"
     >
 
     <TextView
         android:layout_gravity="center_vertical"
         android:id="@+id/approvebuyerdetails_attention_textview"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/user_config_iconwidth60_dimen"
         android:drawableLeft="@drawable/like_backgroud"
         android:gravity="center"/>
 
     <com.shenma.yueba.view.MyGridView 
+        android:padding="0dp"
         android:cacheColorHint="@color/color_transparent"
         android:id="@+id/approvebuyerdetails_attentionvalue_gridview"
         android:horizontalSpacing="@dimen/shop_main_width3_dimen"

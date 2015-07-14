@@ -26,8 +26,6 @@ import com.shenma.yueba.ChatActivity;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.modle.FragmentBean;
-import com.shenma.yueba.baijia.modle.MyCircleInfo;
-import com.shenma.yueba.baijia.modle.RequestMyCircleInfoBean;
 import com.shenma.yueba.baijia.modle.RequestTuiJianCircleInfoBean;
 import com.shenma.yueba.baijia.modle.TuiJianCircleInfo;
 import com.shenma.yueba.baijia.modle.TuiJianCircleInfoBean;
@@ -44,7 +42,7 @@ public class CircleView extends BaseView{
 	List<View> footer_list=new ArrayList<View>();
 	//当前选中的id
 	int currid=-1;
-	View v;
+	View view;
 	PullToRefreshGridView baijia_quanzi_layout_tanb1_gridbview;
 	LinearLayout showloading_layout_view;
 	List<TuiJianCircleInfo> items=new ArrayList<TuiJianCircleInfo>();
@@ -54,37 +52,46 @@ public class CircleView extends BaseView{
 	boolean showDialog=true;
 	boolean isFirst=true;
 	HttpControl httpCntrol=new HttpControl();
+	private CircleView(Activity activity)
+	{
+		if(view==null)
+		{
+			this.activity=activity;
+			inflater=activity.getLayoutInflater();
+			view=inflater.inflate(R.layout.circleview_layout, null);
+			initPullView();
+			initView(view);
+		}
+	}
+	
+	
 	public static CircleView the(Activity activity)
 	{
 		if(quanziControlView==null)
 		{
-			quanziControlView=new CircleView();
+			quanziControlView=new CircleView(activity);
+			
 		}
-		quanziControlView.activity=activity;
+	
 		
 		return quanziControlView;
 	}
 
 	public View getView(Activity activity)
 	{
-		this.activity=activity;
-		if(v==null)
-		{
-
-			inflater=activity.getLayoutInflater();
-			v=inflater.inflate(R.layout.circleview_layout, null);
-			initPullView();
-			initView(v);
-			firstInitData(activity);
-		}
+		//this.activity=activity;
 		baijia_quanzi_layout_tanb1_gridbview.setFocusable(false);
 		baijia_quanzi_layout_tanb1_gridbview.setFocusableInTouchMode(false);
-		return v;
+		if(view!=null)
+		{
+           firstInitData(activity);
+		}
+		return view;
 	}
 	
 	void initPullView()
 	{
-		baijia_quanzi_layout_tanb1_gridbview=(PullToRefreshGridView)v.findViewById(R.id.baijia_quanzi_layout_tanb1_gridbview);
+		baijia_quanzi_layout_tanb1_gridbview=(PullToRefreshGridView)view.findViewById(R.id.baijia_quanzi_layout_tanb1_gridbview);
 		baijia_quanzi_layout_tanb1_gridbview.setMode(Mode.BOTH);
 		 
 		baijia_quanzi_layout_tanb1_gridbview.setOnPullEventListener(new OnPullEventListener<GridView>() {
@@ -252,7 +259,7 @@ public class CircleView extends BaseView{
 	
 	void sendHttp(final int page,final int type)
 	{
-		ToolsUtil.showNoDataView(activity, false);
+		ToolsUtil.showNoDataView(activity,view,false);
 		httpCntrol.getRecommendGroup(page, pageSize, showDialog, new HttpCallBackInterface() {
 			
 			@Override
@@ -269,7 +276,7 @@ public class CircleView extends BaseView{
 							    if(page==1)
 							    {
 							    	baijia_quanzi_layout_tanb1_gridbview.setMode(Mode.PULL_FROM_START);
-								    ToolsUtil.showNoDataView(activity, true);
+								    ToolsUtil.showNoDataView(activity,view, true);
 							    }
 								
 						   }else
@@ -298,7 +305,7 @@ public class CircleView extends BaseView{
 					} else {
 						if(page==1)
 						{
-							ToolsUtil.showNoDataView(activity, true);
+							ToolsUtil.showNoDataView(activity, view,true);
 						}
 						MyApplication.getInstance().showMessage(
 								activity, "没有任何数据");

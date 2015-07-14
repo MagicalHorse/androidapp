@@ -54,11 +54,23 @@ public class MyCircleView extends BaseView{
 	List<MyCircleInfo> items=new ArrayList<MyCircleInfo>();
 	boolean isFirst=true;
 	
+	private MyCircleView(Activity activity)
+	{
+		if(view == null)
+		{
+			this.activity=activity;
+			initView();
+			initPullView();
+			//requestFalshData();
+		}
+	}
+	
+	
 	public static MyCircleView the(Activity activity)
 	{
 		if(myCircleView==null)
 		{
-			myCircleView=new MyCircleView();
+			myCircleView=new MyCircleView(activity);
 		}
 		myCircleView.activity=activity;
 		return myCircleView;
@@ -67,13 +79,6 @@ public class MyCircleView extends BaseView{
 	
 	public View getView(Activity activity)
 	{
-		this.activity=activity;
-		if(view == null)
-		{
-			initView();
-			initPullView();
-			//requestFalshData();
-		}
 		return view ;
 	}
 	
@@ -185,7 +190,7 @@ public class MyCircleView extends BaseView{
 	 * **/
 	void sendHttp(final int page,final int type)
 	{
-		ToolsUtil.showNoDataView(activity, false);
+		ToolsUtil.showNoDataView(activity, view,false);
 		httpCntrol.getMyCircle(page, 10000, showDialog, new HttpCallBackInterface() {
 			
 			@Override
@@ -202,7 +207,7 @@ public class MyCircleView extends BaseView{
 							if(page==1)
 							{
 								pull_refresh_list.setMode(Mode.PULL_FROM_START);
-								ToolsUtil.showNoDataView(activity, true);
+								ToolsUtil.showNoDataView(activity,view, true);
 							}
 						}else
 						{
@@ -229,10 +234,9 @@ public class MyCircleView extends BaseView{
 					} else {
 						if(page==1)
 						{
-							ToolsUtil.showNoDataView(activity, true);
+							ToolsUtil.showNoDataView(activity, view,true);
 						}
-						MyApplication.getInstance().showMessage(
-								activity, "没有任何数据");
+						MyApplication.getInstance().showMessage(activity, "没有任何数据");
 					}
 				}
 				

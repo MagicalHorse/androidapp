@@ -217,10 +217,13 @@ public class ShopPuBuliuFragment extends Fragment implements
 	 * 刷新完成
 	 * **/
 	void refreshComplete() {
+		if(getActivity()!=null)
+		{
 		View v = getActivity().findViewById(
 				R.id.shop_main_layout_title_pulltorefreshscrollview);
 		if (v != null && v instanceof PullToRefreshScrollView) {
 			((PullToRefreshScrollView) v).onRefreshComplete();
+		}
 		}
 	}
 
