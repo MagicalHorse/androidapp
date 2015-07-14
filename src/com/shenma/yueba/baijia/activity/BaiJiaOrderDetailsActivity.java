@@ -85,8 +85,7 @@ LinearLayout baijia_orderdetails_footer_right_linearlayout;//按钮的父对象
 			
 			@Override
 			public void onClick(View v) {
-				
-				
+				BaiJiaOrderDetailsActivity.this.finish();
 			}
 		});
 		
@@ -254,7 +253,7 @@ LinearLayout baijia_orderdetails_footer_right_linearlayout;//按钮的父对象
 	{
 		BaiJiaOrderListInfo info=new BaiJiaOrderListInfo();
 		info.setAddress(baiJiaOrderListInfo.getPickAddress());
-		info.setAmount(baiJiaOrderListInfo.getOrderAmount());
+		info.setAmount(baiJiaOrderListInfo.getActualAmount());
 		info.setBuyerName(baiJiaOrderListInfo.getBuyerName());
 		info.setCreateDate(baiJiaOrderListInfo.getCreateDate());
 		info.setOrderNo(baiJiaOrderListInfo.getOrderNo());
@@ -314,7 +313,7 @@ LinearLayout baijia_orderdetails_footer_right_linearlayout;//按钮的父对象
 		BaiJiaOrdeDetailsInfoBean baiJiaOrdeDetailsInfoBean=bean.getData();
 		order_no_content.setText(ToolsUtil.nullToString(baiJiaOrdeDetailsInfoBean.getOrderNo()));
 		order_wating_content.setText(ToolsUtil.nullToString(baiJiaOrdeDetailsInfoBean.getOrderStatusName()));
-		order_money_count.setText("￥"+baiJiaOrdeDetailsInfoBean.getPrice());
+		order_money_count.setText("￥"+baiJiaOrdeDetailsInfoBean.getActualAmount());
 		order_date_count.setText(ToolsUtil.nullToString(baiJiaOrdeDetailsInfoBean.getCreateDate()));
 		customer_account_content.setText(ToolsUtil.nullToString(baiJiaOrdeDetailsInfoBean.getBuyerName()));
 		tv_customer_phone_content.setText(ToolsUtil.nullToString(baiJiaOrdeDetailsInfoBean.getBuyerMobile()));

@@ -30,7 +30,8 @@ public class SplashActivity extends BaseActivity {
 		handler.postDelayed(new Runnable() {
 			@Override
 			public void run() {
-				skip(LoginAndRegisterActivity.class, true);
+				//skip(LoginAndRegisterActivity.class, true);
+				skip(MainActivityForBaiJia.class, true);
 			}
 		}, 2500);
 		ToolsUtil.getKeyAndSignFromNetSetToLocal(mContext);

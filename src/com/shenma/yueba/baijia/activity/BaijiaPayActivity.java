@@ -91,7 +91,7 @@ boolean isBroadcast=false;//是否注册广播监听 支付结果
 				BaijiaPayActivity.this.finish();
 			}
 		});
-		bean.add(new BaijiaPayInfoBean(R.drawable.weixin_icon,BaijiaPayInfoBean.Type.weixinpay,"请支付",Double.toString(creatOrderInfoBean.getTotalAmount()),"微信支付","微信安全支付"));
+		bean.add(new BaijiaPayInfoBean(R.drawable.weixin_icon,BaijiaPayInfoBean.Type.weixinpay,"请支付",Double.toString(creatOrderInfoBean.getActualAmount()),"微信支付","微信安全支付"));
 		baiJiaPayAdapter=new BaiJiaPayAdapter(bean, BaijiaPayActivity.this);
 		baijiapay_layout_paytype_listview=(ListView)parentView.findViewById(R.id.baijiapay_layout_paytype_listview);
 		baijiapay_layout_paytype_listview.setAdapter(baiJiaPayAdapter);
@@ -212,7 +212,7 @@ boolean isBroadcast=false;//是否注册广播监听 支付结果
 		
 		Map<String, Object> map=new HashMap<String, Object>();
 		map.put("messageTitle", messageTitle);
-		map.put("TotalAmount", creatOrderInfoBean.getTotalAmount());
+		map.put("TotalAmount", creatOrderInfoBean.getActualAmount());
 		map.put("OrderNo", creatOrderInfoBean.getOrderNo());
 		CreateWeiXinOrderManager cwxm=new CreateWeiXinOrderManager(BaijiaPayActivity.this, new WeiXinPayManagerListener() {
 			
