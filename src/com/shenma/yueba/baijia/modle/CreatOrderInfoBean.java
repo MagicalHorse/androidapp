@@ -12,6 +12,14 @@ public class CreatOrderInfoBean implements Serializable{
 	String OrderNo;//" : 订单号 "115012080504",
     double TotalAmount;//订单金额 101.00,
     double DisCountAmount;//":优惠的金额
+    double ActualAmount;//实付金额
+    
+	public double getActualAmount() {
+		return ActualAmount;
+	}
+	public void setActualAmount(double actualAmount) {
+		ActualAmount = actualAmount;
+	}
 	public String getOrderNo() {
 		return OrderNo;
 	}

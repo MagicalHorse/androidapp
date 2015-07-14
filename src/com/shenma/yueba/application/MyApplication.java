@@ -1,7 +1,7 @@
+
 package com.shenma.yueba.application;
 
 import im.control.SocketManger;
-import im.control.SocketManger.SocketManagerListener;
 
 import java.io.File;
 import java.util.LinkedHashMap;
@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 
 import roboguice.RoboGuice;
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
@@ -18,17 +17,9 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.Typeface;
-import android.os.StrictMode;
 import android.widget.Toast;
-
 import cn.jpush.android.api.JPushInterface;
 
-import com.alibaba.sdk.android.oss.OSSService;
-import com.alibaba.sdk.android.oss.OSSServiceProvider;
-import com.alibaba.sdk.android.oss.model.AccessControlList;
-import com.alibaba.sdk.android.oss.model.ClientConfiguration;
-import com.alibaba.sdk.android.oss.model.TokenGenerator;
-import com.alibaba.sdk.android.oss.util.OSSToolKit;
 import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.bitmap.BitmapCommonUtils;
 import com.lidroid.xutils.bitmap.BitmapDisplayConfig;
@@ -46,7 +37,6 @@ import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.activity.LoginAndRegisterActivity;
-import com.shenma.yueba.baijia.activity.SplashActivity;
 import com.shenma.yueba.baijia.modle.UserRequestBean;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.db.DBHelper;
@@ -333,7 +323,7 @@ public class MyApplication extends Application {
 			@Override
 			public void run() {
 				showMessage(context, msg);
-				Intent intent=new Intent(context,SplashActivity.class);
+				Intent intent=new Intent(context,LoginAndRegisterActivity.class);
 				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				MyApplication.removeAllActivity();
 				((Activity)context).startActivity(intent);

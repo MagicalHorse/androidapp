@@ -31,9 +31,15 @@ public class BaiJiaOrdeDetailsInfoBean implements Serializable{
 	boolean IsShareable;// 是否可以分享
     String ShareLink="";//分享连接
     List<OrderPromotions> Promotions=new ArrayList<OrderPromotions>();//活动信息
-
+    double ActualAmount;//实际付款
 	
 	
+	public double getActualAmount() {
+		return ActualAmount;
+	}
+	public void setActualAmount(double actualAmount) {
+		ActualAmount = actualAmount;
+	}
 	public List<OrderPromotions> getPromotions() {
 		return Promotions;
 	}

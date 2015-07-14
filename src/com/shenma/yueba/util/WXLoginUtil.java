@@ -81,8 +81,7 @@ public class WXLoginUtil {
 								new UMDataListener() {
 									@Override
 									public void onStart() {
-										Toast.makeText(ctx, "获取平台数据开始...",
-												Toast.LENGTH_SHORT).show();
+										//Toast.makeText(ctx, "获取平台数据开始...",Toast.LENGTH_SHORT).show();
 									}
 
 									@Override
@@ -110,8 +109,7 @@ public class WXLoginUtil {
 													wxLogin(sb);
 												}
 											});
-											Toast.makeText(ctx, sb.toString(),
-													1000).show();
+											//Toast.makeText(ctx, sb.toString(),1000).show();
 											Log.d("TestData", sb.toString());
 										} else {
 											Log.d("TestData", "发生错误：" + status);

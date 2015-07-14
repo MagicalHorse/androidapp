@@ -181,6 +181,16 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 	 * initView
 	 */
 	protected void initView() {
+		TextView tv_top_left=(TextView)findViewById(R.id.tv_top_left);
+		tv_top_left.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				SocketManger.the(null).disContentSocket();
+				finish();
+			}
+		});
+		
 		tv_top_title=(TextView)findViewById(R.id.tv_top_title);
 		tv_top_title.setText(chat_name);
 		tv_top_title.setVisibility(View.VISIBLE);
@@ -189,10 +199,8 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 		tv_top_right = (TextView) findViewById(R.id.tv_top_right);
 		tv_top_right.setOnClickListener(this);
 		manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-		getWindow()
-				.setSoftInputMode(
-						WindowManager.LayoutParams.SOFT_INPUT_MASK_ADJUST
-								| WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+		//getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_MASK_ADJUST| WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE| WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		chat_list = (PullToRefreshListView) findViewById(R.id.chat_list);
 		// chat_list.setMode(Mode.PULL_FROM_START);
 		chat_list.setMode(Mode.DISABLED);
