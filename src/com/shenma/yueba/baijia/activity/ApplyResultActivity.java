@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.yangjia.activity.MainActivityForYangJia;
 
 /**
@@ -28,18 +29,13 @@ public class ApplyResultActivity extends BaseActivityWithTopView implements OnCl
 		MyApplication.getInstance().addActivity(this);
 		initView();
 		getIntentData();
+		FontManager.changeFonts(mContext, tv_comment,tv_content,tv_confirm,tv_top_title);
 	}
 	private void initView() {
 		tv_content = getView(R.id.tv_content);
 		tv_comment = getView(R.id.tv_comment);
 		tv_confirm = getView(R.id.tv_confirm);
 		setTitle("结果详情");
-		setLeftTextView(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				ApplyResultActivity.this.finish();
-			}
-		});
 		tv_confirm.setOnClickListener(this);
 	}
 	private void getIntentData() {
@@ -51,6 +47,10 @@ public class ApplyResultActivity extends BaseActivityWithTopView implements OnCl
 		if("withdrawGoods".equals(flag)){//提现货款
 			tv_content.setText("货款提现申请已提交，请等待处理");
 			tv_comment.setText("预计到账时间XXX");
+		}
+		if("userCertification".equals(flag)){
+			tv_content.setText("身份认证申请已提交，请等待处理");
+			tv_comment.setText("");
 		}
 	}
 	@Override
@@ -66,5 +66,14 @@ public class ApplyResultActivity extends BaseActivityWithTopView implements OnCl
 			break;
 		}
 		
+	}
+	
+	
+	@Override
+	public void onBackPressed() {
+		MyApplication.getInstance().removeAllActivity();
+		Intent intent = new Intent(mContext, MainActivityForBaiJia.class);
+		startActivity(intent);
+		super.onBackPressed();
 	}
 }

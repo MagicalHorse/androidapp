@@ -70,6 +70,7 @@ public class BuyerCertificationActivity2 extends BaseActivityWithTopView
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		MyApplication.getInstance().addActivity(this);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.buyer_certification_layout2);
 		super.onCreate(savedInstanceState);
@@ -367,8 +368,13 @@ public class BuyerCertificationActivity2 extends BaseActivityWithTopView
 			@Override
 			public void http_Success(Object obj) {
 				SharedUtil.setStringPerfernece(mContext, SharedUtil.user_AuditStatus, "0");
+				
 				Intent intent = new Intent(mContext, ApplyResultActivity.class);
+				intent.putExtra("flag", "userCertification");
 				startActivity(intent);
+				MyApplication.getInstance().finishActivity(BuyerCertificationActivity1.class);
+				MyApplication.getInstance().finishActivity(BuyerCertificationActivity2.class);
+				
 			}
 
 			@Override

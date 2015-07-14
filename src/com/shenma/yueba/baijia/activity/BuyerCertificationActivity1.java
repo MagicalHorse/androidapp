@@ -74,6 +74,7 @@ public class BuyerCertificationActivity1 extends BaseActivityWithTopView
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		MyApplication.getInstance().addActivity(this);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.buyer_certification_layout);
 		super.onCreate(savedInstanceState);
@@ -92,7 +93,7 @@ public class BuyerCertificationActivity1 extends BaseActivityWithTopView
 		tv_get_point = (TextView) findViewById(R.id.tv_get_point);
 		et_info = (EditText) findViewById(R.id.et_info);
 		et_name = (EditText) findViewById(R.id.et_name);
-		tv_name = (TextView) findViewById(R.id.tv_retain);
+		tv_name = (TextView) findViewById(R.id.tv_name);
 		tv_retain = (TextView) findViewById(R.id.tv_retain);
 		rl_idcard_positive = (RelativeLayout) findViewById(R.id.rl_idcard_positive);
 		rl_idcard_reverse = (RelativeLayout) findViewById(R.id.rl_idcard_reverse);
@@ -106,7 +107,7 @@ public class BuyerCertificationActivity1 extends BaseActivityWithTopView
 		rl_idcard_positive.setOnClickListener(this);
 		rl_idcard_reverse.setOnClickListener(this);
 		FontManager.changeFonts(mContext, tv_idcard_title, tv_get_point,
-				et_info, tv_retain, tv_next);
+				et_info, tv_retain, tv_next,tv_name,et_name,tv_top_title);
 		MyApplication.getInstance().kuanggaobi = (float) 1.76;
 		progressDialog = CustomProgressDialog.createDialog(this);
 	}
@@ -221,7 +222,7 @@ public class BuyerCertificationActivity1 extends BaseActivityWithTopView
 								.fromFile(new File(littlePicPath)), Uri
 								.fromFile(FileUtils
 										.createNewFile(littlePicPath_cache)),
-								5, 8), PhotoUtils.INTENT_REQUEST_CODE_CROP);
+								8, 5), PhotoUtils.INTENT_REQUEST_CODE_CROP);
 					}
 				}
 			}
@@ -258,7 +259,7 @@ public class BuyerCertificationActivity1 extends BaseActivityWithTopView
 					startActivityForResult(PhotoUtils.getZoomIntent(Uri
 							.fromFile(new File(littlePicPath)), Uri
 							.fromFile(FileUtils
-									.createNewFile(littlePicPath_cache))),
+									.createNewFile(littlePicPath_cache)),8,5),
 							PhotoUtils.INTENT_REQUEST_CODE_CROP);
 				}
 			}
