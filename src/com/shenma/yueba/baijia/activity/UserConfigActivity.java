@@ -264,7 +264,7 @@ public class UserConfigActivity extends BaseActivityWithTopView implements
 	 */
 	private void modifyUserLogo() {
 		if (!progressDialog.isShowing()) {
-			progressDialog.show();
+			progressDialog.dismiss();
 		}
 		final HttpControl httpControl = new HttpControl();
 		httpControl.syncUpload(littlePicPath_cache, new SaveCallback() {
@@ -325,6 +325,7 @@ public class UserConfigActivity extends BaseActivityWithTopView implements
 
 	@Override
 	protected void onResume() {
+		MyApplication.getInstance().getImageLoader().displayImage(SharedUtil.getHeadImage(mContext), people_config_str2_imageview);
 		tv_nickname_value.setText(SharedUtil.getStringPerfernece(mContext,
 				SharedUtil.user_names));
 		tv_bind_phone_value.setText(SharedUtil.getBooleanPerfernece(mContext,
