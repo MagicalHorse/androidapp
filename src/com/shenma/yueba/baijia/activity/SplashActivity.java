@@ -7,6 +7,7 @@ import android.view.Window;
 import com.shenma.yueba.R;
 import com.shenma.yueba.UpdateManager;
 import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.util.ToolsUtil;
 
 /**
@@ -33,6 +34,9 @@ public class SplashActivity extends BaseActivity {
 			}
 		}, 2500);
 		ToolsUtil.getKeyAndSignFromNetSetToLocal(mContext);
+		
+		
+		
 //		TaskManagerFactory.createDataTaskManager().addTask(new ITask() {
 //			@Override
 //			public void onTaskNumChanged(int taskNum) {

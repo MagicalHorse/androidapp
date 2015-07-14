@@ -28,6 +28,7 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
+import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.modle.ApplyAuthBuyerBean;
 import com.shenma.yueba.baijia.modle.BaseRequest;
 import com.shenma.yueba.baijia.modle.BrandDetailInfoBean;
@@ -1778,7 +1779,7 @@ public class HttpControl {
 	 * @return void
 	 * ****/
 	<T extends BaseRequest> void basehttpSendToJson(String responsejsonstr,
-			Map<String, String> map, Context context, String method,
+			Map<String, String> map, final Context context, String method,
 			final HttpCallBackInterface httpCallBack, final Class<T> classzz,
 			boolean isshwoDialog, boolean isDialogCancell) {
 		final CustomProgressDialog progressDialog = CustomProgressDialog
@@ -1797,15 +1798,18 @@ public class HttpControl {
 
 						if (obj != null && obj instanceof String) {
 							String str = (String) obj;
-							BaseRequest bean = BaseGsonUtils.getJsonToObject(
-									classzz, str);
+							BaseRequest bean = BaseGsonUtils.getJsonToObject(classzz, str);
 							if (bean == null) {
 								httpRequestDataInterface_Fails("数据不存在");
-							} else if (bean.getStatusCode() != 200) {
-								httpRequestDataInterface_Fails(bean
-										.getMessage());
-							} else {
+							}else if(bean.getStatusCode()==200)
+							{
 								httpCallBack.http_Success(bean);
+							}else if(bean.getStatusCode()==401)//如果token 失效
+							{
+								MyApplication.getInstance().startLogin(context,"登录已经失效,请重新登录");
+							}
+							else {
+								httpRequestDataInterface_Fails(bean.getMessage());
 							}
 						} else {
 							httpRequestDataInterface_Fails("数据不存在");
@@ -1974,12 +1978,15 @@ public class HttpControl {
 							if (bean == null) {
 								httpCallBack.http_Fails(0, "数据解析异常");
 
-							} else if (bean.getStatusCode() != 200) {
-								httpCallBack.http_Fails(bean.getStatusCode(),
-										bean.getMessage());
-							} else {
+							}else if(bean.getStatusCode()==200)
+							{
 								httpCallBack.http_Success(bean);
-							}
+							}else if(bean.getStatusCode()==401)//如果token 失效
+							{
+								MyApplication.getInstance().startLogin(context,"登录已经失效,请重新登录");
+							}else {
+								httpCallBack.http_Fails(bean.getStatusCode(),bean.getMessage());
+							} 
 						}
 						 progressDialog.cancel();
 					}
@@ -2094,12 +2101,10 @@ public class HttpControl {
 				}
 				switch (msg.what) {
 				case 200:
-					httpRequestDataInterface
-							.httpRequestDataInterface_Sucss(msg.obj);
+					httpRequestDataInterface.httpRequestDataInterface_Sucss(msg.obj);
 					break;
 				case 400:
-					httpRequestDataInterface
-							.httpRequestDataInterface_Fails((String) msg.obj);
+					httpRequestDataInterface.httpRequestDataInterface_Fails((String) msg.obj);
 					break;
 				}
 			}
@@ -2222,7 +2227,7 @@ public class HttpControl {
 	 *            Context
 	 * @return void
 	 * ***/
-	void setUnLoginInfo(Context context) {
+	public void setUnLoginInfo(Context context) {
 		SharedUtil.setStringPerfernece(context, SharedUtil.user_id, null);
 		SharedUtil.setStringPerfernece(context, SharedUtil.user_name, null);
 		SharedUtil.setStringPerfernece(context, SharedUtil.user_names, null);

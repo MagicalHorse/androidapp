@@ -308,6 +308,10 @@ public class BuyerAdapter extends BaseAdapter {
 					activity.startActivity(intent);
 					break;
 				case R.id.tv_count:// 商品喜欢/取消喜欢
+					if(!MyApplication.getInstance().isUserLogin(activity))
+					{
+						return;
+					}
 					if (v.getTag() != null
 							|| v.getTag() instanceof ProductsInfoBean) {
 						ProductsInfoBean bean = (ProductsInfoBean) v.getTag();
@@ -322,6 +326,10 @@ public class BuyerAdapter extends BaseAdapter {
 					}
 					break;
 				case R.id.buyersteetfragmeng_item_siliao_button:// 私聊
+					if(!MyApplication.getInstance().isUserLogin(activity))
+					{
+						return;
+					}
 					if (v.getTag() != null
 							&& v.getTag() instanceof ProductsInfoBean) {
 						ProductsInfoBean bean = (ProductsInfoBean) v.getTag();
@@ -336,6 +344,10 @@ public class BuyerAdapter extends BaseAdapter {
 
 					break;
 				case R.id.buyersteetfragmeng_item_share_button:// 分享
+					if(!MyApplication.getInstance().isUserLogin(activity))
+					{
+						return;
+					}
 					if (v.getTag() != null
 							&& v.getTag() instanceof ProductsInfoBean) {
 						ProductsInfoBean bean = (ProductsInfoBean) v.getTag();

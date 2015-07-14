@@ -383,6 +383,8 @@ public class UserConfigActivity extends BaseActivityWithTopView implements
 		case R.id.user_config_exit_button:// 退出登录
 			MyApplication.removeAllActivity();
 			Intent intentLogin = new Intent(mContext, SplashActivity.class);
+			HttpControl httpControl=new HttpControl();
+			httpControl.setUnLoginInfo(UserConfigActivity.this);
 			startActivity(intentLogin);
 			break;
 		case R.id.tv_about:// 关于我们

@@ -226,6 +226,10 @@ public class MeFragmentForBaiJia extends BaseFragment implements OnClickListener
 	 * **/
 	void requestData()
 	{
+		if(!MyApplication.getInstance().isUserLogin(getActivity()))
+		{
+			return;
+		}
 		HttpControl httpcontrol=new HttpControl();
 		httpcontrol.GetBaijiaMyInfo(false, new HttpCallBackInterface() {
 			
