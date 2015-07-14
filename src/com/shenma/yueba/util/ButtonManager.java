@@ -166,7 +166,7 @@ public final static String SHENSULOADING="申诉中";//5
         Intent intent=new Intent(context,BaijiaPayActivity.class);
 		CreatOrderInfoBean creatOrderInfoBean=new CreatOrderInfoBean();
 		creatOrderInfoBean.setOrderNo(baiJiaOrderListInfo.getOrderNo());
-		creatOrderInfoBean.setTotalAmount(baiJiaOrderListInfo.getAmount());
+		creatOrderInfoBean.setActualAmount(baiJiaOrderListInfo.getAmount());
 		ProductInfoBean productInfoBean=baiJiaOrderListInfo.getProduct();
 		intent.putExtra("PAYDATA", creatOrderInfoBean);
 		intent.putExtra("MessageTitle", productInfoBean.getName());
