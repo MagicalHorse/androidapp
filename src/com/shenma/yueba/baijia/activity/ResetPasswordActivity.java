@@ -80,7 +80,12 @@ public class ResetPasswordActivity extends BaseActivityWithTopView implements On
 			{
 				MyApplication.getInstance().showMessage(ResetPasswordActivity.this, "新密码不能为空");
 				return;
-			}else if(!(TextUtils.equals(newpwd,renewpwd)))
+			}else if(newpwd.length()<6)
+			{
+				MyApplication.getInstance().showMessage(ResetPasswordActivity.this, "密码不能少于6位");
+				return;
+			}	
+		    else if(!(TextUtils.equals(newpwd,renewpwd)))
 			{
 				MyApplication.getInstance().showMessage(ResetPasswordActivity.this, "两次密码输入不一致");
 				return;

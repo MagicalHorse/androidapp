@@ -131,6 +131,7 @@ public class FillPersonDataActivity extends BaseActivityWithTopView {
 		String pass=et_password.getText().toString().trim();
 		String repass=et_repassword.getText().toString().trim();
 		String cityname=tv_city.getText().toString().trim();
+		
 		int cityvalue=-1;
 		if(tv_city.getTag()!=null && tv_city.getTag() instanceof Integer)
 		{
@@ -145,6 +146,10 @@ public class FillPersonDataActivity extends BaseActivityWithTopView {
 		else if(TextUtils.isEmpty(pass))
 		{
 			MyApplication.getInstance().showMessage(FillPersonDataActivity.this, "密码不能为空");
+			return;
+		}else if(pass.length()<6)
+		{
+			MyApplication.getInstance().showMessage(FillPersonDataActivity.this, "密码长度不能小于6位");
 			return;
 		}
 		else if(!(TextUtils.equals(pass, repass)))

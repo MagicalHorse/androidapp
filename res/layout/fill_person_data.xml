@@ -19,7 +19,7 @@
         android:orientation="vertical" >
 
         <EditText
-        
+            android:maxLength="20"
             android:id="@+id/et_username"
             android:layout_width="fill_parent"
             android:layout_height="55dip"
