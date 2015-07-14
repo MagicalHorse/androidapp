@@ -42,7 +42,6 @@ public class UserIconAdapter extends BaseAdapter {
 
 	@Override
 	public int getCount() {
-
 		if (bean.size() >= maxCount) {
 			return maxCount;
 		} else {
@@ -54,18 +53,17 @@ public class UserIconAdapter extends BaseAdapter {
 	@Override
 	public Object getItem(int position) {
 
-		return null;
+		return bean.get(position);
 	}
 
 	@Override
 	public long getItemId(int position) {
 
-		return 0;
+		return position;
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-
 		UsersInfoBean usersInfoBean = bean.get(position);
 		RoundImageView riv = new RoundImageView(context);
 		riv.setTag(usersInfoBean.getUserId());
@@ -73,7 +71,7 @@ public class UserIconAdapter extends BaseAdapter {
 		width=width/maxCount;
 		Log.i("TAG", "WIDTH:"+width);
 		//riv.setLayoutParams(new AbsListView.LayoutParams(width, width));
-		riv.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.WRAP_CONTENT, AbsListView.LayoutParams.WRAP_CONTENT));
+		//riv.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.WRAP_CONTENT, AbsListView.LayoutParams.WRAP_CONTENT));
 		if (position == (maxCount - 1)) {
 			riv.setImageResource(R.drawable.test003);
 		} else {
