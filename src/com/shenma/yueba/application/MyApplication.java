@@ -46,6 +46,7 @@ import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.activity.LoginAndRegisterActivity;
+import com.shenma.yueba.baijia.activity.SplashActivity;
 import com.shenma.yueba.baijia.modle.UserRequestBean;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.db.DBHelper;
@@ -309,19 +310,37 @@ public class MyApplication extends Application {
 
 	/*****
 	 * 判断用户是否已经登录
+	 * return true 已经登录 false 未登录
 	 * ***/
-	public boolean isUserLogin(Activity activity) {
+	public boolean isUserLogin(Context context) {
 		boolean status = SharedUtil.getBooleanPerfernece(
 				this.getApplicationContext(), SharedUtil.user_loginstatus);
 		if (status) {
 			return true;
 		} else {
-			showMessage(activity, "请先登录");
-			Intent intent = new Intent(activity, LoginAndRegisterActivity.class);
-			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(intent);
+			startLogin(context,"请先登录");
 			return false;
 		}
+	}
+	
+	/***
+	 * 跳转到登录页
+	 * **/
+	public void startLogin(final Context context,final String msg)
+	{
+	    ((Activity)context).runOnUiThread(new Runnable() {
+			
+			@Override
+			public void run() {
+				showMessage(context, msg);
+				Intent intent=new Intent(context,SplashActivity.class);
+				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				MyApplication.removeAllActivity();
+				((Activity)context).startActivity(intent);
+			}
+		});
+		
+
 	}
 
 	private void initScreenWithAndHeight() {
@@ -335,6 +354,26 @@ public class MyApplication extends Application {
 		return null;
 	}
 
+	/***
+	 * 判断用户是否登录 没有登录则 跳转到 引导页
+	 * @param context
+	 * @return true 成功登录  false 未登录
+	 *//*
+	public boolean isUserLogin(Context context)
+	{
+		String user_id=SharedUtil.getStringPerfernece(context, SharedUtil.user_id);
+		if(user_id==null || user_id.equals(""))
+		{
+			Intent intent=new Intent(context,SplashActivity.class);
+			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			MyApplication.removeAllActivity();
+			startActivity(intent);
+			return false;
+		}
+		return true;
+	}*/
+	
+	
 	/**
 	 * 初始化表情
 	 */

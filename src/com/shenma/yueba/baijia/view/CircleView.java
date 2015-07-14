@@ -145,6 +145,10 @@ public class CircleView extends BaseView{
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
+				if(!MyApplication.getInstance().isUserLogin(activity))
+				{
+					return;
+				}
 				TuiJianCircleInfo myCircleInfo=items.get(arg2);
 				Intent intent=new Intent(activity,ChatActivity.class);
 				intent.putExtra("Chat_Type", ChatActivity.chat_type_group);

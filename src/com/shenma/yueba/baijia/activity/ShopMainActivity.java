@@ -18,6 +18,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
+import com.shenma.yueba.ChatActivity;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.fragment.ShopPuBuliuFragment;
@@ -157,6 +158,16 @@ public class ShopMainActivity extends FragmentActivity {
 			
 			switch(v.getId())
 			{
+			case R.id.shop_main_siliao_imagebutton://私聊
+				if (!MyApplication.getInstance().isUserLogin(ShopMainActivity.this)) {
+					return;
+				}
+				Intent siliaointent=new Intent(ShopMainActivity.this,ChatActivity.class);
+				siliaointent.putExtra("Chat_NAME", userInfoBean.getUserName());
+				siliaointent.putExtra("Chat_Type", ChatActivity.chat_type_private);
+				siliaointent.putExtra("toUser_id",userID);
+				startActivity(siliaointent);
+				break;
 			case R.id.shop_stay_layout_parent_linearlayout:
 				if(v.getTag()!=null && v.getTag() instanceof Integer)
 				{
@@ -164,10 +175,17 @@ public class ShopMainActivity extends FragmentActivity {
 				}
 				break;
 			case R.id.shop_main_circle_layout://圈子
+				if (!MyApplication.getInstance().isUserLogin(ShopMainActivity.this)) {
+					return;
+				}
 				Intent intent=new Intent(ShopMainActivity.this,CircleListActivity.class);
 				startActivity(intent);
 				break;
 			case R.id.shop_main_attention_imagebutton://关注
+				if(!MyApplication.getInstance().isUserLogin(ShopMainActivity.this))
+				{
+					return;
+				}
 				if(v.getTag()!=null)
 				{
 					UserInfoBean bean=(UserInfoBean)v.getTag();

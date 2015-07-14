@@ -152,6 +152,10 @@ public class MyCircleView extends BaseView{
 	
 	void requestFalshData()
 	{
+		if(!MyApplication.getInstance().isUserLogin(activity))
+		{
+			return;
+		}
 		Log.i("TAG", "----->>请求数据");
 		sendHttp(1,0);
 	}

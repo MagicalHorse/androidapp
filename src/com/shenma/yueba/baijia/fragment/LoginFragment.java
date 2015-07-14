@@ -6,13 +6,11 @@ import java.util.Set;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -25,11 +23,9 @@ import com.shenma.yueba.baijia.activity.MainActivityForBaiJia;
 import com.shenma.yueba.baijia.modle.UserRequestBean;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
-import com.shenma.yueba.util.JpushUtils;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
-import com.shenma.yueba.util.ToolsUtil;
+import com.shenma.yueba.util.JpushUtils;
 import com.shenma.yueba.util.WXLoginUtil;
-import com.shenma.yueba.yangjia.activity.MainActivityForYangJia;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
@@ -37,7 +33,6 @@ import com.umeng.socialize.controller.listener.SocializeListeners.UMAuthListener
 import com.umeng.socialize.controller.listener.SocializeListeners.UMDataListener;
 import com.umeng.socialize.exception.SocializeException;
 import com.umeng.socialize.sso.UMQQSsoHandler;
-import com.umeng.socialize.weixin.controller.UMWXHandler;
 
 public class LoginFragment extends BaseFragment implements OnClickListener {
 
@@ -122,8 +117,7 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
 							if (obj != null && obj instanceof UserRequestBean) {
 								UserRequestBean bean = (UserRequestBean) obj;
 								httpControl.setLoginInfo(getActivity(), bean);
-								Intent intent = new Intent(getActivity(),
-										MainActivityForYangJia.class);
+								Intent intent = new Intent(getActivity(),MainActivityForBaiJia.class);
 								intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 								JpushUtils jpushUtils = new JpushUtils(getActivity());
 								jpushUtils.setAlias(bean.getData().getId()+"");
