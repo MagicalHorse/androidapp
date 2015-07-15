@@ -102,9 +102,7 @@ public class SetNewPasswordActivity extends BaseActivityWithTopView implements O
 				@Override
 				public void http_Success(Object obj) {
 					Toast.makeText(mContext, "修改成功", 1000).show();
-					Intent intentLogin = new Intent(mContext,SplashActivity.class);
-					startActivity(intentLogin);
-					MyApplication.getInstance().removeAllActivity();
+					finish();
 				}
 				
 				@Override

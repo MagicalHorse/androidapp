@@ -105,12 +105,12 @@ public class SharedUtil {
 	}
 
 	public static String getHeadImage(Context context) {
-		return getSharedPreferences(context).getString(headImage, null);
+		return getSharedPreferences(context).getString(user_logo, null);
 	}
 
 	public static void setHeadImage(Context context, String img) {
 		if (img != null) {
-			getSharedPreferences(context).edit().putString(headImage, img)
+			getSharedPreferences(context).edit().putString(user_logo, img)
 					.commit();
 		}
 	}

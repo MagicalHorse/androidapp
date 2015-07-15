@@ -20,6 +20,12 @@ public class HttpConstants {
 	
 	
 	
+	
+	/**
+	 * 绑定微信
+	 */
+	public static String METHOD_BindWX = USERURL + "BindOutSideUser";
+	
 	/**
 	 * 微信登录
 	 */

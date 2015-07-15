@@ -245,7 +245,7 @@ public class HuoKuanIncomeAndOutGoingFragment extends BaseFragment implements On
 				Toast.makeText(getActivity(), "正在绑定微信", 1000).show();
 				// 绑定手机号
 				WXLoginUtil wxLoginUtil = new WXLoginUtil(getActivity());
-				wxLoginUtil.initWeiChatLogin(false);
+				wxLoginUtil.initWeiChatLogin(false,false);
 				return;
 			}
 			if(ids ==null || ids.size()==0){

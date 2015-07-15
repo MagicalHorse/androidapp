@@ -3,7 +3,9 @@ package com.shenma.yueba.yangjia.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -46,6 +48,7 @@ public class ModifyNickNameActivity extends BaseActivityWithTopView {
 			}
 		});
 		et_modify_nick_name = (EditText) findViewById(R.id.et_modify_nick_name);
+			
 		et_modify_nick_name.setText(ToolsUtil.nullToString(SharedUtil.getStringPerfernece(mContext, SharedUtil.user_names)));
 		setTopRightTextView("完成", new OnClickListener() {
 			@Override
