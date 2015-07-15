@@ -19,6 +19,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.OnPullEventListener;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.State;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.shenma.yueba.ChatActivity;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.adapter.BaiJiaMyCircleAdapter;
@@ -117,7 +118,9 @@ public class CircleListActivity extends BaseActivityWithTopView{
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,long arg3) {
 				MyCircleInfo myCircleInfo=items.get(arg2-1);
 				Intent intent=new Intent(CircleListActivity.this,CircleInfoActivity.class);
-				intent.putExtra("circleId",Integer.toString(myCircleInfo.getId()));
+				intent.putExtra("Chat_Type", ChatActivity.chat_type_group);//类型 圈子 还是私聊
+				intent.putExtra("Chat_NAME",myCircleInfo.getName());//圈子名字
+				intent.putExtra("circleId",myCircleInfo.getId());
 				startActivity(intent);
 			}
 		});
