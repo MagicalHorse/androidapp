@@ -9,6 +9,7 @@ import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import com.shenma.yueba.R;
 import com.shenma.yueba.util.Base64Coder;
 import com.shenma.yueba.util.FontManager;
+import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.yangjia.modle.kaixiaoPiaoBean;
 
 /**  
@@ -66,6 +68,10 @@ public class QRCodeShareDialog extends Dialog implements android.view.View.OnCli
 		qzcodeshare_layouyt_name_textview.setText("订单号："+obj.getOrderNo());
 		qzcodeshare_layouyt_count_textview.setText("￥"+obj.getAmount());
 		byte[] bytes = Base64Coder.decode(obj.getQrCode());
+		LayoutParams params = qzcodeshare_layout_content_imageview.getLayoutParams();
+		params.width = ToolsUtil.getDisplayWidth(context)/4*3;
+		params.height = ToolsUtil.getDisplayWidth(context)/4*3;
+		qzcodeshare_layout_content_imageview.setLayoutParams(params);
 		qzcodeshare_layout_content_imageview.setImageBitmap(BitmapFactory.decodeByteArray(bytes, 0, bytes.length));
 		FontManager.changeFonts(context,qzcodeshare_layouyt_name_textview,qzcodeshare_layouyt_count_textview);
 	}
