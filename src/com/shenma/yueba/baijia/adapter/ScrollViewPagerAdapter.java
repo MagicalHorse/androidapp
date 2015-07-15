@@ -39,7 +39,7 @@ Context context;
 
 		if (imageViewlist.size() < 1) {
 			return 0;
-		} else if (imageViewlist.size() <=3) {
+		} else if (imageViewlist.size() <=2) {
 			return imageViewlist.size();
 		} else {
 			return Integer.MAX_VALUE;
