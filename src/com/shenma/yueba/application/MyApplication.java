@@ -324,8 +324,7 @@ public class MyApplication extends Application {
 			public void run() {
 				showMessage(context, msg);
 				Intent intent=new Intent(context,LoginAndRegisterActivity.class);
-				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				MyApplication.removeAllActivity();
+				intent.putExtra("flag", "needLogin");
 				((Activity)context).startActivity(intent);
 			}
 		});

@@ -4,15 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
-import android.view.Window;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -109,9 +108,6 @@ public class BuyerAdapter extends BaseAdapter {
 			holder.buyersteetfragmeng_item_siliao_button = (TextView) convertView
 					.findViewById(R.id.buyersteetfragmeng_item_siliao_button);
 			setOnclickListener(holder.buyersteetfragmeng_item_siliao_button);
-			// 广告图片
-			holder.buyersteetfragment_item_footer_linearlyout = (LinearLayout) convertView
-					.findViewById(R.id.buyersteetfragment_item_footer_linearlyout);
 			holder.buyersteetfragment_item_footer_linearlyout_content_textview = (TextView) convertView
 					.findViewById(R.id.buyersteetfragment_item_footer_linearlyout_content_textview);
 
@@ -151,8 +147,8 @@ public class BuyerAdapter extends BaseAdapter {
 		if (Products != null && Products.get(position) != null
 				&& Products.get(position).getLikeUsers() != null
 				&& Products.get(position).getLikeUsers().getUsers() != null) {
-			List<UsersInfoBean> users = Products.get(position).getLikeUsers()
-					.getUsers();
+			final List<UsersInfoBean> users = Products.get(position)
+					.getLikeUsers().getUsers();
 			holder.ll_attentionpeople_contener.removeAllViews();
 			for (int i = 0; i < users.size(); i++) {
 				RoundImageView riv = new RoundImageView(activity);
@@ -169,6 +165,20 @@ public class BuyerAdapter extends BaseAdapter {
 				} else {
 					riv.setBackgroundResource(R.drawable.test003);
 				}
+				riv.setTag(users.get(i).getUserId());
+				riv.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						if (((Integer)v.getTag()) <= 0) {
+							return;
+						}
+						Intent intent = new Intent(activity,
+								ShopMainActivity.class);
+						intent.putExtra("DATA", (Integer)v.getTag());
+						activity.startActivity(intent);
+					}
+				});
+
 				holder.ll_attentionpeople_contener.addView(riv);
 			}
 		}
@@ -197,7 +207,7 @@ public class BuyerAdapter extends BaseAdapter {
 		// 关注人列表
 		MyGridView approvebuyerdetails_attentionvalue_gridview;
 		// 广告图片
-		LinearLayout buyersteetfragment_item_footer_linearlyout,
+		LinearLayout
 				ll_attentionpeople_contener;
 		// 内容
 		TextView buyersteetfragment_item_footer_linearlyout_content_textview;
@@ -248,11 +258,11 @@ public class BuyerAdapter extends BaseAdapter {
 				.setTag(productsInfoBean.getProductId());
 		if (productsInfoBean.getPromotion() == null
 				|| !productsInfoBean.getPromotion().isIsShow()) {
-			holder.buyersteetfragment_item_footer_linearlyout
+			holder.buyersteetfragment_item_footer_linearlyout_content_textview
 					.setVisibility(View.GONE);
 
 		} else {
-			holder.buyersteetfragment_item_footer_linearlyout
+			holder.buyersteetfragment_item_footer_linearlyout_content_textview
 					.setVisibility(View.VISIBLE);
 			holder.buyersteetfragment_item_footer_linearlyout_content_textview
 					.setText(ToolsUtil.nullToString(productsInfoBean
@@ -308,8 +318,7 @@ public class BuyerAdapter extends BaseAdapter {
 					activity.startActivity(intent);
 					break;
 				case R.id.tv_count:// 商品喜欢/取消喜欢
-					if(!MyApplication.getInstance().isUserLogin(activity))
-					{
+					if (!MyApplication.getInstance().isUserLogin(activity)) {
 						return;
 					}
 					if (v.getTag() != null
@@ -326,8 +335,7 @@ public class BuyerAdapter extends BaseAdapter {
 					}
 					break;
 				case R.id.buyersteetfragmeng_item_siliao_button:// 私聊
-					if(!MyApplication.getInstance().isUserLogin(activity))
-					{
+					if (!MyApplication.getInstance().isUserLogin(activity)) {
 						return;
 					}
 					if (v.getTag() != null
@@ -344,8 +352,7 @@ public class BuyerAdapter extends BaseAdapter {
 
 					break;
 				case R.id.buyersteetfragmeng_item_share_button:// 分享
-					if(!MyApplication.getInstance().isUserLogin(activity))
-					{
+					if (!MyApplication.getInstance().isUserLogin(activity)) {
 						return;
 					}
 					if (v.getTag() != null

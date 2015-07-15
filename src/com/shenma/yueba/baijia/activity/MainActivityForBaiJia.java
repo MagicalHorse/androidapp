@@ -24,14 +24,16 @@ import com.shenma.yueba.baijia.fragment.MessageFragment;
 import com.shenma.yueba.baijia.modle.FragmentBean;
 
 public class MainActivityForBaiJia extends FragmentActivity {
-FrameLayout baijia_main_framelayout;
-LinearLayout baijia_main_foot_linearlayout;
-List<FragmentBean> fragment_list=new ArrayList<FragmentBean>();
-List<View> footer_list=new ArrayList<View>();
-//当前选中的id
-int currid=-1;
-Fragment indexFragmentForBaiJia,circleFragment,messageFragment,findFragment,meFragmentForBaiJia;
-FragmentManager fragmentManager;
+	FrameLayout baijia_main_framelayout;
+	LinearLayout baijia_main_foot_linearlayout;
+	List<FragmentBean> fragment_list = new ArrayList<FragmentBean>();
+	List<View> footer_list = new ArrayList<View>();
+	// 当前选中的id
+	int currid = -1;
+	Fragment indexFragmentForBaiJia, circleFragment, messageFragment,
+			findFragment, meFragmentForBaiJia;
+	FragmentManager fragmentManager;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -43,90 +45,119 @@ FragmentManager fragmentManager;
 		setCurrView(0);
 	}
 
-	void initView()
-	{
-		fragmentManager=getSupportFragmentManager();
-		baijia_main_framelayout=(FrameLayout)findViewById(R.id.baijia_main_framelayout);
-		baijia_main_foot_linearlayout=(LinearLayout)findViewById(R.id.baijia_main_foot_linearlayout);
-		indexFragmentForBaiJia=new IndexFragmentForBaiJia();
-		circleFragment=new CircleFragment();
-		messageFragment=new MessageFragment();
-		findFragment=new FindFragment();
-		meFragmentForBaiJia=new MeFragmentForBaiJia();
-		
-		fragment_list.add(new FragmentBean("主页",R.drawable.baijia_home_background,indexFragmentForBaiJia));
-		fragment_list.add(new FragmentBean("圈子",R.drawable.baijia_circle_background,circleFragment));
-		fragment_list.add(new FragmentBean("消息",R.drawable.baijia_msg_background,messageFragment));
-		fragment_list.add(new FragmentBean("发现",R.drawable.baijia_find_background,findFragment));
-		fragment_list.add(new FragmentBean("我",R.drawable.baijia_setting_background,meFragmentForBaiJia));
-		
-		
+	void initView() {
+		fragmentManager = getSupportFragmentManager();
+		baijia_main_framelayout = (FrameLayout) findViewById(R.id.baijia_main_framelayout);
+		baijia_main_foot_linearlayout = (LinearLayout) findViewById(R.id.baijia_main_foot_linearlayout);
+		indexFragmentForBaiJia = new IndexFragmentForBaiJia();
+		circleFragment = new CircleFragment();
+		messageFragment = new MessageFragment();
+		findFragment = new FindFragment();
+		meFragmentForBaiJia = new MeFragmentForBaiJia();
+
+		fragment_list.add(new FragmentBean("主页",
+				R.drawable.baijia_home_background, indexFragmentForBaiJia));
+		fragment_list.add(new FragmentBean("圈子",
+				R.drawable.baijia_circle_background, circleFragment));
+		fragment_list.add(new FragmentBean("消息",
+				R.drawable.baijia_msg_background, messageFragment));
+		fragment_list.add(new FragmentBean("发现",
+				R.drawable.baijia_find_background, findFragment));
+		fragment_list.add(new FragmentBean("我",
+				R.drawable.baijia_setting_background, meFragmentForBaiJia));
+
 	}
 
-	void initaddFooterView()
-	{
-		for(int i=0;i<fragment_list.size();i++)
-		{
-			LinearLayout ll=(LinearLayout)LinearLayout.inflate(this, R.layout.tab_image_textview_layout, null);
-			ImageView imageview=(ImageView)ll.findViewById(R.id.imageview);
+	void initaddFooterView() {
+		for (int i = 0; i < fragment_list.size(); i++) {
+			LinearLayout ll = (LinearLayout) LinearLayout.inflate(this,
+					R.layout.tab_image_textview_layout, null);
+			ImageView imageview = (ImageView) ll.findViewById(R.id.imageview);
 			imageview.setImageResource(fragment_list.get(i).getIcon());
-			TextView tv1=(TextView)ll.findViewById(R.id.tv1);
+			TextView tv1 = (TextView) ll.findViewById(R.id.tv1);
 			tv1.setVisibility(View.GONE);
-			/*tv1.setText(fragment_list.get(i).getName());
-			tv1.setTextSize(12);
-			FontManager.changeFonts(getApplication(), tv1);*/
-			LinearLayout.LayoutParams param=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-			param.weight=1;
-			baijia_main_foot_linearlayout.addView(ll,param);
+			/*
+			 * tv1.setText(fragment_list.get(i).getName()); tv1.setTextSize(12);
+			 * FontManager.changeFonts(getApplication(), tv1);
+			 */
+			LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
+					LinearLayout.LayoutParams.MATCH_PARENT,
+					LinearLayout.LayoutParams.MATCH_PARENT);
+			param.weight = 1;
+			baijia_main_foot_linearlayout.addView(ll, param);
 			footer_list.add(ll);
 			ll.setTag(i);
 			ll.setOnClickListener(new OnClickListener() {
-				
+
 				@Override
 				public void onClick(View v) {
-					int i=(Integer)v.getTag();
+					int i = (Integer) v.getTag();
 					setCurrView(i);
 				}
 			});
 		}
 	}
-	
-	
-	void setCurrView(int i)
-	{
-		if(currid==-1 && i==0)
-		{
-			fragmentManager.beginTransaction().add(R.id.baijia_main_framelayout, (Fragment) fragment_list.get(i).getFragment()).commit();
+
+	void setCurrView(int i) {
+		switch (i) {
+		case 0:
+
+			break;
+		case 1:
+			if (!MyApplication.getInstance()
+					.isUserLogin(MainActivityForBaiJia.this)) {
+				return;
+			}
+			break;
+		case 2:
+			if (!MyApplication.getInstance()
+					.isUserLogin(MainActivityForBaiJia.this)) {
+				return;
+			}
+			break;
+		case 4:
+			if (!MyApplication.getInstance()
+					.isUserLogin(MainActivityForBaiJia.this)) {
+				return;
+			}
+			break;
+		default:
+			
+			break;
 		}
-	    else if(currid==i)
-		{
+		
+		if (currid == -1 && i == 0) {
+			fragmentManager
+					.beginTransaction()
+					.add(R.id.baijia_main_framelayout,
+							(Fragment) fragment_list.get(i).getFragment())
+					.commit();
+		} else if (currid == i) {
 			return;
 		}
-		currid=i;
+		currid = i;
 		setTextColor(i);
-		fragmentManager.beginTransaction().replace(R.id.baijia_main_framelayout,(Fragment) fragment_list.get(i).getFragment()).commit();
-		
+		fragmentManager
+				.beginTransaction()
+				.replace(R.id.baijia_main_framelayout,
+						(Fragment) fragment_list.get(i).getFragment()).commit();
+
 	}
-	
-	void setTextColor(int value)
-	{
-		for(int i=0;i<footer_list.size();i++)
-		{
-			LinearLayout ll =(LinearLayout)footer_list.get(i);
-			ImageView iv=(ImageView)ll.findViewById(R.id.imageview);
-			//TextView tv=(TextView)ll.findViewById(R.id.tv1);
-			if(i==value)
-			{
-			  //tv.setTextColor(this.getResources().getColor(R.color.color_deeoyellow));
-			  iv.setSelected(true);
-				
-			}else
-			{
-				//tv.setTextColor(this.getResources().getColor(R.color.black));
+
+	void setTextColor(int value) {
+		for (int i = 0; i < footer_list.size(); i++) {
+			LinearLayout ll = (LinearLayout) footer_list.get(i);
+			ImageView iv = (ImageView) ll.findViewById(R.id.imageview);
+			// TextView tv=(TextView)ll.findViewById(R.id.tv1);
+			if (i == value) {
+				// tv.setTextColor(this.getResources().getColor(R.color.color_deeoyellow));
+				iv.setSelected(true);
+
+			} else {
+				// tv.setTextColor(this.getResources().getColor(R.color.black));
 				iv.setSelected(false);
 			}
-			
-			
+
 		}
 	}
 }

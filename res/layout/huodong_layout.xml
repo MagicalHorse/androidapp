@@ -10,7 +10,7 @@
         android:layout_marginLeft="@dimen/margin_left_and_right"
         android:layout_marginRight="@dimen/margin_left_and_right"
         android:layout_marginBottom="@dimen/shop_main_width3_dimen"
-        android:background="@drawable/youhui"
+        android:background="@drawable/dyg_bg"
         android:paddingBottom="@dimen/shop_main_width3_dimen"
         android:paddingTop="@dimen/shop_main_lineheight8_dimen"
         >
