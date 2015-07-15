@@ -94,19 +94,10 @@
                 android:layout_height="wrap_content"
                 android:text="尺码:" />
 
-            <!-- <LinearLayout 
+            <com.shenma.yueba.view.XCFlowLayout
+                android:id="@+id/flowlayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:o
-                ></LinearLayout> -->
-            <GridView
-                android:id="@+id/createorder_dialog_layout_size_gridview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:horizontalSpacing="@dimen/shop_main_width5_dimen"
-                android:numColumns="5"
-                android:verticalSpacing="@dimen/shop_main_lineheight8_dimen"
-                android:visibility="visible" />
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
         <View
@@ -149,9 +140,9 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/shop_main_lineheight10_dimen" 
+            android:paddingLeft="@dimen/shop_main_lineheight10_dimen"
             android:paddingRight="@dimen/shop_main_lineheight10_dimen"
-            android:paddingTop="@dimen/shop_main_lineheight10_dimen">
+            android:paddingTop="@dimen/shop_main_lineheight10_dimen" >
 
             <Button
                 android:id="@+id/createorder_dialog_layout_cancell_button"

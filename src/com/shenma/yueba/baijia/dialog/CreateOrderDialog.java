@@ -8,6 +8,8 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.Selection;
@@ -15,16 +17,20 @@ import android.text.Spannable;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.ViewGroup.LayoutParams;
+import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -36,6 +42,7 @@ import com.shenma.yueba.baijia.modle.ProductsDetailsInfoBean;
 import com.shenma.yueba.baijia.modle.RequestProductDetailsInfoBean;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.ToolsUtil;
+import com.shenma.yueba.view.XCFlowLayout;
 
 /**  
  * @author gyj  
@@ -57,6 +64,8 @@ public class CreateOrderDialog extends AlertDialog implements android.view.View.
 	List<View> view_array=new ArrayList<View>();
 	TextView createorder_dialog_layout_repertoryvalue_textview;
 	List<PrioductSizesInfoBean> size_list=new ArrayList<PrioductSizesInfoBean>();
+	XCFlowLayout flowlayout;
+	
 	public CreateOrderDialog(Context context,RequestProductDetailsInfoBean bean) {
 		super(context, R.style.MyDialog);
 		//super(context);
@@ -101,14 +110,12 @@ public class CreateOrderDialog extends AlertDialog implements android.view.View.
 		//颜色类型
 		TextView createorder_dialog_layout_colorvalue_textview=(TextView)ll.findViewById(R.id.createorder_dialog_layout_colorvalue_textview);
 		//设置尺寸
-		GridView createorder_dialog_layout_size_gridview=(GridView)ll.findViewById(R.id.createorder_dialog_layout_size_gridview);
 		if(productsDetailsInfoBean.getSizes()!=null && productsDetailsInfoBean.getSizes().size()>0)
 		{
 			size_list.clear();
 			size_list.addAll(productsDetailsInfoBean.getSizes());
 		}
-		
-		createorder_dialog_layout_size_gridview.setAdapter(baseAdapter);
+		flowlayout=(XCFlowLayout)ll.findViewById(R.id.flowlayout);
 		//减
 		Button create_dialog_jian_button=(Button)ll.findViewById(R.id.create_dialog_jian_button);
 		create_dialog_jian_button.setOnClickListener(this);
@@ -172,7 +179,8 @@ public class CreateOrderDialog extends AlertDialog implements android.view.View.
 				
 			}
 		});
-		baseAdapter.notifyDataSetChanged();
+
+		addstandardButton();
 	}
 	
 	@Override
@@ -251,56 +259,6 @@ public class CreateOrderDialog extends AlertDialog implements android.view.View.
 		}
 	}
 	
-	BaseAdapter baseAdapter=new BaseAdapter() {
-		
-		@Override
-		public View getView(int arg0, View arg1, ViewGroup arg2) {
-			PrioductSizesInfoBean prioductSizesInfoBean=size_list.get(arg0);
-			Button btn=new Button(context);
-			FontManager.changeFonts(context, btn);
-			btn.setText(prioductSizesInfoBean.getSize());
-			btn.setTag(prioductSizesInfoBean);
-			btn.setTextSize(8);
-			btn.setBackgroundResource(R.drawable.gridviewitem_background);
-			btn.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, (int)context.getResources().getDimension(R.dimen.shop_main_marginleft30_dimen)));
-			//btn.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, AbsListView.LayoutParams.WRAP_CONTENT));
-			btn.setTag(prioductSizesInfoBean);
-			btn.setOnClickListener(new View.OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					currCheckedFouce=(PrioductSizesInfoBean)v.getTag();
-					setCheckFouse();
-					v.setSelected(true);
-					
-				}
-			});
-			if(!view_array.contains(btn))
-			{
-				view_array.add(btn);
-			}
-			setCheckFouse();
-			return btn;
-		}
-		
-		@Override
-		public long getItemId(int arg0) {
-			
-			return arg0;
-		}
-		
-		@Override
-		public Object getItem(int arg0) {
-			
-			return null;
-		}
-		
-		@Override
-		public int getCount() {
-			
-			return size_list.size();
-		}
-	};
 	
 	/******
 	 * 设置当前选中的尺寸样式
@@ -328,4 +286,44 @@ public class CreateOrderDialog extends AlertDialog implements android.view.View.
 			}
 		}
 	}
+	
+	
+	void addstandardButton()
+	{
+		for(int i=0;i<size_list.size();i++)
+		{
+			PrioductSizesInfoBean prioductSizesInfoBean=size_list.get(i);
+			TextView btn=new TextView(context);
+			btn.setGravity(Gravity.CENTER);
+			FontManager.changeFonts(context, btn);
+			btn.setText(prioductSizesInfoBean.getSize());
+			btn.setTag(prioductSizesInfoBean);
+			btn.setTextSize(12);
+			btn.setBackgroundResource(R.drawable.gridviewitem_background);
+			MarginLayoutParams lp = new MarginLayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
+			lp.leftMargin = 15;
+	        lp.rightMargin = 15;
+	        lp.topMargin = 13;
+	        lp.bottomMargin = 13;
+	        btn.setPadding(30, 20, 30, 20);
+			btn.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					currCheckedFouce=(PrioductSizesInfoBean)v.getTag();
+					setCheckFouse();
+					v.setSelected(true);
+					
+				}
+			});
+			flowlayout.addView(btn, lp);
+			if(!view_array.contains(btn))
+			{
+				view_array.add(btn);
+			}
+			setCheckFouse();
+		}
+	}
+	
+	
 }
