@@ -94,6 +94,11 @@
                 android:layout_height="wrap_content"
                 android:text="尺码:" />
 
+            <!-- <LinearLayout 
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:o
+                ></LinearLayout> -->
             <GridView
                 android:id="@+id/createorder_dialog_layout_size_gridview"
                 android:layout_width="match_parent"
