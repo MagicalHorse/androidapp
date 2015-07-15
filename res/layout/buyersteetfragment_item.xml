@@ -102,6 +102,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/shop_main_width5_dimen"
         android:paddingLeft="10dip"
+        android:maxLines="3"
+        android:ellipsize="end"
         android:textSize="@dimen/textsize14sp" />
 
     <RelativeLayout

@@ -257,6 +257,8 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView
 		String address = Data.getPickAddress();
 		// 成交数据
 		int truncount = Data.getTurnCount();
+		//好评率
+		String haoping="0%";;
 		// 买手头像
 		String usericon = Data.getBuyerLogo();
 		// 买手昵称
@@ -273,10 +275,9 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView
 		// 自提地址
 		setdataValue(R.id.approvebuyerdetails_addressvalue_textview, address);
 		// 成交数量
-		setdataValue(R.id.appprovebuyerdetails_textvalue1_textview, truncount
-				+ "");
+		setdataValue(R.id.appprovebuyerdetails_textvalue1_textview, truncount+ "");
 		// 好评率
-		setdataValue(R.id.appprovebuyerdetails_text2value_textview, "");
+		setdataValue(R.id.appprovebuyerdetails_text2value_textview, haoping);
 
 		setdataValue(R.id.approvebuyerdetails_name_textview, username);
 		// 金额
@@ -327,6 +328,10 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView
 				riv.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
+						if(!MyApplication.getInstance().isUserLogin(ApproveBuyerDetailsActivity.this))
+						{
+							return;
+						}
 						if (((Integer)v.getTag()) <= 0) {
 							return;
 						}
@@ -358,7 +363,7 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView
 			appprovebuyer_viewpager_relativelayout.setVisibility(View.VISIBLE);
 		}
 		ProductsDetailsPromotion productsDetailsPromotion = Data.getPromotion();
-		if (productsDetailsPromotion == null) {
+		if (productsDetailsPromotion == null || !productsDetailsPromotion.isIsShow()) {
 			approvebuyerdetails_closeingtime_linearlayout.setVisibility(View.GONE);
 			
 		} else if(productsDetailsPromotion.isIsShow()) {
@@ -446,11 +451,11 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView
 		// 成交
 		setdataValue(R.id.appprovebuyerdetails_text1, null);
 		// 成交额
-		setdataValue(R.id.appprovebuyerdetails_textvalue1_textview, "");
+		setdataValue(R.id.appprovebuyerdetails_textvalue1_textview,null);
 		// 好评
 		setdataValue(R.id.appprovebuyerdetails_text2, null);
 		// 好评值
-		setdataValue(R.id.appprovebuyerdetails_textvalue1_textview, "");
+		setdataValue(R.id.appprovebuyerdetails_text2value_textview, null);
 		// 金额
 		setdataValue(R.id.approvebuyerdetails_price_textview, null);
 		// 商品名称
