@@ -16,6 +16,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
+import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.Button;
@@ -67,7 +69,6 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView
 	int childWidth = 0;
 	int maxcount = 8;
 	ScrollViewPagerAdapter customPagerAdapter;
-	MyGridView myGirdView;
 	// 商品id;
 	int productID = -1;
 	HttpControl httpControl = new HttpControl();
@@ -88,7 +89,8 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView
 	LinearLayout approvebuyerdetails_closeingtime_linearlayout;
 	Timer timer;
 	RequestProductDetailsInfoBean bean;
-
+	LinearLayout ll_attentionpeople_contener;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -115,6 +117,8 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView
 				ApproveBuyerDetailsActivity.this.finish();
 			}
 		});
+		//头像包裹视图
+		ll_attentionpeople_contener=(LinearLayout)findViewById(R.id.ll_attentionpeople_contener);
 		// 活动父视图
 		approvebuyerdetails_closeingtime_linearlayout = (LinearLayout) findViewById(R.id.approvebuyerdetails_closeingtime_linearlayout);
 		// 打烊时间
@@ -150,9 +154,6 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView
 				return false;
 			}
 		});
-
-		myGirdView = (MyGridView) findViewById(R.id.approvebuyerdetails_attentionvalue_gridview);
-
 		appprovebuyer_viewpager
 				.setOnPageChangeListener(new OnPageChangeListener() {
 
@@ -285,8 +286,14 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView
 		setdataValue(R.id.approvebuyerdetails_producename_textview, productName);
 		LikeUsersInfoBean likeUsersInfoBean = Data.getLikeUsers();
 		if (likeUsersInfoBean != null) {
+			int linkwidt=ll_attentionpeople_contener.getWidth();
+			int item_width=linkwidt/8;
 			// 喜欢
 			TextView approvebuyerdetails_attention_textview = (TextView) findViewById(R.id.approvebuyerdetails_attention_textview);
+			ViewGroup.LayoutParams tv_params=approvebuyerdetails_attention_textview.getLayoutParams();
+			tv_params.height=item_width;
+			approvebuyerdetails_attention_textview.setLayoutParams(tv_params);
+			
 			// 收藏
 			TextView approvebuyerdetails_layout_shoucang_linerlayout_textview = (TextView) findViewById(R.id.approvebuyerdetails_layout_shoucang_linerlayout_textview);
 			approvebuyerdetails_layout_shoucang_linerlayout_textview
@@ -303,9 +310,33 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView
 			approvebuyerdetails_attention_textview.setTag(Data);
 			approvebuyerdetails_attention_textview.setOnClickListener(this);
 			List<UsersInfoBean> users = likeUsersInfoBean.getUsers();
-			if (users != null) {
-				myGirdView.setAdapter(new UserIconAdapter(users,
-						ApproveBuyerDetailsActivity.this, myGirdView));
+			for (int i = 0; i < users.size(); i++) {
+				RoundImageView riv = new RoundImageView(ApproveBuyerDetailsActivity.this);
+				LayoutParams params = new LayoutParams(
+						LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+				params.width = item_width;
+				params.height = item_width;
+				riv.setLayoutParams(params);
+				if (i != 8) {
+					MyApplication.getInstance().getImageLoader()
+							.displayImage(users.get(i).getLogo(), riv);
+				} else {
+					riv.setBackgroundResource(R.drawable.test003);
+				}
+				riv.setTag(users.get(i).getUserId());
+				riv.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						if (((Integer)v.getTag()) <= 0) {
+							return;
+						}
+						Intent intent = new Intent(ApproveBuyerDetailsActivity.this,ShopMainActivity.class);
+						intent.putExtra("DATA", (Integer)v.getTag());
+						ApproveBuyerDetailsActivity.this.startActivity(intent);
+					}
+				});
+
+				ll_attentionpeople_contener.addView(riv);
 			}
 		}
 
@@ -327,17 +358,13 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView
 			appprovebuyer_viewpager_relativelayout.setVisibility(View.VISIBLE);
 		}
 		ProductsDetailsPromotion productsDetailsPromotion = Data.getPromotion();
-		if (productsDetailsPromotion != null) {
-			approvebuyerdetails_closeingtime_linearlayout
-					.setVisibility(View.VISIBLE);
-			approvebuyerdetails_closeingtime_textview
-					.setText(ToolsUtil.nullToString(productsDetailsPromotion
-							.getDescriptionText()));
-			approvebuyerdetails_closeinginfo_textview.setText(ToolsUtil
-					.nullToString(productsDetailsPromotion.getTipText()));
-		} else {
-			approvebuyerdetails_closeingtime_linearlayout
-					.setVisibility(View.GONE);
+		if (productsDetailsPromotion == null) {
+			approvebuyerdetails_closeingtime_linearlayout.setVisibility(View.GONE);
+			
+		} else if(productsDetailsPromotion.isIsShow()) {
+			approvebuyerdetails_closeingtime_linearlayout.setVisibility(View.VISIBLE);
+			approvebuyerdetails_closeingtime_textview.setText(ToolsUtil.nullToString(productsDetailsPromotion.getDescriptionText()));
+			approvebuyerdetails_closeinginfo_textview.setText(ToolsUtil.nullToString(productsDetailsPromotion.getTipText()));
 		}
 		setFont();
 		approvebuyerdetails_srcollview.smoothScrollTo(0, 0);
