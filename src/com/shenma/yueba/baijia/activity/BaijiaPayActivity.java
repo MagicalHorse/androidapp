@@ -30,14 +30,13 @@ import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.wxapi.CreateWeiXinOrderManager;
 import com.shenma.yueba.wxapi.WeiXinBasePayManager.WeiXinPayManagerListener;
-import com.shenma.yueba.yangjia.modle.OrderDetailBackBean;
-import com.shenma.yueba.yangjia.modle.OrderDetailBean;
 
 /**  
  * @author gyj  
  * @version 创建时间：2015-6-16 上午10:03:01  
  * 程序的简单说明  
  */
+
 
 public class BaijiaPayActivity extends BaseActivityWithTopView implements OrderPayOnClick_Listener{
 View parentView;
