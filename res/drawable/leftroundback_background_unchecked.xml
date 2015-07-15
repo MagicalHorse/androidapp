@@ -8,6 +8,6 @@
         android:color="@color/color_transparent"
         />
     <corners
-        android:radius="10dp"
+        android:radius="5dp"
         />
 </shape>
