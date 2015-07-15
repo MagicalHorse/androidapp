@@ -55,12 +55,12 @@
         </RelativeLayout>
 
         <ImageView
+            android:layout_centerHorizontal="true"
             android:id="@+id/qzcodeshare_layout_content_imageview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@+id/qzcodeshare_layout_title_textview"
             android:layout_below="@id/qzcodeshare_layouyt_customview"
-            android:layout_centerHorizontal="true"
             android:padding="5dip"
             android:background="@color/white"
             android:src="@null" />

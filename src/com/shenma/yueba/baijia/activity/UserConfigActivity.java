@@ -435,7 +435,10 @@ public class UserConfigActivity extends BaseActivityWithTopView implements
 
 	@Override
 	public void refresh() {
-		onResume();
+		tv_bind_phone_value.setText(SharedUtil.getBooleanPerfernece(mContext,
+				SharedUtil.user_IsBindMobile) ? "已绑定" : "未绑定");
+		tv_bind_wechat_value.setText(SharedUtil.getBooleanPerfernece(mContext,
+				SharedUtil.user_IsBindWeiXin) ? "已绑定" : "未绑定");
 	}
 	
 }

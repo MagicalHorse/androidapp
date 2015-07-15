@@ -169,8 +169,8 @@ public class WXLoginUtil {
 			@Override
 			public void http_Success(Object obj) {
 				Toast.makeText(ctx, "绑定成功", 1000).show();
-				((BindInter)ctx).refresh();
 				SharedUtil.setBooleanPerfernece(ctx, SharedUtil.user_IsBindWeiXin, true);
+				((BindInter)ctx).refresh();
 					if(closeSelf){
 						((Activity) ctx).finish();
 					}

@@ -136,6 +136,7 @@ public class MeFragmentForBaiJia extends BaseFragment implements OnClickListener
 	@Override
 	public void onResume() {
 		Log.i("CircleFragment", "onResume");
+		tv_nickname.setText(ToolsUtil.nullToString(SharedUtil.getStringPerfernece(getActivity(), SharedUtil.user_names)));
 		super.onResume();
 		requestData();
 	}
@@ -210,10 +211,27 @@ public class MeFragmentForBaiJia extends BaseFragment implements OnClickListener
 		shop_main_attentionvalue_textview.setText(myInfoBean.getFollowingCount()+"");
 		shop_main_fansvalue_textview.setText(myInfoBean.getFollowerCount()+"");
 		shop_main_praisevalue_textview.setText(myInfoBean.getCommunityCount()+"");
-		tv_all_order_count_textview.setVisibility(View.VISIBLE);
-		tv_waiting_for_send_count_textview.setVisibility(View.VISIBLE);
-		tv_waiting_for_recieve_count_textview.setVisibility(View.VISIBLE);
-		tv_pick_by_myself_count_textview.setVisibility(View.VISIBLE);
+		if(0 != myInfoBean.getAllOrderCount()){
+			tv_all_order_count_textview.setVisibility(View.VISIBLE);
+		}else{
+			tv_all_order_count_textview.setVisibility(View.GONE);
+		}
+		if(0 != myInfoBean.getWaitPaymentOrderCount()){
+			tv_waiting_for_send_count_textview.setVisibility(View.VISIBLE);
+		}else{
+			tv_waiting_for_send_count_textview.setVisibility(View.GONE);
+		}
+		if(0 != myInfoBean.getPickedSelfOrderCount()){
+			tv_waiting_for_recieve_count_textview.setVisibility(View.VISIBLE);
+		}else{
+			tv_waiting_for_recieve_count_textview.setVisibility(View.GONE);
+		}
+		if(0 != myInfoBean.getAfterSaleOrderCount()){
+			tv_pick_by_myself_count_textview.setVisibility(View.VISIBLE);
+		}else{
+			tv_pick_by_myself_count_textview.setVisibility(View.GONE);
+		}
+		
 		tv_all_order_count_textview.setText(ToolsUtil.setOrderCount(myInfoBean.getAllOrderCount()+""));
 		tv_waiting_for_send_count_textview.setText(ToolsUtil.setOrderCount(myInfoBean.getWaitPaymentOrderCount()+""));
 		tv_waiting_for_recieve_count_textview.setText(ToolsUtil.setOrderCount(myInfoBean.getPickedSelfOrderCount()+""));
