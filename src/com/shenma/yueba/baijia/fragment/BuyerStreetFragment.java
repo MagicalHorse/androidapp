@@ -317,7 +317,7 @@ public class BuyerStreetFragment extends Fragment {
 			
 		}
 		buyerAdapter.notifyDataSetChanged();
-		ListViewUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
+		ListViewUtils.setListViewHeightBasedOnChildren(baijia_contact_listview,120);
 		pulltorefreshscrollview.onRefreshComplete();
 	}
 
@@ -380,7 +380,7 @@ public class BuyerStreetFragment extends Fragment {
 		baijia_contact_listview.setAdapter(buyerAdapter);
 		//buyerAdapter.notifyDataSetChanged();
 		// 重新计算listview的高度
-		ListViewUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
+		ListViewUtils.setListViewHeightBasedOnChildren(baijia_contact_listview,120);
 		//pulltorefreshscrollview.onRefreshComplete();
 
 	}
