@@ -2373,7 +2373,7 @@ public class HttpControl {
 	
 
 	/**
-	 * 获取我关注的人和我的粉丝的列表
+	 * 绑定手机号
 	 * 
 	 * @param phone
 	 *            String手机号码
