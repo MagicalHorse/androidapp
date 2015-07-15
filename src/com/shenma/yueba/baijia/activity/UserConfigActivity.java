@@ -383,7 +383,7 @@ public class UserConfigActivity extends BaseActivityWithTopView implements
 			} else {
 				// 绑定微信
 				WXLoginUtil wxLoginUtil = new WXLoginUtil(UserConfigActivity.this);
-				wxLoginUtil.initWeiChatLogin(false,false);
+				wxLoginUtil.initWeiChatLogin(false,false,true);
 			}
 			break;
 		case R.id.user_config_exit_button:// 退出登录
