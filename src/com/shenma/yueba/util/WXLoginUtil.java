@@ -167,14 +167,12 @@ public class WXLoginUtil {
 		httpcon.bindWeChat(sb.toString(), new HttpCallBackInterface() {
 			@Override
 			public void http_Success(Object obj) {
-				if (obj != null && obj instanceof UserRequestBean) {
-					UserRequestBean bean = (UserRequestBean) obj;
-					httpcon.setLoginInfo(ctx, bean);
+				Toast.makeText(ctx, "绑定成功", 1000).show();
+				SharedUtil.setBooleanPerfernece(ctx, SharedUtil.user_IsBindWeiXin, true);
 					if(closeSelf){
 						((Activity) ctx).finish();
 					}
-				}
-			}
+				};
 
 			@Override
 			public void http_Fails(int error, String msg) {
