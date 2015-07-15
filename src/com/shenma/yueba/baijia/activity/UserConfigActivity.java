@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -325,7 +326,10 @@ public class UserConfigActivity extends BaseActivityWithTopView implements
 
 	@Override
 	protected void onResume() {
-		MyApplication.getInstance().getImageLoader().displayImage(SharedUtil.getHeadImage(mContext), people_config_str2_imageview);
+		String iconUrl = SharedUtil.getStringPerfernece(UserConfigActivity.this, SharedUtil.user_logo);
+		if(!TextUtils.isEmpty(iconUrl)){
+			MyApplication.getInstance().getImageLoader().displayImage(iconUrl, people_config_str2_imageview);
+		}
 		tv_nickname_value.setText(SharedUtil.getStringPerfernece(mContext,
 				SharedUtil.user_names));
 		tv_bind_phone_value.setText(SharedUtil.getBooleanPerfernece(mContext,
@@ -375,9 +379,9 @@ public class UserConfigActivity extends BaseActivityWithTopView implements
 					SharedUtil.user_IsBindWeiXin)) {
 				Toast.makeText(mContext, "微信号已绑定", 1000).show();
 			} else {
-				// 绑定手机号
+				// 绑定微信
 				WXLoginUtil wxLoginUtil = new WXLoginUtil(mContext);
-				wxLoginUtil.initWeiChatLogin(false);
+				wxLoginUtil.initWeiChatLogin(false,false);
 			}
 			break;
 		case R.id.user_config_exit_button:// 退出登录

@@ -37,7 +37,7 @@ public class WXLoginUtil {
 	/**
 	 * 初始化微信第三方登录
 	 */
-	public void initWeiChatLogin(boolean closeSelf) {
+	public void initWeiChatLogin(boolean closeSelf,final boolean isLogin) {
 		this.closeSelf = closeSelf;
 		mController = UMServiceFactory.getUMSocialService("com.umeng.login");
 		// 添加微信平台
@@ -106,7 +106,12 @@ public class WXLoginUtil {
 											((Activity)ctx).runOnUiThread(new Runnable() {
 												@Override
 												public void run() {
-													wxLogin(sb);
+													if(isLogin){//微信登录
+														wxLogin(sb);
+													}else{//微信绑定
+														bindWeChat(sb);
+													}
+													
 												}
 											});
 											//Toast.makeText(ctx, sb.toString(),1000).show();
@@ -153,4 +158,32 @@ public class WXLoginUtil {
 			}
 		}, ctx, true);
 	}
+	
+	/**
+	 * 绑定微信
+	 */
+	private void bindWeChat(StringBuilder sb) {
+		final HttpControl httpcon = new HttpControl();
+		httpcon.bindWeChat(sb.toString(), new HttpCallBackInterface() {
+			@Override
+			public void http_Success(Object obj) {
+				if (obj != null && obj instanceof UserRequestBean) {
+					UserRequestBean bean = (UserRequestBean) obj;
+					httpcon.setLoginInfo(ctx, bean);
+					if(closeSelf){
+						((Activity) ctx).finish();
+					}
+				}
+			}
+
+			@Override
+			public void http_Fails(int error, String msg) {
+				Toast.makeText(ctx, msg, 1000).show();
+
+			}
+		}, ctx, true);
+	}
+	
+	
+	
 }

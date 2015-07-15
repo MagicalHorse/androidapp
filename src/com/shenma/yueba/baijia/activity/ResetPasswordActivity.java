@@ -101,12 +101,8 @@ public class ResetPasswordActivity extends BaseActivityWithTopView implements On
 				
 				@Override
 				public void http_Success(Object obj) {
-					
-					Intent intent=new Intent(ResetPasswordActivity.this,LoginAndRegisterActivity.class);
-					intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-					startActivity(intent);
+                    MyApplication.getInstance().showMessage(ResetPasswordActivity.this, "修改成功");
                     ResetPasswordActivity.this.finish();
-                    MyApplication.getInstance().showMessage(ResetPasswordActivity.this, "修改成功,请重新登录");
 				}
 				
 				@Override

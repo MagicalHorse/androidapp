@@ -2323,7 +2323,7 @@ public class HttpControl {
 	
 
 	/**
-	 * 获取我关注的人和我的粉丝的列表
+	 * 微信登录
 	 * 
 	 * @param phone
 	 *            String手机号码
@@ -2346,6 +2346,30 @@ public class HttpControl {
 				false);
 	}
 	
+	
+	/**
+	 * 绑定微信
+	 * 
+	 * @param phone
+	 *            String手机号码
+	 * @param password
+	 *            String 密码
+	 * @param httpCallBack
+	 *            HttpCallBackInterface回调接口
+	 * @param context
+	 *            Context
+	 * @return void
+	 * **/
+	public void bindWeChat(String jsonStr,
+			final HttpCallBackInterface httpCallBack, Context context,
+			boolean showDialog) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put(Constants.JSON, jsonStr);
+		map.put("appid",Constants.WX_APP_ID);
+		BasehttpSend(map, context, HttpConstants.METHOD_BindWX,
+				httpCallBack, UserRequestBean.class, showDialog,
+				false);
+	}
 	
 
 	/**
