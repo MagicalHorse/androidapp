@@ -143,7 +143,7 @@ public class HuoKuanManagerActivity extends BaseActivityWithTopView implements
 			public void http_Success(Object obj) {
 				HuoKuanManagerBackBean bean = (HuoKuanManagerBackBean) obj;
 				if(bean!=null && bean.getData()!=null){
-					tv_had_withdraw_ratio.setText("已提现货款 "+ToolsUtil.nullToString(bean.getData().getPickedPercent())+"%");
+					tv_had_withdraw_ratio.setText("已提现货款 "+ToolsUtil.nullToString(bean.getData().getPickedPercent()));
 					tv_had_withdraw_money.setText("￥"+ToolsUtil.nullToString(bean.getData().getPickedAmount()));
 					try {
 						hadProgress = (int) Double.parseDouble(ToolsUtil.nullToString(bean.getData().getPickedPercent()));
@@ -177,11 +177,11 @@ public class HuoKuanManagerActivity extends BaseActivityWithTopView implements
 					} catch (Exception e) {
 						backProgress = 0;
 					}
-					tv_can_withdraw_ratio.setText("可提现货款 "+ToolsUtil.nullToString(bean.getData().getCanPickPercent())+"%");
+					tv_can_withdraw_ratio.setText("可提现货款 "+ToolsUtil.nullToString(bean.getData().getCanPickPercent()));
 					tv_can_withdraw_money.setText("￥"+ToolsUtil.nullToString(bean.getData().getCanPickAmount()));
-					tv_freeze_ratio.setText("冻结货款 "+ToolsUtil.nullToString(bean.getData().getFrozenPercent())+"%");
+					tv_freeze_ratio.setText("冻结货款 "+ToolsUtil.nullToString(bean.getData().getFrozenPercent()));
 					tv_freeze_money.setText("￥"+ToolsUtil.nullToString(bean.getData().getFrozenAmount()));
-					tv_back_ratio.setText("退款 "+ToolsUtil.nullToString(bean.getData().getRmaPercent())+"%");
+					tv_back_ratio.setText("退款 "+ToolsUtil.nullToString(bean.getData().getRmaPercent()));
 					tv_back_money.setText("￥"+ToolsUtil.nullToString(bean.getData().getRmaAmount()));
 					tv_tatal_money.setText("￥"+ToolsUtil.nullToString(bean.getData().getTotalAmount()));
 					timer = new CountDownTimer(1000, 10) {

@@ -40,6 +40,7 @@ import android.widget.Toast;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.modle.RequestUploadProductDataBean;
 import com.shenma.yueba.camera.CameraAty;
 import com.shenma.yueba.camera2.ActivityCapture;
 import com.shenma.yueba.util.CustomProgressDialog;
@@ -172,6 +173,7 @@ private void showDialog() {
 	bt_publish.setOnClickListener(new OnClickListener() {
 		@Override
 		public void onClick(View v) {
+			MyApplication.getInstance().getPublishUtil().setBean(new RequestUploadProductDataBean());
 			Toast.makeText(getApplicationContext(), "相机初始化中...", 1000).show();
 			// 跳转到到自定义相机
 //			Intent intentCamera = new Intent(MainActivityForYangJia.this,CameraAty.class);

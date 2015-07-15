@@ -188,6 +188,7 @@ public class SocialManagerActivity extends BaseFragmentActivity implements
 		if(request == Constants.REQUESTCODE && result == Constants.RESULTCODE){
 			myCircleForSocialFragment.getCircleListFromNet(SocialManagerActivity.this,true, true);
 		}
+		
 		super.onActivityResult(request, result, arg2);
 	}
 }

@@ -30,6 +30,7 @@ import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.adapter.MyCircleInfoAdapter;
 import com.shenma.yueba.constants.Constants;
+import com.shenma.yueba.util.CustomProgressDialog;
 import com.shenma.yueba.util.FileUtils;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
@@ -73,7 +74,7 @@ public class CircleInfoActivity extends BaseActivityWithTopView implements
 	private Button bt_action;//分为 退出圈子，加入圈子，删除圈子三种状态
 	private String from;//来自哪里  1表示来自养家的圈子管理，2表示来自推荐的圈子，3表示来自已经加入的圈子
 	HttpControl httpControl = new HttpControl();
-	
+	private CustomProgressDialog customerDialog;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -106,6 +107,7 @@ public class CircleInfoActivity extends BaseActivityWithTopView implements
 				finish();
 			}
 		});
+		customerDialog = new CustomProgressDialog(mContext).createDialog(mContext);
 		imageView1 = getView(R.id.imageView1);
 		imageView2 = getView(R.id.imageView2);
 		gv_circle = getView(R.id.gv_circle);
@@ -283,7 +285,7 @@ public class CircleInfoActivity extends BaseActivityWithTopView implements
 											ToolsUtil.getImage(ToolsUtil
 													.nullToString(bean
 															.getGroupPic()),
-													120, 0), riv_circle_head);
+													100, 100), riv_circle_head);
 							List<Users> users = bean.getUsers();
 							if (users != null && users.size() > 0) {
 								mList.clear();
@@ -449,27 +451,13 @@ public class CircleInfoActivity extends BaseActivityWithTopView implements
 	
 	
 	public void uploadPic(){
+		customerDialog.show();
 		HttpControl httpContorl = new HttpControl();
 		httpContorl.syncUpload(littlePicPath_cache, new SaveCallback() {
 			
 			@Override
 			public void onProgress(String arg0, int arg1, int arg2) {
-				String picName = littlePicPath_cache.substring(littlePicPath_cache.lastIndexOf("/") + 1,
-						littlePicPath_cache.length());
-				HttpControl httpControl2 = new HttpControl();
-				httpControl2.changeCircleLogo(cricleId, picName, true, new HttpCallBackInterface() {
-					
-					@Override
-					public void http_Success(Object obj) {
-						Toast.makeText(mContext, "修改成功", 1000).show();
-						
-					}
-					
-					@Override
-					public void http_Fails(int error, String msg) {
-						Toast.makeText(mContext, msg, 1000).show();
-					}
-				}, CircleInfoActivity.this);
+				
 			}
 			
 			@Override
@@ -480,7 +468,30 @@ public class CircleInfoActivity extends BaseActivityWithTopView implements
 			
 			@Override
 			public void onSuccess(String arg0) {
-				// TODO Auto-generated method stub
+
+				
+				runOnUiThread(new Runnable() {
+					public void run() {
+						String picName = littlePicPath_cache.substring(littlePicPath_cache.lastIndexOf("/") + 1,
+								littlePicPath_cache.length());
+						HttpControl httpControl2 = new HttpControl();
+						httpControl2.changeCircleLogo(cricleId, picName, false, new HttpCallBackInterface() {
+							
+							@Override
+							public void http_Success(Object obj) {
+								Toast.makeText(mContext, "修改成功", 1000).show();
+								customerDialog.dismiss();
+							}
+							
+							@Override
+							public void http_Fails(int error, String msg) {
+								customerDialog.dismiss();
+								Toast.makeText(mContext, msg, 1000).show();
+							}
+						}, CircleInfoActivity.this);
+					}
+				});
+			
 				
 			}
 		});
