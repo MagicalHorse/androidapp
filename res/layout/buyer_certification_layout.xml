@@ -90,7 +90,8 @@
                 android:orientation="vertical" >
 
                 <TextView
-                    android:paddingLeft="10dip"
+                    android:gravity="center_vertical"
+                    android:drawableLeft="@drawable/star"
                     android:paddingRight="10dip"
                     android:paddingTop="5dip"
                     android:paddingBottom="5dip"
@@ -107,6 +108,8 @@
                     android:layout_height="200dip"
                     android:padding="10dip" >
 
+                    
+                    
                     <ImageView
                         android:id="@+id/iv_idcard_positive"
                         android:layout_width="fill_parent"
