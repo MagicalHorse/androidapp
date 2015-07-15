@@ -142,7 +142,7 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
 			break;
 		case R.id.tv_wechat:// 微信登录
 			WXLoginUtil wxLoginUtil = new WXLoginUtil(getActivity());
-			wxLoginUtil.initWeiChatLogin(true,true);
+			wxLoginUtil.initWeiChatLogin(true,true,false);
 			break;
 		case R.id.tv_qq:// QQ登录
 			initQQLogin();

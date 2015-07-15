@@ -28,7 +28,7 @@ public class WXLoginUtil {
 
 	private Context ctx;
 	private UMSocialService mController;
-
+	private boolean hasCallBack;
 	
 	private boolean closeSelf;
 	public WXLoginUtil(Context ctx) {
@@ -38,8 +38,9 @@ public class WXLoginUtil {
 	/**
 	 * 初始化微信第三方登录
 	 */
-	public void initWeiChatLogin(boolean closeSelf,final boolean isLogin) {
+	public void initWeiChatLogin(boolean closeSelf,final boolean isLogin,boolean hasCallBack) {
 		this.closeSelf = closeSelf;
+		this.hasCallBack = hasCallBack;
 		mController = UMServiceFactory.getUMSocialService("com.umeng.login");
 		// 添加微信平台
 		UMWXHandler wxHandler = new UMWXHandler(ctx, Constants.WX_APP_ID,
@@ -170,7 +171,9 @@ public class WXLoginUtil {
 			public void http_Success(Object obj) {
 				Toast.makeText(ctx, "绑定成功", 1000).show();
 				SharedUtil.setBooleanPerfernece(ctx, SharedUtil.user_IsBindWeiXin, true);
-				((BindInter)ctx).refresh();
+				if(hasCallBack){
+					((BindInter)ctx).refresh();
+				}
 					if(closeSelf){
 						((Activity) ctx).finish();
 					}

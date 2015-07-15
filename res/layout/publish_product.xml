@@ -110,7 +110,7 @@
                         android:ems="10"
                         android:gravity="center_vertical"
                         android:hint="请输入"
-                        android:inputType="number"
+                        android:inputType="numberDecimal"
                         android:paddingLeft="5dip"
                         android:textSize="18sp" >
                     </EditText>

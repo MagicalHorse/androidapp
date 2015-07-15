@@ -26,6 +26,7 @@ import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.activity.ApplyResultActivity;
 import com.shenma.yueba.baijia.fragment.BaseFragment;
 import com.shenma.yueba.constants.Constants;
+import com.shenma.yueba.inter.BindInter;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.util.WXLoginUtil;
@@ -39,7 +40,7 @@ import com.shenma.yueba.yangjia.modle.OrderItem;
 import com.shenma.yueba.yangjia.modle.OrderListBackBean;
 
 @SuppressLint("ValidFragment")
-public class HuoKuanIncomeAndOutGoingFragment extends BaseFragment implements OnClickListener {
+public class HuoKuanIncomeAndOutGoingFragment extends BaseFragment implements OnClickListener{
 	private View rootView;// 缓存Fragment view
 	private PullToRefreshListView rlv;
 	private List<HuoKuanItem> mList = new ArrayList<HuoKuanItem>();
@@ -245,7 +246,7 @@ public class HuoKuanIncomeAndOutGoingFragment extends BaseFragment implements On
 				Toast.makeText(getActivity(), "正在绑定微信", 1000).show();
 				// 绑定手机号
 				WXLoginUtil wxLoginUtil = new WXLoginUtil(getActivity());
-				wxLoginUtil.initWeiChatLogin(false,false);
+				wxLoginUtil.initWeiChatLogin(false,false,false);
 				return;
 			}
 			if(ids ==null || ids.size()==0){

@@ -77,7 +77,7 @@ public class ApplyWithdrawActivity extends BaseActivityWithTopView implements
 					getIncomeRedPack();
 				}else{
 					WXLoginUtil wxLoginUtil = new WXLoginUtil(mContext);
-					wxLoginUtil.initWeiChatLogin(false,false);
+					wxLoginUtil.initWeiChatLogin(false,false,false);
 				}
 			} else {
 				Toast.makeText(mContext, "请输入整数", 1000).show();
