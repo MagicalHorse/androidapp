@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.shenma.yueba.baijia.modle.UserRequestBean;
 import com.shenma.yueba.constants.Constants;
+import com.shenma.yueba.inter.BindInter;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.yangjia.activity.MainActivityForYangJia;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -168,6 +169,7 @@ public class WXLoginUtil {
 			@Override
 			public void http_Success(Object obj) {
 				Toast.makeText(ctx, "绑定成功", 1000).show();
+				((BindInter)ctx).refresh();
 				SharedUtil.setBooleanPerfernece(ctx, SharedUtil.user_IsBindWeiXin, true);
 					if(closeSelf){
 						((Activity) ctx).finish();

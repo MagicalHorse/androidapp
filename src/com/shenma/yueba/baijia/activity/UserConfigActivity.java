@@ -24,11 +24,13 @@ import android.widget.Toast;
 
 import com.alibaba.sdk.android.oss.callback.SaveCallback;
 import com.alibaba.sdk.android.oss.model.OSSException;
+import com.google.inject.Binding;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.modle.ModifyLogoBackBean;
 import com.shenma.yueba.baijia.modle.ModifyLogoBean;
 import com.shenma.yueba.constants.Constants;
+import com.shenma.yueba.inter.BindInter;
 import com.shenma.yueba.util.CustomProgressDialog;
 import com.shenma.yueba.util.FileUtils;
 import com.shenma.yueba.util.FontManager;
@@ -52,7 +54,7 @@ import com.shenma.yueba.yangjia.activity.ModifyNickNameActivity;
  * 
  * *****/
 public class UserConfigActivity extends BaseActivityWithTopView implements
-		OnClickListener {
+		OnClickListener ,BindInter{
 
 	// 头像图片
 	private String littlePicPath;// 小图路径
@@ -380,7 +382,7 @@ public class UserConfigActivity extends BaseActivityWithTopView implements
 				Toast.makeText(mContext, "微信号已绑定", 1000).show();
 			} else {
 				// 绑定微信
-				WXLoginUtil wxLoginUtil = new WXLoginUtil(mContext);
+				WXLoginUtil wxLoginUtil = new WXLoginUtil(UserConfigActivity.this);
 				wxLoginUtil.initWeiChatLogin(false,false);
 			}
 			break;
@@ -430,4 +432,10 @@ public class UserConfigActivity extends BaseActivityWithTopView implements
 			}
 		}, mContext, true);
 	}
+
+	@Override
+	public void refresh() {
+		onResume();
+	}
+	
 }
