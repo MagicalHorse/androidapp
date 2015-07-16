@@ -13,6 +13,7 @@
         android:src="@drawable/default_pic" />
 
     <LinearLayout
+        android:id="@+id/chat_item_content_linearlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/user_config_iconwidth40_dimen"

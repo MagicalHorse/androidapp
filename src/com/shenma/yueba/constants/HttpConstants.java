@@ -632,6 +632,13 @@ public class HttpConstants {
 	
 	public static String GETMYFAVORITEPRODUCTLIST = PRODUCT+ "GetMyFavoriteProductList";
 	
+	
+	/**
+	 *获取用户收藏的商品列表
+	 */
+	
+	public static String GETUSERFAVORITELIST = PRODUCT+"GetUserFavoriteList";
+	
 	/**
 	 * 败家申请退款 （认证买手商品退款）
 	 */

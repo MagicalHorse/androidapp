@@ -210,7 +210,15 @@ boolean isBroadcast=false;//是否注册广播监听 支付结果
 	{
 		
 		Map<String, Object> map=new HashMap<String, Object>();
-		map.put("messageTitle", messageTitle);
+		String body="";
+		if(messageTitle.length()>13)
+		{
+			body=messageTitle.substring(0, 13)+"...";
+		}else
+		{
+			body=messageTitle;
+		}
+		map.put("messageTitle", body);
 		map.put("TotalAmount", creatOrderInfoBean.getActualAmount());
 		map.put("OrderNo", creatOrderInfoBean.getOrderNo());
 		CreateWeiXinOrderManager cwxm=new CreateWeiXinOrderManager(BaijiaPayActivity.this, new WeiXinPayManagerListener() {

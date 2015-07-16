@@ -28,7 +28,6 @@ import com.shenma.yueba.baijia.modle.UserInfoBean;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
-import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.RoundImageView;
 /*****
@@ -132,6 +131,7 @@ public class ShopMainActivity extends FragmentActivity {
 		shop_main_layout_name_textview=(TextView)findViewById(R.id.shop_main_layout_name_textview);
 		shop_main_layout_market_textview=(TextView)findViewById(R.id.shop_main_layout_market_textview);
 		shop_main_siliao_imagebutton=(TextView)findViewById(R.id.shop_main_siliao_imagebutton); 
+		shop_main_siliao_imagebutton.setOnClickListener(onClickListener);
 		shop_main_attention_imagebutton=(TextView)findViewById(R.id.shop_main_attention_imagebutton); 
 		shop_main_attention_imagebutton.setOnClickListener(onClickListener);
 		shop_main_attentionvalue_textview=(TextView)findViewById(R.id.shop_main_attentionvalue_textview); 
@@ -388,7 +388,7 @@ public class ShopMainActivity extends FragmentActivity {
 						setHeadValue();
 					}else
 					{
-						http_Fails(500, "数据为空");
+						http_Fails(500, "信息不存在");
 					}
 				}
 			}
@@ -417,7 +417,7 @@ public class ShopMainActivity extends FragmentActivity {
     	}
     	fragmentBean_list.clear();
     	shop_main_head_layout_tab_linearlayout.removeAllViews();
-    	MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.nullToString(SharedUtil.getStringPerfernece(ShopMainActivity.this, SharedUtil.user_logo)), shop_main_layout_icon_imageview, MyApplication.getInstance().getDisplayImageOptions());
+    	MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.nullToString(userInfoBean.getLogo()), shop_main_layout_icon_imageview, MyApplication.getInstance().getDisplayImageOptions());
     	shop_main_layout_name_textview.setText(ToolsUtil.nullToString(userInfoBean.getUserName()));
     	shop_main_layout_market_textview.setText(ToolsUtil.nullToString(userInfoBean.getAddress()));
     	shop_main_attentionvalue_textview.setText(ToolsUtil.nullToString(userInfoBean.getFollowingCount()+""));
@@ -425,11 +425,10 @@ public class ShopMainActivity extends FragmentActivity {
     	shop_main_praisevalue_textview.setText(ToolsUtil.nullToString(userInfoBean.getCommunityCount()+""));
     	shap_main_description1_textview.setText(ToolsUtil.nullToString(userInfoBean.getDescription()));
     	
-    	String user_level=SharedUtil.getStringPerfernece(this, SharedUtil.user_level);
-    	if("8".equals(user_level))//认证买手
+    	if(userInfoBean.isIsBuyer())//认证买手
     	{
     		initBuyerPuBu();
-    	}else if("1".equals(user_level))//普通买手
+    	}else //普通买手
     	{
     		initUserPuBu();
     	}

@@ -229,7 +229,7 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView
 								&& obj instanceof RequestProductDetailsInfoBean) {
 							bean = (RequestProductDetailsInfoBean) obj;
 							if (bean.getData() == null) {
-								http_Fails(500, "数据异常null");
+								http_Fails(500, "商品信息不存在");
 								ApproveBuyerDetailsActivity.this.finish();
 								return;
 							}
