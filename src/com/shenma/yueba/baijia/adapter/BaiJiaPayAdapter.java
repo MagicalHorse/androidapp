@@ -21,6 +21,7 @@ import com.shenma.yueba.util.ToolsUtil;
  * 程序的简单说明  
  */
 
+
 public class BaiJiaPayAdapter extends BaseAdapter{
 	List<BaijiaPayInfoBean> bean=new ArrayList<BaijiaPayInfoBean>();
     Context context;
