@@ -16,9 +16,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.util.Base64Coder;
 import com.shenma.yueba.util.FontManager;
+import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.util.ToolsUtil;
+import com.shenma.yueba.view.RoundImageView;
 import com.shenma.yueba.yangjia.modle.kaixiaoPiaoBean;
 
 /**  
@@ -57,6 +60,8 @@ public class QRCodeShareDialog extends Dialog implements android.view.View.OnCli
 	
 	void initView()
 	{
+		RoundImageView qzcodeshare_layouyt_customview = (RoundImageView) ll.findViewById(R.id.qzcodeshare_layouyt_customview);
+		MyApplication.getInstance().getImageLoader().displayImage(SharedUtil.getHeadImage(getContext()), qzcodeshare_layouyt_customview);
 		qzcodeshare_layouyt_close_imageview=(ImageView)ll.findViewById(R.id.qzcodeshare_layouyt_close_imageview);
 		qzcodeshare_layout_content_imageview = (ImageView)ll.findViewById(R.id.qzcodeshare_layout_content_imageview);
 		qzcodeshare_layout_title_textview=(TextView)ll.findViewById(R.id.qzcodeshare_layout_title_textview);
