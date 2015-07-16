@@ -79,12 +79,11 @@
                                 android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
                                 android:drawableLeft="@drawable/star"
+                                android:drawableRight="@drawable/arrow_right"
                                 android:gravity="center_vertical"
                                 android:text="商场名称"
-                                 android:drawableRight="@drawable/arrow_right"
                                 android:textColor="@color/text_gray_color"
                                 android:textSize="16sp" />
-
                         </LinearLayout>
 
                         <View style="@style/style_horizontal_line" />
@@ -111,7 +110,8 @@
                                 android:layout_height="wrap_content"
                                 android:background="@null"
                                 android:hint="请输入"
-                                android:paddingLeft="10dip" />
+                                android:paddingLeft="10dip"
+                                android:textColor="@color/text_gray_color" />
                         </LinearLayout>
 
                         <View style="@style/style_horizontal_line" />
@@ -133,12 +133,13 @@
                                 android:textSize="16sp" />
 
                             <EditText
-                                 android:hint="请输入楼层，区号"
                                 android:id="@+id/et_number_name"
                                 android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
                                 android:background="@null"
-                                android:paddingLeft="10dip" />
+                                android:hint="请输入楼层，区号"
+                                android:paddingLeft="10dip"
+                                android:textColor="@color/text_gray_color" />
                         </LinearLayout>
                     </LinearLayout>
 

@@ -99,7 +99,7 @@ public class KaiXiaoPiaoActivity extends BaseActivityWithTopView implements
 
 					@Override
 					public void http_Fails(int error, String msg) {
-						// TODO Auto-generated method stub
+						Toast.makeText(mContext, msg, 1000).show();
 
 					}
 				}, mContext, true);

@@ -1184,11 +1184,12 @@ public class HttpControl {
 	 * 
 	 * @return void
 	 * **/
-	public void GetValidFansListToGroup(String groupid,
+	public void GetValidFansListToGroup(String status,String groupid,
 			boolean showDialog, final HttpCallBackInterface httpCallBack,
 			Context context) {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put(Constants.GROUPID, groupid);
+		map.put(Constants.STATUS, status);
 		BasehttpSend(map, context, HttpConstants.METHOD_CIRCLE_GETVALIDFANSLISTTOGROUP,
 				httpCallBack, FansBackListForInviteCirlce.class, showDialog, false);
 	}
