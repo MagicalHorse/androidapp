@@ -51,4 +51,13 @@ public class SalesManagerForSupperManActivity extends BaseActivityWithTopView {
 		pull_refresh_list.setAdapter(salesAdapter);
 		FontManager.changeFonts(mContext, tv_top_title);
 	}
+	
+	
+	
+	
+	@Override
+	protected void onDestroy() {
+		MyApplication.getInstance().addActivity(this);
+		super.onDestroy();
+	}
 }

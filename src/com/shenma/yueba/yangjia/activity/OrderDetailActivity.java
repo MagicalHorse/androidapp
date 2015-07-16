@@ -51,6 +51,7 @@ public class OrderDetailActivity extends BaseActivityWithTopView {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		MyApplication.getInstance().addActivity(this);//加入回退栈
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.order_detail);
 		super.onCreate(savedInstanceState);
@@ -138,4 +139,13 @@ public class OrderDetailActivity extends BaseActivityWithTopView {
 		}, mContext);
 	}
 
+	
+	
+	@Override
+	protected void onDestroy() {
+		MyApplication.getInstance().addActivity(this);
+		super.onDestroy();
+	}
+	
+	
 }

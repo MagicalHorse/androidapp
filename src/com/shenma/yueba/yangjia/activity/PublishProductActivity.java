@@ -89,6 +89,7 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		MyApplication.getInstance().addActivity(this);//加入回退栈
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.publish_product);
 		super.onCreate(savedInstanceState);
@@ -676,10 +677,10 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 		super.onBackPressed();
 	}
 	
-//	
-//	@Override
-//	protected void onDestroy() {
-//		FileUtils.delAllFile(FileUtils.getRootPath() + "/tagPic/");
-//		super.onDestroy();
-//	}
+	@Override
+	protected void onDestroy() {
+		MyApplication.getInstance().addActivity(this);
+		super.onDestroy();
+	}
+	
 }

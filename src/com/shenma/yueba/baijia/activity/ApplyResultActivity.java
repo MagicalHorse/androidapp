@@ -24,6 +24,7 @@ public class ApplyResultActivity extends BaseActivityWithTopView implements OnCl
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		MyApplication.getInstance().addActivity(this);//加入回退栈
 		setContentView(R.layout.apply_result_layout);
 		super.onCreate(savedInstanceState);
 		MyApplication.getInstance().addActivity(this);
@@ -75,5 +76,12 @@ public class ApplyResultActivity extends BaseActivityWithTopView implements OnCl
 		Intent intent = new Intent(mContext, MainActivityForBaiJia.class);
 		startActivity(intent);
 		super.onBackPressed();
+	}
+	
+	
+	@Override
+	protected void onDestroy() {
+		MyApplication.getInstance().removeActivity(this);//加入回退栈
+		super.onDestroy();
 	}
 }

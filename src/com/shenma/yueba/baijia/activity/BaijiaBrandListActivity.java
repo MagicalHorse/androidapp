@@ -46,6 +46,7 @@ List<BrandInfoInfo> object_list=new ArrayList<BrandInfoInfo>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		MyApplication.getInstance().addActivity(this);//加入回退栈
 		requestWindowFeature(getWindow().FEATURE_NO_TITLE);
 		parenetView=this.getLayoutInflater().inflate(R.layout.brandlist_layout, null);
 		setContentView(parenetView);
@@ -263,5 +264,13 @@ List<BrandInfoInfo> object_list=new ArrayList<BrandInfoInfo>();
 	void initPic(String url,ImageView iv)
 	{
 		MyApplication.getInstance().getImageLoader().displayImage(url, iv, MyApplication.getInstance().getDisplayImageOptions());
+	}
+	
+	
+	
+	@Override
+	protected void onDestroy() {
+		MyApplication.getInstance().removeActivity(this);//加入回退栈
+		super.onDestroy();
 	}
 }

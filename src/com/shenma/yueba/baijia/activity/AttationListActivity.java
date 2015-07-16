@@ -28,9 +28,9 @@ public class AttationListActivity extends BaseActivityWithTopView {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		MyApplication.getInstance().addActivity(this);
 		setContentView(R.layout.refresh_listview_with_title_layout);
 		super.onCreate(savedInstanceState);
-		MyApplication.getInstance().addActivity(this);
 		initView();
 	}
 
@@ -39,5 +39,12 @@ public class AttationListActivity extends BaseActivityWithTopView {
 		pull_refresh_list.setMode(Mode.BOTH);
 		pull_refresh_list.setAdapter(new AttationListAdapter(this, mList));
 		
+	}
+	
+	
+	@Override
+	protected void onDestroy() {
+		MyApplication.getInstance().removeActivity(this);//加入回退栈
+		super.onDestroy();
 	}
 }

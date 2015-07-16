@@ -31,6 +31,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.BaseActivityWithTopView;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.FileUtils;
@@ -374,6 +375,7 @@ public class PublishProductsActivity extends BaseActivityWithTopView implements
 
 	@Override
 	protected void onDestroy() {
+		MyApplication.getInstance().addActivity(this);
 		super.onDestroy();
 		deleteImg();
 	}
@@ -389,4 +391,7 @@ public class PublishProductsActivity extends BaseActivityWithTopView implements
 			PictureCompress.deleteBitmapFromSDCard(deleStr);
 		}
 	}
+	
+	
+	
 }

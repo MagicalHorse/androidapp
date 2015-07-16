@@ -75,12 +75,12 @@ public class AffirmOrderActivity extends BaseActivityWithTopView implements
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		MyApplication.getInstance().addActivity(this);
 		parentview = this.getLayoutInflater().inflate(
 				R.layout.affirmorder_layout, null);
 		requestWindowFeature(getWindow().FEATURE_NO_TITLE);
 		setContentView(parentview);
 		super.onCreate(savedInstanceState);
-		MyApplication.getInstance().addActivity(this);
 		if (this.getIntent().getSerializableExtra("DATA") != null
 				&& this.getIntent().getSerializableExtra("DATA") instanceof RequestProductDetailsInfoBean) {
 			RequestProductDetailsInfoBean bean = (RequestProductDetailsInfoBean) this
@@ -370,5 +370,14 @@ public class AffirmOrderActivity extends BaseActivityWithTopView implements
 			}
 			break;
 		}
+	}
+	
+	
+	
+	
+	@Override
+	protected void onDestroy() {
+		MyApplication.getInstance().removeActivity(this);//加入回退栈
+		super.onDestroy();
 	}
 }

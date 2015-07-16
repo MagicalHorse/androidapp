@@ -165,4 +165,12 @@ public class IncomeDetailActivity extends BaseFragmentActivity implements
 
 	}
 
+	
+
+	@Override
+	protected void onDestroy() {
+		MyApplication.getInstance().removeActivity(this);
+		super.onDestroy();
+	}
+	
 }

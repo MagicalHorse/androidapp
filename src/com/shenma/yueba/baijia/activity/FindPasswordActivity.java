@@ -181,4 +181,14 @@ public class FindPasswordActivity extends BaseActivityWithTopView implements
 					}
 				}, mContext, true);
 	}
+	
+	
+	
+	
+	  @Override
+	    protected void onDestroy() {
+	    	MyApplication.getInstance().removeActivity(this);//加入回退栈
+	    	super.onDestroy();
+	    }
+	
 }

@@ -26,6 +26,7 @@ List<String> str_list=new ArrayList<String>();
 List<Integer> icon_list=new ArrayList<Integer>();
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		MyApplication.getInstance().addActivity(this);//加入回退栈
 		requestWindowFeature(getWindow().FEATURE_NO_TITLE);
 		setContentView(R.layout.invitationfriend_layout);
 		super.onCreate(savedInstanceState);
@@ -61,4 +62,12 @@ List<Integer> icon_list=new ArrayList<Integer>();
 			}
 		});
 	}
+	
+	
+	
+	  @Override
+	    protected void onDestroy() {
+	    	MyApplication.getInstance().removeActivity(this);//加入回退栈
+	    	super.onDestroy();
+	    }
 }

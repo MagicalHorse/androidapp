@@ -18,6 +18,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.BaseActivityWithTopView;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.ListViewUtils;
@@ -44,6 +45,7 @@ public class BoradRewardActivity extends BaseActivityWithTopView{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		MyApplication.getInstance().addActivity(this);//加入回退栈
 		setContentView(R.layout.broad_reward);
 		super.onCreate(savedInstanceState);
 		initView();
@@ -118,5 +120,9 @@ public class BoradRewardActivity extends BaseActivityWithTopView{
 //				}, mContext.getApplicationContext());
 //	}
 
-
+	  @Override
+	    protected void onDestroy() {
+	    	MyApplication.getInstance().removeActivity(this);//加入回退栈
+	    	super.onDestroy();
+	    }
 }

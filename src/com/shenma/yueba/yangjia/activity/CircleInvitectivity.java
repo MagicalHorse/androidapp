@@ -27,6 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.BaseActivityWithTopView;
 import com.shenma.yueba.baijia.activity.FillPersonDataActivity;
 import com.shenma.yueba.baijia.modle.CityListRequestBean;
@@ -78,6 +79,7 @@ public class CircleInvitectivity extends BaseActivityWithTopView implements
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		MyApplication.getInstance().addActivity(this);//加入回退栈
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.invite_list_layout);
 		super.onCreate(savedInstanceState);
@@ -361,4 +363,11 @@ public class CircleInvitectivity extends BaseActivityWithTopView implements
 		return sb.substring(0, sb.length() - 1);
 	}
 
+	
+	  @Override
+	    protected void onDestroy() {
+	    	MyApplication.getInstance().removeActivity(this);//加入回退栈
+	    	super.onDestroy();
+	    }
+	
 }

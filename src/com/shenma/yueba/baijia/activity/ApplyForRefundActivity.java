@@ -41,9 +41,11 @@ Button  applyforrefund_layout_footersubmit_button;//申诉按钮
 EditText createorder_dialog_layout_countvalue_edittext;//数量
 EditText applyforrefund_layout_appealreason_textview;//申诉理由
 BaiJiaOrderListInfo baiJiaOrderListInfo;//订单信息
+
 int maxValue=0;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		MyApplication.getInstance().addActivity(this);//加入回退栈
 		requestWindowFeature(getWindow().FEATURE_NO_TITLE);
 		parentView=RelativeLayout.inflate(this, R.layout.applyforrefund_layout, null);
 		setContentView(parentView);
@@ -214,5 +216,12 @@ int maxValue=0;
 		double refundprice=allprice/count;
 		String str=ToolsUtil.DounbleToString_2(refundprice);
 		applyforrefund_layout_refundprivevalue_textview.setText(str);
+	}
+	
+	
+	@Override
+	protected void onDestroy() {
+		MyApplication.getInstance().removeActivity(this);//加入回退栈
+		super.onDestroy();
 	}
 }

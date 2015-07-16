@@ -52,6 +52,7 @@ HttpControl httpControl=new HttpControl();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		MyApplication.getInstance().addActivity(this);//加入回退栈
 		requestWindowFeature(getWindow().FEATURE_NO_TITLE);
 		parentView=this.getLayoutInflater().inflate(R.layout.appealloading_layout, null);
 		setContentView(parentView);
@@ -65,7 +66,6 @@ HttpControl httpControl=new HttpControl();
 		{
 			orderNo=(String)this.getIntent().getSerializableExtra("DATA");
 		}
-		MyApplication.getInstance().addActivity(this);
 		initView();
 		//请求订单信息
 		requestOrderInfo();
@@ -170,5 +170,15 @@ HttpControl httpControl=new HttpControl();
 		appealloading_layout_commissionermobilevalue_textview.setText("");
 		
 		
+	}
+	
+	
+	
+	
+	
+	@Override
+	protected void onDestroy() {
+		MyApplication.getInstance().removeActivity(this);//加入回退栈
+		super.onDestroy();
 	}
 }

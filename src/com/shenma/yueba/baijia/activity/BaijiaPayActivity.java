@@ -54,11 +54,11 @@ boolean isBroadcast=false;//是否注册广播监听 支付结果
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		MyApplication.getInstance().addActivity(this);
 		requestWindowFeature(getWindow().FEATURE_NO_TITLE);
 		parentView=this.getLayoutInflater().inflate(R.layout.baijiapaylayout, null);
 		setContentView(parentView);
 		super.onCreate(savedInstanceState);
-		MyApplication.getInstance().addActivity(this);
 		if(this.getIntent().getSerializableExtra("PAYDATA")!=null)
 		{
 			creatOrderInfoBean=(CreatOrderInfoBean)this.getIntent().getSerializableExtra("PAYDATA");
@@ -238,8 +238,8 @@ boolean isBroadcast=false;//是否注册广播监听 支付结果
 	
 	@Override
 		protected void onDestroy() {
-			
 			super.onDestroy();
+			MyApplication.getInstance().removeActivity(this);//加入回退栈
 			unRegisterBroadcast();
 		}
 	
@@ -305,4 +305,6 @@ boolean isBroadcast=false;//是否注册广播监听 支付结果
 			super.finish();
 			setResult(200, this.getIntent().putExtra("PAYRESULT", "SUCESS"));
 		}
+	
+	
 }

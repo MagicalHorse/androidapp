@@ -786,5 +786,13 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 	// }
 	//
 	// }
+	
+	
+	
+	  @Override
+	    protected void onDestroy() {
+	    	MyApplication.getInstance().removeActivity(this);//加入回退栈
+	    	super.onDestroy();
+	    }
 
 }

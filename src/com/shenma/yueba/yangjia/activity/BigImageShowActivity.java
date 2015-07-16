@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.BaseActivityWithTopView;
 import com.shenma.yueba.util.Base64Coder;
 import com.shenma.yueba.util.FontManager;
@@ -28,6 +29,7 @@ public class BigImageShowActivity extends BaseActivityWithTopView {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		MyApplication.getInstance().addActivity(this);//加入回退栈
 		setContentView(R.layout.big_image_show);
 		super.onCreate(savedInstanceState);
 		getIntentData();
@@ -58,4 +60,12 @@ public class BigImageShowActivity extends BaseActivityWithTopView {
 		FontManager.changeFonts(mContext, tv_content,tv_top_title);
 		
 	}
+	
+	
+	  @Override
+	    protected void onDestroy() {
+	    	MyApplication.getInstance().removeActivity(this);//加入回退栈
+	    	super.onDestroy();
+	    }
+	
 }

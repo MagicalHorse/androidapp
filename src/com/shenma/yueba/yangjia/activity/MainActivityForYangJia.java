@@ -190,4 +190,13 @@ private void showDialog() {
 	// 用AlertDialog的两个Button，即使监听里什么也不写，点击后也是会吧dialog关掉的，不信的同学可以去试下
 }
 
+
+@Override
+protected void onDestroy() {
+	MyApplication.getInstance().addActivity(this);
+	super.onDestroy();
+}
+
+
+
 }

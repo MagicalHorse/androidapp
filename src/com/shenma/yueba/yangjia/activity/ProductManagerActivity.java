@@ -162,4 +162,13 @@ public class ProductManagerActivity extends BaseFragmentActivity implements
 
 	}
 
+	
+	
+	@Override
+	protected void onDestroy() {
+		MyApplication.getInstance().addActivity(this);
+		super.onDestroy();
+	}
+	
+	
 }

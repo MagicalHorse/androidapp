@@ -45,6 +45,7 @@ View parementView;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		MyApplication.getInstance().addActivity(this);//加入回退栈
 		requestWindowFeature(getWindow().FEATURE_NO_TITLE);
 		parementView=this.getLayoutInflater().inflate(R.layout.orderappeal_layout, null);
 		setContentView(parementView);
@@ -176,4 +177,13 @@ View parementView;
 		}
 		//申诉
 	}
+	
+	
+	
+	
+	  @Override
+	    protected void onDestroy() {
+	    	MyApplication.getInstance().removeActivity(this);//加入回退栈
+	    	super.onDestroy();
+	    }
 }

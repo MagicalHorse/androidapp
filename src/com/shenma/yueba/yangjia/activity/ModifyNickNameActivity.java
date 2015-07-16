@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.BaseActivityWithTopView;
 import com.shenma.yueba.baijia.modle.BaseRequest;
 import com.shenma.yueba.constants.Constants;
@@ -33,6 +34,7 @@ public class ModifyNickNameActivity extends BaseActivityWithTopView {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		MyApplication.getInstance().addActivity(this);//加入回退栈
 		setContentView(R.layout.modify_nickname);
 		super.onCreate(savedInstanceState);
 		initView();
@@ -92,4 +94,13 @@ public class ModifyNickNameActivity extends BaseActivityWithTopView {
 					}
 				}, ModifyNickNameActivity.this);
 	}
+	
+	
+	
+	@Override
+	protected void onDestroy() {
+		MyApplication.getInstance().addActivity(this);
+		super.onDestroy();
+	}
+	
 }

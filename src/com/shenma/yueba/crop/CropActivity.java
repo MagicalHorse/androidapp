@@ -29,6 +29,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.camera2.ActivityCapture;
 
 /**
@@ -80,6 +81,7 @@ public class CropActivity extends MonitoredActivity {
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
+        MyApplication.getInstance().addActivity(this);//加入回退栈
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_crop);

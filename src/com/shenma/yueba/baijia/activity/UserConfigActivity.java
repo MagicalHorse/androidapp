@@ -81,7 +81,6 @@ public class UserConfigActivity extends BaseActivityWithTopView implements
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.setting_layout);
 		super.onCreate(savedInstanceState);
-		MyApplication.getInstance().addActivity(this);
 		initView();
 	}
 
@@ -441,4 +440,11 @@ public class UserConfigActivity extends BaseActivityWithTopView implements
 				SharedUtil.user_IsBindWeiXin) ? "已绑定" : "未绑定");
 	}
 	
+	
+	
+	  @Override
+	    protected void onDestroy() {
+	    	MyApplication.getInstance().removeActivity(this);//加入回退栈
+	    	super.onDestroy();
+	    }
 }

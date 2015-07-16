@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.BaseActivityWithTopView;
 import com.shenma.yueba.baijia.modle.BaseRequest;
 import com.shenma.yueba.util.FontManager;
@@ -31,6 +32,7 @@ public class StoreIntroduceActivity extends BaseActivityWithTopView {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		MyApplication.getInstance().addActivity(this);//加入回退栈
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.store_introduce);
 		super.onCreate(savedInstanceState);
@@ -97,5 +99,12 @@ public class StoreIntroduceActivity extends BaseActivityWithTopView {
 				Toast.makeText(mContext, ToolsUtil.nullToString(msg), 1000).show();
 			}
 		}, StoreIntroduceActivity.this, true, false);
+	}
+	
+	
+	@Override
+	protected void onDestroy() {
+		MyApplication.getInstance().addActivity(this);
+		super.onDestroy();
 	}
 }

@@ -55,10 +55,10 @@ public class MyCollectionActivity extends BaseActivityWithTopView{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		
+		MyApplication.getInstance().addActivity(this);
 		requestWindowFeature(getWindow().FEATURE_NO_TITLE);
 		setContentView(R.layout.shop_main_layoutbak);
 		super.onCreate(savedInstanceState);
-		MyApplication.getInstance().addActivity(this);
 		initView();
 		requestFalshData();
 	}
@@ -407,4 +407,13 @@ public class MyCollectionActivity extends BaseActivityWithTopView{
 		}, MyCollectionActivity.this);
 	}
    
+	
+	
+	
+	
+	  @Override
+	    protected void onDestroy() {
+	    	MyApplication.getInstance().removeActivity(this);//加入回退栈
+	    	super.onDestroy();
+	    }
 }

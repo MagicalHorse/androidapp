@@ -9,6 +9,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.view.imageshow.BasePagerAdapter.OnItemChangeListener;
 import com.shenma.yueba.view.imageshow.UrlPagerAdapter.OnTochImageClickListener;
 /**
@@ -23,6 +24,7 @@ public class ImageShowActivity extends Activity implements OnItemChangeListener,
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		MyApplication.getInstance().addActivity(this);//加入回退栈
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.image_show_viewpager);

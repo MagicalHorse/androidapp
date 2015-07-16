@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.BaseActivityWithTopView;
 import com.shenma.yueba.baijia.modle.BaseRequest;
 import com.shenma.yueba.constants.Constants;
@@ -32,6 +33,7 @@ public class ModifyCircleNameActivity extends BaseActivityWithTopView {
 	private String circleId;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		MyApplication.getInstance().addActivity(this);//加入回退栈
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.modify_circle_name);
 		super.onCreate(savedInstanceState);
@@ -101,4 +103,14 @@ public class ModifyCircleNameActivity extends BaseActivityWithTopView {
 					}
 				}, ModifyCircleNameActivity.this);
 	}
+	
+	
+	
+	@Override
+	protected void onDestroy() {
+		MyApplication.getInstance().addActivity(this);
+		super.onDestroy();
+	}
+	
+	
 }

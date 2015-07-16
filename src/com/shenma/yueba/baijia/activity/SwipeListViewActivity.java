@@ -119,4 +119,13 @@ public class SwipeListViewActivity extends Activity{
  		return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
  				getResources().getDisplayMetrics());
  	}
+     
+     
+     
+     
+     @Override
+     protected void onDestroy() {
+     	MyApplication.getInstance().removeActivity(this);//加入回退栈
+     	super.onDestroy();
+     }
 }

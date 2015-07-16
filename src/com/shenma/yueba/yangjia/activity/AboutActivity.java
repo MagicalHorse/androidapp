@@ -28,6 +28,7 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.BaseActivityWithTopView;
 import com.shenma.yueba.baijia.modle.BaseRequest;
 import com.shenma.yueba.constants.Constants;
@@ -57,6 +58,7 @@ public class AboutActivity extends BaseActivityWithTopView {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		MyApplication.getInstance().addActivity(this);//加入回退栈
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.about_layout);
 		super.onCreate(savedInstanceState);
@@ -76,5 +78,15 @@ public class AboutActivity extends BaseActivityWithTopView {
 		tv_right = getView(R.id.tv_right);
 		FontManager.changeFonts(mContext, tv_version, tv_content, tv_right);
 	}
+	
+	
+	
+	
+	  @Override
+	    protected void onDestroy() {
+	    	MyApplication.getInstance().removeActivity(this);//加入回退栈
+	    	super.onDestroy();
+	    }
+	
 
 }

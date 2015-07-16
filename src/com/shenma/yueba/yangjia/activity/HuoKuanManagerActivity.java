@@ -210,9 +210,11 @@ public class HuoKuanManagerActivity extends BaseActivityWithTopView implements
 	}
 	
 	
-	@Override
-	protected void onDestroy() {
-		timer.cancel();
-		super.onDestroy();
-	}
+	
+	  @Override
+	    protected void onDestroy() {
+			timer.cancel();
+	    	MyApplication.getInstance().removeActivity(this);//加入回退栈
+	    	super.onDestroy();
+	    }
 }

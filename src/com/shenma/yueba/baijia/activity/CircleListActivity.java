@@ -53,12 +53,12 @@ public class CircleListActivity extends BaseActivityWithTopView{
 	HttpControl httpCntrol=new HttpControl();
 	List<MyCircleInfo> items=new ArrayList<MyCircleInfo>();
 	protected void onCreate(Bundle savedInstanceState) {
+		MyApplication.getInstance().addActivity(this);
 		requestWindowFeature(getWindow().FEATURE_NO_TITLE);
 		inflater=this.getLayoutInflater();
 		view = inflater.inflate(R.layout.circlelist_layout, null);
 		setContentView(view);
 		super.onCreate(savedInstanceState);
-		MyApplication.getInstance().addActivity(this);
 		initPullView();
 		requestFalshData();
 	}
@@ -233,4 +233,12 @@ public class CircleListActivity extends BaseActivityWithTopView{
 			}
 		},CircleListActivity.this );
 	}
+	
+	
+	
+	  @Override
+	    protected void onDestroy() {
+	    	MyApplication.getInstance().removeActivity(this);//加入回退栈
+	    	super.onDestroy();
+	    }
 }

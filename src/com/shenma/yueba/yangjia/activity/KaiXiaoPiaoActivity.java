@@ -108,4 +108,13 @@ public class KaiXiaoPiaoActivity extends BaseActivityWithTopView implements
 					}
 				}, mContext, true);
 	}
+	
+	
+	@Override
+	protected void onDestroy() {
+		MyApplication.getInstance().addActivity(this);
+		super.onDestroy();
+	}
+	
+	
 }

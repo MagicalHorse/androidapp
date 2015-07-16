@@ -316,14 +316,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.shenma.yueba.yangjia.activity.BuyerIndentificationActivity"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.shenma.yueba.yangjia.activity.IdentificationBuyerListActivity"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
             android:name="com.shenma.yueba.yangjia.activity.SalesManagerForBuyerActivity"
             android:screenOrientation="portrait" >
         </activity>

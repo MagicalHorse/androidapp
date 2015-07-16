@@ -93,10 +93,10 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		MyApplication.getInstance().addActivity(this);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.approvebuyerdetails_layout);
 		super.onCreate(savedInstanceState);
-		MyApplication.getInstance().addActivity(this);
 		productID = this.getIntent().getIntExtra("productID", -1);
 		if (productID < 0) {
 			MyApplication.getInstance().showMessage(this, "数据错误,请重试");
@@ -676,4 +676,12 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView
 				}, ApproveBuyerDetailsActivity.this);
 	}
 
+	
+	
+	
+	@Override
+	protected void onDestroy() {
+		MyApplication.getInstance().removeActivity(this);//加入回退栈
+		super.onDestroy();
+	}
 }

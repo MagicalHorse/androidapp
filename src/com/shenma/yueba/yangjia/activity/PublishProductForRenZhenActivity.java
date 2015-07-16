@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.BaseActivityWithTopView;
 import com.shenma.yueba.util.FontManager;
 
@@ -29,6 +30,7 @@ public class PublishProductForRenZhenActivity extends BaseActivityWithTopView im
 	private LinearLayout ll_guige_more;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		MyApplication.getInstance().addActivity(this);//加入回退栈
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.edit_product_layout);
 		initView();
@@ -65,4 +67,13 @@ public class PublishProductForRenZhenActivity extends BaseActivityWithTopView im
 		}
 		
 	}
+	
+	
+	
+	@Override
+	protected void onDestroy() {
+		MyApplication.getInstance().addActivity(this);
+		super.onDestroy();
+	}
+	
 }

@@ -60,10 +60,10 @@ public class CityListActivity extends BaseActivityWithTopView {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		MyApplication.getInstance().addActivity(this);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.city_list_layout);
 		super.onCreate(savedInstanceState);
-		MyApplication.getInstance().addActivity(this);
 		initViews();
 	}
 
@@ -284,4 +284,12 @@ public class CityListActivity extends BaseActivityWithTopView {
 		adapter.updateListView(filterDateList);
 	}
 	
+	
+	
+	
+	  @Override
+	    protected void onDestroy() {
+	    	MyApplication.getInstance().removeActivity(this);//加入回退栈
+	    	super.onDestroy();
+	    }
 }

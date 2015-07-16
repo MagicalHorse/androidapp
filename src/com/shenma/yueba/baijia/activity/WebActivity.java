@@ -38,8 +38,6 @@ public class WebActivity extends BaseActivityWithTopView {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.web_layout);
 		super.onCreate(savedInstanceState);
-		MyApplication.getInstance().addActivity(this);
-		
 		getIntentData();
 		initBaseView();
 		initWebView();
@@ -146,13 +144,12 @@ public class WebActivity extends BaseActivityWithTopView {
 		return super.onKeyDown(keyCode, event);
 	}
 
-	public void onResume() {
-		super.onResume();
-
-	}
-
-	public void onPause() {
-		super.onPause();
-	}
-
+	
+	  @Override
+	    protected void onDestroy() {
+	    	MyApplication.getInstance().removeActivity(this);//加入回退栈
+	    	super.onDestroy();
+	    }
+	
+	
 }

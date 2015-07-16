@@ -62,11 +62,11 @@ LinearLayout baijia_orderdetails_footer_right_linearlayout;//按钮的父对象
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		MyApplication.getInstance().addActivity(this);//加入回退栈
 		requestWindowFeature(getWindow().FEATURE_NO_TITLE);
 		parentView=this.getLayoutInflater().inflate(R.layout.baijia_orderdetails_layout, null);
 		setContentView(parentView);
 		super.onCreate(savedInstanceState);
-		MyApplication.getInstance().addActivity(this);
 		if(this.getIntent().getStringExtra("ORDER_ID")==null)
 		{
 			MyApplication.getInstance().showMessage(BaiJiaOrderDetailsActivity.this, "数据错误");
@@ -366,5 +366,14 @@ LinearLayout baijia_orderdetails_footer_right_linearlayout;//按钮的父对象
 				}
 			}
 		}
+	}
+	
+	
+	
+	
+	@Override
+	protected void onDestroy() {
+		MyApplication.getInstance().removeActivity(this);//加入回退栈
+		super.onDestroy();
 	}
 }

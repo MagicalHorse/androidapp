@@ -81,7 +81,6 @@ public class ShopMainActivity extends FragmentActivity {
 			return;
 		}
 		
-		MyApplication.getInstance().addActivity(this);
 		fragmentManager=getSupportFragmentManager();
 		initView();
 		getBaijiaUserInfo();
@@ -488,4 +487,14 @@ public class ShopMainActivity extends FragmentActivity {
     	ShopPuBuliuFragment shopPuBuliuFragment3=new ShopPuBuliuFragment(2,userID);
 		fragmentBean_list.add(new FragmentBean("我的收藏", -1, shopPuBuliuFragment3));
     }
+    
+    
+    
+    @Override
+    protected void onDestroy() {
+    	MyApplication.getInstance().removeActivity(this);//加入回退栈
+    	super.onDestroy();
+    }
+    
+    
 }

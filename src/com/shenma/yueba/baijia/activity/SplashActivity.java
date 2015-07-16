@@ -89,16 +89,12 @@ public class SplashActivity extends BaseActivity {
 //		});
 	}
 
-		
-		
 
-	public void onResume() {
-		super.onResume();
-
-	}
-
-	public void onPause() {
-		super.onPause();
-	}
-
+	
+	
+	  @Override
+	    protected void onDestroy() {
+	    	MyApplication.getInstance().removeActivity(this);//加入回退栈
+	    	super.onDestroy();
+	    }
 }

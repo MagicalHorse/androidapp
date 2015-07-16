@@ -191,4 +191,12 @@ public class SocialManagerActivity extends BaseFragmentActivity implements
 		
 		super.onActivityResult(request, result, arg2);
 	}
+	
+	
+	
+	@Override
+	protected void onDestroy() {
+		MyApplication.getInstance().addActivity(this);
+		super.onDestroy();
+	}
 }

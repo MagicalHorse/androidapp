@@ -48,6 +48,7 @@ public class BaiJiaShareDataActivity extends BaseActivityWithTopView{
 	HttpControl httpControl=new HttpControl();
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		MyApplication.getInstance().addActivity(this);//加入回退栈
 		requestWindowFeature(getWindow().FEATURE_NO_TITLE);
 		setContentView(R.layout.sharedata_layout);
 		super.onCreate(savedInstanceState);
@@ -305,5 +306,12 @@ public class BaiJiaShareDataActivity extends BaseActivityWithTopView{
 				MyApplication.getInstance().showMessage(BaiJiaShareDataActivity.this, "没有任何数据");
 			}
 		}
+    }
+    
+    
+    @Override
+    protected void onDestroy() {
+    	MyApplication.getInstance().removeActivity(this);//加入回退栈
+    	super.onDestroy();
     }
 }
