@@ -80,7 +80,6 @@ public class MyCircleInfoAdapter extends BaseAdapterWithUtil {
 		}
 
 		if (IsOwer) {
-
 			if (position == mList.size() - 2) {
 				holder.riv_head.setBackgroundResource(R.drawable.plus);
 				holder.tv_text.setText("邀请好友");
@@ -117,9 +116,6 @@ public class MyCircleInfoAdapter extends BaseAdapterWithUtil {
 					.getImageLoader()
 					.displayImage(mList.get(position).getLogo(),
 							holder.riv_head);
-		} else {
-			MyApplication.getInstance().getImageLoader()
-					.displayImage("aaa", holder.riv_head);
 		}
 		holder.tv_text.setText(mList.get(position).getNickName());
 

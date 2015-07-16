@@ -75,6 +75,10 @@ public class KaiXiaoPiaoActivity extends BaseActivityWithTopView implements
 				Toast.makeText(mContext, "售价不合法", 1000).show();
 				return;
 			}
+			if(!ToolsUtil.isPointTwo(et_product_price.getText().toString())){
+				Toast.makeText(mContext, "售价小数点后最多两位", 1000).show();
+				return;
+			}
 			KaiXiaoPiao();
 			break;
 

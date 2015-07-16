@@ -695,6 +695,22 @@ public class ToolsUtil {
 		
 	}
 	
+	/**
+	 * 是否是两位小数
+	 * @return
+	 */
+	public static boolean isPointTwo(String price){
+		if(price.contains(".")){
+			String[] priceStr = price.split("\\.");
+			if(priceStr[1].length()>2){
+				return false;
+			}else {
+				return true;
+			}
+		}else{
+			return true;
+		}
+	}
 	
 	
 	
