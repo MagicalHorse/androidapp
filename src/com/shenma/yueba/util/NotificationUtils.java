@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.graphics.Color;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.yangjia.activity.MainActivityForYangJia;
 import com.shenma.yueba.yangjia.activity.SalesManagerForBuyerActivity;
 
 /**
@@ -53,6 +54,10 @@ public class NotificationUtils {
 			if("Order".equals(type)){
 				notificationIntent = new Intent(ctx,
 						SalesManagerForBuyerActivity.class); // 点击该通知后要跳转的Activity
+			}
+			if("CertifiedApply".equals(type)){//认证通过
+				notificationIntent = new Intent(ctx,
+						MainActivityForYangJia.class); // 点击该通知后要跳转的Activity
 			}
 			PendingIntent contentItent = PendingIntent.getActivity(ctx, 0,
 					notificationIntent, 0);

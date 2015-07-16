@@ -148,13 +148,13 @@ private View getTabItemView(int index) {
 private void showDialog() {
 	final AlertDialog dialog = new AlertDialog.Builder(MainActivityForYangJia.this)
 			.create();
+	dialog.setCanceledOnTouchOutside(true);
 	dialog.show();
 	Window window = dialog.getWindow();
 	// 设置布局
 	window.setContentView(R.layout.alertdialog);
 	// 设置宽高
 	window.setLayout(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
-	
 	window.setGravity(Gravity.BOTTOM);
 	// 设置弹出的动画效果
 	window.setWindowAnimations(R.style.AnimBottom);

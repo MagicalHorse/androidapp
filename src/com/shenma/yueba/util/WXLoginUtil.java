@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.shenma.yueba.baijia.activity.MainActivityForBaiJia;
 import com.shenma.yueba.baijia.modle.UserRequestBean;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.inter.BindInter;
@@ -144,7 +145,7 @@ public class WXLoginUtil {
 					UserRequestBean bean = (UserRequestBean) obj;
 					httpcon.setLoginInfo(ctx, bean);
 					Intent intent = new Intent(ctx,
-							MainActivityForYangJia.class);
+							MainActivityForBaiJia.class);
 					intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					ctx.startActivity(intent);
 					if(closeSelf){
