@@ -70,7 +70,7 @@ public class MyCircleForSocialFragment extends BaseFragment {
 				intent.putExtra("Chat_Type", ChatActivity.chat_type_group);
 				intent.putExtra("Chat_NAME",mList.get(pos-1).getName());//圈子名字
 				intent.putExtra("circleId", Integer.parseInt(mList.get(pos-1).getId()));
-				startActivity(intent);
+				startActivityForResult(intent, Constants.REQUESTCODE);
 			}
 		});
 		pull_refresh_list.setOnRefreshListener(new OnRefreshListener2() {

@@ -116,6 +116,7 @@ public class MeFragmentForYangJia extends BaseFragment implements
 		case R.id.tv_store:// 店铺首页
 			Intent shopIntent = new Intent(getActivity(),
 					ShopMainActivity.class);
+			shopIntent.putExtra("DATA", Integer.valueOf(SharedUtil.getUserId(getActivity())));
 			startActivity(shopIntent);
 			break;
 		case R.id.tv_store_introduce:// 店铺说明
