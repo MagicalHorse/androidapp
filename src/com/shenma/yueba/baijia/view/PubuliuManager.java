@@ -86,6 +86,7 @@ public class PubuliuManager {
     {
     	if(item!=null)
     	{
+    		
     		for(int i=0;i<item.size();i++)
     		{
     			MyFavoriteProductListInfo bean=item.get(i);
