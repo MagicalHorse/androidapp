@@ -123,11 +123,14 @@ public class ShopPuBuliuFragment extends Fragment implements
 			@Override
 			public void http_Success(Object obj) {
 				refreshComplete();
-				if(obj==null || !(obj instanceof RequestMyFavoriteProductListInfoBean) || ((RequestMyFavoriteProductListInfoBean)obj).getData()==null)
+				if(obj==null || !(obj instanceof RequestMyFavoriteProductListInfoBean) || ((RequestMyFavoriteProductListInfoBean)obj).getData()==null ||((RequestMyFavoriteProductListInfoBean)obj).getData().getItems()==null || ((RequestMyFavoriteProductListInfoBean)obj).getData().getItems().size()==0)
 				{
 					if(page==1)
 					{
 						ToolsUtil.showNoDataView(getActivity(), true);
+					}else
+					{
+						MyApplication.getInstance().showMessage(getActivity(), "没有更多信息");
 					}
 					return;
 				}else
@@ -250,16 +253,27 @@ public class ShopPuBuliuFragment extends Fragment implements
 	{
     	ToolsUtil.showNoDataView(getActivity(), false);
     	Log.i("TAG", "currpage="+page+"   pagesize="+pageSize);
-    	httpControl.getMyFavoriteProductList(page, pageSize, false, new HttpCallBackInterface() {
+    	httpControl.getUserFavoriteProductList(userID,page, pageSize, false, new HttpCallBackInterface() {
 			
 			@Override
 			public void http_Success(Object obj) {
 				refreshComplete();
-				if(obj==null || !(obj instanceof RequestMyFavoriteProductListInfoBean) || ((RequestMyFavoriteProductListInfoBean)obj).getData()==null)
+				if(obj==null || !(obj instanceof RequestMyFavoriteProductListInfoBean) || ((RequestMyFavoriteProductListInfoBean)obj).getData()==null ||((RequestMyFavoriteProductListInfoBean)obj).getData().getItems()==null || ((RequestMyFavoriteProductListInfoBean)obj).getData().getItems().size()==0)
 				{
 					if(page==1)
 					{
+						View v=getActivity().findViewById(R.id.shop_main_head_layout_horizontal_line_include);
+						if(v!=null)
+						{
+							v.setVisibility(View.GONE);
+						}else
+						{
+							v.setVisibility(View.VISIBLE);
+						}
 						ToolsUtil.showNoDataView(getActivity(), true);
+					}else
+					{
+						MyApplication.getInstance().showMessage(getActivity(), "没有更多信息");
 					}
 					return;
 				}else

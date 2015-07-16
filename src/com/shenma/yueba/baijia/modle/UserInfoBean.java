@@ -21,6 +21,14 @@ public class UserInfoBean implements Serializable{
 	int GoodCount;// 赞过的数量
 	int FavoriteCount;//收藏数
 	int CommunityCount;// 圈子个数
+	String Logo="";//头像
+	
+	public String getLogo() {
+		return Logo;
+	}
+	public void setLogo(String logo) {
+		Logo = logo;
+	}
 	public boolean isIsBuyer() {
 		return IsBuyer;
 	}

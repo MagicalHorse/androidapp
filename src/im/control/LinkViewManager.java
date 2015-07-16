@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TextView.BufferType;
@@ -33,6 +34,8 @@ public class LinkViewManager extends ChatBaseManager {
 		this.type = type;
 
 	}
+	
+	LinearLayout chat_item_content_linearlayout;
     RoundImageView chat_layout_item_leftmsg_icon_roundimageview;//头像
 	TextView_Type type = TextView_Type.left;
 	RelativeLayout ll;
@@ -56,8 +59,12 @@ public class LinkViewManager extends ChatBaseManager {
 			ll = (RelativeLayout) view.findViewById(R.id.chat_layout_item_linkright_include);
 			break;
 		}
+		infaterView();
+	}
 
-		ll.setOnClickListener(new OnClickListener() {
+	void infaterView() {
+		chat_item_content_linearlayout=(LinearLayout)ll.findViewById(R.id.chat_item_content_linearlayout);
+        chat_item_content_linearlayout.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
@@ -71,10 +78,6 @@ public class LinkViewManager extends ChatBaseManager {
 				
 			}
 		});
-		infaterView();
-	}
-
-	void infaterView() {
 		chat_layout_item_leftmsg_icon_roundimageview=(RoundImageView)ll.findViewById(R.id.chat_layout_item_leftmsg_icon_roundimageview);
 		chat_layout_item_leftmsg_name_textview = (TextView) ll.findViewById(R.id.chat_layout_item_leftmsg_name_textview);
 		chat_layout_item_leftmsg_time_textview = (TextView) ll.findViewById(R.id.chat_layout_item_leftmsg_time_textview);
@@ -93,7 +96,7 @@ public class LinkViewManager extends ChatBaseManager {
 		} else {
 			ll.setVisibility(View.GONE);
 		}
-		ll.setTag(bean);
+		chat_item_content_linearlayout.setTag(bean);
 		String contecnt_str=ToolsUtil.getImage(ToolsUtil.nullToString((String)bean.getContent()), 320, 0);
 		chat_layout_item_leftmsg_name_textview.setText(ToolsUtil.nullToString(bean.getUserName()));
 		chat_layout_item_leftmsg_time_textview.setText(ToolsUtil.nullToString(bean.getCreationDate()));

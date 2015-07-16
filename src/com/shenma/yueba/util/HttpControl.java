@@ -1626,6 +1626,23 @@ public class HttpControl {
 	
 	
 	
+	
+	/**
+	 * 获取用户收藏的商品列表
+	 * @param userid int 用户id
+	 * @param currPage int 当前页
+	 * @param pageSize int 条数
+	 * @param CityId int 城市编号 int 条数
+	 * @return void
+	 * **/
+	public void getUserFavoriteProductList(int userid,int currPage, int pageSize,boolean showDialog, final HttpCallBackInterface httpCallBack,Context context) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("userid", Integer.toString(userid));
+		map.put(Constants.PAGE, Integer.toString(currPage));
+		map.put(Constants.PAGESIZE, Integer.toString(pageSize));
+		BasehttpSend(map, context, HttpConstants.GETUSERFAVORITELIST,httpCallBack, RequestMyFavoriteProductListInfoBean.class, showDialog,false);
+	}
+	
 	/**
 	 * 根据品牌名称检索品牌
 	 * @param currPage int 当前页
