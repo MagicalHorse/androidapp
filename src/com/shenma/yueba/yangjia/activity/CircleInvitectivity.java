@@ -254,7 +254,7 @@ public class CircleInvitectivity extends BaseActivityWithTopView implements
 	public void getAttationOrFansList(String status, Context ctx,
 			boolean showDialog) {
 		HttpControl httpControl = new HttpControl();
-		httpControl.GetValidFansListToGroup(circleId,true,
+		httpControl.GetValidFansListToGroup(status,circleId,true,
 				new HttpCallBackInterface() {
 
 					@Override
