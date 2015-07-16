@@ -55,6 +55,9 @@ public class XCFlowLayout extends ViewGroup{
             int childWidth = child.getMeasuredWidth() + lp.leftMargin + lp.rightMargin;
             //子View占据的高度
             int childHeight = child.getMeasuredHeight() + lp.topMargin + lp.bottomMargin;
+            
+            int chidePadiingHeight=child.getPaddingTop()+child.getPaddingBottom();
+            
             //换行时候
             if(lineWidth + childWidth > sizeWidth){
                 //对比得到最大的宽度
@@ -63,7 +66,7 @@ public class XCFlowLayout extends ViewGroup{
                 lineWidth = childWidth;
                 //记录行高
                 height += lineHeight;
-                lineHeight = childHeight;
+                lineHeight = childHeight+chidePadiingHeight;
             }else{//不换行情况
                 //叠加行宽
                 lineWidth += childWidth;
@@ -78,7 +81,7 @@ public class XCFlowLayout extends ViewGroup{
         }
         //wrap_content
         setMeasuredDimension(modeWidth == MeasureSpec.EXACTLY ? sizeWidth : width,
-                modeHeight == MeasureSpec.EXACTLY ? sizeHeight : height+80);
+                modeHeight == MeasureSpec.EXACTLY ? sizeHeight : height);
         //super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
     //存储所有子View

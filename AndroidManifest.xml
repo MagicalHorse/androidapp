@@ -354,11 +354,13 @@
         <!-- 败家订单申请退页面 -->
         <activity
             android:name="com.shenma.yueba.baijia.activity.ApplyForRefundActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden"
             android:screenOrientation="portrait" >
         </activity>
 
         <!-- 败家订单申诉页面 -->
         <activity
+            android:windowSoftInputMode="adjustResize|stateHidden"
             android:name="com.shenma.yueba.baijia.activity.OrderAppealActivity"
             android:screenOrientation="portrait" >
         </activity>
