@@ -4,9 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 
 import com.shenma.yueba.R;
@@ -38,22 +42,22 @@ public final static String SHENSULOADING="申诉中";//5
 	/***
 	 * 根据订单状态返回操作按钮
 	 * **/
-	public static List<View> getButton(Activity activity,int type)
+	public static List<View> getButton(Activity activity,int type,OrderControlListener orderControlListener)
 	{
 		List<View> view_list=new ArrayList<View>();
 		switch(type)
 		{
 		case 0://代付款
-			view_list.add(createWaitPayButton(activity, 0));//付款按钮
+			view_list.add(createWaitPayButton(activity, 0,orderControlListener));//付款按钮
 			break;
 		case 1://申请退款 确认提货
-			view_list.add(createWaitPayButton(activity, 3));//申请退款
-			view_list.add(createWaitPayButton(activity, 2));// 确认提货
+			view_list.add(createWaitPayButton(activity, 3,orderControlListener));//申请退款
+			view_list.add(createWaitPayButton(activity, 2,orderControlListener));// 确认提货
 			break;
 		case 15://确认提货  申请退款
 		case 16:
-			view_list.add(createWaitPayButton(activity, 2));//确认提货
-			view_list.add(createWaitPayButton(activity, 3));//申请退款
+			//view_list.add(createWaitPayButton(activity, 2));//确认提货
+			view_list.add(createWaitPayButton(activity, 3,orderControlListener));//申请退款
 			break;
 		//申请退款
 		case 3:
@@ -70,8 +74,9 @@ public final static String SHENSULOADING="申诉中";//5
 	/***
 	 * 创建操作按钮
 	 * **/
-	static View createWaitPayButton(Activity activity,int type)
+	static View createWaitPayButton(Activity activity,int type,OrderControlListener orderControlListener)
 	{
+		CustonOnClickListener custonOnClickListener=new CustonOnClickListener(activity,orderControlListener);
 		View v=activity.getLayoutInflater().inflate(R.layout.button_layout, null);
 		Button btn=(Button)v.findViewById(R.id.baijia_orderdetails_sqtk_button);
 		String str="";
@@ -106,8 +111,80 @@ public final static String SHENSULOADING="申诉中";//5
 		}
 		btn.setText(str);
 		btn.setBackgroundResource(back_resource_id);
+		btn.setOnClickListener(custonOnClickListener);
 		return v;
 	}
+	
+	
+	static class CustonOnClickListener implements OnClickListener
+	{
+		OrderControlListener orderControlListener;
+		Activity activity;
+		CustonOnClickListener(Activity activity,OrderControlListener orderControlListener)
+		{
+			this.activity=activity;
+			this.orderControlListener=orderControlListener;
+		}
+		@Override
+		public void onClick(View v) {
+			buttonControl(v,activity,orderControlListener);
+		}
+	}
+
+	
+	
+	/****
+	 * 按钮控制
+	 * ***/
+	static void buttonControl(View btn,Activity activity,OrderControlListener orderControlListener)
+	{
+		if(btn==null || btn.getTag()==null || !(btn.getTag() instanceof BaiJiaOrderListInfo))
+        {
+        	return;
+        }
+		BaiJiaOrderListInfo baiJiaOrderListInfo=(BaiJiaOrderListInfo)btn.getTag();
+		String str=((Button)btn).getText().toString();
+		if(str.equals(ButtonManager.WAITPAY))//如果是等待支付
+		{
+			ButtonManager.payOrder(activity, baiJiaOrderListInfo);
+		}else if(str.equals(ButtonManager.CANCELPAY))//撤销退款
+		{
+			ButtonManager.cancelRefund(activity);
+		}else if(str.equals(ButtonManager.QUERENTIHUO))//确认提货
+		{
+			showDiaglog(activity,str,baiJiaOrderListInfo,orderControlListener);
+			
+		}else if(str.equals(ButtonManager.SHENQINGTUIKUAN))//申请退款
+		{
+			ButtonManager.applyforRefund(activity, baiJiaOrderListInfo);
+		}
+	}
+	
+	
+	static void showDiaglog(final Activity activity,final String str,final BaiJiaOrderListInfo baiJiaOrderListInfo ,final OrderControlListener orderControlListener)
+	{
+		Dialog dialog=new AlertDialog.Builder(activity).setTitle("确认").setMessage("是否 "+str).setPositiveButton("是", new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				if(str.equals(ButtonManager.QUERENTIHUO))//确认提货
+				{
+					ButtonManager.affirmPUG(activity, baiJiaOrderListInfo, orderControlListener);
+					dialog.cancel();
+				}
+			}
+		}).setNegativeButton("否", new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.cancel();
+			}
+		}).create();
+		dialog.show();
+	}
+	
+	
+	
 	
 	
 	/****

@@ -68,10 +68,9 @@ public class BaiJiaOrderListFragment extends Fragment implements
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		if (parentView == null) {
-			parentView = inflater.inflate(
-					R.layout.baijiaorderlistfragment_layout, null);
+			parentView = inflater.inflate(R.layout.baijiaorderlistfragment_layout, null);
 			initView();
-			requestFalshData();
+			//requestFalshData();
 		}
 		ViewGroup vp = (ViewGroup) parentView.getParent();
 		if (vp != null) {
@@ -80,16 +79,21 @@ public class BaiJiaOrderListFragment extends Fragment implements
 		return parentView;
 	}
 
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		ishow=true;
+		requestFalshData();
+	}
+	
 	void initView() {
-		pull_refresh_list = (PullToRefreshListView) parentView
-				.findViewById(R.id.pull_refresh_list);
+		pull_refresh_list = (PullToRefreshListView) parentView.findViewById(R.id.pull_refresh_list);
 		// 设置标签显示的内容
-		baiJiaOrderListAdapter = new BaiJiaOrderListAdapter(this, object_list,
-				getActivity());
+		baiJiaOrderListAdapter = new BaiJiaOrderListAdapter(this, object_list,getActivity());
 		pull_refresh_list.setAdapter(baiJiaOrderListAdapter);
 		pull_refresh_list.setMode(Mode.BOTH);
-		pull_refresh_list
-				.setOnPullEventListener(new OnPullEventListener<ListView>() {
+		pull_refresh_list.setOnPullEventListener(new OnPullEventListener<ListView>() {
 
 					@Override
 					public void onPullEvent(
@@ -264,6 +268,7 @@ public class BaiJiaOrderListFragment extends Fragment implements
 
 	@Override
 	public void orderCotrol_OnRefuces() {
+		ishow = true;
 		requestFalshData();
 	}
 }

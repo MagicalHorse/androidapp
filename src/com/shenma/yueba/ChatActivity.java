@@ -70,6 +70,7 @@ import com.shenma.yueba.baijia.adapter.ChattingAdapter;
 import com.shenma.yueba.baijia.dialog.CreateOrderDialog;
 import com.shenma.yueba.baijia.modle.BaiJiaShareInfoBean;
 import com.shenma.yueba.baijia.modle.ProductsDetailsInfoBean;
+import com.shenma.yueba.baijia.modle.ProductsDetailsTagInfo;
 import com.shenma.yueba.baijia.modle.RequestImMessageInfoBean;
 import com.shenma.yueba.baijia.modle.RequestProductDetailsInfoBean;
 import com.shenma.yueba.baijia.modle.RequestRoomInfo;
@@ -806,15 +807,14 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 			RequestProductDetailsInfoBean bean = (RequestProductDetailsInfoBean) obj;
 			ProductsDetailsInfoBean productsDetailsInfoBean = bean.getData();
 			if (productsDetailsInfoBean != null) {
-				String[] pic_array = productsDetailsInfoBean.getProductPic();
+				List<ProductsDetailsTagInfo>  productsDetailsTagInfo_list= productsDetailsInfoBean.getProductPic();
 				chat_product_head_layout_button.setTag(bean);
-				if (pic_array != null && pic_array.length > 0) {
+				if (productsDetailsTagInfo_list != null && productsDetailsTagInfo_list.size() > 0) {
 					MyApplication
 							.getInstance()
 							.getImageLoader()
 							.displayImage(
-									ToolsUtil.nullToString(ToolsUtil.getImage(
-											pic_array[0], 320, 0)),
+									ToolsUtil.nullToString(ToolsUtil.getImage(ToolsUtil.nullToString(productsDetailsTagInfo_list.get(0).getLogo()), 320, 0)),
 									chat_product_head_layout_imageview);
 				}
 
