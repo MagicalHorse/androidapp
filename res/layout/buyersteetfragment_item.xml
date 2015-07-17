@@ -104,6 +104,7 @@
         android:paddingLeft="10dip"
         android:maxLines="3"
         android:ellipsize="end"
+        android:text="@null"
         android:textSize="@dimen/textsize14sp" />
 
     <RelativeLayout
