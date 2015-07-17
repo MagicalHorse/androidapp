@@ -17,6 +17,7 @@ import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.modle.BaiJiaOrderListInfo;
 import com.shenma.yueba.baijia.modle.ProductInfoBean;
+import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.ToolsUtil;
@@ -64,6 +65,15 @@ int maxValue=0;
 	
 	void initView()
 	{
+		setTitle("申请退货");
+		FontManager.changeFonts(ApplyForRefundActivity.this, tv_top_title);
+		setLeftTextView(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				finish();
+			}
+		});
 		affirmorder_item_icon_imageview=(ImageView)parentView.findViewById(R.id.affirmorder_item_icon_imageview);
 		affirmorder_item_productname_textview=(TextView)parentView.findViewById(R.id.affirmorder_item_productname_textview);
 		affirmorder_item_productsize_textview=(TextView)parentView.findViewById(R.id.affirmorder_item_productsize_textview);

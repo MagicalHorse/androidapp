@@ -31,8 +31,10 @@
             android:layout_height="match_parent"
             android:layout_marginBottom="@dimen/shop_main_width1_dimen"
             android:layout_weight="1"
+            android:maxLines="2"
+            android:ellipsize="end"
             android:gravity="bottom|left"
-            android:text="连衣裙" />
+            android:text="@null" />
 
         <TextView
             android:id="@+id/chat_product_head_layout_price_textview"
@@ -41,7 +43,7 @@
             android:layout_marginTop="@dimen/shop_main_width1_dimen"
             android:layout_weight="1"
             android:gravity="top|left"
-            android:text="￥1000"
+            android:text="￥0"
             android:textColor="@color/red" />
     </LinearLayout>
 

@@ -205,10 +205,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 		manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 		// getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_MASK_ADJUST|
 		// WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-		getWindow()
-				.setSoftInputMode(
-						WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
-								| WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		chat_list = (PullToRefreshListView) findViewById(R.id.chat_list);
 		// chat_list.setMode(Mode.PULL_FROM_START);
 		chat_list.setMode(Mode.DISABLED);
@@ -238,7 +235,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 				} else {
 					btnContainer.setVisibility(View.GONE);
 				}
-
+				pointLast(bean_list.size());
 			}
 		});
 		edittext_layout.setBackgroundResource(R.drawable.shape_linearlayout10);
@@ -249,6 +246,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 			public void onClick(View v) {
 				iv_emoticons_normal.setVisibility(View.VISIBLE);
 				btnContainer.setVisibility(View.GONE);
+				pointLast(bean_list.size());
 			}
 		});
 		// 监听文字框
@@ -735,6 +733,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 			// 隐藏表情
 			hideFace();
 		}
+		pointLast(bean_list.size());
 	}
 
 	@Override
