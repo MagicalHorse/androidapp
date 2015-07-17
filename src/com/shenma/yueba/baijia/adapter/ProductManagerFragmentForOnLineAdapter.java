@@ -72,8 +72,8 @@ public class ProductManagerFragmentForOnLineAdapter extends BaseAdapterWithUtil 
 					null);
 			holder.iv_product = (ImageView) convertView
 					.findViewById(R.id.iv_product);
-			holder.tv_brand_name = (TextView) convertView
-					.findViewById(R.id.tv_brand_name);
+//			holder.tv_brand_name = (TextView) convertView
+//					.findViewById(R.id.tv_brand_name);
 			holder.tv_date = (TextView) convertView.findViewById(R.id.tv_date);
 			holder.tv_description = (TextView) convertView
 					.findViewById(R.id.tv_description);
@@ -148,7 +148,7 @@ public class ProductManagerFragmentForOnLineAdapter extends BaseAdapterWithUtil 
 				}
 			});
 
-			FontManager.changeFonts(ctx, holder.tv_brand_name, holder.tv_price,
+			FontManager.changeFonts(ctx, holder.tv_price,
 					holder.tv_description, holder.tv_size, holder.tv_price,
 					holder.tv_button1, holder.tv_button2, holder.tv_button3,
 					holder.tv_button4);
@@ -180,8 +180,8 @@ public class ProductManagerFragmentForOnLineAdapter extends BaseAdapterWithUtil 
 			bitmapUtils.display(holder.iv_product,
 					ToolsUtil.getImage(mList.get(position).getPic(), 120, 0));
 		}
-		holder.tv_brand_name.setText(ToolsUtil.nullToString(mList.get(position)
-				.getBrandName()));
+//		holder.tv_brand_name.setText(ToolsUtil.nullToString(mList.get(position)
+//				.getBrandName()));
 		holder.tv_date.setText(ToolsUtil.nullToString(mList.get(position)
 				.getExpireTime()));
 		holder.tv_description.setText(ToolsUtil.nullToString(mList
@@ -196,7 +196,7 @@ public class ProductManagerFragmentForOnLineAdapter extends BaseAdapterWithUtil 
 
 	class Holder {
 		ImageView iv_product;
-		TextView tv_brand_name;
+//		TextView tv_brand_name;
 		TextView tv_price;
 		TextView tv_description;
 		TextView tv_date;
