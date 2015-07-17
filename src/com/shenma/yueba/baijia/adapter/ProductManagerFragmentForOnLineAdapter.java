@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -90,64 +91,6 @@ public class ProductManagerFragmentForOnLineAdapter extends BaseAdapterWithUtil 
 			holder.tv_button4 = (TextView) convertView
 					.findViewById(R.id.tv_button4);
 		
-			holder.tv_button1.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					if (flag == 1 || flag == 2) {// 下架
-						setOnLineOrOffLine(position, mList.get(position)
-								.getProductId(), 0);
-					} else if (flag == 0) {// 上架
-						setOnLineOrOffLine(position, mList.get(position)
-								.getProductId(), 1);
-					}
-				}
-			});
-
-			holder.tv_button2.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					if ("复制".equals(((TextView) v).getText().toString().trim())) {
-						productCopy(mList.get(position).getProductId());
-					}
-				}
-			});
-
-			holder.tv_button3.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					if ("分享".equals(((TextView) v).getText().toString().trim())) {
-						ShareUtil.shareAll((Activity)ctx, mList.get(position).getBrandName(), mList.get(position).getShareLink(), mList.get(position).getDetail().getImages().get(0).getImageUrl()+"_240x0.jpg",new ShareListener() {
-							
-							@Override
-							public void sharedListener_sucess() {
-								requestShared(Integer.parseInt(mList.get(position).getProductId()));
-							}
-							
-							@Override
-							public void sharedListener_Fails(String msg) {
-								MyApplication.getInstance().showMessage(ctx, msg);
-							}
-						});
-					}
-				}
-			});
-			
-			holder.tv_button4.setOnClickListener(new OnClickListener() {
-
-				@Override
-				public void onClick(View v) {
-					if (flag == 1 || flag == 2) {// 修改
-                       Intent intent = new Intent(ctx, PublishProductActivity.class);
-                       intent.putExtra("id", mList.get(position).getProductId());
-                       intent.putExtra("data", mList.get(position).getDetail());
-                       ctx.startActivity(intent);
-					} else if (flag == 0) {// 删除
-						deleteProduct(position, mList.get(position)
-								.getProductId());
-					}
-				}
-			});
-
 			FontManager.changeFonts(ctx, holder.tv_price,
 					holder.tv_description, holder.tv_size, holder.tv_price,
 					holder.tv_button1, holder.tv_button2, holder.tv_button3,
@@ -157,6 +100,68 @@ public class ProductManagerFragmentForOnLineAdapter extends BaseAdapterWithUtil 
 			holder = (Holder) convertView.getTag();
 		}
 
+		holder.tv_button1.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (flag == 1 || flag == 2) {// 下架
+					setOnLineOrOffLine(position, mList.get(position)
+							.getProductId(), 0);
+				} else if (flag == 0) {// 上架
+					setOnLineOrOffLine(position, mList.get(position)
+							.getProductId(), 1);
+				}
+			}
+		});
+
+		holder.tv_button2.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if ("复制".equals(((TextView) v).getText().toString().trim())) {
+					productCopy(mList.get(position).getProductId());
+				}
+			}
+		});
+
+		holder.tv_button3.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if ("分享".equals(((TextView) v).getText().toString().trim())) {
+					ShareUtil.shareAll((Activity)ctx, mList.get(position).getBrandName(), mList.get(position).getShareLink(), mList.get(position).getDetail().getImages().get(0).getImageUrl()+"_240x0.jpg",new ShareListener() {
+						
+						@Override
+						public void sharedListener_sucess() {
+							requestShared(Integer.parseInt(mList.get(position).getProductId()));
+						}
+						
+						@Override
+						public void sharedListener_Fails(String msg) {
+							MyApplication.getInstance().showMessage(ctx, msg);
+						}
+					});
+				}
+			}
+		});
+		
+		holder.tv_button4.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				if (flag == 1 || flag == 2) {// 修改
+					Log.i("position", position+"--------");
+                   Intent intent = new Intent(ctx, PublishProductActivity.class);
+                   intent.putExtra("id", mList.get(position).getProductId());
+                   intent.putExtra("data", mList.get(position).getDetail());
+                   ctx.startActivity(intent);
+				} else if (flag == 0) {// 删除
+					deleteProduct(position, mList.get(position)
+							.getProductId());
+				}
+			}
+		});
+
+		
+		
+		
 		if (flag == 1) {// 在线商品
 			holder.tv_button1.setText("下架");
 			holder.tv_button2.setText("复制");
