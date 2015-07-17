@@ -27,6 +27,13 @@ public class SplashActivity extends BaseActivity {
 		MyApplication.getInstance().addActivity(this);
 		UpdateManager mUpdateManager = new UpdateManager(mContext, "1.0.1", "http://www.joybar/aaa.apk", "title", "content");
 		mUpdateManager.startUpdate();
+		
+		
+		MobclickAgent.openActivityDurationTrack(true); // 统计在线时长
+		MobclickAgent.onEvent(this, "SplashActivity"); // 打开客户端
+		MobclickAgent.updateOnlineConfig( mContext );
+		MobclickAgent.setCatchUncaughtExceptions(true);
+		MobclickAgent.setDebugMode( true );
 		handler.postDelayed(new Runnable() {
 			@Override
 			public void run() {

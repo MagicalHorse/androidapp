@@ -149,15 +149,16 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 		}
 		if (bean != null) {
 			tagList = bean.getTagList();
-			MyApplication
-					.getInstance()
-					.getPublishUtil()
-					.getBean()
-					.getImages()
-					.get(Integer.valueOf(MyApplication.getInstance()
-							.getPublishUtil().getIndex())).setTags(tagList);
+			if(tagList!=null && tagList.size()>0){
+				MyApplication
+				.getInstance()
+				.getPublishUtil()
+				.getBean()
+				.getImages()
+				.get(Integer.valueOf(MyApplication.getInstance()
+						.getPublishUtil().getIndex())).setTags(tagList);
+			}
 			setImageView();
-		
 		}
 
 
@@ -613,11 +614,18 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 		}
 		File file = new File(dir, "tagPic" + SharedUtil.getUserId(mContext)
 				+ index + ".png");
+		File file2 = new File(dir, "tagPic_yuan" + SharedUtil.getUserId(mContext)
+				+ index + ".png");
 		 if (file.exists()) {
 		 file.delete();
 		 }
+		 if (file2.exists()) {
+			 file2.delete();
+			 }
 		try {
 			final FileOutputStream out = new FileOutputStream(file);
+			final FileOutputStream out2 = new FileOutputStream(file2);
+			
 			MyApplication.getInstance().getImageLoader()
 					.loadImage(imageUrl, new ImageLoadingListener() {
 						@Override
@@ -639,6 +647,11 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 										out);
 								out.flush();
 								out.close();
+								
+								bitmap.compress(Bitmap.CompressFormat.PNG, 100,
+										out2);
+								out2.flush();
+								out2.close();
 							} catch (Exception e) {
 								// TODO: handle exception
 							}
