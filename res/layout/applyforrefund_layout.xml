@@ -2,7 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical" 
+    android:background="@color/white"
+    >
 
     <include
         android:id="@+id/applyforrefund_layout_head_include"
@@ -57,6 +59,7 @@
             <!-- 退款金额 -->
 
             <LinearLayout
+                android:layout_marginTop="@dimen/shop_main_width5_dimen"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
@@ -83,6 +86,7 @@
             <!-- 退货数量 -->
 
             <LinearLayout
+                android:layout_marginTop="@dimen/shop_main_width5_dimen"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
