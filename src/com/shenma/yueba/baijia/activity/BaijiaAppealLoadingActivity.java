@@ -12,6 +12,7 @@ import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.RoundImageView;
+import com.umeng.analytics.MobclickAgent;
 
 /**  
  * @author gyj  
@@ -173,7 +174,16 @@ HttpControl httpControl=new HttpControl();
 	}
 	
 	
-	
+	public void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+		}
+		public void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+		}
+
+
 	
 	
 	@Override

@@ -57,6 +57,7 @@ import com.shenma.yueba.util.ParserJson;
 import com.shenma.yueba.util.PhotoUtils;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.SelectePhotoType;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 标签搜索
@@ -206,4 +207,13 @@ public class AddTagActivity extends BaseActivityWithTopView implements TextWatch
 	    	MyApplication.getInstance().removeActivity(this);//加入回退栈
 	    	super.onDestroy();
 	    }
+	  
+	  public void onResume() {
+			super.onResume();
+			MobclickAgent.onResume(this);
+			}
+			public void onPause() {
+			super.onPause();
+			MobclickAgent.onPause(this);
+			}
 }

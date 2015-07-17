@@ -36,6 +36,7 @@ import com.shenma.yueba.util.sore.SideBar;
 import com.shenma.yueba.util.sore.SideBar.OnTouchingLetterChangedListener;
 import com.shenma.yueba.util.sore.SortAdapter;
 import com.shenma.yueba.util.sore.SortModel;
+import com.umeng.analytics.MobclickAgent;
 
 public class CityListActivity extends BaseActivityWithTopView {
 	private ListView sortListView;
@@ -292,4 +293,15 @@ public class CityListActivity extends BaseActivityWithTopView {
 	    	MyApplication.getInstance().removeActivity(this);//加入回退栈
 	    	super.onDestroy();
 	    }
+	  
+	  
+
+		public void onResume() {
+			super.onResume();
+			MobclickAgent.onResume(this);
+			}
+			public void onPause() {
+			super.onPause();
+			MobclickAgent.onPause(this);
+			}
 }

@@ -20,6 +20,7 @@ import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
+import com.umeng.analytics.MobclickAgent;
 
 
 /**
@@ -107,4 +108,14 @@ public class StoreIntroduceActivity extends BaseActivityWithTopView {
 		MyApplication.getInstance().addActivity(this);
 		super.onDestroy();
 	}
+	
+	
+	  public void onResume() {
+			super.onResume();
+			MobclickAgent.onResume(this);
+			}
+			public void onPause() {
+			super.onPause();
+			MobclickAgent.onPause(this);
+			}
 }

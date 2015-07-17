@@ -20,6 +20,7 @@ import com.shenma.yueba.baijia.adapter.MyFragmentPagerAdapter;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.yangjia.fragment.IncomeDetailFragment;
 import com.shenma.yueba.yangjia.fragment.WithdrawHistoryFragment;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 收入明细
@@ -172,5 +173,14 @@ public class IncomeDetailActivity extends BaseFragmentActivity implements
 		MyApplication.getInstance().removeActivity(this);
 		super.onDestroy();
 	}
+	
+	  public void onResume() {
+			super.onResume();
+			MobclickAgent.onResume(this);
+			}
+			public void onPause() {
+			super.onPause();
+			MobclickAgent.onPause(this);
+			}
 	
 }

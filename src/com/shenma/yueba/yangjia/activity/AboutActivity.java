@@ -42,6 +42,7 @@ import com.shenma.yueba.util.ParserJson;
 import com.shenma.yueba.util.PhotoUtils;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.SelectePhotoType;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 关于我们
@@ -88,5 +89,12 @@ public class AboutActivity extends BaseActivityWithTopView {
 	    	super.onDestroy();
 	    }
 	
-
+	  public void onResume() {
+			super.onResume();
+			MobclickAgent.onResume(this);
+			}
+			public void onPause() {
+			super.onPause();
+			MobclickAgent.onPause(this);
+			}
 }

@@ -17,6 +17,7 @@ import com.shenma.yueba.baijia.activity.BaseActivityWithTopView;
 import com.shenma.yueba.receiver.SalesAdapter;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.yangjia.modle.SalesItemBean;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 销售管理---达人
@@ -60,4 +61,14 @@ public class SalesManagerForSupperManActivity extends BaseActivityWithTopView {
 		MyApplication.getInstance().addActivity(this);
 		super.onDestroy();
 	}
+	
+	
+	  public void onResume() {
+			super.onResume();
+			MobclickAgent.onResume(this);
+			}
+			public void onPause() {
+			super.onPause();
+			MobclickAgent.onPause(this);
+			}
 }

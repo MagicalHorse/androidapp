@@ -24,6 +24,7 @@ import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.ListViewUtils;
 import com.shenma.yueba.yangjia.adapter.BroadRewardAdapter;
 import com.shenma.yueba.yangjia.modle.BroadRewardListBean;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 红榜奖励
@@ -125,4 +126,14 @@ public class BoradRewardActivity extends BaseActivityWithTopView{
 	    	MyApplication.getInstance().removeActivity(this);//加入回退栈
 	    	super.onDestroy();
 	    }
+	  
+	  
+	  public void onResume() {
+			super.onResume();
+			MobclickAgent.onResume(this);
+			}
+			public void onPause() {
+			super.onPause();
+			MobclickAgent.onPause(this);
+			}
 }

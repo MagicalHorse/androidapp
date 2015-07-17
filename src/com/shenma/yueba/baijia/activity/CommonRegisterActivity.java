@@ -24,6 +24,7 @@ import com.shenma.yueba.util.ParserJson;
 import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.util.UserBean;
+import com.umeng.analytics.MobclickAgent;
 
 /***
  * 普通注册界面
@@ -266,15 +267,6 @@ public class CommonRegisterActivity extends BaseActivityWithTopView implements
 
 	}
 
-	public void onResume() {
-		super.onResume();
-
-	}
-
-	public void onPause() {
-		super.onPause();
-	}
-
 	/**
 	 * 获取验证码
 	 */
@@ -329,4 +321,16 @@ public class CommonRegisterActivity extends BaseActivityWithTopView implements
 	    	MyApplication.getInstance().removeActivity(this);//加入回退栈
 	    	super.onDestroy();
 	    }
+	  
+	  
+	  
+
+		public void onResume() {
+			super.onResume();
+			MobclickAgent.onResume(this);
+			}
+			public void onPause() {
+			super.onPause();
+			MobclickAgent.onPause(this);
+			}
 }

@@ -22,6 +22,7 @@ import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.fragment.BaiJiaOrderListFragment;
 import com.shenma.yueba.baijia.modle.FragmentBean;
 import com.shenma.yueba.util.FontManager;
+import com.umeng.analytics.MobclickAgent;
 
 /**  
  * @author gyj  
@@ -169,6 +170,15 @@ int currid=-1;
 		}
 	
 	
+	
+	public void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+		}
+		public void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+		}
 	
 	@Override
 	protected void onDestroy() {

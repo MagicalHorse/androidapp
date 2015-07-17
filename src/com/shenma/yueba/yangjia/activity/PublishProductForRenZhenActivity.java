@@ -12,6 +12,7 @@ import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.BaseActivityWithTopView;
 import com.shenma.yueba.util.FontManager;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 发布商品（认证买手）
@@ -76,4 +77,13 @@ public class PublishProductForRenZhenActivity extends BaseActivityWithTopView im
 		super.onDestroy();
 	}
 	
+	
+	  public void onResume() {
+			super.onResume();
+			MobclickAgent.onResume(this);
+			}
+			public void onPause() {
+			super.onPause();
+			MobclickAgent.onPause(this);
+			}
 }

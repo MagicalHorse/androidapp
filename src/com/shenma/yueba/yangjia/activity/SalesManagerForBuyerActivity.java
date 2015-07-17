@@ -25,6 +25,7 @@ import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.yangjia.fragment.ItemCustomerFragment;
+import com.umeng.analytics.MobclickAgent;
 
 
 /**
@@ -205,4 +206,13 @@ public class SalesManagerForBuyerActivity extends BaseFragmentActivity implement
 		super.onDestroy();
 	}
 	
+	
+	  public void onResume() {
+			super.onResume();
+			MobclickAgent.onResume(this);
+			}
+			public void onPause() {
+			super.onPause();
+			MobclickAgent.onPause(this);
+			}
 }

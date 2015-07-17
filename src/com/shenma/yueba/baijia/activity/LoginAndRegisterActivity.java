@@ -29,6 +29,7 @@ import com.shenma.yueba.baijia.fragment.RegisterFragment;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.view.RoundImageView;
+import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
@@ -184,6 +185,15 @@ public class LoginAndRegisterActivity extends FragmentActivity implements OnClic
 		
 	}
 	
+	
+	public void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+		}
+		public void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+		}
 	
 	  @Override
 	    protected void onDestroy() {

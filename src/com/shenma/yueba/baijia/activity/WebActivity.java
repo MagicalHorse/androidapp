@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.util.FontManager;
+import com.umeng.analytics.MobclickAgent;
 
 /***
  * 所有的需要显示网页的界面
@@ -151,5 +152,12 @@ public class WebActivity extends BaseActivityWithTopView {
 	    	super.onDestroy();
 	    }
 	
-	
+	  public void onResume() {
+			super.onResume();
+			MobclickAgent.onResume(this);
+			}
+			public void onPause() {
+			super.onPause();
+			MobclickAgent.onPause(this);
+			}
 }

@@ -51,6 +51,7 @@ import com.shenma.yueba.yangjia.fragment.IndexFragmentForYangJia;
 import com.shenma.yueba.yangjia.fragment.MeFragmentForYangJia;
 import com.shenma.yueba.yangjia.fragment.MessageFragmentForYangJia;
 import com.shenma.yueba.yangjia.fragment.TaskRewardFragment;
+import com.umeng.analytics.MobclickAgent;
 
 
 /**
@@ -197,6 +198,13 @@ protected void onDestroy() {
 	super.onDestroy();
 }
 
-
+public void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+		}
+		public void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+		}
 
 }

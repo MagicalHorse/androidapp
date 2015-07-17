@@ -5,8 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -103,6 +105,55 @@ public class TagImageView extends RelativeLayout {
 	
 	}
 
+	
+	/**
+	 * 添加标签
+	 * 
+	 * 
+	 * @version 1.0
+	 * @createTime 2015-1-30,上午11:50:02
+	 * @updateTime 2015-1-30,上午11:50:02
+	 * @createAuthor zhou wan
+	 * @updateAuthor
+	 * @updateInfo
+	 * @param content
+	 * @param x
+	 *            x轴的位置
+	 * @param y
+	 *            y轴的位置
+	 */
+	public void addTextTagCanNotMove(String content, int tagX, int tagY) {
+		if (tagViewList == null)
+			tagViewList = new ArrayList<View>();
+//		boolean isAdd = true;
+//		if(tagNameList.contains(content)){
+//			for (int i = 0; i < positionList.size(); i++) {
+//				if(tagX == positionList.get(i).get("x") && tagY == positionList.get(i).get("x")){
+//					isAdd = false;
+//					break;
+//				}
+//			}
+//		}
+//		if(isAdd){
+			LayoutInflater mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			View view = mInflater.inflate(R.layout.tag, null);
+			TextView text = (TextView) view.findViewById(R.id.tag_text);
+			RelativeLayout layout = (RelativeLayout) view.findViewById(R.id.tag_layout);
+			text.setText(content);
+			layout.setTag(i++);
+//			setTagViewOnTouchListener(layout);
+			this.addView(layout);
+			setTagViewPosition(layout, tagX, tagY);
+			tagViewList.add(layout);
+			Map<String, Integer> tagsPositonMap = new HashMap<String, Integer>();
+			tagsPositonMap.put("x", tagX);
+			tagsPositonMap.put("y", tagY);
+			positionList.add(tagsPositonMap);
+			tagNameList.add(content);
+//		}
+	
+	}
+	
 	/**
 	 * 给标签添加OnTouch监听
 	 * 
@@ -120,6 +171,7 @@ public class TagImageView extends RelativeLayout {
 			int startx = 0;
 			int starty = 0;
 
+			@SuppressLint("NewApi")
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				if (v.getId() == R.id.tag_layout) {
@@ -142,11 +194,11 @@ public class TagImageView extends RelativeLayout {
 						
 						break;
 					case MotionEvent.ACTION_UP:
-						Toast.makeText(getContext(), ""+layoutView.getTag(), 1000).show();
+						Log.i("tag", "actionUp-----"+v.getX()+"-----"+ v.getY());
 						for (int i = 0; i < tagViewList.size(); i++) {
 								if(i == (Integer)layoutView.getTag()){
-									positionList.get(i).put("x", xx);
-									positionList.get(i).put("y", yy);
+									positionList.get(i).put("x", (int)v.getX());
+									positionList.get(i).put("y", (int)v.getY());
 								}
 							}
 						break;

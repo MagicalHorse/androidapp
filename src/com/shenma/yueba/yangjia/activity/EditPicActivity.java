@@ -51,12 +51,14 @@ import com.shenma.yueba.filter.RainBowFilter;
 import com.shenma.yueba.filter.SepiaFilter;
 import com.shenma.yueba.filter.XRadiationFilter;
 import com.shenma.yueba.util.FileUtils;
+import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.TagImageView;
 import com.shenma.yueba.yangjia.modle.TagCacheBean;
 import com.shenma.yueba.yangjia.modle.TagListBean;
 import com.shenma.yueba.yangjia.modle.TagsBean;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 编辑图片
@@ -143,9 +145,8 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 		getIntentData();
 		LoadImageFilter();
 		MyApplication.getInstance().addActivity(mContext);
-		
-
 		super.onResume();
+		MobclickAgent.onResume(this);
 	}
 
 	private void getIntentData() {
@@ -193,6 +194,7 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 		tv_tishi = getView(R.id.tv_tishi);
 		tv_next = getView(R.id.tv_next);
 		tv_next.setOnClickListener(this);
+		FontManager.changeFonts(mContext, tv_next,tv_top_title);
 	}
 
 	@Override
@@ -795,4 +797,9 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 	    	super.onDestroy();
 	    }
 
+	  
+			public void onPause() {
+			super.onPause();
+			MobclickAgent.onPause(this);
+			}
 }

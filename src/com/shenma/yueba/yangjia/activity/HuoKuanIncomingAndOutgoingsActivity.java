@@ -20,6 +20,7 @@ import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.yangjia.fragment.HuoKuanIncomeAndOutGoingFragment;
+import com.umeng.analytics.MobclickAgent;
 
 
 /**
@@ -204,4 +205,13 @@ public class HuoKuanIncomingAndOutgoingsActivity extends BaseFragmentActivity im
 	    	super.onDestroy();
 	    }
 	
+	  
+	  public void onResume() {
+			super.onResume();
+			MobclickAgent.onResume(this);
+			}
+			public void onPause() {
+			super.onPause();
+			MobclickAgent.onPause(this);
+			}
 }

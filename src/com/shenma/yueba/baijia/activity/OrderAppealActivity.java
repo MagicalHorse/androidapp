@@ -17,6 +17,7 @@ import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.RoundImageView;
+import com.umeng.analytics.MobclickAgent;
 
 /**  
  * @author gyj  
@@ -179,7 +180,14 @@ View parementView;
 		//申诉
 	}
 	
-	
+	public void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+		}
+		public void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+		}
 	
 	
 	  @Override

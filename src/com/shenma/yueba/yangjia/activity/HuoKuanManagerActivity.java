@@ -18,6 +18,7 @@ import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.view.progressbar.NumberProgressBar;
 import com.shenma.yueba.view.progressbar.NumberProgressBar.ProgressTextVisibility;
 import com.shenma.yueba.view.progressbar.OnProgressBarListener;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 货款管理
@@ -217,4 +218,13 @@ public class HuoKuanManagerActivity extends BaseActivityWithTopView implements
 	    	MyApplication.getInstance().removeActivity(this);//加入回退栈
 	    	super.onDestroy();
 	    }
+	  
+	  public void onResume() {
+			super.onResume();
+			MobclickAgent.onResume(this);
+			}
+			public void onPause() {
+			super.onPause();
+			MobclickAgent.onPause(this);
+			}
 }

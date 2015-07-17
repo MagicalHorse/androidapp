@@ -13,6 +13,7 @@ import android.widget.ListView;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.adapter.InvitationAdapter;
+import com.umeng.analytics.MobclickAgent;
 
 /**  
  * @author gyj  
@@ -63,7 +64,14 @@ List<Integer> icon_list=new ArrayList<Integer>();
 		});
 	}
 	
-	
+	public void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+		}
+		public void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+		}
 	
 	  @Override
 	    protected void onDestroy() {

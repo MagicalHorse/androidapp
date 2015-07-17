@@ -11,6 +11,7 @@ import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.yangjia.activity.MainActivityForYangJia;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 申请结果界面(可共用)
@@ -68,6 +69,18 @@ public class ApplyResultActivity extends BaseActivityWithTopView implements OnCl
 		}
 		
 	}
+	
+	
+	
+	 public void onResume() {
+		  super.onResume();
+		  MobclickAgent.onResume(this);
+		  }
+		  public void onPause() {
+		  super.onPause();
+		  MobclickAgent.onPause(this);
+		  }
+
 	
 	
 	@Override

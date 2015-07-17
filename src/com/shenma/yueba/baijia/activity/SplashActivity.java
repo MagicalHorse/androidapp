@@ -7,8 +7,8 @@ import android.view.Window;
 import com.shenma.yueba.R;
 import com.shenma.yueba.UpdateManager;
 import com.shenma.yueba.application.MyApplication;
-import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.util.ToolsUtil;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 程序刚启动的时候，加载页面
@@ -97,4 +97,17 @@ public class SplashActivity extends BaseActivity {
 	    	MyApplication.getInstance().removeActivity(this);//加入回退栈
 	    	super.onDestroy();
 	    }
+	  
+	  
+	  
+	  public void onResume() {
+		  super.onResume();
+		  MobclickAgent.onResume(this);
+		  }
+		  public void onPause() {
+		  super.onPause();
+		  MobclickAgent.onPause(this);
+		  }
+
+
 }

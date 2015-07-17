@@ -30,6 +30,7 @@ import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.RoundImageView;
+import com.umeng.analytics.MobclickAgent;
 /*****
  * 本类定义 店铺商品首页显示页面 
  * 1.显示商家logo  名称  地址   店铺描述 以及 商品图片等信息
@@ -496,5 +497,12 @@ public class ShopMainActivity extends FragmentActivity {
     	super.onDestroy();
     }
     
-    
+	public void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+		}
+		public void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+		}
 }

@@ -39,6 +39,7 @@ import com.shenma.yueba.util.PhotoUtils;
 import com.shenma.yueba.util.PictureCompress;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.SelectePhotoType;
+import com.umeng.analytics.MobclickAgent;
 
 
 /**
@@ -392,6 +393,15 @@ public class PublishProductsActivity extends BaseActivityWithTopView implements
 		}
 	}
 	
+	
+	  public void onResume() {
+			super.onResume();
+			MobclickAgent.onResume(this);
+			}
+			public void onPause() {
+			super.onPause();
+			MobclickAgent.onPause(this);
+			}
 	
 	
 }

@@ -34,6 +34,7 @@ import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.yangjia.adapter.CityListAdapter;
 import com.shenma.yueba.yangjia.adapter.StoreListAdapter;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 身份认证
@@ -392,5 +393,12 @@ public class BuyerCertificationActivity2 extends BaseActivityWithTopView
 	    	super.onDestroy();
 	    }
 	
-	
+		public void onResume() {
+			super.onResume();
+			MobclickAgent.onResume(this);
+			}
+			public void onPause() {
+			super.onPause();
+			MobclickAgent.onPause(this);
+			}
 }

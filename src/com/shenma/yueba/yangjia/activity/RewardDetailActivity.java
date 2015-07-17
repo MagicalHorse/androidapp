@@ -27,6 +27,7 @@ import com.shenma.yueba.yangjia.adapter.BroadRewardAdapter;
 import com.shenma.yueba.yangjia.modle.BroadRewardListBean;
 import com.shenma.yueba.yangjia.modle.HistoryItem;
 import com.shenma.yueba.yangjia.modle.RewardDetailBackBean;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 奖励详情
@@ -140,5 +141,14 @@ public class RewardDetailActivity extends BaseActivityWithTopView{
 		super.onDestroy();
 	}
 	
+	
+	  public void onResume() {
+			super.onResume();
+			MobclickAgent.onResume(this);
+			}
+			public void onPause() {
+			super.onPause();
+			MobclickAgent.onPause(this);
+			}
 	
 }

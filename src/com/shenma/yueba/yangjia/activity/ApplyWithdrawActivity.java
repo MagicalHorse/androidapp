@@ -18,6 +18,7 @@ import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.util.WXLoginUtil;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 申请提现的界面
@@ -120,5 +121,12 @@ public class ApplyWithdrawActivity extends BaseActivityWithTopView implements
 	    	super.onDestroy();
 	    }
 	
-	
+	  public void onResume() {
+			super.onResume();
+			MobclickAgent.onResume(this);
+			}
+			public void onPause() {
+			super.onPause();
+			MobclickAgent.onPause(this);
+			}
 }

@@ -21,6 +21,7 @@ import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.MyCountDown;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 找回密码
@@ -183,7 +184,14 @@ public class FindPasswordActivity extends BaseActivityWithTopView implements
 	}
 	
 	
-	
+	public void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+		}
+		public void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+		}
 	
 	  @Override
 	    protected void onDestroy() {

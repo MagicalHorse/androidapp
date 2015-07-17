@@ -29,6 +29,7 @@ import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.yangjia.activity.MainActivityForYangJia;
 import com.shenma.yueba.yangjia.modle.AliYunKeyBackBean;
 import com.shenma.yueba.yangjia.modle.AliYunKeyBean;
+import com.umeng.analytics.MobclickAgent;
 
 /***
  * 引导页，如果是程序第一次安装，就会进入此界面
@@ -162,16 +163,6 @@ public class GuideActivity extends BaseActivity  {
 		curDot.startAnimation(anim);
 	}
 
-	public void onResume() {
-
-	}
-
-	public void onPause() {
-	}
-	
-	
-	
-	
 	
 	/**
 	 * 获取阿里云需要的key和sign
@@ -207,7 +198,14 @@ public class GuideActivity extends BaseActivity  {
 		}, GuideActivity.this);
 	}
 	
-	
+	public void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+		}
+		public void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+		}
 	
 	  @Override
 	    protected void onDestroy() {

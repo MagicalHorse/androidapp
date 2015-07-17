@@ -18,6 +18,7 @@ import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.adapter.MyFragmentPagerAdapter;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.yangjia.fragment.ProductManagerFragmentForOnLine;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 商品管理
@@ -170,5 +171,12 @@ public class ProductManagerActivity extends BaseFragmentActivity implements
 		super.onDestroy();
 	}
 	
-	
+	  public void onResume() {
+			super.onResume();
+			MobclickAgent.onResume(this);
+			}
+			public void onPause() {
+			super.onPause();
+			MobclickAgent.onPause(this);
+			}
 }

@@ -45,6 +45,7 @@ import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.FixedSpeedScroller;
 import com.shenma.yueba.view.MyGridView;
 import com.shenma.yueba.view.RoundImageView;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * @author gyj
@@ -379,6 +380,7 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView
 	protected void onResume() {
 
 		super.onResume();
+		  MobclickAgent.onResume(this);
 		startTimeToViewPager();
 	}
 
@@ -386,6 +388,7 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView
 	protected void onPause() {
 
 		super.onPause();
+		  MobclickAgent.onPause(this);
 		stopTimerToViewPager();
 	}
 
@@ -676,7 +679,7 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView
 				}, ApproveBuyerDetailsActivity.this);
 	}
 
-	
+
 	
 	
 	@Override

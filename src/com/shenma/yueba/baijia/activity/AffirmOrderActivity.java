@@ -31,6 +31,7 @@ import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.ListViewUtils;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.RoundImageView;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * @author gyj
@@ -380,4 +381,14 @@ public class AffirmOrderActivity extends BaseActivityWithTopView implements
 		MyApplication.getInstance().removeActivity(this);//加入回退栈
 		super.onDestroy();
 	}
+	
+	 public void onResume() {
+		  super.onResume();
+		  MobclickAgent.onResume(this);
+		  }
+		  public void onPause() {
+		  super.onPause();
+		  MobclickAgent.onPause(this);
+		  }
+
 }
