@@ -185,6 +185,9 @@ public class MyBuyerFragment extends Fragment {
 								{
 									baijia_contact_listview.setMode(Mode.PULL_FROM_START);
 									ToolsUtil.showNoDataView(getActivity(), true);
+								}else
+								{
+									MyApplication.getInstance().showMessage(getActivity(), getActivity().getResources().getString(R.string.lastpagedata_str));
 								}
 							}else
 							{
@@ -203,6 +206,10 @@ public class MyBuyerFragment extends Fragment {
 									baijia_contact_listview.setMode(Mode.BOTH);
 								}
 								
+								if(page!=1 && (data.getItems().getProducts()==null || data.getItems().getProducts().size()==0))
+								{
+									MyApplication.getInstance().showMessage(getActivity(), getActivity().getResources().getString(R.string.lastpagedata_str));
+								}
 								switch (type) {
 								case 0:
 									falshData(data);
@@ -214,7 +221,6 @@ public class MyBuyerFragment extends Fragment {
 							}
 						}
 							else {
-								MyApplication.getInstance().showMessage(getActivity(), "没有任何数据");
 								if(page==1)
 								{
 									ToolsUtil.showNoDataView(getActivity(), true);

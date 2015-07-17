@@ -16,59 +16,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
-        <com.handmark.pulltorefresh.library.PullToRefreshScrollView
-            android:id="@+id/pulltorefreshscrollview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical" >
-
-                <RelativeLayout
-                    android:id="@+id/baijiasteetfragmnet_layout_head_viewpager_relativelayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" >
-
-                    <android.support.v4.view.ViewPager
-                        android:id="@+id/baijiasteetfragmnet_layout_head_viewpager"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-
-                    <LinearLayout
-                        android:id="@+id/baijia_head_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginBottom="10dp"
-                        android:gravity="center"
-                        android:orientation="horizontal" />
-                </RelativeLayout>
-
-                <TextView
-                    android:id="@+id/buyersteet_newtextview"
-                    style="@style/text_title_style"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/shop_main_width5_dimen"
-                    android:layout_marginRight="@dimen/shop_main_width5_dimen"
-                    android:paddingBottom="@dimen/shop_main_lineheight8_dimen"
-                    android:paddingTop="@dimen/shop_main_lineheight8_dimen"
-                    android:text=""
-                    android:textColor="@color/color_textgray"
-                    android:textSize="@dimen/textsize11sp" />
-
-                <View style="@style/style_horizontal_line" />
-
-                <ListView
+        <com.handmark.pulltorefresh.library.PullToRefreshListView
                     android:id="@+id/baijia_contact_listview"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:paddingLeft="@dimen/shop_main_width5_dimen"
                     android:paddingRight="@dimen/shop_main_width5_dimen" />
-            </LinearLayout>
-        </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
 
         <include
             android:id="@+id/showloading_layout_view"
@@ -76,7 +29,8 @@
             layout="@layout/showloading_layout"
             android:visibility="gone" />
         <!-- 无数据视图 -->
-        <include layout="@layout/nodata_layout"/>
+
+        <include layout="@layout/nodata_layout" />
     </RelativeLayout>
 
 </LinearLayout>

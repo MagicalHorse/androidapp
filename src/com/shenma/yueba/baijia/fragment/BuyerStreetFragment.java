@@ -21,6 +21,7 @@ import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
+import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -33,6 +34,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnPullEventListener;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.State;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.lidroid.xutils.BitmapUtils;
 import com.shenma.yueba.R;
@@ -60,7 +62,7 @@ public class BuyerStreetFragment extends Fragment {
 	// 当前选中的id （ViewPager选中的id）
 	int currid = -1;
 	FragmentManager fragmentManager;
-	ListView baijia_contact_listview;
+	PullToRefreshListView baijia_contact_listview;
 	TextView focus_textview;
 	// tab原点的 父视图
 	LinearLayout baijia_head_layout;
@@ -68,7 +70,6 @@ public class BuyerStreetFragment extends Fragment {
 	TextView buyersteet_newtextview;
 	RelativeLayout baijiasteetfragmnet_layout_head_viewpager_relativelayout;
 	View parentview;
-	PullToRefreshScrollView pulltorefreshscrollview;
 	ViewPager baijiasteetfragmnet_layout_head_viewpager;
 	LayoutInflater inflater;
 	LinearLayout showloading_layout_view;
@@ -108,8 +109,6 @@ public class BuyerStreetFragment extends Fragment {
 		}
 		focus_textview.setFocusable(true);
 		focus_textview.setFocusableInTouchMode(true);
-		pulltorefreshscrollview.setFocusable(false);
-		pulltorefreshscrollview.setFocusableInTouchMode(false);
 		return parentview;
 
 	}
@@ -122,29 +121,28 @@ public class BuyerStreetFragment extends Fragment {
 	}
 
 	void initPullView() {
-		pulltorefreshscrollview = (PullToRefreshScrollView) parentview.findViewById(R.id.pulltorefreshscrollview);
+		baijia_contact_listview = (PullToRefreshListView) parentview.findViewById(R.id.baijia_contact_listview);
 		// 设置标签显示的内容
-		pulltorefreshscrollview.setMode(Mode.BOTH);
-		pulltorefreshscrollview.setOnPullEventListener(new OnPullEventListener<ScrollView>() {
+		baijia_contact_listview.setMode(Mode.DISABLED);
+		baijia_contact_listview.setOnPullEventListener(new OnPullEventListener<ListView>() {
 
-					@Override
-					public void onPullEvent(
-							PullToRefreshBase<ScrollView> refreshView,
-							State state, Mode direction) {
-						// 设置标签显示的内容
-						if (direction == Mode.PULL_FROM_START) {
-							pulltorefreshscrollview.getLoadingLayoutProxy().setPullLabel(getActivity().getResources().getString(R.string.Refreshonstr));
-							pulltorefreshscrollview.getLoadingLayoutProxy().setRefreshingLabel(getActivity().getResources().getString(R.string.Refreshloadingstr));
-							pulltorefreshscrollview.getLoadingLayoutProxy().setReleaseLabel(getActivity().getResources().getString(R.string.Loosentherefresh));
-						} else if (direction == Mode.PULL_FROM_END) {
-							pulltorefreshscrollview.getLoadingLayoutProxy().setPullLabel(getActivity().getResources().getString(R.string.Thedropdownloadstr));
-							pulltorefreshscrollview.getLoadingLayoutProxy().setRefreshingLabel(getActivity().getResources().getString(R.string.RefreshLoadingstr));
-							pulltorefreshscrollview.getLoadingLayoutProxy().setReleaseLabel(getActivity().getResources().getString(R.string.Loosentheloadstr));
-						}
-					}
-				});
+			@Override
+			public void onPullEvent(PullToRefreshBase<ListView> refreshView,
+					State state, Mode direction) {
+				// 设置标签显示的内容
+				if (direction == Mode.PULL_FROM_START) {
+					baijia_contact_listview.getLoadingLayoutProxy().setPullLabel(getActivity().getResources().getString(R.string.Refreshonstr));
+					baijia_contact_listview.getLoadingLayoutProxy().setRefreshingLabel(getActivity().getResources().getString(R.string.Refreshloadingstr));
+					baijia_contact_listview.getLoadingLayoutProxy().setReleaseLabel(getActivity().getResources().getString(R.string.Loosentherefresh));
+				} else if (direction == Mode.PULL_FROM_END) {
+					baijia_contact_listview.getLoadingLayoutProxy().setPullLabel(getActivity().getResources().getString(R.string.Thedropdownloadstr));
+					baijia_contact_listview.getLoadingLayoutProxy().setRefreshingLabel(getActivity().getResources().getString(R.string.RefreshLoadingstr));
+					baijia_contact_listview.getLoadingLayoutProxy().setReleaseLabel(getActivity().getResources().getString(R.string.Loosentheloadstr));
+				}
+			}
+		});
 
-		pulltorefreshscrollview.setOnRefreshListener(new OnRefreshListener2() {
+		baijia_contact_listview.setOnRefreshListener(new OnRefreshListener2() {
 
 			@Override
 			public void onPullDownToRefresh(PullToRefreshBase refreshView) {
@@ -160,17 +158,22 @@ public class BuyerStreetFragment extends Fragment {
 	}
 
 	void initView(View v) {
-		baijiasteetfragmnet_layout_head_viewpager_relativelayout = (RelativeLayout) v
-				.findViewById(R.id.baijiasteetfragmnet_layout_head_viewpager_relativelayout);
-		buyersteet_newtextview = (TextView) v
-				.findViewById(R.id.buyersteet_newtextview);
-		baijia_head_layout = (LinearLayout) v
-				.findViewById(R.id.baijia_head_layout);
-		focus_textview = (TextView) v.findViewById(R.id.focus_textview);
-		showloading_layout_view = (LinearLayout) v
-				.findViewById(R.id.showloading_layout_view);
+		
+		LinearLayout head_ll=(LinearLayout)LinearLayout.inflate(getActivity(), R.layout.main_head_listview_layout, null);
+		
+		AbsListView.LayoutParams layoutParams = new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, AbsListView.LayoutParams.WRAP_CONTENT);     
+		head_ll.setLayoutParams(layoutParams);   
+		ListView lv = baijia_contact_listview.getRefreshableView();   
+		lv.addHeaderView(head_ll);
+		
+		
+		
+		baijiasteetfragmnet_layout_head_viewpager_relativelayout = (RelativeLayout) head_ll.findViewById(R.id.baijiasteetfragmnet_layout_head_viewpager_relativelayout);
+		buyersteet_newtextview = (TextView)head_ll.findViewById(R.id.buyersteet_newtextview);
+		baijia_head_layout = (LinearLayout) head_ll.findViewById(R.id.baijia_head_layout);
+		focus_textview = (TextView)v.findViewById(R.id.focus_textview);
+		showloading_layout_view = (LinearLayout)v.findViewById(R.id.showloading_layout_view);
 		showloading_layout_view.setVisibility(View.GONE);
-		baijia_contact_listview = (ListView) v.findViewById(R.id.baijia_contact_listview);
 		
 		baijiasteetfragmnet_layout_head_viewpager = (ViewPager) v.findViewById(R.id.baijiasteetfragmnet_layout_head_viewpager);
 		baijiasteetfragmnet_layout_head_viewpager
@@ -244,11 +247,11 @@ public class BuyerStreetFragment extends Fragment {
 
 					@Override
 					public void http_Success(Object obj) {
-						pulltorefreshscrollview.onRefreshComplete();
 						currpage = page;
 						ishow = false;
                         buyersteet_newtextview.setText("最新上新");
 						FontManager.changeFonts(getActivity(),buyersteet_newtextview);
+						baijia_contact_listview.setMode(Mode.BOTH);
 						if (obj != null&& obj instanceof RequestProductListInfoBean) {
 							RequestProductListInfoBean bean = (RequestProductListInfoBean) obj;
 							HomeProductListInfoBean data = bean.getData();
@@ -256,8 +259,11 @@ public class BuyerStreetFragment extends Fragment {
 							{
 								if(page==1)
 								{
-									//pulltorefreshscrollview.setMode(Mode.PULL_FROM_START);//设置会导致计算告诉异常
+									//pulltorefreshscrollview.setMode(Mode.PULL_FROM_START);
 									ToolsUtil.showNoDataView(getActivity(), true);
+								}else
+								{
+									MyApplication.getInstance().showMessage(getActivity(), getActivity().getResources().getString(R.string.lastpagedata_str));
 								}
 							}else 
 							{
@@ -269,10 +275,14 @@ public class BuyerStreetFragment extends Fragment {
 								int totalPage = data.getTotalpaged();
 								if (currpage >= totalPage && page!=1) {
 									//pulltorefreshscrollview.setMode(Mode.PULL_FROM_START);
-									MyApplication.getInstance().showMessage(getActivity(), getActivity().getResources().getString(R.string.lastpagedata_str));
 								} else {
 									//pulltorefreshscrollview.setMode(Mode.BOTH);
 								}
+								if(page!=1 && (data.getItems().getProducts()==null || data.getItems().getProducts().size()==0))
+								{
+									MyApplication.getInstance().showMessage(getActivity(), getActivity().getResources().getString(R.string.lastpagedata_str));
+								}
+								
 								switch (type) {
 								case 0:
 									falshData(data);
@@ -288,14 +298,20 @@ public class BuyerStreetFragment extends Fragment {
 									ToolsUtil.showNoDataView(getActivity(),true);
 								}
 								MyApplication.getInstance().showMessage(getActivity(), "没有任何数据");
-								 
+								baijia_contact_listview.postDelayed(new Runnable() {
+									
+									@Override
+									public void run() {
+										baijia_contact_listview.onRefreshComplete();
+									}
+								}, 200);
 							}
 
 					}
 
 					@Override
 					public void http_Fails(int error, String msg) {
-						pulltorefreshscrollview.onRefreshComplete();
+						baijia_contact_listview.onRefreshComplete();
 						MyApplication.getInstance().showMessage(getActivity(),
 								msg);
 					}
@@ -306,6 +322,13 @@ public class BuyerStreetFragment extends Fragment {
 	 * 加载数据
 	 * **/
 	void addData(HomeProductListInfoBean data) {
+		baijia_contact_listview.postDelayed(new Runnable() {
+			
+			@Override
+			public void run() {
+				baijia_contact_listview.onRefreshComplete();
+			}
+		}, 1000);
 		showloading_layout_view.setVisibility(View.GONE);
 		ProductListInfoBean item = data.getItems();
 		if (item.getProducts() != null) {
@@ -317,15 +340,23 @@ public class BuyerStreetFragment extends Fragment {
 			
 		}
 		buyerAdapter.notifyDataSetChanged();
-		ListViewUtils.setListViewHeightBasedOnChildren(baijia_contact_listview,120);
-		pulltorefreshscrollview.onRefreshComplete();
+		//ListViewUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
+		
+		
 	}
 
 	/***
 	 * 刷新viewpager数据
 	 * ***/
 	void falshData(HomeProductListInfoBean data) {
-		
+		baijia_contact_listview.postDelayed(new Runnable() {
+				
+				@Override
+				public void run() {
+					baijia_contact_listview.onRefreshComplete();
+				}
+			}, 1000);
+		 
 		currid = -1;
 		ProductListInfoBean item = data.getItems();
 		Banners.clear();
@@ -375,13 +406,12 @@ public class BuyerStreetFragment extends Fragment {
 				Products.addAll(item.getProducts());
 			}
 		}
-		
 		buyerAdapter = new BuyerAdapter(Products, getActivity());
 		baijia_contact_listview.setAdapter(buyerAdapter);
-		//buyerAdapter.notifyDataSetChanged();
 		// 重新计算listview的高度
-		ListViewUtils.setListViewHeightBasedOnChildren(baijia_contact_listview,120);
+		//ListViewUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
 		//pulltorefreshscrollview.onRefreshComplete();
+         
 
 	}
 
@@ -389,8 +419,8 @@ public class BuyerStreetFragment extends Fragment {
 	public void onResume() {
 
 		super.onResume();
-		pulltorefreshscrollview.setFocusable(false);
-		pulltorefreshscrollview.setFocusableInTouchMode(false);
+		baijia_contact_listview.setFocusable(false);
+		baijia_contact_listview.setFocusableInTouchMode(false);
 		startTimeToViewPager();
 	}
 

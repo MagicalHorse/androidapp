@@ -16,7 +16,7 @@ public class MsgListInfo implements Serializable{
         int UnReadCount;//未读条数
         String UnReadMessage="";//最后一条信息内容，如果没有则返回  "暂无消息"
         String UnReadLastTime="";//最后一条时间   如果没有则返回当前时间
-        int RoomId;//当前聊天的roomId
+        String RoomId;//当前聊天的roomId
 		public int getId() {
 			return Id;
 		}
@@ -59,10 +59,10 @@ public class MsgListInfo implements Serializable{
 		public void setUnReadLastTime(String unReadLastTime) {
 			UnReadLastTime = unReadLastTime;
 		}
-		public int getRoomId() {
+		public String getRoomId() {
 			return RoomId;
 		}
-		public void setRoomId(int roomId) {
+		public void setRoomId(String roomId) {
 			RoomId = roomId;
 		}
 
