@@ -32,6 +32,7 @@ import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
+import com.umeng.analytics.MobclickAgent;
 
 
 /**  
@@ -241,4 +242,15 @@ public class CircleListActivity extends BaseActivityWithTopView{
 	    	MyApplication.getInstance().removeActivity(this);//加入回退栈
 	    	super.onDestroy();
 	    }
+	  
+	  
+
+		public void onResume() {
+			super.onResume();
+			MobclickAgent.onResume(this);
+			}
+			public void onPause() {
+			super.onPause();
+			MobclickAgent.onPause(this);
+			}
 }

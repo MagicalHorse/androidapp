@@ -46,6 +46,7 @@ import com.shenma.yueba.util.PhotoUtils;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.RoundImageView;
 import com.shenma.yueba.view.SelectePhotoType;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 新增圈子
@@ -323,4 +324,12 @@ public class AddCircleActivity extends BaseActivityWithTopView implements
 	    	super.onDestroy();
 	    }
 	
+	  public void onResume() {
+			super.onResume();
+			MobclickAgent.onResume(this);
+			}
+			public void onPause() {
+			super.onPause();
+			MobclickAgent.onPause(this);
+			}
 }

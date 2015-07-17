@@ -44,6 +44,7 @@ import com.shenma.yueba.view.RoundImageView;
 import com.shenma.yueba.view.SelectePhotoType;
 import com.shenma.yueba.yangjia.activity.AboutActivity;
 import com.shenma.yueba.yangjia.activity.ModifyNickNameActivity;
+import com.umeng.analytics.MobclickAgent;
 
 
 /*****
@@ -343,6 +344,7 @@ public class UserConfigActivity extends BaseActivityWithTopView implements
 			switchButton.setBackgroundResource(R.drawable.off);
 		}
 		super.onResume();
+		MobclickAgent.onResume(this);
 	}
 
 	@Override
@@ -440,7 +442,10 @@ public class UserConfigActivity extends BaseActivityWithTopView implements
 				SharedUtil.user_IsBindWeiXin) ? "已绑定" : "未绑定");
 	}
 	
-	
+		public void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+		}
 	
 	  @Override
 	    protected void onDestroy() {

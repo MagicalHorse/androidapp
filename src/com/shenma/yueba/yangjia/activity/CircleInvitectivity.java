@@ -43,6 +43,7 @@ import com.shenma.yueba.util.sore.SideBar.OnTouchingLetterChangedListener;
 import com.shenma.yueba.yangjia.modle.AttationAndFansItemBean;
 import com.shenma.yueba.yangjia.modle.FansBackListForInviteCirlce;
 import com.shenma.yueba.yangjia.modle.FansItemBean;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 邀请好友加入圈子
@@ -370,4 +371,12 @@ public class CircleInvitectivity extends BaseActivityWithTopView implements
 	    	super.onDestroy();
 	    }
 	
+	  public void onResume() {
+			super.onResume();
+			MobclickAgent.onResume(this);
+			}
+			public void onPause() {
+			super.onPause();
+			MobclickAgent.onPause(this);
+			}
 }

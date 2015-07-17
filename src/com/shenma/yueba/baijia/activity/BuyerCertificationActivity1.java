@@ -42,6 +42,7 @@ import com.shenma.yueba.util.PhotoUtils;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.view.SelectePhotoType;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 身份认证
@@ -334,4 +335,13 @@ public class BuyerCertificationActivity1 extends BaseActivityWithTopView
 	    	super.onDestroy();
 	    }
 
+	  
+		public void onResume() {
+			super.onResume();
+			MobclickAgent.onResume(this);
+			}
+			public void onPause() {
+			super.onPause();
+			MobclickAgent.onPause(this);
+			}
 }

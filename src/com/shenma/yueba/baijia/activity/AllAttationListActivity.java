@@ -21,6 +21,7 @@ import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.adapter.AttationListAdapter;
 import com.shenma.yueba.baijia.modle.AttationListBean;
 import com.shenma.yueba.util.FontManager;
+import com.umeng.analytics.MobclickAgent;
 
 
 /**
@@ -122,6 +123,15 @@ public class AllAttationListActivity extends BaseActivityWithTopView implements 
 		
 	}
 	
+	 public void onResume() {
+		  super.onResume();
+		  MobclickAgent.onResume(this);
+		  }
+		  public void onPause() {
+		  super.onPause();
+		  MobclickAgent.onPause(this);
+		  }
+
 	
 	
 	@Override

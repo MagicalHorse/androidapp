@@ -18,6 +18,7 @@ import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.RoundImageView;
 import com.shenma.yueba.yangjia.modle.OrderDetailBackBean;
 import com.shenma.yueba.yangjia.modle.OrderDetailBean;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 订单详情
@@ -147,5 +148,12 @@ public class OrderDetailActivity extends BaseActivityWithTopView {
 		super.onDestroy();
 	}
 	
-	
+	  public void onResume() {
+			super.onResume();
+			MobclickAgent.onResume(this);
+			}
+			public void onPause() {
+			super.onPause();
+			MobclickAgent.onPause(this);
+			}
 }

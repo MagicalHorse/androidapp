@@ -44,6 +44,7 @@ import com.shenma.yueba.yangjia.activity.ModifyCircleNameActivity;
 import com.shenma.yueba.yangjia.modle.CircleDetailBackBean;
 import com.shenma.yueba.yangjia.modle.CircleDetailBean;
 import com.shenma.yueba.yangjia.modle.Users;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 圈子信息
@@ -504,5 +505,13 @@ public class CircleInfoActivity extends BaseActivityWithTopView implements
 	    }
 	
 	
-	
+
+		public void onResume() {
+			super.onResume();
+			MobclickAgent.onResume(this);
+			}
+			public void onPause() {
+			super.onPause();
+			MobclickAgent.onPause(this);
+			}
 }

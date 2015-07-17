@@ -21,6 +21,7 @@ import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.ToolsUtil;
+import com.umeng.analytics.MobclickAgent;
 
 /**  
  * @author gyj  
@@ -227,6 +228,17 @@ int maxValue=0;
 		String str=ToolsUtil.DounbleToString_2(refundprice);
 		applyforrefund_layout_refundprivevalue_textview.setText(str);
 	}
+	
+	
+	 public void onResume() {
+		  super.onResume();
+		  MobclickAgent.onResume(this);
+		  }
+		  public void onPause() {
+		  super.onPause();
+		  MobclickAgent.onPause(this);
+		  }
+
 	
 	
 	@Override

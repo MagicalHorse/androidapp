@@ -27,6 +27,7 @@ import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.ToolsUtil;
+import com.umeng.analytics.MobclickAgent;
 
 /**  
  * @author gyj  
@@ -265,6 +266,16 @@ List<BrandInfoInfo> object_list=new ArrayList<BrandInfoInfo>();
 	{
 		MyApplication.getInstance().getImageLoader().displayImage(url, iv, MyApplication.getInstance().getDisplayImageOptions());
 	}
+	
+	
+	public void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+		}
+		public void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+		}
 	
 	
 	

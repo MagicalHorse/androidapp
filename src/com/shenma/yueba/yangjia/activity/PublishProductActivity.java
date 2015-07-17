@@ -51,6 +51,7 @@ import com.shenma.yueba.view.TagImageView;
 import com.shenma.yueba.yangjia.modle.StateBean;
 import com.shenma.yueba.yangjia.modle.TagListBean;
 import com.shenma.yueba.yangjia.modle.TagsBean;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 发布商品
@@ -683,4 +684,14 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 		super.onDestroy();
 	}
 	
+	
+	
+	  public void onResume() {
+			super.onResume();
+			MobclickAgent.onResume(this);
+			}
+			public void onPause() {
+			super.onPause();
+			MobclickAgent.onPause(this);
+			}
 }

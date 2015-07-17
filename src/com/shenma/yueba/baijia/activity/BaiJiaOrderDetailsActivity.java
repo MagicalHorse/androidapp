@@ -31,6 +31,7 @@ import com.shenma.yueba.util.ShareUtil;
 import com.shenma.yueba.util.ShareUtil.ShareListener;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.RoundImageView;
+import com.umeng.analytics.MobclickAgent;
 
 /**  
  * @author gyj  
@@ -369,6 +370,14 @@ LinearLayout baijia_orderdetails_footer_right_linearlayout;//按钮的父对象
 	}
 	
 	
+	public void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+		}
+		public void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+		}
 	
 	
 	@Override

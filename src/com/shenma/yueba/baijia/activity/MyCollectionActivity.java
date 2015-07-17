@@ -32,6 +32,7 @@ import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
+import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.utils.Log;
 
 /**  
@@ -147,10 +148,6 @@ public class MyCollectionActivity extends BaseActivityWithTopView{
 	}
 	
         
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
     
     /***
      * 加载数据获取我收藏的商品
@@ -409,7 +406,14 @@ public class MyCollectionActivity extends BaseActivityWithTopView{
    
 	
 	
-	
+	public void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+		}
+		public void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+		}
 	
 	  @Override
 	    protected void onDestroy() {

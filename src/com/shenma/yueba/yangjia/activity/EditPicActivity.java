@@ -58,6 +58,7 @@ import com.shenma.yueba.view.TagImageView;
 import com.shenma.yueba.yangjia.modle.TagCacheBean;
 import com.shenma.yueba.yangjia.modle.TagListBean;
 import com.shenma.yueba.yangjia.modle.TagsBean;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 编辑图片
@@ -144,9 +145,8 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 		getIntentData();
 		LoadImageFilter();
 		MyApplication.getInstance().addActivity(mContext);
-		
-
 		super.onResume();
+		MobclickAgent.onResume(this);
 	}
 
 	private void getIntentData() {
@@ -797,4 +797,9 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 	    	super.onDestroy();
 	    }
 
+	  
+			public void onPause() {
+			super.onPause();
+			MobclickAgent.onPause(this);
+			}
 }

@@ -22,6 +22,7 @@ import com.shenma.yueba.baijia.fragment.IndexFragmentForBaiJia;
 import com.shenma.yueba.baijia.fragment.MeFragmentForBaiJia;
 import com.shenma.yueba.baijia.fragment.MessageFragment;
 import com.shenma.yueba.baijia.modle.FragmentBean;
+import com.umeng.analytics.MobclickAgent;
 
 public class MainActivityForBaiJia extends FragmentActivity {
 	FrameLayout baijia_main_framelayout;
@@ -162,7 +163,14 @@ public class MainActivityForBaiJia extends FragmentActivity {
 	}
 	
 	
-	
+	public void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+		}
+		public void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+		}
 	
 	  @Override
 	    protected void onDestroy() {

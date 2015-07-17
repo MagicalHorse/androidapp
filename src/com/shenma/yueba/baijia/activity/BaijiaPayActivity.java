@@ -30,6 +30,7 @@ import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.wxapi.CreateWeiXinOrderManager;
 import com.shenma.yueba.wxapi.WeiXinBasePayManager.WeiXinPayManagerListener;
+import com.umeng.analytics.MobclickAgent;
 
 /**  
  * @author gyj  
@@ -306,5 +307,14 @@ boolean isBroadcast=false;//是否注册广播监听 支付结果
 			setResult(200, this.getIntent().putExtra("PAYRESULT", "SUCESS"));
 		}
 	
+	
+	public void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+		}
+		public void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+		}
 	
 }

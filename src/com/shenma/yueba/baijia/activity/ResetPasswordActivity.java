@@ -16,6 +16,7 @@ import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.SharedUtil;
+import com.umeng.analytics.MobclickAgent;
 /**
  * 设置新密码
  * @author a
@@ -119,7 +120,14 @@ public class ResetPasswordActivity extends BaseActivityWithTopView implements On
 		
 	}
 	
-	
+	public void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+		}
+		public void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+		}
 	
 	
 	  @Override

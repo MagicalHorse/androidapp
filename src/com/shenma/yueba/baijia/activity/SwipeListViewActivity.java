@@ -20,6 +20,7 @@ import com.shenma.yueba.swipemenulistview.SwipeMenu;
 import com.shenma.yueba.swipemenulistview.SwipeMenuCreator;
 import com.shenma.yueba.swipemenulistview.SwipeMenuItem;
 import com.shenma.yueba.swipemenulistview.SwipeMenuListView;
+import com.umeng.analytics.MobclickAgent;
 
 public class SwipeListViewActivity extends Activity{
 	
@@ -120,7 +121,14 @@ public class SwipeListViewActivity extends Activity{
  				getResources().getDisplayMetrics());
  	}
      
-     
+ 	public void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+		}
+		public void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+		}
      
      
      @Override

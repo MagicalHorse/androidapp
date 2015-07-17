@@ -19,6 +19,7 @@ import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.yangjia.modle.KaiXiaoPiaoBackBean;
 import com.shenma.yueba.yangjia.modle.kaixiaoPiaoBean;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 开小票
@@ -116,5 +117,12 @@ public class KaiXiaoPiaoActivity extends BaseActivityWithTopView implements
 		super.onDestroy();
 	}
 	
-	
+	  public void onResume() {
+			super.onResume();
+			MobclickAgent.onResume(this);
+			}
+			public void onPause() {
+			super.onPause();
+			MobclickAgent.onPause(this);
+			}
 }

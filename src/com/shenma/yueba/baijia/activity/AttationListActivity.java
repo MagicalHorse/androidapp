@@ -12,7 +12,7 @@ import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.adapter.AttationListAdapter;
 import com.shenma.yueba.baijia.modle.AttationListBean;
-import com.shenma.yueba.baijia.modle.FansListBean;
+import com.umeng.analytics.MobclickAgent;
 
 
 /**
@@ -40,6 +40,17 @@ public class AttationListActivity extends BaseActivityWithTopView {
 		pull_refresh_list.setAdapter(new AttationListAdapter(this, mList));
 		
 	}
+	
+	public void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+		}
+		public void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+		}
+
+
 	
 	
 	@Override

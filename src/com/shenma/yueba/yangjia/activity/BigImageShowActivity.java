@@ -15,6 +15,7 @@ import com.shenma.yueba.baijia.activity.BaseActivityWithTopView;
 import com.shenma.yueba.util.Base64Coder;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.ToolsUtil;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 显示大图的activity
@@ -67,5 +68,12 @@ public class BigImageShowActivity extends BaseActivityWithTopView {
 	    	MyApplication.getInstance().removeActivity(this);//加入回退栈
 	    	super.onDestroy();
 	    }
-	
+	  public void onResume() {
+			super.onResume();
+			MobclickAgent.onResume(this);
+			}
+			public void onPause() {
+			super.onPause();
+			MobclickAgent.onPause(this);
+			}
 }

@@ -23,6 +23,7 @@ import com.shenma.yueba.yangjia.adapter.MyAttentionAndFansForSocialAdapter;
 import com.shenma.yueba.yangjia.fragment.MyAttentionAndFansForSocialFragment;
 import com.shenma.yueba.yangjia.fragment.MyCircleForSocialFragment;
 import com.shenma.yueba.yangjia.fragment.ProductManagerFragmentForOnLine;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 社交管理
@@ -199,4 +200,14 @@ public class SocialManagerActivity extends BaseFragmentActivity implements
 		MyApplication.getInstance().addActivity(this);
 		super.onDestroy();
 	}
+	
+	
+	  public void onResume() {
+			super.onResume();
+			MobclickAgent.onResume(this);
+			}
+			public void onPause() {
+			super.onPause();
+			MobclickAgent.onPause(this);
+			}
 }
