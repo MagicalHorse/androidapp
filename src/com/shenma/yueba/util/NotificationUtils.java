@@ -26,7 +26,7 @@ public class NotificationUtils {
 		NotificationManager notificationManager = (NotificationManager) ctx
 				.getSystemService(android.content.Context.NOTIFICATION_SERVICE);
 		// 定义Notification的各种属性
-		Notification notification = new Notification(R.drawable.icon, text[1],
+		Notification notification = new Notification(R.drawable.ic_launcher, text[1],
 				System.currentTimeMillis());
 		// FLAG_AUTO_CANCEL 该通知能被状态栏的清除按钮给清除掉
 		// FLAG_NO_CLEAR 该通知不能被状态栏的清除按钮给清除掉
@@ -55,9 +55,13 @@ public class NotificationUtils {
 				notificationIntent = new Intent(ctx,
 						SalesManagerForBuyerActivity.class); // 点击该通知后要跳转的Activity
 			}
-			if("CertifiedApply".equals(type)){//认证通过
+			if("AgreeCertifiedApply".equals(type)){//认证通过
+				SharedUtil.setAuditStatus(ctx, "1");
 				notificationIntent = new Intent(ctx,
 						MainActivityForYangJia.class); // 点击该通知后要跳转的Activity
+			}
+			if("RefuseCertifiedApply".equals(type)){//认证被拒绝
+				SharedUtil.setAuditStatus(ctx, "-1");
 			}
 			PendingIntent contentItent = PendingIntent.getActivity(ctx, 0,
 					notificationIntent, 0);

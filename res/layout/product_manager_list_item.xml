@@ -21,32 +21,38 @@
             android:layout_centerVertical="true"
             android:scaleType="fitXY"
             android:src="@drawable/default_pic" />
-
-        <TextView
-            android:id="@+id/tv_brand_name"
+<TextView
+            android:layout_marginLeft="10dip"
+            android:layout_alignParentRight="true"
+            android:id="@+id/tv_date"
+            android:layout_alignTop="@id/tv_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dip"
-            android:layout_toRightOf="@id/iv_product"
-            android:text="@null"
-            android:textColor="@color/text_gray_color"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/tv_date"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/tv_brand_name"
-            android:layout_toRightOf="@id/tv_brand_name"
             android:gravity="right"
             android:text="@null"
+            android:textSize="13sp"
             android:textColor="@color/text_gray_color" />
-
         <TextView
+            android:layout_marginTop="3dip"
             android:id="@+id/tv_description"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@id/tv_brand_name"
+            android:maxLines="2"
+            android:layout_marginLeft="5dip"
+            android:layout_toLeftOf="@id/tv_date"
+            android:layout_toRightOf="@id/iv_product"
+            android:text="@null"
+            android:ellipsize="end"
+            android:textColor="@color/text_gray_color"
+             android:textSize="15sp" />
+
+        
+
+        <TextView
+            android:id="@+id/tv_description"
+            android:visibility="gone"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
             android:layout_marginRight="20dip"
             android:layout_toRightOf="@id/iv_product"
             android:ellipsize="end"
@@ -61,21 +67,27 @@
             android:id="@+id/tv_size"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@id/tv_brand_name"
             android:text="@null"
+            android:layout_marginBottom="3dip"
+            android:layout_marginLeft="5dip"
+               android:layout_toRightOf="@id/iv_product"
             android:textColor="@color/text_gray_color"
             android:textSize="15sp" />
 
         <TextView
             android:id="@+id/tv_price"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
             android:layout_alignBottom="@id/tv_size"
             android:layout_toRightOf="@id/tv_size"
             android:gravity="right"
             android:text="@null"
             android:textColor="@color/red_text_color"
             android:textSize="15sp" />
+        
+        
+        
     </RelativeLayout>
 
     <View style="@style/style_horizontal_line" />

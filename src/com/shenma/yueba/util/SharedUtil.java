@@ -288,10 +288,10 @@ public class SharedUtil {
 		return getSharedPreferences(context).getString(user_AuditStatus, "");
 	}
 	
-	public static void setAuditStatus(Context context, String userPassword) {
-		if (userPassword != null) {
+	public static void setAuditStatus(Context context, String suditStatus) {
+		if (suditStatus != null) {
 			getSharedPreferences(context).edit()
-			.putString(user_AuditStatus, userPassword).commit();
+			.putString(user_AuditStatus, suditStatus).commit();
 		}
 	}
 	
