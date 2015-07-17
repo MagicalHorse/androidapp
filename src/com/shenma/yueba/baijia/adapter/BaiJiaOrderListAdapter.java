@@ -211,7 +211,7 @@ public class BaiJiaOrderListAdapter extends BaseAdapter {
 	 * ***/
 	void setButtonStatus(Holder holder,BaiJiaOrderListInfo bean) {
 		holder.baijiaorder_layout_item_status.removeAllViews();
-		List<View> view_list= ButtonManager.getButton((Activity)context, bean.getOrderStatus());
+		List<View> view_list= ButtonManager.getButton((Activity)context, bean.getOrderStatus(),orderControlListener);
 		if(view_list!=null)
 		{
 			for(int i=0;i<view_list.size();i++)
@@ -219,7 +219,6 @@ public class BaiJiaOrderListAdapter extends BaseAdapter {
 				View button=view_list.get(i);
 				Button btn=(Button)button.findViewById(R.id.baijia_orderdetails_sqtk_button);
 				FontManager.changeFonts(context, btn);
-				btn.setOnClickListener(onclickListener);
 				btn.setTag(bean);
 				LinearLayout.LayoutParams param=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 				param.leftMargin=10;
@@ -249,44 +248,13 @@ public class BaiJiaOrderListAdapter extends BaseAdapter {
 
 		@Override
 		public void onClick(View v) {
-			switch (v.getId()) {
-			case R.id.baijia_orderdetails_sqtk_button:// 按钮操作
-				buttonControl(v);
-				break;
-			}
+			
 		}
 	};
 
 	void initPic(ImageView iv, String url) {
 		MyApplication.getInstance().getImageLoader().displayImage(url, iv,MyApplication.getInstance().getDisplayImageOptions());
 	}
-	
-	/****
-	 * 按钮控制
-	 * ***/
-	void buttonControl(View btn)
-	{
-		if(btn==null || btn.getTag()==null || !(btn.getTag() instanceof BaiJiaOrderListInfo))
-        {
-        	return;
-        }
-		BaiJiaOrderListInfo baiJiaOrderListInfo=(BaiJiaOrderListInfo)btn.getTag();
-		String str=((Button)btn).getText().toString();
-		if(str.equals(ButtonManager.WAITPAY))//如果是等待支付
-		{
-			ButtonManager.payOrder(context, baiJiaOrderListInfo);
-		}else if(str.equals(ButtonManager.CANCELPAY))//撤销退款
-		{
-			ButtonManager.cancelRefund(context);
-		}else if(str.equals(ButtonManager.QUERENTIHUO))//确认提货
-		{
-			ButtonManager.affirmPUG(context, baiJiaOrderListInfo, orderControlListener);
-		}else if(str.equals(ButtonManager.SHENQINGTUIKUAN))//申请退款
-		{
-			ButtonManager.applyforRefund(context, baiJiaOrderListInfo);
-		}
-	}
-	
 	
 	
 	public interface OrderControlListener

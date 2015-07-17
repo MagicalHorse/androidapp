@@ -65,6 +65,6 @@ Context context;
 	@Override
 	public void destroyItem(ViewGroup container, int position, Object object) {
 		ImageView imageview=imageViewlist.get(position%imageViewlist.size());
-		container.removeView(imageview);
+		//container.removeView(imageview);
 	}
 }

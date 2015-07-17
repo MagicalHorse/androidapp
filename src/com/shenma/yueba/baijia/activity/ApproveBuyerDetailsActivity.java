@@ -36,6 +36,7 @@ import com.shenma.yueba.baijia.adapter.UserIconAdapter;
 import com.shenma.yueba.baijia.modle.LikeUsersInfoBean;
 import com.shenma.yueba.baijia.modle.ProductsDetailsInfoBean;
 import com.shenma.yueba.baijia.modle.ProductsDetailsPromotion;
+import com.shenma.yueba.baijia.modle.ProductsDetailsTagInfo;
 import com.shenma.yueba.baijia.modle.RequestProductDetailsInfoBean;
 import com.shenma.yueba.baijia.modle.UsersInfoBean;
 import com.shenma.yueba.util.FontManager;
@@ -346,13 +347,14 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView
 			}
 		}
 
-		if (Data.getProductPic() != null && Data.getProductPic().length > 0) {
-			String[] str_array = Data.getProductPic();
-			for (int i = 0; i < str_array.length; i++) {
+		if (Data.getProductPic() != null && Data.getProductPic().size() > 0) {
+			//图片和标签
+			List<ProductsDetailsTagInfo> productsDetailsTagInfo_list=  Data.getProductPic();
+			for (int i = 0; i < productsDetailsTagInfo_list.size(); i++) {
 				ImageView iv = new ImageView(ApproveBuyerDetailsActivity.this);
 				iv.setScaleType(ScaleType.FIT_CENTER);
 				viewlist.add(iv);
-				initPic(ToolsUtil.getImage(str_array[i], 320, 0), iv);
+				initPic(ToolsUtil.getImage(ToolsUtil.nullToString(productsDetailsTagInfo_list.get(i).getLogo()), 320, 0), iv);
 			}
 			customPagerAdapter = new ScrollViewPagerAdapter(
 					ApproveBuyerDetailsActivity.this, viewlist);

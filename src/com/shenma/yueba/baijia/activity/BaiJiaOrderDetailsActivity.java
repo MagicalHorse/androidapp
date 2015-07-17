@@ -154,10 +154,6 @@ LinearLayout baijia_orderdetails_footer_right_linearlayout;//按钮的父对象
 			{
 				ToolsUtil.callActivity(BaiJiaOrderDetailsActivity.this, phoneNo);
 			}
-			break;
-			
-		case R.id.baijia_orderdetails_sqtk_button:
-		     buttonControl(v);
 		     break;
 		}
 		
@@ -213,42 +209,6 @@ LinearLayout baijia_orderdetails_footer_right_linearlayout;//按钮的父对象
 			}
 		}, BaiJiaOrderDetailsActivity.this);
 	}
-	
-	
-	
-	
-	/****
-	 * 按钮控制
-	 * ***/
-	void buttonControl(View btn)
-	{
-		if(btn==null || btn.getTag()==null || !(btn.getTag() instanceof BaiJiaOrdeDetailsInfoBean))
-        {
-        	return;
-        }
-		BaiJiaOrdeDetailsInfoBean baiJiaOrderListInfo=(BaiJiaOrdeDetailsInfoBean)btn.getTag();
-		String str=((Button)btn).getText().toString();
-		if(str.equals(ButtonManager.WAITPAY))//如果是等待支付
-		{
-			//数据转换
-			BaiJiaOrderListInfo info=dataTrasition(baiJiaOrderListInfo);
-			ButtonManager.payOrder(this, info);
-		}else if(str.equals(ButtonManager.CANCELPAY))//撤销退款
-		{
-			ButtonManager.cancelRefund(this);
-		}else if(str.equals(ButtonManager.QUERENTIHUO))//确认提货
-		{
-			//数据转换
-			BaiJiaOrderListInfo info=dataTrasition(baiJiaOrderListInfo);
-			ButtonManager.affirmPUG(this, info, this);
-		}else if(str.equals(ButtonManager.SHENQINGTUIKUAN))//申请退款
-		{
-			//数据转换
-			BaiJiaOrderListInfo info=dataTrasition(baiJiaOrderListInfo);
-			ButtonManager.applyforRefund(this, info);
-		}
-	}
-	
 	
 	BaiJiaOrderListInfo dataTrasition(BaiJiaOrdeDetailsInfoBean baiJiaOrderListInfo)
 	{
@@ -322,7 +282,7 @@ LinearLayout baijia_orderdetails_footer_right_linearlayout;//按钮的父对象
 		MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.nullToString(baiJiaOrdeDetailsInfoBean.getBuyerLogo()), riv_customer_head, MyApplication.getInstance().getDisplayImageOptions());
 		obj_list.add(baiJiaOrdeDetailsInfoBean);
 		//根据订单状态 设置按钮
-		List<View> view_list=ButtonManager.getButton(this, bean.getData().getOrderStatus());
+		List<View> view_list=ButtonManager.getButton(this, bean.getData().getOrderStatus(),this);
 		baijia_orderdetails_footer_right_linearlayout.removeAllViews();
 		if(view_list!=null)
 		{
@@ -333,9 +293,10 @@ LinearLayout baijia_orderdetails_footer_right_linearlayout;//按钮的父对象
 					View button=view_list.get(i);
 					Button btn=(Button)button.findViewById(R.id.baijia_orderdetails_sqtk_button);
 					FontManager.changeFonts(this, btn);
-					btn.setOnClickListener(this);
 					BaiJiaOrdeDetailsInfoBean infobean=bean.getData();
-					btn.setTag(infobean);
+					//数据转换
+					BaiJiaOrderListInfo info=dataTrasition(infobean);
+					btn.setTag(info);
 					LinearLayout.LayoutParams param=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 					param.leftMargin=5;
 					baijia_orderdetails_footer_right_linearlayout.addView(button,param);
@@ -346,7 +307,7 @@ LinearLayout baijia_orderdetails_footer_right_linearlayout;//按钮的父对象
 		baijia_orderdetails_layout_lsitview.setAdapter(baijiaOrderDetailsAdapter);
 		baijiaOrderDetailsAdapter.notifyDataSetChanged();
 		
-		ListViewUtils.setListViewHeightBasedOnChildren(baijia_orderdetails_layout_lsitview);
+		//ListViewUtils.setListViewHeightBasedOnChildren(baijia_orderdetails_layout_lsitview);
 	}
 
 	@Override

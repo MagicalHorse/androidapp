@@ -39,6 +39,7 @@ import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.AffirmOrderActivity;
 import com.shenma.yueba.baijia.modle.PrioductSizesInfoBean;
 import com.shenma.yueba.baijia.modle.ProductsDetailsInfoBean;
+import com.shenma.yueba.baijia.modle.ProductsDetailsTagInfo;
 import com.shenma.yueba.baijia.modle.RequestProductDetailsInfoBean;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.ToolsUtil;
@@ -97,10 +98,10 @@ public class CreateOrderDialog extends AlertDialog implements android.view.View.
 		ToolsUtil.setFontStyle(context, ll, R.id.chat_product_head_layout_name_textview,R.id.chat_product_head_layout_price_textview,R.id.createorder_dialog_layout_color_textview,R.id.createorder_dialog_layout_colorvalue_textview,R.id.createorder_dialog_layout_size_textview,R.id.createorder_dialog_layout_count_textview,R.id.create_dialog_jian_button,R.id.createorder_dialog_layout_countvalue_edittext,R.id.create_dialog_jia_button,R.id.createorder_dialog_layout_cancell_button,R.id.createorder_dialog_layout_submit_button,R.id.createorder_dialog_layout_repertory_textview,R.id.createorder_dialog_layout_repertoryvalue_textview);
 		//头像
 		ImageView chat_product_head_layout_imageview=(ImageView)ll.findViewById(R.id.chat_product_head_layout_imageview);
-		String[] pic_array=productsDetailsInfoBean.getProductPic();
-		if(pic_array!=null && pic_array.length>0)
+		List<ProductsDetailsTagInfo> productsDetailsTagInfo_list=productsDetailsInfoBean.getProductPic();
+		if(productsDetailsTagInfo_list!=null && productsDetailsTagInfo_list.size()>0)
 		{
-			MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.getImage(pic_array[0], 320, 0), chat_product_head_layout_imageview, MyApplication.getInstance().getDisplayImageOptions());
+			MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.getImage(ToolsUtil.nullToString(productsDetailsTagInfo_list.get(0).getLogo()), 320, 0), chat_product_head_layout_imageview, MyApplication.getInstance().getDisplayImageOptions());
 		}
 		//产品名称
 		TextView chat_product_head_layout_name_textview=(TextView)ll.findViewById(R.id.chat_product_head_layout_name_textview);

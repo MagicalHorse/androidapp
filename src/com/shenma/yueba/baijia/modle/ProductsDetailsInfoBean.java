@@ -69,7 +69,13 @@ public class ProductsDetailsInfoBean implements Serializable{
 	//关注的人
 	LikeUsersInfoBean LikeUsers=new LikeUsersInfoBean();
 	//买手推荐商品信息
-	String[] ProductPic=null;
+	List<ProductsDetailsTagInfo> ProductPic=new ArrayList<ProductsDetailsTagInfo>();
+	public List<ProductsDetailsTagInfo> getProductPic() {
+		return ProductPic;
+	}
+	public void setProductPic(List<ProductsDetailsTagInfo> productPic) {
+		ProductPic = productPic;
+	}
 	public int getBuyerId() {
 		return BuyerId;
 	}
@@ -131,12 +137,5 @@ public class ProductsDetailsInfoBean implements Serializable{
 	public void setLikeUsers(LikeUsersInfoBean likeUsers) {
 		LikeUsers = likeUsers;
 	}
-	public String[] getProductPic() {
-		return ProductPic;
-	}
-	public void setProductPic(String[] productPic) {
-		ProductPic = productPic;
-	}
-	
 	
 }

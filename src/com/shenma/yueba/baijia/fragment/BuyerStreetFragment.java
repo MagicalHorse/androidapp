@@ -471,9 +471,6 @@ public class BuyerStreetFragment extends Fragment {
 	 * 启动自动滚动
 	 * **/
 	void startTimeToViewPager() {
-		if (true) {
-			return;
-		}
 		stopTimerToViewPager();
 		if (imageViewlist == null || imageViewlist.size() <= 2) {
 			return;
