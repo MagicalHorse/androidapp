@@ -131,6 +131,12 @@ public class AddTagActivity extends BaseActivityWithTopView implements TextWatch
 	public void afterTextChanged(Editable arg0) {
 		String content = arg0.toString();
 		if(content.length()== 0 ){
+			if(mList!=null && mList.size()>0){
+				if(mList.get(0).isNewTag()){
+					mList.remove(0);
+					adapter.notifyDataSetChanged();
+				}
+			}
 			iv_delete.setVisibility(View.GONE);
 		}else{
 			iv_delete.setVisibility(View.VISIBLE);
@@ -175,6 +181,15 @@ public class AddTagActivity extends BaseActivityWithTopView implements TextWatch
 				if(bean.getData()!=null){
 					mList.clear();
 					if(bean.getData().size()>0){
+						if("0".equals(type) && !TextUtils.isEmpty(et_search.getText().toString().trim())){
+							if(!isConstantsKey(et_search.getText().toString().trim(), bean.getData())){
+								TagListItemBean item = new TagListItemBean();
+								item.setId("");
+								item.setName("添加新标签："+et_search.getText().toString().trim());
+								item.setNewTag(true);
+								mList.add(item);
+							}
+						}
 						mList.addAll(bean.getData());
 					}else{
 						if("0".equals(type)){
@@ -216,4 +231,25 @@ public class AddTagActivity extends BaseActivityWithTopView implements TextWatch
 			super.onPause();
 			MobclickAgent.onPause(this);
 			}
+			
+			
+			
+			
+			
+			private boolean isConstantsKey(String key,List<TagListItemBean> lists){
+				boolean isConstants = false;
+				for (int i = 0; i < lists.size(); i++) {
+					if(key!=null && key.equals(lists.get(i).getName())){
+						isConstants =  true;
+						break;
+					}
+				}
+				return isConstants;
+				
+			}
+			
 }
+
+
+
+
