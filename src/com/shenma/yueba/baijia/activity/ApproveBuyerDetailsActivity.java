@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -37,6 +38,7 @@ import com.shenma.yueba.baijia.modle.LikeUsersInfoBean;
 import com.shenma.yueba.baijia.modle.ProductsDetailsInfoBean;
 import com.shenma.yueba.baijia.modle.ProductsDetailsPromotion;
 import com.shenma.yueba.baijia.modle.ProductsDetailsTagInfo;
+import com.shenma.yueba.baijia.modle.ProductsDetailsTagsInfo;
 import com.shenma.yueba.baijia.modle.RequestProductDetailsInfoBean;
 import com.shenma.yueba.baijia.modle.UsersInfoBean;
 import com.shenma.yueba.util.FontManager;
@@ -46,6 +48,7 @@ import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.FixedSpeedScroller;
 import com.shenma.yueba.view.MyGridView;
 import com.shenma.yueba.view.RoundImageView;
+import com.shenma.yueba.view.TagImageView;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -53,6 +56,7 @@ import com.umeng.analytics.MobclickAgent;
  * @version 创建时间：2015-5-20 下午6:02:36 程序的简单说明 定义认证买手 商品详情页
  */
 
+@SuppressLint("NewApi")
 public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView
 		implements OnClickListener {
 	// 当前选中的id （ViewPager选中的id）
@@ -87,7 +91,7 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView
 	Button approvebuyer_addcartbutton;
 	// 直接购买
 	Button approvebuyerbuybutton;
-	List<ImageView> viewlist = new ArrayList<ImageView>();
+	List<View> viewlist = new ArrayList<View>();
 	LinearLayout approvebuyerdetails_closeingtime_linearlayout;
 	Timer timer;
 	RequestProductDetailsInfoBean bean;
@@ -137,8 +141,7 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView
 		getWindowManager().getDefaultDisplay().getMetrics(dm);
 		int width = dm.widthPixels;
 		int height = width;
-		appprovebuyer_viewpager_relativelayout
-				.setLayoutParams(new LinearLayout.LayoutParams(width, height));
+		appprovebuyer_viewpager_relativelayout.setLayoutParams(new LinearLayout.LayoutParams(width, height));
 
 		appprovebuyer_viewpager.setOnTouchListener(new OnTouchListener() {
 
@@ -351,13 +354,34 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView
 			//图片和标签
 			List<ProductsDetailsTagInfo> productsDetailsTagInfo_list=  Data.getProductPic();
 			for (int i = 0; i < productsDetailsTagInfo_list.size(); i++) {
+				RelativeLayout rl=new RelativeLayout(ApproveBuyerDetailsActivity.this);
 				ImageView iv = new ImageView(ApproveBuyerDetailsActivity.this);
-				iv.setScaleType(ScaleType.FIT_CENTER);
-				viewlist.add(iv);
+				iv.setBackgroundColor(ApproveBuyerDetailsActivity.this.getResources().getColor(R.color.color_lightgrey));
+				iv.setScaleType(ScaleType.FIT_XY);
+				rl.addView(iv, new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
+				TagImageView tiv=new TagImageView(ApproveBuyerDetailsActivity.this);
+				//tiv.setBackgroundColor(ApproveBuyerDetailsActivity.this.getResources().getColor(R.color.color_blue));
+				//tiv.setAlpha(0.5f);
+				List<ProductsDetailsTagsInfo> productsDetailsTagsInfo_list=productsDetailsTagInfo_list.get(i).getTags();
+				if(productsDetailsTagsInfo_list!=null && productsDetailsTagsInfo_list.size()>0)
+				{
+				  for(int j=0;j<productsDetailsTagsInfo_list.size();j++)
+				  {
+					  DisplayMetrics dm = new DisplayMetrics();
+						getWindowManager().getDefaultDisplay().getMetrics(dm);
+						int width = dm.widthPixels;
+						int height = width;
+					  ProductsDetailsTagsInfo pdtinfo= productsDetailsTagsInfo_list.get(j);
+					  int tagx=(int)(pdtinfo.getPosX()*width);
+					  int tagy=(int)(pdtinfo.getPosY()*height);
+					  tiv.addTextTagCanNotMove(ToolsUtil.nullToString(pdtinfo.getName()), tagx, tagy);
+				  }
+				}
+				rl.addView(tiv, new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
+				viewlist.add(rl);
 				initPic(ToolsUtil.getImage(ToolsUtil.nullToString(productsDetailsTagInfo_list.get(i).getLogo()), 320, 0), iv);
 			}
-			customPagerAdapter = new ScrollViewPagerAdapter(
-					ApproveBuyerDetailsActivity.this, viewlist);
+			customPagerAdapter = new ScrollViewPagerAdapter(ApproveBuyerDetailsActivity.this, viewlist);
 			appprovebuyer_viewpager.setAdapter(customPagerAdapter);
 			setcurrItem(0);
 			startTimeToViewPager();

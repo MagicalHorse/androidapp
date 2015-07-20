@@ -3,8 +3,6 @@ package com.shenma.yueba.baijia.adapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.shenma.yueba.R;
-
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.util.Log;
@@ -13,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 
+import com.shenma.yueba.R;
+
 /**  
  * @author gyj  
  * @version 创建时间：2015-6-26 下午5:25:12  
@@ -20,9 +20,9 @@ import android.widget.ImageView.ScaleType;
  */
 
 public class ScrollViewPagerAdapter extends PagerAdapter{
-List<ImageView> imageViewlist=new ArrayList<ImageView>();
+List<View> imageViewlist=new ArrayList<View>();
 Context context;
-	public ScrollViewPagerAdapter(Context context,List<ImageView> imageViewlist)
+	public ScrollViewPagerAdapter(Context context,List<View> imageViewlist)
 	{
 		this.context=context;
 		this.imageViewlist=imageViewlist;
@@ -50,21 +50,21 @@ Context context;
 	public Object instantiateItem(ViewGroup container, int position) {
 		int a=position % imageViewlist.size();
 		Log.i("TAG", "A:"+a);
-		ImageView imageview=(ImageView)imageViewlist.get(a);
-		imageview.setBackgroundColor(context.getResources().getColor(R.color.color_lightgrey));
+		View imageview=imageViewlist.get(a);
+		
 		if (imageview.getParent() != null) {
 			((ViewGroup) imageview.getParent()).removeView(imageview);
 		}
 		//imageview.setImageResource(R.drawable.default_pic);
-		imageview.setScaleType(ScaleType.FIT_CENTER);
 		imageview.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT));
 		container.addView(imageview, 0);
+		imageview.invalidate();
 		return imageview;
 	}
 
 	@Override
 	public void destroyItem(ViewGroup container, int position, Object object) {
-		ImageView imageview=imageViewlist.get(position%imageViewlist.size());
+		//ImageView imageview=imageViewlist.get(position%imageViewlist.size());
 		//container.removeView(imageview);
 	}
 }

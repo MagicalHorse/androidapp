@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.AbsListView;
 import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -87,7 +88,7 @@ public class BuyerStreetFragment extends Fragment {
 	// 商品信息列表
 	List<ProductsInfoBean> Products = new ArrayList<ProductsInfoBean>();
 	BitmapUtils bitmapUtils;
-	List<ImageView> imageViewlist = new ArrayList<ImageView>();
+	List<View> imageViewlist = new ArrayList<View>();
 	BuyerAdapter buyerAdapter;
 
 	@Override
@@ -368,6 +369,7 @@ public class BuyerStreetFragment extends Fragment {
 			for (int i = 0; i < Banners.size(); i++) {
 				ImageView imageView = new ImageView(getActivity());
 				imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT));
+				imageView.setScaleType(ScaleType.FIT_XY);
 				imageView.setTag(Banners.get(i));
 				imageViewlist.add(imageView);
 				initPic(ToolsUtil.nullToString(ToolsUtil.getImage(Banners.get(i).getPic(), 320, 0)), imageView);
