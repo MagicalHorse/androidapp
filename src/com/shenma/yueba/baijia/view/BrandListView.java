@@ -38,7 +38,6 @@ import com.shenma.yueba.util.ToolsUtil;
  */
 
 public class BrandListView extends BaseView{
-	static BrandListView msgListView;
 	Activity activity;
 	LayoutInflater layoutInflater;
 	
@@ -52,15 +51,6 @@ public class BrandListView extends BaseView{
 	HttpControl httpCntrol=new HttpControl();
 	List<BrandInfo> items=new ArrayList<BrandInfo>();
 	boolean isfirst=true;
-	
-	public static BrandListView the()
-	{
-		if(msgListView==null)
-		{
-			msgListView=new BrandListView();
-		}
-		return msgListView;
-	}
 	
 	public View getView(Activity activity)
 	{
@@ -96,7 +86,7 @@ public class BrandListView extends BaseView{
 		});
 		
 		showloading_layout_view=(LinearLayout)view.findViewById(R.id.showloading_layout_view);
-		pull_refresh_list.setMode(Mode.PULL_FROM_START);
+		//pull_refresh_list.setMode(Mode.PULL_FROM_START);
 		 
 		pull_refresh_list.setOnPullEventListener(new OnPullEventListener<ListView>() {
 
@@ -197,17 +187,20 @@ public class BrandListView extends BaseView{
 						{
 							pull_refresh_list.setMode(Mode.PULL_FROM_START);
 							ToolsUtil.showNoDataView(activity,view ,true);
+						}else
+						{
+							MyApplication.getInstance().showMessage(activity, activity.getResources().getString(R.string.lastpagedata_str));
 						}
 					}else 
 					{
 						if(page==1)
 						{
-							pull_refresh_list.setMode(Mode.PULL_FROM_START);
+							pull_refresh_list.setMode(Mode.BOTH);
 						}
 						int totalPage = bean.getData().getTotalpaged();
 						if (currPage >= totalPage) {
 							//MyApplication.getInstance().showMessage(activity, activity.getResources().getString(R.string.lastpagedata_str));
-							pull_refresh_list.setMode(Mode.PULL_FROM_START);
+							pull_refresh_list.setMode(Mode.BOTH);
 						} else {
 							pull_refresh_list.setMode(Mode.BOTH);
 						}

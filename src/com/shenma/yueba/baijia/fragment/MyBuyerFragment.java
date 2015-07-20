@@ -91,7 +91,7 @@ public class MyBuyerFragment extends Fragment {
 
 	void initPullView() {
 		baijia_contact_listview = (PullToRefreshListView)parentview.findViewById(R.id.baijia_contact_listview);
-		baijia_contact_listview.setMode(Mode.BOTH);
+		//baijia_contact_listview.setMode(Mode.BOTH);
 		baijia_contact_listview.setOnPullEventListener(new OnPullEventListener<ListView>() {
 
 			@Override
@@ -195,12 +195,12 @@ public class MyBuyerFragment extends Fragment {
 								int totalPage = data.getTotalpaged();
 								if(page==1)
 								{
-									baijia_contact_listview.setMode(Mode.PULL_FROM_START);
+									baijia_contact_listview.setMode(Mode.BOTH);
 								}
 								if(currpage>=totalPage)
 								{
 									//MyApplication.getInstance().showMessage(getActivity(), getActivity().getResources().getString(R.string.lastpagedata_str));
-									baijia_contact_listview.setMode(Mode.PULL_FROM_START);
+									baijia_contact_listview.setMode(Mode.BOTH);
 								}else
 								{
 									baijia_contact_listview.setMode(Mode.BOTH);

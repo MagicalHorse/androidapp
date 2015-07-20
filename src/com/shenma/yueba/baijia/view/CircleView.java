@@ -78,7 +78,7 @@ public class CircleView extends BaseView{
 	void initPullView()
 	{
 		baijia_quanzi_layout_tanb1_gridbview=(PullToRefreshGridView)view.findViewById(R.id.baijia_quanzi_layout_tanb1_gridbview);
-		baijia_quanzi_layout_tanb1_gridbview.setMode(Mode.BOTH);
+		//baijia_quanzi_layout_tanb1_gridbview.setMode(Mode.BOTH);
 		 
 		baijia_quanzi_layout_tanb1_gridbview.setOnPullEventListener(new OnPullEventListener<GridView>() {
 
@@ -267,17 +267,20 @@ public class CircleView extends BaseView{
 							    {
 							    	baijia_quanzi_layout_tanb1_gridbview.setMode(Mode.PULL_FROM_START);
 								    ToolsUtil.showNoDataView(activity,view, true);
+							    }else
+							    {
+							    	MyApplication.getInstance().showMessage(activity, activity.getResources().getString(R.string.lastpagedata_str));
 							    }
 								
 						   }else
 						   {
 							   if(page==1)
 							    {
-							    	baijia_quanzi_layout_tanb1_gridbview.setMode(Mode.PULL_FROM_START);
+							    	baijia_quanzi_layout_tanb1_gridbview.setMode(Mode.BOTH);
 							    }
 							   int totalPage = bean.getTotalpaged();
 								if (currPage >= totalPage) {
-									baijia_quanzi_layout_tanb1_gridbview.setMode(Mode.PULL_FROM_START);
+									baijia_quanzi_layout_tanb1_gridbview.setMode(Mode.BOTH);
 									//MyApplication.getInstance().showMessage(activity, activity.getResources().getString(R.string.lastpagedata_str));
 								} else {
 									baijia_quanzi_layout_tanb1_gridbview.setMode(Mode.BOTH);

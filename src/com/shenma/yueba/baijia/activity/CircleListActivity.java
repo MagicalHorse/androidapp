@@ -77,7 +77,7 @@ public class CircleListActivity extends BaseActivityWithTopView{
 		});
 		pull_refresh_list=(PullToRefreshListView)view.findViewById(R.id.pull_refresh_list);
 		showloading_layout_view=(LinearLayout)view.findViewById(R.id.showloading_layout_view);
-		pull_refresh_list.setMode(Mode.PULL_FROM_START);
+		pull_refresh_list.setMode(Mode.DISABLED);
 		 
 		pull_refresh_list.setOnPullEventListener(new OnPullEventListener<ListView>() {
 
@@ -191,17 +191,20 @@ public class CircleListActivity extends BaseActivityWithTopView{
 							{
 								pull_refresh_list.setMode(Mode.PULL_FROM_START);
 								ToolsUtil.showNoDataView(CircleListActivity.this, true);
+							}else
+							{
+								MyApplication.getInstance().showMessage(CircleListActivity.this, CircleListActivity.this.getResources().getString(R.string.lastpagedata_str));
 							}
 						}else
 						{
 							if(page==1)
 							{
-								pull_refresh_list.setMode(Mode.PULL_FROM_START);
+								pull_refresh_list.setMode(Mode.BOTH);
 							}
 							int totalPage = bean.getTotalpaged();
 							if (currPage >= totalPage) {
 								//MyApplication.getInstance().showMessage(CircleListActivity.this, CircleListActivity.this.getResources().getString(R.string.lastpagedata_str));
-								pull_refresh_list.setMode(Mode.PULL_FROM_START);
+								pull_refresh_list.setMode(Mode.BOTH);
 							} else {
 								pull_refresh_list.setMode(Mode.BOTH);
 							}

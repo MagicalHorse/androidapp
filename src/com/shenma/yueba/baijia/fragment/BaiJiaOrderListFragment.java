@@ -92,7 +92,7 @@ public class BaiJiaOrderListFragment extends Fragment implements
 		// 设置标签显示的内容
 		baiJiaOrderListAdapter = new BaiJiaOrderListAdapter(this, object_list,getActivity());
 		pull_refresh_list.setAdapter(baiJiaOrderListAdapter);
-		pull_refresh_list.setMode(Mode.BOTH);
+		pull_refresh_list.setMode(Mode.DISABLED);
 		pull_refresh_list.setOnPullEventListener(new OnPullEventListener<ListView>() {
 
 					@Override
@@ -187,19 +187,22 @@ public class BaiJiaOrderListFragment extends Fragment implements
 								{
 									pull_refresh_list.setMode(Mode.PULL_FROM_START);
 									ToolsUtil.showNoDataView(getActivity(),true);
+								}else
+								{
+									MyApplication.getInstance().showMessage(getActivity(), getActivity().getResources().getString(R.string.lastpagedata_str));
 								}
 							}else
 							{
 							   if(page==1)
 							   {
-								   pull_refresh_list.setMode(Mode.PULL_FROM_START);
+								   pull_refresh_list.setMode(Mode.BOTH);
 							   }
 							   
 							   int totalPage = bean.getTotalpaged();
 
 								if (currpage >= totalPage) {
 									//MyApplication.getInstance().showMessage(getActivity(), getActivity().getResources().getString(R.string.lastpagedata_str));
-									pull_refresh_list.setMode(Mode.PULL_FROM_START);
+									pull_refresh_list.setMode(Mode.BOTH);
 								} else {
 									pull_refresh_list.setMode(Mode.BOTH);
 								}
