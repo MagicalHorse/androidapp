@@ -481,14 +481,15 @@ public class BuyerStreetFragment extends Fragment {
 			@Override
 			public void run() {
 				currid++;
-				getActivity().runOnUiThread(new Runnable() {
-
-					@Override
-					public void run() {
-						setViewPagerDuration(1000);
-						setcurrItem(currid);
-					}
-				});
+				if(getActivity()!=null){
+					getActivity().runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							setViewPagerDuration(1000);
+							setcurrItem(currid);
+						}
+					});
+				}
 			}
 		}, 2000, 3000);
 	}
