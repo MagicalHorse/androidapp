@@ -7,12 +7,14 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
@@ -26,6 +28,7 @@ import com.umeng.analytics.MobclickAgent;
 
 public class MainActivityForBaiJia extends FragmentActivity {
 	FrameLayout baijia_main_framelayout;
+	private long exitTime = 0;// 初始化退出时间，用于两次点击返回退出程序
 	LinearLayout baijia_main_foot_linearlayout;
 	List<FragmentBean> fragment_list = new ArrayList<FragmentBean>();
 	List<View> footer_list = new ArrayList<View>();
@@ -105,28 +108,28 @@ public class MainActivityForBaiJia extends FragmentActivity {
 
 			break;
 		case 1:
-			if (!MyApplication.getInstance()
-					.isUserLogin(MainActivityForBaiJia.this)) {
+			if (!MyApplication.getInstance().isUserLogin(
+					MainActivityForBaiJia.this)) {
 				return;
 			}
 			break;
 		case 2:
-			if (!MyApplication.getInstance()
-					.isUserLogin(MainActivityForBaiJia.this)) {
+			if (!MyApplication.getInstance().isUserLogin(
+					MainActivityForBaiJia.this)) {
 				return;
 			}
 			break;
 		case 4:
-			if (!MyApplication.getInstance()
-					.isUserLogin(MainActivityForBaiJia.this)) {
+			if (!MyApplication.getInstance().isUserLogin(
+					MainActivityForBaiJia.this)) {
 				return;
 			}
 			break;
 		default:
-			
+
 			break;
 		}
-		
+
 		if (currid == -1 && i == 0) {
 			fragmentManager
 					.beginTransaction()
@@ -161,20 +164,35 @@ public class MainActivityForBaiJia extends FragmentActivity {
 
 		}
 	}
-	
-	
+
 	public void onResume() {
 		super.onResume();
 		MobclickAgent.onResume(this);
-		}
-		public void onPause() {
+	}
+
+	public void onPause() {
 		super.onPause();
 		MobclickAgent.onPause(this);
+	}
+
+	@Override
+	protected void onDestroy() {
+		MyApplication.getInstance().removeActivity(this);// 加入回退栈
+		super.onDestroy();
+	}
+
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK
+				&& event.getAction() == KeyEvent.ACTION_DOWN) {
+			if ((System.currentTimeMillis() - exitTime) > 2000) {
+				exitTime = System.currentTimeMillis();
+				Toast.makeText(getApplicationContext(), "再按一次退出程序",
+						Toast.LENGTH_SHORT).show();
+			} else {
+				MyApplication.getInstance().exit();
+			}
+			return true; // 返回true表示执行结束不需继续执行父类按键响应
 		}
-	
-	  @Override
-	    protected void onDestroy() {
-	    	MyApplication.getInstance().removeActivity(this);//加入回退栈
-	    	super.onDestroy();
-	    }
+		return super.onKeyDown(keyCode, event);
+	}
 }

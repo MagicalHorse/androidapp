@@ -44,6 +44,7 @@ public class MeFragmentForYangJia extends BaseFragment implements
 	private TextView tv_store_introduce;
 	private TextView tv_invite_buyer;
 	private TextView tv_to_baijia;
+	private String shareContent = "快来关注shopping平台，24小时售卖实体百货商品，送货上门现场自提随心选！";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -125,7 +126,7 @@ public class MeFragmentForYangJia extends BaseFragment implements
 			startActivity(storeIntroduceIntent);
 			break;
 		case R.id.tv_invite_buyer:// 邀请买手
-			ShareUtil.shareAll(getActivity(), "我市内容", "我是url", "http://img3.3lian.com/2014/c2/61/d/17.jpg",null);
+			ShareUtil.shareAll(getActivity(), shareContent, "", "http://img3.3lian.com/2014/c2/61/d/17.jpg",null);
 			break;
 		case R.id.tv_to_baijia:// 我要败家
 			CustomProgressDialog dialog = new CustomProgressDialog(
