@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 /**
  * 
- * @author caizhiming
+ * @author gyj
  * @created on 2015-4-13
  */
 public class XCFlowLayout extends ViewGroup{

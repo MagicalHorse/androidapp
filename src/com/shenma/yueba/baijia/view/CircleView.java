@@ -36,7 +36,6 @@ import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.RoundImageView;
 
 public class CircleView extends BaseView{
-	static CircleView quanziControlView;
 	Activity activity;
 	List<FragmentBean> fragment_list=new ArrayList<FragmentBean>();
 	List<View> footer_list=new ArrayList<View>();
@@ -52,7 +51,7 @@ public class CircleView extends BaseView{
 	boolean showDialog=true;
 	boolean isFirst=true;
 	HttpControl httpCntrol=new HttpControl();
-	private CircleView(Activity activity)
+	public CircleView(Activity activity)
 	{
 		if(view==null)
 		{
@@ -62,19 +61,6 @@ public class CircleView extends BaseView{
 			initPullView();
 			initView(view);
 		}
-	}
-	
-	
-	public static CircleView the(Activity activity)
-	{
-		if(quanziControlView==null)
-		{
-			quanziControlView=new CircleView(activity);
-			
-		}
-	
-		
-		return quanziControlView;
 	}
 
 	public View getView(Activity activity)
