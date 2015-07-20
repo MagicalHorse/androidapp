@@ -2006,7 +2006,9 @@ public class HttpControl {
 								httpCallBack.http_Fails(bean.getStatusCode(),bean.getMessage());
 							} 
 						}
-						 progressDialog.cancel();
+						if(progressDialog!=null){
+							progressDialog.cancel();
+						}
 					}
 
 					@Override
@@ -2015,7 +2017,9 @@ public class HttpControl {
 						if (httpCallBack != null) {
 							httpCallBack.http_Fails(0, msg);
 						}
-						 progressDialog.cancel();
+						if(progressDialog!=null){
+							progressDialog.cancel();
+						}
 					}
 				});
 	}
