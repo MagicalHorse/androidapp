@@ -90,20 +90,30 @@
         </LinearLayout>
     </RelativeLayout>
 
-    <ImageView
-        android:id="@+id/baijia_tab1_item_productcontent_imageview"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scaleType="fitCenter" />
+        android:layout_height="wrap_content" >
+
+        <ImageView
+            android:id="@+id/baijia_tab1_item_productcontent_imageview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY" />
+
+        <com.shenma.yueba.view.TagImageView
+            android:id="@+id/baijia_tab1_item_productcontent_tagimageview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/buyersteetfragmeng_item_desc_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/shop_main_width5_dimen"
-        android:paddingLeft="10dip"
-        android:maxLines="3"
         android:ellipsize="end"
+        android:maxLines="3"
+        android:paddingLeft="10dip"
         android:text="@null"
         android:textSize="@dimen/textsize14sp" />
 
