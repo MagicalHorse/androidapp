@@ -142,7 +142,7 @@ public class SalesManagerForAttestationBuyerAdapter extends BaseAdapterWithUtil 
 				List<ProductItemBean>  products = item.getProducts();
 				ProductItemBean productItme = products.get(0);
 				if(!TextUtils.isEmpty(productItme.getPicture())){
-					bitmapUtils.display(holder.iv_product, productItme.getPicture());
+					bitmapUtils.display(holder.iv_product, ToolsUtil.getImage(productItme.getPicture(), 120, 0));
 					holder.tv_price.setText(TextUtils.isEmpty(productItme.getPrice())?"":productItme.getPrice()+"￥");
 					holder.tv_product_name.setText(TextUtils.isEmpty(productItme.getBrandName())?"":productItme.getBrandName());
 					holder.tv_description.setText(TextUtils.isEmpty(productItme.getName())?"":productItme.getName());
@@ -153,6 +153,7 @@ public class SalesManagerForAttestationBuyerAdapter extends BaseAdapterWithUtil 
 			}
 			
 		}
+		
 		return convertView;
 	}
 	
