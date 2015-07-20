@@ -19,6 +19,7 @@ import com.shenma.yueba.baijia.fragment.BaseFragment;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
+import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.yangjia.adapter.MyAttentionAndFansForSocialAdapter;
 import com.shenma.yueba.yangjia.adapter.MyCircleForSocialAdapter;
 import com.shenma.yueba.yangjia.modle.AttaionAndFansListItemBean;
@@ -91,7 +92,8 @@ public class MyAttentionAndFansForSocialFragment extends BaseFragment {
 	 */
 	public void getAttationOrFansList(String status,Context ctx,boolean showDialog){
 		HttpControl httpControl = new HttpControl();
-		httpControl.getAttationOrFansList(status, page, Constants.PageSize,new HttpCallBackInterface() {
+		int userID=Integer.parseInt(SharedUtil.getStringPerfernece(getActivity(), SharedUtil.user_id));
+		httpControl.getAttationOrFansList(userID,status, page, Constants.PageSize,new HttpCallBackInterface() {
 			
 			@Override
 			public void http_Success(Object obj) {

@@ -360,24 +360,21 @@ public class HttpControl {
 
 	/**
 	 * 获取我关注的人和我的粉丝的列表
-	 * 
-	 * @param phone
-	 *            String手机号码
-	 * @param password
-	 *            String 密码
-	 * @param httpCallBack
-	 *            HttpCallBackInterface回调接口
-	 * @param context
-	 *            Context
+	 *  
+	 * @param status String手机号码   0表示我关注的人   1表示我的粉丝
+	 * @param UserID int 用户id
+	 * @param httpCallBack  HttpCallBackInterface回调接口
+	 * @param context  Context
 	 * @return void
 	 * **/
-	public void getAttationOrFansList(String status, int page,String pageSize,
+	public void getAttationOrFansList(int UserID,String status, int page,String pageSize,
 			final HttpCallBackInterface httpCallBack, Context context,
 			boolean showDialog) {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put(Constants.STATUS, status);
-		map.put(Constants.PAGE, page + "");
+		map.put(Constants.PAGE, Integer.toString(page));
 		map.put(Constants.PAGESIZE, pageSize);
+		map.put("UserID", Integer.toString(UserID));
 		BasehttpSend(map, context, HttpConstants.METHOD_GETUSERFAVOITE,
 				httpCallBack, AttationAndFansListBackBean.class, showDialog,
 				false);
@@ -1439,6 +1436,26 @@ public class HttpControl {
 				RequestMyCircleInfoBean.class, showDialog, false);
 	}
 
+	
+	/**
+	 * 获取用户的圈子(如果是买手显示由买手创建的圈子，如果是普通用户则显示用户加入的圈子)
+	 * 
+	 * @param currPage  int 当前页
+	 * @param pageSize int 条数
+	 * @param UserId  int 用户ID
+	 * @return void
+	 * **/
+	public void getUserGroups(int UserId,int currPage, int pageSize, boolean showDialog,
+			final HttpCallBackInterface httpCallBack, Context context) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("UserId", Integer.toString(UserId));
+		map.put(Constants.PAGE, Integer.toString(currPage));
+		map.put(Constants.PAGESIZE, Integer.toString(pageSize));
+		BasehttpSend(map, context, HttpConstants.GETUSERGROUPS, httpCallBack,
+				RequestMyCircleInfoBean.class, showDialog, false);
+	}
+
+	
 	/**
 	 * 获取败家推荐的圈子
 	 * 

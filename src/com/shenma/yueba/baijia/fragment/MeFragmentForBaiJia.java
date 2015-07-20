@@ -146,6 +146,8 @@ public class MeFragmentForBaiJia extends BaseFragment implements OnClickListener
 		switch (v.getId()) {
 		case R.id.me_fragment_for_baijie_layout_mycircle_linearlayout://圈子
 			Intent intent=new Intent(getActivity(),CircleListActivity.class);
+			int userID=Integer.parseInt(SharedUtil.getStringPerfernece(getActivity(), SharedUtil.user_id));
+			intent.putExtra("userID", userID);
 			startActivity(intent);
 			break;
 		case R.id.iv_setting://设置

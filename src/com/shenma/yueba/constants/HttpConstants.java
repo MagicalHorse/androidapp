@@ -604,6 +604,12 @@ public class HttpConstants {
 	public static String GETMYCIRCLE = Circle+ "GetMyGroup";
 	
 	/**
+	 * 获取用户的圈子(如果是买手显示由买手创建的圈子，如果是普通用户则显示用户加入的圈子)
+	 */
+	
+	public static String GETUSERGROUPS = Circle+ "GetUserGroups";
+	
+	/**
 	 * 修改推送状态
 	 */
 	
