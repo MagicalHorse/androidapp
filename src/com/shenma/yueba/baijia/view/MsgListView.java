@@ -36,8 +36,7 @@ import com.shenma.yueba.util.ToolsUtil;
  * 程序的简单说明  
  */
 
-public class MsgListView {
-	static MsgListView msgListView;
+public class MsgListView extends BaseView{
 	Activity activity;
 	LayoutInflater layoutInflater;
 	boolean showDialog=true;
@@ -51,14 +50,6 @@ public class MsgListView {
 	private PullToRefreshListView pull_refresh_list;
 	LinearLayout showloading_layout_view;
 	MsgAdapter msgAdapter;
-	public static MsgListView the()
-	{
-		if(msgListView==null)
-		{
-			msgListView=new MsgListView();
-		}
-		return msgListView;
-	}
 	
 	public View getView(Activity activity)
 	{
@@ -68,7 +59,6 @@ public class MsgListView {
 			layoutInflater=activity.getLayoutInflater();
 			initView();
 			initPullView();
-			firstData();
 		}
 		return view;
 	}
@@ -89,9 +79,10 @@ public class MsgListView {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,long arg3) {
 				MsgListInfo msgListInfo=mList.get(arg2-1);
 				Intent intent=new Intent(activity,ChatActivity.class);
+				
 				intent.putExtra("Chat_Type", ChatActivity.chat_type_private);//类型 圈子 还是私聊
 				intent.putExtra("Chat_NAME",msgListInfo.getName());//名字
-				intent.putExtra("toUser_id",msgListInfo.getId());//touser_id
+				intent.putExtra("Chat_RoomID",msgListInfo.getRoomId());//roomid
 				activity.startActivity(intent);
 			}
 		});
@@ -255,12 +246,12 @@ public class MsgListView {
 		}
 	}
 	
-	public void firstData()
-	{
-	   if(isfirstStatus)
-	   {
-		   return ;
-	   }
-	   requestFalshData();
+	@Override
+	public void firstInitData(Activity activity) {
+		 if(isfirstStatus)
+		   {
+			   return ;
+		   }
+		   requestFalshData();
 	}
 }

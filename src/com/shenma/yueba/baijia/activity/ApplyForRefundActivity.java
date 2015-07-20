@@ -1,5 +1,7 @@
 package com.shenma.yueba.baijia.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.Selection;
@@ -7,6 +9,7 @@ import android.text.Spannable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -76,6 +79,7 @@ int maxValue=0;
 			}
 		});
 		affirmorder_item_icon_imageview=(ImageView)parentView.findViewById(R.id.affirmorder_item_icon_imageview);
+		affirmorder_item_icon_imageview.setOnClickListener(this);
 		affirmorder_item_productname_textview=(TextView)parentView.findViewById(R.id.affirmorder_item_productname_textview);
 		affirmorder_item_productsize_textview=(TextView)parentView.findViewById(R.id.affirmorder_item_productsize_textview);
 		affirmorder_item_productcount_textview=(TextView)parentView.findViewById(R.id.affirmorder_item_productcount_textview);
@@ -88,6 +92,16 @@ int maxValue=0;
 		applyforrefund_layout_footersubmit_button=(Button)parentView.findViewById(R.id.applyforrefund_layout_footersubmit_button);
 		applyforrefund_layout_footersubmit_button.setOnClickListener(this);
 		createorder_dialog_layout_countvalue_edittext=(EditText)parentView.findViewById(R.id.createorder_dialog_layout_countvalue_edittext);
+		createorder_dialog_layout_countvalue_edittext.setFocusable(false);
+		createorder_dialog_layout_countvalue_edittext.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				InputMethodManager im=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+				im.hideSoftInputFromWindow(v.getWindowToken(), 0);
+				
+			}
+		});
 		applyforrefund_layout_appealreason_textview=(EditText)parentView.findViewById(R.id.applyforrefund_layout_appealreason_textview);
 		ToolsUtil.setFontStyle(this, parentView, R.id.affirmorder_item_productname_textview,R.id.affirmorder_item_productsize_textview,R.id.affirmorder_item_productcount_textview,R.id.affirmorder_item_productprice_textview,R.id.applyforrefund_layout_server_textview,R.id.applyforrefund_layout_servervalue_textview,R.id.applyforrefund_layout_refundprive_textview,R.id.applyforrefund_layout_refundprivevalue_textview,R.id.applyforrefund_layout_count_textview,R.id.create_dialog_jian_button,R.id.createorder_dialog_layout_countvalue_edittext,R.id.create_dialog_jia_button,R.id.applyforrefund_layout_appealreason_textview,R.id.applyforrefund_layout_footersubmit_button);
 		ProductInfoBean productInfoBean=baiJiaOrderListInfo.getProduct();
@@ -124,6 +138,7 @@ int maxValue=0;
 					createorder_dialog_layout_countvalue_edittext.setText(Integer.toString(maxValue));
 				}
 				calculateRefundPrice(Integer.parseInt(createorder_dialog_layout_countvalue_edittext.getText().toString().trim()));
+				isTextButtonEnable();
 			}
 			
 			@Override
@@ -166,6 +181,11 @@ int maxValue=0;
 			break;
 		case R.id.applyforrefund_layout_footersubmit_button://申请按钮
 			submit();
+			break;
+		case R.id.affirmorder_item_icon_imageview:
+			Intent intent=new Intent(ApplyForRefundActivity.this,ApproveBuyerDetailsActivity.class);
+			intent.putExtra("productID", baiJiaOrderListInfo.getProduct().getProductId());
+			startActivity(intent);
 			break;
 		}
 	}
@@ -223,10 +243,17 @@ int maxValue=0;
 	 * **/
 	void calculateRefundPrice(int count)
 	{
-		double allprice=baiJiaOrderListInfo.getOrderProductCount();
-		double refundprice=allprice/count;
+		//总价格
+		double allprice=baiJiaOrderListInfo.getAmount();
+		//平均价格
+		double avgprice=allprice/baiJiaOrderListInfo.getOrderProductCount();
+		double refundprice=avgprice*count;
 		String str=ToolsUtil.DounbleToString_2(refundprice);
 		applyforrefund_layout_refundprivevalue_textview.setText(str);
+		if(count==baiJiaOrderListInfo.getOrderProductCount())
+		{
+			applyforrefund_layout_refundprivevalue_textview.setText(Double.toString(baiJiaOrderListInfo.getAmount()));
+		}
 	}
 	
 	
@@ -245,5 +272,30 @@ int maxValue=0;
 	protected void onDestroy() {
 		MyApplication.getInstance().removeActivity(this);//加入回退栈
 		super.onDestroy();
+	}
+	
+	/*****
+	 * 根据库存 即 商品数量 设置 按钮颜色
+	 * ***/
+	void isTextButtonEnable()
+	{
+		create_dialog_jian_button.setSelected(true);
+		create_dialog_jia_button.setSelected(true);
+		//库存
+		int Stock=maxValue;
+		//当前选择的购买数量
+		int count=Integer.valueOf(createorder_dialog_layout_countvalue_edittext.getText().toString().trim());
+		if(Stock<=1)
+		{
+			create_dialog_jian_button.setSelected(false);
+			create_dialog_jia_button.setSelected(false);
+		}else if(count<=1)
+		{
+			create_dialog_jian_button.setSelected(false);
+		}else if(count>=Stock)
+		{
+			create_dialog_jia_button.setSelected(false);
+		}
+		
 	}
 }

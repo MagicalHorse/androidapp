@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.modle.FragmentBean;
+import com.shenma.yueba.baijia.view.BaseView;
 import com.shenma.yueba.baijia.view.DynamicListView;
 import com.shenma.yueba.baijia.view.MsgListView;
 import com.shenma.yueba.constants.Constants;
@@ -73,10 +74,10 @@ public class MessageFragment extends Fragment{
 		switch(currid)
 		{
 		case 0:
-			MsgListView.the().firstData();
+			((BaseView)(fragment_list.get(0).getFragment())).firstInitData(getActivity());
 			break;
 		case 1:
-			DynamicListView.the().firstData();
+			((BaseView)(fragment_list.get(1).getFragment())).firstInitData(getActivity());
 			break;
 		 }
 		setTextColor(currid); 
@@ -90,8 +91,8 @@ public class MessageFragment extends Fragment{
 		/*Fragment recommendedCircleFragment=new RecommendedCircleFragment();
 		Fragment myCircleFragment=new MyCircleFragment();
 		*/
-		fragment_list.add(new FragmentBean("消息", -1, MsgListView.the().getView(getActivity())));
-		fragment_list.add(new FragmentBean("动态", -1, DynamicListView.the().getView(getActivity())));
+		fragment_list.add(new FragmentBean("消息", -1, new MsgListView()));
+		fragment_list.add(new FragmentBean("动态", -1, new DynamicListView()));
 		
 		baijia_fragment_tab1_head_linearlayout=(LinearLayout)v.findViewById(R.id.baijia_fragment_tab1_head_linearlayout);
 		for(int i=0;i<fragment_list.size();i++)
@@ -135,7 +136,7 @@ public class MessageFragment extends Fragment{
 			public Object instantiateItem(ViewGroup container, int position) {
 				
 				//return super.instantiateItem(container, position);
-				View v=(View)fragment_list.get(position).getFragment();
+				View v=((BaseView)fragment_list.get(position).getFragment()).getView(getActivity());
 				container.addView(v,0);
 				return v;
 			}
@@ -156,10 +157,10 @@ public class MessageFragment extends Fragment{
 				switch(arg0)
 				{
 				case 0:
-					MsgListView.the().firstData();
+					((BaseView)(fragment_list.get(0).getFragment())).firstInitData(getActivity());
 					break;
 				case 1:
-					DynamicListView.the().firstData();
+					((BaseView)(fragment_list.get(1).getFragment())).firstInitData(getActivity());
 					break;
 				}
 				setCurrView(arg0);
@@ -230,5 +231,10 @@ public class MessageFragment extends Fragment{
 			}
 			
 		}
+	}
+	
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
 	}
 }

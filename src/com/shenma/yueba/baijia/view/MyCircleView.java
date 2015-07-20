@@ -43,7 +43,6 @@ public class MyCircleView extends BaseView{
 	private View view;
 	private PullToRefreshListView pull_refresh_list;
 	LinearLayout showloading_layout_view;
-	static MyCircleView myCircleView;
 	Activity activity;
 	LayoutInflater inflater;
 	BaiJiaMyCircleAdapter myCircleAdapter;
@@ -54,7 +53,7 @@ public class MyCircleView extends BaseView{
 	List<MyCircleInfo> items=new ArrayList<MyCircleInfo>();
 	boolean isFirst=true;
 	
-	private MyCircleView(Activity activity)
+	public MyCircleView(Activity activity)
 	{
 		if(view == null)
 		{
@@ -63,17 +62,6 @@ public class MyCircleView extends BaseView{
 			initPullView();
 			//requestFalshData();
 		}
-	}
-	
-	
-	public static MyCircleView the(Activity activity)
-	{
-		if(myCircleView==null)
-		{
-			myCircleView=new MyCircleView(activity);
-		}
-		myCircleView.activity=activity;
-		return myCircleView;
 	}
 	
 	

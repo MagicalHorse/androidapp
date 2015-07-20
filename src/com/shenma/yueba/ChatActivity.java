@@ -137,15 +137,26 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_chat);
+		
+		// 我的 userid
+		formUser_id = Integer.parseInt(SharedUtil.getStringPerfernece(this,SharedUtil.user_id));
+		initView();
+		// 设置购买商品信息 视图
+		setProduct();
+		
 		// 我的昵称
-		userName = SharedUtil.getStringPerfernece(getApplicationContext(),
-				SharedUtil.user_names);
+		userName = SharedUtil.getStringPerfernece(getApplicationContext(),SharedUtil.user_names);
+		
 		// 我的头像
 		usericon = SharedUtil.getStringPerfernece(this, SharedUtil.user_logo);
 		if (this.getIntent().getStringExtra("Chat_NAME") != null)// 名字
 		{
 			// 圈子名称 或 私聊用户名称
 			chat_name = this.getIntent().getStringExtra("Chat_NAME");
+			tv_top_title = (TextView) findViewById(R.id.tv_top_title);
+			tv_top_title.setText(chat_name);
+			tv_top_title.setVisibility(View.VISIBLE);
+			FontManager.changeFonts(this, tv_top_title);
 		}
 		if (this.getIntent().getStringExtra("Chat_Type") == null)// 获取聊天类型
 		{
@@ -159,26 +170,34 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 		if (chat_type.endsWith(chat_type_group)) {
 			// 获取圈子ID
 			circleId = this.getIntent().getIntExtra("circleId", -1);
+			// 获取房间号
+			getRoomdId(circleId, formUser_id, toUser_id);
 		} else if (chat_type.endsWith(chat_type_private)) {// 如果是私聊
 
-			// 私聊 获取 toUser_id
-			toUser_id = this.getIntent().getIntExtra("toUser_id", -1);
-			if (toUser_id < 0) {
-				MyApplication.getInstance().showMessage(this, "数据错误");
-				finish();
-				return;
+			//如果存在房间号 则直接获取消息信息
+			if(this.getIntent().getStringExtra("Chat_RoomID")!=null)
+			{
+				String room_id=this.getIntent().getStringExtra("Chat_RoomID");
+				if(!room_id.equals(""))
+				{
+					//获取到 room_id;
+					roomId=room_id;
+					//获取历史消息
+					getMessage();
+				}
+			}else//否则 如果存在对方id 则获取房间号
+			{
+				// 私聊 获取 toUser_id
+				toUser_id = this.getIntent().getIntExtra("toUser_id", -1);
+				if (toUser_id < 0) {
+					MyApplication.getInstance().showMessage(this, "数据错误");
+					finish();
+					return;
+				}
+				// 获取房间号
+				getRoomdId(circleId, formUser_id, toUser_id);
 			}
-
 		}
-		initView();
-		// 我的 userid
-		formUser_id = Integer.parseInt(SharedUtil.getStringPerfernece(this,
-				SharedUtil.user_id));
-		// 设置购买商品信息 视图
-		setProduct();
-		// 获取房间号
-		getRoomdId(circleId, formUser_id, toUser_id);
-
 		SocketManger.the(this);
 	}
 
@@ -195,11 +214,6 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 				finish();
 			}
 		});
-
-		tv_top_title = (TextView) findViewById(R.id.tv_top_title);
-		tv_top_title.setText(chat_name);
-		tv_top_title.setVisibility(View.VISIBLE);
-		FontManager.changeFonts(this, tv_top_title);
 		chat_product_head_layout_include = (RelativeLayout) findViewById(R.id.chat_product_head_layout_include);
 		tv_top_right = (TextView) findViewById(R.id.tv_top_right);
 		tv_top_right.setOnClickListener(this);

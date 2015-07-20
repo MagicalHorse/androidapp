@@ -78,7 +78,7 @@ public class MeFragmentForBaiJia extends BaseFragment implements OnClickListener
 		if (parent != null) {
 			parent.removeView(view);
 		}
-		requestData();
+		//requestData();
 		return view;
 	}
 

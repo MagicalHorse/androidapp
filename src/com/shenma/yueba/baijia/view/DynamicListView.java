@@ -38,8 +38,7 @@ import com.shenma.yueba.util.ToolsUtil;
  * 程序的简单说明  
  */
 
-public class DynamicListView {
-	static DynamicListView msgListView;
+public class DynamicListView extends BaseView{
 	Activity activity;
 	LayoutInflater layoutInflater;
 	boolean showDialog=true;
@@ -53,14 +52,6 @@ public class DynamicListView {
 	private PullToRefreshListView pull_refresh_list;
 	LinearLayout showloading_layout_view;
 	DynamicAdapter msgAdapter;
-	public static DynamicListView the()
-	{
-		if(msgListView==null)
-		{
-			msgListView=new DynamicListView();
-		}
-		return msgListView;
-	}
 	
 	public View getView(Activity activity)
 	{
@@ -256,13 +247,12 @@ public class DynamicListView {
 			msgAdapter.notifyDataSetChanged();
 		}
 	}
-	
-	public void firstData()
-	{
-	   if(isfirstStatus)
-	   {
-		   return ;
-	   }
-	   requestFalshData();
+	@Override
+	public void firstInitData(Activity activity) {
+		if(isfirstStatus)
+		   {
+			   return ;
+		   }
+		   requestFalshData();
 	}
 }

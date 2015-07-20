@@ -81,10 +81,8 @@ public class CircleFragment extends Fragment {
 		 * Fragment recommendedCircleFragment=new RecommendedCircleFragment();
 		 * Fragment myCircleFragment=new MyCircleFragment();
 		 */
-		fragment_list.add(new FragmentBean("推荐圈子", -1, CircleView
-				.the(getActivity())));
-		fragment_list.add(new FragmentBean("我的圈子", -1, MyCircleView
-				.the(getActivity())));
+		fragment_list.add(new FragmentBean("推荐圈子", -1, new CircleView(getActivity())));
+		fragment_list.add(new FragmentBean("我的圈子", -1, new MyCircleView(getActivity())));
 
 		baijia_fragment_tab1_head_linearlayout = (LinearLayout) v
 				.findViewById(R.id.baijia_fragment_tab1_head_linearlayout);
@@ -131,8 +129,7 @@ public class CircleFragment extends Fragment {
 			@Override
 			public Object instantiateItem(ViewGroup container, int position) {
 
-				BaseView bv = (BaseView) fragment_list.get(position)
-						.getFragment();
+				BaseView bv = (BaseView) fragment_list.get(position).getFragment();
 				View v = bv.getView(getActivity());
 				container.addView(v, 0);
 				return v;

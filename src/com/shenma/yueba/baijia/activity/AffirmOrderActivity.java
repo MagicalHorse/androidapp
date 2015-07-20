@@ -122,7 +122,7 @@ public class AffirmOrderActivity extends BaseActivityWithTopView implements
 
 			@Override
 			public void onClick(View v) {
-				submitData();
+				finish();
 			}
 		});
 		ToolsUtil.setFontStyle(AffirmOrderActivity.this, parentview,

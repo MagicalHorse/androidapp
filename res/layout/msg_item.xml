@@ -29,7 +29,7 @@
             android:layout_alignParentTop="true"
             android:singleLine="true"
             android:ellipsize="end"
-            android:text=""
+            android:text="@null"
             android:textSize="@dimen/textsize10sp" />
 
         <TextView
@@ -37,7 +37,7 @@
             android:id="@+id/tv_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text=""
+            android:text="@null"
             android:textSize="@dimen/textsize13sp" />
 
         <TextView
@@ -45,7 +45,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:text=""
+            android:text="@null"
+            android:maxLines="2"
+            android:ellipsize="end"
             android:textSize="@dimen/textsize11sp" />
     </RelativeLayout>
 
