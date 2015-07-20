@@ -24,7 +24,6 @@ import android.widget.Toast;
 
 import com.alibaba.sdk.android.oss.callback.SaveCallback;
 import com.alibaba.sdk.android.oss.model.OSSException;
-import com.google.inject.Binding;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.modle.ModifyLogoBackBean;
@@ -35,6 +34,7 @@ import com.shenma.yueba.util.CustomProgressDialog;
 import com.shenma.yueba.util.FileUtils;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.JpushUtils;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.PhotoUtils;
 import com.shenma.yueba.util.SharedUtil;
@@ -392,6 +392,8 @@ public class UserConfigActivity extends BaseActivityWithTopView implements
 			Intent intentLogin = new Intent(mContext, SplashActivity.class);
 			HttpControl httpControl=new HttpControl();
 			httpControl.setUnLoginInfo(UserConfigActivity.this);
+			JpushUtils jpushUtils = new JpushUtils(mContext);
+			jpushUtils.setAlias("");//取消别名设置
 			startActivity(intentLogin);
 			break;
 		case R.id.tv_about:// 关于我们

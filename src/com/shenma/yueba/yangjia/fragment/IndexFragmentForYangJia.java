@@ -59,7 +59,6 @@ public class IndexFragmentForYangJia extends BaseFragment implements
 	private ImageView iv_cursor_left, iv_cursor_center, iv_cursor_right;
 	private Button bt_cart;
 	private ViewPager viewpager_main;
-	private BuyerStreetFragment buyerStreetFragment;// 买手街
 	private MyBuyerFragment myBuyerFragment;// 我的买手
 	private ArrayList<Fragment> fragmentList = new ArrayList<Fragment>();
 	private MyFragmentPagerAdapter myFragmentPagerAdapter;

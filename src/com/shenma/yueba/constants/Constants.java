@@ -21,7 +21,7 @@ public class Constants {
 	public static final String HTTPCHANNEL = "channel";// 附加参数
 	public static final String ANDROID = "Android";// 附加参数
 	public static final String PRIVATEKEY = "97CCE28B-345C-4C83-ACE3-C2E349BF53D7";// 私钥
-	public static final String PageSize = "10";
+	public static final String PageSize = "6";
 
 	// appid
 	// 请同时修改 androidmanifest.xml里面，.PayActivityd里的属性<data
