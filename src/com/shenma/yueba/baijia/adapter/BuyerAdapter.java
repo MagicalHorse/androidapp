@@ -15,6 +15,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.shenma.yueba.ChatActivity;
@@ -25,6 +26,7 @@ import com.shenma.yueba.baijia.activity.ShopMainActivity;
 import com.shenma.yueba.baijia.modle.BaseRequest;
 import com.shenma.yueba.baijia.modle.LikeUsersInfoBean;
 import com.shenma.yueba.baijia.modle.ProductPicInfoBean;
+import com.shenma.yueba.baijia.modle.ProductTagsInfoBean;
 import com.shenma.yueba.baijia.modle.ProductsInfoBean;
 import com.shenma.yueba.baijia.modle.UsersInfoBean;
 import com.shenma.yueba.util.FontManager;
@@ -35,6 +37,7 @@ import com.shenma.yueba.util.ShareUtil.ShareListener;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.MyGridView;
 import com.shenma.yueba.view.RoundImageView;
+import com.shenma.yueba.view.TagImageView;
 
 /**
  * @author gyj
@@ -89,13 +92,16 @@ public class BuyerAdapter extends BaseAdapter {
 					.findViewById(R.id.baijia_tab1_item_time_textview);
 			holder.baijia_tab1_item_productcontent_imageview = (ImageView) convertView
 					.findViewById(R.id.baijia_tab1_item_productcontent_imageview);
+			holder.baijia_tab1_item_productcontent_tagimageview=(TagImageView)convertView.findViewById(R.id.baijia_tab1_item_productcontent_tagimageview);
 			DisplayMetrics displayMetrics = new DisplayMetrics();
 			activity.getWindowManager().getDefaultDisplay()
 					.getMetrics(displayMetrics);
 			int height = displayMetrics.widthPixels;
-			holder.baijia_tab1_item_productcontent_imageview
-					.setLayoutParams(new LinearLayout.LayoutParams(
-							LinearLayout.LayoutParams.MATCH_PARENT, height));
+			holder.baijia_tab1_item_productcontent_imageview.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, height));
+			holder.baijia_tab1_item_productcontent_tagimageview.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, height));
+			
+			
+			
 			setOnclickListener(holder.baijia_tab1_item_productcontent_imageview);
 
 			holder.buyersteetfragmeng_item_price_textview = (TextView) convertView
@@ -115,7 +121,7 @@ public class BuyerAdapter extends BaseAdapter {
 					.findViewById(R.id.buyersteetfragmeng_item_share_button);
 			setOnclickListener(holder.buyersteetfragmeng_item_share_button);
 			convertView.setTag(holder);
-
+            
 			holder.ll_attentionpeople_contener = (LinearLayout) convertView
 					.findViewById(R.id.ll_attentionpeople_contener);
 
@@ -211,6 +217,7 @@ public class BuyerAdapter extends BaseAdapter {
 				ll_attentionpeople_contener;
 		// 内容
 		TextView buyersteetfragment_item_footer_linearlyout_content_textview;
+		TagImageView baijia_tab1_item_productcontent_tagimageview;
 
 	}
 
@@ -219,6 +226,25 @@ public class BuyerAdapter extends BaseAdapter {
 	 * **/
 
 	void initValue(Holder holder, ProductsInfoBean productsInfoBean) {
+		holder.baijia_tab1_item_productcontent_tagimageview.removeAllViews();
+		List<ProductTagsInfoBean> tags_list=productsInfoBean.getProductPic().getTags();
+		if(tags_list!=null && tags_list.size()>0)
+		{
+		   for(int i=0;i<tags_list.size();i++)
+		   {
+			   ProductTagsInfoBean productTagsInfoBean= tags_list.get(i);
+			   DisplayMetrics displayMetrics = new DisplayMetrics();
+				activity.getWindowManager().getDefaultDisplay()
+						.getMetrics(displayMetrics);
+				int height = displayMetrics.widthPixels;
+			  int tagx= (int)(productTagsInfoBean.getPosX()*height);
+			  int tagy=(int)(productTagsInfoBean.getPosY()*height);
+			  Log.i("TAG", "----->>tagx:"+tagx+"  tagy:"+tagy);
+			  holder.baijia_tab1_item_productcontent_tagimageview.addTextTagCanNotMove(ToolsUtil.nullToString(productTagsInfoBean.getTagName()), tagx, tagy);
+		   }
+		}
+		
+		
 		// 私聊
 		holder.buyersteetfragmeng_item_siliao_button.setTag(productsInfoBean);
 
