@@ -99,19 +99,19 @@ public class ItemCustomerFragment extends BaseFragment implements RefreshOrderLi
 		this.tag = tag;
 		if (tag == 0) {// 全部订单
 			orderProductType = "";
-			status = "";
+			status = "0";
 			if(mList.size() != 0){
 				return;
 			}
 		} else if (tag == 1) {// 待付款
-			status = "0";
+			status = "1";
 			orderProductType = "";
 			if(mList.size() != 0){
 				return;
 			}
 		} else if (tag == 2) {// 专柜自提
 			orderProductType = "4";
-			status = "";
+			status = "2";
 			if(mList.size()!= 0){
 				return;
 			}
@@ -140,7 +140,7 @@ public class ItemCustomerFragment extends BaseFragment implements RefreshOrderLi
 		                     public void run() {
 		                    	 rlv.onRefreshComplete();
 		                     }
-		             }, 1000);
+		             }, 100);
 						OrderListBackBean bean = (OrderListBackBean) obj;
 						if (isRefresh) {
 							if(bean.getData()!=null && bean.getData().getOrderlist()!=null && bean.getData().getOrderlist().size()>0){
@@ -175,6 +175,10 @@ public class ItemCustomerFragment extends BaseFragment implements RefreshOrderLi
 
 	@Override
 	public void refreshOrderList(int index) {
-		getData(customerId, index, getActivity());
+		this.isRefresh = true;
+		this.tag = index;
+		orderProductType = "";
+		status = index+"";
+		getDataFromNet(customerId,true,getActivity());
 	}
 }

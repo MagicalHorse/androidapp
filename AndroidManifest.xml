@@ -196,6 +196,9 @@
         <activity
             android:name="com.shenma.yueba.yangjia.activity.BigImageShowActivity"
             android:screenOrientation="portrait" />
+         <activity
+            android:name="com.shenma.yueba.GuideActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.shenma.yueba.yangjia.activity.BoradRewardActivity"
             android:screenOrientation="portrait" />

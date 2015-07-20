@@ -107,7 +107,13 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 		if(TextUtils.isEmpty(productId) && TextUtils.isEmpty(MyApplication.getInstance().getPublishUtil().getBean().getId())){//说明是修改商品
 			tv_publish.setText("发布");
 		}else{
+			MyApplication.getInstance().getPublishUtil().getBean().setId(productId);
 			tv_publish.setText("修改");
+			if(detailBean!=null){
+				MyApplication.getInstance().getPublishUtil().setBean(detailBean);
+			}else{
+		    	detailBean =  MyApplication.getInstance().getPublishUtil().getBean();
+		    }
 		}
 		// 修改商品
 		if (detailBean != null) {

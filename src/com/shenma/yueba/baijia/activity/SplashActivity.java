@@ -4,9 +4,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.Window;
 
+import com.shenma.yueba.GuideActivity;
 import com.shenma.yueba.R;
 import com.shenma.yueba.UpdateManager;
 import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.util.ToolsUtil;
 import com.umeng.analytics.MobclickAgent;
 
@@ -37,8 +39,12 @@ public class SplashActivity extends BaseActivity {
 		handler.postDelayed(new Runnable() {
 			@Override
 			public void run() {
-				//skip(LoginAndRegisterActivity.class, true);
-				skip(MainActivityForBaiJia.class, true);
+				if(!SharedUtil.getBooleanPerfernece(mContext, SharedUtil.user_first)){
+					skip(GuideActivity.class, true);
+					SharedUtil.setBooleanPerfernece(mContext, SharedUtil.user_first, true);
+				}else{
+					skip(MainActivityForBaiJia.class, true);
+				}
 			}
 		}, 2500);
 		ToolsUtil.getKeyAndSignFromNetSetToLocal(mContext);
