@@ -230,7 +230,7 @@
                     android:drawablePadding="3dip"
                     android:drawableTop="@drawable/dfk"
                     android:gravity="center_horizontal"
-                    android:text="代付款"
+                    android:text="待付款"
                     android:textColor="@color/black"
                     android:textSize="13dip" />
 
