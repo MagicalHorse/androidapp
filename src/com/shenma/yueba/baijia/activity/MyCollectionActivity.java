@@ -89,7 +89,7 @@ public class MyCollectionActivity extends BaseActivityWithTopView{
 		pubuliy_left_linearlayout=(LinearLayout)findViewById(R.id.pubuliy_left_linearlayout);
 		pubuliy_right_linearlayout=(LinearLayout)findViewById(R.id.pubuliy_right_linearlayout);
 		shop_main_layout_title_pulltorefreshscrollview=(PullToRefreshScrollView)findViewById(R.id.shop_main_layout_title_pulltorefreshscrollview);
-		shop_main_layout_title_pulltorefreshscrollview.setMode(Mode.BOTH);
+		shop_main_layout_title_pulltorefreshscrollview.setMode(Mode.DISABLED);
 		shop_main_layout_title_pulltorefreshscrollview.setOnRefreshListener(new OnRefreshListener2() {
 
 			@Override
@@ -175,12 +175,15 @@ public class MyCollectionActivity extends BaseActivityWithTopView{
 							{
 								shop_main_layout_title_pulltorefreshscrollview.setMode(Mode.PULL_FROM_START);
 								ToolsUtil.showNoDataView(MyCollectionActivity.this, true);
+							}else
+							{
+								MyApplication.getInstance().showMessage(MyCollectionActivity.this, MyCollectionActivity.this.getResources().getString(R.string.lastpagedata_str));
 							}
 						}else
 						{
 							int totalPage = bean.getData().getTotalpaged();
 							if (currPage >= totalPage) {
-								shop_main_layout_title_pulltorefreshscrollview.setMode(Mode.PULL_FROM_START);
+								shop_main_layout_title_pulltorefreshscrollview.setMode(Mode.BOTH);
 								//MyApplication.getInstance().showMessage(MyCollectionActivity.this, MyCollectionActivity.this.getResources().getString(R.string.lastpagedata_str));
 							} else {
 								shop_main_layout_title_pulltorefreshscrollview.setMode(Mode.BOTH);

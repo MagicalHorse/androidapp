@@ -240,17 +240,20 @@ public class BuyerFragment extends BaseFragment{
 						{
 							pull_refresh_list.setMode(Mode.PULL_FROM_START);
 							ToolsUtil.showNoDataView(getActivity(),view ,true);
+						}else
+						{
+							MyApplication.getInstance().showMessage(getActivity(), getActivity().getResources().getString(R.string.lastpagedata_str));
 						}
 					}else
 					{
 						if(page==1)
 						{
-							pull_refresh_list.setMode(Mode.PULL_FROM_START);
+							pull_refresh_list.setMode(Mode.BOTH);
 						}
 						int totalPage = bean.getData().getTotalpaged();
 						if (currPage >= totalPage) {
 							//MyApplication.getInstance().showMessage(getActivity(), getActivity().getResources().getString(R.string.lastpagedata_str));
-							pull_refresh_list.setMode(Mode.PULL_FROM_START);
+							pull_refresh_list.setMode(Mode.BOTH);
 						} else {
 							pull_refresh_list.setMode(Mode.BOTH);
 						}

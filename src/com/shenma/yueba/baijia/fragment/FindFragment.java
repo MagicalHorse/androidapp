@@ -89,8 +89,8 @@ public class FindFragment extends Fragment{
 				startActivityForResult(intent, 200);
 			}
 		});
-		fragment_list.add(new FragmentBean("品牌", -1, BrandListView.the()));
-		fragment_list.add(new FragmentBean("同城", -1, CityWideListView.the()));
+		fragment_list.add(new FragmentBean("品牌", -1, new BrandListView()));
+		fragment_list.add(new FragmentBean("同城", -1, new CityWideListView()));
 		
 		baijia_fragment_tab1_head_linearlayout=(LinearLayout)v.findViewById(R.id.baijia_fragment_tab1_head_linearlayout);
 		for(int i=0;i<fragment_list.size();i++)

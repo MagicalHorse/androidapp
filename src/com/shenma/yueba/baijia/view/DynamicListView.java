@@ -75,7 +75,7 @@ public class DynamicListView extends BaseView{
 	{
 		pull_refresh_list=(PullToRefreshListView)view.findViewById(R.id.pull_refresh_list);
 		showloading_layout_view=(LinearLayout)view.findViewById(R.id.showloading_layout_view);
-		pull_refresh_list.setMode(Mode.BOTH);
+		//pull_refresh_list.setMode(Mode.BOTH);
 		pull_refresh_list.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -176,19 +176,22 @@ public class DynamicListView extends BaseView{
 						if(page==1)
 						{
 							ToolsUtil.showNoDataView(activity, view, true);
+						}else
+						{
+							MyApplication.getInstance().showMessage(activity, activity.getResources().getString(R.string.lastpagedata_str));
 						}
 					}else
 					{
 						if(page==1)
 						   {
-							   pull_refresh_list.setMode(Mode.PULL_FROM_START);
+							   pull_refresh_list.setMode(Mode.BOTH);
 						   }
 						   
 						   int totalPage = msgbean.getData().getTotalpaged();
 
 							if (currpage >= totalPage) {
 								//MyApplication.getInstance().showMessage(activity, activity.getResources().getString(R.string.lastpagedata_str));
-								pull_refresh_list.setMode(Mode.PULL_FROM_START);
+								pull_refresh_list.setMode(Mode.BOTH);
 							} else {
 								pull_refresh_list.setMode(Mode.BOTH);
 							}
