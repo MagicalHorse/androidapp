@@ -53,6 +53,8 @@ public class CircleListActivity extends BaseActivityWithTopView{
 	boolean showDialog=true;
 	HttpControl httpCntrol=new HttpControl();
 	List<MyCircleInfo> items=new ArrayList<MyCircleInfo>();
+	int userID=-1;
+	
 	protected void onCreate(Bundle savedInstanceState) {
 		MyApplication.getInstance().addActivity(this);
 		requestWindowFeature(getWindow().FEATURE_NO_TITLE);
@@ -60,6 +62,13 @@ public class CircleListActivity extends BaseActivityWithTopView{
 		view = inflater.inflate(R.layout.circlelist_layout, null);
 		setContentView(view);
 		super.onCreate(savedInstanceState);
+		userID=this.getIntent().getIntExtra("userID", -1);
+		if(userID<0)
+		{
+			MyApplication.getInstance().showMessage(this, "用户信息错误");
+			finish();
+			return;
+		}
 		initPullView();
 		requestFalshData();
 	}
@@ -174,7 +183,8 @@ public class CircleListActivity extends BaseActivityWithTopView{
 	 * **/
 	void sendHttp(final int page,final int type)
 	{
-		httpCntrol.getMyCircle(page, pageSize, showDialog, new HttpCallBackInterface() {
+		
+		httpCntrol.getUserGroups(userID,page, pageSize, showDialog, new HttpCallBackInterface() {
 			
 			@Override
 			public void http_Success(Object obj) {

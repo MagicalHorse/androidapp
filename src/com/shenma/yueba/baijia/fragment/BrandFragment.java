@@ -23,15 +23,14 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.BaijiaBrandListActivity;
-import com.shenma.yueba.baijia.activity.CircleListActivity;
 import com.shenma.yueba.baijia.adapter.ImageTextlAdapter;
 import com.shenma.yueba.baijia.modle.BrandSearchInfo;
 import com.shenma.yueba.baijia.modle.BrandSearchInfoBean;
 import com.shenma.yueba.baijia.modle.RequestBrandSearchInfoBean;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.HttpControl;
-import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
+import com.shenma.yueba.util.ToolsUtil;
 
 /**
  * 品牌

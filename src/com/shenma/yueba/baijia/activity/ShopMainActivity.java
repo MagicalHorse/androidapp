@@ -179,6 +179,7 @@ public class ShopMainActivity extends FragmentActivity {
 					return;
 				}
 				Intent intent=new Intent(ShopMainActivity.this,CircleListActivity.class);
+				intent.putExtra("userID", userID);
 				startActivity(intent);
 				break;
 			case R.id.shop_main_attention_imagebutton://关注
