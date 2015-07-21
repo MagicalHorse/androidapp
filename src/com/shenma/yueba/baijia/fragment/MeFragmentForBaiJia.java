@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.activity.AttationListActivity;
 import com.shenma.yueba.baijia.activity.BaiJiaOrderListActivity;
 import com.shenma.yueba.baijia.activity.BuyerCertificationActivity1;
 import com.shenma.yueba.baijia.activity.CircleListActivity;
@@ -58,7 +59,8 @@ public class MeFragmentForBaiJia extends BaseFragment implements OnClickListener
 	TextView tv_waiting_for_send_count_textview;//待支付订单数
 	TextView tv_waiting_for_recieve_count_textview;//专柜自提订单数
 	TextView tv_pick_by_myself_count_textview;//售后订单数
-	
+	LinearLayout me_fragment_for_baijie_layout_fans_linearlayout;//粉丝
+	LinearLayout me_fragment_for_baijie_layout_attention_linearlayout;//关注
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		Log.i("CircleFragment", "oncreate");
@@ -87,6 +89,11 @@ public class MeFragmentForBaiJia extends BaseFragment implements OnClickListener
 	 */
 	private void initViews(LayoutInflater inflater) {
 		view = inflater.inflate(R.layout.me_fragment_for_baijia, null);
+		
+		me_fragment_for_baijie_layout_attention_linearlayout=(LinearLayout)view.findViewById(R.id.me_fragment_for_baijie_layout_attention_linearlayout);
+		me_fragment_for_baijie_layout_attention_linearlayout.setOnClickListener(this);
+		me_fragment_for_baijie_layout_fans_linearlayout=(LinearLayout)view.findViewById(R.id.me_fragment_for_baijie_layout_fans_linearlayout);
+		me_fragment_for_baijie_layout_fans_linearlayout.setOnClickListener(this);
 		tv_all_order_count_textview=(TextView)view.findViewById(R.id.tv_all_order_count_textview);
 		tv_waiting_for_send_count_textview=(TextView)view.findViewById(R.id.tv_waiting_for_send_count_textview);
 		tv_waiting_for_recieve_count_textview=(TextView)view.findViewById(R.id.tv_waiting_for_recieve_count_textview);
@@ -143,13 +150,25 @@ public class MeFragmentForBaiJia extends BaseFragment implements OnClickListener
 
 	@Override
 	public void onClick(View v) {
+		int userID=Integer.parseInt(SharedUtil.getStringPerfernece(getActivity(), SharedUtil.user_id));
 		switch (v.getId()) {
 		case R.id.me_fragment_for_baijie_layout_mycircle_linearlayout://圈子
-			Intent intent=new Intent(getActivity(),CircleListActivity.class);
-			int userID=Integer.parseInt(SharedUtil.getStringPerfernece(getActivity(), SharedUtil.user_id));
+			Intent intent=new Intent(getActivity(),AttationListActivity.class);
 			intent.putExtra("userID", userID);
 			startActivity(intent);
 			break;
+		case R.id.me_fragment_for_baijie_layout_fans_linearlayout://粉丝
+			Intent fansintent=new Intent(getActivity(),AttationListActivity.class);
+			fansintent.putExtra("TYPE", AttationListActivity.TYPE_FANS);
+			fansintent.putExtra("userID", userID);
+			startActivity(fansintent);
+			break;
+		case R.id.me_fragment_for_baijie_layout_attention_linearlayout://关注
+			Intent attentionintent=new Intent(getActivity(),CircleListActivity.class);
+			attentionintent.putExtra("TYPE", AttationListActivity.TYPE_ATTATION);
+			attentionintent.putExtra("userID", userID);
+			startActivity(attentionintent);
+			break;	
 		case R.id.iv_setting://设置
 			Intent userConfigIntent = new Intent(getActivity(),UserConfigActivity.class);
 			startActivity(userConfigIntent);

@@ -73,7 +73,7 @@ public class AllAttationListActivity extends BaseActivityWithTopView implements 
 		ll_top_out.addView(search_view);
 		pull_refresh_list = (PullToRefreshListView) findViewById(R.id.pull_refresh_list);
 		pull_refresh_list.setMode(Mode.BOTH);
-		pull_refresh_list.setAdapter(new AttationListAdapter(this, mList));
+		//pull_refresh_list.setAdapter(new AttationListAdapter(this, mList,status));
 		initPopwindow();
 		FontManager.changeFonts(this, tv_top_title);
 	}

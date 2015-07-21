@@ -10,6 +10,14 @@ public class AttaionAndFansListItemBean {
 	private String totalcount;
 	private String totalpaged;
 	private String ispaged;
+	AttationFansCount FansCount=new AttationFansCount();
+	
+	public AttationFansCount getFansCount() {
+		return FansCount;
+	}
+	public void setFansCount(AttationFansCount fansCount) {
+		FansCount = fansCount;
+	}
 	private List<AttationAndFansItemBean> items;
 	public String getPageindex() {
 		return pageindex;

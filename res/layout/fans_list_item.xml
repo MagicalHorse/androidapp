@@ -28,6 +28,7 @@
             android:paddingRight="5dip"
             android:paddingTop="2dip"
             android:text="买手"
+            android:visibility="gone"
             android:textSize="12sp" />
 
         <TextView
@@ -37,7 +38,7 @@
             android:layout_alignBottom="@id/tv_type"
             android:layout_marginLeft="5dip"
             android:layout_toRightOf="@id/tv_type"
-            android:text="加菲猫" />
+            android:text="@null" />
 
         <LinearLayout
             android:id="@+id/ll_attention"

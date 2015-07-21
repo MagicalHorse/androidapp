@@ -68,6 +68,7 @@
             <!-- 圆形 -->
 
             <LinearLayout
+                android:id="@+id/me_fragment_for_baijie_layout_attention_linearlayout"
                 android:layout_width="@dimen/user_config_iconwidth70_dimen"
                 android:layout_height="@dimen/user_config_iconwidth70_dimen"
                 android:background="@drawable/round_background"
@@ -103,6 +104,7 @@
             <!-- 圆形 -->
 
             <LinearLayout
+                android:id="@+id/me_fragment_for_baijie_layout_fans_linearlayout"
                 android:layout_width="@dimen/user_config_iconwidth70_dimen"
                 android:layout_height="@dimen/user_config_iconwidth70_dimen"
                 android:layout_marginLeft="@dimen/shop_main_lineheight10_dimen"

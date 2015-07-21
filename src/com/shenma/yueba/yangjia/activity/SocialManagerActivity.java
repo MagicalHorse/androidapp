@@ -142,7 +142,7 @@ public class SocialManagerActivity extends BaseFragmentActivity implements
 				case 1:
 					myCircleForSocialFragment.tv_nodata.setVisibility(View.GONE);
 					tv_top_right.setVisibility(View.GONE);
-					myFansFragment.getData("1", SocialManagerActivity.this,true);// 0表示我关注的人   1表示我的粉丝
+					myFansFragment.getData(1, SocialManagerActivity.this,true);// 0表示我关注的人   1表示我的粉丝
 					break;
 //				
 //				case 2 :

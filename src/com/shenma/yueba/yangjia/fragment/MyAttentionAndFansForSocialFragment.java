@@ -39,7 +39,7 @@ public class MyAttentionAndFansForSocialFragment extends BaseFragment {
 	private List<AttationAndFansItemBean> mList = new ArrayList<AttationAndFansItemBean>();
 	private int page = 1;
 	private boolean isRefresh = true;
-	private String status = "1";// 0表示我关注的人   1表示我的粉丝
+	private int status = 1;// 0表示我关注的人   1表示我的粉丝
 	public TextView tv_nodata;
 
 	@Override
@@ -80,7 +80,7 @@ public class MyAttentionAndFansForSocialFragment extends BaseFragment {
 	}
 	
 	
-	public void getData(String status,Context ctx,boolean showDialog){
+	public void getData(int status,Context ctx,boolean showDialog){
 		if(mList.size() == 0){
 			getAttationOrFansList(status, ctx,showDialog);
 		}
@@ -90,10 +90,10 @@ public class MyAttentionAndFansForSocialFragment extends BaseFragment {
 	/**
 	 * 获取关注列表和fans列表
 	 */
-	public void getAttationOrFansList(String status,Context ctx,boolean showDialog){
+	public void getAttationOrFansList(int status,Context ctx,boolean showDialog){
 		HttpControl httpControl = new HttpControl();
 		int userID=Integer.parseInt(SharedUtil.getStringPerfernece(getActivity(), SharedUtil.user_id));
-		httpControl.getAttationOrFansList(userID,status, page, Constants.PageSize,new HttpCallBackInterface() {
+		httpControl.getAttationOrFansList(userID,-1,status, page, Constants.PAGESIZE_VALUE,new HttpCallBackInterface() {
 			
 			@Override
 			public void http_Success(Object obj) {
