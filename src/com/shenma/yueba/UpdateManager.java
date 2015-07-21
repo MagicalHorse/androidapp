@@ -37,7 +37,6 @@ public class UpdateManager implements View.OnClickListener {
 	private String updateTitle;// 更新题目
 	private String updateContent;// 更新内容
 	private String NewVersion;// 传过来的新版本号
-	private Dialog downloadDialog;
 	/* 下载包安装路径 */
 	private static final String savePath = Constants.SD;
 	private static final String saveFileName = savePath + Constants.apkName;
@@ -71,7 +70,6 @@ public class UpdateManager implements View.OnClickListener {
 				break;
 			case DOWN_OVER:
 				// 安装
-				downloadDialog.dismiss();
 				pd.dismiss();
 				installApk();
 				break;

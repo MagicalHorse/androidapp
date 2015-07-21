@@ -267,7 +267,7 @@ public class UserConfigActivity extends BaseActivityWithTopView implements
 	 */
 	private void modifyUserLogo() {
 		if (!progressDialog.isShowing()) {
-			progressDialog.dismiss();
+			progressDialog.show();
 		}
 		final HttpControl httpControl = new HttpControl();
 		httpControl.syncUpload(littlePicPath_cache, new SaveCallback() {

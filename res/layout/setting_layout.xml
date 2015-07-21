@@ -59,6 +59,7 @@
                             android:layout_height="60dip"
                             android:layout_centerVertical="true"
                             android:layout_marginRight="10dip"
+                            android:scaleType="fitXY"
                             android:layout_toLeftOf="@id/iv_arrar_head"
                             android:src="@drawable/default_pic" />
                     </RelativeLayout>

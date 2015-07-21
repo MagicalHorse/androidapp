@@ -61,7 +61,8 @@ public class GuideActivity extends Activity{
 					if(ids.length-1 == position){
 						Intent intent = new Intent(context, MainActivityForBaiJia.class);
 						startActivity(intent);
-					}
+						GuideActivity.this.finish();					
+						}
 					
 				}
 			});

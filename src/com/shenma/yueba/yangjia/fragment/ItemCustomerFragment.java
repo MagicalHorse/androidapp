@@ -161,7 +161,6 @@ public class ItemCustomerFragment extends BaseFragment implements RefreshOrderLi
 							}else{
 								Toast.makeText(getActivity(), "没有更多数据了...", 1000).show();
 							}
-							
 							adapter.notifyDataSetChanged();
 						}
 					}
