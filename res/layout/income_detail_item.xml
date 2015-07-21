@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/tv_earning_money_title"
-            android:text="￥89"
+            android:text="@null"
             android:textSize="16sp" />
 
         <TextView
@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:text="来源：订单"
+            android:text="@null"
             android:textColor="@color/text_gray_color"
             android:textSize="16sp" />
     </RelativeLayout>
@@ -61,7 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/tv_order_money_title"
-            android:text="￥92"
+            android:text="@null"
             android:textSize="16sp" />
 
         <TextView
@@ -70,7 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:text="2015/12/21"
+            android:text="@null"
             android:textColor="@color/text_gray_color"
             android:textSize="16sp" />
     </RelativeLayout>
@@ -97,7 +97,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/tv_order_number_title"
-            android:text="24312432"
+            android:text="@null"
             android:textSize="16sp" />
           <TextView
             android:id="@+id/tv_status"
@@ -105,7 +105,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:text="已提货"
+            android:text="@null"
             android:textColor="@color/text_gray_color"
             android:textSize="16sp" />
     </RelativeLayout>

@@ -48,7 +48,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginBottom="40dip"
                     android:layout_marginTop="40dip"
-                    android:text="500.00"
+                    android:text="@null"
                     android:textColor="@color/white"
                     android:textSize="60sp" />
             </RelativeLayout>
@@ -79,7 +79,7 @@
                     android:layout_height="wrap_content"
                     android:paddingBottom="10dip"
                     android:paddingTop="10dip"
-                    android:text="30000.00"
+                    android:text="@null"
                     android:textColor="@color/red_text_color"
                     android:textSize="35sp" />
             </LinearLayout>
@@ -127,7 +127,7 @@
                     android:layout_height="wrap_content"
                     android:paddingBottom="10dip"
                     android:paddingTop="10dip"
-                    android:text="1382.02"
+                    android:text="@null"
                     android:textColor="@color/red_text_color"
                     android:textSize="35sp" />
             </LinearLayout>

@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/shop_main_lineheight10_dimen"
-        android:src="@drawable/default_pic_h" />
+        android:src="@drawable/default_pic" />
 
     <RelativeLayout
         android:layout_width="match_parent"

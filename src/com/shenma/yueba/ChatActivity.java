@@ -253,7 +253,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 				pointLast(bean_list.size());
 			}
 		});
-		edittext_layout.setBackgroundResource(R.drawable.shape_linearlayout10);
+		mEditTextContent.setBackgroundResource(R.drawable.shape_linearlayout10);
 		edittext_layout.requestFocus();
 		mEditTextContent.setOnClickListener(new OnClickListener() {
 
