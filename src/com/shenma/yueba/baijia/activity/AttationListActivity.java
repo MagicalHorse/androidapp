@@ -53,7 +53,7 @@ public class AttationListActivity extends BaseActivityWithTopView {
 		requestWindowFeature(getWindow().FEATURE_NO_TITLE);
 		setContentView(R.layout.refresh_listview_with_title_layout);
 		super.onCreate(savedInstanceState);
-		initView();
+		
 		userID=this.getIntent().getIntExtra("userID", -1);
 		if(userID<0 || this.getIntent().getStringExtra("TYPE")==null)
 		{
@@ -73,6 +73,7 @@ public class AttationListActivity extends BaseActivityWithTopView {
 			finish();
 			return;
 		}
+		initView();
 		requestFalshData();
 	}
 
@@ -96,7 +97,7 @@ public class AttationListActivity extends BaseActivityWithTopView {
 		});
 		pull_refresh_list = (PullToRefreshListView) findViewById(R.id.pull_refresh_list);
 		pull_refresh_list.setMode(Mode.DISABLED);
-		brandAdapter=new AttationListAdapter(this, mList,status);
+		brandAdapter=new AttationListAdapter(this, mList,status,pull_refresh_list);
 		pull_refresh_list.setAdapter(brandAdapter);
 		pull_refresh_list.setOnPullEventListener(new OnPullEventListener<ListView>() {
 

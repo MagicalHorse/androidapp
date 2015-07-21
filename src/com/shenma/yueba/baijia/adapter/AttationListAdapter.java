@@ -8,6 +8,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.modle.AttationListBean;
@@ -22,11 +23,13 @@ public class AttationListAdapter extends BaseAdapterWithUtil {
 	int status=0;//关注
 	HttpControl httpControl=new HttpControl();
 	Context context;
-	public AttationListAdapter(Context ctx,List<AttationAndFansItemBean> mList,int status) {
+	PullToRefreshListView pullToRefreshListView;
+	public AttationListAdapter(Context ctx,List<AttationAndFansItemBean> mList,int status,PullToRefreshListView pullToRefreshListView) {
 		super(ctx);
 		this.mList = mList;
 		this.context=ctx;
 		this.status=status;
+		this.pullToRefreshListView=pullToRefreshListView;
 	}
 
 	@Override
@@ -47,7 +50,6 @@ public class AttationListAdapter extends BaseAdapterWithUtil {
 		return position;
 	}
 
-	@SuppressWarnings("null")
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		Holder holder;
@@ -170,6 +172,17 @@ public class AttationListAdapter extends BaseAdapterWithUtil {
 				}else if(Status==1)
 				{
 					bean.setFavorite(true);
+				}
+				if(pullToRefreshListView.findViewWithTag(bean)!=null &&  pullToRefreshListView.findViewWithTag(bean) instanceof TextView)
+				{
+					TextView tv=(TextView)pullToRefreshListView.findViewWithTag(bean);
+					if(Status==0)
+					{
+						tv.setText("关注");
+					}else if(Status==1)
+					{
+						tv.setText("已关注");
+					}
 				}
 
 			}

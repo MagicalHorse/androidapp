@@ -88,6 +88,7 @@
         <!-- 圆形 -->
 
         <LinearLayout
+            android:id="@+id/shop_main_attention_linearlayout"
             android:layout_width="@dimen/user_config_iconwidth70_dimen"
             android:layout_height="@dimen/user_config_iconwidth70_dimen"
             android:background="@drawable/round_background"
@@ -121,6 +122,7 @@
         <!-- 圆形 -->
 
         <LinearLayout
+            android:id="@+id/shop_main_fans_linearlayout"
             android:layout_width="@dimen/user_config_iconwidth70_dimen"
             android:layout_height="@dimen/user_config_iconwidth70_dimen"
             android:layout_marginLeft="@dimen/shop_main_lineheight10_dimen"

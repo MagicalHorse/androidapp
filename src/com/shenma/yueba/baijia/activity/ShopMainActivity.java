@@ -64,6 +64,9 @@ public class ShopMainActivity extends FragmentActivity {
     List<FragmentBean> fragmentBean_list=new ArrayList<FragmentBean>();
     List<View> view_list=new ArrayList<View>();
     PullToRefreshScrollView shop_main_layout_title_pulltorefreshscrollview;
+    LinearLayout shop_main_fans_linearlayout;//粉丝
+    LinearLayout shop_main_attention_linearlayout;//关注
+    
     int currId=-1;
     HttpControl httpControl=new HttpControl();
     UserInfoBean userInfoBean;
@@ -105,7 +108,10 @@ public class ShopMainActivity extends FragmentActivity {
 		TextView tv_top_title=(TextView)findViewById(R.id.tv_top_title);
 		tv_top_title.setVisibility(View.VISIBLE);
 		tv_top_title.setText("店铺名称");
-
+		shop_main_attention_linearlayout=(LinearLayout)findViewById(R.id.shop_main_attention_linearlayout);
+		shop_main_attention_linearlayout.setOnClickListener(onClickListener);
+		shop_main_fans_linearlayout=(LinearLayout)findViewById(R.id.shop_main_fans_linearlayout);
+		shop_main_fans_linearlayout.setOnClickListener(onClickListener);
 		shop_main_layout_title_pulltorefreshscrollview=(PullToRefreshScrollView)findViewById(R.id.shop_main_layout_title_pulltorefreshscrollview);
 		shop_main_layout_title_pulltorefreshscrollview.setMode(Mode.BOTH);
 		shop_main_layout_title_pulltorefreshscrollview.setOnRefreshListener(new OnRefreshListener2() {
@@ -181,6 +187,18 @@ public class ShopMainActivity extends FragmentActivity {
 				Intent intent=new Intent(ShopMainActivity.this,CircleListActivity.class);
 				intent.putExtra("userID", userID);
 				startActivity(intent);
+				break;
+			case R.id.shop_main_fans_linearlayout://粉丝
+				Intent fansintent=new Intent(ShopMainActivity.this,AttationListActivity.class);
+				fansintent.putExtra("TYPE", AttationListActivity.TYPE_FANS);
+				fansintent.putExtra("userID", userID);
+				startActivity(fansintent);
+				break;
+			case R.id.shop_main_attention_linearlayout://关注
+				Intent attentionintent=new Intent(ShopMainActivity.this,AttationListActivity.class);
+				attentionintent.putExtra("TYPE", AttationListActivity.TYPE_ATTATION);
+				attentionintent.putExtra("userID", userID);
+				startActivity(attentionintent);
 				break;
 			case R.id.shop_main_attention_imagebutton://关注
 				if(!MyApplication.getInstance().isUserLogin(ShopMainActivity.this))
