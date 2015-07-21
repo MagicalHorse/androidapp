@@ -26,7 +26,7 @@ public class NotificationUtils {
 		NotificationManager notificationManager = (NotificationManager) ctx
 				.getSystemService(android.content.Context.NOTIFICATION_SERVICE);
 		// 定义Notification的各种属性
-		Notification notification = new Notification(R.drawable.ic_launcher, text[1],
+		Notification notification = new Notification(R.drawable.icon, text[1],
 				System.currentTimeMillis());
 		// FLAG_AUTO_CANCEL 该通知能被状态栏的清除按钮给清除掉
 		// FLAG_NO_CLEAR 该通知不能被状态栏的清除按钮给清除掉
