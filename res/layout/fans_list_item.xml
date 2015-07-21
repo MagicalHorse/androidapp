@@ -44,6 +44,8 @@
                 android:visibility="gone" />
 
             <TextView
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:id="@+id/tv_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -63,6 +65,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@null"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:textSize="@dimen/textsize12sp" />
 
             <TextView
@@ -71,6 +75,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:text="@null"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:textSize="@dimen/textsize12sp" />
         </LinearLayout>
     </LinearLayout>
