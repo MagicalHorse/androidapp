@@ -23,6 +23,7 @@ public class HttpConstants {
 	
 	
 	
+	
 	/**
 	 * 绑定微信
 	 */
