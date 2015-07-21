@@ -33,6 +33,7 @@ public class CircleFragment extends Fragment {
 	CircleFragment baiJiaFrament;
 	ViewPager baijia_fragment_tab1_pagerview;
 	LinearLayout baijia_fragment_tab1_head_linearlayout;
+	
 	// 当前选中的id
 	int currid = -1;
 	View v;
