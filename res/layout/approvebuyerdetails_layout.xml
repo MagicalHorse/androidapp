@@ -51,7 +51,7 @@
                     android:layout_below="@id/approvebuyerdetails_icon_imageview"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/shop_main_lineheight8_dimen"
-                    android:text="名字"
+                    android:text="@null"
                     android:textSize="@dimen/textsize18sp" />
 
                 <RelativeLayout
@@ -67,7 +67,8 @@
                         android:id="@+id/appprovebuyerdetails_text1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="成交:"
+                        android:text="成交："
+                        android:textColor="@color/text_gray_color"
                         android:textSize="@dimen/textsize14sp" />
 
                     <TextView
@@ -76,20 +77,20 @@
                         android:layout_height="wrap_content"
                         android:layout_alignTop="@id/appprovebuyerdetails_text1"
                         android:layout_toRightOf="@id/appprovebuyerdetails_text1"
-                        android:text=""
+                        android:text="@null"
+                        android:textColor="@color/text_gray_color"
                         android:textSize="@dimen/textsize14sp" />
 
                     <TextView
-                        android:visibility="gone"
                         android:id="@+id/appprovebuyerdetails_text2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/appprovebuyerdetails_text1"
                         android:text="好评:"
-                        android:textSize="@dimen/textsize14sp" />
+                        android:textSize="@dimen/textsize14sp"
+                        android:visibility="gone" />
 
                     <TextView
-                        android:visibility="gone"
                         android:id="@+id/appprovebuyerdetails_text2value_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -98,7 +99,8 @@
                         android:layout_toRightOf="@id/appprovebuyerdetails_text2"
                         android:text=""
                         android:textColor="@color/red"
-                        android:textSize="@dimen/textsize14sp" />
+                        android:textSize="@dimen/textsize14sp"
+                        android:visibility="gone" />
                 </RelativeLayout>
             </RelativeLayout>
 
@@ -137,11 +139,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/shop_main_width5_dimen"
                     android:layout_marginTop="@dimen/shop_main_width5_dimen"
-                    android:hint="￥0"
+                    android:hint="@null"
                     android:paddingLeft="@dimen/margin_left_and_right"
-                    android:textColor="@color/red"
-                    android:textColorHint="@color/red"
-                    android:textSize="@dimen/textsize20sp" />
+                    android:textColor="@color/red_text_color"
+                    android:textColorHint="@color/red_text_color"
+                    android:textSize="@dimen/textsize15sp" />
 
                 <TextView
                     android:id="@+id/approvebuyerdatails_layout_desc1_textview"
@@ -149,10 +151,10 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="@dimen/margin_left_and_right"
-                    android:layout_marginTop="@dimen/shop_main_width2_dimen"
+                    android:layout_marginTop="@dimen/shop_main_width5_dimen"
                     android:text="*商品只支持商城自提"
-                    android:textColor="@color/red"
-                    android:textSize="@dimen/textsize12sp" />
+                    android:textColor="@color/red_text_color"
+                    android:textSize="@dimen/textsize15sp" />
             </RelativeLayout>
 
             <TextView
@@ -162,7 +164,7 @@
                 android:paddingLeft="@dimen/margin_left_and_right"
                 android:paddingRight="@dimen/margin_left_and_right"
                 android:textColor="@color/black"
-                android:textSize="@dimen/textsize18sp" />
+                android:textSize="@dimen/textsize16sp" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -221,8 +223,8 @@
                         android:id="@+id/approvebuyerdetails_closeingtime_textview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/shop_main_width3_dimen"
-                        android:text=""
+                        android:layout_marginLeft="@dimen/shop_main_width5_dimen"
+                        android:text="@null"
                         android:textColor="@color/color_textgray"
                         android:textSize="@dimen/textsize13sp" />
                 </LinearLayout>
@@ -232,7 +234,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/shop_main_width3_dimen"
                     android:layout_marginRight="@dimen/shop_main_width3_dimen"
-                    android:layout_marginTop="@dimen/shop_main_width3_dimen"
+                    android:layout_marginTop="@dimen/shop_main_width5_dimen"
                     android:orientation="horizontal" >
 
                     <ImageView
@@ -246,7 +248,7 @@
                         android:id="@+id/approvebuyerdetails_closeinginfo_textview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/shop_main_width3_dimen"
+                        android:layout_marginLeft="@dimen/shop_main_width5_dimen"
                         android:textColor="@color/color_textgray"
                         android:textSize="@dimen/textsize13sp" />
                 </LinearLayout>
@@ -264,11 +266,11 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dip"
-                android:paddingLeft="@dimen/margin_left_and_right"
-                android:paddingRight="@dimen/margin_left_and_right"
                 android:layout_marginTop="5dip"
                 android:gravity="center_vertical"
-                android:orientation="horizontal" >
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/margin_left_and_right"
+                android:paddingRight="@dimen/margin_left_and_right" >
 
                 <TextView
                     android:id="@+id/approvebuyerdetails_attention_textview"
@@ -279,10 +281,10 @@
                     android:gravity="center_vertical" />
 
                 <LinearLayout
-                    android:layout_marginLeft="5dp"
                     android:id="@+id/ll_attentionpeople_contener"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
                     android:orientation="horizontal" >
                 </LinearLayout>
             </LinearLayout>
@@ -295,6 +297,8 @@
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:visibility="visible" >
+
+        <View style="@style/style_horizontal_line" />
 
         <LinearLayout
             android:id="@+id/footer_left_linerlayout"
@@ -317,7 +321,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:drawableTop="@drawable/circle_default"
+                    android:drawableTop="@drawable/chat"
                     android:gravity="center"
                     android:text="私聊"
                     android:textSize="13dip" />
@@ -365,12 +369,12 @@
                 android:id="@+id/approvebuyerbuybutton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_margin="5dip"
                 android:background="@drawable/nowbuy_background"
-                android:padding="@dimen/shop_main_lineheight10_dimen"
-                android:paddingLeft="@dimen/shop_main_lineheight10_dimen"
-                android:paddingRight="@dimen/shop_main_lineheight10_dimen"
+                android:gravity="center"
                 android:text="我要买"
-                android:textSize="18dip" />
+                android:textColor="@color/white"
+                android:textSize="15dip" />
         </LinearLayout>
     </RelativeLayout>
 
