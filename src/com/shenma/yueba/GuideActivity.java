@@ -67,7 +67,7 @@ public class GuideActivity extends Activity{
 			});
 			ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,ViewGroup.LayoutParams.FILL_PARENT);
 			iv.setLayoutParams(params);
-			iv.setScaleType(ScaleType.FIT_XY);
+			iv.setScaleType(ScaleType.FIT_CENTER);
 			guides.add(iv);
 		}
 
