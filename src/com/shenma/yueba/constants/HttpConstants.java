@@ -2,8 +2,8 @@ package com.shenma.yueba.constants;
 
 public class HttpConstants {
 	
-    private static String baseUrl = "http://123.57.77.86:8080/app/";
-//	private static String baseUrl = "http://123.57.52.187:8080/app/";
+//    private static String baseUrl = "http://123.57.77.86:8080/app/";
+	private static String baseUrl = "http://123.57.52.187:8080/app/";
 	private static String USERURL = baseUrl + "User/";// USER接口
 	private static String COMMONURL = baseUrl + "Common/";
 	private static String ADDRESS = baseUrl + "Address/";// 地址管理
@@ -18,6 +18,7 @@ public class HttpConstants {
 	private static String weixinBaseUrl = "https://api.mch.weixin.qq.com/";//微信接口
 	private static String weixinPAYUrl = weixinBaseUrl+"pay/";//微信支付接口
 	private static String weixinPAYCallBackUrl = baseUrl+"Payment/";//微信支平台回调
+	
 	
 	
 	
