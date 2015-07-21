@@ -192,7 +192,7 @@ public class CircleView extends BaseView{
 			TuiJianCircleInfo myCircleInfo=items.get(position);
 			MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.nullToString(myCircleInfo.getLogo()), holder.riv);
 			holder.tv_circle_name.setText(ToolsUtil.nullToString(myCircleInfo.getName()));
-			holder.tv_count.setText(myCircleInfo.getMemberCount()+"");
+			holder.tv_count.setText("人数："+myCircleInfo.getMemberCount());
 			holder.tv_address.setText(ToolsUtil.nullToString(myCircleInfo.getAddress()));
 			return convertView;
 		}
