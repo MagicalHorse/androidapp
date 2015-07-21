@@ -153,7 +153,7 @@ public class MeFragmentForBaiJia extends BaseFragment implements OnClickListener
 		int userID=Integer.parseInt(SharedUtil.getStringPerfernece(getActivity(), SharedUtil.user_id));
 		switch (v.getId()) {
 		case R.id.me_fragment_for_baijie_layout_mycircle_linearlayout://圈子
-			Intent intent=new Intent(getActivity(),AttationListActivity.class);
+			Intent intent=new Intent(getActivity(),CircleListActivity.class);
 			intent.putExtra("userID", userID);
 			startActivity(intent);
 			break;
@@ -164,7 +164,7 @@ public class MeFragmentForBaiJia extends BaseFragment implements OnClickListener
 			startActivity(fansintent);
 			break;
 		case R.id.me_fragment_for_baijie_layout_attention_linearlayout://关注
-			Intent attentionintent=new Intent(getActivity(),CircleListActivity.class);
+			Intent attentionintent=new Intent(getActivity(),AttationListActivity.class);
 			attentionintent.putExtra("TYPE", AttationListActivity.TYPE_ATTATION);
 			attentionintent.putExtra("userID", userID);
 			startActivity(attentionintent);

@@ -32,10 +32,7 @@
                 android:id="@+id/pull_refresh_list"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:background="#ffffff"
                 android:cacheColorHint="#00000000"
-                android:divider="#19000000"
-                android:dividerHeight="1dp"
                 android:fadingEdge="none"
                 android:fastScrollEnabled="false"
                 android:footerDividersEnabled="false"
@@ -48,6 +45,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical" />
         </LinearLayout>
+        
+        <include layout="@layout/nodata_layout"/>
     </RelativeLayout>
 
 </LinearLayout>

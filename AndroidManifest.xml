@@ -443,7 +443,14 @@
         <activity
             android:name="com.shenma.yueba.baijia.activity.BaijiaBrandListActivity"
             android:screenOrientation="portrait" />
+        
+        <!--败家 粉丝  关注列表-->
+        <activity
+            android:name="com.shenma.yueba.baijia.activity.AttationListActivity"
+            android:screenOrientation="portrait" />
 
+        
+        
         <!-- 聊天界面 -->
         <activity
             android:name="com.shenma.yueba.ChatActivity"

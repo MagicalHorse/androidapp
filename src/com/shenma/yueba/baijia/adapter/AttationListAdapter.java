@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.modle.AttationListBean;
+import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.RoundImageView;
 import com.shenma.yueba.yangjia.modle.AttationAndFansItemBean;
@@ -18,9 +20,12 @@ import com.shenma.yueba.yangjia.modle.AttationAndFansItemBean;
 public class AttationListAdapter extends BaseAdapterWithUtil {
 	private List<AttationAndFansItemBean> mList;
 	int status=0;//关注
+	HttpControl httpControl=new HttpControl();
+	Context context;
 	public AttationListAdapter(Context ctx,List<AttationAndFansItemBean> mList,int status) {
 		super(ctx);
 		this.mList = mList;
+		this.context=ctx;
 		this.status=status;
 	}
 
@@ -50,30 +55,41 @@ public class AttationListAdapter extends BaseAdapterWithUtil {
 			holder = new Holder();
 			convertView = View.inflate(ctx, R.layout.fans_list_item, null);
 			holder.riv_head = (RoundImageView) convertView.findViewById(R.id.riv_head);
-			holder.tv_type = (TextView) convertView.findViewById(R.id.tv_type);
 			holder.tv_name = (TextView) convertView.findViewById(R.id.tv_name);
 			holder.tv_attention_count = (TextView) convertView.findViewById(R.id.tv_attention_count);
 			holder.tv_fans_count = (TextView) convertView.findViewById(R.id.tv_fans_count);
 			holder.tv_atttention = (TextView) convertView.findViewById(R.id.tv_atttention);
 			holder.tv_address = (TextView) convertView.findViewById(R.id.tv_address);
-			if(status==0)
-			{
-				holder.tv_fans_count.setVisibility(View.GONE);
-				holder.tv_atttention.setVisibility(View.VISIBLE);
-			}else if(status==1)
-			{
-				holder.tv_fans_count.setVisibility(View.VISIBLE);
-				holder.tv_atttention.setVisibility(View.GONE);
-			}else
-			{
-				holder.tv_fans_count.setVisibility(View.GONE);
-				holder.tv_atttention.setVisibility(View.GONE);
-			}
+			ToolsUtil.setFontStyle(ctx, convertView,R.id.tv_name,R.id.tv_attention_count,R.id.tv_fans_count,R.id.tv_atttention,R.id.tv_address);
 			holder.tv_atttention.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					
-					//sssssssss
+					if(v.getTag()!=null && v.getTag() instanceof AttationAndFansItemBean)
+					{
+						AttationAndFansItemBean bean=(AttationAndFansItemBean)v.getTag();
+						if(status==0)//如果是关注
+						{
+							if(bean.isFavorite())
+							{
+								sendFans(bean,0);
+							}else
+							{
+								sendFans(bean,1);
+							}
+							
+						}else if(status==1)//如果是粉丝
+						{
+							if(bean.isFavorite())
+							{
+								sendAttation(bean,0);
+							}else
+							{
+								sendAttation(bean,1);
+							}
+							
+						}
+					}
+					AttationListAdapter.this.notifyDataSetChanged();
 				}
 			});
 			convertView.setTag(holder);
@@ -87,7 +103,6 @@ public class AttationListAdapter extends BaseAdapterWithUtil {
 	
 	class Holder{
 		RoundImageView riv_head;
-		TextView tv_type;
 		TextView tv_name;
 		TextView tv_attention_count;
 		TextView tv_fans_count;
@@ -101,36 +116,69 @@ public class AttationListAdapter extends BaseAdapterWithUtil {
 		AttationAndFansItemBean bean=mList.get(position);
 		MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.nullToString(bean.getUserLogo()), holder.riv_head, MyApplication.getInstance().getDisplayImageOptions());
 		holder.tv_name.setText(ToolsUtil.nullToString(bean.getUserName()));
+		holder.tv_atttention.setTag(bean);
+		holder.tv_fans_count.setText("关注  "+ToolsUtil.nullToString(bean.getFansCount()));
+		holder.tv_attention_count.setText("粉丝  "+ToolsUtil.nullToString(bean.getFavoiteCount()));
 		if(status==0)//是关注
 		{
-			holder.tv_atttention.setText(ToolsUtil.nullToString(bean.getFavoiteCount()));
+			
 			
 			if(bean.isFavorite())
 			{
-				holder.tv_attention_count.setText("已关注");
+				holder.tv_atttention.setText("已关注");
 			}else
 			{
-				holder.tv_attention_count.setText("关注");
+				holder.tv_atttention.setText("关注");
 			}
 		}else if(status==1)//粉丝
 		{
-			holder.tv_fans_count.setText(ToolsUtil.nullToString(bean.getFavoiteCount()));
+			
 			
 			if(bean.isFavorite())
 			{
-				holder.tv_attention_count.setText("已关注");
+				holder.tv_atttention.setText("已关注");
 			}else
 			{
-				holder.tv_attention_count.setText("已关注");
+				holder.tv_atttention.setText("关注");
 			}
 		}
-		/*holder.tv_attention_count
-		holder.tv_fans_count
 		
-		bean.isChecked()*/
 		
 		
 	}
 
+	
+	void sendFans(final AttationAndFansItemBean bean,final int Status)
+	{
+		sendAttation(bean,Status);
+	}
+	
+	/*****
+	 * @param bean AttationAndFansItemBean
+	 * @param Status int  1表示关注 0表示取消关注
+	 * ****/
+	void sendAttation(final AttationAndFansItemBean bean,final int Status)
+	{
+		   int favoriteId=Integer.parseInt(bean.getUserId());
+           httpControl.setFavoite(favoriteId, Status, new HttpCallBackInterface() {
+			
+			@Override
+			public void http_Success(Object obj) {
+				if(Status==0) //1表示关注 0表示取消关注
+				{
+					bean.setFavorite(false);
+				}else if(Status==1)
+				{
+					bean.setFavorite(true);
+				}
+
+			}
+			
+			@Override
+			public void http_Fails(int error, String msg) {
+				MyApplication.getInstance().showMessage(ctx, msg);
+			}
+		}, context);
+	}
 
 }

@@ -5,19 +5,23 @@ import java.util.List;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ListView;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnPullEventListener;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.State;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.adapter.AttationListAdapter;
-import com.shenma.yueba.baijia.modle.AttationListBean;
-import com.shenma.yueba.baijia.modle.BaiJiaOrderListInfoBean;
-import com.shenma.yueba.baijia.modle.RequestBaiJiaOrderListInfoBean;
 import com.shenma.yueba.constants.Constants;
+import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
-import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
+import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.yangjia.modle.AttationAndFansItemBean;
 import com.shenma.yueba.yangjia.modle.AttationAndFansListBackBean;
 import com.umeng.analytics.MobclickAgent;
@@ -46,6 +50,7 @@ public class AttationListActivity extends BaseActivityWithTopView {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		MyApplication.getInstance().addActivity(this);
+		requestWindowFeature(getWindow().FEATURE_NO_TITLE);
 		setContentView(R.layout.refresh_listview_with_title_layout);
 		super.onCreate(savedInstanceState);
 		initView();
@@ -68,12 +73,65 @@ public class AttationListActivity extends BaseActivityWithTopView {
 			finish();
 			return;
 		}
+		requestFalshData();
 	}
 
 	private void initView() {
+		String title="";
+		if(status==0)
+		{
+			title="关注";
+		}else if(status==1)
+		{
+			title="粉丝";
+		}
+		setTitle(title);
+		FontManager.changeFonts(this, tv_top_title);
+		setLeftTextView(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				finish();
+			}
+		});
 		pull_refresh_list = (PullToRefreshListView) findViewById(R.id.pull_refresh_list);
 		pull_refresh_list.setMode(Mode.DISABLED);
-		//pull_refresh_list.setAdapter(new AttationListAdapter(this, mList));
+		brandAdapter=new AttationListAdapter(this, mList,status);
+		pull_refresh_list.setAdapter(brandAdapter);
+		pull_refresh_list.setOnPullEventListener(new OnPullEventListener<ListView>() {
+
+					@Override
+					public void onPullEvent(
+							PullToRefreshBase<ListView> refreshView,
+							State state, Mode direction) {
+
+						// 设置标签显示的内容
+						if (direction == Mode.PULL_FROM_START) {
+							pull_refresh_list.getLoadingLayoutProxy()
+									.setPullLabel(AttationListActivity.this.getResources().getString(R.string.Refreshonstr));
+							pull_refresh_list.getLoadingLayoutProxy().setRefreshingLabel(AttationListActivity.this.getResources().getString(R.string.Refreshloadingstr));
+							pull_refresh_list.getLoadingLayoutProxy().setReleaseLabel(AttationListActivity.this.getResources().getString(R.string.Loosentherefresh));
+						} else if (direction == Mode.PULL_FROM_END) {
+							pull_refresh_list.getLoadingLayoutProxy().setPullLabel(AttationListActivity.this.getResources().getString(R.string.Thedropdownloadstr));
+							pull_refresh_list.getLoadingLayoutProxy().setRefreshingLabel(AttationListActivity.this.getResources().getString(R.string.RefreshLoadingstr));
+							pull_refresh_list.getLoadingLayoutProxy().setReleaseLabel(AttationListActivity.this.getResources().getString(R.string.Loosentheloadstr));
+						}
+					}
+				});
+
+		pull_refresh_list.setOnRefreshListener(new OnRefreshListener2() {
+
+			@Override
+			public void onPullDownToRefresh(PullToRefreshBase refreshView) {
+
+				requestFalshData();
+			}
+
+			@Override
+			public void onPullUpToRefresh(PullToRefreshBase refreshView) {
+				requestData();
+			}
+		});
 		
 	}
 	

@@ -59,6 +59,8 @@ public class ItemCustomerFragment extends BaseFragment implements RefreshOrderLi
 			rlv = (PullToRefreshListView) rootView
 					.findViewById(R.id.pull_refresh_list);
 			rlv.setMode(Mode.BOTH);
+			adapter = new SalesManagerForAttestationBuyerAdapter(
+					getActivity(), mList, tag,ItemCustomerFragment.this);
 			rlv.setOnRefreshListener(new OnRefreshListener2() {
 
 				@Override
@@ -147,8 +149,7 @@ public class ItemCustomerFragment extends BaseFragment implements RefreshOrderLi
 								tv_nodata.setVisibility(View.GONE);
 								mList.clear();
 								mList.addAll(bean.getData().getOrderlist());
-								adapter = new SalesManagerForAttestationBuyerAdapter(
-										getActivity(), mList, tag,ItemCustomerFragment.this);
+								
 								rlv.setAdapter(adapter);
 							}else{
 								tv_nodata.setVisibility(View.VISIBLE);
