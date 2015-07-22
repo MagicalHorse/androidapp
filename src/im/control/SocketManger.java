@@ -44,7 +44,7 @@ public class SocketManger {
 	/***
 	 * 建立通信连接
 	 * ***/
-	public void contentSocket(SocketManagerListener listener) {
+	public synchronized void contentSocket(SocketManagerListener listener) {
 		this.listener=listener;
 		if(socket==null)
 		{
@@ -68,7 +68,7 @@ public class SocketManger {
 	/***
 	 * 断开通信连接
 	 * ***/
-	public void disContentSocket() {
+	public synchronized void disContentSocket() {
 		if(socket!=null)
 		{
 			unsetListtener();
@@ -112,7 +112,7 @@ public class SocketManger {
 	 * 发送信息
 	 * @param messageBean MessageBean 发送信息
 	 * ***/
-	public void sendMsg(MessageBean messageBean,SocketManagerListener listener) {
+	public  void sendMsg(MessageBean messageBean,SocketManagerListener listener) {
 		this.listener=listener;
 		if(!mssageBean_list.contains(messageBean))
 		{
@@ -139,6 +139,7 @@ public class SocketManger {
 				Log.i("TAG", e.getMessage());
 			}
 		} else {
+			contentSocket(listener);
 			Log.i("TAG", "未连接");
 		}
 	}
