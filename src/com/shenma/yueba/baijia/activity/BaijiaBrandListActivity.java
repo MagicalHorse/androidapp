@@ -84,7 +84,7 @@ List<BrandInfoInfo> object_list=new ArrayList<BrandInfoInfo>();
 		});
 		
 		brandlist_layout_pullTorefreshgridview=(PullToRefreshGridView)parenetView.findViewById(R.id.brandlist_layout_pullTorefreshgridview);
-		brandlist_layout_pullTorefreshgridview.setMode(Mode.DISABLED);
+		brandlist_layout_pullTorefreshgridview.setMode(Mode.PULL_FROM_START);
 		brandlist_layout_pullTorefreshgridview.setAdapter(baseAdapter);
 		
 		brandlist_layout_pullTorefreshgridview.setOnPullEventListener(new OnPullEventListener<GridView>() {

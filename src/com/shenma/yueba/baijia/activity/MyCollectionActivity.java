@@ -89,7 +89,7 @@ public class MyCollectionActivity extends BaseActivityWithTopView{
 		pubuliy_left_linearlayout=(LinearLayout)findViewById(R.id.pubuliy_left_linearlayout);
 		pubuliy_right_linearlayout=(LinearLayout)findViewById(R.id.pubuliy_right_linearlayout);
 		shop_main_layout_title_pulltorefreshscrollview=(PullToRefreshScrollView)findViewById(R.id.shop_main_layout_title_pulltorefreshscrollview);
-		shop_main_layout_title_pulltorefreshscrollview.setMode(Mode.DISABLED);
+		shop_main_layout_title_pulltorefreshscrollview.setMode(Mode.PULL_FROM_START);
 		shop_main_layout_title_pulltorefreshscrollview.setOnRefreshListener(new OnRefreshListener2() {
 
 			@Override

@@ -25,7 +25,7 @@ public class TextChatBean extends BaseChatBean{
 	@Override
 	public void sendData(SocketManagerListener listener) {
 		MessageBean bean=getMessageBean();
-		SocketManger.the(listener).sendMsg(bean);
+		SocketManger.the().sendMsg(bean,listener);
 	}
 
 	/*****

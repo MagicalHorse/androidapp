@@ -93,7 +93,7 @@ public class BrandFragment extends BaseFragment{
 			}
 		});
 		
-		pull_refresh_list.setMode(Mode.DISABLED);
+		pull_refresh_list.setMode(Mode.PULL_FROM_START);
 		 
 		pull_refresh_list.setOnPullEventListener(new OnPullEventListener<ListView>() {
 

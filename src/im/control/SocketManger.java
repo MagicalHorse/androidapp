@@ -4,11 +4,8 @@ import im.form.MessageBean;
 import im.form.RequestMessageBean;
 import im.form.RoomBean;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.json.JSONObject;
 
@@ -24,7 +21,7 @@ import com.google.gson.Gson;
  * 通信管理
  * **/
 public class SocketManger {
-	Socket socket;
+	static Socket socket;
 	static SocketManger socketManger;
 	final String URL = "http://182.92.7.70:8001/chat";
 	//final String URL = "http://192.168.1.145:8000/chat";
@@ -35,30 +32,36 @@ public class SocketManger {
 	}
 
 	
-	public static SocketManger the(SocketManagerListener listener)
+	public static SocketManger the()
 	{
 		if(socketManger==null)
 		{
 			socketManger=new SocketManger();
 		}
-		socketManger.listener=listener;
 		return socketManger;
 	}
 	
 	/***
 	 * 建立通信连接
 	 * ***/
-	public void contentSocket() {
-		
-		if(socket==null || !socket.connected())
+	public void contentSocket(SocketManagerListener listener) {
+		this.listener=listener;
+		if(socket==null)
 		{
 			try {
 				socket = IO.socket(URL);
+				unsetListtener();
 				setListtener();
 				socket.connect();
+				Log.i("TAG", "---->>>socket create");
 			} catch (Exception e) {
 				e.printStackTrace();
+				Log.i("TAG", "---->>>socket error"+e.getMessage());
 			}
+		}else if(!socket.connected())
+		{
+			Log.i("TAG", "---->>>socket unconnect");
+			socket.connect();
 		}
 	}
 
@@ -66,8 +69,12 @@ public class SocketManger {
 	 * 断开通信连接
 	 * ***/
 	public void disContentSocket() {
-		if (isConnect()) {
-			socket.disconnect();
+		if(socket!=null)
+		{
+			unsetListtener();
+			if (isConnect()) {
+				socket.disconnect();
+			}
 		}
 		socket = null;
 	}
@@ -105,7 +112,8 @@ public class SocketManger {
 	 * 发送信息
 	 * @param messageBean MessageBean 发送信息
 	 * ***/
-	public void sendMsg(MessageBean messageBean) {
+	public void sendMsg(MessageBean messageBean,SocketManagerListener listener) {
+		this.listener=listener;
 		if(!mssageBean_list.contains(messageBean))
 		{
 			mssageBean_list.add(messageBean);
@@ -155,6 +163,8 @@ public class SocketManger {
 
 			@Override
 			public void call(Object... arg0) {
+
+				Log.i("TAG", "---->>>socket Socket.EVENT_CONNECT");
 				if (listener != null) {
 					listener.connectSucess(arg0);
 				}
@@ -162,7 +172,6 @@ public class SocketManger {
 				{
 					sendMsg(mssageBean_list.get(i));
 				}*/
-				Log.i("TAG", "Socket.EVENT_CONNECT");
 			}
 		});
 		// 连接失败监听
@@ -170,10 +179,11 @@ public class SocketManger {
 
 			@Override
 			public void call(Object... arg0) {
+				Log.i("TAG", "---->>>socket Socket.EVENT_CONNECT_ERROR");
 				if (listener != null) {
 					listener.error(Socket.EVENT_CONNECT_ERROR, arg0);
 				}
-				Log.i("TAG", "Socket.EVENT_CONNECT_ERROR");
+				
 			}
 		});
 
@@ -182,10 +192,11 @@ public class SocketManger {
 
 			@Override
 			public void call(Object... arg0) {
+				Log.i("TAG", "---->>>socket Socket.EVENT_CONNECT_TIMEOUT");
 				if (listener != null) {
 					listener.error(Socket.EVENT_CONNECT_TIMEOUT, arg0);
 				}
-				Log.i("TAG", "Socket.EVENT_CONNECT_TIMEOUT");
+				
 			}
 		});
 
@@ -194,10 +205,11 @@ public class SocketManger {
 
 			@Override
 			public void call(Object... arg0) {
+				Log.i("TAG", "---->>>socket Socket.EVENT_DISCONNECT");
 				if (listener != null) {
 					listener.disconnectSucess(arg0);
 				}
-				Log.i("TAG", "Socket.EVENT_DISCONNECT");
+				
 			}
 		});
 
@@ -208,7 +220,7 @@ public class SocketManger {
 				if(arg0[0]!=null && arg0[0] instanceof JSONObject)
 				{
 				JSONObject json=(JSONObject)arg0[0];
-					
+				Log.i("TAG", "---->>>socket new message");	
 				if (listener != null) {
 					
 					Gson gson=new Gson();
@@ -231,7 +243,7 @@ public class SocketManger {
 				if (listener != null) {
 					listener.sendMsgListener(arg0);
 				}
-				Log.i("TAG", "Socket.EVENT_MESSAGE");
+				Log.i("TAG", "---->>>socket Socket.EVENT_MESSAGE");
 			}
 		});
 
@@ -243,9 +255,33 @@ public class SocketManger {
 				if (listener != null) {
 					listener.connectSucess(arg0);
 				}
-				Log.i("TAG", "Socket.EVENT_RECONNECT");
+				Log.i("TAG", "---->>>socket Socket.EVENT_RECONNECT");
 			}
 		});
+	}
+	
+	
+	
+	/******
+	 * 注销监听
+	 * **/
+	void unsetListtener() {
+		// 连接监听
+		socket.off(Socket.EVENT_CONNECT);
+		// 连接失败监听
+		socket.off(Socket.EVENT_CONNECT_ERROR);
+
+		// 连接超时
+		socket.off(Socket.EVENT_CONNECT_TIMEOUT);
+
+		// 断开连接监听
+		socket.off(Socket.EVENT_DISCONNECT);
+
+		socket.off("new message");
+		// 发送消息监听
+		socket.off(Socket.EVENT_MESSAGE);
+		// 重新连接监听
+		socket.off(Socket.EVENT_RECONNECT);
 	}
 
 	/*public void inroon(String owner, String room_id, String type,
@@ -283,15 +319,16 @@ public class SocketManger {
 		String json=gson.toJson(bean);
 		Log.i("TAG", json);
 		try {
+			Log.i("TAG", "---->>>socket inroom");
 			socket.emit("join room", owner, new JSONObject(json), new Ack() {
 
 				@Override
 				public void call(Object... arg0) {
-					Log.i("TAG", "join room " + arg0.toString());
+					Log.i("TAG", "---->>>socket inroom");
 				}
 			});
 		} catch (Exception e) {
-			Log.i("TAG", e.getMessage());
+			Log.i("TAG", "---->>>socket inroom error:"+e.getMessage());
 		}
 	}
 

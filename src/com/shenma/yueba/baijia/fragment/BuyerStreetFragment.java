@@ -124,7 +124,7 @@ public class BuyerStreetFragment extends Fragment {
 	void initPullView() {
 		baijia_contact_listview = (PullToRefreshListView) parentview.findViewById(R.id.baijia_contact_listview);
 		// 设置标签显示的内容
-		baijia_contact_listview.setMode(Mode.DISABLED);
+		baijia_contact_listview.setMode(Mode.PULL_FROM_START);
 		baijia_contact_listview.setOnPullEventListener(new OnPullEventListener<ListView>() {
 
 			@Override
@@ -263,7 +263,7 @@ public class BuyerStreetFragment extends Fragment {
 									Banners.clear();
 									imageViewlist.clear();
 									Products.clear();
-									//pulltorefreshscrollview.setMode(Mode.PULL_FROM_START);
+									baijia_contact_listview.setMode(Mode.PULL_FROM_START);
 									ToolsUtil.showNoDataView(getActivity(), true);
 								}else
 								{
@@ -273,14 +273,14 @@ public class BuyerStreetFragment extends Fragment {
 							{
 								if(page==1)
 								{
-									//pulltorefreshscrollview.setMode(Mode.PULL_FROM_START);
+									baijia_contact_listview.setMode(Mode.PULL_FROM_START);
 								}
 								
 								int totalPage = data.getTotalpaged();
 								if (currpage >= totalPage && page!=1) {
-									//pulltorefreshscrollview.setMode(Mode.PULL_FROM_START);
+									baijia_contact_listview.setMode(Mode.PULL_FROM_START);
 								} else {
-									//pulltorefreshscrollview.setMode(Mode.BOTH);
+									baijia_contact_listview.setMode(Mode.BOTH);
 								}
 								if(page!=1 && (data.getItems().getProducts()==null || data.getItems().getProducts().size()==0))
 								{
@@ -316,8 +316,7 @@ public class BuyerStreetFragment extends Fragment {
 					@Override
 					public void http_Fails(int error, String msg) {
 						baijia_contact_listview.onRefreshComplete();
-						MyApplication.getInstance().showMessage(getActivity(),
-								msg);
+						MyApplication.getInstance().showMessage(getActivity(),msg);
 					}
 				}, getActivity(), ishow, true);
 	}

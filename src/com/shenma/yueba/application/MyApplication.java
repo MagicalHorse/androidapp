@@ -73,8 +73,6 @@ public class MyApplication extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		//启动IM
-		SocketManger.the(null);
 		instance = this;
 		initBitmapUtils();
 		initImageLoader(getApplicationContext());

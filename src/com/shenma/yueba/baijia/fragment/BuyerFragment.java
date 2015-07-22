@@ -97,7 +97,7 @@ public class BuyerFragment extends BaseFragment{
 		});
 		searchBuyerAdapter=new SearchBuyerAdapter(getActivity(), mList);
 		pull_refresh_list.setAdapter(searchBuyerAdapter);
-		pull_refresh_list.setMode(Mode.DISABLED);
+		pull_refresh_list.setMode(Mode.PULL_FROM_START);
 		 
 		pull_refresh_list.setOnPullEventListener(new OnPullEventListener<ListView>() {
 
