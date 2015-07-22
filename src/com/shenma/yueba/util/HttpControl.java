@@ -361,7 +361,7 @@ public class HttpControl {
 
 	/**
 	 * 获取我关注的人和我的粉丝的列表
-	 *  
+	 * @param CurrentUserId int 登录用户的id
 	 * @param status int   0表示我关注的人   1表示我的粉丝
 	 * @param UserID int 用户id
 	 * @param UserLevel int (注： 负数 为查询全部)根据UserLevel对关注的人进行筛选，null表示全部，0表示默认登记，1表示普通用户，2表示大人，4表示导购，8表示认证买手
@@ -369,13 +369,14 @@ public class HttpControl {
 	 * @param context  Context
 	 * @return void
 	 * **/
-	public void getAttationOrFansList(int UserID,int UserLevel,int status, int page,int pageSize,
+	public void getAttationOrFansList(int CurrentUserId,int UserID,int UserLevel,int status, int page,int pageSize,
 			final HttpCallBackInterface httpCallBack, Context context,
 			boolean showDialog) {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put(Constants.STATUS, Integer.toString(status));
 		map.put(Constants.PAGE, Integer.toString(page));
 		map.put(Constants.PAGESIZE, Integer.toString(pageSize));
+		map.put("CurrentUserId", Integer.toString(CurrentUserId));
 		map.put("UserID", Integer.toString(UserID));
 		if(UserLevel>-1)
 		{

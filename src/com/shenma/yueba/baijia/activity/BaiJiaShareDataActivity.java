@@ -264,6 +264,7 @@ public class BaiJiaShareDataActivity extends BaseActivityWithTopView{
 				{
 					if(page==1)
 					{
+						bean_array.clear();
 						sharedata_layout_pulltorefreshlistview.setMode(Mode.PULL_FROM_START);
 						ToolsUtil.showNoDataView(BaiJiaShareDataActivity.this, true);
 					}

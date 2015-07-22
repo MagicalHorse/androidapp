@@ -20,6 +20,7 @@ import com.shenma.yueba.baijia.adapter.AttationListAdapter;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.yangjia.modle.AttationAndFansItemBean;
@@ -174,7 +175,9 @@ public class AttationListActivity extends BaseActivityWithTopView {
 	void sendHttp(int UserID,int UserLevel,int status,final int page,final int type)
 	{
 		ToolsUtil.showNoDataView(AttationListActivity.this, false);
-		httoControl.getAttationOrFansList(UserID, UserLevel, status, page,Constants.PAGESIZE_VALUE, new HttpCallBackInterface() {
+		//当前登录的用户id
+		int CurrentUserId=Integer.parseInt(SharedUtil.getStringPerfernece(this, SharedUtil.user_id));
+		httoControl.getAttationOrFansList(CurrentUserId,UserID, UserLevel, status, page,Constants.PAGESIZE_VALUE, new HttpCallBackInterface() {
 			
 			@Override
 			public void http_Success(Object obj) {
@@ -187,6 +190,7 @@ public class AttationListActivity extends BaseActivityWithTopView {
 					{
 						if(page==1)
 						{
+							mList.clear();
 							pull_refresh_list.setMode(Mode.PULL_FROM_START);
 							ToolsUtil.showNoDataView(AttationListActivity.this,true);
 						}else

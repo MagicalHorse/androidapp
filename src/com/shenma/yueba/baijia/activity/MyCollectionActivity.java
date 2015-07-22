@@ -137,13 +137,13 @@ public class MyCollectionActivity extends BaseActivityWithTopView{
 	 * ***/
 	void falshData(MyFavoriteProductListInfoBean bean)
 	{
+		pubuliy_right_linearlayout.removeAllViews();
+		pubuliy_left_linearlayout.removeAllViews();
 		if(bean.getItems()==null || bean.getItems().size()==0)
 		{
 			return;
 		}
 		currPage++;
-		pubuliy_right_linearlayout.removeAllViews();
-		pubuliy_left_linearlayout.removeAllViews();
 		onResher(bean.getItems());
 	}
 	
@@ -173,6 +173,7 @@ public class MyCollectionActivity extends BaseActivityWithTopView{
 						{
 							if(page==1)
 							{
+								falshData(bean.getData());
 								shop_main_layout_title_pulltorefreshscrollview.setMode(Mode.PULL_FROM_START);
 								ToolsUtil.showNoDataView(MyCollectionActivity.this, true);
 							}else

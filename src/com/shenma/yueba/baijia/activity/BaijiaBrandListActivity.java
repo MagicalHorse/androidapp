@@ -234,6 +234,7 @@ List<BrandInfoInfo> object_list=new ArrayList<BrandInfoInfo>();
 					{
 						if(page==1)
 						{
+							object_list.clear();
 							brandlist_layout_pullTorefreshgridview.setMode(Mode.PULL_FROM_START);
 							ToolsUtil.showNoDataView(BaijiaBrandListActivity.this ,true);
 						}else

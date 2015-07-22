@@ -260,6 +260,9 @@ public class BuyerStreetFragment extends Fragment {
 							{
 								if(page==1)
 								{
+									Banners.clear();
+									imageViewlist.clear();
+									Products.clear();
 									//pulltorefreshscrollview.setMode(Mode.PULL_FROM_START);
 									ToolsUtil.showNoDataView(getActivity(), true);
 								}else

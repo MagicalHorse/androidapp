@@ -183,6 +183,8 @@ public class MyBuyerFragment extends Fragment {
 							{
 								if(page==1)
 								{
+									Banners.clear();
+									Products.clear();
 									baijia_contact_listview.setMode(Mode.PULL_FROM_START);
 									ToolsUtil.showNoDataView(getActivity(), true);
 								}else

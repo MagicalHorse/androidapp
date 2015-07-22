@@ -199,6 +199,7 @@ public class CircleListActivity extends BaseActivityWithTopView{
 						{
 							if(page==1)
 							{
+								items.clear();
 								pull_refresh_list.setMode(Mode.PULL_FROM_START);
 								ToolsUtil.showNoDataView(CircleListActivity.this, true);
 							}else

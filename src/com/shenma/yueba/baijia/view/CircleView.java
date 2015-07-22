@@ -265,6 +265,7 @@ public class CircleView extends BaseView{
 						   {
 							    if(page==1)
 							    {
+							    	items.clear();
 							    	baijia_quanzi_layout_tanb1_gridbview.setMode(Mode.PULL_FROM_START);
 								    ToolsUtil.showNoDataView(activity,view, true);
 							    }else

@@ -93,7 +93,9 @@ public class MyAttentionAndFansForSocialFragment extends BaseFragment {
 	public void getAttationOrFansList(int status,Context ctx,boolean showDialog){
 		HttpControl httpControl = new HttpControl();
 		int userID=Integer.parseInt(SharedUtil.getStringPerfernece(getActivity(), SharedUtil.user_id));
-		httpControl.getAttationOrFansList(userID,-1,status, page, Constants.PAGESIZE_VALUE,new HttpCallBackInterface() {
+		//当前登录的用户id
+		int CurrentUserId=Integer.parseInt(SharedUtil.getStringPerfernece(getActivity(), SharedUtil.user_id));
+		httpControl.getAttationOrFansList(CurrentUserId,userID,-1,status, page, Constants.PAGESIZE_VALUE,new HttpCallBackInterface() {
 			
 			@Override
 			public void http_Success(Object obj) {

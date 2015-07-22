@@ -183,6 +183,7 @@ public class CityWideListView extends BaseView{
 					{
 						if(page==1)
 						{
+							items.clear();
 							pull_refresh_list.setMode(Mode.PULL_FROM_START);
 							ToolsUtil.showNoDataView(activity, true);
 						}else

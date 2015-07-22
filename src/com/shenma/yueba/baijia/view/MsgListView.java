@@ -173,6 +173,7 @@ public class MsgListView extends BaseView{
 					{
 						if(page==1)
 						{
+							mList.clear();
 							ToolsUtil.showNoDataView(activity, view, true);
 						}else
 						{

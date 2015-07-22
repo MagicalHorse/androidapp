@@ -198,6 +198,7 @@ public class MyCircleView extends BaseView{
 						{
 							if(page==1)
 							{
+								items.clear();
 								pull_refresh_list.setMode(Mode.PULL_FROM_START);
 								ToolsUtil.showNoDataView(activity,view, true);
 							}else
