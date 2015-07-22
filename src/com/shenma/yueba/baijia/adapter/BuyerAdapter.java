@@ -336,6 +336,10 @@ public class BuyerAdapter extends BaseAdapter {
 					}
 					break;
 				case R.id.baijia_tab1_item_icon_imageview:// 商铺详细
+					if(!MyApplication.getInstance().isUserLogin(activity))
+					{
+						return;
+					}
 					if (v.getTag() == null || !(v.getTag() instanceof Integer)) {
 						return;
 					}
@@ -381,14 +385,11 @@ public class BuyerAdapter extends BaseAdapter {
 					if (!MyApplication.getInstance().isUserLogin(activity)) {
 						return;
 					}
-					if (v.getTag() != null
-							&& v.getTag() instanceof ProductsInfoBean) {
+					if (v.getTag() != null && v.getTag() instanceof ProductsInfoBean) {
 						ProductsInfoBean bean = (ProductsInfoBean) v.getTag();
 						String content = bean.getProductName();
 						String url = bean.getShareLink();
-						String icon = ToolsUtil.getImage(ToolsUtil
-								.nullToString(bean.getProductPic().getName()),
-								320, 0);
+						String icon = ToolsUtil.getImage(ToolsUtil.nullToString(bean.getProductPic().getName()),320, 0);
 						shareUrl(bean.getProductId(), content, url, icon);
 					}
 
@@ -468,7 +469,7 @@ public class BuyerAdapter extends BaseAdapter {
 	 *            String 图片地址
 	 * ****/
 	void shareUrl(final int productid, String content, String url, String icon) {
-		ShareUtil.shareAll(activity, "我市内容", url, icon, new ShareListener() {
+		ShareUtil.shareAll(activity, content, url, icon, new ShareListener() {
 
 			@Override
 			public void sharedListener_sucess() {
