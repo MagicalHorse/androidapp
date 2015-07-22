@@ -240,7 +240,7 @@ public class BuyerAdapter extends BaseAdapter {
 			  int tagx= (int)(productTagsInfoBean.getPosX()*height);
 			  int tagy=(int)(productTagsInfoBean.getPosY()*height);
 			  Log.i("TAG", "----->>tagx:"+tagx+"  tagy:"+tagy);
-			  holder.baijia_tab1_item_productcontent_tagimageview.addTextTagCanNotMove(ToolsUtil.nullToString(productTagsInfoBean.getTagName()), tagx, tagy);
+			  holder.baijia_tab1_item_productcontent_tagimageview.addTextTagCanNotMove(ToolsUtil.nullToString(productTagsInfoBean.getName()), tagx, tagy);
 		   }
 		}
 		

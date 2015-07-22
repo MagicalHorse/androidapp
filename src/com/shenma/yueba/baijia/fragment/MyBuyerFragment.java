@@ -168,7 +168,7 @@ public class MyBuyerFragment extends Fragment {
 	 * ***/
 	void sendRequestData(final int page,final int type) {
 		Log.i("TAG", "currpage="+page+"   pagesize="+pagesize);
-		ToolsUtil.showNoDataView(getActivity(), false);
+		ToolsUtil.showNoDataView(getActivity(),parentview, false);
 		httpContril.getMyBuyerListData(page, pagesize,new HttpCallBackInterface() {
 
 					@Override
@@ -179,14 +179,14 @@ public class MyBuyerFragment extends Fragment {
 						if (obj != null && obj instanceof MyRequestProductListInfoBean) {
 							MyRequestProductListInfoBean bean = (MyRequestProductListInfoBean) obj;
 							MyHomeProductListInfoBean data = bean.getData();
-							if(data==null || data.getItems()==null)
+							if(data==null || data.getItems()==null || data.getItems().getProducts()==null || data.getItems().getProducts().size()==0)
 							{
 								if(page==1)
 								{
 									Banners.clear();
 									Products.clear();
 									baijia_contact_listview.setMode(Mode.PULL_FROM_START);
-									ToolsUtil.showNoDataView(getActivity(), true);
+									ToolsUtil.showNoDataView(getActivity(),parentview, true);
 								}else
 								{
 									MyApplication.getInstance().showMessage(getActivity(), getActivity().getResources().getString(R.string.lastpagedata_str));
@@ -225,7 +225,7 @@ public class MyBuyerFragment extends Fragment {
 							else {
 								if(page==1)
 								{
-									ToolsUtil.showNoDataView(getActivity(), true);
+									ToolsUtil.showNoDataView(getActivity(),parentview, true);
 								}
 							}
                            
