@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
     
-    <include layout="@layout/title_for_common"/>
+    <include 
+        android:id="@+id/brandlist_layout_top_include"
+        layout="@layout/title_for_common"/>
 
     <com.handmark.pulltorefresh.library.PullToRefreshGridView
+        android:layout_below="@id/brandlist_layout_top_include"
         android:id="@+id/brandlist_layout_pullTorefreshgridview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -15,4 +18,8 @@
         android:verticalSpacing="@dimen/shop_main_lineheight10_dimen"
         />
     
-</LinearLayout>
+    <include 
+        android:layout_below="@id/brandlist_layout_top_include"
+        layout="@layout/nodata_layout"/>
+    
+</RelativeLayout>
