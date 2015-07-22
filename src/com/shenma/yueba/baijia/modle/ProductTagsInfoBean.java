@@ -10,21 +10,23 @@ import java.io.Serializable;
 
 public class ProductTagsInfoBean implements Serializable{
 
-	int TagId  ;// 标签id    
-    String TagName="";// 标签名
-    float PosX ;//       x坐标
+	float PosX ;//       x坐标
     float PosY   ;//     y坐标
-	public int getTagId() {
-		return TagId;
+	int Id  ;// 标签id    
+    String Name="";// 标签名
+    
+	
+	public int getId() {
+		return Id;
 	}
-	public void setTagId(int tagId) {
-		TagId = tagId;
+	public void setId(int id) {
+		Id = id;
 	}
-	public String getTagName() {
-		return TagName;
+	public String getName() {
+		return Name;
 	}
-	public void setTagName(String tagName) {
-		TagName = tagName;
+	public void setName(String name) {
+		Name = name;
 	}
 	public float getPosX() {
 		return PosX;

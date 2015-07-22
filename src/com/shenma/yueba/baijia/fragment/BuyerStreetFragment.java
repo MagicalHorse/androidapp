@@ -256,7 +256,7 @@ public class BuyerStreetFragment extends Fragment {
 						if (obj != null&& obj instanceof RequestProductListInfoBean) {
 							RequestProductListInfoBean bean = (RequestProductListInfoBean) obj;
 							HomeProductListInfoBean data = bean.getData();
-							if(data==null || data.getItems()==null)
+							if(data==null || data.getItems()==null || (data.getItems().getBanners()==null && data.getItems().getProducts()==null) || (data.getItems().getBanners()==null && data.getItems().getProducts().size()==0) || (data.getItems().getBanners().size()==0 && data.getItems().getProducts()==null) || (data.getItems().getBanners().size()==0 && data.getItems().getProducts().size()==0))
 							{
 								if(page==1)
 								{

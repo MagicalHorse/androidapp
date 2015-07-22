@@ -196,7 +196,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 					// 获取历史消息
 					getMessage();
 					SocketManger.the().contentSocket(this);
-					//inroom();
+					inroom();
 				}
 			} else// 否则 如果存在对方id 则获取房间号
 			{
@@ -344,7 +344,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 		if (fView.getVisibility() == View.VISIBLE) {
 			hideFace();
 		}
-		//inroom();
+		inroom();
 	}
 
 	/**
@@ -1027,7 +1027,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 								// 进入房间
 								SocketManger.the().contentSocket(ChatActivity.this);
 								int_array = requestRoomInfo.getUserList();
-								//inroom();
+								inroom();
 								getMessage();// 获取历史数据
 							}
 
@@ -1153,9 +1153,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 	
 	@Override
 	protected void onStop() {
-		// TODO Auto-generated method stub
 		super.onStop();
-		SocketManger.the().disContentSocket();
 	}
 
 }
