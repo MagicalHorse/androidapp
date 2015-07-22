@@ -37,6 +37,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
+                    android:textSize="15sp"
                     android:layout_centerVertical="true"
                     android:text="买手账号:" />
 
@@ -44,6 +45,7 @@
                     android:id="@+id/affirmorder_layout_novalue_textview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                       android:textSize="15sp"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/shop_main_lineheight10_dimen"
                     android:layout_toLeftOf="@+id/affirmorder_layout_icon_roundimageview"
@@ -74,12 +76,14 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
+                       android:textSize="15sp"
                     android:text="买手电话:" />
 
                 <TextView
                     android:id="@+id/affirmorder_layout_phonevalue_textview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                       android:textSize="15sp"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/shop_main_lineheight10_dimen"
                     android:layout_toLeftOf="@+id/affirmorder_layout_icon_imageview"
@@ -109,6 +113,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
+                       android:textSize="15sp"
                     android:layout_centerVertical="true"
                     android:text="提货地址:" />
 
@@ -116,6 +121,7 @@
                     android:id="@+id/affirmorder_layout_pickupvalue_textview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                       android:textSize="15sp"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/shop_main_lineheight10_dimen"
                     android:layout_toRightOf="@+id/affirmorder_layout_pickup_textview"
@@ -142,6 +148,7 @@
                 <TextView
                     android:id="@+id/affirmorder_item_allcount_textview"
                     android:layout_width="wrap_content"
+                       android:textSize="15sp"
                     android:layout_height="wrap_content"
                     android:text="@null" />
 
@@ -149,6 +156,7 @@
                     android:id="@+id/affirmorder_item_price_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                       android:textSize="15sp"
                     android:layout_toLeftOf="@+id/affirmorder_item_pricevalue_textview"
                     android:text="实付:￥" />
 
@@ -177,12 +185,14 @@
                     android:id="@+id/affirmorder_item_youhuititle_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                       android:textSize="15sp"
                     android:layout_centerVertical="true"
                     android:text="打烊购" />
 
                 <TextView
                     android:id="@+id/affirmorder_item_youhuicontext_textview"
                     android:layout_width="wrap_content"
+                       android:textSize="15sp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
@@ -209,6 +219,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
+                           android:textSize="15sp"
                         android:text="提货电话:" />
 
                     <EditText

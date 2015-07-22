@@ -126,7 +126,7 @@ public class MeFragmentForYangJia extends BaseFragment implements
 			startActivity(storeIntroduceIntent);
 			break;
 		case R.id.tv_invite_buyer:// 邀请买手
-			ShareUtil.shareAll(getActivity(), shareContent, "", "http://img3.3lian.com/2014/c2/61/d/17.jpg",null);
+			ShareUtil.shareAll(getActivity(), shareContent, "", "",null);
 			break;
 		case R.id.tv_to_baijia:// 我要败家
 			CustomProgressDialog dialog = new CustomProgressDialog(
