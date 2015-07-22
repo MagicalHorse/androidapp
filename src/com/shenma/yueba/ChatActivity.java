@@ -138,7 +138,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_chat);
-		SocketManger.the(this);
+		SocketManger.the();
 		// 我的 userid
 		formUser_id = Integer.parseInt(SharedUtil.getStringPerfernece(this,
 				SharedUtil.user_id));
@@ -195,7 +195,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 					roomId = room_id;
 					// 获取历史消息
 					getMessage();
-					SocketManger.the(this).contentSocket();
+					SocketManger.the().contentSocket(this);
 					//inroom();
 				}
 			} else// 否则 如果存在对方id 则获取房间号
@@ -223,7 +223,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 
 			@Override
 			public void onClick(View v) {
-				SocketManger.the(null).disContentSocket();
+				SocketManger.the().disContentSocket();
 				finish();
 			}
 		});
@@ -334,8 +334,8 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		SocketManger.the(null);
-		SocketManger.the(null).disContentSocket();
+		SocketManger.the();
+		SocketManger.the().disContentSocket();
 	}
 
 	@Override
@@ -971,7 +971,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 			userint[i] = int_array.get(i);
 		}
 		roomBean.setUsers(userint);
-		SocketManger.the(ChatActivity.this).inroon(owner, roomBean);
+		SocketManger.the().inroon(owner, roomBean);
 
 		if (requestRoomInfo != null) {
 			Log.i("TAG", "socketio---->>已经与服务器建立链接");
@@ -1025,7 +1025,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 								roomId = bean.getData().getId();
 								owner = bean.getData().getOwner();
 								// 进入房间
-								SocketManger.the(ChatActivity.this).contentSocket();
+								SocketManger.the().contentSocket(ChatActivity.this);
 								int_array = requestRoomInfo.getUserList();
 								//inroom();
 								getMessage();// 获取历史数据
@@ -1155,7 +1155,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 	protected void onStop() {
 		// TODO Auto-generated method stub
 		super.onStop();
-		SocketManger.the(null).disContentSocket();
+		SocketManger.the().disContentSocket();
 	}
 
 }
