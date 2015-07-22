@@ -15,6 +15,7 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.alibaba.sdk.android.oss.OSSService;
@@ -2001,10 +2002,14 @@ public class HttpControl {
 		 final CustomProgressDialog progressDialog = CustomProgressDialog
 		 .createDialog(context);
 		 progressDialog.setCancelable(isDialogCancell);
-		 if(isshwoDialog)
-		 {
-			 progressDialog.show();
-		 }
+		 try {
+			 if(isshwoDialog)
+			 {
+				 progressDialog.show();
+			 }
+		} catch (Exception e) {
+		}
+	
 		httpUtils.send(HttpMethod.POST, method.trim(),
 				setBaseRequestParams(map, context),
 				new RequestCallBack<String>() {
@@ -2028,9 +2033,14 @@ public class HttpControl {
 								httpCallBack.http_Fails(bean.getStatusCode(),bean.getMessage());
 							} 
 						}
-						if(progressDialog!=null){
-							progressDialog.cancel();
+						try {
+							if(progressDialog!=null){
+								progressDialog.cancel();
+							}
+						} catch (Exception e) {
+							// TODO: handle exception
 						}
+						
 					}
 
 					
@@ -2348,17 +2358,19 @@ public class HttpControl {
 
 	// 同步上传数据
 	public void syncUpload(String imageLocalPath, SaveCallback callBack) {
-		ossService = OSSServiceProvider.getService();
-		bucket = ossService.getOssBucket("apprss");
-		OSSFile bigfFile = ossService.getOssFile(bucket, imageLocalPath
-				.substring(imageLocalPath.lastIndexOf("/") + 1,
-						imageLocalPath.length()));
-		try {
-			bigfFile.setUploadFilePath(imageLocalPath, "image/*");
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+		if(!TextUtils.isEmpty(imageLocalPath)){
+			ossService = OSSServiceProvider.getService();
+			bucket = ossService.getOssBucket("apprss");
+			OSSFile bigfFile = ossService.getOssFile(bucket, imageLocalPath
+					.substring(imageLocalPath.lastIndexOf("/") + 1,
+							imageLocalPath.length()));
+			try {
+				bigfFile.setUploadFilePath(imageLocalPath, "image/*");
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+			bigfFile.ResumableUploadInBackground(callBack);
 		}
-		bigfFile.ResumableUploadInBackground(callBack);
 	}
 
 	

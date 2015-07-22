@@ -64,7 +64,8 @@
             android:layout_height="60dip"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dip"
-            android:src="@drawable/default_pic_h" />
+            android:src="@drawable/default_pic" />
+
 
         <ImageView
             android:id="@+id/bnCapture"

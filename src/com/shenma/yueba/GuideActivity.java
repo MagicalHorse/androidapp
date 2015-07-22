@@ -61,13 +61,14 @@ public class GuideActivity extends Activity{
 					if(ids.length-1 == position){
 						Intent intent = new Intent(context, MainActivityForBaiJia.class);
 						startActivity(intent);
-					}
+						GuideActivity.this.finish();					
+						}
 					
 				}
 			});
 			ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,ViewGroup.LayoutParams.FILL_PARENT);
 			iv.setLayoutParams(params);
-			iv.setScaleType(ScaleType.FIT_CENTER);
+			iv.setScaleType(ScaleType.FIT_XY);
 			guides.add(iv);
 		}
 

@@ -7,12 +7,16 @@
         android:id="@+id/affirmorder_layout_head"
         layout="@layout/title_for_common" />
 
+    <View
+        android:id="@+id/view_h"
+        style="@style/style_horizontal_line"
+        android:layout_below="@id/affirmorder_layout_head" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/affrimorder_layout_footer_relativelayout"
-        android:layout_below="@id/affirmorder_layout_head"
-        android:layout_marginTop="@dimen/shop_main_lineheight10_dimen"
+        android:layout_below="@id/view_h"
         android:scrollbars="none" >
 
         <LinearLayout
@@ -44,7 +48,7 @@
                     android:layout_marginLeft="@dimen/shop_main_lineheight10_dimen"
                     android:layout_toLeftOf="@+id/affirmorder_layout_icon_roundimageview"
                     android:layout_toRightOf="@+id/affirmorder_layout_no_textview"
-                    android:text="买手账号" />
+                    android:text="@null" />
 
                 <com.shenma.yueba.view.RoundImageView
                     android:id="@+id/affirmorder_layout_icon_roundimageview"
@@ -55,10 +59,7 @@
                     android:src="@drawable/default_pic" />
             </RelativeLayout>
 
-            <TextView
-                style="@style/style_horizontal_line"
-                android:layout_marginLeft="@dimen/margin_left_and_right"
-                android:layout_marginRight="@dimen/margin_left_and_right" />
+            <TextView style="@style/style_horizontal_line" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -83,7 +84,7 @@
                     android:layout_marginLeft="@dimen/shop_main_lineheight10_dimen"
                     android:layout_toLeftOf="@+id/affirmorder_layout_icon_imageview"
                     android:layout_toRightOf="@+id/affirmorder_layout_phone_textview"
-                    android:text="1111" />
+                    android:text="@null" />
 
                 <ImageView
                     android:id="@+id/affirmorder_layout_icon_imageview"
@@ -94,10 +95,7 @@
                     android:src="@drawable/phon_icon" />
             </RelativeLayout>
 
-            <TextView
-                style="@style/style_horizontal_line"
-                android:layout_marginLeft="@dimen/margin_left_and_right"
-                android:layout_marginRight="@dimen/margin_left_and_right" />
+            <View style="@style/style_horizontal_line" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -121,8 +119,10 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/shop_main_lineheight10_dimen"
                     android:layout_toRightOf="@+id/affirmorder_layout_pickup_textview"
-                    android:text="1111" />
+                    android:text="@null" />
             </RelativeLayout>
+
+            <View style="@style/style_horizontal_line" />
 
             <ListView
                 android:id="@+id/affirmorder_layout_product_listview"
@@ -143,7 +143,7 @@
                     android:id="@+id/affirmorder_item_allcount_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="共0件商品 " />
+                    android:text="@null" />
 
                 <TextView
                     android:id="@+id/affirmorder_item_price_textview"
@@ -159,7 +159,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:gravity="right"
-                    android:text="0" />
+                    android:text="@null" />
             </RelativeLayout>
 
             <!-- 打烊购 -->
@@ -186,7 +186,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:text="立减30.00" />
+                    android:text="@null" />
             </RelativeLayout>
 
             <!-- 提货电话 -->
@@ -233,24 +233,29 @@
                     android:gravity="right"
                     android:text="*输入您的手机号,方便买手找到你"
                     android:textColor="@color/red"
-                    android:textSize="@dimen/textsize10sp" />
+                    android:textSize="@dimen/textsize12sp" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
     <RelativeLayout
-        android:padding="@dimen/shop_main_lineheight10_dimen"
         android:id="@+id/affrimorder_layout_footer_relativelayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/color_btnbackground">
+        android:background="@color/color_btnbackground" >
+
+        <View
+            android:id="@+id/view"
+            style="@style/style_horizontal_line" />
 
         <TextView
             android:id="@+id/affrimorder_layout_footer_countpricename_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/view"
             android:layout_centerVertical="true"
+            android:layout_marginTop="5dip"
             android:layout_toLeftOf="@+id/affrimorder_layout_footer_countprice_textview"
             android:gravity="right"
             android:text="合计:￥"
@@ -267,16 +272,18 @@
             android:textColor="@color/red" />
 
         <Button
-            android:textSize="@dimen/textsize12sp"
             android:id="@+id/affrimorder_layout_footer_sumit_button"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/shop_main_marginleft35_dimen"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:textColor="@color/white"
             android:layout_marginLeft="@dimen/shop_main_lineheight10_dimen"
             android:layout_marginRight="@dimen/shop_main_lineheight10_dimen"
+            android:layout_marginTop="5dip"
             android:background="@drawable/affirmbutton_background"
-            android:text="确认" />
+            android:text="确认"
+            android:textSize="@dimen/textsize15sp" />
     </RelativeLayout>
 
 </RelativeLayout>

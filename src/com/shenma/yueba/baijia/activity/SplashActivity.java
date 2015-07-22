@@ -2,6 +2,7 @@ package com.shenma.yueba.baijia.activity;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Window;
 
 import com.shenma.yueba.GuideActivity;
@@ -29,8 +30,8 @@ public class SplashActivity extends BaseActivity {
 		MyApplication.getInstance().addActivity(this);
 		UpdateManager mUpdateManager = new UpdateManager(mContext, "1.0.1", "http://www.joybar/aaa.apk", "title", "content");
 		mUpdateManager.startUpdate();
-		
-		
+		Log.i("screen", ToolsUtil.getDisplayWidth(mContext)+"");
+		Log.i("screen", ToolsUtil.getDisplayHeight(mContext)+"");
 		MobclickAgent.openActivityDurationTrack(true); // 统计在线时长
 		MobclickAgent.onEvent(this, "SplashActivity"); // 打开客户端
 		MobclickAgent.updateOnlineConfig( mContext );
