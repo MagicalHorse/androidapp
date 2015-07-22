@@ -97,7 +97,7 @@ public class AttationListActivity extends BaseActivityWithTopView {
 			}
 		});
 		pull_refresh_list = (PullToRefreshListView) findViewById(R.id.pull_refresh_list);
-		pull_refresh_list.setMode(Mode.DISABLED);
+		pull_refresh_list.setMode(Mode.PULL_FROM_START);
 		brandAdapter=new AttationListAdapter(this, mList,status,pull_refresh_list);
 		pull_refresh_list.setAdapter(brandAdapter);
 		pull_refresh_list.setOnPullEventListener(new OnPullEventListener<ListView>() {

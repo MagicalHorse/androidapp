@@ -92,7 +92,7 @@ public class BaiJiaOrderListFragment extends Fragment implements
 		// 设置标签显示的内容
 		baiJiaOrderListAdapter = new BaiJiaOrderListAdapter(this, object_list,getActivity());
 		pull_refresh_list.setAdapter(baiJiaOrderListAdapter);
-		pull_refresh_list.setMode(Mode.DISABLED);
+		pull_refresh_list.setMode(Mode.PULL_FROM_START);
 		pull_refresh_list.setOnPullEventListener(new OnPullEventListener<ListView>() {
 
 					@Override
