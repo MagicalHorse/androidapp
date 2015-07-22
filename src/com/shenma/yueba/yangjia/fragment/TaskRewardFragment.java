@@ -73,6 +73,7 @@ public class TaskRewardFragment extends BaseFragment {
 					long arg3) {
 				Intent intent = new Intent(getActivity(), RewardDetailActivity.class);
 				intent.putExtra("promotionId", mList.get(position).getId());
+				intent.putExtra("titleName", mList.get(position).getName());
 				startActivity(intent);
 			}
 		});

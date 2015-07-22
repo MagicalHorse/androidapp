@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.adapter.BaseAdapterWithUtil;
 import com.shenma.yueba.util.FontManager;
+import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.yangjia.modle.HistoryItem;
 
 public class BroadRewardAdapter extends BaseAdapterWithUtil {
@@ -51,6 +52,8 @@ public class BroadRewardAdapter extends BaseAdapterWithUtil {
 		}else{
 			holder = (Holder) convertView.getTag();
 		}
+		holder.tv_time.setText(ToolsUtil.nullToString(mList.get(position).getEndtime()));
+		holder.tv_content.setText(ToolsUtil.nullToString(mList.get(position).getStatus_str()));
 		return convertView;
 	}
 	
