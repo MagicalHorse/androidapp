@@ -126,6 +126,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 	String userName = "";
 	String usericon = "";
 	RequestRoomInfo requestRoomInfo;
+	List<Integer> int_array=new ArrayList<Integer>();
 	String chat_name = "";
 	TextView tv_top_title;
 	String littlePicPath;
@@ -133,20 +134,22 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		MyApplication.getInstance().addActivity(this);//加入回退栈
+		MyApplication.getInstance().addActivity(this);// 加入回退栈
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_chat);
-		
+		SocketManger.the(this);
 		// 我的 userid
-		formUser_id = Integer.parseInt(SharedUtil.getStringPerfernece(this,SharedUtil.user_id));
+		formUser_id = Integer.parseInt(SharedUtil.getStringPerfernece(this,
+				SharedUtil.user_id));
 		initView();
 		// 设置购买商品信息 视图
 		setProduct();
-		
+
 		// 我的昵称
-		userName = SharedUtil.getStringPerfernece(getApplicationContext(),SharedUtil.user_names);
-		
+		userName = SharedUtil.getStringPerfernece(getApplicationContext(),
+				SharedUtil.user_names);
+
 		// 我的头像
 		usericon = SharedUtil.getStringPerfernece(this, SharedUtil.user_logo);
 		if (this.getIntent().getStringExtra("Chat_NAME") != null)// 名字
@@ -170,22 +173,32 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 		if (chat_type.endsWith(chat_type_group)) {
 			// 获取圈子ID
 			circleId = this.getIntent().getIntExtra("circleId", -1);
+			// 群聊
+			if (circleId > 0) {
+				// 显示设置
+				tv_top_right.setVisibility(View.VISIBLE);
+			} else {
+				// 隐藏设置
+				tv_top_right.setVisibility(View.GONE);
+
+			}
+
 			// 获取房间号
 			getRoomdId(circleId, formUser_id, toUser_id);
 		} else if (chat_type.endsWith(chat_type_private)) {// 如果是私聊
 
-			//如果存在房间号 则直接获取消息信息
-			if(this.getIntent().getStringExtra("Chat_RoomID")!=null)
-			{
-				String room_id=this.getIntent().getStringExtra("Chat_RoomID");
-				if(!room_id.equals(""))
-				{
-					//获取到 room_id;
-					roomId=room_id;
-					//获取历史消息
+			// 如果存在房间号 则直接获取消息信息
+			if (this.getIntent().getStringExtra("Chat_RoomID") != null) {
+				String room_id = this.getIntent().getStringExtra("Chat_RoomID");
+				if (!room_id.equals("")) {
+					// 获取到 room_id;
+					roomId = room_id;
+					// 获取历史消息
 					getMessage();
+					SocketManger.the(this).contentSocket();
+					//inroom();
 				}
-			}else//否则 如果存在对方id 则获取房间号
+			} else// 否则 如果存在对方id 则获取房间号
 			{
 				// 私聊 获取 toUser_id
 				toUser_id = this.getIntent().getIntExtra("toUser_id", -1);
@@ -198,7 +211,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 				getRoomdId(circleId, formUser_id, toUser_id);
 			}
 		}
-		SocketManger.the(this);
+
 	}
 
 	/**
@@ -220,7 +233,10 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 		manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 		// getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_MASK_ADJUST|
 		// WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+		getWindow()
+				.setSoftInputMode(
+						WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
+								| WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		chat_list = (PullToRefreshListView) findViewById(R.id.chat_list);
 		// chat_list.setMode(Mode.PULL_FROM_START);
 		chat_list.setMode(Mode.DISABLED);
@@ -290,16 +306,6 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 			}
 		});
 
-		// 群聊
-		if (circleId > 0) {
-			// 显示设置
-			tv_top_right.setVisibility(View.VISIBLE);
-		} else {
-			// 隐藏设置
-			tv_top_right.setVisibility(View.GONE);
-
-		}
-
 	}
 
 	/**
@@ -329,6 +335,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 	protected void onDestroy() {
 		super.onDestroy();
 		SocketManger.the(null);
+		SocketManger.the(null).disContentSocket();
 	}
 
 	@Override
@@ -337,7 +344,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 		if (fView.getVisibility() == View.VISIBLE) {
 			hideFace();
 		}
-		inroom();
+		//inroom();
 	}
 
 	/**
@@ -821,14 +828,20 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 			RequestProductDetailsInfoBean bean = (RequestProductDetailsInfoBean) obj;
 			ProductsDetailsInfoBean productsDetailsInfoBean = bean.getData();
 			if (productsDetailsInfoBean != null) {
-				List<ProductsDetailsTagInfo>  productsDetailsTagInfo_list= productsDetailsInfoBean.getProductPic();
+				List<ProductsDetailsTagInfo> productsDetailsTagInfo_list = productsDetailsInfoBean
+						.getProductPic();
 				chat_product_head_layout_button.setTag(bean);
-				if (productsDetailsTagInfo_list != null && productsDetailsTagInfo_list.size() > 0) {
+				if (productsDetailsTagInfo_list != null
+						&& productsDetailsTagInfo_list.size() > 0) {
 					MyApplication
 							.getInstance()
 							.getImageLoader()
 							.displayImage(
-									ToolsUtil.nullToString(ToolsUtil.getImage(ToolsUtil.nullToString(productsDetailsTagInfo_list.get(0).getLogo()), 320, 0)),
+									ToolsUtil.nullToString(ToolsUtil.getImage(
+											ToolsUtil
+													.nullToString(productsDetailsTagInfo_list
+															.get(0).getLogo()),
+											320, 0)),
 									chat_product_head_layout_imageview);
 				}
 
@@ -946,22 +959,23 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 	 * 加入房间
 	 * **/
 	void inroom() {
+		// 加入房间
+		RoomBean roomBean = new RoomBean();
+		roomBean.setOwner(owner);
+		roomBean.setRoom_id(roomId);
+		//roomBean.setTitle();ssss
+		roomBean.setUserName(userName);
+		roomBean.setType(chat_type);
+		int[] userint = new int[int_array.size()];
+		for (int i = 0; i < int_array.size(); i++) {
+			userint[i] = int_array.get(i);
+		}
+		roomBean.setUsers(userint);
+		SocketManger.the(ChatActivity.this).inroon(owner, roomBean);
+
 		if (requestRoomInfo != null) {
 			Log.i("TAG", "socketio---->>已经与服务器建立链接");
-			// 加入房间
-			RoomBean roomBean = new RoomBean();
-			roomBean.setOwner(owner);
-			roomBean.setRoom_id(roomId);
-			roomBean.setTitle(requestRoomInfo.getTitle());
-			roomBean.setUserName(userName);
-			roomBean.setType(chat_type);
-			List<Integer> int_array = requestRoomInfo.getUserList();
-			int[] userint = new int[int_array.size()];
-			for (int i = 0; i < int_array.size(); i++) {
-				userint[i] = int_array.get(i);
-			}
-			roomBean.setUsers(userint);
-			SocketManger.the(ChatActivity.this).inroon(owner, roomBean);
+
 			Log.i("TAG", "socketio---->>加入房间 roomId=" + roomId);
 		}
 	}
@@ -1011,9 +1025,9 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 								roomId = bean.getData().getId();
 								owner = bean.getData().getOwner();
 								// 进入房间
-								SocketManger.the(ChatActivity.this)
-										.contentSocket();
-								inroom();
+								SocketManger.the(ChatActivity.this).contentSocket();
+								int_array = requestRoomInfo.getUserList();
+								//inroom();
 								getMessage();// 获取历史数据
 							}
 
@@ -1136,5 +1150,14 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 		// chattingAdapter.notifyDataSetChanged();
 
 	}
+	
+	@Override
+	protected void onStop() {
+		// TODO Auto-generated method stub
+		super.onStop();
+		SocketManger.the(null).disContentSocket();
+	}
 
 }
+
+

@@ -7,6 +7,7 @@ import java.util.Map;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -124,7 +125,10 @@ public class TagImageView extends RelativeLayout {
 	 */
 	public void addTextTagCanNotMove(String content, int tagX, int tagY) {
 		if (tagViewList == null)
+		{
 			tagViewList = new ArrayList<View>();
+		}
+		
 //		boolean isAdd = true;
 //		if(tagNameList.contains(content)){
 //			for (int i = 0; i < positionList.size(); i++) {
@@ -325,4 +329,5 @@ public class TagImageView extends RelativeLayout {
 			tagViewList.clear();
 		}
 	}
+	
 }

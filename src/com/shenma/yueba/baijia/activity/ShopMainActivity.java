@@ -239,10 +239,12 @@ public class ShopMainActivity extends FragmentActivity {
 				{
 				case 0:
 					((TextView)textview).setText("关注");
+					shop_main_attention_imagebutton.setCompoundDrawablesWithIntrinsicBounds(ShopMainActivity.this.getResources().getDrawable(R.drawable.shop_guanzhu), null, null, null);
 					bean.setIsFollowing(false);
 					break;
 				case 1:
 					((TextView)textview).setText("取消");
+					shop_main_attention_imagebutton.setCompoundDrawablesWithIntrinsicBounds(ShopMainActivity.this.getResources().getDrawable(R.drawable.shop_unguanzhu), null, null, null);
 					bean.setIsFollowing(true);
 					break;
 				}
@@ -429,10 +431,14 @@ public class ShopMainActivity extends FragmentActivity {
     	if(userInfoBean.isIsFollowing())
     	{
     		shop_main_attention_imagebutton.setText("取消");
+    		shop_main_attention_imagebutton.setCompoundDrawablesWithIntrinsicBounds(ShopMainActivity.this.getResources().getDrawable(R.drawable.shop_unguanzhu), null, null, null);
+    		
     		
     	}else
     	{
     		shop_main_attention_imagebutton.setText("关注");
+    		shop_main_attention_imagebutton.setCompoundDrawablesWithIntrinsicBounds(ShopMainActivity.this.getResources().getDrawable(R.drawable.shop_guanzhu), null, null, null);
+    		
     	}
     	fragmentBean_list.clear();
     	shop_main_head_layout_tab_linearlayout.removeAllViews();

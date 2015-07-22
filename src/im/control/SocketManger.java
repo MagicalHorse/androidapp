@@ -49,17 +49,16 @@ public class SocketManger {
 	 * 建立通信连接
 	 * ***/
 	public void contentSocket() {
-		if (socket != null && socket.connected()) {
-			// 断开
-			//disContentSocket();
-			return;
-		}
-		try {
-			socket = IO.socket(URL);
-			setListtener();
-			socket.connect();
-		} catch (Exception e) {
-			e.printStackTrace();
+		
+		if(socket==null || !socket.connected())
+		{
+			try {
+				socket = IO.socket(URL);
+				setListtener();
+				socket.connect();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

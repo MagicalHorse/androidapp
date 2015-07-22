@@ -15,6 +15,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 
+import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.constants.HttpConstants;
 import com.shenma.yueba.wxapi.bean.WenXinErrorBean;
 
@@ -56,6 +57,12 @@ public class CreateWeiXinOrderManager extends WeiXinBasePayManager{
 			String str=(String)obj;
 			Map<String,String> xml=decodeXml(str);
 			resultunifiedorder=xml;
+			if(xml.containsKey("err_code") && xml.containsKey("err_code_des"))
+			{
+				MyApplication.getInstance().showMessage(context, xml.get("err_code_des"));
+				return;
+			}
+			
 			if(!(xml.containsKey("return_code")))
 			{
 				sendFails("请求数据失败，请重试");

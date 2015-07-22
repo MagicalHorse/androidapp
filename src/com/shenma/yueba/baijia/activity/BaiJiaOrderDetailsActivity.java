@@ -171,8 +171,8 @@ LinearLayout baijia_orderdetails_footer_right_linearlayout;//按钮的父对象
 	void shareUrl()
 	{
 		final BaiJiaOrdeDetailsInfoBean infobean=bean.getData();
-		
-		ShareUtil.shareAll(BaiJiaOrderDetailsActivity.this, "我市内容", infobean.getShareLink(), infobean.getProductName(),new ShareListener() {
+		String name=infobean.getProductName();
+		ShareUtil.shareAll(BaiJiaOrderDetailsActivity.this, name, infobean.getShareLink(),ToolsUtil.getImage(ToolsUtil.nullToString(infobean.getProductPic()), 320, 0),new ShareListener() {
 			
 			@Override
 			public void sharedListener_sucess() {
@@ -281,6 +281,12 @@ LinearLayout baijia_orderdetails_footer_right_linearlayout;//按钮的父对象
 		tv_get_address_content.setText(ToolsUtil.nullToString(baiJiaOrdeDetailsInfoBean.getPickAddress()));
 		MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.nullToString(baiJiaOrdeDetailsInfoBean.getBuyerLogo()), riv_customer_head, MyApplication.getInstance().getDisplayImageOptions());
 		obj_list.add(baiJiaOrdeDetailsInfoBean);
+		//如果当前订单状态是已提货 体显示 分享按钮
+		if(bean.getData().getOrderStatus()==16)
+		{
+			baijia_orderdetails_xjfx_textview.setVisibility(View.VISIBLE);
+		}
+		
 		//根据订单状态 设置按钮
 		List<View> view_list=ButtonManager.getButton(this, bean.getData().getOrderStatus(),this);
 		baijia_orderdetails_footer_right_linearlayout.removeAllViews();

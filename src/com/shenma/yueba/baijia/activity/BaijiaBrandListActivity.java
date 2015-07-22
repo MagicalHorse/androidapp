@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -12,10 +13,15 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnPullEventListener;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.State;
 import com.handmark.pulltorefresh.library.PullToRefreshGridView;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
@@ -78,7 +84,50 @@ List<BrandInfoInfo> object_list=new ArrayList<BrandInfoInfo>();
 		});
 		
 		brandlist_layout_pullTorefreshgridview=(PullToRefreshGridView)parenetView.findViewById(R.id.brandlist_layout_pullTorefreshgridview);
+		brandlist_layout_pullTorefreshgridview.setMode(Mode.DISABLED);
 		brandlist_layout_pullTorefreshgridview.setAdapter(baseAdapter);
+		
+		brandlist_layout_pullTorefreshgridview.setOnPullEventListener(new OnPullEventListener<GridView>() {
+
+			@Override
+			public void onPullEvent(PullToRefreshBase<GridView> refreshView,
+					State state, Mode direction) {
+				// 设置标签显示的内容
+				if (direction == Mode.PULL_FROM_START) {
+					brandlist_layout_pullTorefreshgridview.getLoadingLayoutProxy().setPullLabel(BaijiaBrandListActivity.this.getResources().getString(R.string.Refreshonstr));
+					brandlist_layout_pullTorefreshgridview.getLoadingLayoutProxy().setRefreshingLabel(BaijiaBrandListActivity.this.getResources().getString(R.string.Refreshloadingstr));
+					brandlist_layout_pullTorefreshgridview.getLoadingLayoutProxy().setReleaseLabel(BaijiaBrandListActivity.this.getResources().getString(R.string.Loosentherefresh));
+				} else if (direction == Mode.PULL_FROM_END) {
+					brandlist_layout_pullTorefreshgridview.getLoadingLayoutProxy().setPullLabel(BaijiaBrandListActivity.this.getResources().getString(R.string.Thedropdownloadstr));
+					brandlist_layout_pullTorefreshgridview.getLoadingLayoutProxy().setRefreshingLabel(BaijiaBrandListActivity.this.getResources().getString(R.string.RefreshLoadingstr));
+					brandlist_layout_pullTorefreshgridview.getLoadingLayoutProxy().setReleaseLabel(BaijiaBrandListActivity.this.getResources().getString(R.string.Loosentheloadstr));
+				}
+			}
+		});
+		 
+		brandlist_layout_pullTorefreshgridview.setOnRefreshListener(new OnRefreshListener2() {
+
+			@Override
+			public void onPullDownToRefresh(PullToRefreshBase refreshView) {
+				
+				//SystemClock.sleep(100);
+				Log.i("TAG", "onPullDownToRefresh");
+				//pulltorefreshscrollview.setRefreshing();
+				requestFalshData();
+			}
+
+			@Override
+			public void onPullUpToRefresh(PullToRefreshBase refreshView) {
+				//SystemClock.sleep(100);
+				//pulltorefreshscrollview.setRefreshing();
+				Log.i("TAG", "onPullUpToRefresh");
+				requestData();
+			}
+		});
+		
+		
+		
+		
 		brandlist_layout_pullTorefreshgridview.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -167,55 +216,69 @@ List<BrandInfoInfo> object_list=new ArrayList<BrandInfoInfo>();
 	 * @param page int 当前页
 	 * @param BrandId int 品牌id
 	 * ***/
-	void sendHttp(int page,final int type)
+	void sendHttp(final int page,final int type)
 	{
+		ToolsUtil.showNoDataView(BaijiaBrandListActivity.this,false);
 		httpControl.getBaijiaBrandDetails(page, pageSize, BrandId, showDialog, new HttpCallBackInterface() {
 			
 			@Override
 			public void http_Success(Object obj) {
-			brandlist_layout_pullTorefreshgridview.onRefreshComplete();
-			if(obj!=null && obj instanceof RequestBrandInfoInfoBean)
-			{
-				
-				RequestBrandInfoInfoBean bean=(RequestBrandInfoInfoBean)obj;
-				
-				if (bean != null) {
-					int totalPage = bean.getTotalpaged();
-					if(currPage==1)
+				brandlist_layout_pullTorefreshgridview.onRefreshComplete();
+				currPage=page;
+				showDialog=false;
+				if(obj!=null)
+				{
+					RequestBrandInfoInfoBean bean=(RequestBrandInfoInfoBean)obj;
+					BrandInfoInfoBean brandInfoInfoBean=bean.getData();
+					if(brandInfoInfoBean==null || brandInfoInfoBean.getItems()==null || brandInfoInfoBean.getItems().size()==0)
 					{
-						if(bean.getData()==null || bean.getData().getItems()==null)
-					   {
-							MyApplication.getInstance().showMessage(BaijiaBrandListActivity.this, "还没有订单");
-							return;
-					   }
-					}
-					currPage=bean.getPageindex();
-					if (currPage >= totalPage) {
-						brandlist_layout_pullTorefreshgridview.setMode(Mode.PULL_FROM_START);
-					} else {
-						brandlist_layout_pullTorefreshgridview.setMode(Mode.BOTH);
-					}
-					switch (type) {
-					case 0:
-						falshData(bean.getData().getItems());
-						break;
-					case 1:
-						addData(bean.getData().getItems());
-						break;
+						if(page==1)
+						{
+							brandlist_layout_pullTorefreshgridview.setMode(Mode.PULL_FROM_START);
+							ToolsUtil.showNoDataView(BaijiaBrandListActivity.this ,true);
+						}else
+						{
+							MyApplication.getInstance().showMessage(BaijiaBrandListActivity.this, BaijiaBrandListActivity.this.getResources().getString(R.string.lastpagedata_str));
+						}
+					}else
+					{
+						if(page==1)
+						{
+							brandlist_layout_pullTorefreshgridview.setMode(Mode.BOTH);
+						}
+						int totalPage = bean.getData().getTotalpaged();
+						if (currPage >= totalPage) {
+							//MyApplication.getInstance().showMessage(getActivity(), getActivity().getResources().getString(R.string.lastpagedata_str));
+							brandlist_layout_pullTorefreshgridview.setMode(Mode.BOTH);
+						} else {
+							brandlist_layout_pullTorefreshgridview.setMode(Mode.BOTH);
+						}
+						switch(type)
+						{
+						case 0:
+							falshData(brandInfoInfoBean.getItems());
+							break;
+						case 1:
+							addData(brandInfoInfoBean.getItems());
+							break;
+						}
+						
 					}
 				} else {
+					if(page==1)
+					{
+						ToolsUtil.showNoDataView(BaijiaBrandListActivity.this, true);
+					}
 					MyApplication.getInstance().showMessage(BaijiaBrandListActivity.this, "没有任何数据");
 				}
 			}
 			
-		}
-		
-		@Override
-		public void http_Fails(int error, String msg) {
-			MyApplication.getInstance().showMessage(BaijiaBrandListActivity.this, msg);
-			brandlist_layout_pullTorefreshgridview.onRefreshComplete();
-		}
-	}, BaijiaBrandListActivity.this);
+			@Override
+			public void http_Fails(int error, String msg) {
+				MyApplication.getInstance().showMessage(BaijiaBrandListActivity.this, msg);
+				brandlist_layout_pullTorefreshgridview.onRefreshComplete();
+			}
+		}, BaijiaBrandListActivity.this);
 	}
 	
 	/***

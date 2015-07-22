@@ -84,7 +84,7 @@ public class BrandFragment extends BaseFragment{
 					long arg3) {
 				if((arg2-1)>=0 && (arg2-1)<mList.size())
 				{
-					BrandSearchInfo brandSearchInfo=mList.get(arg2);
+					BrandSearchInfo brandSearchInfo=mList.get(arg2-1);
 					Intent intent=new Intent(getActivity(),BaijiaBrandListActivity.class);
 					intent.putExtra("BRANDID", brandSearchInfo.getId());
 					getActivity().startActivity(intent);
