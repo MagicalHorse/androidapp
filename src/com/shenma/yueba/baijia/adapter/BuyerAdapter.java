@@ -267,7 +267,7 @@ public class BuyerAdapter extends BaseAdapter {
 		holder.customImage.setImageResource(R.drawable.default_pic);
 		// 下载买家头像
 		initPic(productsInfoBean.getBuyerLogo(), holder.customImage,
-				R.drawable.test002);
+				R.drawable.default_pic);
 		ProductPicInfoBean productPicInfoBean = productsInfoBean
 				.getProductPic();
 		if (productPicInfoBean == null) {
