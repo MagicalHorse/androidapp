@@ -311,11 +311,9 @@ public class CreateOrderDialog extends AlertDialog implements android.view.View.
 			btn.setTextSize(12);
 			btn.setBackgroundResource(R.drawable.gridviewitem_background);
 			MarginLayoutParams lp = new MarginLayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
-			lp.leftMargin = 15;
-	        lp.rightMargin = 15;
-	        lp.topMargin = 13;
-	        lp.bottomMargin = 13;
+			lp.setMargins(5, 5, 5, 5);
 	        btn.setPadding(30, 20, 30, 20);
+	        btn.setGravity(Gravity.CENTER);
 			btn.setOnClickListener(new View.OnClickListener() {
 				
 				@Override

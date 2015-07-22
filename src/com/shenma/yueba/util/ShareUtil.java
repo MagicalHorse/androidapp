@@ -8,6 +8,8 @@ import java.util.List;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.BitmapFactory;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -64,7 +66,11 @@ public class ShareUtil {
 		//weixinContent.setTitle(content);
 		weixinContent.setShareContent(content);
 		weixinContent.setTargetUrl(url);
-		weixinContent.setShareImage(new UMImage(activity, imgurl));
+		if(TextUtils.isEmpty(imgurl)){
+			weixinContent.setShareImage(new UMImage(activity, BitmapFactory.decodeResource(activity.getResources(), R.drawable.icon)));
+		}else{
+			weixinContent.setShareImage(new UMImage(activity, imgurl));
+		}
 		UMSocialService controller = UMServiceFactory.getUMSocialService(
 				"com.umeng.share", RequestType.SOCIAL);
 		controller.setShareMedia(weixinContent);
@@ -104,7 +110,11 @@ public class ShareUtil {
 		CircleShareContent circleMedia = new CircleShareContent();
 		circleMedia.setShareContent(content);
 		circleMedia.setTitle(content);
+		if(TextUtils.isEmpty(imgurl)){
+			circleMedia.setShareImage(new UMImage(activity, BitmapFactory.decodeResource(activity.getResources(), R.drawable.icon)));
+		}else{
 		circleMedia.setShareImage(new UMImage(activity, imgurl));
+		}
 		circleMedia.setTargetUrl(url);
 		com.umeng.socialize.utils.Log.LOG = true;
 		UMSocialService controller = UMServiceFactory.getUMSocialService("com.umeng.share", RequestType.SOCIAL);
