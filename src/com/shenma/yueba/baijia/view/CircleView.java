@@ -78,7 +78,7 @@ public class CircleView extends BaseView{
 	void initPullView()
 	{
 		baijia_quanzi_layout_tanb1_gridbview=(PullToRefreshGridView)view.findViewById(R.id.baijia_quanzi_layout_tanb1_gridbview);
-		//baijia_quanzi_layout_tanb1_gridbview.setMode(Mode.BOTH);
+		baijia_quanzi_layout_tanb1_gridbview.setMode(Mode.BOTH);
 		 
 		baijia_quanzi_layout_tanb1_gridbview.setOnPullEventListener(new OnPullEventListener<GridView>() {
 

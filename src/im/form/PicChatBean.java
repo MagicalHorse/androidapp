@@ -106,7 +106,7 @@ public void setPicaddress(String picaddress) {
 	{
 		content=url;
 		MessageBean bean=getMessageBean();
-		SocketManger.the(sockerManagerlistener).sendMsg(bean);
+		SocketManger.the().sendMsg(bean,sockerManagerlistener);
 		if(listener!=null)
 		{
 			listener.pic_notifaction();

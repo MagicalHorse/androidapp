@@ -91,7 +91,7 @@ public class MyBuyerFragment extends Fragment {
 
 	void initPullView() {
 		baijia_contact_listview = (PullToRefreshListView)parentview.findViewById(R.id.baijia_contact_listview);
-		//baijia_contact_listview.setMode(Mode.BOTH);
+		baijia_contact_listview.setMode(Mode.BOTH);
 		baijia_contact_listview.setOnPullEventListener(new OnPullEventListener<ListView>() {
 
 			@Override
