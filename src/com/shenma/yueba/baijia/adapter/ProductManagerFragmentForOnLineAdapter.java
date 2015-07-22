@@ -19,9 +19,12 @@ import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.modle.BaseRequest;
 import com.shenma.yueba.baijia.modle.ProductManagerForOnLineBean;
 import com.shenma.yueba.inter.RefreshProductListInter;
+import com.shenma.yueba.util.DialogUtilInter;
+import com.shenma.yueba.util.DialogUtils;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
+import com.shenma.yueba.util.PopwindowUtil;
 import com.shenma.yueba.util.ShareUtil;
 import com.shenma.yueba.util.ShareUtil.ShareListener;
 import com.shenma.yueba.util.ToolsUtil;
@@ -117,7 +120,16 @@ public class ProductManagerFragmentForOnLineAdapter extends BaseAdapterWithUtil 
 			@Override
 			public void onClick(View v) {
 				if ("复制".equals(((TextView) v).getText().toString().trim())) {
-					productCopy(mList.get(position).getProductId());
+					DialogUtils dialog = new DialogUtils();
+					dialog.alertDialog(ctx, "提示", "您确认要复制该商品吗？", new DialogUtilInter() {
+						
+						@Override
+						public void dialogCallBack(int... which) {
+							productCopy(mList.get(position).getProductId());
+							
+						}
+					}, true, "确定", "取消", true, true);
+					
 				}
 			}
 		});
