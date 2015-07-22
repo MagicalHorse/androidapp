@@ -20,6 +20,8 @@ import com.shenma.yueba.baijia.adapter.BaseAdapterWithUtil;
 import com.shenma.yueba.baijia.modle.CreatOrderInfoBean;
 import com.shenma.yueba.baijia.modle.RequestCreatOrderInfoBean;
 import com.shenma.yueba.inter.RefreshOrderListener;
+import com.shenma.yueba.util.DialogUtilInter;
+import com.shenma.yueba.util.DialogUtils;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.ToolsUtil;
@@ -31,6 +33,7 @@ public class SalesManagerForAttestationBuyerAdapter extends BaseAdapterWithUtil 
 	private List<OrderItem> mList;
 	private int tag;//标记不同的订单状态
 	private RefreshOrderListener lisner;
+	private DialogUtils dialog = new DialogUtils();
 	public SalesManagerForAttestationBuyerAdapter(Context ctx,List<OrderItem> mList,int tag,RefreshOrderListener lisner) {
 		super(ctx);
 		this.mList = mList;
@@ -90,7 +93,14 @@ public class SalesManagerForAttestationBuyerAdapter extends BaseAdapterWithUtil 
 						intent.putExtra("MessageTitle", "退款订单号："+mList.get(position).getOrderNo());
 						ctx.startActivity(intent);
 					}else if("确认退款".equals(holder.tv_bottom.getText().toString().trim())){
-						confirmBack(position);
+						dialog.alertDialog(ctx, "提示", "您确认要退款吗？",
+								new DialogUtilInter() {
+									@Override
+									public void dialogCallBack(int... which) {
+										confirmBack(position);
+
+									}
+								}, true, "确定", "取消", true, true);
 					}
 				}
 			});

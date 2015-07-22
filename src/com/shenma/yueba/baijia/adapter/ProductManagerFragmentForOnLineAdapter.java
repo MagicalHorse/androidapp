@@ -34,11 +34,14 @@ public class ProductManagerFragmentForOnLineAdapter extends BaseAdapterWithUtil 
 	private List<ProductManagerForOnLineBean> mList;
 	private int flag;
 	private RefreshProductListInter inter;
+	DialogUtils dialog = new DialogUtils();
 	Context ctx;
+
 	public ProductManagerFragmentForOnLineAdapter(Context ctx,
-			List<ProductManagerForOnLineBean> mList, int flag,RefreshProductListInter inter) {
+			List<ProductManagerForOnLineBean> mList, int flag,
+			RefreshProductListInter inter) {
 		super(ctx);
-		this.ctx=ctx;
+		this.ctx = ctx;
 		this.mList = mList;
 		this.flag = flag;
 		this.inter = inter;
@@ -46,19 +49,19 @@ public class ProductManagerFragmentForOnLineAdapter extends BaseAdapterWithUtil 
 
 	@Override
 	public int getCount() {
-		
+
 		return mList.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		
+
 		return mList.get(position);
 	}
 
 	@Override
 	public long getItemId(int position) {
-		
+
 		return position;
 	}
 
@@ -76,8 +79,8 @@ public class ProductManagerFragmentForOnLineAdapter extends BaseAdapterWithUtil 
 					null);
 			holder.iv_product = (ImageView) convertView
 					.findViewById(R.id.iv_product);
-//			holder.tv_brand_name = (TextView) convertView
-//					.findViewById(R.id.tv_brand_name);
+			// holder.tv_brand_name = (TextView) convertView
+			// .findViewById(R.id.tv_brand_name);
 			holder.tv_date = (TextView) convertView.findViewById(R.id.tv_date);
 			holder.tv_description = (TextView) convertView
 					.findViewById(R.id.tv_description);
@@ -93,7 +96,7 @@ public class ProductManagerFragmentForOnLineAdapter extends BaseAdapterWithUtil 
 					.findViewById(R.id.tv_button3);
 			holder.tv_button4 = (TextView) convertView
 					.findViewById(R.id.tv_button4);
-		
+
 			FontManager.changeFonts(ctx, holder.tv_price,
 					holder.tv_description, holder.tv_size, holder.tv_price,
 					holder.tv_button1, holder.tv_button2, holder.tv_button3,
@@ -106,12 +109,30 @@ public class ProductManagerFragmentForOnLineAdapter extends BaseAdapterWithUtil 
 		holder.tv_button1.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+
 				if (flag == 1 || flag == 2) {// 下架
-					setOnLineOrOffLine(position, mList.get(position)
-							.getProductId(), 0);
+					dialog.alertDialog(ctx, "提示", "您确认要下架该商品吗？",
+							new DialogUtilInter() {
+								@Override
+								public void dialogCallBack(int... which) {
+									setOnLineOrOffLine(position,
+											mList.get(position).getProductId(),
+											0);
+								}
+							}, true, "确定", "取消", true, true);
+
 				} else if (flag == 0) {// 上架
-					setOnLineOrOffLine(position, mList.get(position)
-							.getProductId(), 1);
+
+					dialog.alertDialog(ctx, "提示", "您确认要上架该商品吗？",
+							new DialogUtilInter() {
+								@Override
+								public void dialogCallBack(int... which) {
+									setOnLineOrOffLine(position,
+											mList.get(position).getProductId(),
+											1);
+								}
+							}, true, "确定", "取消", true, true);
+
 				}
 			}
 		});
@@ -120,16 +141,17 @@ public class ProductManagerFragmentForOnLineAdapter extends BaseAdapterWithUtil 
 			@Override
 			public void onClick(View v) {
 				if ("复制".equals(((TextView) v).getText().toString().trim())) {
-					DialogUtils dialog = new DialogUtils();
-					dialog.alertDialog(ctx, "提示", "您确认要复制该商品吗？", new DialogUtilInter() {
-						
-						@Override
-						public void dialogCallBack(int... which) {
-							productCopy(mList.get(position).getProductId());
-							
-						}
-					}, true, "确定", "取消", true, true);
-					
+					dialog.alertDialog(ctx, "提示", "您确认要复制该商品吗？",
+							new DialogUtilInter() {
+
+								@Override
+								public void dialogCallBack(int... which) {
+									productCopy(mList.get(position)
+											.getProductId());
+
+								}
+							}, true, "确定", "取消", true, true);
+
 				}
 			}
 		});
@@ -138,42 +160,55 @@ public class ProductManagerFragmentForOnLineAdapter extends BaseAdapterWithUtil 
 			@Override
 			public void onClick(View v) {
 				if ("分享".equals(((TextView) v).getText().toString().trim())) {
-					ShareUtil.shareAll((Activity)ctx, mList.get(position).getBrandName(), mList.get(position).getShareLink(), mList.get(position).getDetail().getImages().get(0).getImageUrl()+"_240x0.jpg",new ShareListener() {
-						
-						@Override
-						public void sharedListener_sucess() {
-							requestShared(Integer.parseInt(mList.get(position).getProductId()));
-						}
-						
-						@Override
-						public void sharedListener_Fails(String msg) {
-							MyApplication.getInstance().showMessage(ctx, msg);
-						}
-					});
+					ShareUtil.shareAll((Activity) ctx, mList.get(position)
+							.getBrandName(),
+							mList.get(position).getShareLink(),
+							mList.get(position).getDetail().getImages().get(0)
+									.getImageUrl()
+									+ "_240x0.jpg", new ShareListener() {
+
+								@Override
+								public void sharedListener_sucess() {
+									requestShared(Integer.parseInt(mList.get(
+											position).getProductId()));
+								}
+
+								@Override
+								public void sharedListener_Fails(String msg) {
+									MyApplication.getInstance().showMessage(
+											ctx, msg);
+								}
+							});
 				}
 			}
 		});
-		
+
 		holder.tv_button4.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				if (flag == 1 || flag == 2) {// 修改
-					Log.i("position", position+"--------");
-                   Intent intent = new Intent(ctx, PublishProductActivity.class);
-                   intent.putExtra("id", mList.get(position).getProductId());
-                   intent.putExtra("data", mList.get(position).getDetail());
-                   ctx.startActivity(intent);
+					Log.i("position", position + "--------");
+					Intent intent = new Intent(ctx,
+							PublishProductActivity.class);
+					intent.putExtra("id", mList.get(position).getProductId());
+					intent.putExtra("data", mList.get(position).getDetail());
+					ctx.startActivity(intent);
 				} else if (flag == 0) {// 删除
-					deleteProduct(position, mList.get(position)
-							.getProductId());
+					dialog.alertDialog(ctx, "提示", "您确认要删除该商品吗？",
+							new DialogUtilInter() {
+
+								@Override
+								public void dialogCallBack(int... which) {
+									deleteProduct(position, mList.get(position)
+											.getProductId());
+
+								}
+							}, true, "确定", "取消", true, true);
 				}
 			}
 		});
 
-		
-		
-		
 		if (flag == 1) {// 在线商品
 			holder.tv_button1.setText("下架");
 			holder.tv_button2.setText("复制");
@@ -197,8 +232,8 @@ public class ProductManagerFragmentForOnLineAdapter extends BaseAdapterWithUtil 
 			bitmapUtils.display(holder.iv_product,
 					ToolsUtil.getImage(mList.get(position).getPic(), 120, 0));
 		}
-//		holder.tv_brand_name.setText(ToolsUtil.nullToString(mList.get(position)
-//				.getBrandName()));
+		// holder.tv_brand_name.setText(ToolsUtil.nullToString(mList.get(position)
+		// .getBrandName()));
 		holder.tv_date.setText(ToolsUtil.nullToString(mList.get(position)
 				.getExpireTime()));
 		holder.tv_description.setText(ToolsUtil.nullToString(mList
@@ -213,7 +248,7 @@ public class ProductManagerFragmentForOnLineAdapter extends BaseAdapterWithUtil 
 
 	class Holder {
 		ImageView iv_product;
-//		TextView tv_brand_name;
+		// TextView tv_brand_name;
 		TextView tv_price;
 		TextView tv_description;
 		TextView tv_date;
@@ -225,8 +260,6 @@ public class ProductManagerFragmentForOnLineAdapter extends BaseAdapterWithUtil 
 		TextView tv_button4;
 	}
 
-	
-
 	/**
 	 * 复制商品
 	 */
@@ -236,13 +269,13 @@ public class ProductManagerFragmentForOnLineAdapter extends BaseAdapterWithUtil 
 			@Override
 			public void http_Success(Object obj) {
 				Toast.makeText(ctx, "复制成功", 1000).show();
-				if(flag ==1){//在线商品
+				if (flag == 1) {// 在线商品
 					inter.refreshOnLineProduct(0);
 				}
-				if(flag == 2){//即将下线
+				if (flag == 2) {// 即将下线
 					inter.refreshOnLineProduct(1);
 				}
-				if(flag == 0){//下线商品
+				if (flag == 0) {// 下线商品
 					inter.refreshOnLineProduct(2);
 				}
 			}
@@ -272,13 +305,13 @@ public class ProductManagerFragmentForOnLineAdapter extends BaseAdapterWithUtil 
 					public void http_Success(Object obj) {
 						Toast.makeText(ctx, status == 1 ? "上线成功" : "下架成功", 1000)
 								.show();
-						if(flag ==1){//在线商品
+						if (flag == 1) {// 在线商品
 							inter.refreshOnLineProduct(0);
 						}
-						if(flag == 2){//即将下线
+						if (flag == 2) {// 即将下线
 							inter.refreshOnLineProduct(1);
 						}
-						if(flag == 0){//下线商品
+						if (flag == 0) {// 下线商品
 							inter.refreshOnLineProduct(2);
 						}
 						notifyDataSetChanged();
@@ -286,7 +319,6 @@ public class ProductManagerFragmentForOnLineAdapter extends BaseAdapterWithUtil 
 
 					@Override
 					public void http_Fails(int error, String msg) {
-						
 
 					}
 				}, ctx, true, true);
@@ -317,31 +349,31 @@ public class ProductManagerFragmentForOnLineAdapter extends BaseAdapterWithUtil 
 		}, ctx, true, true);
 
 	}
-	
-	
+
 	/*****
 	 * 分享成功后 回调
 	 * ****/
-	void requestShared(int productid)
-	{
-		HttpControl httpControl=new HttpControl();
-		httpControl.createProductShare(productid, false, new HttpCallBackInterface() {
-			
-			@Override
-			public void http_Success(Object obj) {
-				if(obj!=null && obj instanceof BaseRequest)
-				{
-					MyApplication.getInstance().showMessage(ctx, "分享成功");
-				}else{
-					MyApplication.getInstance().showMessage(ctx, "分享失败");
-				}
-			}
-			
-			@Override
-			public void http_Fails(int error, String msg) {
-				MyApplication.getInstance().showMessage(ctx, msg);
-			}
-		},ctx);
+	void requestShared(int productid) {
+		HttpControl httpControl = new HttpControl();
+		httpControl.createProductShare(productid, false,
+				new HttpCallBackInterface() {
+
+					@Override
+					public void http_Success(Object obj) {
+						if (obj != null && obj instanceof BaseRequest) {
+							MyApplication.getInstance()
+									.showMessage(ctx, "分享成功");
+						} else {
+							MyApplication.getInstance()
+									.showMessage(ctx, "分享失败");
+						}
+					}
+
+					@Override
+					public void http_Fails(int error, String msg) {
+						MyApplication.getInstance().showMessage(ctx, msg);
+					}
+				}, ctx);
 	}
 
 }

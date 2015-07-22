@@ -241,7 +241,6 @@ public class TagImageView extends RelativeLayout {
 		xx = dx;
 		yy = dy;
 		
-		Toast.makeText(getContext(), "x:"+xx+"---y:"+yy, 1000).show();
 		
 		int parentWidth = this.getWidth();
 		int parentHeight = this.getHeight();
