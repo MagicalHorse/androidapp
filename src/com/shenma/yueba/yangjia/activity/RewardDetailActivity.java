@@ -48,6 +48,7 @@ public class RewardDetailActivity extends BaseActivityWithTopView{
 	private List<HistoryItem> mList = new ArrayList<HistoryItem>();
 	private String promotionId;//奖励id
 	private TextView tv_nodata;
+	private String titleName;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		MyApplication.getInstance().addActivity(this);//加入回退栈
@@ -55,12 +56,13 @@ public class RewardDetailActivity extends BaseActivityWithTopView{
 		setContentView(R.layout.reward_detail_layout);
 		super.onCreate(savedInstanceState);
 		promotionId = getIntent().getStringExtra("promotionId");
+		titleName = getIntent().getStringExtra("titleName");
 		initView();
 		getRewardDetail();
 	}
 
 	private void initView() {
-		setTitle("红榜奖励");
+		setTitle(titleName!=null?titleName:"");
 		setLeftTextView(new OnClickListener() {
 			@Override
 			public void onClick(View v) {

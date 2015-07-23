@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -376,7 +377,10 @@ public class IndexFragmentForYangJia extends BaseFragment implements
 		case R.id.bt_top_right:
 //			SocicalShareUtil shareUtil = new SocicalShareUtil(getActivity());
 //			shareUtil.showShareDialog();
-			ShareUtil.shareAll(getActivity(), data.getShare().getDesc(),  data.getShare().getShare_link(),  data.getShare().getLogo(),null);
+			Log.i("share", "---desc--"+data.getShare().getDesc());
+			Log.i("share", "---link--"+data.getShare().getShare_link());
+			Log.i("share", "---logo--"+data.getShare().getLogo());
+			ShareUtil.shareAll(getActivity(), data.getShare().getDesc(),  data.getShare().getShare_link(),  ToolsUtil.getImage(data.getShare().getLogo(), 200, 200),null);
 		default:
 			break;
 		}

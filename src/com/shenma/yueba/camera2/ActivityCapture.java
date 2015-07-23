@@ -449,9 +449,9 @@ public class ActivityCapture extends Activity implements View.OnClickListener,
 
 		Camera.Parameters camParmeters = camera.getParameters();
 		List<Size> sizes = camParmeters.getSupportedPreviewSizes();
-		for (Size size : sizes) {
-			Log.v(TAG, "w:" + size.width + ",h:" + size.height);
-		}
+//		for (Size size : sizes) {
+//			Log.v(TAG, "w:" + size.width + ",h:" + size.height);
+//		}
 
 		preview = new CameraPreview(this, camera);
 		cropBorderView = new CameraCropBorderView(this);
