@@ -17,6 +17,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.alibaba.sdk.android.oss.OSSService;
 import com.alibaba.sdk.android.oss.OSSServiceProvider;
@@ -1498,7 +1499,7 @@ public class HttpControl {
 		map.put(Constants.PAGE, Integer.toString(currPage));
 		map.put(Constants.PAGESIZE, Integer.toString(pageSize));
 		BasehttpSend(map, context, HttpConstants.GETBRANDPRODUCTLIST,
-				httpCallBack, RequestBrandInfoBean.class, showDialog, false);
+				httpCallBack, RequestBrandInfoBean.class, showDialog, true);
 	}
 
 	/**
@@ -1521,7 +1522,7 @@ public class HttpControl {
 		map.put("CityId", Integer.toString(CityId));
 		BasehttpSend(map, context, HttpConstants.GETCITYPRODUCTLIST,
 				httpCallBack, RequestBrandCityWideInfoBean.class, showDialog,
-				false);
+				true);
 	}
 	
 	
@@ -2047,13 +2048,18 @@ public class HttpControl {
 					
 					@Override
 					public void onFailure(HttpException error, String msg) {
+						if(error.getExceptionCode() == 0){
+							Toast.makeText(context, "网络异常，请检查网络", 1000).show();
+						}else{
 
-						if (httpCallBack != null) {
-							httpCallBack.http_Fails(0, msg);
+							if (httpCallBack != null) {
+								httpCallBack.http_Fails(0, msg);
+							}
+							if(progressDialog!=null){
+								progressDialog.cancel();
+							}
 						}
-						if(progressDialog!=null){
-							progressDialog.cancel();
-						}
+
 					}
 				});
 	}
