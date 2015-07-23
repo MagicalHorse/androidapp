@@ -1564,6 +1564,19 @@ public class HttpControl {
 		BasehttpSend(map, context, HttpConstants.METHOD_APPLY_RMA,httpCallBack, BaseRequest.class, showDialog,false);
 	}
 	
+	
+	/**
+	 * 败家  认证买手商品取消退款
+	 * 
+	 * @param OrderNo  String 订单编号" 必填
+     * @return void
+	 * **/
+	public void cancelRma(String OrderNo,boolean showDialog, final HttpCallBackInterface httpCallBack,Context context) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("OrderNo",OrderNo);
+		BasehttpSend(map, context, HttpConstants.METHOD_CANCELRMA,httpCallBack, BaseRequest.class, showDialog,false);
+	}
+	
 	/**
 	 * 败家  确认提货
 	 * 

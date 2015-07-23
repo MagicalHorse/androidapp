@@ -569,6 +569,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 		 */
 		if (ToolsUtil.isAvailableSpace(ChatActivity.this)) {
 			littlePicPath = PhotoUtils.takePicture(ChatActivity.this);
+			Log.i("TAG", "littlePicPath:"+littlePicPath);
 		}
 
 	}

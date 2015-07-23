@@ -69,7 +69,7 @@ int maxValue=0;
 	
 	void initView()
 	{
-		setTitle("申请退货");
+		setTitle("申请退款");
 		FontManager.changeFonts(ApplyForRefundActivity.this, tv_top_title);
 		setLeftTextView(new OnClickListener() {
 			

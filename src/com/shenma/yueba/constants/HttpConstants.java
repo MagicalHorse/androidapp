@@ -660,6 +660,12 @@ public class HttpConstants {
 	
 	public static String METHOD_CONFIRMGOODS = Order+ "ConfirmGoods";
 	
+	/**
+	 * 败家 认证买手商品取消退款
+	 */
+	
+	public static String METHOD_CANCELRMA = Order+ "CancelRma";
+	
 	/*****
 	 * 客户获取自己的基本信息（新）
 	 * **/

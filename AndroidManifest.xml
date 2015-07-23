@@ -438,6 +438,11 @@
         <activity
             android:name="com.shenma.yueba.baijia.activity.AttationListActivity"
             android:screenOrientation="portrait" />
+        
+         <!--败家 图片放大-->
+        <activity
+            android:name="com.shenma.yueba.baijia.activity.TouchImageViewActivity"
+            android:screenOrientation="portrait" />
 
         
         

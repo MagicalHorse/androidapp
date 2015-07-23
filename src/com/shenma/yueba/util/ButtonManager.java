@@ -33,7 +33,7 @@ import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 
 public class ButtonManager {
 public final static String WAITPAY="付款";//0
-public final static String CANCELPAY="撤销退款";//1
+public final static String CANCELPAY="撤销退货";//1
 public final static String QUERENTIHUO="确认提货";//2
 public final static String SHENQINGTUIKUAN="申请退款";//3
 public final static String SHENSU="申诉";//4
@@ -61,7 +61,7 @@ public final static String SHENSULOADING="申诉中";//5
 			break;
 		//申请退款
 		case 3:
-			//view_list.add(createWaitPayButton(activity, 1));//撤销退款
+			view_list.add(createWaitPayButton(activity, 1,orderControlListener));//撤销退款
 			//撤销退款
 			break;
 		}
@@ -147,9 +147,9 @@ public final static String SHENSULOADING="申诉中";//5
 		if(str.equals(ButtonManager.WAITPAY))//如果是等待支付
 		{
 			ButtonManager.payOrder(activity, baiJiaOrderListInfo);
-		}else if(str.equals(ButtonManager.CANCELPAY))//撤销退款
+		}else if(str.equals(ButtonManager.CANCELPAY))//撤销退货
 		{
-			ButtonManager.cancelRefund(activity);
+			showDiaglog(activity, str, baiJiaOrderListInfo, orderControlListener);
 		}else if(str.equals(ButtonManager.QUERENTIHUO))//确认提货
 		{
 			showDiaglog(activity,str,baiJiaOrderListInfo,orderControlListener);
@@ -171,6 +171,9 @@ public final static String SHENSULOADING="申诉中";//5
 				{
 					ButtonManager.affirmPUG(activity, baiJiaOrderListInfo, orderControlListener);
 					dialog.cancel();
+				}else if(str.equals(ButtonManager.CANCELPAY))//申请退货
+				{
+					ButtonManager.cancelRefund(activity, baiJiaOrderListInfo, orderControlListener);
 				}
 			}
 		}).setNegativeButton("否", new DialogInterface.OnClickListener() {
@@ -213,12 +216,27 @@ public final static String SHENSULOADING="申诉中";//5
 	
 	
 	/****
-	 * 撤销退款
+	 * 撤销退货
 	 * **/
-	public static void cancelRefund(final Context context)
+	public static void cancelRefund(final Context context,BaiJiaOrderListInfo baiJiaOrderListInfo ,final OrderControlListener orderControlListener)
 	{
 		
-		
+		HttpControl httpControl=new HttpControl();
+		httpControl.cancelRma(baiJiaOrderListInfo.getOrderNo(), true, new HttpCallBackInterface() {
+			
+			@Override
+			public void http_Success(Object obj) {
+				if(orderControlListener!=null)
+				{
+					orderControlListener.orderCotrol_OnRefuces();//通知刷新页面
+				}
+			}
+			
+			@Override
+			public void http_Fails(int error, String msg) {
+				MyApplication.getInstance().showMessage(context, msg);
+			}
+		}, context);
 	}
 	
 	
@@ -251,15 +269,6 @@ public final static String SHENSULOADING="申诉中";//5
 		((Activity)context).startActivityForResult(intent, 200);
 	}
 	
-	/****
-	 * 申诉
-	 * **/
-	public static void cancelRefund(final Context context,BaiJiaOrderListInfo baiJiaOrderListInfo)
-	{
-		Intent intent=new Intent(context,OrderAppealActivity.class);
-		intent.putExtra("DATA", baiJiaOrderListInfo);
-		((Activity)context).startActivityForResult(intent, 200);
-	}
 	
 	/****
 	 * 申诉中
