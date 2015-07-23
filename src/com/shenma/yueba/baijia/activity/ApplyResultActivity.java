@@ -44,11 +44,11 @@ public class ApplyResultActivity extends BaseActivityWithTopView implements OnCl
 		String flag = getIntent().getStringExtra("flag");
 		if("applaywithdraw".equals(flag)){//申请提现
 			tv_content.setText("提现申请已提交，请等待处理");
-			tv_comment.setText("预计到账时间XXX");
+			tv_comment.setText("预计1小时内到帐");
 		}
 		if("withdrawGoods".equals(flag)){//提现货款
 			tv_content.setText("货款提现申请已提交，请等待处理");
-			tv_comment.setText("预计到账时间XXX");
+			tv_comment.setText("");
 		}
 		if("userCertification".equals(flag)){
 			tv_content.setText("身份认证申请已提交，请等待处理");

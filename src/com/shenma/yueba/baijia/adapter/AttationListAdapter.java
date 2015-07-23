@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.activity.AttationListActivity;
 import com.shenma.yueba.baijia.modle.AttationListBean;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
@@ -127,10 +128,10 @@ public class AttationListAdapter extends BaseAdapterWithUtil {
 			
 			if(bean.isFavorite())
 			{
-				holder.tv_atttention.setText("已关注");
+				holder.tv_atttention.setText("取消关注");
 			}else
 			{
-				holder.tv_atttention.setText("关注");
+				holder.tv_atttention.setText(" 关注 ");
 			}
 		}else if(status==1)//粉丝
 		{
@@ -138,10 +139,10 @@ public class AttationListAdapter extends BaseAdapterWithUtil {
 			
 			if(bean.isFavorite())
 			{
-				holder.tv_atttention.setText("已关注");
+				holder.tv_atttention.setText("取消关注");
 			}else
 			{
-				holder.tv_atttention.setText("关注");
+				holder.tv_atttention.setText(" 关注 ");
 			}
 		}
 		
@@ -166,24 +167,26 @@ public class AttationListAdapter extends BaseAdapterWithUtil {
 			
 			@Override
 			public void http_Success(Object obj) {
-				if(Status==0) //1表示关注 0表示取消关注
-				{
-					bean.setFavorite(false);
-				}else if(Status==1)
-				{
-					bean.setFavorite(true);
-				}
-				if(pullToRefreshListView.findViewWithTag(bean)!=null &&  pullToRefreshListView.findViewWithTag(bean) instanceof TextView)
-				{
-					TextView tv=(TextView)pullToRefreshListView.findViewWithTag(bean);
-					if(Status==0)
-					{
-						tv.setText("关注");
-					}else if(Status==1)
-					{
-						tv.setText("已关注");
-					}
-				}
+//				if(Status==0) //1表示关注 0表示取消关注
+//				{
+//					bean.setFavorite(false);
+//				}else if(Status==1)
+//				{
+//					bean.setFavorite(true);
+//				}
+//				if(pullToRefreshListView.findViewWithTag(bean)!=null &&  pullToRefreshListView.findViewWithTag(bean) instanceof TextView)
+//				{
+//					TextView tv=(TextView)pullToRefreshListView.findViewWithTag(bean);
+//					if(Status==0)
+//					{
+//						tv.setText("关注");
+//					}else if(Status==1)
+//					{
+//						tv.setText("取消关注");
+//					}
+//				}
+				
+				((AttationListActivity)ctx).refresh();
 
 			}
 			

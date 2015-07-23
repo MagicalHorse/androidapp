@@ -159,7 +159,7 @@ public class WithdrawHistoryFragment extends BaseFragment {
                     public void run() {
                     	pull_refresh_list.onRefreshComplete();
                     }
-            }, 1000);
+            }, 100);
 				IncomeHistoryBackBean bean = (IncomeHistoryBackBean) obj;
 				adapter = new WithDrawHistoryAdapter(getActivity(), mList, 0);
 				if (isRefresh) {
