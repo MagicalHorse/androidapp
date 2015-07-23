@@ -8,20 +8,21 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ListView;
 
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnPullEventListener;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.State;
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.adapter.AttationListAdapter;
 import com.shenma.yueba.constants.Constants;
+import com.shenma.yueba.inter.AttationListInter;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
-import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
+import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.yangjia.modle.AttationAndFansItemBean;
 import com.shenma.yueba.yangjia.modle.AttationAndFansListBackBean;
@@ -33,7 +34,7 @@ import com.umeng.analytics.MobclickAgent;
  * @author a
  *
  */
-public class AttationListActivity extends BaseActivityWithTopView {
+public class AttationListActivity extends BaseActivityWithTopView implements AttationListInter {
 	public static final String TYPE_FANS="FANS";//粉丝
 	public static final String TYPE_ATTATION="ATTATION";//关注
 	private AttationListAdapter brandAdapter;
@@ -193,6 +194,7 @@ public class AttationListActivity extends BaseActivityWithTopView {
 							mList.clear();
 							pull_refresh_list.setMode(Mode.PULL_FROM_START);
 							ToolsUtil.showNoDataView(AttationListActivity.this,true);
+							brandAdapter.notifyDataSetChanged();
 						}else
 						{
 							MyApplication.getInstance().showMessage(AttationListActivity.this, AttationListActivity.this.getResources().getString(R.string.lastpagedata_str));
@@ -274,5 +276,11 @@ public class AttationListActivity extends BaseActivityWithTopView {
 		if (brandAdapter != null) {
 			brandAdapter.notifyDataSetChanged();
 		}
+	}
+
+	@Override
+	public void refresh() {
+		showDialog = true;
+		requestFalshData();
 	}
 }

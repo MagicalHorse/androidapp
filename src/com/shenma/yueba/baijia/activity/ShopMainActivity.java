@@ -13,6 +13,7 @@ import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
@@ -241,11 +242,13 @@ public class ShopMainActivity extends FragmentActivity {
 					((TextView)textview).setText("关注");
 					shop_main_attention_imagebutton.setCompoundDrawablesWithIntrinsicBounds(ShopMainActivity.this.getResources().getDrawable(R.drawable.shop_guanzhu), null, null, null);
 					bean.setIsFollowing(false);
+					Toast.makeText(ShopMainActivity.this, "取消成功", 1000).show();
 					break;
 				case 1:
 					((TextView)textview).setText("取消");
 					shop_main_attention_imagebutton.setCompoundDrawablesWithIntrinsicBounds(ShopMainActivity.this.getResources().getDrawable(R.drawable.shop_unguanzhu), null, null, null);
 					bean.setIsFollowing(true);
+					Toast.makeText(ShopMainActivity.this, "关注成功", 1000).show();
 					break;
 				}
 			}
