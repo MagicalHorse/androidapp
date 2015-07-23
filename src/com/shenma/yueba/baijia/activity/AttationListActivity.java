@@ -182,7 +182,13 @@ public class AttationListActivity extends BaseActivityWithTopView implements Att
 			
 			@Override
 			public void http_Success(Object obj) {
-				pull_refresh_list.onRefreshComplete();
+				pull_refresh_list.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                    	pull_refresh_list.onRefreshComplete();
+                    }
+            }, 100);
+			
 				currpage=page;
 				showDialog = false;
 				if (obj != null&& obj instanceof AttationAndFansListBackBean) {

@@ -23,6 +23,7 @@
         <TextView
             android:gravity="right"
             android:id="@+id/tv_time"
+             android:layout_marginTop="2dip"
             android:layout_width="@dimen/shop_main_width120_dimen"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -33,12 +34,13 @@
             android:textSize="@dimen/textsize10sp" />
 
         <TextView
+            android:layout_marginTop="2dip"
             android:layout_toLeftOf="@+id/tv_time"
             android:id="@+id/tv_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@null"
-            android:textSize="@dimen/textsize13sp" />
+            android:textSize="@dimen/textsize14sp" />
 
         <TextView
             android:id="@+id/tv_msg"
@@ -47,6 +49,8 @@
             android:layout_alignParentBottom="true"
             android:text="@null"
             android:maxLines="2"
+            android:layout_marginBottom="2dip"
+            android:textColor="@color/text_gray_color"
             android:ellipsize="end"
             android:textSize="@dimen/textsize11sp" />
     </RelativeLayout>

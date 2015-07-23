@@ -145,7 +145,12 @@ public class BrandFragment extends BaseFragment{
 		 if(key.equals(""))
 		 {
 			 MyApplication.getInstance().showMessage(getActivity(), "请输入关键字");
-			 pull_refresh_list.onRefreshComplete();
+				pull_refresh_list.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                    	pull_refresh_list.onRefreshComplete();
+                    }
+            }, 100);
 			 return;
 		 }
 		sendHttp(1,currPage, state, key);
@@ -218,7 +223,12 @@ public class BrandFragment extends BaseFragment{
 			
 			@Override
 			public void http_Success(Object obj) {
-				pull_refresh_list.onRefreshComplete();
+				pull_refresh_list.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                    	pull_refresh_list.onRefreshComplete();
+                    }
+            }, 100);
 				currPage=page;
 				ishowStatus=false;
 				if(obj!=null)
@@ -271,7 +281,12 @@ public class BrandFragment extends BaseFragment{
 			@Override
 			public void http_Fails(int error, String msg) {
 				MyApplication.getInstance().showMessage(getActivity(), msg);
-				pull_refresh_list.onRefreshComplete();
+				pull_refresh_list.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                    	pull_refresh_list.onRefreshComplete();
+                    }
+            }, 100);
 			}
 		}, getActivity());
 	}

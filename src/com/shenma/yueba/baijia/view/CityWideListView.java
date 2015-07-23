@@ -175,7 +175,12 @@ public class CityWideListView extends BaseView{
 			@Override
 			public void http_Success(Object obj) {
 				showDialog=false;
-				pull_refresh_list.onRefreshComplete();
+				pull_refresh_list.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                    	pull_refresh_list.onRefreshComplete();
+                    }
+            }, 100);
 				currPage=page;
 				if(obj!=null && obj instanceof RequestBrandCityWideInfoBean)
 				{

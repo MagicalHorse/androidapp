@@ -188,7 +188,12 @@ public class MyCircleView extends BaseView{
 			@Override
 			public void http_Success(Object obj) {
 				showDialog=false;
-				pull_refresh_list.onRefreshComplete();
+				pull_refresh_list.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                    	pull_refresh_list.onRefreshComplete();
+                    }
+            }, 100);
 				currPage=page;
 				if(obj!=null && obj instanceof RequestMyCircleInfoBean)
 				{
@@ -240,7 +245,12 @@ public class MyCircleView extends BaseView{
 			
 			@Override
 			public void http_Fails(int error, String msg) {
-				pull_refresh_list.onRefreshComplete();
+				pull_refresh_list.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                    	pull_refresh_list.onRefreshComplete();
+                    }
+            }, 100);
 				MyApplication.getInstance().showMessage(activity, msg);
 			}
 		},activity );
