@@ -224,10 +224,6 @@
             android:name="com.shenma.yueba.baijia.activity.CircleInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.shenma.yueba.baijia.activity.SwipeListViewActivity"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
             android:name="com.shenma.yueba.baijia.activity.WebActivity"
             android:screenOrientation="portrait" >
         </activity>
@@ -375,12 +371,6 @@
             android:screenOrientation="portrait" >
         </activity>
 
-        <!-- 邀请好友 -->
-        <activity
-            android:name="com.shenma.yueba.baijia.activity.InvitationFriendActivity"
-            android:screenOrientation="portrait" >
-        </activity>
-
         <!-- 修改圈子名称 -->
         <activity
             android:name="com.shenma.yueba.yangjia.activity.ModifyCircleNameActivity"
@@ -505,21 +495,6 @@
         <!-- 申请提现 -->
         <activity
             android:name="com.shenma.yueba.yangjia.activity.ApplyWithdrawActivity"
-            android:screenOrientation="portrait" >
-        </activity>
-        <!-- 自定义相机 -->
-        <activity
-            android:name="com.shenma.yueba.camera.CameraAty"
-            android:screenOrientation="portrait" >
-        </activity>
-        <!-- 自定义相机 -->
-        <activity
-            android:name="com.shenma.yueba.camera.AlbumAty"
-            android:screenOrientation="portrait" >
-        </activity>
-        <!-- 自定义相机 -->
-        <activity
-            android:name="com.shenma.yueba.camera.AlbumItemAty"
             android:screenOrientation="portrait" >
         </activity>
         <!-- 网络状态变化的广播 -->
