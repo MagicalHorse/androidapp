@@ -4,6 +4,7 @@ import im.form.BaseChatBean;
 import im.form.PicChatBean;
 import android.content.Context;
 import android.content.Intent;
+import android.sax.StartElementListener;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.ApproveBuyerDetailsActivity;
+import com.shenma.yueba.baijia.activity.TouchImageViewActivity;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.RoundImageView;
 
@@ -24,7 +26,7 @@ import com.shenma.yueba.view.RoundImageView;
  * 程序的简单说明  
  */
 
-public class PicViewManager extends ChatBaseManager{
+public class PicViewManager extends ChatBaseManager implements OnClickListener{
 	
 	public enum PicView_Type
 	{
@@ -67,6 +69,7 @@ public class PicViewManager extends ChatBaseManager{
 		
 		chat_layout_item_leftimg_icon_roundimageview=(RoundImageView)ll.findViewById(R.id.chat_layout_item_leftimg_icon_roundimageview);
 		chat_layout_item_leftimg_msg_imageview=(ImageView)ll.findViewById(R.id.chat_layout_item_leftimg_msg_imageview);
+		chat_layout_item_leftimg_msg_imageview.setOnClickListener(this);
 		chat_layout_item_leftmsg_name_textview=(TextView)ll.findViewById(R.id.chat_layout_item_leftmsg_name_textview);
 		chat_layout_item_leftmsg_time_textview=(TextView)ll.findViewById(R.id.chat_layout_item_leftmsg_time_textview);
 		
@@ -91,6 +94,7 @@ public class PicViewManager extends ChatBaseManager{
 			PicChatBean picbean=(PicChatBean)bean;
 			chat_layout_item_leftmsg_name_textview.setText(ToolsUtil.nullToString(picbean.getUserName()));
 			chat_layout_item_leftmsg_time_textview.setText(ToolsUtil.nullToString(picbean.getCreationDate()));
+			chat_layout_item_leftimg_msg_imageview.setTag(bean);
 			MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.nullToString(picbean.getLogo()), chat_layout_item_leftimg_icon_roundimageview, MyApplication.getInstance().getDisplayImageOptions());
 			if(picbean.isSuccess())
 			{
@@ -113,5 +117,23 @@ public class PicViewManager extends ChatBaseManager{
 			chat_layout_item_leftimg_progress_textview.setText(value+"%");
 		}
 		 
+	}
+
+
+	@Override
+	public void onClick(View v) {
+		switch(v.getId())
+		{
+		case R.id.chat_layout_item_leftimg_msg_imageview:
+			PicChatBean picbean=(PicChatBean)v.getTag();
+			Intent intent=new Intent(context,TouchImageViewActivity.class);
+			if(picbean.isSuccess())
+			{
+				intent.putExtra("IMG_URL", (String)picbean.getContent());
+			    context.startActivity(intent);
+			}
+			
+			break;
+		}
 	}
 }
