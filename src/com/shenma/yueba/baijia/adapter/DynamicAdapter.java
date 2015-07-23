@@ -60,7 +60,6 @@ public class DynamicAdapter extends BaseAdapterWithUtil {
 		return convertView;
 	}
 	
-	
 	class Holder{
 		RoundImageView iv_dynamic_icon;//头像
 		ImageView iv_dynamic_img;//图片
