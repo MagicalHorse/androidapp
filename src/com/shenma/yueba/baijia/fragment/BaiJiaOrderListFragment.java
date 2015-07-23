@@ -181,7 +181,7 @@ public class BaiJiaOrderListFragment extends Fragment implements
 		                    public void run() {
 		                    	pull_refresh_list.onRefreshComplete();
 		                    }
-		            }, 100);
+		            }, 300);
 						currpage=page;
 						ishow = false;
 						if (obj != null&& obj instanceof RequestBaiJiaOrderListInfoBean) {

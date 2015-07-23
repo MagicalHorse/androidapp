@@ -248,6 +248,7 @@ public class DynamicListView extends BaseView{
 	 * 加载数据
 	 * **/
 	void addData(List<UserDynamicInfo> msg_list) {
+		currpage++;
 		if (mList != null) {
 			mList.addAll(msg_list);
 		}

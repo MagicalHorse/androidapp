@@ -4,7 +4,6 @@ import im.form.BaseChatBean;
 import im.form.PicChatBean;
 import android.content.Context;
 import android.content.Intent;
-import android.sax.StartElementListener;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -15,7 +14,6 @@ import android.widget.TextView;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
-import com.shenma.yueba.baijia.activity.ApproveBuyerDetailsActivity;
 import com.shenma.yueba.baijia.activity.TouchImageViewActivity;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.RoundImageView;
@@ -114,6 +112,10 @@ public class PicViewManager extends ChatBaseManager implements OnClickListener{
 			int currcount=picbean.getProgress();
 			int maxcount=picbean.getMaxProgress();
 			int value=(int)(((float)currcount/(float)maxcount)*100);
+		    if(value>=100)
+		    {
+		    	value=99;
+		    }
 			chat_layout_item_leftimg_progress_textview.setText(value+"%");
 		}
 		 
