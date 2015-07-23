@@ -1,12 +1,8 @@
 package com.shenma.yueba.baijia.fragment;
 
 
-import java.util.Map;
-import java.util.Set;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -14,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
@@ -26,13 +21,8 @@ import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.JpushUtils;
 import com.shenma.yueba.util.WXLoginUtil;
-import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
-import com.umeng.socialize.controller.listener.SocializeListeners.UMAuthListener;
-import com.umeng.socialize.controller.listener.SocializeListeners.UMDataListener;
-import com.umeng.socialize.exception.SocializeException;
-import com.umeng.socialize.sso.UMQQSsoHandler;
 
 public class LoginFragment extends BaseFragment implements OnClickListener {
 
@@ -145,7 +135,7 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
 			wxLoginUtil.initWeiChatLogin(true,true,false);
 			break;
 		case R.id.tv_qq:// QQ登录
-			initQQLogin();
+//			initQQLogin();
 			break;
 		default:
 			break;
@@ -153,71 +143,71 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
 	}
 
 
-	private void initQQLogin() {
-		// 参数1为当前Activity， 参数2为开发者在QQ互联申请的APP ID，参数3为开发者在QQ互联申请的APP kEY.
-		UMQQSsoHandler qqSsoHandler = new UMQQSsoHandler(getActivity(),
-				"100424468", "c7394704798a158208a74ab60104f0ba");
-		qqSsoHandler.addToSocialSDK();
-
-		mController.doOauthVerify(getActivity(), SHARE_MEDIA.QQ,
-				new UMAuthListener() {
-					@Override
-					public void onStart(SHARE_MEDIA platform) {
-						Toast.makeText(getActivity(), "正在授权，请稍后",
-								Toast.LENGTH_SHORT).show();
-					}
-
-					@Override
-					public void onError(SocializeException e,
-							SHARE_MEDIA platform) {
-						Toast.makeText(getActivity(), "授权错误",
-								Toast.LENGTH_SHORT).show();
-					}
-
-					@Override
-					public void onComplete(Bundle value, SHARE_MEDIA platform) {
-						Toast.makeText(getActivity(), "授权完成",
-								Toast.LENGTH_SHORT).show();
-						// 获取相关授权信息
-						mController.getPlatformInfo(getActivity(),
-								SHARE_MEDIA.QQ, new UMDataListener() {
-
-									@Override
-									public void onStart() {
-										Toast.makeText(getActivity(),
-												"获取平台数据开始...",
-												Toast.LENGTH_SHORT).show();
-									}
-
-									@Override
-									public void onComplete(int status,
-											Map<String, Object> info) {
-										if (status == 200 && info != null) {
-											sb = new StringBuilder();
-											Set<String> keys = info.keySet();
-											sb.append("{");
-											for (String key : keys) {
-												sb.append(key
-														+ ":"
-														+ info.get(key)
-																.toString());
-											}
-											sb.append("}");
-											Log.d("TestData", sb.toString());
-										} else {
-											Log.d("TestData", "发生错误：" + status);
-										}
-									}
-								});
-					}
-
-					@Override
-					public void onCancel(SHARE_MEDIA platform) {
-						Toast.makeText(getActivity(), "授权取消",
-								Toast.LENGTH_SHORT).show();
-					}
-				});
-
-	}
+//	private void initQQLogin() {
+//		// 参数1为当前Activity， 参数2为开发者在QQ互联申请的APP ID，参数3为开发者在QQ互联申请的APP kEY.
+//		UMQQSsoHandler qqSsoHandler = new UMQQSsoHandler(getActivity(),
+//				"100424468", "c7394704798a158208a74ab60104f0ba");
+//		qqSsoHandler.addToSocialSDK();
+//
+//		mController.doOauthVerify(getActivity(), SHARE_MEDIA.QQ,
+//				new UMAuthListener() {
+//					@Override
+//					public void onStart(SHARE_MEDIA platform) {
+//						Toast.makeText(getActivity(), "正在授权，请稍后",
+//								Toast.LENGTH_SHORT).show();
+//					}
+//
+//					@Override
+//					public void onError(SocializeException e,
+//							SHARE_MEDIA platform) {
+//						Toast.makeText(getActivity(), "授权错误",
+//								Toast.LENGTH_SHORT).show();
+//					}
+//
+//					@Override
+//					public void onComplete(Bundle value, SHARE_MEDIA platform) {
+//						Toast.makeText(getActivity(), "授权完成",
+//								Toast.LENGTH_SHORT).show();
+//						// 获取相关授权信息
+//						mController.getPlatformInfo(getActivity(),
+//								SHARE_MEDIA.QQ, new UMDataListener() {
+//
+//									@Override
+//									public void onStart() {
+//										Toast.makeText(getActivity(),
+//												"获取平台数据开始...",
+//												Toast.LENGTH_SHORT).show();
+//									}
+//
+//									@Override
+//									public void onComplete(int status,
+//											Map<String, Object> info) {
+//										if (status == 200 && info != null) {
+//											sb = new StringBuilder();
+//											Set<String> keys = info.keySet();
+//											sb.append("{");
+//											for (String key : keys) {
+//												sb.append(key
+//														+ ":"
+//														+ info.get(key)
+//																.toString());
+//											}
+//											sb.append("}");
+//											Log.d("TestData", sb.toString());
+//										} else {
+//											Log.d("TestData", "发生错误：" + status);
+//										}
+//									}
+//								});
+//					}
+//
+//					@Override
+//					public void onCancel(SHARE_MEDIA platform) {
+//						Toast.makeText(getActivity(), "授权取消",
+//								Toast.LENGTH_SHORT).show();
+//					}
+//				});
+//
+//	}
 
 }
