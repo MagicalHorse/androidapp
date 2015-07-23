@@ -11,10 +11,6 @@ import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
 import com.umeng.socialize.controller.listener.SocializeListeners.SnsPostListener;
 import com.umeng.socialize.media.UMImage;
-import com.umeng.socialize.sso.QZoneSsoHandler;
-import com.umeng.socialize.sso.SinaSsoHandler;
-import com.umeng.socialize.sso.TencentWBSsoHandler;
-import com.umeng.socialize.sso.UMQQSsoHandler;
 import com.umeng.socialize.weixin.controller.UMWXHandler;
 import com.umeng.socialize.weixin.media.CircleShareContent;
 import com.umeng.socialize.weixin.media.WeiXinShareContent;
@@ -34,7 +30,6 @@ public class SocicalShareUtil {
 	private SHARE_MEDIA mPlatform = SHARE_MEDIA.SINA;
 	public SocicalShareUtil(Context ctx) {
 		this.ctx = ctx;
-		configPlatforms();
 	}
 
 	
@@ -44,19 +39,6 @@ public class SocicalShareUtil {
 		
 	}
 
-	/**
-	 * 配置分享平台参数</br>
-	 */
-	private void configPlatforms() {
-		// 添加新浪SSO授权
-		mController.getConfig().setSsoHandler(new SinaSsoHandler());
-		// 添加腾讯微博SSO授权
-		mController.getConfig().setSsoHandler(new TencentWBSsoHandler());
-		// 添加QQ、QZone平台
-		addQQQZonePlatform();
-		// 添加微信、微信朋友圈平台
-		
-	}
 
 	/**
 	 * @功能描述 : 添加QQ平台支持 QQ分享的内容， 包含四种类型， 即单纯的文字、图片、音乐、视频. 参数说明 : title, summary,
@@ -65,20 +47,20 @@ public class SocicalShareUtil {
 	 *       : 用户点击该分享时跳转到的目标地址 [必填] ( 若不填写则默认设置为友盟主页 )
 	 * @return
 	 */
-	private void addQQQZonePlatform() {
-		String appId = "100424468";
-		String appKey = "c7394704798a158208a74ab60104f0ba";
-		// 添加QQ支持, 并且设置QQ分享内容的target url
-		UMQQSsoHandler qqSsoHandler = new UMQQSsoHandler((Activity) ctx, appId,
-				appKey);
-		qqSsoHandler.setTargetUrl("http://www.umeng.com/social");
-		qqSsoHandler.addToSocialSDK();
-
-		// 添加QZone平台
-		QZoneSsoHandler qZoneSsoHandler = new QZoneSsoHandler((Activity) ctx,
-				appId, appKey);
-		qZoneSsoHandler.addToSocialSDK();
-	}
+//	private void addQQQZonePlatform() {
+//		String appId = "100424468";
+//		String appKey = "c7394704798a158208a74ab60104f0ba";
+//		// 添加QQ支持, 并且设置QQ分享内容的target url
+//		UMQQSsoHandler qqSsoHandler = new UMQQSsoHandler((Activity) ctx, appId,
+//				appKey);
+//		qqSsoHandler.setTargetUrl("http://www.umeng.com/social");
+//		qqSsoHandler.addToSocialSDK();
+//
+//		// 添加QZone平台
+//		QZoneSsoHandler qZoneSsoHandler = new QZoneSsoHandler((Activity) ctx,
+//				appId, appKey);
+//		qZoneSsoHandler.addToSocialSDK();
+//	}
 
 	/**
 	 * @功能描述 : 添加微信平台分享

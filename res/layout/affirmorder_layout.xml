@@ -39,7 +39,7 @@
                     android:layout_alignParentLeft="true"
                     android:textSize="15sp"
                     android:layout_centerVertical="true"
-                    android:text="买手账号:" />
+                    android:text="买手昵称" />
 
                 <TextView
                     android:id="@+id/affirmorder_layout_novalue_textview"

@@ -51,7 +51,6 @@ import com.umeng.analytics.MobclickAgent;
  * 
  */
 public class AboutActivity extends BaseActivityWithTopView {
-
 	
 	private TextView tv_version;
 	private TextView tv_content;

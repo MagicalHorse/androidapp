@@ -9,6 +9,6 @@ package com.shenma.yueba;
 
 public final class Manifest {
     public static final class permission {
-        public static final String JPUSH_MESSAGE="com.aebiz.sdmail.permission.JPUSH_MESSAGE";
+        public static final String JPUSH_MESSAGE="com.shenma.yueba.permission.JPUSH_MESSAGE";
     }
 }
