@@ -29,8 +29,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/shop_main_width15_dimen" >
+        android:layout_height="70dip"
+        android:padding="@dimen/shop_main_width5_dimen" >
 
         <ImageView
             android:id="@+id/baijiapay_layout_item_imageview"
@@ -40,30 +40,29 @@
             android:src="@drawable/default_pic"
             android:scaleType="fitCenter" />
 
-        <LinearLayout
-            android:layout_marginLeft="@dimen/shop_main_width5_dimen"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/baijiapay_layout_item_right_imageview"
-            android:layout_toRightOf="@id/baijiapay_layout_item_imageview"
-            android:orientation="vertical" >
 
             <TextView
+                android:layout_marginTop="5dip"
+                android:layout_toRightOf="@id/baijiapay_layout_item_imageview"
+                android:layout_marginLeft="5dip"
                 android:id="@+id/baijiapay_layout_item_textview3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@null"
                 android:textSize="@dimen/textsize13sp"
                  />
 
             <TextView
-                android:layout_marginTop="@dimen/shop_main_width3_dimen"
+                android:layout_alignLeft="@id/baijiapay_layout_item_textview3"
                 android:id="@+id/baijiapay_layout_item_textview4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                 android:text="@null"
+                 android:layout_marginBottom="5dip"
                 android:textSize="@dimen/textsize10sp"
+                android:textColor="@color/text_gray_color"
                 />
-        </LinearLayout>
 
         <ImageView
             android:id="@+id/baijiapay_layout_item_right_imageview"

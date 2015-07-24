@@ -207,11 +207,10 @@ public class MeFragmentForBaiJia extends BaseFragment implements OnClickListener
 			}else if("-1".equals(SharedUtil.getAuditStatus(getActivity()))){
 				Toast.makeText(getActivity(), "您的审核已被拒绝，请三天后重试...", Toast.LENGTH_LONG).show();
 			}else if("1".equals(SharedUtil.getAuditStatus(getActivity()))){
+				MyApplication.getInstance().removeAllActivity();
 				Intent intentyangjia=new Intent(getActivity(), MainActivityForYangJia.class);
 				startActivity(intentyangjia);
 			}
-//			Intent buyerCertificaitonIntent = new Intent(getActivity(),BuyerCertificationActivity1.class);
-//			startActivity(buyerCertificaitonIntent);
 			break;
 		case R.id.tv_my_collection://我的收藏
 			Intent intent5 = new Intent(getActivity(),MyCollectionActivity.class);
