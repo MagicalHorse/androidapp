@@ -380,7 +380,7 @@ public class IndexFragmentForYangJia extends BaseFragment implements
 			Log.i("share", "---desc--"+data.getShare().getDesc());
 			Log.i("share", "---link--"+data.getShare().getShare_link());
 			Log.i("share", "---logo--"+data.getShare().getLogo());
-			ShareUtil.shareAll(getActivity(), data.getShare().getDesc(),  data.getShare().getShare_link(),  ToolsUtil.getImage(data.getShare().getLogo(), 200, 200),null);
+			ShareUtil.shareAll(getActivity(),data.getShare().getTitle(), data.getShare().getDesc(),  data.getShare().getShare_link(),  ToolsUtil.getImage(data.getShare().getLogo(), 200, 200),null);
 		default:
 			break;
 		}

@@ -12,6 +12,7 @@ import java.util.Map;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Bitmap.CompressFormat;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -61,6 +62,7 @@ import com.umeng.analytics.MobclickAgent;
  */
 public class PublishProductActivity extends BaseActivityWithTopView implements
 		OnClickListener {
+	private Bitmap bitmap0,bitmap1,bitmap2;
 	public String pic1, pic2, pic3, pic;
 	private LinearLayout ll_guige_container;
 	private TextView tv_product_number;
@@ -84,7 +86,6 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 	private CustomProgressDialog progressDialog;
 	private int upPicProgress = 0;
 	private int maxSize = 100;
-	private String imageEndStr = "_240x0.jpg";
 	private boolean onePicLoadFinished, twoPicLoadFinished, ThreePicFinished;
 	private String productId;
 
@@ -107,7 +108,11 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 		if(TextUtils.isEmpty(productId) && TextUtils.isEmpty(MyApplication.getInstance().getPublishUtil().getBean().getId())){//说明是修改商品
 			tv_publish.setText("发布");
 		}else{
-			MyApplication.getInstance().getPublishUtil().getBean().setId(productId);
+			if(productId!=null){
+				MyApplication.getInstance().getPublishUtil().getBean().setId(productId);
+			}else{
+				productId = MyApplication.getInstance().getPublishUtil().getBean().getId();
+			}
 			tv_publish.setText("修改");
 			if(detailBean!=null){
 				MyApplication.getInstance().getPublishUtil().setBean(detailBean);
@@ -115,6 +120,20 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 		    	detailBean =  MyApplication.getInstance().getPublishUtil().getBean();
 		    }
 		}
+		
+		if (bean != null) {
+			tagList = bean.getTagList();
+			if(tagList!=null && tagList.size()>0){
+				MyApplication
+				.getInstance()
+				.getPublishUtil()
+				.getBean()
+				.getImages()
+				.get(Integer.valueOf(MyApplication.getInstance()
+						.getPublishUtil().getIndex())).setTags(tagList);
+			}
+		}
+		
 		// 修改商品
 		if (detailBean != null) {
 			FileUtils.delAllFile(FileUtils.getRootPath() + "/tagPic/");
@@ -125,7 +144,7 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 			if (imagesList != null && imagesList.size() > 0) {
 				String imageUrl = imagesList.get(0).getImageUrl();
 				if (!TextUtils.isEmpty(imageUrl)) {
-					saveBitmapToFile(0, imageUrl + imageEndStr);
+					saveBitmapToFile(0, imageUrl);
 				}
 			}
 			et_product_number.setText(ToolsUtil.nullToString(MyApplication.getInstance().getPublishUtil().getBean().getSku_Code()));
@@ -150,22 +169,10 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 				
 				}
 			}
-			
 			return;
 		}
-		if (bean != null) {
-			tagList = bean.getTagList();
-			if(tagList!=null && tagList.size()>0){
-				MyApplication
-				.getInstance()
-				.getPublishUtil()
-				.getBean()
-				.getImages()
-				.get(Integer.valueOf(MyApplication.getInstance()
-						.getPublishUtil().getIndex())).setTags(tagList);
-			}
-			setImageView();
-		}
+		
+		setImageView();
 
 
 	}
@@ -300,8 +307,37 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 
 			File files = new File(FileUtils.getRootPath() + "/tagPic/" + "tagPic"+ SharedUtil.getUserId(mContext) + i + ".png");
 			if (files.exists()) {
-				iv_pic.setImageBitmap(BitmapFactory.decodeFile(FileUtils.getRootPath() + "/tagPic/" + "tagPic"+ SharedUtil.getUserId(mContext) + i + ".png"));
-				bean.setSetPic(true);
+				BitmapFactory.Options options = new BitmapFactory.Options();
+				options.inSampleSize = 2;
+				switch (i) {
+				case 0:
+					if(bitmap0!=null){
+						bitmap0 = null;
+					}
+					bitmap0 = BitmapFactory.decodeFile(FileUtils.getRootPath() + "/tagPic/" + "tagPic"+ SharedUtil.getUserId(mContext) + i + ".png", options);
+					iv_pic.setImageBitmap(bitmap0);
+					bean.setSetPic(true);
+					break;
+				case 1:
+					if(bitmap1!=null){
+						bitmap1 = null;
+					}
+					bitmap1 = BitmapFactory.decodeFile(FileUtils.getRootPath() + "/tagPic/" + "tagPic"+ SharedUtil.getUserId(mContext) + i + ".png", options);
+					iv_pic.setImageBitmap(bitmap1);
+					bean.setSetPic(true);
+					break;
+				case 2:
+					if(bitmap2!=null){
+						bitmap2 = null;
+					}
+					bitmap2 = BitmapFactory.decodeFile(FileUtils.getRootPath() + "/tagPic/" + "tagPic"+ SharedUtil.getUserId(mContext) + i + ".png", options);
+					iv_pic.setImageBitmap(bitmap2);
+					bean.setSetPic(true);
+					break;
+				default:
+					break;
+				}
+			
 			} else {
 				iv_pic.setBackgroundResource(R.drawable.default_pic);
 			}
@@ -377,6 +413,7 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 				public void http_Success(Object obj) {
 					Toast.makeText(mContext, "修改成功", 1000).show();
 //					FileUtils.delAllFile(FileUtils.getRootPath() + "/tagPic/");
+					setResult(101);
 					PublishProductActivity.this.finish();
 					MyApplication.getInstance().getPublishUtil().setBean(null);
 					MyApplication.getInstance().getPublishUtil().setIndex("0");
@@ -668,8 +705,7 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 								saveBitmapToFile(index + 1, MyApplication
 										.getInstance().getPublishUtil()
 										.getBean().getImages().get(index+1)
-										.getImageUrl()
-										+ imageEndStr);
+										.getImageUrl());
 							} else {
 								setImageView();
 							}
@@ -699,6 +735,15 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 	
 	@Override
 	protected void onDestroy() {
+		if(bitmap0!=null){
+			bitmap0.recycle();
+		}
+		if(bitmap1!=null){
+			bitmap1.recycle();
+		}
+		if(bitmap2!=null){
+			bitmap2.recycle();
+		}
 		MyApplication.getInstance().addActivity(this);
 		super.onDestroy();
 	}

@@ -1393,7 +1393,7 @@ public class HttpControl {
 		map.put(Constants.PAGE, Integer.toString(currPage));
 		map.put(Constants.PAGESIZE, Integer.toString(pageSize));
 		map.put("State", Integer.toString(State));
-		BasehttpSend(map, context, HttpConstants.GETORDERLIST, httpCallBack,RequestBaiJiaOrderListInfoBean.class, showDialog, false);
+		BasehttpSend(map, context, HttpConstants.GETORDERLIST, httpCallBack,RequestBaiJiaOrderListInfoBean.class, showDialog, true);
 	}
 	
 	
@@ -2016,7 +2016,8 @@ public class HttpControl {
 			boolean isshwoDialog, boolean isDialogCancell) {
 		 final CustomProgressDialog progressDialog = CustomProgressDialog
 		 .createDialog(context);
-		 progressDialog.setCancelable(isDialogCancell);
+		 progressDialog.setCancelable(true);
+		 progressDialog.setCanceledOnTouchOutside(false);
 		 try {
 			 if(isshwoDialog)
 			 {
@@ -2386,10 +2387,11 @@ public class HttpControl {
 							imageLocalPath.length()));
 			try {
 				bigfFile.setUploadFilePath(imageLocalPath, "image/*");
+				bigfFile.ResumableUploadInBackground(callBack);
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			}
-			bigfFile.ResumableUploadInBackground(callBack);
+			
 		}
 	}
 

@@ -18,40 +18,41 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:maxLines="2"
+        android:text="@null"
         android:ellipsize="end"
         />
-    
-    <RelativeLayout 
-        android:gravity="center_vertical"
-        android:layout_margin="@dimen/shop_main_width3_dimen"
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        >
-        <TextView 
+        android:layout_margin="@dimen/shop_main_width3_dimen"
+        android:gravity="center_vertical" >
+
+        <TextView
             android:id="@+id/pubuliu_item_layout_price_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="￥"
-            />
-        
-        <TextView 
-            android:layout_toRightOf="@+id/pubuliu_item_layout_price_textview"
+            android:layout_centerVertical="true"
+            android:text="￥" />
+
+        <TextView
             android:id="@+id/pubuliu_item_layout_pricevalue_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="123"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/pubuliu_item_layout_price_textview"
             android:maxLength="10"
-            android:textColor="@color/red"
-            />
-        
+            android:text="@null"
+            android:textColor="@color/red" />
+
         <TextView
             android:id="@+id/pubuliu_item_layout_like_textview"
-            android:gravity="center"
-            android:layout_alignParentRight="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:drawableLeft="@drawable/like_backgroud"
-            />
+            android:gravity="center" />
     </RelativeLayout>
+
 </LinearLayout>

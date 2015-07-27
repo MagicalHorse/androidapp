@@ -28,6 +28,7 @@ import com.shenma.yueba.util.PopwindowUtil;
 import com.shenma.yueba.util.ShareUtil;
 import com.shenma.yueba.util.ShareUtil.ShareListener;
 import com.shenma.yueba.util.ToolsUtil;
+import com.shenma.yueba.yangjia.activity.ProductManagerActivity;
 import com.shenma.yueba.yangjia.activity.PublishProductActivity;
 
 public class ProductManagerFragmentForOnLineAdapter extends BaseAdapterWithUtil {
@@ -160,7 +161,7 @@ public class ProductManagerFragmentForOnLineAdapter extends BaseAdapterWithUtil 
 			@Override
 			public void onClick(View v) {
 				if ("分享".equals(((TextView) v).getText().toString().trim())) {
-					ShareUtil.shareAll((Activity) ctx, mList.get(position)
+					ShareUtil.shareAll((Activity) ctx, "",mList.get(position)
 							.getBrandName(),
 							mList.get(position).getShareLink(),
 							mList.get(position).getDetail().getImages().get(0)
@@ -193,7 +194,7 @@ public class ProductManagerFragmentForOnLineAdapter extends BaseAdapterWithUtil 
 							PublishProductActivity.class);
 					intent.putExtra("id", mList.get(position).getProductId());
 					intent.putExtra("data", mList.get(position).getDetail());
-					ctx.startActivity(intent);
+					((Activity)ctx).startActivityForResult(intent, 100);
 				} else if (flag == 0) {// 删除
 					dialog.alertDialog(ctx, "提示", "您确认要删除该商品吗？",
 							new DialogUtilInter() {

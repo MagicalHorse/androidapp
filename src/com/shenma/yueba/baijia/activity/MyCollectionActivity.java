@@ -66,7 +66,7 @@ public class MyCollectionActivity extends BaseActivityWithTopView{
 	
 	void initView()
 	{
-		setTitle("收藏");
+		setTitle("我的收藏");
 		FontManager.changeFonts(MyCollectionActivity.this,tv_top_title);
 		setLeftTextView(new OnClickListener() {
 			
@@ -367,38 +367,39 @@ public class MyCollectionActivity extends BaseActivityWithTopView{
 			
 			@Override
 			public void http_Success(Object obj) {
-				if(v!=null && v instanceof TextView)
-				{
-					MyFavoriteProductListLikeUser myFavoriteProductListLikeUser=myFavoriteProductListInfo.getLikeUser();
-					if(myFavoriteProductListLikeUser!=null)
-					{
-						switch(Status)
-						{
-						case 0:
-							if(arr_list.contains(myFavoriteProductListInfo))
-							{
-								arr_list.remove(myFavoriteProductListInfo);
-								if(v.getParent().getParent()!=null)
-								{
-									if(v.getParent().getParent()==pubuliy_left_linearlayout)
-									{
-										leftHeight-=((ViewGroup)v.getParent()).getHeight();
-									}else if(v.getParent()==pubuliy_right_linearlayout)
-									{
-										rightHeight-=((ViewGroup)v.getParent()).getHeight();
-									}
-									((LinearLayout)v.getParent().getParent()).setVisibility(View.GONE);
-								}
-							}
-							v.setSelected(false);
-							break;
-						case 1:
-							v.setSelected(true);
-							break;
-						}
-					}
-					
-				}
+//				if(v!=null && v instanceof TextView)
+//				{
+//					MyFavoriteProductListLikeUser myFavoriteProductListLikeUser=myFavoriteProductListInfo.getLikeUser();
+//					if(myFavoriteProductListLikeUser!=null)
+//					{
+//						switch(Status)
+//						{
+//						case 0:
+//							if(arr_list.contains(myFavoriteProductListInfo))
+//							{
+//								arr_list.remove(myFavoriteProductListInfo);
+//								if(v.getParent().getParent()!=null)
+//								{
+//									if(v.getParent().getParent()==pubuliy_left_linearlayout)
+//									{
+//										leftHeight-=((ViewGroup)v.getParent()).getHeight();
+//									}else if(v.getParent()==pubuliy_right_linearlayout)
+//									{
+//										rightHeight-=((ViewGroup)v.getParent()).getHeight();
+//									}
+//									((LinearLayout)v.getParent().getParent()).setVisibility(View.GONE);
+//								}
+//							}
+//							v.setSelected(false);
+//							break;
+//						case 1:
+//							v.setSelected(true);
+//							break;
+//						}
+//					}
+//					
+//				}
+				requestFalshData();
 			}
 			
 			@Override

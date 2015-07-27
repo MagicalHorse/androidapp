@@ -135,7 +135,7 @@ public class ProductManagerFragmentForOnLine extends BaseFragment implements Ref
 	/**
 	 * 获取在线商品
 	 */
-	private void getProductListForOnLine(final boolean isRefresh, int page,
+	public void getProductListForOnLine(final boolean isRefresh, int page,
 			Context ctx, int status) {
 		HttpControl httpControl = new HttpControl();
 		httpControl.getBuyerProductListForOnLine(page + "", Constants.PageSize,

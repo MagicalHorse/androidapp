@@ -172,7 +172,7 @@ LinearLayout baijia_orderdetails_footer_right_linearlayout;//按钮的父对象
 	{
 		final BaiJiaOrdeDetailsInfoBean infobean=bean.getData();
 		String name=infobean.getProductName();
-		ShareUtil.shareAll(BaiJiaOrderDetailsActivity.this, name, infobean.getShareLink(),ToolsUtil.getImage(ToolsUtil.nullToString(infobean.getProductPic()), 320, 0),new ShareListener() {
+		ShareUtil.shareAll(BaiJiaOrderDetailsActivity.this,"", name, infobean.getShareLink(),ToolsUtil.getImage(ToolsUtil.nullToString(infobean.getProductPic()), 320, 0),new ShareListener() {
 			
 			@Override
 			public void sharedListener_sucess() {

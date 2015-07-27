@@ -2,6 +2,7 @@ package com.shenma.yueba.yangjia.activity;
 
 import java.util.ArrayList;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -120,6 +121,7 @@ public class ProductManagerActivity extends BaseFragmentActivity implements
 			 * 页面跳转完成后调用的方法
 			 */
 			public void onPageSelected(int arg0) {
+				index = arg0;
 				setCursorAndText(arg0,cursorImageList,titleTextList);
 				if(arg0 == 0){//全部在线商品
 					productManagerFragmentForOnLine2.tv_nodata.setVisibility(View.GONE);
@@ -161,6 +163,21 @@ public class ProductManagerActivity extends BaseFragmentActivity implements
 			break;
 		}
 
+	}
+	
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent arg2) {
+		if(requestCode == 100 && resultCode == 101){
+			if(index == 0){
+				productManagerFragmentForOnLine.getProductListForOnLine(true, 1, ProductManagerActivity.this, 1);//获取在线商品
+			}else if(index == 1){
+				productManagerFragmentForOnLine.getProductListForOnLine(true, 1, ProductManagerActivity.this, 2);//获取即将下限商品
+			}else if(index == 2){
+				productManagerFragmentForOnLine.getProductListForOnLine(true, 1, ProductManagerActivity.this, 0);//获取下限商品
+			}
+		}
+		super.onActivityResult(requestCode, resultCode, arg2);
 	}
 
 	

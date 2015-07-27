@@ -19,7 +19,6 @@
     </LinearLayout>
 
     <FrameLayout
-        android:layout_marginTop="@dimen/shop_main_width15_dimen"
         android:id="@+id/baijia_main_framelayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

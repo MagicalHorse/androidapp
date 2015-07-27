@@ -109,7 +109,7 @@ List<BaiJiaOrdeDetailsInfoBean> obj_list=new ArrayList<BaiJiaOrdeDetailsInfoBean
 	 holder.affirmorder_item_icon_imageview.setTag(baiJiaOrdeDetailsInfoBean);
 	 MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.getImage(ToolsUtil.nullToString(baiJiaOrdeDetailsInfoBean.getProductPic()), 320, 0), holder.affirmorder_item_icon_imageview, MyApplication.getInstance().getDisplayImageOptions());
 	 holder.affirmorder_item_productname_textview.setText(ToolsUtil.nullToString(baiJiaOrdeDetailsInfoBean.getProductName()));
-	 holder.affirmorder_item_productsize_textview.setText(ToolsUtil.nullToString(baiJiaOrdeDetailsInfoBean.getSizeName()+"  "+baiJiaOrdeDetailsInfoBean.getSizeValue()));
+	 holder.affirmorder_item_productsize_textview.setText(ToolsUtil.nullToString(baiJiaOrdeDetailsInfoBean.getSizeName()+"："+baiJiaOrdeDetailsInfoBean.getSizeValue()));
 	 holder.affirmorder_item_productcount_textview.setText(ToolsUtil.nullToString("x"+baiJiaOrdeDetailsInfoBean.getProductCount()));
 	 holder.affirmorder_item_productprice_textview.setText(ToolsUtil.nullToString("￥"+baiJiaOrdeDetailsInfoBean.getPrice()));
 	 List<OrderPromotions> promotion_array=baiJiaOrdeDetailsInfoBean.getPromotions();

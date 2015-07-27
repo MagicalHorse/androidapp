@@ -6,6 +6,7 @@ public class Share {
 	private String logo;
 	private String desc;
 	private String share_link;
+	private String title;
 	public String getLogo() {
 		return logo;
 	}
@@ -22,8 +23,15 @@ public class Share {
 		return share_link;
 	}
 	public void setShare_link(String share_link) {
-		this.share_link = share_link;
+		this.share_link = share_link; 	
 	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	
 	
 	
 }

@@ -24,6 +24,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -63,7 +64,7 @@ public final class MainActivityForYangJia extends FragmentActivity {
 	static final int MENU_SET_MODE = 2;
 	static final int MENU_DEMO = 3;
 
-	
+	private long exitTime = 0;// 初始化退出时间，用于两次点击返回退出程序
 	private LinkedList<String> mListItems;
 	private ArrayAdapter<String> mAdapter;
 	private FragmentTabHost mTabHost;
@@ -204,6 +205,21 @@ public void onResume() {
 		public void onPause() {
 		super.onPause();
 		MobclickAgent.onPause(this);
+		}
+		
+		public boolean onKeyDown(int keyCode, KeyEvent event) {
+			if (keyCode == KeyEvent.KEYCODE_BACK
+					&& event.getAction() == KeyEvent.ACTION_DOWN) {
+				if ((System.currentTimeMillis() - exitTime) > 2000) {
+					exitTime = System.currentTimeMillis();
+					Toast.makeText(getApplicationContext(), "再按一次退出程序",
+							Toast.LENGTH_SHORT).show();
+				} else {
+					MyApplication.getInstance().exit();
+				}
+				return true; // 返回true表示执行结束不需继续执行父类按键响应
+			}
+			return super.onKeyDown(keyCode, event);
 		}
 
 }

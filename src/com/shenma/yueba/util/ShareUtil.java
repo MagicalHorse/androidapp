@@ -36,7 +36,7 @@ public class ShareUtil {
 	private static BottomPopupWindow pop;
 	static String appId = "wx0bd15e11e7c3090f";
 	static String appSecret = "e3ff58518855345970755d08a3540c26";
-	public static void shareAll(final Activity activity, final String content,final String url, final String imgurl,ShareListener shareListener) {
+	public static void shareAll(final Activity activity, final String title,final String content,final String url, final String imgurl,ShareListener shareListener) {
 		List<String> list = new ArrayList<String>();
 //		if (SharedUtil.getWeiboQQ(activity)) {
 //			list.add("腾讯微博");
@@ -54,16 +54,16 @@ public class ShareUtil {
 		for (int i = 0; i < list.size(); i++) {
 			strArray[i] = list.get(i);
 		}
-		getShareDialog(activity,content,url,imgurl,shareListener);
+		getShareDialog(activity,title,content,url,imgurl,shareListener);
 	}
 
 	// 微信好友
-	public static void shareWeixinFriend(final Activity activity,String content, String url, String imgurl,final ShareListener shareListener) {
+	public static void shareWeixinFriend(final Activity activity,String title,String content, String url, String imgurl,final ShareListener shareListener) {
 		// 添加微信平台
 		UMWXHandler wxHandler = new UMWXHandler(activity, appId, appSecret);
 		wxHandler.addToSocialSDK();
 		WeiXinShareContent weixinContent = new WeiXinShareContent();
-		//weixinContent.setTitle(content);
+		weixinContent.setTitle(title);
 		weixinContent.setShareContent(content);
 		weixinContent.setTargetUrl(url);
 		if(TextUtils.isEmpty(imgurl)){
@@ -102,14 +102,20 @@ public class ShareUtil {
 	}
 
 	// 微信朋友圈
-	public static void shareWeixinFriends(final Activity activity,
+	public static void shareWeixinFriends(final Activity activity,String title,
 			String content, String url, String imgurl,final ShareListener shareListener) {
 		UMWXHandler wxCircleHandler = new UMWXHandler(activity, appId, appSecret);
 		wxCircleHandler.setToCircle(true);
 		wxCircleHandler.addToSocialSDK();
 		CircleShareContent circleMedia = new CircleShareContent();
-		circleMedia.setShareContent(content);
-		circleMedia.setTitle(content);
+	
+		if(!TextUtils.isEmpty(title)){
+			circleMedia.setTitle(title);
+		}
+		
+		if(!TextUtils.isEmpty(content)){
+			circleMedia.setShareContent(content);
+		}
 		if(TextUtils.isEmpty(imgurl)){
 			circleMedia.setShareImage(new UMImage(activity, BitmapFactory.decodeResource(activity.getResources(), R.drawable.icon)));
 		}else{
@@ -217,7 +223,7 @@ public class ShareUtil {
 	}
 	
 	
-	public static void getShareDialog(final Context ctx,final String content,
+	public static void getShareDialog(final Context ctx,final String title,final String content,
 			final String url, final String imgurl,final ShareListener shareListener){
 		final List<String> list = new ArrayList<String>();
 //		if (SharedUtil.getWeiboQQ(ctx)) {
@@ -251,9 +257,9 @@ public class ShareUtil {
 					}else if("新浪微博".equals(list.get(position))){
 						share((Activity)ctx, SHARE_MEDIA.SINA, content+"-->请点击："+url,imgurl);
 					}else if("微信好友".equals(list.get(position))){
-						shareWeixinFriend((Activity)ctx, content, url, imgurl,shareListener);
+						shareWeixinFriend((Activity)ctx,title, content, url, imgurl,shareListener);
 					}else if("微信朋友圈".equals(list.get(position))){
-						shareWeixinFriends((Activity)ctx, content, url, imgurl,shareListener);
+						shareWeixinFriends((Activity)ctx, title,content, url, imgurl,shareListener);
 					}
 				}else{
 					Toast.makeText(ctx, "网络不可用，请检查网络连接", 1000).show();
