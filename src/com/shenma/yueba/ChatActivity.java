@@ -133,6 +133,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 	String littlePicPath;
 	String littlePicPath_cache;
 
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		MyApplication.getInstance().addActivity(this);// 加入回退栈
