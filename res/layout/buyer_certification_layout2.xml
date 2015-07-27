@@ -75,6 +75,7 @@
                             android:orientation="horizontal" >
 
                             <TextView
+                                android:visibility="gone"
                                 android:id="@+id/tv_store_title"
                                 android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
@@ -84,6 +85,27 @@
                                 android:text="商场名称"
                                 android:textColor="@color/text_gray_color"
                                 android:textSize="16sp" />
+                            
+
+                            <TextView
+                                android:id="@+id/tv_store_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableLeft="@drawable/star"
+                                android:gravity="center_vertical"
+                                android:text="商场名称"
+                                android:textColor="@color/text_gray_color"
+                                android:textSize="16sp" />
+
+                            <EditText
+                                android:id="@+id/et_store_name"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:hint="请输入"
+                                android:paddingLeft="10dip"
+                                android:textColor="@color/text_gray_color" />
+                            
                         </LinearLayout>
 
                         <View style="@style/style_horizontal_line" />
