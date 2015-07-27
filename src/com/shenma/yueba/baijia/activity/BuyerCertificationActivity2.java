@@ -55,6 +55,7 @@ public class BuyerCertificationActivity2 extends BaseActivityWithTopView
 	private EditText et_store_name;
 	private TextView tv_zhuangui_title;
 	private EditText et_zhuangui_name;
+	
 	private TextView tv_number_title;
 	private EditText et_number_name;
 	private TextView tv_confirm;
