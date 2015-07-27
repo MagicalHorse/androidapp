@@ -100,16 +100,18 @@ public class BaiJiaOrderListFragment extends Fragment implements
 							PullToRefreshBase<ListView> refreshView,
 							State state, Mode direction) {
 
+						if(pull_refresh_list!=null && pull_refresh_list.getLoadingLayoutProxy()!=null)
+						{
 						// 设置标签显示的内容
 						if (direction == Mode.PULL_FROM_START) {
-							pull_refresh_list.getLoadingLayoutProxy()
-									.setPullLabel(getActivity().getResources().getString(R.string.Refreshonstr));
+							pull_refresh_list.getLoadingLayoutProxy().setPullLabel(getActivity().getResources().getString(R.string.Refreshonstr));
 							pull_refresh_list.getLoadingLayoutProxy().setRefreshingLabel(getActivity().getResources().getString(R.string.Refreshloadingstr));
 							pull_refresh_list.getLoadingLayoutProxy().setReleaseLabel(getActivity().getResources().getString(R.string.Loosentherefresh));
 						} else if (direction == Mode.PULL_FROM_END) {
 							pull_refresh_list.getLoadingLayoutProxy().setPullLabel(getActivity().getResources().getString(R.string.Thedropdownloadstr));
 							pull_refresh_list.getLoadingLayoutProxy().setRefreshingLabel(getActivity().getResources().getString(R.string.RefreshLoadingstr));
 							pull_refresh_list.getLoadingLayoutProxy().setReleaseLabel(getActivity().getResources().getString(R.string.Loosentheloadstr));
+						}
 						}
 					}
 				});
@@ -175,13 +177,18 @@ public class BaiJiaOrderListFragment extends Fragment implements
 
 					@Override
 					public void http_Success(Object obj) {
-						
+						if(pull_refresh_list!=null)
+						{
 						pull_refresh_list.postDelayed(new Runnable() {
 		                    @Override
 		                    public void run() {
-		                    	pull_refresh_list.onRefreshComplete();
+		                    	if(pull_refresh_list!=null)
+		                    	{
+		                    		pull_refresh_list.onRefreshComplete();
+		                    	}
 		                    }
 		            }, 300);
+						}
 						currpage=page;
 						ishow = false;
 						if (obj != null&& obj instanceof RequestBaiJiaOrderListInfoBean) {
@@ -236,7 +243,11 @@ public class BaiJiaOrderListFragment extends Fragment implements
 					@Override
 					public void http_Fails(int error, String msg) {
 						MyApplication.getInstance().showMessage(getActivity(),msg);
-						pull_refresh_list.onRefreshComplete();
+						if(pull_refresh_list!=null)
+						{
+							pull_refresh_list.onRefreshComplete();
+						}
+						
 					}
 				}, getActivity());
 

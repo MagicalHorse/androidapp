@@ -17,6 +17,7 @@
         android:orientation="horizontal"
         android:padding="@dimen/shop_main_width5_dimen" >
     </LinearLayout>
+    <View style="@style/style_horizontal_line"/>
 
     <FrameLayout
         android:id="@+id/baijia_main_framelayout"

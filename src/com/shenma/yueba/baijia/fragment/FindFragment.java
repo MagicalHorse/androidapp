@@ -89,8 +89,8 @@ public class FindFragment extends Fragment{
 				startActivityForResult(intent, 200);
 			}
 		});
-		fragment_list.add(new FragmentBean("品牌", -1, new BrandListView()));
-		fragment_list.add(new FragmentBean("同城", -1, new CityWideListView()));
+		fragment_list.add(new FragmentBean("品牌", -1, new BrandListView(getActivity())));
+		fragment_list.add(new FragmentBean("同城", -1, new CityWideListView(getActivity())));
 		
 		baijia_fragment_tab1_head_linearlayout=(LinearLayout)v.findViewById(R.id.baijia_fragment_tab1_head_linearlayout);
 		for(int i=0;i<fragment_list.size();i++)
@@ -135,7 +135,7 @@ public class FindFragment extends Fragment{
 				
 				//return super.instantiateItem(container, position);
 				BaseView bv=(BaseView)fragment_list.get(position).getFragment();
-				View v=bv.getView(getActivity());
+				View v=bv.getView();
 				container.addView(v,0);
 				return v;
 			}
@@ -154,7 +154,7 @@ public class FindFragment extends Fragment{
 			@Override
 			public void onPageSelected(int arg0) {
 				setTextColor(arg0);
-				((BaseView)fragment_list.get(arg0).getFragment()).firstInitData(getActivity());
+				((BaseView)fragment_list.get(arg0).getFragment()).firstInitData();
 			}
 			
 			@Override

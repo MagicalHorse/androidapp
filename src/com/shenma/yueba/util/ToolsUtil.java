@@ -824,9 +824,11 @@ public class ToolsUtil {
 				
 				@Override
 				public void run() {
-					View v=parentView.findViewById(R.id.nodata_layout_textview);
-			    	if(v!=null)
-			    	{
+					if(parentView!=null)
+					{
+					  View v=parentView.findViewById(R.id.nodata_layout_textview);
+			    	  if(v!=null)
+			    	  {
 			    		FontManager.changeFonts(activity, v);
 			    		if(status)
 			    		{
@@ -835,8 +837,8 @@ public class ToolsUtil {
 			    		{
 			    			v.setVisibility(View.GONE);
 			    		}
-			    	}
-					
+			    	 }
+					}
 				}
 			});
     	}

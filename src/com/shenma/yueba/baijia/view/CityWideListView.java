@@ -54,9 +54,14 @@ public class CityWideListView extends BaseView{
 	boolean isfirst=true;
 	int CityId=0;//当前城市id
 	
-	public View getView(Activity activity)
+	public CityWideListView(Activity activity)
 	{
 		this.activity=activity;
+	}
+	
+	public View getView()
+	{
+		
 		if(view==null)
 		{
 			layoutInflater=activity.getLayoutInflater();
@@ -240,8 +245,7 @@ public class CityWideListView extends BaseView{
 	}
 
 	@Override
-	public void firstInitData(Activity activity) {
-		this.activity=activity;
+	public void firstInitData() {
 		if(isfirst)
 		{
 			requestFalshData();

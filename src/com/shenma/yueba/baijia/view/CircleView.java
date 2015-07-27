@@ -63,14 +63,14 @@ public class CircleView extends BaseView{
 		}
 	}
 
-	public View getView(Activity activity)
+	public View getView()
 	{
 		//this.activity=activity;
 		baijia_quanzi_layout_tanb1_gridbview.setFocusable(false);
 		baijia_quanzi_layout_tanb1_gridbview.setFocusableInTouchMode(false);
 		if(view!=null)
 		{
-           firstInitData(activity);
+           firstInitData();
 		}
 		return view;
 	}
@@ -319,7 +319,7 @@ public class CircleView extends BaseView{
 	/*****
 	 * 首次加载
 	 * ***/
-	public void firstInitData(Activity activity)
+	public void firstInitData()
 	{
 		this.activity=activity;
 		if(isFirst)

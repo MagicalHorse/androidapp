@@ -52,10 +52,14 @@ public class DynamicListView extends BaseView{
 	private PullToRefreshListView pull_refresh_list;
 	LinearLayout showloading_layout_view;
 	DynamicAdapter msgAdapter;
-	
-	public View getView(Activity activity)
+	public DynamicListView(Activity activity)
 	{
 		this.activity=activity;
+	}
+	
+	public View getView()
+	{
+		
 		if(view==null)
 		{
 			layoutInflater=activity.getLayoutInflater();
@@ -257,7 +261,7 @@ public class DynamicListView extends BaseView{
 		}
 	}
 	@Override
-	public void firstInitData(Activity activity) {
+	public void firstInitData() {
 		if(isfirstStatus)
 		   {
 			   return ;

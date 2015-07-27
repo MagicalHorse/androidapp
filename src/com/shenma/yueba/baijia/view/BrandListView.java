@@ -52,15 +52,20 @@ public class BrandListView extends BaseView{
 	List<BrandInfo> items=new ArrayList<BrandInfo>();
 	boolean isfirst=true;
 	
-	public View getView(Activity activity)
+	public BrandListView(Activity activity)
 	{
 		this.activity=activity;
+	}
+	
+	public View getView()
+	{
+		
 		if(view==null)
 		{
 			layoutInflater=activity.getLayoutInflater();
 			initView();
 			initPullView();
-			firstInitData(activity);
+			firstInitData();
 			//requestFalshData();
 		}
 		return view;
@@ -240,8 +245,7 @@ public class BrandListView extends BaseView{
 	}
 
 	@Override
-	public void firstInitData(Activity activity) {
-		this.activity=activity;
+	public void firstInitData() {
 		if(isfirst)
 		{
 			requestFalshData();

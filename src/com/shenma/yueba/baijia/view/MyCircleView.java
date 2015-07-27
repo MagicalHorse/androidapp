@@ -65,7 +65,7 @@ public class MyCircleView extends BaseView{
 	}
 	
 	
-	public View getView(Activity activity)
+	public View getView()
 	{
 		return view ;
 	}
@@ -258,12 +258,11 @@ public class MyCircleView extends BaseView{
 
 
 	@Override
-	public void firstInitData(Activity activity) {
+	public void firstInitData() {
 		/*if(isFirst)
 		{
 			requestFalshData();
 		}*/
-		this.activity=activity;
 		requestFalshData();
 	}
 }
