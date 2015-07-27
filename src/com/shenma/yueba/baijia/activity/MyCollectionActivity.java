@@ -41,7 +41,6 @@ import com.umeng.socialize.utils.Log;
  * @version 创建时间：2015-5-20 上午11:14:57  
  * 程序的简单说明  
  */
-
 public class MyCollectionActivity extends BaseActivityWithTopView{
     HttpControl httpCntrol=new HttpControl();
     int currPage=Constants.CURRPAGE_VALUE;
@@ -52,6 +51,7 @@ public class MyCollectionActivity extends BaseActivityWithTopView{
 	int leftHeight;//左侧高度
 	int rightHeight;//右侧高度
 	List<MyFavoriteProductListInfo> arr_list=new ArrayList<MyFavoriteProductListInfo>();
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
