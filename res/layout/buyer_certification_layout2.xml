@@ -85,6 +85,7 @@
                                 android:text="商场名称"
                                 android:textColor="@color/text_gray_color"
                                 android:textSize="16sp" />
+                        
                             
 
                             <TextView
