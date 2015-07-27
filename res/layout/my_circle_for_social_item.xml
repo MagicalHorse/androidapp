@@ -4,19 +4,19 @@
     android:layout_height="wrap_content"
     android:padding="10dp" >
 
-    <ImageView
-        android:id="@+id/iv_circle_head"
+    <com.shenma.yueba.view.RoundImageView
+        android:id="@+id/ri_circle_head"
         android:layout_width="55dip"
         android:layout_height="55dip"
-        />
-
+        android:src="@drawable/default_pic" />
+ 
     <TextView
         android:id="@+id/tv_circle_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@id/iv_circle_head"
+        android:layout_alignTop="@id/ri_circle_head"
         android:layout_marginLeft="10dip"
-        android:layout_toRightOf="@id/iv_circle_head"
+        android:layout_toRightOf="@id/ri_circle_head"
         android:text="欧美高端女包"
         android:textColor="@color/black"
         android:textSize="18sp" />
@@ -25,7 +25,7 @@
         android:id="@+id/tv_attention_count"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/iv_circle_head"
+        android:layout_alignBottom="@id/ri_circle_head"
         android:layout_alignLeft="@id/tv_circle_name"
         android:text="关注：24"
         android:textColor="@color/text_gray_color"

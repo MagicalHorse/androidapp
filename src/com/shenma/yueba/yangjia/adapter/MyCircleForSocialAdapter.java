@@ -13,6 +13,7 @@ import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.adapter.BaseAdapterWithUtil;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.ToolsUtil;
+import com.shenma.yueba.view.RoundImageView;
 import com.shenma.yueba.yangjia.modle.CirlceItemBean;
 
 public class MyCircleForSocialAdapter extends BaseAdapterWithUtil {
@@ -49,8 +50,8 @@ public class MyCircleForSocialAdapter extends BaseAdapterWithUtil {
 			holder = new Holder();
 			convertView = View.inflate(ctx, R.layout.my_circle_for_social_item,
 					null);
-			holder.iv_circle_head = (ImageView) convertView
-					.findViewById(R.id.iv_circle_head);
+			holder.ri_circle_head = (RoundImageView) convertView
+					.findViewById(R.id.ri_circle_head);
 			holder.tv_circle_name = (TextView) convertView
 					.findViewById(R.id.tv_circle_name);
 			holder.tv_attention_count = (TextView) convertView
@@ -60,16 +61,16 @@ public class MyCircleForSocialAdapter extends BaseAdapterWithUtil {
 			holder = (Holder) convertView.getTag();
 		}
 
-		MyApplication.getInstance().getImageLoader().displayImage(mList.get(position).getLogo(), holder.iv_circle_head, MyApplication.getInstance().getRoundDisplayImageOptions());
+		MyApplication.getInstance().getImageLoader().displayImage(mList.get(position).getLogo(), holder.ri_circle_head, MyApplication.getInstance().getDisplayImageOptions());
 		holder.tv_circle_name.setText(ToolsUtil.nullToString(mList.get(position).getName()));
-		holder.tv_attention_count.setText("关注："+ToolsUtil.nullToString(mList.get(position).getUserCount()));
+		holder.tv_attention_count.setText("成员："+ToolsUtil.nullToString(mList.get(position).getUserCount()));
 		FontManager.changeFonts(ctx, holder.tv_circle_name,
 				holder.tv_attention_count);
 		return convertView;
 	}
 
 	class Holder {
-		ImageView iv_circle_head;
+		RoundImageView ri_circle_head;
 		TextView tv_circle_name;
 		TextView tv_attention_count;
 	}
