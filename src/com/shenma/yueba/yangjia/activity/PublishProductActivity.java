@@ -120,6 +120,20 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 		    	detailBean =  MyApplication.getInstance().getPublishUtil().getBean();
 		    }
 		}
+		
+		if (bean != null) {
+			tagList = bean.getTagList();
+			if(tagList!=null && tagList.size()>0){
+				MyApplication
+				.getInstance()
+				.getPublishUtil()
+				.getBean()
+				.getImages()
+				.get(Integer.valueOf(MyApplication.getInstance()
+						.getPublishUtil().getIndex())).setTags(tagList);
+			}
+		}
+		
 		// 修改商品
 		if (detailBean != null) {
 			FileUtils.delAllFile(FileUtils.getRootPath() + "/tagPic/");
@@ -155,22 +169,10 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 				
 				}
 			}
-			
 			return;
 		}
-		if (bean != null) {
-			tagList = bean.getTagList();
-			if(tagList!=null && tagList.size()>0){
-				MyApplication
-				.getInstance()
-				.getPublishUtil()
-				.getBean()
-				.getImages()
-				.get(Integer.valueOf(MyApplication.getInstance()
-						.getPublishUtil().getIndex())).setTags(tagList);
-			}
-			setImageView();
-		}
+		
+		setImageView();
 
 
 	}
@@ -411,6 +413,7 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 				public void http_Success(Object obj) {
 					Toast.makeText(mContext, "修改成功", 1000).show();
 //					FileUtils.delAllFile(FileUtils.getRootPath() + "/tagPic/");
+					setResult(101);
 					PublishProductActivity.this.finish();
 					MyApplication.getInstance().getPublishUtil().setBean(null);
 					MyApplication.getInstance().getPublishUtil().setIndex("0");

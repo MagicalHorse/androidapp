@@ -4,13 +4,13 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
-    android:paddingLeft="@dimen/margin_left_and_right"
-    android:paddingRight="@dimen/margin_left_and_right"
     android:paddingBottom="@dimen/margin_left_and_right"
     android:descendantFocusability="blocksDescendants"
     >
 
     <RelativeLayout
+        android:paddingLeft="8dip"
+        android:paddingRight="8dip"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="@dimen/shop_main_width5_dimen"
@@ -35,11 +35,14 @@
 
     <View style="@style/style_horizontal_line" />
 
-    <include layout="@layout/productinfolist_layout" />
+    <include 
+        layout="@layout/productinfolist_layout" />
 
     <View style="@style/style_horizontal_line" />
 
     <RelativeLayout
+           android:paddingLeft="8dip"
+        android:paddingRight="8dip"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="@dimen/shop_main_lineheight8_dimen"
@@ -58,7 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/baijia_orderlayout_item_pricevalue_textview"
             android:textSize="@dimen/textsize14sp"
-            android:text="实付:￥" />
+            android:text="@null" />
 
         <TextView
             android:id="@+id/baijia_orderlayout_item_pricevalue_textview"
@@ -72,6 +75,8 @@
     <View style="@style/style_horizontal_line" />
 
     <RelativeLayout
+           android:paddingLeft="8dip"
+        android:paddingRight="8dip"
         android:id="@+id/baijia_orderdetails_layout_footer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

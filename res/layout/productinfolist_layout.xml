@@ -3,6 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
+       android:paddingLeft="5dip"
+        android:paddingRight="5dip"
     android:orientation="horizontal" >
 
     <ImageView
@@ -15,8 +17,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="70dip"
-        android:paddingTop="5dip" 
-        android:paddingBottom="5dip"
+        android:paddingTop="8dip" 
+        android:paddingBottom="8dip"
         >
 
         <TextView

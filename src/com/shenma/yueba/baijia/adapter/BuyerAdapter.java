@@ -390,7 +390,7 @@ public class BuyerAdapter extends BaseAdapter {
 						String content = bean.getProductName();
 						String url = bean.getShareLink();
 						String icon = ToolsUtil.getImage(ToolsUtil.nullToString(bean.getProductPic().getName()),320, 0);
-						shareUrl(bean.getProductId(), content, url, icon);
+						shareUrl(bean.getProductId(), "",content, url, icon);
 					}
 
 					break;
@@ -468,8 +468,8 @@ public class BuyerAdapter extends BaseAdapter {
 	 * @param icon
 	 *            String 图片地址
 	 * ****/
-	void shareUrl(final int productid, String content, String url, String icon) {
-		ShareUtil.shareAll(activity, content, url, icon, new ShareListener() {
+	void shareUrl(final int productid, String title,String content, String url, String icon) {
+		ShareUtil.shareAll(activity,title, content, url, icon, new ShareListener() {
 
 			@Override
 			public void sharedListener_sucess() {

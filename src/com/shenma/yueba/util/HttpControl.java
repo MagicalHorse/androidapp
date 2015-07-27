@@ -2387,10 +2387,11 @@ public class HttpControl {
 							imageLocalPath.length()));
 			try {
 				bigfFile.setUploadFilePath(imageLocalPath, "image/*");
+				bigfFile.ResumableUploadInBackground(callBack);
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			}
-			bigfFile.ResumableUploadInBackground(callBack);
+			
 		}
 	}
 
