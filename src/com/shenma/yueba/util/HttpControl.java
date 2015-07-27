@@ -405,7 +405,7 @@ public class HttpControl {
 		if (responsejsonstr == null) {
 			httpCallBack.http_Fails(500, "发送数据错误");
 		}
-		basehttpSendToJson(responsejsonstr, null, context,
+		basehttpSendToJson(true,responsejsonstr, null, context,
 				HttpConstants.METHOD_ADDRESSCREATE, httpCallBack,
 				ContactsAddressRequestBean.class, true, false);
 	}
@@ -424,7 +424,7 @@ public class HttpControl {
 	public void getContactAddressDetails(
 			final HttpCallBackInterface httpCallBack, Context context, int Id) {
 		String json = "{'Id':" + Id + "}";
-		basehttpSendToJson(json, null, context,
+		basehttpSendToJson(true,json, null, context,
 				HttpConstants.METHOD_ADDRESSCREATE_DETAILS, httpCallBack,
 				ContactsAddressRequestBean.class, true, false);
 	}
@@ -443,7 +443,7 @@ public class HttpControl {
 	public void getMyContactAddressList(
 			final HttpCallBackInterface httpCallBack, Context context, int Id) {
 		String json = "{'Id':" + Id + "}";
-		basehttpSendToJson(json, null, context,
+		basehttpSendToJson(true,json, null, context,
 				HttpConstants.METHOD_MYADDRESSCREATE_LIST, httpCallBack,
 				ContactsAddressRequestListBean.class, true, false);
 	}
@@ -462,7 +462,7 @@ public class HttpControl {
 	public void getDeleteContactAddress(
 			final HttpCallBackInterface httpCallBack, Context context, int Id) {
 		String json = "{'id':" + Id + "}";
-		basehttpSendToJson(json, null, context,
+		basehttpSendToJson(true,json, null, context,
 				HttpConstants.METHOD_ADDRESSCREATE_DELETE, httpCallBack,
 				BaseRequest.class, true, false);
 	}
@@ -485,7 +485,7 @@ public class HttpControl {
 		if (responsejsonstr == null) {
 			httpCallBack.http_Fails(500, "发送数据错误");
 		}
-		basehttpSendToJson(responsejsonstr, null, context,
+		basehttpSendToJson(true,responsejsonstr, null, context,
 				HttpConstants.METHOD_ADDRESSCREATE_UPDATE, httpCallBack,
 				ContactsAddressRequestListBean.class, true, false);
 	}
@@ -504,7 +504,7 @@ public class HttpControl {
 	public void setDefaultContactAddress(
 			final HttpCallBackInterface httpCallBack, Context context, int Id) {
 		String json = "{'id':" + Id + "}";
-		basehttpSendToJson(json, null, context,
+		basehttpSendToJson(true,json, null, context,
 				HttpConstants.METHOD_ADDRESSCREATE_DEFAULT, httpCallBack,
 				BaseRequest.class, true, false);
 	}
@@ -522,7 +522,7 @@ public class HttpControl {
 	 * **/
 	public void getDefaultContactAddress(
 			final HttpCallBackInterface httpCallBack, Context context, int Id) {
-		basehttpSendToJson(null, null, context,
+		basehttpSendToJson(true,null, null, context,
 				HttpConstants.METHOD_ADDRESSCREATE_GETDEFAULT, httpCallBack,
 				ContactsAddressRequestBean.class, true, false);
 	}
@@ -708,9 +708,8 @@ public class HttpControl {
 		if (responsejsonstr == null) {
 			httpCallBack.http_Fails(500, "发送数据错误");
 		}
-		basehttpSendToJson(responsejsonstr, null, context,
-				HttpConstants.METHOD_BUYER_CREATE_AUTH_BUYER, httpCallBack,
-				BaseRequest.class, true, false);
+		//basehttpSendToJson(responsejsonstr, null, context,HttpConstants.METHOD_BUYER_CREATE_AUTH_BUYER, httpCallBack,BaseRequest.class, true, false);
+		basehttpSendToJson(false,responsejsonstr, null, context,HttpConstants.METHOD_BUYER_CREATE_AUTH_BUYER, httpCallBack,BaseRequest.class, true, false);
 	}
 
 	
@@ -1817,6 +1816,7 @@ public class HttpControl {
 	/********
 	 * 基础Http传递json数据通用类
 	 * 
+	 * @param isaddData boolean 是否在签名中 加载数据 true是 false否
 	 * @param responsejsonstr
 	 *            String JSON类型数据
 	 * @param map
@@ -1834,7 +1834,7 @@ public class HttpControl {
 	 *            boolean 是否可取消对话框 true 不可取消 false 可取消 默认 可取消
 	 * @return void
 	 * ****/
-	<T extends BaseRequest> void basehttpSendToJson(String responsejsonstr,
+	<T extends BaseRequest> void basehttpSendToJson(boolean isaddData,String responsejsonstr,
 			Map<String, String> map, final Context context, String method,
 			final HttpCallBackInterface httpCallBack, final Class<T> classzz,
 			boolean isshwoDialog, boolean isDialogCancell) {
@@ -1846,7 +1846,7 @@ public class HttpControl {
 		if (isshwoDialog) {
 			progressDialog.show();
 		}
-		httpSendToJson(responsejsonstr, map, context, method,
+		httpSendToJson(isaddData,responsejsonstr, map, context, method,
 				new HttpRequestDataInterface() {
 
 					@Override
@@ -1928,7 +1928,10 @@ public class HttpControl {
 							stringBuilder.append(k);
 							stringBuilder.append("=");
 							stringBuilder.append(v);
-							stringBuilder.append("&");
+							if(iterator.hasNext())
+							{
+							  stringBuilder.append("&");
+							}
 						}
 
 					}
@@ -1937,6 +1940,67 @@ public class HttpControl {
 		}
 		return stringBuilder.toString();
 	}
+	
+	
+	/****
+	 * 通用传输数据 用于上传JSON类型数据 返回url拼接后的字符串 如 a=1&b=2&sign=md5
+	 * 
+	 * @param map
+	 *            Map<String, String> 传递的参数
+	 * @param context
+	 *            Context
+	 * @return String
+	 * **/
+	String setBaseRequestJsonParams(Map<String, String> map, Context context) {
+		StringBuilder stringBuilder = new StringBuilder();
+		if (stringBuilder != null) {
+			String versionName = "0";
+			try {
+				// 获取版本号
+				PackageInfo pi = context.getPackageManager().getPackageInfo(
+						context.getPackageName(), 0);
+				versionName = pi.versionName;
+				versionName = "2.3";
+			} catch (Exception e) {
+
+			}
+			if (map == null) {
+				map = new HashMap<String, String>();
+			}
+			if (map != null) {
+				map.put(Constants.HTTPCHANNEL, Constants.ANDROID);
+				map.put(Constants.CLIENTVERSION, versionName);
+				map.put(Constants.UUID, UUID.randomUUID().toString());
+				map.put(Constants.TOKEN, SharedUtil.getStringPerfernece(
+						context, SharedUtil.user_token));
+				String md5str = Md5Utils.md5ToString(map,null);
+				map.put(Constants.SIGN, md5str);
+				Set<String> set = map.keySet();
+				if (set != null && set.size() > 0) {
+					Iterator<String> iterator = set.iterator();
+					while (iterator.hasNext()) {
+						String k = iterator.next();
+						if (map.containsKey(k)) {
+							String v = map.get(k);
+							stringBuilder.append(k);
+							stringBuilder.append("=");
+							stringBuilder.append(v);
+							if(iterator.hasNext())
+							{
+								stringBuilder.append("&");
+							}
+							
+						}
+
+					}
+				}
+			}
+		}
+		return stringBuilder.toString();
+	}
+	
+	
+	
 
 	/****
 	 * 通用传输数据 生成http传输对象 RequestParams
@@ -2122,7 +2186,7 @@ public class HttpControl {
 
 	/*****
 	 * 访问网络 上传JSON类型数据
-	 * 
+	 * @param isaddData boolean 是否在签名中 加载数据 true是 false否
 	 * @param json
 	 *            String json类型的字符串
 	 * @param map
@@ -2139,7 +2203,7 @@ public class HttpControl {
 	 *            HttpRequestDataInterface http接口
 	 * @return void
 	 * ***/
-	<T> void httpSendToJson(final String json, final Map<String, String> map,
+	<T> void httpSendToJson(boolean isaddData,final String json, final Map<String, String> map,
 			final Context context, String method,
 			final HttpRequestDataInterface httpRequestDataInterface) {
 		String parameter = setBaseRequestJsonParams(map, context, json);
@@ -2150,9 +2214,17 @@ public class HttpControl {
 		 * 
 		 * e.printStackTrace(); } }
 		 */
-		method = method + "?" + setBaseRequestJsonParams(map, context, json);
+		if(isaddData)
+		{
+			method = method + "?" + setBaseRequestJsonParams(map, context, json);
+		}else
+		{
+			method = method + "?" +setBaseRequestJsonParams(map, context);
+		}
+		
 		sendHttpJson(method, json, httpRequestDataInterface);
 	}
+		
 
 	/*******
 	 * 本类定义 异步 上传JSON 数据
