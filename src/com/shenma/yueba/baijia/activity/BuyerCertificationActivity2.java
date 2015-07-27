@@ -50,7 +50,9 @@ public class BuyerCertificationActivity2 extends BaseActivityWithTopView
 	ListView lv;
 	private TextView tv_store_info_title;
 	private TextView tv_self_get_point_title;
-	private TextView tv_store_title;
+//	private TextView tv_store_title;
+	private TextView tv_store_name;
+	private EditText et_store_name;
 	private TextView tv_zhuangui_title;
 	private EditText et_zhuangui_name;
 	private TextView tv_number_title;
@@ -61,10 +63,11 @@ public class BuyerCertificationActivity2 extends BaseActivityWithTopView
 	private TextView tv_province;
 	private TextView tv_city;
 
+	
 	private String province_id;
 	private String city_id;
 	private String town_id;
-	private String store_id;
+//	private String store_id;
 	private int tag = 1;// 1表示省份，2表示城市，3表示区县
 	private List<CityListItembean> mList = new ArrayList<CityListItembean>();
 	private ApplyAuthBuyerBean bean;
@@ -188,17 +191,18 @@ public class BuyerCertificationActivity2 extends BaseActivityWithTopView
 					town_id = mList.get(position).getId();
 					drawer_layout.closeDrawers();
 				}
-				if(tag == 4){
-					tv_store_title.setText("商城名称 "+storeList.get(position).getStoreName());
-					store_id = storeList.get(position).getStoreId();
-					drawer_layout.closeDrawers();
-				}
+//				if(tag == 4){
+//					tv_store_title.setText("商城名称 "+storeList.get(position).getStoreName());
+//					store_id = storeList.get(position).getStoreId();
+//					drawer_layout.closeDrawers();
+//				}
 			}
 		});
 		tv_store_info_title = getView(R.id.tv_store_info_title);
 		tv_self_get_point_title = getView(R.id.tv_self_get_point_title);
 
-		tv_store_title = getView(R.id.tv_store_title);
+		tv_store_name = getView(R.id.tv_store_name);
+		et_store_name = getView(R.id.et_store_name);
 		tv_zhuangui_title = getView(R.id.tv_zhuangui_title);
 		et_zhuangui_name = getView(R.id.et_zhuangui_name);
 		tv_number_title = getView(R.id.tv_number_title);
@@ -213,9 +217,8 @@ public class BuyerCertificationActivity2 extends BaseActivityWithTopView
 		tv_county_town.setOnClickListener(this);
 		tv_province.setOnClickListener(this);
 		tv_city.setOnClickListener(this);
-		tv_store_title.setOnClickListener(this);
 		FontManager.changeFonts(mContext, tv_store_info_title,
-				tv_self_get_point_title, tv_store_title, tv_zhuangui_title,
+				tv_self_get_point_title, tv_store_name,et_store_name, tv_zhuangui_title,
 				et_zhuangui_name, tv_number_title, et_number_name, tv_confirm,
 				et_street);
 	}
@@ -299,10 +302,10 @@ public class BuyerCertificationActivity2 extends BaseActivityWithTopView
 			break;
 		case R.id.tv_confirm:// 提交申请
 
-			if (TextUtils.isEmpty(store_id)) {//
+			/*if (TextUtils.isEmpty(store_id)) {//
 				Toast.makeText(mContext, "请选择商场", 1000).show();
 				return;
-			}
+			}*/
 			if (TextUtils.isEmpty(et_zhuangui_name.getText().toString().trim())) {//
 				Toast.makeText(mContext, "请填写专柜名称", 1000).show();
 				return;
@@ -329,9 +332,9 @@ public class BuyerCertificationActivity2 extends BaseActivityWithTopView
 			}
 			uploadData();
 			break;
-		case R.id.tv_store_title://获取店铺列表
-			getStoreList();
-			break;
+//		case R.id.tv_store_title://获取店铺列表
+		//	getStoreList();
+//			break;
 		default:
 			break;
 		}
@@ -351,14 +354,14 @@ public class BuyerCertificationActivity2 extends BaseActivityWithTopView
 	}
 
 	private void setData() {
-		bean.setStoreName(tv_store_title.getText().toString().trim());
+		bean.setStoreName(et_store_name.getText().toString().trim());
 		bean.setSectionName(et_zhuangui_name.getText().toString().trim());
 		bean.setSectionLocate(et_number_name.getText().toString().trim());
 		bean.setAddress(et_street.getText().toString().trim());
 		bean.setProvinceId(province_id);
 		bean.setCityId(city_id);
 		bean.setDistrictId(town_id);
-		bean.setStoreId(store_id);
+//		bean.setStoreId(store_id);
 	}
 
 	private void uploadData() {
