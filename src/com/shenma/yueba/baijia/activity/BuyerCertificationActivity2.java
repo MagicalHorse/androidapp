@@ -384,7 +384,7 @@ public class BuyerCertificationActivity2 extends BaseActivityWithTopView
 
 			@Override
 			public void http_Fails(int error, String msg) {
-
+                 MyApplication.getInstance().showMessage(BuyerCertificationActivity2.this, msg);
 			}
 		}, BuyerCertificationActivity2.this);
 
