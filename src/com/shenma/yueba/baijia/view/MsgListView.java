@@ -51,9 +51,14 @@ public class MsgListView extends BaseView{
 	LinearLayout showloading_layout_view;
 	MsgAdapter msgAdapter;
 	
-	public View getView(Activity activity)
+	
+	public MsgListView(Activity activity)
 	{
 		this.activity=activity;
+	}
+	
+	public View getView()
+	{
 		if(view==null)
 		{
 			layoutInflater=activity.getLayoutInflater();
@@ -256,8 +261,8 @@ public class MsgListView extends BaseView{
 	}
 	
 	@Override
-	public void firstInitData(Activity activity) {
-		 if(isfirstStatus)
+	public void firstInitData() {
+		if(isfirstStatus)
 		   {
 			   return ;
 		   }

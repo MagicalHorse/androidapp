@@ -12,6 +12,6 @@ import android.view.View;
 public abstract class BaseView{
 
 	
-	public abstract View getView(Activity activity);
-	public abstract void firstInitData(Activity activity);
+	public abstract View getView();
+	public abstract void firstInitData();
 }

@@ -70,7 +70,7 @@ public class CircleFragment extends Fragment {
 		if (currid > -1 && currid < fragment_list.size()) {
 			BaseView bv = (BaseView) fragment_list.get(currid).getFragment();
 			if (bv != null) {
-				bv.firstInitData(getActivity());
+				bv.firstInitData();
 			}
 
 		}
@@ -131,7 +131,7 @@ public class CircleFragment extends Fragment {
 			public Object instantiateItem(ViewGroup container, int position) {
 
 				BaseView bv = (BaseView) fragment_list.get(position).getFragment();
-				View v = bv.getView(getActivity());
+				View v = bv.getView();
 				container.addView(v, 0);
 				return v;
 			}
@@ -176,7 +176,7 @@ public class CircleFragment extends Fragment {
 		baijia_fragment_tab1_pagerview.setCurrentItem(i);
 		if (currid > -1 && currid < fragment_list.size()) {
 			BaseView bv = (BaseView) fragment_list.get(currid).getFragment();
-			bv.firstInitData(getActivity());
+			bv.firstInitData();
 		}
 	}
 

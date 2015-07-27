@@ -74,10 +74,10 @@ public class MessageFragment extends Fragment{
 		switch(currid)
 		{
 		case 0:
-			((BaseView)(fragment_list.get(0).getFragment())).firstInitData(getActivity());
+			((BaseView)(fragment_list.get(0).getFragment())).firstInitData();
 			break;
 		case 1:
-			((BaseView)(fragment_list.get(1).getFragment())).firstInitData(getActivity());
+			((BaseView)(fragment_list.get(1).getFragment())).firstInitData();
 			break;
 		 }
 		setTextColor(currid); 
@@ -91,8 +91,8 @@ public class MessageFragment extends Fragment{
 		/*Fragment recommendedCircleFragment=new RecommendedCircleFragment();
 		Fragment myCircleFragment=new MyCircleFragment();
 		*/
-		fragment_list.add(new FragmentBean("消息", -1, new MsgListView()));
-		fragment_list.add(new FragmentBean("动态", -1, new DynamicListView()));
+		fragment_list.add(new FragmentBean("消息", -1, new MsgListView(getActivity())));
+		fragment_list.add(new FragmentBean("动态", -1, new DynamicListView(getActivity())));
 		
 		baijia_fragment_tab1_head_linearlayout=(LinearLayout)v.findViewById(R.id.baijia_fragment_tab1_head_linearlayout);
 		for(int i=0;i<fragment_list.size();i++)
@@ -136,7 +136,7 @@ public class MessageFragment extends Fragment{
 			public Object instantiateItem(ViewGroup container, int position) {
 				
 				//return super.instantiateItem(container, position);
-				View v=((BaseView)fragment_list.get(position).getFragment()).getView(getActivity());
+				View v=((BaseView)fragment_list.get(position).getFragment()).getView();
 				container.addView(v,0);
 				return v;
 			}
@@ -157,10 +157,10 @@ public class MessageFragment extends Fragment{
 				switch(arg0)
 				{
 				case 0:
-					((BaseView)(fragment_list.get(0).getFragment())).firstInitData(getActivity());
+					((BaseView)(fragment_list.get(0).getFragment())).firstInitData();
 					break;
 				case 1:
-					((BaseView)(fragment_list.get(1).getFragment())).firstInitData(getActivity());
+					((BaseView)(fragment_list.get(1).getFragment())).firstInitData();
 					break;
 				}
 				setCurrView(arg0);
