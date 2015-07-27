@@ -55,6 +55,7 @@ public class GuideActivity extends Activity{
 		for (int i = 0; i < ids.length; i++) {
 			ImageView iv = new ImageView(this);
 			iv.setImageResource(ids[i]);
+			iv.setScaleType(ScaleType.CENTER_CROP);
 			iv.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -97,4 +98,5 @@ public class GuideActivity extends Activity{
 				open.setVisibility(View.GONE);
 		}
 	};
+	
 }
