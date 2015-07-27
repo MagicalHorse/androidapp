@@ -70,7 +70,7 @@ public class QRCodeShareDialog extends Dialog implements android.view.View.OnCli
 		qzcodeshare_layout_share_button=(Button)ll.findViewById(R.id.qzcodeshare_layout_share_button);
 		qzcodeshare_layout_share_button.setOnClickListener(this);
 		qzcodeshare_layouyt_close_imageview.setOnClickListener(this);
-		qzcodeshare_layouyt_name_textview.setText("订单号："+obj.getOrderNo());
+		qzcodeshare_layouyt_name_textview.setText("商品名："+obj.getProductName());
 		qzcodeshare_layouyt_count_textview.setText("￥"+obj.getAmount());
 		byte[] bytes = Base64Coder.decode(obj.getQrCode());
 		LayoutParams params = qzcodeshare_layout_content_imageview.getLayoutParams();

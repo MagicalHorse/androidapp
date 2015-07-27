@@ -215,8 +215,8 @@ public class MyApplication extends Application {
 		bigPicDisplayConfig.setBitmapConfig(Bitmap.Config.RGB_565);
 		bigPicDisplayConfig.setBitmapMaxSize(BitmapCommonUtils
 				.getScreenSize(this));
-		bitmapUtils.configDefaultLoadingImage(R.drawable.ic_launcher);// 默认背景图片
-		bitmapUtils.configDefaultLoadFailedImage(R.drawable.ic_launcher);// 加载失败图片
+		bitmapUtils.configDefaultLoadingImage(R.drawable.default_pic);// 默认背景图片
+		bitmapUtils.configDefaultLoadFailedImage(R.drawable.default_pic);// 加载失败图片
 		bitmapUtils.configDefaultBitmapConfig(Bitmap.Config.RGB_565);// 设置图片压缩类型
 	}
 

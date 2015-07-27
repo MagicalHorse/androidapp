@@ -270,6 +270,7 @@ public class CircleInfoActivity extends BaseActivityWithTopView implements
 		httpControl.getCircleDetail(circleId, showDialog,
 				new HttpCallBackInterface() {
 
+			
 					@Override
 					public void http_Success(Object obj) {
 						CircleDetailBackBean result = (CircleDetailBackBean) obj;
@@ -286,7 +287,7 @@ public class CircleInfoActivity extends BaseActivityWithTopView implements
 											ToolsUtil.getImage(ToolsUtil
 													.nullToString(bean
 															.getGroupPic()),
-													100, 100), riv_circle_head);
+													100, 100), riv_circle_head, MyApplication.getInstance().getDisplayImageOptions());
 							List<Users> users = bean.getUsers();
 							if (users != null && users.size() > 0) {
 								mList.clear();
