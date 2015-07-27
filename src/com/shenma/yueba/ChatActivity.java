@@ -166,6 +166,8 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 		if (this.getIntent().getStringExtra("Chat_Type") == null)// 获取聊天类型
 		{
 			MyApplication.getInstance().showMessage(this, "数据错误");
+			//离开房间
+			outRoom();
 			finish();
 			return;
 		}
@@ -385,6 +387,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 				fView.setVisibility(View.GONE);
 			}
 		}
+		outRoom();
 	}
 
 	@Override
@@ -1157,6 +1160,15 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 	@Override
 	protected void onStop() {
 		super.onStop();
+	}
+	
+	
+	/*****
+	 * 离开房间
+	 * ***/
+	void outRoom()
+	{
+		SocketManger.the().outinroon();
 	}
 
 }

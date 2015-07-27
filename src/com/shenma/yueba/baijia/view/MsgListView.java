@@ -77,7 +77,7 @@ public class MsgListView extends BaseView{
 	{
 		pull_refresh_list=(PullToRefreshListView)view.findViewById(R.id.pull_refresh_list);
 		showloading_layout_view=(LinearLayout)view.findViewById(R.id.showloading_layout_view);
-		//pull_refresh_list.setMode(Mode.BOTH);
+		pull_refresh_list.setMode(Mode.BOTH);
 		pull_refresh_list.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override

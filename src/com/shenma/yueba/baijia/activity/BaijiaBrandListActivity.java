@@ -5,7 +5,9 @@ import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -171,7 +173,7 @@ List<BrandInfoInfo> object_list=new ArrayList<BrandInfoInfo>();
 			{
 				holder=new Holder();
 				holder.imageview=new ImageView(BaijiaBrandListActivity.this);
-				holder.imageview.setScaleType(ScaleType.FIT_CENTER);
+				holder.imageview.setScaleType(ScaleType.CENTER_CROP);
 				//AbsListView.LayoutParams params=new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT,AbsListView.LayoutParams.MATCH_PARENT);
 				AbsListView.LayoutParams params=new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT,BaijiaBrandListActivity.this.getResources().getDimensionPixelSize(R.dimen.shop_main_width150_dimen));
 				holder.imageview.setLayoutParams(params);
@@ -183,6 +185,14 @@ List<BrandInfoInfo> object_list=new ArrayList<BrandInfoInfo>();
 			}else
 			{
 				holder=(Holder)convertView.getTag();
+			}
+			DisplayMetrics dm=new DisplayMetrics();
+			getWindowManager().getDefaultDisplay().getMetrics(dm);
+			int allwidth=dm.widthPixels;
+			int childheight=allwidth/3;
+			if(childheight>0)
+			{
+				holder.imageview.setLayoutParams(new AbsListView.LayoutParams(childheight, childheight));
 			}
 			BrandInfoInfo bean=object_list.get(position);
 			initPic(ToolsUtil.getImage(ToolsUtil.nullToString(bean.getPic()), 320, 0), holder.imageview);

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
@@ -113,6 +114,17 @@ public class SameCityAdapter extends BaseAdapterWithUtil {
 		}else{
 			holder = (Holder) convertView.getTag();
 		}
+		int width=holder.brandlist_item_imageview1.getWidth();
+		if(width>0)
+		{
+			holder.brandlist_item_imageview1.setLayoutParams(new LinearLayout.LayoutParams(width, width));
+			holder.brandlist_item_imageview2.setLayoutParams(new LinearLayout.LayoutParams(width, width));
+			holder.brandlist_item_imageview3.setLayoutParams(new LinearLayout.LayoutParams(width, width));
+		}
+		
+		holder.brandlist_item_imageview1.setVisibility(View.INVISIBLE);
+		holder.brandlist_item_imageview2.setVisibility(View.INVISIBLE);
+		holder.brandlist_item_imageview3.setVisibility(View.INVISIBLE);
 		
 		BrandCityWideInfo brandCityWideInfo=items.get(position);
 		holder.iv_head.setTag(brandCityWideInfo.getUserId());
@@ -142,12 +154,15 @@ public class SameCityAdapter extends BaseAdapterWithUtil {
 			  switch(i)
 			  {
 			  case 0:
+				  holder.brandlist_item_imageview1.setVisibility(View.VISIBLE);
 				  MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.getImage(ToolsUtil.nullToString(pic_array[0]), 320, 0), holder.brandlist_item_imageview1, MyApplication.getInstance().getDisplayImageOptions());
 				  break;
 			  case 1:
+				  holder.brandlist_item_imageview2.setVisibility(View.VISIBLE);
 				  MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.getImage(ToolsUtil.nullToString(pic_array[1]), 320, 0), holder.brandlist_item_imageview2, MyApplication.getInstance().getDisplayImageOptions());
 				  break;
 			  case 2:
+				  holder.brandlist_item_imageview3.setVisibility(View.VISIBLE);
 				  MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.getImage(ToolsUtil.nullToString(pic_array[2]), 320, 0), holder.brandlist_item_imageview3, MyApplication.getInstance().getDisplayImageOptions());
 				  break;
 			  }

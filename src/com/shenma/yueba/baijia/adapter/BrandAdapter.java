@@ -4,10 +4,12 @@ import java.util.List;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
@@ -62,6 +64,21 @@ public class BrandAdapter extends BaseAdapterWithUtil {
 		}else{
 			holder = (Holder) convertView.getTag();
 		}
+		
+		int width=holder.brandlist_item_imageview1.getWidth();
+		if(width>0)
+		{
+			Log.i("TAG", "--->>WIDTH:"+width);
+			holder.brandlist_item_imageview1.setLayoutParams(new LinearLayout.LayoutParams(width, width));
+			holder.brandlist_item_imageview2.setLayoutParams(new LinearLayout.LayoutParams(width, width));
+			holder.brandlist_item_imageview3.setLayoutParams(new LinearLayout.LayoutParams(width, width));
+			holder.brandlist_item_imageview4.setLayoutParams(new LinearLayout.LayoutParams(width, width));
+		}
+		
+		holder.brandlist_item_imageview1.setVisibility(View.INVISIBLE);
+		holder.brandlist_item_imageview2.setVisibility(View.INVISIBLE);
+		holder.brandlist_item_imageview3.setVisibility(View.INVISIBLE);
+		holder.brandlist_item_imageview4.setVisibility(View.INVISIBLE);
 		BrandInfo brandInfo=items.get(position);
 		holder.iv_brand.setTag(brandInfo.getBrandId());
 		initPic(holder.iv_brand, ToolsUtil.nullToString(brandInfo.getBrandLogo()));
@@ -105,7 +122,11 @@ public class BrandAdapter extends BaseAdapterWithUtil {
 	
 	void initPic(ImageView iv,String url)
 	{
-		MyApplication.getInstance().getImageLoader().displayImage(url, iv, MyApplication.getInstance().getDisplayImageOptions());
+		if(iv!=null)
+		{
+			iv.setVisibility(View.VISIBLE);
+		    MyApplication.getInstance().getImageLoader().displayImage(url, iv, MyApplication.getInstance().getDisplayImageOptions());
+		}
 	}
 
 	

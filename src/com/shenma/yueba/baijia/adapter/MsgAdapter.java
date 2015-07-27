@@ -50,6 +50,7 @@ public class MsgAdapter extends BaseAdapterWithUtil {
 			holder.tv_name = (TextView) convertView.findViewById(R.id.tv_name);
 			holder.tv_time = (TextView) convertView.findViewById(R.id.tv_time);
 			holder.tv_msg = (TextView) convertView.findViewById(R.id.tv_msg);
+			holder.tv_msg_count = (TextView) convertView.findViewById(R.id.tv_msg_count);
 			MyApplication.getInstance().getImageLoader().displayImage("http://img3.redocn.com/20091221/20091217_fa2a743db1f556f82b9asJ320coGmYFf.jpg", holder.iv_msg, MyApplication.getInstance().getRoundDisplayImageOptions());
 			
 			FontManager.changeFonts(ctx, holder.tv_name,holder.tv_time,holder.tv_msg);
@@ -67,11 +68,20 @@ public class MsgAdapter extends BaseAdapterWithUtil {
 		TextView tv_name;
 		TextView tv_time;
 		TextView tv_msg;
+		TextView tv_msg_count;
 	}
 
 	void setValue(Holder holder, int position)
 	{
 		MsgListInfo msgListInf=	mList.get(position);
+		holder.tv_msg_count.setText(msgListInf.getUnReadCount()+"");
+		if(msgListInf.getUnReadCount()>0)
+		{
+			holder.tv_msg_count.setVisibility(View.VISIBLE);
+		}else
+		{
+			holder.tv_msg_count.setVisibility(View.GONE);
+		}
 		MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.nullToString(msgListInf.getLogo()), holder.iv_msg, MyApplication.getInstance().getDisplayImageOptions());
 		holder.tv_name.setText(ToolsUtil.nullToString(msgListInf.getName()));
 		holder.tv_time.setText(ToolsUtil.nullToString(msgListInf.getUpdateTime()));

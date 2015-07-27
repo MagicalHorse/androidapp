@@ -332,6 +332,28 @@ public class SocketManger {
 			Log.i("TAG", "---->>>socket inroom error:"+e.getMessage());
 		}
 	}
+	
+	
+	/****
+	 * 推出房间
+	 * @param owner String 进入者id
+	 * @param bean RoomBean 信息
+	 * ***/
+	public void outinroon() {
+		
+		try {
+			Log.i("TAG", "---->>>socket inroom");
+			socket.emit("leaveRoom", new Ack() {
+
+				@Override
+				public void call(Object... arg0) {
+					Log.i("TAG", "---->>>socket outinroon");
+				}
+			});
+		} catch (Exception e) {
+			Log.i("TAG", "---->>>socket outinroon error:"+e.getMessage());
+		}
+	}
 
 	public interface SocketManagerListener {
 		void error(Object... obj);
