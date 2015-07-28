@@ -74,6 +74,9 @@ public class IndexFragmentForBaiJia extends Fragment {
 		Fragment buyerStreetFragment = new BuyerStreetFragment();
 		// Fragment theySayFragment=new TheySayFragment();
 		Fragment myBuyerFragment = new MyBuyerFragment();
+		if(fragment_list!=null){
+			fragment_list.clear();
+		}
 		fragment_list.add(new FragmentBean("买手街", -1, buyerStreetFragment));
 		// fragment_list.add(new FragmentBean("TA们说", -1, theySayFragment));
 		fragment_list.add(new FragmentBean("我的买手", -1, myBuyerFragment));

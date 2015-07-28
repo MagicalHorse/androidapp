@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.util.ToolsUtil;
 
 /**
  * 标签自定义控件类
@@ -142,6 +143,9 @@ public class TagImageView extends RelativeLayout {
 			LayoutInflater mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			View view = mInflater.inflate(R.layout.tag, null);
 			TextView text = (TextView) view.findViewById(R.id.tag_text);
+//			android.view.ViewGroup.LayoutParams params = text.getLayoutParams();
+//			params.height = ToolsUtil.px2dip(getContext(), 25);
+//			text.setLayoutParams(params);
 			RelativeLayout layout = (RelativeLayout) view.findViewById(R.id.tag_layout);
 			text.setText(content);
 			layout.setTag(i++);
