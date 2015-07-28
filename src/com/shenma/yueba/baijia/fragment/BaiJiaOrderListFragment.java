@@ -27,6 +27,7 @@ import com.shenma.yueba.baijia.adapter.BaiJiaOrderListAdapter;
 import com.shenma.yueba.baijia.adapter.BaiJiaOrderListAdapter.OrderControlListener;
 import com.shenma.yueba.baijia.modle.BaiJiaOrderListInfo;
 import com.shenma.yueba.baijia.modle.BaiJiaOrderListInfoBean;
+import com.shenma.yueba.baijia.modle.HomeProductListInfoBean;
 import com.shenma.yueba.baijia.modle.RequestBaiJiaOrderListInfoBean;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.HttpControl;
@@ -93,28 +94,7 @@ public class BaiJiaOrderListFragment extends Fragment implements
 		baiJiaOrderListAdapter = new BaiJiaOrderListAdapter(this, object_list,getActivity());
 		pull_refresh_list.setAdapter(baiJiaOrderListAdapter);
 		pull_refresh_list.setMode(Mode.PULL_FROM_START);
-		pull_refresh_list.setOnPullEventListener(new OnPullEventListener<ListView>() {
-
-					@Override
-					public void onPullEvent(
-							PullToRefreshBase<ListView> refreshView,
-							State state, Mode direction) {
-
-						if(pull_refresh_list!=null && pull_refresh_list.getLoadingLayoutProxy()!=null)
-						{
-						// 设置标签显示的内容
-						if (direction == Mode.PULL_FROM_START) {
-							pull_refresh_list.getLoadingLayoutProxy().setPullLabel(getActivity().getResources().getString(R.string.Refreshonstr));
-							pull_refresh_list.getLoadingLayoutProxy().setRefreshingLabel(getActivity().getResources().getString(R.string.Refreshloadingstr));
-							pull_refresh_list.getLoadingLayoutProxy().setReleaseLabel(getActivity().getResources().getString(R.string.Loosentherefresh));
-						} else if (direction == Mode.PULL_FROM_END) {
-							pull_refresh_list.getLoadingLayoutProxy().setPullLabel(getActivity().getResources().getString(R.string.Thedropdownloadstr));
-							pull_refresh_list.getLoadingLayoutProxy().setRefreshingLabel(getActivity().getResources().getString(R.string.RefreshLoadingstr));
-							pull_refresh_list.getLoadingLayoutProxy().setReleaseLabel(getActivity().getResources().getString(R.string.Loosentheloadstr));
-						}
-						}
-					}
-				});
+		ToolsUtil.initPullResfresh(pull_refresh_list, getActivity());
 
 		pull_refresh_list.setOnRefreshListener(new OnRefreshListener2() {
 
@@ -170,72 +150,30 @@ public class BaiJiaOrderListFragment extends Fragment implements
 	 *            int 0 刷新 1 加载
 	 * ***/
 	void sendRequestData(final int page, final int type) {
-		ToolsUtil.showNoDataView(getActivity(), false);
+		ToolsUtil.showNoDataView(getActivity(),parentView,false);
 		Log.i("TAG", "currpage=" + page + "   pagesize=" + pagersize);
 		httpControl.getBaijiaOrderList(page, pagersize, state, ishow,
 				new HttpCallBackInterface() {
 
 					@Override
 					public void http_Success(Object obj) {
-						if(pull_refresh_list!=null)
-						{
-						pull_refresh_list.postDelayed(new Runnable() {
-		                    @Override
-		                    public void run() {
-		                    	if(pull_refresh_list!=null)
-		                    	{
-		                    		pull_refresh_list.onRefreshComplete();
-		                    	}
-		                    }
-		            }, 300);
-						}
+						ToolsUtil.pullResfresh(pull_refresh_list);
 						currpage=page;
 						ishow = false;
 						if (obj != null&& obj instanceof RequestBaiJiaOrderListInfoBean) {
 							requestBaiJiaOrderListInfoBean = (RequestBaiJiaOrderListInfoBean) obj;
-							BaiJiaOrderListInfoBean bean = requestBaiJiaOrderListInfoBean.getData();
-							if(bean==null || bean.getItems()==null || bean.getItems().size()==0)
-							{
-								if(page==1)
-								{
-									object_list.clear();
-									pull_refresh_list.setMode(Mode.PULL_FROM_START);
-									ToolsUtil.showNoDataView(getActivity(),true);
-								}else
-								{
-									MyApplication.getInstance().showMessage(getActivity(), getActivity().getResources().getString(R.string.lastpagedata_str));
-								}
-							}else
-							{
-							   if(page==1)
-							   {
-								   pull_refresh_list.setMode(Mode.BOTH);
-							   }
-							   
-							   int totalPage = bean.getTotalpaged();
-
-								if (currpage >= totalPage) {
-									//MyApplication.getInstance().showMessage(getActivity(), getActivity().getResources().getString(R.string.lastpagedata_str));
-									pull_refresh_list.setMode(Mode.BOTH);
-								} else {
-									pull_refresh_list.setMode(Mode.BOTH);
-								}
-								switch (type) {
-								case 0:
-									falshData(bean);
-									break;
-								case 1:
-									addData(bean);
-									break;
-								}
+							switch (type) {
+							case 0:
+								falshData(requestBaiJiaOrderListInfoBean);
+								break;
+							case 1:
+								addData(requestBaiJiaOrderListInfoBean);
+								break;
 							}
-
+							setPageStatus(requestBaiJiaOrderListInfoBean, page);
+							
 							} else {
-								if(page==1)
-								{
-									ToolsUtil.showNoDataView(getActivity(), true);
-								}
-								MyApplication.getInstance().showMessage(getActivity(), "没有任何数据");
+								http_Fails(500, getActivity().getResources().getString(R.string.errorpagedata_str));
 							}
 
 					}
@@ -243,45 +181,60 @@ public class BaiJiaOrderListFragment extends Fragment implements
 					@Override
 					public void http_Fails(int error, String msg) {
 						MyApplication.getInstance().showMessage(getActivity(),msg);
-						if(pull_refresh_list!=null)
-						{
-							pull_refresh_list.onRefreshComplete();
-						}
+						ToolsUtil.pullResfresh(pull_refresh_list);
 						
 					}
 				}, getActivity());
 
 	}
 
+	
+	
+	void setPageStatus(RequestBaiJiaOrderListInfoBean data, int page) {
+		if (page == 1 && (data.getData()==null || data.getData().getItems() == null || data.getData().getItems().size()==0)) {
+			pull_refresh_list.setMode(Mode.PULL_FROM_START);
+			ToolsUtil.showNoDataView(getActivity(),parentView,true);
+		} else if (page != 1 && (data.getData()==null || data.getData().getItems()== null || data.getData().getItems().size() == 0)) {
+			pull_refresh_list.setMode(Mode.BOTH);
+			MyApplication.getInstance().showMessage(getActivity(),getActivity().getResources().getString(R.string.lastpagedata_str));
+		}else
+		{
+			pull_refresh_list.setMode(Mode.BOTH);
+		}
+	}
+	
+	
 	/***
 	 * 刷新viewpager数据
 	 * ***/
-	void falshData(BaiJiaOrderListInfoBean bean) {
+	void falshData(RequestBaiJiaOrderListInfoBean bean) {
+		ishow = false;
 		currpage++;
-		if (bean == null) {
-			return;
+		object_list.clear();
+		if (bean.getData()!= null) {
+			if (bean.getData().getItems() != null) {
+				object_list.addAll(bean.getData().getItems());
+			}
 		}
-		if (bean.getItems() != null) {
-			object_list.clear();
-			object_list.addAll(bean.getItems());
-		}
+		
 		if (baiJiaOrderListAdapter != null) {
 			baiJiaOrderListAdapter.notifyDataSetChanged();
 		}
-		ishow = false;
+		
 	}
 
 	/***
 	 * 加载数据
 	 * **/
-	void addData(BaiJiaOrderListInfoBean bean) {
+	void addData(RequestBaiJiaOrderListInfoBean bean) {
+		ishow = false;
 		currpage++;
-		if (bean == null) {
-			return;
+		if (bean.getData()!= null) {
+			if (bean.getData().getItems() != null) {
+				object_list.addAll(bean.getData().getItems());
+			}
 		}
-		if (bean.getItems() != null) {
-			object_list.addAll(bean.getItems());
-		}
+		
 		if (baiJiaOrderListAdapter != null) {
 			baiJiaOrderListAdapter.notifyDataSetChanged();
 		}
