@@ -52,6 +52,7 @@ public class StoreIntroduceActivity extends BaseActivityWithTopView {
 			public void onClick(View v) {
 				if(TextUtils.isEmpty(et_modify_info.getText().toString().trim())){
 					Toast.makeText(mContext, "店铺说明不能为空", 1000).show();
+					return;
 				}
 				setStoreIntroduce();
 			}

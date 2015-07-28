@@ -239,9 +239,7 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 		for (int i = 0; i < positionList.size(); i++) {
 			double x = (double) positionList.get(i).get("x")
 					/ (double) ToolsUtil.getDisplayWidth(mContext);
-			double y = ((double) positionList.get(i).get("y") - ToolsUtil
-					.dip2px(EditPicActivity.this, ll_top.getHeight()))
-					/ (double) ToolsUtil.getDisplayWidth(mContext);
+			double y = ((double) positionList.get(i).get("y")/ (double) ToolsUtil.getDisplayWidth(mContext));
 			Map<String, Double> map = new HashMap<String, Double>();
 			if (x < 0) {
 				x = 0.0;
