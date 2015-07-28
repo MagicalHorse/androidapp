@@ -2,8 +2,9 @@ package com.shenma.yueba.baijia.adapter;
 
 import java.util.List;
 
+import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -13,7 +14,6 @@ import android.widget.LinearLayout;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
-import com.shenma.yueba.baijia.activity.ShopMainActivity;
 import com.shenma.yueba.baijia.modle.BrandInfo;
 import com.shenma.yueba.baijia.modle.ProductInFo;
 import com.shenma.yueba.util.ToolsUtil;
@@ -65,7 +65,9 @@ public class BrandAdapter extends BaseAdapterWithUtil {
 			holder = (Holder) convertView.getTag();
 		}
 		
-		int width=holder.brandlist_item_imageview1.getWidth();
+		DisplayMetrics dm=new DisplayMetrics();
+		((Activity)context).getWindowManager().getDefaultDisplay().getMetrics(dm);
+		int width=dm.widthPixels/4;
 		if(width>0)
 		{
 			Log.i("TAG", "--->>WIDTH:"+width);

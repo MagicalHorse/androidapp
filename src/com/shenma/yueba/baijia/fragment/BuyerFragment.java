@@ -98,24 +98,7 @@ public class BuyerFragment extends BaseFragment{
 		searchBuyerAdapter=new SearchBuyerAdapter(getActivity(), mList);
 		pull_refresh_list.setAdapter(searchBuyerAdapter);
 		pull_refresh_list.setMode(Mode.PULL_FROM_START);
-		 
-		pull_refresh_list.setOnPullEventListener(new OnPullEventListener<ListView>() {
-
-			@Override
-			public void onPullEvent(PullToRefreshBase<ListView> refreshView,
-					State state, Mode direction) {
-				// 设置标签显示的内容
-				if (direction == Mode.PULL_FROM_START) {
-					pull_refresh_list.getLoadingLayoutProxy().setPullLabel(getActivity().getResources().getString(R.string.Refreshonstr));
-					pull_refresh_list.getLoadingLayoutProxy().setRefreshingLabel(getActivity().getResources().getString(R.string.Refreshloadingstr));
-					pull_refresh_list.getLoadingLayoutProxy().setReleaseLabel(getActivity().getResources().getString(R.string.Loosentherefresh));
-				} else if (direction == Mode.PULL_FROM_END) {
-					pull_refresh_list.getLoadingLayoutProxy().setPullLabel(getActivity().getResources().getString(R.string.Thedropdownloadstr));
-					pull_refresh_list.getLoadingLayoutProxy().setRefreshingLabel(getActivity().getResources().getString(R.string.RefreshLoadingstr));
-					pull_refresh_list.getLoadingLayoutProxy().setReleaseLabel(getActivity().getResources().getString(R.string.Loosentheloadstr));
-				}
-			}
-		});
+		ToolsUtil.initPullResfresh(pull_refresh_list, getActivity());
 		 
 		pull_refresh_list.setOnRefreshListener(new OnRefreshListener2() {
 
@@ -237,12 +220,7 @@ public class BuyerFragment extends BaseFragment{
 			
 			@Override
 			public void http_Success(Object obj) {
-				pull_refresh_list.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                    	pull_refresh_list.onRefreshComplete();
-                    }
-            }, 100);
+				ToolsUtil.pullResfresh(pull_refresh_list);
 				currPage=page;
 				ishowStatus=false;
 				if(obj!=null)
@@ -295,12 +273,7 @@ public class BuyerFragment extends BaseFragment{
 			@Override
 			public void http_Fails(int error, String msg) {
 				MyApplication.getInstance().showMessage(getActivity(), msg);
-				pull_refresh_list.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                    	pull_refresh_list.onRefreshComplete();
-                    }
-            }, 100);
+				ToolsUtil.pullResfresh(pull_refresh_list);
 			}
 		}, getActivity());
 	}

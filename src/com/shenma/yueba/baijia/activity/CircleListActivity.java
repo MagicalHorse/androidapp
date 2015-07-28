@@ -25,6 +25,7 @@ import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.adapter.BaiJiaMyCircleAdapter;
 import com.shenma.yueba.baijia.modle.MyCircleInfo;
 import com.shenma.yueba.baijia.modle.MyCircleInfoBean;
+import com.shenma.yueba.baijia.modle.RequestBaiJiaOrderListInfoBean;
 import com.shenma.yueba.baijia.modle.RequestMyCircleInfoBean;
 import com.shenma.yueba.baijia.view.MyCircleView;
 import com.shenma.yueba.constants.Constants;
@@ -87,26 +88,7 @@ public class CircleListActivity extends BaseActivityWithTopView{
 		pull_refresh_list=(PullToRefreshListView)view.findViewById(R.id.pull_refresh_list);
 		showloading_layout_view=(LinearLayout)view.findViewById(R.id.showloading_layout_view);
 		pull_refresh_list.setMode(Mode.PULL_FROM_START);
-		 
-		pull_refresh_list.setOnPullEventListener(new OnPullEventListener<ListView>() {
-
-			@Override
-			public void onPullEvent(PullToRefreshBase<ListView> refreshView,
-					State state, Mode direction) {
-				// 设置标签显示的内容
-				if (direction == Mode.PULL_FROM_START) {
-					pull_refresh_list.getLoadingLayoutProxy()
-							.setPullLabel(CircleListActivity.this.getResources().getString(R.string.Refreshonstr));
-					pull_refresh_list.getLoadingLayoutProxy().setRefreshingLabel(CircleListActivity.this.getResources().getString(R.string.Refreshloadingstr));
-					pull_refresh_list.getLoadingLayoutProxy().setReleaseLabel(CircleListActivity.this.getResources().getString(R.string.Loosentherefresh));
-				} else if (direction == Mode.PULL_FROM_END) {
-					pull_refresh_list.getLoadingLayoutProxy().setPullLabel(CircleListActivity.this.getResources().getString(R.string.Thedropdownloadstr));
-					pull_refresh_list.getLoadingLayoutProxy().setRefreshingLabel(CircleListActivity.this.getResources().getString(R.string.RefreshLoadingstr));
-					pull_refresh_list.getLoadingLayoutProxy().setReleaseLabel(CircleListActivity.this.getResources().getString(R.string.Loosentheloadstr));
-				}
-			}
-		});
-		 
+		ToolsUtil.initPullResfresh(pull_refresh_list, CircleListActivity.this);
 		pull_refresh_list.setOnRefreshListener(new OnRefreshListener2() {
 
 			@Override
@@ -149,36 +131,41 @@ public class CircleListActivity extends BaseActivityWithTopView{
 	}
 	
 	
-	void addData(MyCircleInfoBean bean)
+	void addData(RequestMyCircleInfoBean bean)
 	{
 		currPage++;
-		if(bean.getItems()!=null)
+		if(bean.getData()!=null)
 		{
-			items.addAll(bean.getItems());
+			if(bean.getData().getItems()!=null)
+			{
+				items.addAll(bean.getData().getItems());
+			}
 		}
+		
 		showloading_layout_view.setVisibility(View.GONE);
-		myCircleAdapter.notifyDataSetChanged();
-		pull_refresh_list.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-            	pull_refresh_list.onRefreshComplete();
-            }
-    }, 100);
+		if(myCircleAdapter!=null)
+		{
+			myCircleAdapter.notifyDataSetChanged();
+		}
 	}
 	
-	void falshData(MyCircleInfoBean bean)
+	void falshData(RequestMyCircleInfoBean bean)
 	{
 		currPage++;
 		items.clear();
-		if(bean.getItems()!=null)
+		if(bean.getData()!=null)
 		{
-			items.addAll(bean.getItems());
+			if(bean.getData().getItems()!=null)
+			{
+				items.addAll(bean.getData().getItems());
+			}
 		}
+		
 		showloading_layout_view.setVisibility(View.GONE);
-		myCircleAdapter.notifyDataSetChanged();
-		
-		
-		
+		if(myCircleAdapter!=null)
+		{
+			myCircleAdapter.notifyDataSetChanged();
+		}
 	}
 	
 	/******
@@ -188,65 +175,31 @@ public class CircleListActivity extends BaseActivityWithTopView{
 	 * **/
 	void sendHttp(final int page,final int type)
 	{
-		
+		ToolsUtil.showNoDataView(CircleListActivity.this,view,false);
 		httpCntrol.getUserGroups(userID,page, pageSize, showDialog, new HttpCallBackInterface() {
 			
 			@Override
 			public void http_Success(Object obj) {
-				pull_refresh_list.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                    	pull_refresh_list.onRefreshComplete();
-                    }
-            }, 100);
 				showDialog=false;
 				currPage=page;
+				ToolsUtil.pullResfresh(pull_refresh_list);
+				
 				if(obj!=null && obj instanceof RequestMyCircleInfoBean)
 				{
 					RequestMyCircleInfoBean bean=(RequestMyCircleInfoBean)obj;
-					if (bean != null) {
-						if(bean.getData()==null || bean.getData().getItems()==null || bean.getData().getItems().size()==0)
-						{
-							if(page==1)
-							{
-								items.clear();
-								pull_refresh_list.setMode(Mode.PULL_FROM_START);
-								ToolsUtil.showNoDataView(CircleListActivity.this, true);
-							}else
-							{
-								MyApplication.getInstance().showMessage(CircleListActivity.this, CircleListActivity.this.getResources().getString(R.string.lastpagedata_str));
-							}
-						}else
-						{
-							if(page==1)
-							{
-								pull_refresh_list.setMode(Mode.BOTH);
-							}
-							int totalPage = bean.getTotalpaged();
-							if (currPage >= totalPage) {
-								//MyApplication.getInstance().showMessage(CircleListActivity.this, CircleListActivity.this.getResources().getString(R.string.lastpagedata_str));
-								pull_refresh_list.setMode(Mode.BOTH);
-							} else {
-								pull_refresh_list.setMode(Mode.BOTH);
-							}
-							switch (type) {
-							case 0:
-								falshData(bean.getData());
-								break;
-							case 1:
-								addData(bean.getData());
-								break;
-							}
-							
-						}
-						
-					} else {
-						if(page==1)
-						{
-							ToolsUtil.showNoDataView(CircleListActivity.this,view, true);
-						}
-						MyApplication.getInstance().showMessage(CircleListActivity.this, "没有任何数据");
+					switch (type) {
+					case 0:
+						falshData(bean);
+						break;
+					case 1:
+						addData(bean);
+						break;
 					}
+					setPageStatus(bean, page);
+					
+				} else {
+						
+					http_Fails(500, CircleListActivity.this.getResources().getString(R.string.errorpagedata_str));
 				}
 				
 			}
@@ -255,10 +208,24 @@ public class CircleListActivity extends BaseActivityWithTopView{
 			public void http_Fails(int error, String msg) {
 				MyApplication.getInstance().showMessage(CircleListActivity.this, msg);
 				CircleListActivity.this.finish();
+				ToolsUtil.pullResfresh(pull_refresh_list);
 			}
 		},CircleListActivity.this );
 	}
 	
+	
+	void setPageStatus(RequestMyCircleInfoBean data, int page) {
+		if (page == 1 && (data.getData()==null || data.getData().getItems() == null || data.getData().getItems().size()==0)) {
+			pull_refresh_list.setMode(Mode.PULL_FROM_START);
+			ToolsUtil.showNoDataView(CircleListActivity.this,view,true);
+		} else if (page != 1 && (data.getData()==null || data.getData().getItems()== null || data.getData().getItems().size() == 0)) {
+			pull_refresh_list.setMode(Mode.BOTH);
+			MyApplication.getInstance().showMessage(CircleListActivity.this,CircleListActivity.this.getResources().getString(R.string.lastpagedata_str));
+		}else
+		{
+			pull_refresh_list.setMode(Mode.BOTH);
+		}
+	}
 	
 	
 	  @Override

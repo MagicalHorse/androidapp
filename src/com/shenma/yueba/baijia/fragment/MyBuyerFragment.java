@@ -30,6 +30,7 @@ import com.shenma.yueba.baijia.activity.ShopMainActivity;
 import com.shenma.yueba.baijia.adapter.BuyerAdapter;
 import com.shenma.yueba.baijia.modle.BannersInfoBean;
 import com.shenma.yueba.baijia.modle.FragmentBean;
+import com.shenma.yueba.baijia.modle.HomeProductListInfoBean;
 import com.shenma.yueba.baijia.modle.MyHomeProductListInfoBean;
 import com.shenma.yueba.baijia.modle.MyProductListInfoBean;
 import com.shenma.yueba.baijia.modle.MyRequestProductListInfoBean;
@@ -56,7 +57,6 @@ public class MyBuyerFragment extends Fragment {
 	int maxcount = 8;
 	//是否显示进度条
 	boolean ishow=false;
-	List<BannersInfoBean> Banners = new ArrayList<BannersInfoBean>();
 	// 商品信息列表
 	List<ProductsInfoBean> Products = new ArrayList<ProductsInfoBean>();
 	BitmapUtils bitmapUtils;
@@ -92,24 +92,7 @@ public class MyBuyerFragment extends Fragment {
 	void initPullView() {
 		baijia_contact_listview = (PullToRefreshListView)parentview.findViewById(R.id.baijia_contact_listview);
 		baijia_contact_listview.setMode(Mode.BOTH);
-		baijia_contact_listview.setOnPullEventListener(new OnPullEventListener<ListView>() {
-
-			@Override
-			public void onPullEvent(PullToRefreshBase<ListView> refreshView,
-					State state, Mode direction) {
-				
-				// 设置标签显示的内容
-				if (direction == Mode.PULL_FROM_START) {
-					baijia_contact_listview.getLoadingLayoutProxy().setPullLabel(getActivity().getResources().getString(R.string.Refreshonstr));
-					baijia_contact_listview.getLoadingLayoutProxy().setRefreshingLabel(getActivity().getResources().getString(R.string.Refreshloadingstr));
-					baijia_contact_listview.getLoadingLayoutProxy().setReleaseLabel(getActivity().getResources().getString(R.string.Loosentherefresh));
-				} else if (direction == Mode.PULL_FROM_END) {
-					baijia_contact_listview.getLoadingLayoutProxy().setPullLabel(getActivity().getResources().getString(R.string.Thedropdownloadstr));
-					baijia_contact_listview.getLoadingLayoutProxy().setRefreshingLabel(getActivity().getResources().getString(R.string.RefreshLoadingstr));
-					baijia_contact_listview.getLoadingLayoutProxy().setReleaseLabel(getActivity().getResources().getString(R.string.Loosentheloadstr));
-				}
-			}
-		});
+		ToolsUtil.initPullResfresh(baijia_contact_listview, getActivity());
 
 		baijia_contact_listview.setOnRefreshListener(new OnRefreshListener2() {
 
@@ -174,76 +157,67 @@ public class MyBuyerFragment extends Fragment {
 					@Override
 					public void http_Success(Object obj) {
 						ishow=false;
-						baijia_contact_listview.onRefreshComplete();
+						ToolsUtil.pullResfresh(baijia_contact_listview);
 						currpage=page;
 						if (obj != null && obj instanceof MyRequestProductListInfoBean) {
 							MyRequestProductListInfoBean bean = (MyRequestProductListInfoBean) obj;
 							MyHomeProductListInfoBean data = bean.getData();
-							if(data==null || data.getItems()==null || data.getItems().getProducts()==null || data.getItems().getProducts().size()==0)
-							{
-								if(page==1)
-								{
-									Banners.clear();
-									Products.clear();
-									baijia_contact_listview.setMode(Mode.PULL_FROM_START);
-									ToolsUtil.showNoDataView(getActivity(),parentview, true);
-								}else
-								{
-									MyApplication.getInstance().showMessage(getActivity(), getActivity().getResources().getString(R.string.lastpagedata_str));
-								}
-							}else
-							{
-								
-								int totalPage = data.getTotalpaged();
-								if(page==1)
-								{
-									baijia_contact_listview.setMode(Mode.BOTH);
-								}
-								if(currpage>=totalPage)
-								{
-									//MyApplication.getInstance().showMessage(getActivity(), getActivity().getResources().getString(R.string.lastpagedata_str));
-									baijia_contact_listview.setMode(Mode.BOTH);
-								}else
-								{
-									baijia_contact_listview.setMode(Mode.BOTH);
-								}
-								
-								if(page!=1 && (data.getItems().getProducts()==null || data.getItems().getProducts().size()==0))
-								{
-									MyApplication.getInstance().showMessage(getActivity(), getActivity().getResources().getString(R.string.lastpagedata_str));
-								}
-								switch (type) {
-								case 0:
-									falshData(data);
-									break;
-								case 1:
-									addData(data);
-									break;
-								}
+							switch (type) {
+							case 0:
+								falshData(data);
+								break;
+							case 1:
+								addData(data);
+								break;
 							}
+							setPageStatus(data, page);
 						}
 							else {
-								if(page==1)
-								{
-									ToolsUtil.showNoDataView(getActivity(),parentview, true);
-								}
+								http_Fails(500, getActivity().getResources()
+										.getString(R.string.errorpagedata_str));
 							}
                            
 					}
 
 					@Override
 					public void http_Fails(int error, String msg) {
-						baijia_contact_listview.onRefreshComplete();
+						ToolsUtil.pullResfresh(baijia_contact_listview);
 						MyApplication.getInstance().showMessage(getActivity(),msg);
 					}
 				}, getActivity(),ishow,false);
 	}
 
+	
+	
+	
+	void setPageStatus(MyHomeProductListInfoBean data, int page) {
+		if (page == 1
+				&& (data.getItems() == null
+						|| data.getItems().getProducts() == null || data
+						.getItems().getProducts().size() == 0)) {
+			baijia_contact_listview.setMode(Mode.PULL_FROM_START);
+			ToolsUtil.showNoDataView(getActivity(), parentview,true);
+		} else if (page != 1
+				&& (data.getItems().getProducts() == null || data.getItems()
+						.getProducts().size() == 0)) {
+			baijia_contact_listview.setMode(Mode.BOTH);
+			MyApplication.getInstance().showMessage(
+					getActivity(),
+					getActivity().getResources().getString(
+							R.string.lastpagedata_str));
+		} else {
+			baijia_contact_listview.setMode(Mode.BOTH);
+		}
+	}
+	
+	
 	/***
 	 * 加载数据
 	 * **/
 	void addData(MyHomeProductListInfoBean data) {
 		//showloading_layout_view.setVisibility(View.GONE);
+		if(data!=null)
+		{
 		MyProductListInfoBean item = data.getItems();
 		if(item.getProducts()!=null)
 		{
@@ -253,7 +227,12 @@ public class MyBuyerFragment extends Fragment {
 				Products.addAll(item.getProducts());
 			}
 		}
-		buyerAdapter.notifyDataSetChanged();
+		}
+		if(buyerAdapter!=null)
+		{
+			buyerAdapter.notifyDataSetChanged();
+		}
+		
 	}
 
 	/***
@@ -261,10 +240,11 @@ public class MyBuyerFragment extends Fragment {
 	 * ***/
 	void falshData(MyHomeProductListInfoBean data) {
 		//showloading_layout_view.setVisibility(View.GONE);
-		MyProductListInfoBean item = data.getItems();
-		Banners.clear();
 		Products.clear();
-		
+		if(data!=null)
+		{
+		MyProductListInfoBean item = data.getItems();
+			
 		if(item.getProducts()!=null )
 		{
 			if(item.getProducts().size()>0)
@@ -275,7 +255,12 @@ public class MyBuyerFragment extends Fragment {
 		}
 		buyerAdapter=new BuyerAdapter(Products, getActivity());
 		baijia_contact_listview.setAdapter(buyerAdapter);
-		buyerAdapter.notifyDataSetChanged();
+		}
+		if(buyerAdapter!=null)
+		{
+			buyerAdapter.notifyDataSetChanged();
+		}
+		
 	}
 	
 	/*****

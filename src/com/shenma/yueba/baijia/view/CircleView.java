@@ -26,6 +26,7 @@ import com.shenma.yueba.ChatActivity;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.modle.FragmentBean;
+import com.shenma.yueba.baijia.modle.RequestBrandCityWideInfoBean;
 import com.shenma.yueba.baijia.modle.RequestTuiJianCircleInfoBean;
 import com.shenma.yueba.baijia.modle.TuiJianCircleInfo;
 import com.shenma.yueba.baijia.modle.TuiJianCircleInfoBean;
@@ -79,25 +80,7 @@ public class CircleView extends BaseView{
 	{
 		baijia_quanzi_layout_tanb1_gridbview=(PullToRefreshGridView)view.findViewById(R.id.baijia_quanzi_layout_tanb1_gridbview);
 		baijia_quanzi_layout_tanb1_gridbview.setMode(Mode.BOTH);
-		 
-		baijia_quanzi_layout_tanb1_gridbview.setOnPullEventListener(new OnPullEventListener<GridView>() {
-
-			@Override
-			public void onPullEvent(PullToRefreshBase<GridView> refreshView,
-					State state, Mode direction) {
-				
-				// 设置标签显示的内容
-				if (direction == Mode.PULL_FROM_START) {
-					baijia_quanzi_layout_tanb1_gridbview.getLoadingLayoutProxy().setPullLabel(activity.getResources().getString(R.string.Refreshonstr));
-					baijia_quanzi_layout_tanb1_gridbview.getLoadingLayoutProxy().setRefreshingLabel(activity.getResources().getString(R.string.Refreshloadingstr));
-					baijia_quanzi_layout_tanb1_gridbview.getLoadingLayoutProxy().setReleaseLabel(activity.getResources().getString(R.string.Loosentherefresh));
-				} else if (direction == Mode.PULL_FROM_END) {
-					baijia_quanzi_layout_tanb1_gridbview.getLoadingLayoutProxy().setPullLabel(activity.getResources().getString(R.string.Thedropdownloadstr));
-					baijia_quanzi_layout_tanb1_gridbview.getLoadingLayoutProxy().setRefreshingLabel(activity.getResources().getString(R.string.RefreshLoadingstr));
-					baijia_quanzi_layout_tanb1_gridbview.getLoadingLayoutProxy().setReleaseLabel(activity.getResources().getString(R.string.Loosentheloadstr));
-				}
-			}
-		});
+		ToolsUtil.initPullResfresh(baijia_quanzi_layout_tanb1_gridbview, activity);
 		 
 		baijia_quanzi_layout_tanb1_gridbview.setOnRefreshListener(new OnRefreshListener2() {
 
@@ -219,31 +202,42 @@ public class CircleView extends BaseView{
 	}
 	
 	
-	void addData(TuiJianCircleInfoBean bean)
+	void addData(RequestTuiJianCircleInfoBean bean)
 	{
 		showDialog=false;
 		currPage++;
-		if(bean.getItems()!=null)
+		if(bean.getData()!=null)
 		{
-			items.addAll(bean.getItems());
+			if(bean.getData().getItems()!=null)
+			{
+				items.addAll(bean.getData().getItems());
+			}
 		}
 		showloading_layout_view.setVisibility(View.GONE);
-		baseAdapter.notifyDataSetChanged();
-		//ListUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
+		if(baseAdapter!=null)
+		{
+			baseAdapter.notifyDataSetChanged();
+		}
+		
 	}
 	
-	void falshData(TuiJianCircleInfoBean bean)
+	void falshData(RequestTuiJianCircleInfoBean bean)
 	{
 		isFirst=false;
 		currPage++;
 		items.clear();
-		if(bean.getItems()!=null)
+		if(bean.getData()!=null)
 		{
-			items.addAll(bean.getItems());
+			if(bean.getData().getItems()!=null)
+			{
+				items.addAll(bean.getData().getItems());
+			}
 		}
 		showloading_layout_view.setVisibility(View.GONE);
-		baseAdapter.notifyDataSetChanged();
-		
+		if(baseAdapter!=null)
+		{
+			baseAdapter.notifyDataSetChanged();
+		}
 	}
 	
 	
@@ -256,54 +250,23 @@ public class CircleView extends BaseView{
 			public void http_Success(Object obj) {
 				currPage=page;
 				showDialog=false;
-				baijia_quanzi_layout_tanb1_gridbview.onRefreshComplete();
+				ToolsUtil.pullResfresh(baijia_quanzi_layout_tanb1_gridbview);
 				if(obj!=null && obj instanceof RequestTuiJianCircleInfoBean)
 				{
 					RequestTuiJianCircleInfoBean bean=(RequestTuiJianCircleInfoBean)obj;
-					if (bean != null) {
-						if(bean.getData()==null || bean.getData().getItems()==null || bean.getData().getItems().size()==0)
-						   {
-							    if(page==1)
-							    {
-							    	items.clear();
-							    	baijia_quanzi_layout_tanb1_gridbview.setMode(Mode.PULL_FROM_START);
-								    ToolsUtil.showNoDataView(activity,view, true);
-							    }else
-							    {
-							    	MyApplication.getInstance().showMessage(activity, activity.getResources().getString(R.string.lastpagedata_str));
-							    }
-								
-						   }else
-						   {
-							   if(page==1)
-							    {
-							    	baijia_quanzi_layout_tanb1_gridbview.setMode(Mode.BOTH);
-							    }
-							   int totalPage = bean.getTotalpaged();
-								if (currPage >= totalPage) {
-									baijia_quanzi_layout_tanb1_gridbview.setMode(Mode.BOTH);
-									//MyApplication.getInstance().showMessage(activity, activity.getResources().getString(R.string.lastpagedata_str));
-								} else {
-									baijia_quanzi_layout_tanb1_gridbview.setMode(Mode.BOTH);
-								}
-								switch (type) {
-								case 0:
-									falshData(bean.getData());
-									break;
-								case 1:
-									addData(bean.getData());
-									break;
-								}
-						   }
-						
-					} else {
-						if(page==1)
-						{
-							ToolsUtil.showNoDataView(activity, view,true);
-						}
-						MyApplication.getInstance().showMessage(
-								activity, "没有任何数据");
+					switch (type) {
+					case 0:
+						falshData(bean);
+						break;
+					case 1:
+						addData(bean);
+						break;
 					}
+
+					setPageStatus(bean, page);
+				} else {
+					http_Fails(500, activity.getResources()
+							.getString(R.string.errorpagedata_str));
 				}
 				
 			}
@@ -311,10 +274,31 @@ public class CircleView extends BaseView{
 			@Override
 			public void http_Fails(int error, String msg) {
 				MyApplication.getInstance().showMessage(activity, msg);
-				baijia_quanzi_layout_tanb1_gridbview.onRefreshComplete();
+				ToolsUtil.pullResfresh(baijia_quanzi_layout_tanb1_gridbview);
 			}
 		},activity );
 	}
+	
+	
+	
+	void setPageStatus(RequestTuiJianCircleInfoBean data, int page) {
+		if (page == 1 && (data.getData() == null
+						|| data.getData().getItems() == null || data
+						.getData().getItems().size() == 0)) {
+			baijia_quanzi_layout_tanb1_gridbview.setMode(Mode.PULL_FROM_START);
+			ToolsUtil.showNoDataView(activity, view,true);
+		} else if (page != 1
+				&& (data.getData() == null || data.getData().getItems()==null || data.getData().getItems().size() == 0)) {
+			baijia_quanzi_layout_tanb1_gridbview.setMode(Mode.BOTH);
+			MyApplication.getInstance().showMessage(
+					activity,
+					activity.getResources().getString(
+							R.string.lastpagedata_str));
+		} else {
+			baijia_quanzi_layout_tanb1_gridbview.setMode(Mode.BOTH);
+		}
+	}
+	
 	
 	/*****
 	 * 首次加载

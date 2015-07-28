@@ -26,6 +26,7 @@ import com.shenma.yueba.baijia.activity.BaijiaBrandListActivity;
 import com.shenma.yueba.baijia.adapter.ImageTextlAdapter;
 import com.shenma.yueba.baijia.modle.BrandSearchInfo;
 import com.shenma.yueba.baijia.modle.BrandSearchInfoBean;
+import com.shenma.yueba.baijia.modle.RequestBrandInfoBean;
 import com.shenma.yueba.baijia.modle.RequestBrandSearchInfoBean;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.HttpControl;
@@ -94,26 +95,7 @@ public class BrandFragment extends BaseFragment{
 		});
 		
 		pull_refresh_list.setMode(Mode.PULL_FROM_START);
-		 
-		pull_refresh_list.setOnPullEventListener(new OnPullEventListener<ListView>() {
-
-			@Override
-			public void onPullEvent(PullToRefreshBase<ListView> refreshView,
-					State state, Mode direction) {
-				//设置标签显示的内容
-				 
-				// 设置标签显示的内容
-				if (direction == Mode.PULL_FROM_START) {
-					pull_refresh_list.getLoadingLayoutProxy().setPullLabel(getActivity().getResources().getString(R.string.Refreshonstr));
-					pull_refresh_list.getLoadingLayoutProxy().setRefreshingLabel(getActivity().getResources().getString(R.string.Refreshloadingstr));
-					pull_refresh_list.getLoadingLayoutProxy().setReleaseLabel(getActivity().getResources().getString(R.string.Loosentherefresh));
-				} else if (direction == Mode.PULL_FROM_END) {
-					pull_refresh_list.getLoadingLayoutProxy().setPullLabel(getActivity().getResources().getString(R.string.Thedropdownloadstr));
-					pull_refresh_list.getLoadingLayoutProxy().setRefreshingLabel(getActivity().getResources().getString(R.string.RefreshLoadingstr));
-					pull_refresh_list.getLoadingLayoutProxy().setReleaseLabel(getActivity().getResources().getString(R.string.Loosentheloadstr));
-				}
-			}
-		});
+		ToolsUtil.initPullResfresh(pull_refresh_list, getActivity());
 		 
 		pull_refresh_list.setOnRefreshListener(new OnRefreshListener2() {
 
@@ -145,12 +127,7 @@ public class BrandFragment extends BaseFragment{
 		 if(key.equals(""))
 		 {
 			 MyApplication.getInstance().showMessage(getActivity(), "请输入关键字");
-				pull_refresh_list.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                    	pull_refresh_list.onRefreshComplete();
-                    }
-            }, 100);
+			 ToolsUtil.pullResfresh(pull_refresh_list);
 			 return;
 		 }
 		sendHttp(1,currPage, state, key);
@@ -164,7 +141,7 @@ public class BrandFragment extends BaseFragment{
 		if(key.equals(""))
 		 {
 			 MyApplication.getInstance().showMessage(getActivity(), "请输入关键字");
-			 pull_refresh_list.onRefreshComplete();
+			 ToolsUtil.pullResfresh(pull_refresh_list);
 			 return;
 		 }
 		mList.clear();
@@ -174,38 +151,47 @@ public class BrandFragment extends BaseFragment{
 	/***
 	 * 加载更多数据
 	 * **/
-	void addData(List<BrandSearchInfo> item)
+	void addData(RequestBrandSearchInfoBean bean)
 	{
 		ishowStatus=false;
 		currPage++;
-		if(item!=null)
+		if(bean.getData()!=null)
 		{
-			mList.addAll(item);
+			if(bean.getData().getItems()!=null)
+			{
+				mList.addAll(bean.getData().getItems());
+			}
 		}
 		
 		showloading_layout_view.setVisibility(View.GONE);
-		imageTextlAdapter.notifyDataSetChanged();
-		//ListUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
+		if(imageTextlAdapter!=null)
+		{
+			imageTextlAdapter.notifyDataSetChanged();
+		}
+		
 	}
 	
 	/***
 	 * 刷新数据
 	 * **/
-	void falshData(List<BrandSearchInfo> item)
+	void falshData(RequestBrandSearchInfoBean bean)
 	{
 		ishowStatus=false;
 		currPage++;
 		mList.clear();
-		if(item!=null)
+		if(bean.getData()!=null)
 		{
-			mList.addAll(item);
+			if(bean.getData().getItems()!=null)
+			{
+				mList.addAll(bean.getData().getItems());
+			}
 		}
 		
 		showloading_layout_view.setVisibility(View.GONE);
-		imageTextlAdapter.notifyDataSetChanged();
-		
-		//ListUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
-		
+		if(imageTextlAdapter!=null)
+		{
+			imageTextlAdapter.notifyDataSetChanged();
+		}
 		
 	}
 	
@@ -223,72 +209,53 @@ public class BrandFragment extends BaseFragment{
 			
 			@Override
 			public void http_Success(Object obj) {
-				pull_refresh_list.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                    	pull_refresh_list.onRefreshComplete();
-                    }
-            }, 100);
+				ToolsUtil.pullResfresh(pull_refresh_list);
 				currPage=page;
 				ishowStatus=false;
-				if(obj!=null)
+				if(obj!=null &&  obj instanceof RequestBrandSearchInfoBean)
 				{
 					RequestBrandSearchInfoBean bean=(RequestBrandSearchInfoBean)obj;
-					BrandSearchInfoBean brandSearchInfoBean=bean.getData();
-					if(brandSearchInfoBean==null || brandSearchInfoBean.getItems()==null || brandSearchInfoBean.getItems().size()==0)
-					{
-						if(page==1)
-						{
-							pull_refresh_list.setMode(Mode.PULL_FROM_START);
-							ToolsUtil.showNoDataView(getActivity(),view ,true);
-						}else
-						{
-							MyApplication.getInstance().showMessage(getActivity(), getActivity().getResources().getString(R.string.lastpagedata_str));
-						}
-					}else
-					{
-						if(page==1)
-						{
-							pull_refresh_list.setMode(Mode.BOTH);
-						}
-						int totalPage = bean.getData().getTotalpaged();
-						if (currPage >= totalPage) {
-							//MyApplication.getInstance().showMessage(getActivity(), getActivity().getResources().getString(R.string.lastpagedata_str));
-							pull_refresh_list.setMode(Mode.BOTH);
-						} else {
-							pull_refresh_list.setMode(Mode.BOTH);
-						}
-						switch(type)
-						{
-						case 0:
-							falshData(brandSearchInfoBean.getItems());
-							break;
-						case 1:
-							addData(brandSearchInfoBean.getItems());
-							break;
-						}
-						
+					switch (type) {
+					case 0:
+						falshData(bean);
+						break;
+					case 1:
+						addData(bean);
+						break;
 					}
+
+					setPageStatus(bean, page);
 				} else {
-					if(page==1)
-					{
-						ToolsUtil.showNoDataView(getActivity(),view, true);
-					}
-					MyApplication.getInstance().showMessage(getActivity(), "没有任何数据");
+					http_Fails(500, getActivity().getResources()
+							.getString(R.string.errorpagedata_str));
 				}
 			}
 			
 			@Override
 			public void http_Fails(int error, String msg) {
 				MyApplication.getInstance().showMessage(getActivity(), msg);
-				pull_refresh_list.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                    	pull_refresh_list.onRefreshComplete();
-                    }
-            }, 100);
+				ToolsUtil.pullResfresh(pull_refresh_list);
 			}
 		}, getActivity());
+	}
+	
+	
+	void setPageStatus(RequestBrandSearchInfoBean data, int page) {
+		if (page == 1 && (data.getData() == null
+						|| data.getData().getItems() == null || data
+						.getData().getItems().size() == 0)) {
+			pull_refresh_list.setMode(Mode.PULL_FROM_START);
+			ToolsUtil.showNoDataView(getActivity(), view,true);
+		} else if (page != 1
+				&& (data.getData() == null || data.getData().getItems()==null || data.getData().getItems().size() == 0)) {
+			pull_refresh_list.setMode(Mode.BOTH);
+			MyApplication.getInstance().showMessage(
+					getActivity(),
+					getActivity().getResources().getString(
+							R.string.lastpagedata_str));
+		} else {
+			pull_refresh_list.setMode(Mode.BOTH);
+		}
 	}
 	
 	public void searchData(String key)

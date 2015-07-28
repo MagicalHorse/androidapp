@@ -184,7 +184,7 @@ public class SocketManger {
 				if (listener != null) {
 					listener.error(Socket.EVENT_CONNECT_ERROR, arg0);
 				}
-				
+				contentSocket(listener);
 			}
 		});
 
@@ -197,7 +197,7 @@ public class SocketManger {
 				if (listener != null) {
 					listener.error(Socket.EVENT_CONNECT_TIMEOUT, arg0);
 				}
-				
+				contentSocket(listener);
 			}
 		});
 
@@ -313,7 +313,7 @@ public class SocketManger {
 	 * @param owner String 进入者id
 	 * @param bean RoomBean 信息
 	 * ***/
-	public void inroon(String owner,RoomBean bean) {
+	public void inroon(String userId,RoomBean bean) {
 		//Map<String, String> data2=getMap(bean);
 		//Log.i("TAG", new JSONObject(data2).toString());
 		Gson gson=new Gson();
@@ -321,7 +321,7 @@ public class SocketManger {
 		Log.i("TAG", json);
 		try {
 			Log.i("TAG", "---->>>socket inroom");
-			socket.emit("join room", owner, new JSONObject(json), new Ack() {
+			socket.emit("join room", userId, new JSONObject(json), new Ack() {
 
 				@Override
 				public void call(Object... arg0) {
