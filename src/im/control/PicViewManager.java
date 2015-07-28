@@ -2,6 +2,7 @@ package im.control;
 
 import im.form.BaseChatBean;
 import im.form.PicChatBean;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
@@ -133,6 +134,7 @@ public class PicViewManager extends ChatBaseManager implements OnClickListener{
 			{
 				intent.putExtra("IMG_URL", (String)picbean.getContent());
 			    context.startActivity(intent);
+			    ((Activity)context).overridePendingTransition(R.anim.img_scale_in, R.anim.img_scale_out);
 			}
 			
 			break;

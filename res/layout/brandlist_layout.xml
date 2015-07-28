@@ -9,11 +9,12 @@
         layout="@layout/title_for_common"/>
 
     <com.handmark.pulltorefresh.library.PullToRefreshGridView
+        android:padding="@dimen/shop_main_width5_dimen"
         android:layout_below="@id/brandlist_layout_top_include"
         android:id="@+id/brandlist_layout_pullTorefreshgridview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:numColumns="4"
+        android:numColumns="3"
         android:horizontalSpacing="@dimen/shop_main_width5_dimen"
         android:verticalSpacing="@dimen/shop_main_lineheight10_dimen"
         />

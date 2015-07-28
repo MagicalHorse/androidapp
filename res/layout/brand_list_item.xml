@@ -12,6 +12,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
+        android:scaleType="centerCrop"
         android:src="@drawable/default_pic"
         />
     
@@ -23,9 +24,11 @@
         android:orientation="horizontal"
         >
         <ImageView
+            android:padding="2px"
+            android:visibility="invisible"
             android:background="@color/color_lightgrey"
             android:id="@+id/brandlist_item_imageview1"
-            android:scaleType="fitCenter"
+            android:scaleType="centerCrop"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -33,10 +36,12 @@
             />
         
         <ImageView
+            android:padding="2px"
+            android:visibility="invisible"
             android:background="@color/color_lightgrey"
-            android:scaleType="fitCenter"
+            android:scaleType="centerCrop"
             android:id="@+id/brandlist_item_imageview2"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="2px"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -44,10 +49,12 @@
             />
         
         <ImageView
+            android:padding="2px"
+            android:visibility="invisible"
             android:background="@color/color_lightgrey"
-            android:scaleType="fitCenter"
+            android:scaleType="centerCrop"
             android:id="@+id/brandlist_item_imageview3"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="2px"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -55,10 +62,12 @@
             />
         
         <ImageView
+            android:padding="2px"
+            android:visibility="invisible"
             android:background="@color/color_lightgrey"
-            android:scaleType="fitCenter"
+            android:scaleType="centerCrop"
             android:id="@+id/brandlist_item_imageview4"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="2px"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"

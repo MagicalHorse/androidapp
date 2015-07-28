@@ -357,7 +357,7 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView
 				RelativeLayout rl=new RelativeLayout(ApproveBuyerDetailsActivity.this);
 				ImageView iv = new ImageView(ApproveBuyerDetailsActivity.this);
 				iv.setBackgroundColor(ApproveBuyerDetailsActivity.this.getResources().getColor(R.color.color_lightgrey));
-				iv.setScaleType(ScaleType.FIT_XY);
+				iv.setScaleType(ScaleType.CENTER_CROP);
 				rl.addView(iv, new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
 				TagImageView tiv=new TagImageView(ApproveBuyerDetailsActivity.this);
 				//tiv.setBackgroundColor(ApproveBuyerDetailsActivity.this.getResources().getColor(R.color.color_blue));
