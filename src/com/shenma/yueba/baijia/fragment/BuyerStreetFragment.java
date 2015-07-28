@@ -122,26 +122,11 @@ public class BuyerStreetFragment extends Fragment {
 	}
 
 	void initPullView() {
-		baijia_contact_listview = (PullToRefreshListView) parentview.findViewById(R.id.baijia_contact_listview);
+		baijia_contact_listview = (PullToRefreshListView) parentview
+				.findViewById(R.id.baijia_contact_listview);
 		// 设置标签显示的内容
 		baijia_contact_listview.setMode(Mode.PULL_FROM_START);
-		baijia_contact_listview.setOnPullEventListener(new OnPullEventListener<ListView>() {
-
-			@Override
-			public void onPullEvent(PullToRefreshBase<ListView> refreshView,
-					State state, Mode direction) {
-				// 设置标签显示的内容
-				if (direction == Mode.PULL_FROM_START) {
-					baijia_contact_listview.getLoadingLayoutProxy().setPullLabel(getActivity().getResources().getString(R.string.Refreshonstr));
-					baijia_contact_listview.getLoadingLayoutProxy().setRefreshingLabel(getActivity().getResources().getString(R.string.Refreshloadingstr));
-					baijia_contact_listview.getLoadingLayoutProxy().setReleaseLabel(getActivity().getResources().getString(R.string.Loosentherefresh));
-				} else if (direction == Mode.PULL_FROM_END) {
-					baijia_contact_listview.getLoadingLayoutProxy().setPullLabel(getActivity().getResources().getString(R.string.Thedropdownloadstr));
-					baijia_contact_listview.getLoadingLayoutProxy().setRefreshingLabel(getActivity().getResources().getString(R.string.RefreshLoadingstr));
-					baijia_contact_listview.getLoadingLayoutProxy().setReleaseLabel(getActivity().getResources().getString(R.string.Loosentheloadstr));
-				}
-			}
-		});
+		ToolsUtil.initPullResfresh(baijia_contact_listview, getActivity());
 
 		baijia_contact_listview.setOnRefreshListener(new OnRefreshListener2() {
 
@@ -159,24 +144,30 @@ public class BuyerStreetFragment extends Fragment {
 	}
 
 	void initView(View v) {
-		
-		LinearLayout head_ll=(LinearLayout)LinearLayout.inflate(getActivity(), R.layout.main_head_listview_layout, null);
-		
-		AbsListView.LayoutParams layoutParams = new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, AbsListView.LayoutParams.WRAP_CONTENT);     
-		head_ll.setLayoutParams(layoutParams);   
-		ListView lv = baijia_contact_listview.getRefreshableView();   
+
+		LinearLayout head_ll = (LinearLayout) LinearLayout.inflate(
+				getActivity(), R.layout.main_head_listview_layout, null);
+
+		AbsListView.LayoutParams layoutParams = new AbsListView.LayoutParams(
+				AbsListView.LayoutParams.MATCH_PARENT,
+				AbsListView.LayoutParams.WRAP_CONTENT);
+		head_ll.setLayoutParams(layoutParams);
+		ListView lv = baijia_contact_listview.getRefreshableView();
 		lv.addHeaderView(head_ll);
-		
-		
-		
-		baijiasteetfragmnet_layout_head_viewpager_relativelayout = (RelativeLayout) head_ll.findViewById(R.id.baijiasteetfragmnet_layout_head_viewpager_relativelayout);
-		buyersteet_newtextview = (TextView)head_ll.findViewById(R.id.buyersteet_newtextview);
-		baijia_head_layout = (LinearLayout) head_ll.findViewById(R.id.baijia_head_layout);
-		focus_textview = (TextView)v.findViewById(R.id.focus_textview);
-		showloading_layout_view = (LinearLayout)v.findViewById(R.id.showloading_layout_view);
+
+		baijiasteetfragmnet_layout_head_viewpager_relativelayout = (RelativeLayout) head_ll
+				.findViewById(R.id.baijiasteetfragmnet_layout_head_viewpager_relativelayout);
+		buyersteet_newtextview = (TextView) head_ll
+				.findViewById(R.id.buyersteet_newtextview);
+		baijia_head_layout = (LinearLayout) head_ll
+				.findViewById(R.id.baijia_head_layout);
+		focus_textview = (TextView) v.findViewById(R.id.focus_textview);
+		showloading_layout_view = (LinearLayout) v
+				.findViewById(R.id.showloading_layout_view);
 		showloading_layout_view.setVisibility(View.GONE);
-		
-		baijiasteetfragmnet_layout_head_viewpager = (ViewPager) v.findViewById(R.id.baijiasteetfragmnet_layout_head_viewpager);
+
+		baijiasteetfragmnet_layout_head_viewpager = (ViewPager) v
+				.findViewById(R.id.baijiasteetfragmnet_layout_head_viewpager);
 		baijiasteetfragmnet_layout_head_viewpager
 				.setOnPageChangeListener(new OnPageChangeListener() {
 
@@ -197,7 +188,8 @@ public class BuyerStreetFragment extends Fragment {
 					}
 				});
 
-		baijiasteetfragmnet_layout_head_viewpager.setOnTouchListener(new OnTouchListener() {
+		baijiasteetfragmnet_layout_head_viewpager
+				.setOnTouchListener(new OnTouchListener() {
 
 					@Override
 					public boolean onTouch(View v, MotionEvent event) {
@@ -242,81 +234,45 @@ public class BuyerStreetFragment extends Fragment {
 	 *            int 0 刷新 1 加载
 	 * ***/
 	void sendRequestData(final int page, final int type) {
-		ToolsUtil.showNoDataView(getActivity(), false);// 设置隐藏
+		ToolsUtil.showNoDataView(getActivity(),parentview,false);// 设置隐藏
 		Log.i("TAG", "currpage=" + page + "   pagesize=" + pagesize);
-		httpContril.getProduceHomeListData(page, pagesize,new HttpCallBackInterface() {
+		httpContril.getProduceHomeListData(page, pagesize,
+				new HttpCallBackInterface() {
 
 					@Override
 					public void http_Success(Object obj) {
 						currpage = page;
 						ishow = false;
-                        buyersteet_newtextview.setText("最新上新");
-						FontManager.changeFonts(getActivity(),buyersteet_newtextview);
+						buyersteet_newtextview.setText("最新上新");
+						FontManager.changeFonts(getActivity(),
+								buyersteet_newtextview);
 						baijia_contact_listview.setMode(Mode.BOTH);
-						if (obj != null&& obj instanceof RequestProductListInfoBean) {
+						ToolsUtil.pullResfresh(baijia_contact_listview);
+						if (obj != null && obj instanceof RequestProductListInfoBean) {
 							RequestProductListInfoBean bean = (RequestProductListInfoBean) obj;
 							HomeProductListInfoBean data = bean.getData();
-							if(data==null || data.getItems()==null || (data.getItems().getBanners()==null && data.getItems().getProducts()==null) || (data.getItems().getBanners()==null && data.getItems().getProducts().size()==0) || (data.getItems().getBanners().size()==0 && data.getItems().getProducts()==null) || (data.getItems().getBanners().size()==0 && data.getItems().getProducts().size()==0))
-							{
-								if(page==1)
-								{
-									Banners.clear();
-									imageViewlist.clear();
-									Products.clear();
-									baijia_contact_listview.setMode(Mode.PULL_FROM_START);
-									ToolsUtil.showNoDataView(getActivity(), true);
-								}else
-								{
-									MyApplication.getInstance().showMessage(getActivity(), getActivity().getResources().getString(R.string.lastpagedata_str));
-								}
-							}else 
-							{
-								if(page==1)
-								{
-									baijia_contact_listview.setMode(Mode.PULL_FROM_START);
-								}
-								
-								int totalPage = data.getTotalpaged();
-								if (currpage >= totalPage && page!=1) {
-									baijia_contact_listview.setMode(Mode.PULL_FROM_START);
-								} else {
-									baijia_contact_listview.setMode(Mode.BOTH);
-								}
-								if(page!=1 && (data.getItems().getProducts()==null || data.getItems().getProducts().size()==0))
-								{
-									MyApplication.getInstance().showMessage(getActivity(), getActivity().getResources().getString(R.string.lastpagedata_str));
-								}
-								
-								switch (type) {
-								case 0:
-									falshData(data);
-									break;
-								case 1:
-									addData(data);
-									break;
-								}
-							}
-								
-							} else {
-								if (page == 1) {
-									ToolsUtil.showNoDataView(getActivity(),true);
-								}
-								MyApplication.getInstance().showMessage(getActivity(), "没有任何数据");
-								baijia_contact_listview.postDelayed(new Runnable() {
-									
-									@Override
-									public void run() {
-										baijia_contact_listview.onRefreshComplete();
-									}
-								}, 200);
+							switch (type) {
+							case 0:
+								setViewPagerItem(data);
+								falshData(data);
+								break;
+							case 1:
+								addData(data);
+								break;
 							}
 
+							setPageStatus(data, page);
+						} else {
+							http_Fails(500, getActivity().getResources()
+									.getString(R.string.errorpagedata_str));
+						}
 					}
 
 					@Override
 					public void http_Fails(int error, String msg) {
-						baijia_contact_listview.onRefreshComplete();
-						MyApplication.getInstance().showMessage(getActivity(),msg);
+						ToolsUtil.pullResfresh(baijia_contact_listview);
+						MyApplication.getInstance().showMessage(getActivity(),
+								msg);
 					}
 				}, getActivity(), ishow, true);
 	}
@@ -325,98 +281,130 @@ public class BuyerStreetFragment extends Fragment {
 	 * 加载数据
 	 * **/
 	void addData(HomeProductListInfoBean data) {
-		baijia_contact_listview.postDelayed(new Runnable() {
-			
-			@Override
-			public void run() {
-				baijia_contact_listview.onRefreshComplete();
+		if (data != null) {
+
+			showloading_layout_view.setVisibility(View.GONE);
+			ProductListInfoBean item = data.getItems();
+			if (item.getProducts() != null) {
+				if (item.getProducts().size() > 0) {
+					currpage++;
+					Products.addAll(item.getProducts());
+				}
+
 			}
-		}, 1000);
-		showloading_layout_view.setVisibility(View.GONE);
-		ProductListInfoBean item = data.getItems();
-		if (item.getProducts() != null) {
-			if(item.getProducts().size()>0)
-			{
-				currpage++;
-				Products.addAll(item.getProducts());
-			}
-			
 		}
-		buyerAdapter.notifyDataSetChanged();
-		//ListViewUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
-		
-		
+		if (buyerAdapter != null) {
+			buyerAdapter.notifyDataSetChanged();
+		}
+
+		// ListViewUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
+
+	}
+
+	void setPageStatus(HomeProductListInfoBean data, int page) {
+		if (page == 1
+				&& (data.getItems() == null
+						|| data.getItems().getProducts() == null || data
+						.getItems().getProducts().size() == 0)) {
+			baijia_contact_listview.setMode(Mode.PULL_FROM_START);
+			ToolsUtil.showNoDataView(getActivity(),parentview,true);
+		} else if (page != 1
+				&& (data.getItems().getProducts() == null || data.getItems()
+						.getProducts().size() == 0)) {
+			baijia_contact_listview.setMode(Mode.BOTH);
+			MyApplication.getInstance().showMessage(
+					getActivity(),
+					getActivity().getResources().getString(
+							R.string.lastpagedata_str));
+		} else {
+			baijia_contact_listview.setMode(Mode.BOTH);
+		}
 	}
 
 	/***
 	 * 刷新viewpager数据
 	 * ***/
 	void falshData(HomeProductListInfoBean data) {
-		baijia_contact_listview.postDelayed(new Runnable() {
-				
-				@Override
-				public void run() {
-					baijia_contact_listview.onRefreshComplete();
+		Products.clear();
+		if (data != null) {
+
+			ProductListInfoBean item = data.getItems();
+			if (item.getProducts() != null) {
+				if (item.getProducts().size() > 0) {
+					currpage++;
+					Products.addAll(item.getProducts());
 				}
-			}, 1000);
-		 
+			}
+			buyerAdapter = new BuyerAdapter(Products, getActivity());
+			baijia_contact_listview.setAdapter(buyerAdapter);
+		}
+		if (buyerAdapter != null) {
+			buyerAdapter.notifyDataSetChanged();
+		}
+	}
+
+	/******
+	 * 设置顶部活动内容
+	 * ****/
+	void setViewPagerItem(HomeProductListInfoBean data) {
+		stopTimerToViewPager();
 		currid = -1;
-		ProductListInfoBean item = data.getItems();
 		Banners.clear();
 		imageViewlist.clear();
-		Products.clear();
-		// 获取活动列表
-		if (item != null && item.getBanners() != null) {
-			Banners = item.getBanners();
-			for (int i = 0; i < Banners.size(); i++) {
-				ImageView imageView = new ImageView(getActivity());
-				imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT));
-				imageView.setScaleType(ScaleType.FIT_XY);
-				imageView.setTag(Banners.get(i));
-				imageViewlist.add(imageView);
-				initPic(ToolsUtil.nullToString(ToolsUtil.getImage(Banners.get(i).getPic(), 320, 0)), imageView);
-				imageView.setOnClickListener(new OnClickListener() {
+		if (data != null) {
+			ProductListInfoBean item = data.getItems();
 
-					@Override
-					public void onClick(View v) {
-						BannersInfoBean bannersInfoBean = (BannersInfoBean) v
-								.getTag();
-						Intent intent = new Intent(getActivity(),
-								WebActivity.class);
-						intent.putExtra("url", bannersInfoBean.getLink());
-						startActivity(intent);
-					}
-				});
+			// 获取活动列表
+			if (item != null && item.getBanners() != null) {
+				Banners = item.getBanners();
+				for (int i = 0; i < Banners.size(); i++) {
+					ImageView imageView = new ImageView(getActivity());
+					imageView.setLayoutParams(new ViewGroup.LayoutParams(
+							ViewGroup.LayoutParams.MATCH_PARENT,
+							ViewGroup.LayoutParams.MATCH_PARENT));
+					imageView.setScaleType(ScaleType.FIT_XY);
+					imageView.setTag(Banners.get(i));
+					imageViewlist.add(imageView);
+					initPic(ToolsUtil.nullToString(ToolsUtil.getImage(Banners
+							.get(i).getPic(), 320, 0)), imageView);
+					imageView.setOnClickListener(new OnClickListener() {
+
+						@Override
+						public void onClick(View v) {
+							BannersInfoBean bannersInfoBean = (BannersInfoBean) v
+									.getTag();
+							Intent intent = new Intent(getActivity(),
+									WebActivity.class);
+							intent.putExtra("url", bannersInfoBean.getLink());
+							startActivity(intent);
+						}
+					});
+				}
 			}
-		}
-		if (imageViewlist.size() > 0) {
-			DisplayMetrics dm = new DisplayMetrics();
-			getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
-			int width = dm.widthPixels;
-			int height = width / 2;
-			baijiasteetfragmnet_layout_head_viewpager_relativelayout.setLayoutParams(new LinearLayout.LayoutParams(width,height));
-			((RelativeLayout.LayoutParams) baijia_head_layout.getLayoutParams()).bottomMargin = 40;
-			pagerAdapter = new ScrollViewPagerAdapter(getActivity(),imageViewlist);
-			baijiasteetfragmnet_layout_head_viewpager.setAdapter(pagerAdapter);
 			if (imageViewlist.size() > 0) {
-				setcurrItem(0);
+				DisplayMetrics dm = new DisplayMetrics();
+				getActivity().getWindowManager().getDefaultDisplay()
+						.getMetrics(dm);
+				int width = dm.widthPixels;
+				int height = width / 2;
+				baijiasteetfragmnet_layout_head_viewpager_relativelayout
+						.setLayoutParams(new LinearLayout.LayoutParams(width,
+								height));
+				((RelativeLayout.LayoutParams) baijia_head_layout
+						.getLayoutParams()).bottomMargin = 40;
+				pagerAdapter = new ScrollViewPagerAdapter(getActivity(),
+						imageViewlist);
+				baijiasteetfragmnet_layout_head_viewpager
+						.setAdapter(pagerAdapter);
+				if (imageViewlist.size() > 0) {
+					setcurrItem(0);
+				}
+				startTimeToViewPager();
 			}
-			startTimeToViewPager();
 		}
-		if (item.getProducts() != null ) {
-			if(item.getProducts().size()>0)
-			{
-				currpage++;
-				Products.addAll(item.getProducts());
-			}
+		if (pagerAdapter != null) {
+			pagerAdapter.notifyDataSetChanged();
 		}
-		buyerAdapter = new BuyerAdapter(Products, getActivity());
-		baijia_contact_listview.setAdapter(buyerAdapter);
-		// 重新计算listview的高度
-		//ListViewUtils.setListViewHeightBasedOnChildren(baijia_contact_listview);
-		//pulltorefreshscrollview.onRefreshComplete();
-         
-
 	}
 
 	@Override
@@ -485,7 +473,7 @@ public class BuyerStreetFragment extends Fragment {
 			@Override
 			public void run() {
 				currid++;
-				if(getActivity()!=null){
+				if (getActivity() != null) {
 					getActivity().runOnUiThread(new Runnable() {
 						@Override
 						public void run() {

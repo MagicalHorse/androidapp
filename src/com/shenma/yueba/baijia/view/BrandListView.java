@@ -26,6 +26,7 @@ import com.shenma.yueba.baijia.adapter.BrandAdapter;
 import com.shenma.yueba.baijia.modle.BrandInfo;
 import com.shenma.yueba.baijia.modle.BrandInfoBean;
 import com.shenma.yueba.baijia.modle.RequestBrandInfoBean;
+import com.shenma.yueba.baijia.modle.RequestUserDynamicInfoBean;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
@@ -92,26 +93,7 @@ public class BrandListView extends BaseView{
 		});
 		
 		showloading_layout_view=(LinearLayout)view.findViewById(R.id.showloading_layout_view);
-		;
-		 
-		pull_refresh_list.setOnPullEventListener(new OnPullEventListener<ListView>() {
-
-			@Override
-			public void onPullEvent(PullToRefreshBase<ListView> refreshView,
-					State state, Mode direction) {
-				
-				// 设置标签显示的内容
-				if (direction == Mode.PULL_FROM_START) {
-					pull_refresh_list.getLoadingLayoutProxy().setPullLabel(activity.getResources().getString(R.string.Refreshonstr));
-					pull_refresh_list.getLoadingLayoutProxy().setRefreshingLabel(activity.getResources().getString(R.string.Refreshloadingstr));
-					pull_refresh_list.getLoadingLayoutProxy().setReleaseLabel(activity.getResources().getString(R.string.Loosentherefresh));
-				} else if (direction == Mode.PULL_FROM_END) {
-					pull_refresh_list.getLoadingLayoutProxy().setPullLabel(activity.getResources().getString(R.string.Thedropdownloadstr));
-					pull_refresh_list.getLoadingLayoutProxy().setRefreshingLabel(activity.getResources().getString(R.string.RefreshLoadingstr));
-					pull_refresh_list.getLoadingLayoutProxy().setReleaseLabel(activity.getResources().getString(R.string.Loosentheloadstr));
-				}
-			}
-		});
+		ToolsUtil.initPullResfresh(pull_refresh_list, activity);
 		 
 		pull_refresh_list.setOnRefreshListener(new OnRefreshListener2() {
 
@@ -144,28 +126,41 @@ public class BrandListView extends BaseView{
 	}
 	
 	
-	void addData(BrandInfoBean bean)
+	void addData(RequestBrandInfoBean bean)
 	{
 		currPage++;
-		if(bean.getItems()!=null)
+		if(bean.getData()!=null)
 		{
-			items.addAll(bean.getItems());
+			if(bean.getData().getItems()!=null)
+			{
+				items.addAll(bean.getData().getItems());
+			}
 		}
 		showloading_layout_view.setVisibility(View.GONE);
-		brandAdapter.notifyDataSetChanged();
+		if(brandAdapter!=null)
+		{
+			brandAdapter.notifyDataSetChanged();
+		}
+		
 	}
 	
-	void falshData(BrandInfoBean bean)
+	void falshData(RequestBrandInfoBean bean)
 	{
 		isfirst=false;
 		currPage++;
 		items.clear();
-		if(bean.getItems()!=null)
+		if(bean.getData()!=null)
 		{
-			items.addAll(bean.getItems());
+			if(bean.getData().getItems()!=null)
+			{
+				items.addAll(bean.getData().getItems());
+			}
 		}
 		showloading_layout_view.setVisibility(View.GONE);
-		brandAdapter.notifyDataSetChanged();
+		if(brandAdapter!=null)
+		{
+			brandAdapter.notifyDataSetChanged();
+		}
 		
 		
 	}
@@ -181,69 +176,57 @@ public class BrandListView extends BaseView{
 			
 			@Override
 			public void http_Success(Object obj) {
-				pull_refresh_list.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                    	pull_refresh_list.onRefreshComplete();
-                    }
-            }, 100);
+				ToolsUtil.pullResfresh(pull_refresh_list);
 				currPage=page;
 				showDialog=false;
 				if(obj!=null && obj instanceof RequestBrandInfoBean)
 				{
 					RequestBrandInfoBean bean=(RequestBrandInfoBean)obj;
-					if(bean.getData()==null || bean.getData().getItems()==null || bean.getData().getItems().size()==0)
-					{
-						if(page==1)
-						{
-							items.clear();
-							pull_refresh_list.setMode(Mode.PULL_FROM_START);
-							ToolsUtil.showNoDataView(activity,view ,true);
-						}else
-						{
-							MyApplication.getInstance().showMessage(activity, activity.getResources().getString(R.string.lastpagedata_str));
-						}
-					}else 
-					{
-						if(page==1)
-						{
-							pull_refresh_list.setMode(Mode.BOTH);
-						}
-						int totalPage = bean.getData().getTotalpaged();
-						if (currPage >= totalPage) {
-							//MyApplication.getInstance().showMessage(activity, activity.getResources().getString(R.string.lastpagedata_str));
-							pull_refresh_list.setMode(Mode.BOTH);
-						} else {
-							pull_refresh_list.setMode(Mode.BOTH);
-						}
-						switch (type) {
-						case 0:
-							falshData(bean.getData());
-							break;
-						case 1:
-							addData(bean.getData());
-							break;
-						}
-						
+					switch (type) {
+					case 0:
+						falshData(bean);
+						break;
+					case 1:
+						addData(bean);
+						break;
 					}
-					} else {
-						if(page==1)
-						{
-							ToolsUtil.showNoDataView(activity,view, true);
-						}
-						MyApplication.getInstance().showMessage(activity, "没有任何数据");
-					}
+
+					setPageStatus(bean, page);
+				} else {
+					http_Fails(500, activity.getResources()
+							.getString(R.string.errorpagedata_str));
+				}
 				
 			}
 			
 			@Override
 			public void http_Fails(int error, String msg) {
-				pull_refresh_list.onRefreshComplete();
+				ToolsUtil.pullResfresh(pull_refresh_list);
 				MyApplication.getInstance().showMessage(activity, msg);
 			}
 		},activity );
 	}
 
+	
+	void setPageStatus(RequestBrandInfoBean data, int page) {
+		if (page == 1 && (data.getData() == null
+						|| data.getData().getItems() == null || data
+						.getData().getItems().size() == 0)) {
+			pull_refresh_list.setMode(Mode.PULL_FROM_START);
+			ToolsUtil.showNoDataView(activity, view,true);
+		} else if (page != 1
+				&& (data.getData() == null || data.getData().getItems()==null || data.getData().getItems().size() == 0)) {
+			pull_refresh_list.setMode(Mode.BOTH);
+			MyApplication.getInstance().showMessage(
+					activity,
+					activity.getResources().getString(
+							R.string.lastpagedata_str));
+		} else {
+			pull_refresh_list.setMode(Mode.BOTH);
+		}
+	}
+	
+	
 	@Override
 	public void firstInitData() {
 		if(isfirst)

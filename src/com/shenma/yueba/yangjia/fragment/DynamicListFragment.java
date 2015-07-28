@@ -23,6 +23,7 @@ import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.adapter.DynamicAdapter;
 import com.shenma.yueba.baijia.fragment.BaseFragment;
+import com.shenma.yueba.baijia.modle.RequestMsgListInfoBean;
 import com.shenma.yueba.baijia.modle.RequestUserDynamicInfoBean;
 import com.shenma.yueba.baijia.modle.UserDynamicInfo;
 import com.shenma.yueba.constants.Constants;
@@ -95,25 +96,7 @@ public class DynamicListFragment extends BaseFragment {
 				activity.startActivity(intent);*/
 			}
 		});
-		
-		
-		pull_refresh_list.setOnPullEventListener(new OnPullEventListener<ListView>() {
-
-			@Override
-			public void onPullEvent(PullToRefreshBase<ListView> refreshView,
-					State state, Mode direction) {
-				// 设置标签显示的内容
-				if (direction == Mode.PULL_FROM_START) {
-					pull_refresh_list.getLoadingLayoutProxy().setPullLabel(getActivity().getResources().getString(R.string.Refreshonstr));
-					pull_refresh_list.getLoadingLayoutProxy().setRefreshingLabel(getActivity().getResources().getString(R.string.Refreshloadingstr));
-					pull_refresh_list.getLoadingLayoutProxy().setReleaseLabel(getActivity().getResources().getString(R.string.Loosentherefresh));
-				} else if (direction == Mode.PULL_FROM_END) {
-					pull_refresh_list.getLoadingLayoutProxy().setPullLabel(getActivity().getResources().getString(R.string.Thedropdownloadstr));
-					pull_refresh_list.getLoadingLayoutProxy().setRefreshingLabel(getActivity().getResources().getString(R.string.RefreshLoadingstr));
-					pull_refresh_list.getLoadingLayoutProxy().setReleaseLabel(getActivity().getResources().getString(R.string.Loosentheloadstr));
-				}
-			}
-		});
+		ToolsUtil.initPullResfresh(pull_refresh_list, getActivity());
 		 
 		pull_refresh_list.setOnRefreshListener(new OnRefreshListener2() {
 
@@ -174,47 +157,23 @@ public class DynamicListFragment extends BaseFragment {
 				isfirstStatus=false;
 				currpage=page;
 				showDialog=false;
-				pull_refresh_list.onRefreshComplete();
+				ToolsUtil.pullResfresh(pull_refresh_list);
 				if(obj!=null && obj instanceof RequestUserDynamicInfoBean)
 				{
 					RequestUserDynamicInfoBean msgbean=(RequestUserDynamicInfoBean)obj;
-					if(msgbean.getData()==null || msgbean.getData().getItems()==null || msgbean.getData().getItems().size()==0)
-					{
-						if(page==1)
-						{
-							ToolsUtil.showNoDataView(getActivity(), view, true);
-						}
-					}else
-					{
-						if(page==1)
-						   {
-							   pull_refresh_list.setMode(Mode.PULL_FROM_START);
-						   }
-						   
-						   int totalPage = msgbean.getData().getTotalpaged();
+					switch (type) {
+					case 0:
+						falshData(msgbean);
+						break;
+					case 1:
+						addData(msgbean);
+						break;
+					}
 
-							if (currpage >= totalPage) {
-								//MyApplication.getInstance().showMessage(activity, activity.getResources().getString(R.string.lastpagedata_str));
-								pull_refresh_list.setMode(Mode.PULL_FROM_START);
-							} else {
-								pull_refresh_list.setMode(Mode.BOTH);
-							}
-							switch (type) {
-							case 0:
-								falshData(msgbean.getData().getItems());
-								break;
-							case 1:
-								addData(msgbean.getData().getItems());
-								break;
-							}
-						
-					}
+					setPageStatus(msgbean, page);
 				}else {
-					if(page==1)
-					{
-						ToolsUtil.showNoDataView(getActivity(), view,  true);
-					}
-					MyApplication.getInstance().showMessage(getActivity(), "没有任何数据");
+					http_Fails(500, getActivity().getResources()
+							.getString(R.string.errorpagedata_str));
 				}
 			}
 			
@@ -222,33 +181,61 @@ public class DynamicListFragment extends BaseFragment {
 			public void http_Fails(int error, String msg) {
 				isfirstStatus=false;
 				MyApplication.getInstance().showMessage(getActivity(),msg);
-				pull_refresh_list.onRefreshComplete();
+				ToolsUtil.pullResfresh(pull_refresh_list);
 			}
 		}, getActivity());
 	}
 	
 	
+	
+	void setPageStatus(RequestUserDynamicInfoBean data, int page) {
+		if (page == 1 && (data.getData() == null
+						|| data.getData().getItems() == null || data
+						.getData().getItems().size() == 0)) {
+			pull_refresh_list.setMode(Mode.PULL_FROM_START);
+			ToolsUtil.showNoDataView(getActivity(), view,true);
+		} else if (page != 1
+				&& (data.getData() == null || data.getData().getItems()==null || data.getData().getItems().size() == 0)) {
+			pull_refresh_list.setMode(Mode.BOTH);
+			MyApplication.getInstance().showMessage(
+					getActivity(),
+					getActivity().getResources().getString(
+							R.string.lastpagedata_str));
+		} else {
+			pull_refresh_list.setMode(Mode.BOTH);
+		}
+	}
+	
 	/***
 	 * 刷新viewpager数据
 	 * ***/
-	void falshData(List<UserDynamicInfo> msg_list) {
+	void falshData(RequestUserDynamicInfoBean bean) {
 		currpage++;
-		if (mList != null) {
-			mList.clear();
-			mList.addAll(msg_list);
+		mList.clear();
+		showDialog = false;
+		if (bean.getData() != null) {
+			if(bean.getData().getItems()!=null)
+			{
+				mList.addAll(bean.getData().getItems());
+			}
 		}
 		if (msgAdapter != null) {
 			msgAdapter.notifyDataSetChanged();
 		}
-		showDialog = false;
+		
 	}
 
 	/***
 	 * 加载数据
 	 * **/
-	void addData(List<UserDynamicInfo> msg_list) {
-		if (mList != null) {
-			mList.addAll(msg_list);
+	void addData(RequestUserDynamicInfoBean bean) {
+		currpage++;
+		showDialog=false;
+		if (bean.getData() != null) {
+			if(bean.getData().getItems()!=null)
+			{
+				mList.addAll(bean.getData().getItems());
+			}
 		}
 		if (msgAdapter != null) {
 			msgAdapter.notifyDataSetChanged();

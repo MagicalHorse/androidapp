@@ -6,13 +6,10 @@ import java.util.List;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ListView;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnPullEventListener;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.State;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
@@ -101,26 +98,7 @@ public class AttationListActivity extends BaseActivityWithTopView implements Att
 		pull_refresh_list.setMode(Mode.PULL_FROM_START);
 		brandAdapter=new AttationListAdapter(this, mList,status,pull_refresh_list);
 		pull_refresh_list.setAdapter(brandAdapter);
-		pull_refresh_list.setOnPullEventListener(new OnPullEventListener<ListView>() {
-
-					@Override
-					public void onPullEvent(
-							PullToRefreshBase<ListView> refreshView,
-							State state, Mode direction) {
-
-						// 设置标签显示的内容
-						if (direction == Mode.PULL_FROM_START) {
-							pull_refresh_list.getLoadingLayoutProxy()
-									.setPullLabel(AttationListActivity.this.getResources().getString(R.string.Refreshonstr));
-							pull_refresh_list.getLoadingLayoutProxy().setRefreshingLabel(AttationListActivity.this.getResources().getString(R.string.Refreshloadingstr));
-							pull_refresh_list.getLoadingLayoutProxy().setReleaseLabel(AttationListActivity.this.getResources().getString(R.string.Loosentherefresh));
-						} else if (direction == Mode.PULL_FROM_END) {
-							pull_refresh_list.getLoadingLayoutProxy().setPullLabel(AttationListActivity.this.getResources().getString(R.string.Thedropdownloadstr));
-							pull_refresh_list.getLoadingLayoutProxy().setRefreshingLabel(AttationListActivity.this.getResources().getString(R.string.RefreshLoadingstr));
-							pull_refresh_list.getLoadingLayoutProxy().setReleaseLabel(AttationListActivity.this.getResources().getString(R.string.Loosentheloadstr));
-						}
-					}
-				});
+        ToolsUtil.initPullResfresh(pull_refresh_list, AttationListActivity.this);
 
 		pull_refresh_list.setOnRefreshListener(new OnRefreshListener2() {
 
@@ -182,102 +160,91 @@ public class AttationListActivity extends BaseActivityWithTopView implements Att
 			
 			@Override
 			public void http_Success(Object obj) {
-				pull_refresh_list.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                    	pull_refresh_list.onRefreshComplete();
-                    }
-            }, 100);
-			
+				ToolsUtil.pullResfresh(pull_refresh_list);
 				currpage=page;
 				showDialog = false;
-				if (obj != null&& obj instanceof AttationAndFansListBackBean) {
+				if (obj != null&& obj instanceof AttationAndFansListBackBean) 
+				{
 					bean = (AttationAndFansListBackBean) obj;
-					if(bean==null || bean.getData()==null || bean.getData().getItems()==null ||bean.getData().getItems().size()==0)
-					{
-						if(page==1)
-						{
-							mList.clear();
-							pull_refresh_list.setMode(Mode.PULL_FROM_START);
-							ToolsUtil.showNoDataView(AttationListActivity.this,true);
-							brandAdapter.notifyDataSetChanged();
-						}else
-						{
-							MyApplication.getInstance().showMessage(AttationListActivity.this, AttationListActivity.this.getResources().getString(R.string.lastpagedata_str));
-						}
-					}else
-					{
-					   if(page==1)
-					   {
-						   pull_refresh_list.setMode(Mode.BOTH);
-					   }
-					   
-					   int totalPage = Integer.parseInt(bean.getData().getTotalpaged());
-
-						if (currpage >= totalPage) {
-							//MyApplication.getInstance().showMessage(getActivity(), getActivity().getResources().getString(R.string.lastpagedata_str));
-							pull_refresh_list.setMode(Mode.BOTH);
-						} else {
-							pull_refresh_list.setMode(Mode.BOTH);
-						}
-						switch (type) {
-						case 0:
-							falshData(bean.getData().getItems());
-							break;
-						case 1:
-							addData(bean.getData().getItems());
-							break;
-						}
+					switch (type) {
+					case 0:
+						falshData(bean);
+						break;
+					case 1:
+						addData(bean);
+						break;
 					}
+					setPageStatus(bean, page);
+					
+				} else {
+					http_Fails(500, AttationListActivity.this.getResources()
+							.getString(R.string.errorpagedata_str));
+				}	
 
-					} else {
-						if(page==1)
-						{
-							ToolsUtil.showNoDataView(AttationListActivity.this, true);
-						}
-						MyApplication.getInstance().showMessage(AttationListActivity.this, "没有任何数据");
-					}
+					
 
 			}
 			
 			@Override
 			public void http_Fails(int error, String msg) {
 				MyApplication.getInstance().showMessage(AttationListActivity.this,msg);
-				pull_refresh_list.onRefreshComplete();
+				ToolsUtil.pullResfresh(pull_refresh_list);
 			}
 		}, this, showDialog);
+	}
+	
+	
+	void setPageStatus(AttationAndFansListBackBean data, int page) {
+		if (page == 1 && (data.getData() == null
+						|| data.getData().getItems() == null || data
+						.getData().getItems().size() == 0)) {
+			pull_refresh_list.setMode(Mode.PULL_FROM_START);
+			ToolsUtil.showNoDataView(AttationListActivity.this, true);
+		} else if (page != 1
+				&& (data.getData() == null || data.getData().getItems()==null || data.getData().getItems().size() == 0)) {
+			pull_refresh_list.setMode(Mode.BOTH);
+			MyApplication.getInstance().showMessage(
+					AttationListActivity.this,
+					AttationListActivity.this.getResources().getString(
+							R.string.lastpagedata_str));
+		} else {
+			pull_refresh_list.setMode(Mode.BOTH);
+		}
 	}
 	
 	
 	/***
 	 * 刷新viewpager数据
 	 * ***/
-	void falshData(List<AttationAndFansItemBean> bean_list) {
+	void falshData(AttationAndFansListBackBean bean) {
 		currpage++;
-		if (bean == null) {
-			return;
-		}
-		if (bean_list != null) {
-			mList.clear();
-			mList.addAll(bean_list);
+		mList.clear();
+		showDialog = false;
+		if (bean.getData()!= null) {
+			if(bean.getData().getItems()!=null)
+			{
+				mList.addAll(bean.getData().getItems());
+			}
+			
 		}
 		if (brandAdapter != null) {
 			brandAdapter.notifyDataSetChanged();
 		}
-		showDialog = false;
+		
 	}
 
 	/***
 	 * 加载数据
 	 * **/
-	void addData(List<AttationAndFansItemBean> bean_list) {
+	void addData(AttationAndFansListBackBean bean) {
 		showDialog = false;
 		currpage++;
-		if (bean == null) {
-			return;
-		}
-		if (bean_list != null) {
-			mList.addAll(bean_list);
+		if (bean.getData()!= null) {
+			if(bean.getData().getItems()!=null)
+			{
+				mList.addAll(bean.getData().getItems());
+			}
+			
 		}
 		if (brandAdapter != null) {
 			brandAdapter.notifyDataSetChanged();

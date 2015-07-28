@@ -25,6 +25,7 @@ import com.shenma.yueba.baijia.modle.MyFavoriteProductListInfo;
 import com.shenma.yueba.baijia.modle.MyFavoriteProductListInfoBean;
 import com.shenma.yueba.baijia.modle.MyFavoriteProductListLikeUser;
 import com.shenma.yueba.baijia.modle.MyFavoriteProductListPic;
+import com.shenma.yueba.baijia.modle.RequestBrandInfoBean;
 import com.shenma.yueba.baijia.modle.RequestMyFavoriteProductListInfoBean;
 import com.shenma.yueba.baijia.view.PubuliuManager;
 import com.shenma.yueba.constants.Constants;
@@ -124,29 +125,38 @@ public class MyCollectionActivity extends BaseActivityWithTopView{
 	/****
 	 * 添加
 	 * ***/
-	void addData(MyFavoriteProductListInfoBean bean)
+	void addData(RequestMyFavoriteProductListInfoBean bean)
 	{
-		if(bean.getItems()==null || bean.getItems().size()==0)
-		{
-			return;
-		}
 		currPage++;
-		onaddData(bean.getItems());
+		if(bean.getData()!=null)
+		{
+			if(bean.getData().getItems()!=null)
+			{
+				onaddData(bean.getData().getItems());
+			}
+		}
+		
 	}
 	
 	/****
 	 * 刷新
 	 * ***/
-	void falshData(MyFavoriteProductListInfoBean bean)
+	void falshData(RequestMyFavoriteProductListInfoBean bean)
 	{
+		currPage++;
 		pubuliy_right_linearlayout.removeAllViews();
 		pubuliy_left_linearlayout.removeAllViews();
-		if(bean.getItems()==null || bean.getItems().size()==0)
+		leftHeight=0;
+		rightHeight=0;
+		arr_list.clear();
+		if(bean.getData()!=null)
 		{
-			return;
+			if(bean.getData().getItems()!=null)
+			{
+				onResher(bean.getData().getItems());
+			}
 		}
-		currPage++;
-		onResher(bean.getItems());
+		
 	}
 	
         
@@ -170,43 +180,18 @@ public class MyCollectionActivity extends BaseActivityWithTopView{
 				if(obj!=null && obj instanceof RequestMyFavoriteProductListInfoBean)
 				{
 					RequestMyFavoriteProductListInfoBean bean=(RequestMyFavoriteProductListInfoBean)obj;
-					if (bean != null) {
-						if(bean.getData()==null || bean.getData().getItems()==null || bean.getData().getItems().size()==0)
-						{
-							if(page==1)
-							{
-								falshData(bean.getData());
-								shop_main_layout_title_pulltorefreshscrollview.setMode(Mode.PULL_FROM_START);
-								ToolsUtil.showNoDataView(MyCollectionActivity.this, true);
-							}else
-							{
-								MyApplication.getInstance().showMessage(MyCollectionActivity.this, MyCollectionActivity.this.getResources().getString(R.string.lastpagedata_str));
-							}
-						}else
-						{
-							int totalPage = bean.getData().getTotalpaged();
-							if (currPage >= totalPage) {
-								shop_main_layout_title_pulltorefreshscrollview.setMode(Mode.BOTH);
-								//MyApplication.getInstance().showMessage(MyCollectionActivity.this, MyCollectionActivity.this.getResources().getString(R.string.lastpagedata_str));
-							} else {
-								shop_main_layout_title_pulltorefreshscrollview.setMode(Mode.BOTH);
-							}
-							switch (type) {
-							case 0:
-								falshData(bean.getData());
-								break;
-							case 1:
-								addData(bean.getData());
-								break;
-							}
-						}
-					} else {
-						if(page==1)
-						{
-							ToolsUtil.showNoDataView(MyCollectionActivity.this, true);
-						}
-						MyApplication.getInstance().showMessage(MyCollectionActivity.this, "没有任何数据");
+					switch (type) {
+					case 0:
+						falshData(bean);
+						break;
+					case 1:
+						addData(bean);
+						break;
 					}
+					setPageStatus(bean, page);
+				} else {
+					
+					http_Fails(500, MyCollectionActivity.this.getResources().getString(R.string.errorpagedata_str));
 				}
 				
 			}
@@ -236,13 +221,28 @@ public class MyCollectionActivity extends BaseActivityWithTopView{
 	 * ***/
 	public void onResher(List<MyFavoriteProductListInfo> item)
 	{
-		leftHeight=0;
-		rightHeight=0;
-		pubuliy_left_linearlayout.removeAllViews();
-		pubuliy_right_linearlayout.removeAllViews();
-		arr_list.clear();
 		addItem(item);
 	}
+	
+	
+	void setPageStatus(RequestMyFavoriteProductListInfoBean data, int page) {
+		if (page == 1 && (data.getData() == null
+						|| data.getData().getItems() == null || data
+						.getData().getItems().size() == 0)) {
+			shop_main_layout_title_pulltorefreshscrollview.setMode(Mode.PULL_FROM_START);
+			ToolsUtil.showNoDataView(MyCollectionActivity.this, true);
+		} else if (page != 1
+				&& (data.getData() == null || data.getData().getItems()==null || data.getData().getItems().size() == 0)) {
+			shop_main_layout_title_pulltorefreshscrollview.setMode(Mode.BOTH);
+			MyApplication.getInstance().showMessage(
+					MyCollectionActivity.this,
+					MyCollectionActivity.this.getResources().getString(
+							R.string.lastpagedata_str));
+		} else {
+			shop_main_layout_title_pulltorefreshscrollview.setMode(Mode.BOTH);
+		}
+	}
+	
 	
 	
 	/****
@@ -251,7 +251,7 @@ public class MyCollectionActivity extends BaseActivityWithTopView{
 	 * ****/
 	public void onaddData(List<MyFavoriteProductListInfo> item)
 	{
-		addItem(item);
+		addItem(item);		
 	}
 	
 	

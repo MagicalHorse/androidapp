@@ -123,7 +123,6 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 	int circleId;// 圈子id
 	int currPage = Constants.CURRPAGE_VALUE;
 	String roomId = null;
-	String owner;
 	String userName = "";
 	String usericon = "";
 	RequestRoomInfo requestRoomInfo;
@@ -142,8 +141,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 		setContentView(R.layout.activity_chat);
 		SocketManger.the();
 		// 我的 userid
-		formUser_id = Integer.parseInt(SharedUtil.getStringPerfernece(this,
-				SharedUtil.user_id));
+		formUser_id = Integer.parseInt(SharedUtil.getStringPerfernece(this,SharedUtil.user_id));
 		initView();
 		// 设置购买商品信息 视图
 		setProduct();
@@ -200,6 +198,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 					// 获取历史消息
 					getMessage();
 					SocketManger.the().contentSocket(this);
+					
 					inroom();
 				}
 			} else// 否则 如果存在对方id 则获取房间号
@@ -227,7 +226,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 
 			@Override
 			public void onClick(View v) {
-				SocketManger.the().disContentSocket();
+				outRoom();
 				finish();
 			}
 		});
@@ -338,7 +337,6 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		SocketManger.the();
 		SocketManger.the().disContentSocket();
 	}
 
@@ -967,7 +965,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 	void inroom() {
 		// 加入房间
 		RoomBean roomBean = new RoomBean();
-		roomBean.setOwner(owner);
+		roomBean.setOwner(Integer.toString(formUser_id));
 		roomBean.setRoom_id(roomId);
 		//roomBean.setTitle();ssss
 		roomBean.setUserName(userName);
@@ -977,7 +975,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 			userint[i] = int_array.get(i);
 		}
 		roomBean.setUsers(userint);
-		SocketManger.the().inroon(owner, roomBean);
+		SocketManger.the().inroon(Integer.toString(formUser_id), roomBean);
 
 		if (requestRoomInfo != null) {
 			Log.i("TAG", "socketio---->>已经与服务器建立链接");
@@ -1029,7 +1027,6 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 							} else {
 								requestRoomInfo = bean.getData();
 								roomId = bean.getData().getId();
-								owner = bean.getData().getOwner();
 								// 进入房间
 								SocketManger.the().contentSocket(ChatActivity.this);
 								int_array = requestRoomInfo.getUserList();

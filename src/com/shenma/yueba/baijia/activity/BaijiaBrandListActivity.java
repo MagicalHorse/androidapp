@@ -29,6 +29,7 @@ import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.modle.BrandInfoInfo;
 import com.shenma.yueba.baijia.modle.BrandInfoInfoBean;
+import com.shenma.yueba.baijia.modle.RequestBrandInfoBean;
 import com.shenma.yueba.baijia.modle.RequestBrandInfoInfoBean;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.FontManager;
@@ -88,24 +89,7 @@ List<BrandInfoInfo> object_list=new ArrayList<BrandInfoInfo>();
 		brandlist_layout_pullTorefreshgridview=(PullToRefreshGridView)parenetView.findViewById(R.id.brandlist_layout_pullTorefreshgridview);
 		brandlist_layout_pullTorefreshgridview.setMode(Mode.PULL_FROM_START);
 		brandlist_layout_pullTorefreshgridview.setAdapter(baseAdapter);
-		
-		brandlist_layout_pullTorefreshgridview.setOnPullEventListener(new OnPullEventListener<GridView>() {
-
-			@Override
-			public void onPullEvent(PullToRefreshBase<GridView> refreshView,
-					State state, Mode direction) {
-				// 设置标签显示的内容
-				if (direction == Mode.PULL_FROM_START) {
-					brandlist_layout_pullTorefreshgridview.getLoadingLayoutProxy().setPullLabel(BaijiaBrandListActivity.this.getResources().getString(R.string.Refreshonstr));
-					brandlist_layout_pullTorefreshgridview.getLoadingLayoutProxy().setRefreshingLabel(BaijiaBrandListActivity.this.getResources().getString(R.string.Refreshloadingstr));
-					brandlist_layout_pullTorefreshgridview.getLoadingLayoutProxy().setReleaseLabel(BaijiaBrandListActivity.this.getResources().getString(R.string.Loosentherefresh));
-				} else if (direction == Mode.PULL_FROM_END) {
-					brandlist_layout_pullTorefreshgridview.getLoadingLayoutProxy().setPullLabel(BaijiaBrandListActivity.this.getResources().getString(R.string.Thedropdownloadstr));
-					brandlist_layout_pullTorefreshgridview.getLoadingLayoutProxy().setRefreshingLabel(BaijiaBrandListActivity.this.getResources().getString(R.string.RefreshLoadingstr));
-					brandlist_layout_pullTorefreshgridview.getLoadingLayoutProxy().setReleaseLabel(BaijiaBrandListActivity.this.getResources().getString(R.string.Loosentheloadstr));
-				}
-			}
-		});
+		ToolsUtil.initPullResfresh(brandlist_layout_pullTorefreshgridview, BaijiaBrandListActivity.this);
 		 
 		brandlist_layout_pullTorefreshgridview.setOnRefreshListener(new OnRefreshListener2() {
 
@@ -228,85 +212,76 @@ List<BrandInfoInfo> object_list=new ArrayList<BrandInfoInfo>();
 	 * ***/
 	void sendHttp(final int page,final int type)
 	{
-		ToolsUtil.showNoDataView(BaijiaBrandListActivity.this,false);
+		ToolsUtil.showNoDataView(BaijiaBrandListActivity.this,parenetView,false);
 		httpControl.getBaijiaBrandDetails(page, pageSize, BrandId, showDialog, new HttpCallBackInterface() {
 			
 			@Override
 			public void http_Success(Object obj) {
-				brandlist_layout_pullTorefreshgridview.onRefreshComplete();
+				ToolsUtil.pullResfresh(brandlist_layout_pullTorefreshgridview);
 				currPage=page;
 				showDialog=false;
 				if(obj!=null)
 				{
 					RequestBrandInfoInfoBean bean=(RequestBrandInfoInfoBean)obj;
-					BrandInfoInfoBean brandInfoInfoBean=bean.getData();
-					if(brandInfoInfoBean==null || brandInfoInfoBean.getItems()==null || brandInfoInfoBean.getItems().size()==0)
-					{
-						if(page==1)
-						{
-							object_list.clear();
-							brandlist_layout_pullTorefreshgridview.setMode(Mode.PULL_FROM_START);
-							ToolsUtil.showNoDataView(BaijiaBrandListActivity.this ,true);
-						}else
-						{
-							MyApplication.getInstance().showMessage(BaijiaBrandListActivity.this, BaijiaBrandListActivity.this.getResources().getString(R.string.lastpagedata_str));
-						}
-					}else
-					{
-						if(page==1)
-						{
-							brandlist_layout_pullTorefreshgridview.setMode(Mode.BOTH);
-						}
-						int totalPage = bean.getData().getTotalpaged();
-						if (currPage >= totalPage) {
-							//MyApplication.getInstance().showMessage(getActivity(), getActivity().getResources().getString(R.string.lastpagedata_str));
-							brandlist_layout_pullTorefreshgridview.setMode(Mode.BOTH);
-						} else {
-							brandlist_layout_pullTorefreshgridview.setMode(Mode.BOTH);
-						}
-						switch(type)
-						{
-						case 0:
-							falshData(brandInfoInfoBean.getItems());
-							break;
-						case 1:
-							addData(brandInfoInfoBean.getItems());
-							break;
-						}
-						
+					switch (type) {
+					case 0:
+						falshData(bean);
+						break;
+					case 1:
+						addData(bean);
+						break;
 					}
+					setPageStatus(bean, page);
+					
 				} else {
-					if(page==1)
-					{
-						ToolsUtil.showNoDataView(BaijiaBrandListActivity.this, true);
-					}
-					MyApplication.getInstance().showMessage(BaijiaBrandListActivity.this, "没有任何数据");
+					http_Fails(500, BaijiaBrandListActivity.this.getResources()
+							.getString(R.string.errorpagedata_str));
 				}
 			}
 			
 			@Override
 			public void http_Fails(int error, String msg) {
 				MyApplication.getInstance().showMessage(BaijiaBrandListActivity.this, msg);
-				brandlist_layout_pullTorefreshgridview.onRefreshComplete();
+				ToolsUtil.pullResfresh(brandlist_layout_pullTorefreshgridview);
 			}
 		}, BaijiaBrandListActivity.this);
 	}
 	
+	
+	void setPageStatus(RequestBrandInfoInfoBean data, int page) {
+		if (page == 1 && (data.getData() == null
+						|| data.getData().getItems() == null || data
+						.getData().getItems().size() == 0)) {
+			brandlist_layout_pullTorefreshgridview.setMode(Mode.PULL_FROM_START);
+			ToolsUtil.showNoDataView(BaijiaBrandListActivity.this, parenetView,true);
+		} else if (page != 1
+				&& (data.getData() == null || data.getData().getItems()==null || data.getData().getItems().size() == 0)) {
+			brandlist_layout_pullTorefreshgridview.setMode(Mode.BOTH);
+			MyApplication.getInstance().showMessage(
+					BaijiaBrandListActivity.this,
+					BaijiaBrandListActivity.this.getResources().getString(
+							R.string.lastpagedata_str));
+		} else {
+			brandlist_layout_pullTorefreshgridview.setMode(Mode.BOTH);
+		}
+	}
+	
+	
+	
 	/***
 	 * 刷新viewpager数据
 	 * ***/
-	void falshData(List<BrandInfoInfo> bean) {
+	void falshData(RequestBrandInfoInfoBean bean) {
 		currPage++;
-		if(bean==null)
+		object_list.clear();
+		if(bean.getData()!=null)
 		{
-			return;
+			if(bean.getData().getItems()!=null)
+			{
+				object_list.addAll(bean.getData().getItems());
+			}
+			
 		}
-		if(bean!=null)
-		{
-			object_list.clear();
-			object_list.addAll(bean);
-		}
-		brandlist_layout_pullTorefreshgridview.onRefreshComplete();
 		if(baseAdapter!=null)
 		{
 			baseAdapter.notifyDataSetChanged();
@@ -318,18 +293,16 @@ List<BrandInfoInfo> object_list=new ArrayList<BrandInfoInfo>();
 	/***
 	 * 加载数据
 	 * **/
-	void addData(List<BrandInfoInfo> bean) {
+	void addData(RequestBrandInfoInfoBean bean) {
 		currPage++;
-		if(bean==null)
+		if(bean.getData()!=null)
 		{
-			return;
+			if(bean.getData().getItems()!=null)
+			{
+				object_list.addAll(bean.getData().getItems());
+			}
+			
 		}
-		if(bean!=null)
-		{
-			object_list.addAll(bean);
-		}
-		brandlist_layout_pullTorefreshgridview.onRefreshComplete();
-		object_list.add(null);
 		if(baseAdapter!=null)
 		{
 			baseAdapter.notifyDataSetChanged();

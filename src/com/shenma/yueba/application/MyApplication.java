@@ -82,6 +82,7 @@ public class MyApplication extends Application {
 		initJpush();
 		dbHelper = RoboGuice.getBaseApplicationInjector(this).getInstance(
 				DBHelper.class);
+		socketManger.the().contentSocket(null);
 	}
 
 	
