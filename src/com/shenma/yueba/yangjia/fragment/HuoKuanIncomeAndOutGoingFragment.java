@@ -214,7 +214,7 @@ public class HuoKuanIncomeAndOutGoingFragment extends BaseFragment implements On
 				rlv.onRefreshComplete();
 				Toast.makeText(getActivity(), msg, 1000).show();
 			}
-		}, getActivity(), true, false);
+		}, ctx, true, false);
 	}
 
 	
