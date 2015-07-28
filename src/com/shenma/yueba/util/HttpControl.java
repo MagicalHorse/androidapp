@@ -3,8 +3,10 @@ package com.shenma.yueba.util;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -1914,9 +1916,14 @@ public class HttpControl {
 				map.put(Constants.HTTPCHANNEL, Constants.ANDROID);
 				map.put(Constants.CLIENTVERSION, versionName);
 				map.put(Constants.UUID, UUID.randomUUID().toString());
-				map.put(Constants.TOKEN, SharedUtil.getStringPerfernece(
-						context, SharedUtil.user_token));
+				map.put(Constants.TOKEN, SharedUtil.getStringPerfernece(context, SharedUtil.user_token));
 				String md5str = Md5Utils.md5ToString(map, json);
+				try {
+					map.put(Constants.TOKEN, URLEncoder.encode(SharedUtil.getStringPerfernece(context, SharedUtil.user_token), "utf-8"));
+				} catch (UnsupportedEncodingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				map.put(Constants.SIGN, md5str);
 				Set<String> set = map.keySet();
 				if (set != null && set.size() > 0) {
@@ -2146,7 +2153,9 @@ public class HttpControl {
 	<T> void httpSendToJson(final String json, final Map<String, String> map,
 			final Context context, String method,
 			final HttpRequestDataInterface httpRequestDataInterface) {
-		method = method + "?" + setBaseRequestJsonParams(map, context, json);
+		
+			method = method + "?" +setBaseRequestJsonParams(map, context, json);
+		
 		sendHttpJson(method, json, httpRequestDataInterface);
 	}
 		
