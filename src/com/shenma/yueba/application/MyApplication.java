@@ -40,6 +40,7 @@ import com.shenma.yueba.baijia.activity.LoginAndRegisterActivity;
 import com.shenma.yueba.baijia.modle.UserRequestBean;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.db.DBHelper;
+import com.shenma.yueba.util.LocationUtil;
 import com.shenma.yueba.util.PublishPicUtil;
 import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.util.ToolsUtil;
@@ -83,8 +84,20 @@ public class MyApplication extends Application {
 		dbHelper = RoboGuice.getBaseApplicationInjector(this).getInstance(
 				DBHelper.class);
 		socketManger.the().contentSocket(null);
+		LocationUtil locationUtil = new LocationUtil(this);
+		locationUtil.getLocation();
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	public PublishPicUtil getPublishUtil(){
