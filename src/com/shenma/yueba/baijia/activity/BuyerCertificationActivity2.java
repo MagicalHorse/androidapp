@@ -366,12 +366,14 @@ public class BuyerCertificationActivity2 extends BaseActivityWithTopView
 	}
 
 	private void uploadData() {
+		tv_confirm.setEnabled(false);
 		setData();
 		HttpControl httpControl = new HttpControl();
 		httpControl.getAppliyAuthBuyer(bean, new HttpCallBackInterface() {
 
 			@Override
 			public void http_Success(Object obj) {
+				tv_confirm.setEnabled(true);
 				SharedUtil.setStringPerfernece(mContext, SharedUtil.user_AuditStatus, "0");
 				
 				Intent intent = new Intent(mContext, ApplyResultActivity.class);
@@ -384,6 +386,7 @@ public class BuyerCertificationActivity2 extends BaseActivityWithTopView
 
 			@Override
 			public void http_Fails(int error, String msg) {
+				tv_confirm.setEnabled(true);
                  MyApplication.getInstance().showMessage(BuyerCertificationActivity2.this, msg);
 			}
 		}, BuyerCertificationActivity2.this);

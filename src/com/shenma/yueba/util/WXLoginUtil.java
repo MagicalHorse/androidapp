@@ -109,6 +109,7 @@ public class WXLoginUtil {
 												public void run() {
 													if(isLogin){//微信登录
 														wxLogin(sb);
+														Log.i("wechat",sb.toString());
 													}else{//微信绑定
 														bindWeChat(sb);
 													}

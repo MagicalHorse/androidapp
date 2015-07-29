@@ -168,7 +168,7 @@ public class ProductManagerActivity extends BaseFragmentActivity implements
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent arg2) {
-		if(requestCode == 100 && resultCode == 101){
+		if(requestCode == 100){
 			if(index == 0){
 				productManagerFragmentForOnLine.getProductListForOnLine(true, 1, ProductManagerActivity.this, 1);//获取在线商品
 			}else if(index == 1){

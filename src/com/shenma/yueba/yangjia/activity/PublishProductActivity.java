@@ -88,6 +88,7 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 	private int maxSize = 100;
 	private boolean onePicLoadFinished, twoPicLoadFinished, ThreePicFinished;
 	private String productId;
+	private String from;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +101,7 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 	}
 
 	private void getIntentData() {
+		from = getIntent().getStringExtra("from");
 		TagListBean bean = (TagListBean) getIntent().getSerializableExtra(
 				"tagListBean");
 		RequestUploadProductDataBean detailBean = (RequestUploadProductDataBean) getIntent()
@@ -136,9 +138,11 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 		
 		// 修改商品
 		if (detailBean != null) {
-			FileUtils.delAllFile(FileUtils.getRootPath() + "/tagPic/");
-			MyApplication.getInstance().getPublishUtil().setBean(detailBean);
-			MyApplication.getInstance().getPublishUtil().getBean().setId(productId);
+			if("editPic".equals(from)){
+				
+			}else if("productManager".equals(from)){
+				FileUtils.delAllFile(FileUtils.getRootPath() + "/tagPic/");
+			}
 			List<ProductImagesBean> imagesList = MyApplication.getInstance()
 					.getPublishUtil().getBean().getImages();
 			if (imagesList != null && imagesList.size() > 0) {
@@ -147,6 +151,8 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 					saveBitmapToFile(0, imageUrl);
 				}
 			}
+			MyApplication.getInstance().getPublishUtil().setBean(detailBean);
+			MyApplication.getInstance().getPublishUtil().getBean().setId(productId);
 			et_product_number.setText(ToolsUtil.nullToString(MyApplication.getInstance().getPublishUtil().getBean().getSku_Code()));
 			et_price.setText(ToolsUtil.nullToString(MyApplication.getInstance().getPublishUtil().getBean().getPrice()));
 			et_introduce.setText(ToolsUtil.nullToString(MyApplication.getInstance().getPublishUtil().getBean().getDesc()));
@@ -463,6 +469,7 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 			ll_guige_container.addView(view);
 			break;
 		case R.id.tv_publish:// 发布商品
+			MyApplication.getInstance().getPublishUtil().getBean().setImages(null);
 			uploadImage();
 			break;
 		default:
@@ -609,6 +616,8 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 							+ "1.png").exists()) {
 						String imageName2 = pic2.substring(
 								pic2.lastIndexOf("/") + 1, pic2.length());
+						List<ProductImagesBean> aa = MyApplication.getInstance().getPublishUtil().getBean()
+								.getImages();
 						MyApplication.getInstance().getPublishUtil().getBean()
 								.getImages().get(1).setImageUrl(imageName2);
 					}
@@ -652,79 +661,77 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 	private void saveBitmapToFile(final int index, String imageUrl) {
 		File dir = new File(FileUtils.getRootPath() + "/tagPic/");
 		if (!dir.exists()) {
-			if (!dir.exists())
 				dir.mkdirs();
 		}
 		File file = new File(dir, "tagPic" + SharedUtil.getUserId(mContext)
 				+ index + ".png");
 		File file2 = new File(dir, "tagPic_yuan" + SharedUtil.getUserId(mContext)
 				+ index + ".png");
-		 if (file.exists()) {
-		 file.delete();
+		 if(!file.exists() && !file2.exists()){
+			 try {
+					final FileOutputStream out = new FileOutputStream(file);
+					final FileOutputStream out2 = new FileOutputStream(file2);
+					
+					MyApplication.getInstance().getImageLoader()
+							.loadImage(imageUrl, new ImageLoadingListener() {
+								@Override
+								public void onLoadingStarted(String arg0, View arg1) {
+
+								}
+
+								@Override
+								public void onLoadingFailed(String arg0, View arg1,
+										FailReason arg2) {
+
+								}
+
+								@Override
+								public void onLoadingComplete(String arg0, View arg1,
+										Bitmap bitmap) {
+									try {
+										bitmap.compress(Bitmap.CompressFormat.PNG, 100,
+												out);
+										out.flush();
+										out.close();
+										
+										bitmap.compress(Bitmap.CompressFormat.PNG, 100,
+												out2);
+										out2.flush();
+										out2.close();
+									} catch (Exception e) {
+										// TODO: handle exception
+									}
+
+									if (index < MyApplication.getInstance()
+											.getPublishUtil().getBean().getImages()
+											.size()-1) {
+										saveBitmapToFile(index + 1, MyApplication
+												.getInstance().getPublishUtil()
+												.getBean().getImages().get(index+1)
+												.getImageUrl());
+									} else {
+										setImageView();
+									}
+
+								}
+
+								@Override
+								public void onLoadingCancelled(String arg0, View arg1) {
+
+								}
+							});
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+		 }else{
+			 setImageView();
 		 }
-		 if (file2.exists()) {
-			 file2.delete();
-			 }
-		try {
-			final FileOutputStream out = new FileOutputStream(file);
-			final FileOutputStream out2 = new FileOutputStream(file2);
-			
-			MyApplication.getInstance().getImageLoader()
-					.loadImage(imageUrl, new ImageLoadingListener() {
-						@Override
-						public void onLoadingStarted(String arg0, View arg1) {
-
-						}
-
-						@Override
-						public void onLoadingFailed(String arg0, View arg1,
-								FailReason arg2) {
-
-						}
-
-						@Override
-						public void onLoadingComplete(String arg0, View arg1,
-								Bitmap bitmap) {
-							try {
-								bitmap.compress(Bitmap.CompressFormat.PNG, 100,
-										out);
-								out.flush();
-								out.close();
-								
-								bitmap.compress(Bitmap.CompressFormat.PNG, 100,
-										out2);
-								out2.flush();
-								out2.close();
-							} catch (Exception e) {
-								// TODO: handle exception
-							}
-
-							if (index < MyApplication.getInstance()
-									.getPublishUtil().getBean().getImages()
-									.size()-1) {
-								saveBitmapToFile(index + 1, MyApplication
-										.getInstance().getPublishUtil()
-										.getBean().getImages().get(index+1)
-										.getImageUrl());
-							} else {
-								setImageView();
-							}
-
-						}
-
-						@Override
-						public void onLoadingCancelled(String arg0, View arg1) {
-
-						}
-					});
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+		
 	}
 	
 	@Override

@@ -82,6 +82,7 @@ public class BuyerCertificationActivity1 extends BaseActivityWithTopView
 		initView();
 	}
 
+	
 	private void initView() {
 		setTitle("身份认证材料");
 		setLeftTextView(new OnClickListener() {
@@ -274,7 +275,7 @@ public class BuyerCertificationActivity1 extends BaseActivityWithTopView
 			progressDialog.show();
 		}
 		HttpControl httpControl = new HttpControl();
-		httpControl.syncUpload(pic1, new SaveCallback() {
+		httpControl.syncUpload(imagePath, new SaveCallback() {
 
 			@Override
 			public void onProgress(String arg0, int arg1, int arg2) {

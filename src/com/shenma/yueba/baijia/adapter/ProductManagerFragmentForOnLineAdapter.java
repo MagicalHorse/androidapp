@@ -192,6 +192,7 @@ public class ProductManagerFragmentForOnLineAdapter extends BaseAdapterWithUtil 
 					Log.i("position", position + "--------");
 					Intent intent = new Intent(ctx,
 							PublishProductActivity.class);
+					intent.putExtra("from", "productManager");
 					intent.putExtra("id", mList.get(position).getProductId());
 					intent.putExtra("data", mList.get(position).getDetail());
 					((Activity)ctx).startActivityForResult(intent, 100);
