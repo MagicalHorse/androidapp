@@ -118,7 +118,7 @@ public class FindPasswordActivity extends BaseActivityWithTopView implements
 				return;
 			}
 			HttpControl hControl = new HttpControl();
-			hControl.sendPhoeCode(phone, "1", new HttpCallBackInterface() {
+			hControl.sendPhoeCode(phone, "bindPhone".equals(from)?"2":"1", new HttpCallBackInterface() {
 
 				@Override
 				public void http_Success(Object obj) {
