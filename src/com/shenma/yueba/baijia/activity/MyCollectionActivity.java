@@ -42,6 +42,7 @@ import com.umeng.socialize.utils.Log;
  * @version 创建时间：2015-5-20 上午11:14:57  
  * 程序的简单说明  
  */
+
 public class MyCollectionActivity extends BaseActivityWithTopView{
     HttpControl httpCntrol=new HttpControl();
     int currPage=Constants.CURRPAGE_VALUE;
