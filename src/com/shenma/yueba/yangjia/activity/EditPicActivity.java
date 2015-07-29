@@ -211,6 +211,7 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 			TagListBean resultBean = new TagListBean();
 			resultBean.setTagList(setUploadTagInfoToStanderStyle());//将要提交的标签信息转化成需要的格式
 			Intent intent = new Intent(mContext, PublishProductActivity.class);
+			intent.putExtra("from", "editPic");
 			intent.putExtra("tagListBean", resultBean);
 			startActivity(intent);
 			break;
