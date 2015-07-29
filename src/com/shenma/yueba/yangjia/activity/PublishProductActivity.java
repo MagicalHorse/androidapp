@@ -469,7 +469,7 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 			ll_guige_container.addView(view);
 			break;
 		case R.id.tv_publish:// 发布商品
-			MyApplication.getInstance().getPublishUtil().getBean().setImages(null);
+//			MyApplication.getInstance().getPublishUtil().getBean().setImages(null);
 			uploadImage();
 			break;
 		default:

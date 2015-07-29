@@ -151,7 +151,7 @@ public class TagImageView extends RelativeLayout {
 			layout.setTag(i++);
 //			setTagViewOnTouchListener(layout);
 			this.addView(layout);
-			setTagViewPosition(layout, tagX, tagY);
+			setTagViewPositionNoMove(layout, tagX, tagY);
 			tagViewList.add(layout);
 			Map<String, Integer> tagsPositonMap = new HashMap<String, Integer>();
 			tagsPositonMap.put("x", tagX);
@@ -274,6 +274,57 @@ public class TagImageView extends RelativeLayout {
 	}
 
 	
+	
+	/**
+	 * 
+	 * 设置标签的位置
+	 * 
+	 * @version 1.0
+	 * @createTime 2015-1-30,上午11:49:33
+	 * @updateTime 2015-1-30,上午11:49:33
+	 * @createAuthor zhou wan
+	 * @updateAuthor
+	 * @updateInfo
+	 * @param v
+	 * @param dx
+	 *            x方向移动距离
+	 * @param dy
+	 *            y方向移动的距离
+	 */
+	private void setTagViewPositionNoMove(View tagView, int dx, int dy) {
+		
+		
+		xx = dx;
+		yy = dy;
+		
+		
+		int parentWidth = ToolsUtil.getDisplayWidth(context);
+		int parentHeight = parentWidth;
+
+		int left = tagView.getLeft() + dx;
+		int top = tagView.getTop() + dy;
+
+		if (left < 0) {
+			left = 0;
+		} else if ((left + tagView.getWidth()) >= parentWidth) {
+			left = parentWidth - tagView.getWidth();
+		}
+		if (top < 0) {
+			top = 0;
+		} else if ((top + tagView.getHeight()) >= parentHeight) {
+			top = parentHeight - tagView.getHeight();
+		}
+		int right = left + tagView.getWidth();
+		int bottom = top + tagView.getHeight();
+		tagView.layout(left, top, right, bottom);
+		
+		
+		RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) tagView.getLayoutParams();
+		params.leftMargin = left;
+		params.topMargin = top;
+		tagView.setLayoutParams(params);
+	}
+
 	
 	public void clearViewList(){
 		if(tagViewList!=null){
