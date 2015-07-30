@@ -37,6 +37,7 @@ import com.shenma.yueba.baijia.modle.ApplyAuthBuyerBean;
 import com.shenma.yueba.baijia.modle.BaseRequest;
 import com.shenma.yueba.baijia.modle.BrandDetailInfoBean;
 import com.shenma.yueba.baijia.modle.BuyerIndexInfoBean;
+import com.shenma.yueba.baijia.modle.CheckVersionBackBean;
 import com.shenma.yueba.baijia.modle.CityListBackBean;
 import com.shenma.yueba.baijia.modle.CityListRequestBean;
 import com.shenma.yueba.baijia.modle.HuoKuanManagerBackBean;
@@ -215,6 +216,29 @@ public class HttpControl {
 				httpCallBack, CityListRequestBean.class, true, false);
 	}
 
+	
+
+	/**
+	 * 版本检查更新
+	 * 
+	 * @param httpCallBack
+	 *            HttpCallBackInterface 回调接口
+	 * @param context
+	 *            Context
+	 * @return void
+	 * **/
+	public void checkVersion(final HttpCallBackInterface httpCallBack,
+			Context context) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put(Constants.TYPE,"0");//0表示android 1表示IOS
+		BasehttpSend(map, context, HttpConstants.METHOD_VERSION_UPDATE,
+				httpCallBack, CheckVersionBackBean.class, true, false);
+	}
+
+	
+	
+	
+	
 	/**
 	 * 获取阿里云key
 	 * 
