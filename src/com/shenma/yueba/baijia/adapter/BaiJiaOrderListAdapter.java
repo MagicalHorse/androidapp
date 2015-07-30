@@ -94,7 +94,7 @@ public class BaiJiaOrderListAdapter extends BaseAdapter {
 					.findViewById(R.id.baijia_orderlayout_item_price_textview);
 			holder.baijia_orderdetails_lianxibuyer_textview = (TextView) arg1
 					.findViewById(R.id.baijia_orderdetails_lianxibuyer_textview);
-
+			holder.baijia_orderlayout_item_price_textview.setText("实付:");
 			holder.baijiaorder_layout_item_status=(LinearLayout)arg1.findViewById(R.id.baijiaorder_layout_item_status);
 			arg1.setTag(holder);
 		} else {
@@ -175,13 +175,11 @@ public class BaiJiaOrderListAdapter extends BaseAdapter {
 				.nullToString(prodcutName));
 		holder.affirmorder_item_productsize_textview.setText(ToolsUtil
 				.nullToString(productDesc));
-		holder.affirmorder_item_productcount_textview.setText("x"
-				+ procuctCount);
-		holder.affirmorder_item_productprice_textview.setText("x"
-				+ productPrice);
+		holder.affirmorder_item_productcount_textview.setText("x"+ procuctCount);
+		holder.affirmorder_item_productprice_textview.setText("￥"+ productPrice);
 		holder.baijia_orderdetails_lianxibuyer_textview.setText(ToolsUtil
 				.nullToString(productAddress));
-		holder.baijia_orderlayout_item_pricevalue_textview.setText(allPrice + "");
+		holder.baijia_orderlayout_item_pricevalue_textview.setText("￥"+allPrice);
 		holder.affirmorder_item_icon_imageview
 				.setImageResource(R.drawable.default_pic);
 		holder.affirmorder_item_icon_imageview.setTag(productInfoBean

@@ -67,23 +67,21 @@ public class BrandAdapter extends BaseAdapterWithUtil {
 		
 		DisplayMetrics dm=new DisplayMetrics();
 		((Activity)context).getWindowManager().getDefaultDisplay().getMetrics(dm);
-		int width=dm.widthPixels/4;
+		int width=dm.widthPixels/2;
 		if(width>0)
 		{
 			Log.i("TAG", "--->>WIDTH:"+width);
-			holder.brandlist_item_imageview1.setLayoutParams(new LinearLayout.LayoutParams(width, width));
-			holder.brandlist_item_imageview2.setLayoutParams(new LinearLayout.LayoutParams(width, width));
-			holder.brandlist_item_imageview3.setLayoutParams(new LinearLayout.LayoutParams(width, width));
-			holder.brandlist_item_imageview4.setLayoutParams(new LinearLayout.LayoutParams(width, width));
+			int height=3*width/4;
+			holder.brandlist_item_imageview1.setLayoutParams(new LinearLayout.LayoutParams(width, height));
+			holder.brandlist_item_imageview2.setLayoutParams(new LinearLayout.LayoutParams(width, height));
+			Log.i("TAG", "--->>WIDTH:"+width+"  height:"+height);
 		}
 		
 		holder.brandlist_item_imageview1.setVisibility(View.INVISIBLE);
 		holder.brandlist_item_imageview2.setVisibility(View.INVISIBLE);
-		holder.brandlist_item_imageview3.setVisibility(View.INVISIBLE);
-		holder.brandlist_item_imageview4.setVisibility(View.INVISIBLE);
 		BrandInfo brandInfo=items.get(position);
-		holder.iv_brand.setTag(brandInfo.getBrandId());
-		initPic(holder.iv_brand, ToolsUtil.nullToString(brandInfo.getBrandLogo()));
+		//holder.iv_brand.setTag(brandInfo.getBrandId());
+		//initPic(holder.iv_brand, ToolsUtil.nullToString(brandInfo.getBrandLogo()));
 		List<ProductInFo> productInFo_list=brandInfo.getProduct();
 		for(int i=0;i<productInFo_list.size();i++)
 		{

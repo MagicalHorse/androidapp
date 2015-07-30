@@ -72,6 +72,7 @@ public class ShopMainActivity extends FragmentActivity {
     HttpControl httpControl=new HttpControl();
     UserInfoBean userInfoBean;
     int userID=-1;
+    TextView tv_top_title;
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
     	MyApplication.getInstance().addActivity(this);//加入回退栈
@@ -106,9 +107,8 @@ public class ShopMainActivity extends FragmentActivity {
 				ShopMainActivity.this.finish();
 			}
 		});
-		TextView tv_top_title=(TextView)findViewById(R.id.tv_top_title);
+		tv_top_title=(TextView)findViewById(R.id.tv_top_title);
 		tv_top_title.setVisibility(View.VISIBLE);
-		tv_top_title.setText("店铺名称");
 		shop_main_attention_linearlayout=(LinearLayout)findViewById(R.id.shop_main_attention_linearlayout);
 		shop_main_attention_linearlayout.setOnClickListener(onClickListener);
 		shop_main_fans_linearlayout=(LinearLayout)findViewById(R.id.shop_main_fans_linearlayout);
@@ -430,6 +430,7 @@ public class ShopMainActivity extends FragmentActivity {
      * **/
     void setHeadValue()
     {
+    	tv_top_title.setText(userInfoBean.getUserName());
     	shop_main_attention_imagebutton.setTag(userInfoBean);
     	if(userInfoBean.isIsFollowing())
     	{

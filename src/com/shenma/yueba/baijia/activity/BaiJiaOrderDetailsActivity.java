@@ -141,8 +141,14 @@ LinearLayout baijia_orderdetails_footer_right_linearlayout;//按钮的父对象
 			startActivity(intentbuter);
 			break;
 		case R.id.riv_customer_head://头像
-			Intent iconIntent=new Intent(BaiJiaOrderDetailsActivity.this,ShopMainActivity.class);
-			startActivity(iconIntent);
+			if(v.getTag()!=null && v.getTag() instanceof Integer)
+			{
+				Intent iconIntent=new Intent(BaiJiaOrderDetailsActivity.this,ShopMainActivity.class);
+				iconIntent.putExtra("DATA", (Integer)v.getTag());
+				startActivity(iconIntent);
+				
+			}
+			
 			break;
 		case R.id.baijia_orderdetails_xjfx_textview://现金分享
 			shareUrl();
@@ -281,6 +287,7 @@ LinearLayout baijia_orderdetails_footer_right_linearlayout;//按钮的父对象
 		tv_get_address_content.setText(ToolsUtil.nullToString(baiJiaOrdeDetailsInfoBean.getPickAddress()));
 		MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.nullToString(baiJiaOrdeDetailsInfoBean.getBuyerLogo()), riv_customer_head, MyApplication.getInstance().getDisplayImageOptions());
 		obj_list.add(baiJiaOrdeDetailsInfoBean);
+		riv_customer_head.setTag(baiJiaOrdeDetailsInfoBean.getBuyerId());
 		//如果当前订单状态是已提货 体显示 分享按钮
 		if(bean.getData().getOrderStatus()==16)
 		{
