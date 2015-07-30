@@ -181,7 +181,7 @@ public class AddTagActivity extends BaseActivityWithTopView implements TextWatch
 				if(bean.getData()!=null){
 					mList.clear();
 					if(bean.getData().size()>0){
-						if("0".equals(type) && !TextUtils.isEmpty(et_search.getText().toString().trim())){
+						if(!TextUtils.isEmpty(et_search.getText().toString().trim())){
 							if(!isConstantsKey(et_search.getText().toString().trim(), bean.getData())){
 								TagListItemBean item = new TagListItemBean();
 								item.setId("");
@@ -192,15 +192,41 @@ public class AddTagActivity extends BaseActivityWithTopView implements TextWatch
 						}
 						mList.addAll(bean.getData());
 					}else{
-						if("0".equals(type)){
 							TagListItemBean item = new TagListItemBean();
 							item.setId("");
 							item.setName("添加新标签："+et_search.getText().toString().trim());
 							item.setNewTag(true);
 							mList.add(item);
-						}
 					}
 					adapter.notifyDataSetChanged();
+					
+					
+					
+					
+//					mList.clear();
+//					if(bean.getData().size()>0){
+//						if("0".equals(type) && !TextUtils.isEmpty(et_search.getText().toString().trim())){
+//							if(!isConstantsKey(et_search.getText().toString().trim(), bean.getData())){
+//								TagListItemBean item = new TagListItemBean();
+//								item.setId("");
+//								item.setName("添加新标签："+et_search.getText().toString().trim());
+//								item.setNewTag(true);
+//								mList.add(item);
+//							}
+//						}
+//						mList.addAll(bean.getData());
+//					}else{
+//						if("0".equals(type)){
+//							TagListItemBean item = new TagListItemBean();
+//							item.setId("");
+//							item.setName("添加新标签："+et_search.getText().toString().trim());
+//							item.setNewTag(true);
+//							mList.add(item);
+//						}
+//					}
+//					adapter.notifyDataSetChanged();
+				
+					
 				
 				}
 				

@@ -7,7 +7,7 @@ public class TagsBean implements Serializable{
 	private String PosX;
 	private String PosY;
 	private String SourceId;//如果是品牌标签，这里传品牌的编号id
-	private String SourceType;//标签类型      50表示文本标签        51表示品牌标签     52表示买手标签 
+	private String SourceType;//标签类型      50表示普通标签        51表示品牌标签     52表示买手标签 
 	public String getName() {
 		return Name;
 	}
