@@ -7,7 +7,6 @@ import android.view.Window;
 
 import com.shenma.yueba.GuideActivity;
 import com.shenma.yueba.R;
-import com.shenma.yueba.UpdateManager;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.util.ToolsUtil;
@@ -28,8 +27,6 @@ public class SplashActivity extends BaseActivity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.loading_layout);
 		MyApplication.getInstance().addActivity(this);
-		UpdateManager mUpdateManager = new UpdateManager(mContext, "1.0.1", "http://www.joybar/aaa.apk", "title", "content");
-		mUpdateManager.startUpdate();
 		Log.i("screen", ToolsUtil.getDisplayWidth(mContext)+"");
 		Log.i("screen", ToolsUtil.getDisplayHeight(mContext)+"");
 		MobclickAgent.openActivityDurationTrack(true); // 统计在线时长

@@ -69,7 +69,6 @@ import com.umeng.analytics.MobclickAgent;
 public class EditPicActivity extends BaseActivityWithTopView implements
 		OnClickListener, OnTouchListener {
 
-	
 	private ImageView iv_pic;
 	private TextView tv_tishi;
 	private TextView tv_next;
@@ -81,8 +80,9 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 	private LinearLayout ll_top;
 	private Bitmap result;
 	private Bitmap resultCache;
-	private ArrayList<String> tagNameList =new ArrayList<String>();//姓名的集合
-	private List<Map<String, Integer>> positionList = new ArrayList<Map<String,Integer>>();//位置的集合
+	private ArrayList<String> tagNameList = new ArrayList<String>();// 姓名的集合
+	private List<Map<String, Integer>> positionList = new ArrayList<Map<String, Integer>>();// 位置的集合
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -92,14 +92,13 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 		initView();
 
 	}
-	
-	
+
 	@Override
 	protected void onNewIntent(Intent intent) {
 		// TODO Auto-generated method stub
 		super.onNewIntent(intent);
 	}
-	
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (Constants.REQUESTCODE == requestCode
@@ -110,36 +109,40 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 				String name = bundle.getString("name");
 				String type = bundle.getString("type");
 				layout_tag_image.addTextTag(name, startx, starty);
-				positionList = layout_tag_image.getPositionList();//获取标签位置信息
-				tagNameList = layout_tag_image.getTagNameList();//获取标签文字列表
-				savetagCacheInfo(Integer.valueOf(MyApplication.getInstance().getPublishUtil().getIndex()));//缓存标签名称和位置，用于再次回来该页面显示用
+				positionList = layout_tag_image.getPositionList();// 获取标签位置信息
+				tagNameList = layout_tag_image.getTagNameList();// 获取标签文字列表
+				savetagCacheInfo(Integer.valueOf(MyApplication.getInstance()
+						.getPublishUtil().getIndex()));// 缓存标签名称和位置，用于再次回来该页面显示用
 			}
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}
-	
+
 	@Override
 	protected void onRestart() {
-		Log.i("edit","onRestart");
+		Log.i("edit", "onRestart");
 		layout_tag_image.setIToZero();
-//		layout_tag_image.clearViewList();
+		// layout_tag_image.clearViewList();
 		layout_tag_image.clearTagView();
 		layout_tag_image.getPositionList().clear();
 		layout_tag_image.getTagNameList().clear();
-//		if(MyApplication.getInstance().getPublishUtil().isOtherPic()){
-			ArrayList<List<TagCacheBean>> allTagCacheList= MyApplication.getInstance().getPublishUtil().getTagCacheList();
-			List<TagCacheBean> tagCacheList =  allTagCacheList.get(Integer.valueOf(MyApplication.getInstance().getPublishUtil().getIndex()));
-			for (int i = 0; i < tagCacheList.size(); i++) {
-				String name = tagCacheList.get(i).getName();
-				int x = tagCacheList.get(i).getX();
-				int y = tagCacheList.get(i).getY();
-				layout_tag_image.addTextTag(name, x, y);
-			}
-//		}
-		
+		// if(MyApplication.getInstance().getPublishUtil().isOtherPic()){
+		ArrayList<List<TagCacheBean>> allTagCacheList = MyApplication
+				.getInstance().getPublishUtil().getTagCacheList();
+		List<TagCacheBean> tagCacheList = allTagCacheList.get(Integer
+				.valueOf(MyApplication.getInstance().getPublishUtil()
+						.getIndex()));
+		for (int i = 0; i < tagCacheList.size(); i++) {
+			String name = tagCacheList.get(i).getName();
+			int x = tagCacheList.get(i).getX();
+			int y = tagCacheList.get(i).getY();
+			layout_tag_image.addTextTag(name, x, y);
+		}
+		// }
+
 		super.onRestart();
 	}
-	
+
 	@Override
 	protected void onResume() {
 		getIntentData();
@@ -150,28 +153,36 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 	}
 
 	private void getIntentData() {
-		if("camera".equals(MyApplication.getInstance().getPublishUtil().getFrom())){//来自相机
+		if ("camera".equals(MyApplication.getInstance().getPublishUtil()
+				.getFrom())) {// 来自相机
 			File dir = new File(FileUtils.getRootPath() + "/tagPic/");
 			if (!dir.exists()) {
 				dir.mkdirs();
 			}
-			String index = MyApplication.getInstance().getPublishUtil().getIndex();
+			String index = MyApplication.getInstance().getPublishUtil()
+					.getIndex();
 			result = BitmapFactory.decodeFile(FileUtils.getRootPath()
-					+ "/tagPic/" + "joybar_camera"+ SharedUtil.getUserId(mContext)+index+".png");
+					+ "/tagPic/" + "joybar_camera"
+					+ SharedUtil.getUserId(mContext) + index + ".png");
 			resultCache = result;
-		}else if("picture".equals(MyApplication.getInstance().getPublishUtil().getFrom())){//来自图库
+		} else if ("picture".equals(MyApplication.getInstance()
+				.getPublishUtil().getFrom())) {// 来自图库
 			Uri uri = MyApplication.getInstance().getPublishUtil().getUri();
 			result = getBitmap(uri);
 			resultCache = result;
-		}else if("publish".equals(MyApplication.getInstance().getPublishUtil().getFrom())){//发布商品返回
-			String index = MyApplication.getInstance().getPublishUtil().getIndex();
+		} else if ("publish".equals(MyApplication.getInstance()
+				.getPublishUtil().getFrom())) {// 发布商品返回
+			String index = MyApplication.getInstance().getPublishUtil()
+					.getIndex();
 			result = BitmapFactory.decodeFile(FileUtils.getRootPath()
-					+ "/tagPic/" + "tagPic_yuan"+SharedUtil.getUserId(mContext)+ index+".png");
+					+ "/tagPic/" + "tagPic_yuan"
+					+ SharedUtil.getUserId(mContext) + index + ".png");
 			resultCache = BitmapFactory.decodeFile(FileUtils.getRootPath()
-					+ "/tagPic/" + "tagPic"+SharedUtil.getUserId(mContext)+ index+".png");
+					+ "/tagPic/" + "tagPic" + SharedUtil.getUserId(mContext)
+					+ index + ".png");
 		}
 		iv_pic.setImageBitmap(resultCache);
-		}
+	}
 
 	private void initView() {
 		setTitle("编辑图片");
@@ -194,22 +205,23 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 		tv_tishi = getView(R.id.tv_tishi);
 		tv_next = getView(R.id.tv_next);
 		tv_next.setOnClickListener(this);
-		FontManager.changeFonts(mContext, tv_next,tv_top_title);
+		FontManager.changeFonts(mContext, tv_next, tv_top_title);
 	}
 
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.tv_next:// 下一步
-			saveBitmapToFile();//存储图片到本地
-			tagList.clear();//清空要提交的标签tag位置信息
-			positionList = layout_tag_image.getPositionList();//获取标签位置信息
-			tagNameList = layout_tag_image.getTagNameList();//获取标签文字列表
-			savetagCacheInfo(Integer.valueOf(MyApplication.getInstance().getPublishUtil().getIndex()));//缓存标签名称和位置，用于再次回来该页面显示用
-			//savetagCacheInfo(Integer.valueOf(MyApplication.getInstance().getPublishUtil().getIndex()));//缓存标签名称和位置，用于再次回来该页面显示用
-			getUploadTagInfo();//获取要提交的标签信息
+			saveBitmapToFile();// 存储图片到本地
+			tagList.clear();// 清空要提交的标签tag位置信息
+			positionList = layout_tag_image.getPositionList();// 获取标签位置信息
+			tagNameList = layout_tag_image.getTagNameList();// 获取标签文字列表
+			savetagCacheInfo(Integer.valueOf(MyApplication.getInstance()
+					.getPublishUtil().getIndex()));// 缓存标签名称和位置，用于再次回来该页面显示用
+			// savetagCacheInfo(Integer.valueOf(MyApplication.getInstance().getPublishUtil().getIndex()));//缓存标签名称和位置，用于再次回来该页面显示用
+			getUploadTagInfo();// 获取要提交的标签信息
 			TagListBean resultBean = new TagListBean();
-			resultBean.setTagList(setUploadTagInfoToStanderStyle());//将要提交的标签信息转化成需要的格式
+			resultBean.setTagList(setUploadTagInfoToStanderStyle());// 将要提交的标签信息转化成需要的格式
 			Intent intent = new Intent(mContext, PublishProductActivity.class);
 			intent.putExtra("from", "editPic");
 			intent.putExtra("tagListBean", resultBean);
@@ -227,20 +239,20 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 		List<TagsBean> tagLists = new ArrayList<TagsBean>();
 		for (int i = 0; i < tagList.size(); i++) {
 			TagsBean tagsBean = new TagsBean();
-			tagsBean.setPosX(""+tagList.get(i).get("x"));
-			tagsBean.setPosY(""+tagList.get(i).get("y"));
+			tagsBean.setPosX("" + tagList.get(i).get("x"));
+			tagsBean.setPosY("" + tagList.get(i).get("y"));
 			tagsBean.setName(tagNameList.get(i));
 			tagLists.add(tagsBean);
 		}
 		return tagLists;
 	}
 
-
 	private void getUploadTagInfo() {
 		for (int i = 0; i < positionList.size(); i++) {
 			double x = (double) positionList.get(i).get("x")
 					/ (double) ToolsUtil.getDisplayWidth(mContext);
-			double y = ((double) positionList.get(i).get("y")/ (double) ToolsUtil.getDisplayWidth(mContext));
+			double y = ((double) positionList.get(i).get("y") / (double) ToolsUtil
+					.getDisplayWidth(mContext));
 			Map<String, Double> map = new HashMap<String, Double>();
 			if (x < 0) {
 				x = 0.0;
@@ -260,19 +272,19 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 		}
 	}
 
-
 	private void savetagCacheInfo(int index) {
-		MyApplication.getInstance().getPublishUtil().getTagCacheList().get(index).clear();
+		MyApplication.getInstance().getPublishUtil().getTagCacheList()
+				.get(index).clear();
 		for (int i = 0; i < tagNameList.size(); i++) {
 			TagCacheBean tagCacheBean = new TagCacheBean();
 			tagCacheBean.setName(tagNameList.get(i));
 			tagCacheBean.setX(positionList.get(i).get("x"));
 			tagCacheBean.setY(positionList.get(i).get("y"));
-			MyApplication.getInstance().getPublishUtil().getTagCacheList().get(index).add(tagCacheBean);
+			MyApplication.getInstance().getPublishUtil().getTagCacheList()
+					.get(index).add(tagCacheBean);
 		}
-		
-	}
 
+	}
 
 	private void saveBitmapToFile() {
 		File dir = new File(FileUtils.getRootPath() + "/tagPic/");
@@ -280,8 +292,13 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 			if (!dir.exists())
 				dir.mkdirs();
 		}
-		File file = new File(dir, "tagPic"+SharedUtil.getUserId(mContext)+ MyApplication.getInstance().getPublishUtil().getIndex() + ".png");
-		File file_yuan = new File(dir, "tagPic_yuan"+SharedUtil.getUserId(mContext) + MyApplication.getInstance().getPublishUtil().getIndex() + ".png");
+		File file = new File(dir, "tagPic" + SharedUtil.getUserId(mContext)
+				+ MyApplication.getInstance().getPublishUtil().getIndex()
+				+ ".png");
+		File file_yuan = new File(dir, "tagPic_yuan"
+				+ SharedUtil.getUserId(mContext)
+				+ MyApplication.getInstance().getPublishUtil().getIndex()
+				+ ".png");
 		if (file.exists()) {
 			file.delete();
 		}
@@ -305,8 +322,6 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 		}
 
 	}
-
-
 
 	/**
 	 * 此处写方法描述
@@ -729,7 +744,7 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 			@Override
 			public void onClick(View v) {
 				Intent intentAddTag = new Intent(mContext, AddTagActivity.class);
-				intentAddTag.putExtra("type", "1");// 1表示品牌，0表示商品
+				intentAddTag.putExtra("type", "1");// 1表示品牌标签，0表示普通标签
 				startActivityForResult(intentAddTag, Constants.REQUESTCODE);
 				dialog.cancel();
 			}
@@ -739,7 +754,7 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 			public void onClick(View v) {
 				Intent intentProduct = new Intent(EditPicActivity.this,
 						AddTagActivity.class);
-				intentProduct.putExtra("type", "0");// 1表示品牌，0表示商品
+				intentProduct.putExtra("type", "0");// 1表示品牌标签，0表示普通标签
 				startActivityForResult(intentProduct, Constants.REQUESTCODE);
 				dialog.cancel();
 			}
@@ -787,18 +802,15 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 	// }
 	//
 	// }
-	
-	
-	
-	  @Override
-	    protected void onDestroy() {
-	    	MyApplication.getInstance().removeActivity(this);//加入回退栈
-	    	super.onDestroy();
-	    }
 
-	  
-			public void onPause() {
-			super.onPause();
-			MobclickAgent.onPause(this);
-			}
+	@Override
+	protected void onDestroy() {
+		MyApplication.getInstance().removeActivity(this);// 加入回退栈
+		super.onDestroy();
+	}
+
+	public void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
 }

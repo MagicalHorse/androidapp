@@ -15,6 +15,7 @@
             android:layout_width="85dip"
             android:layout_height="85dip"
             android:layout_marginRight="30dp"
+               android:textSize="14sp"
             android:background="@drawable/round_background_maincolor"
             android:text="品牌标签"
             android:textColor="@color/white" />
@@ -23,9 +24,10 @@
             android:id="@+id/bt_product"
             android:layout_width="85dip"
             android:layout_height="85dip"
+            android:textSize="14sp"
             android:layout_marginLeft="30dp"
             android:background="@drawable/round_background_maincolor"
-            android:text="商品标签"
+            android:text="普通标签"
             android:textColor="@color/white" />
     </LinearLayout>
 

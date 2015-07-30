@@ -70,8 +70,8 @@ public class IncomeDetailAdapter extends BaseAdapterWithUtil {
 		holder.tv_from.setText("1".equals(ToolsUtil.nullToString(mList.get(position).getOrder_type()))?"来源：奖励":"来源：订单");
 		holder.tv_money_number.setText("￥"+ToolsUtil.nullToString(mList.get(position).getAmount()));
 		holder.tv_date.setText(ToolsUtil.nullToString(mList.get(position).getCreate_date()));
-		holder.tv_order_number.setText("￥"+ToolsUtil.nullToString(mList.get(position).getOrder_no()));
-		holder.tv_status.setText("￥"+ToolsUtil.nullToString(mList.get(position).getOrderstatus_s()));
+		holder.tv_order_number.setText(ToolsUtil.nullToString(mList.get(position).getOrder_no()));
+		holder.tv_status.setText(ToolsUtil.nullToString(mList.get(position).getOrderstatus_s()));
 		
 		return convertView;
 	}

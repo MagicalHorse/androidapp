@@ -17,13 +17,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.UpdateManager;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.fragment.CircleFragment;
 import com.shenma.yueba.baijia.fragment.FindFragment;
 import com.shenma.yueba.baijia.fragment.IndexFragmentForBaiJia;
 import com.shenma.yueba.baijia.fragment.MeFragmentForBaiJia;
 import com.shenma.yueba.baijia.fragment.MessageFragment;
+import com.shenma.yueba.baijia.modle.CheckVersionBackBean;
 import com.shenma.yueba.baijia.modle.FragmentBean;
+import com.shenma.yueba.baijia.modle.VersionUpdateDetail;
+import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.ToolsUtil;
+import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.umeng.analytics.MobclickAgent;
 
 public class MainActivityForBaiJia extends FragmentActivity {
@@ -47,6 +53,36 @@ public class MainActivityForBaiJia extends FragmentActivity {
 		initView();
 		initaddFooterView();
 		setCurrView(0);
+		checkVersion();
+	}
+
+	private void checkVersion() {
+		HttpControl httpControl = new HttpControl();
+		httpControl.checkVersion(new HttpCallBackInterface() {
+			@Override
+			public void http_Success(Object obj) {
+				CheckVersionBackBean bean = (CheckVersionBackBean) obj;
+				if(bean.getData()!=null){
+					String versionRemote = bean.getData().getVersion();
+					String localVersionStr = ToolsUtil.getVersionName(MainActivityForBaiJia.this);
+					float localVersonFloat = Float.valueOf(localVersionStr);
+					if(!versionRemote.equals(localVersonFloat)){
+						UpdateManager manager = new UpdateManager(MainActivityForBaiJia.this, versionRemote+"", bean.getData().getUrl(), bean.getData().getTitle(), bean.getData().getDetails());
+						manager.startUpdate();
+					}
+				}
+				
+				
+
+			}
+
+			@Override
+			public void http_Fails(int error, String msg) {
+				// TODO Auto-generated method stub
+
+			}
+		}, MainActivityForBaiJia.this);
+
 	}
 
 	void initView() {

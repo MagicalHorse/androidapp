@@ -65,6 +65,11 @@ public class HttpConstants {
 	 */
 	public static String METHOD_VERIFYCODE = USERURL + "VerifyCode";
 	/**
+	 * 版本更新接口
+	 */
+	public static String METHOD_VERSION_UPDATE = COMMONURL + "CheckVersion";
+	/**
+	/**
 	 * 获取城市列表
 	 */
 	public static String METHOD_GETCITYLIST = COMMONURL + "GetCityList";
