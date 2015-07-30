@@ -70,7 +70,7 @@ public class UpdateManager implements View.OnClickListener {
 				break;
 			case DOWN_OVER:
 				// 安装
-				pd.dismiss();
+				downDialog.dismiss();
 				installApk();
 				break;
 			default:
@@ -123,6 +123,7 @@ public class UpdateManager implements View.OnClickListener {
 		TextView bt_quit = (TextView) view.findViewById(R.id.bt_quit);
 		bt_quit.setOnClickListener(this);
 		progress_bar = (ProgressBar) view.findViewById(R.id.progress);
+//		progress_bar.setProgress(50);
 		tv_title.setText("更新中...");
 		Button bt_backgroud = (Button) view.findViewById(R.id.bt_backgroud);
 		bt_backgroud.setOnClickListener(this);
@@ -145,7 +146,7 @@ public class UpdateManager implements View.OnClickListener {
 				InputStream is = conn.getInputStream();
 				File file = new File(savePath);
 				if (!file.exists()) {
-					file.mkdir();
+					file.mkdirs();
 				}
 				String apkFile = saveFileName;
 				File ApkFile = new File(apkFile);
@@ -217,6 +218,9 @@ public class UpdateManager implements View.OnClickListener {
 			break;
 		case R.id.bt_quit:// 停止下载
 			interceptFlag = true;
+			break;
+		case R.id.bt_backgroud://后台运行
+			
 			break;
 		default:
 			break;
