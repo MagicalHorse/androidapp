@@ -250,6 +250,7 @@ public class CircleView extends BaseView{
 			public void http_Success(Object obj) {
 				currPage=page;
 				showDialog=false;
+				
 				ToolsUtil.pullResfresh(baijia_quanzi_layout_tanb1_gridbview);
 				if(obj!=null && obj instanceof RequestTuiJianCircleInfoBean)
 				{

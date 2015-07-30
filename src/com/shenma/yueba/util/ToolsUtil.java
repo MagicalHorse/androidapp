@@ -967,7 +967,7 @@ public class ToolsUtil {
 				public void run() {
 					pullListView.onRefreshComplete();
 				}
-			}, 100);
+			}, 1000);
 		}
 	}
 }
