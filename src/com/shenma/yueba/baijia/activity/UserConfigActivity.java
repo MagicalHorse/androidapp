@@ -91,6 +91,8 @@ public class UserConfigActivity extends BaseActivityWithTopView implements
 	 * **/
 	void initView() {
 		progressDialog = new CustomProgressDialog(mContext).createDialog(mContext);
+		progressDialog.setCancelable(true);
+		progressDialog.setCanceledOnTouchOutside(false);
 		setTitle("设置");
 		setLeftTextView(new OnClickListener() {
 			@Override

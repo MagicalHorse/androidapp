@@ -3,6 +3,7 @@ package com.shenma.yueba.baijia.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
@@ -18,6 +20,7 @@ import com.shenma.yueba.baijia.activity.MainActivityForBaiJia;
 import com.shenma.yueba.baijia.modle.UserRequestBean;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.JpushUtils;
 import com.shenma.yueba.util.WXLoginUtil;
@@ -84,18 +87,24 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
 			startActivity(intent);
 			break;
 		case R.id.bt_login:// 登录
-			// if (TextUtils.isEmpty(et_mobile.getText().toString())) {
-			// Toast.makeText(getActivity(), "手机号不能为空", 1000).show();
-			// et_mobile.startAnimation(AnimationUtils.loadAnimation(
-			// getActivity(), R.anim.shake));
-			// } else if (!ToolsUtil.checkPhone(et_mobile.getText().toString()))
-			// {
-			// Toast.makeText(getActivity(), "手机号格式不正确", 1000).show();
-			// } else if (TextUtils.isEmpty(et_password.getText().toString())) {
-			// Toast.makeText(getActivity(), "密码不能为空", 1000).show();
-			// et_password.startAnimation(AnimationUtils.loadAnimation(
-			// getActivity(), R.anim.shake));
-			// } else {
+			if(TextUtils.isEmpty(et_mobile.getText().toString().trim())){
+				Toast.makeText(getActivity(), "手机号不能为空", 1000).show();
+				break;
+			}
+//			if(!ToolsUtil.checkPhone(et_mobile.getText().toString().trim())){
+//				Toast.makeText(getActivity(), "手机号格式不正确", 1000).show();
+//				break;
+//			}
+			
+			if(et_mobile.getText().toString().trim().length()!=11){
+				Toast.makeText(getActivity(), "请输入正确的手机号", 1000).show();
+				break;
+			}
+			
+			if(TextUtils.isEmpty(et_password.getText().toString().trim())){
+				Toast.makeText(getActivity(), "密码不能为空", 1000).show();
+				break;
+			}
 			final HttpControl httpControl = new HttpControl();
 			httpControl.userLogin(et_mobile.getText().toString().trim(),
 					et_password.getText().toString().trim(),

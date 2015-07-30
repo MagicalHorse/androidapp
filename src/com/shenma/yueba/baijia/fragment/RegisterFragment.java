@@ -73,10 +73,10 @@ public class RegisterFragment extends BaseFragment implements OnClickListener {
 					Toast.makeText(getActivity(), "手机号不能为空", 1000).show();
 					return;
 				}
-				//判断手机号码是否合法
-				if(!ToolsUtil.checkPhone(mobile)){
+				//判断手机号码是否合法  由于现在新手机号有扩充，正则表达式判断可能会有错误
+				if(et_mobile.getText().toString().trim().length()!=11){
 					Toast.makeText(getActivity(), "请输入正确的手机号", 1000).show();
-					return;
+					break;
 				}
 				HttpControl httpControl=new HttpControl();
 				httpControl.sendPhoeCode(et_mobile.getText().toString().trim(), "0",new HttpCallBackInterface() {

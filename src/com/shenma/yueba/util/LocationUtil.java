@@ -37,8 +37,8 @@ public class LocationUtil {
 						.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 				if (locationNetWork != null && locationNetWork.getLatitude() != 0
 						&& locationNetWork.getLongitude() != 0) {
-					latitude = location.getLatitude(); // 经度
-					longitude = location.getLongitude(); // 纬度
+					latitude = locationNetWork.getLatitude(); // 经度
+					longitude = locationNetWork.getLongitude(); // 纬度
 					SharedUtil.setStringPerfernece(ctx, "latitude", latitude + "");
 					SharedUtil.setStringPerfernece(ctx, "longitude", longitude + "");
 					Log.i("location", latitude + "----" + longitude);

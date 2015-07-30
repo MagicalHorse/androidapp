@@ -57,6 +57,8 @@ public class Constants {
 	public static final String INCOMESTATUS = "IncomeStatus";// 收入明细状态
 	public static final String INCOMETRANSFERSTATUS = "IncomeTransferStatus";// 收入明细状态
 	public static final String PAGESIZE = "Pagesize";// 页size
+	public static final String LONGITUDE = "Longitude";//经度
+	public static final String LATITUDE = "Latitude";//维度
 	public static final String ID = "Id";
 	public static final String USERIDSTR = "useridstr";
 	public static final String ORDER_NO = "OrderNo";
