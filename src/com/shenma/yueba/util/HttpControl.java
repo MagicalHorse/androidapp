@@ -1520,6 +1520,9 @@ public class HttpControl {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put(Constants.PAGE, Integer.toString(currPage));
 		map.put(Constants.PAGESIZE, Integer.toString(pageSize));
+		map.put(Constants.LONGITUDE, SharedUtil.getStringPerfernece(context,"longitude"));
+		map.put(Constants.LATITUDE, SharedUtil.getStringPerfernece(context,"latitude"));
+		map.put(Constants.PAGESIZE, Integer.toString(pageSize));
 		map.put("CityId", Integer.toString(CityId));
 		BasehttpSend(map, context, HttpConstants.GETCITYPRODUCTLIST,
 				httpCallBack, RequestBrandCityWideInfoBean.class, showDialog,
