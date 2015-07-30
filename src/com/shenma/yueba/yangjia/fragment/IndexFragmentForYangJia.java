@@ -408,7 +408,9 @@ public class IndexFragmentForYangJia extends BaseFragment implements
 				tv_today_huokuan_money.setText(ToolsUtil.nullToString(goodsamount.getTodaygoodsamount()));
 				tv_all_huokuan_money.setText(ToolsUtil.nullToString(goodsamount.getTotalgoodsamount()));
 				byte[] bytes = Base64Coder.decode(codeUrl);
-				iv_qr_code.setImageBitmap(BitmapFactory.decodeByteArray(bytes, 0, bytes.length));
+				BitmapFactory.Options options = new BitmapFactory.Options();
+				options.inSampleSize = 4;
+				iv_qr_code.setImageBitmap(BitmapFactory.decodeByteArray(bytes, 0, bytes.length,options));
 				tv_qr_name.setText(ToolsUtil.nullToString(shopName));
 				
 				//处理返回来的数据

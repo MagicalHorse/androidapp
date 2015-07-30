@@ -25,7 +25,9 @@ import android.widget.Toast;
 import com.alibaba.sdk.android.oss.callback.SaveCallback;
 import com.alibaba.sdk.android.oss.model.OSSException;
 import com.shenma.yueba.R;
+import com.shenma.yueba.UpdateManager;
 import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.modle.CheckVersionBackBean;
 import com.shenma.yueba.baijia.modle.ModifyLogoBackBean;
 import com.shenma.yueba.baijia.modle.ModifyLogoBean;
 import com.shenma.yueba.constants.Constants;
@@ -34,8 +36,8 @@ import com.shenma.yueba.util.CustomProgressDialog;
 import com.shenma.yueba.util.FileUtils;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
-import com.shenma.yueba.util.JpushUtils;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
+import com.shenma.yueba.util.JpushUtils;
 import com.shenma.yueba.util.PhotoUtils;
 import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.util.ToolsUtil;
@@ -353,7 +355,7 @@ public class UserConfigActivity extends BaseActivityWithTopView implements
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.tv_check_update://检查更新
-			
+			checkVersion();
 			break;
 		case R.id.rl_head:// 修改头像
 			showBottomDialog();
@@ -436,6 +438,39 @@ public class UserConfigActivity extends BaseActivityWithTopView implements
 
 			}
 		}, mContext, true);
+	}
+	
+	
+	
+	private void checkVersion() {
+		HttpControl httpControl = new HttpControl();
+		httpControl.checkVersion(new HttpCallBackInterface() {
+			@Override
+			public void http_Success(Object obj) {
+				CheckVersionBackBean bean = (CheckVersionBackBean) obj;
+				if(bean.getData()!=null){
+					String versionRemote = bean.getData().getVersion();
+					String localVersionStr = ToolsUtil.getVersionName(UserConfigActivity.this);
+					float localVersonFloat = Float.valueOf(localVersionStr);
+					if(!versionRemote.equals(localVersonFloat)){
+						UpdateManager manager = new UpdateManager(UserConfigActivity.this, versionRemote+"", bean.getData().getUrl(), bean.getData().getTitle(), bean.getData().getDetails());
+						manager.startUpdate();
+					}else{
+						Toast.makeText(mContext, "当前是最新版本", 1000).show();
+					}
+				}
+				
+				
+
+			}
+
+			@Override
+			public void http_Fails(int error, String msg) {
+				// TODO Auto-generated method stub
+
+			}
+		}, UserConfigActivity.this);
+
 	}
 
 	@Override

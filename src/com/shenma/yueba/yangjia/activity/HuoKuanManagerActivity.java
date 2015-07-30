@@ -43,7 +43,8 @@ public class HuoKuanManagerActivity extends BaseActivityWithTopView implements
 	private TextView tv_back_ratio;
 	private TextView tv_back_money;
 	private NumberProgressBar numberbar_back;
-	private int hadProgress = 0,canProgress = 0,freezeProgress = 0,backProgress = 0;
+	int hadProgress = 0;
+	private int canProgress = 0,freezeProgress = 0,backProgress = 0;
 	private CountDownTimer timer;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -144,10 +145,10 @@ public class HuoKuanManagerActivity extends BaseActivityWithTopView implements
 			public void http_Success(Object obj) {
 				HuoKuanManagerBackBean bean = (HuoKuanManagerBackBean) obj;
 				if(bean!=null && bean.getData()!=null){
-					tv_had_withdraw_ratio.setText("已提现货款 "+ToolsUtil.nullToString(bean.getData().getPickedPercent())+"%");
+					tv_had_withdraw_ratio.setText("已提现货款 "+ToolsUtil.nullToString(bean.getData().getPickedPercent()));
 					tv_had_withdraw_money.setText("￥"+ToolsUtil.nullToString(bean.getData().getPickedAmount()));
 					try {
-						hadProgress = (int) Double.parseDouble(ToolsUtil.nullToString(bean.getData().getPickedPercent()));
+						hadProgress = (int) (100*(Double.parseDouble(ToolsUtil.nullToString(bean.getData().getPickedAmount()))/Double.parseDouble(ToolsUtil.nullToString(bean.getData().getTotalAmount()))));
 //						if(hadProgress == 0){
 //							hadProgress = 2;
 //						}
@@ -155,7 +156,7 @@ public class HuoKuanManagerActivity extends BaseActivityWithTopView implements
 						hadProgress = 0;
 					}
 					try {
-						canProgress = (int) Double.parseDouble(ToolsUtil.nullToString(bean.getData().getCanPickPercent()));
+						canProgress = (int) (100*(Double.parseDouble(ToolsUtil.nullToString(bean.getData().getCanPickAmount()))/Double.parseDouble(ToolsUtil.nullToString(bean.getData().getTotalAmount()))));
 //						if(canProgress == 0){
 //							canProgress = 2;
 //						}
@@ -163,7 +164,7 @@ public class HuoKuanManagerActivity extends BaseActivityWithTopView implements
 						canProgress = 0;
 					}
 					try {
-						freezeProgress = (int) Double.parseDouble(ToolsUtil.nullToString(bean.getData().getFrozenPercent()));
+						freezeProgress = (int) (100*(Double.parseDouble(ToolsUtil.nullToString(bean.getData().getFrozenAmount()))/Double.parseDouble(ToolsUtil.nullToString(bean.getData().getTotalAmount()))));
 //						if(freezeProgress == 0){
 //							freezeProgress = 2;
 //						}
@@ -171,24 +172,24 @@ public class HuoKuanManagerActivity extends BaseActivityWithTopView implements
 						freezeProgress = 0;
 					}
 					try {
-						backProgress = (int) Double.parseDouble(ToolsUtil.nullToString(bean.getData().getRmaPercent()));
+						backProgress = (int) (100*(Double.parseDouble(ToolsUtil.nullToString(bean.getData().getRmaAmount()))/Double.parseDouble(ToolsUtil.nullToString(bean.getData().getTotalAmount()))));
 //						if(backProgress == 0){
 //							backProgress = 2;
 //						}
 					} catch (Exception e) {
 						backProgress = 0;
 					}
-					tv_can_withdraw_ratio.setText("可提现货款 "+ToolsUtil.nullToString(bean.getData().getCanPickPercent())+"%");
+					tv_can_withdraw_ratio.setText("可提现货款 "+ToolsUtil.nullToString(bean.getData().getCanPickPercent()));
 					tv_can_withdraw_money.setText("￥"+ToolsUtil.nullToString(bean.getData().getCanPickAmount()));
-					tv_freeze_ratio.setText("冻结货款 "+ToolsUtil.nullToString(bean.getData().getFrozenPercent())+"%");
+					tv_freeze_ratio.setText("冻结货款 "+ToolsUtil.nullToString(bean.getData().getFrozenPercent()));
 					tv_freeze_money.setText("￥"+ToolsUtil.nullToString(bean.getData().getFrozenAmount()));
-					tv_back_ratio.setText("退款 "+ToolsUtil.nullToString(bean.getData().getRmaPercent())+"%");
+					tv_back_ratio.setText("退款 "+ToolsUtil.nullToString(bean.getData().getRmaPercent()));
 					tv_back_money.setText("￥"+ToolsUtil.nullToString(bean.getData().getRmaAmount()));
 					tv_tatal_money.setText("￥"+ToolsUtil.nullToString(bean.getData().getTotalAmount()));
 					timer = new CountDownTimer(1000, 10) {
 							@Override
 							public void onTick(long millisUntilFinished) {
-								numberbar_had_withdraw.setProgress(hadProgress-(int)millisUntilFinished/10);
+								numberbar_had_withdraw.setProgress((int)hadProgress-(int)millisUntilFinished/10);
 								numberbar_can_withdraw.setProgress(canProgress-(int)millisUntilFinished/10);
 								numberbar_freeze.setProgress(freezeProgress-(int)millisUntilFinished/10);
 								numberbar_back.setProgress(backProgress-(int)millisUntilFinished/10);
