@@ -69,7 +69,7 @@ public class NumberProgressBar extends View {
 
 
     private final int default_text_color = Color.rgb(66, 145, 241);
-    private final int default_reached_color = Color.rgb(66, 145, 241);
+    private final int default_reached_color = Color.rgb(255, 163, 0);
     private final int default_unreached_color = Color.rgb(204, 204, 204);
     private final float default_progress_text_offset;
     private final float default_text_size;
