@@ -10,6 +10,11 @@ public class HuoKuanManagerBean {
 	private String CanPickPercent;//可提现比例
 	private String FrozenPercent;//冻结的比例
 	private String RmaPercent;//退货的比例
+	private String Credit;//货款总额度
+	private String UsedCredit;//已使用货款额度
+	private String UsedCreditPercent;//已使用货款额度比例
+	
+
 	public String getTotalAmount() {
 		return TotalAmount;
 	}
@@ -64,5 +69,24 @@ public class HuoKuanManagerBean {
 	public void setRmaPercent(String rmaPercent) {
 		RmaPercent = rmaPercent;
 	}
+	public String getCredit() {
+		return Credit;
+	}
+	public void setCredit(String credit) {
+		Credit = credit;
+	}
+	public String getUsedCredit() {
+		return UsedCredit;
+	}
+	public void setUsedCredit(String usedCredit) {
+		UsedCredit = usedCredit;
+	}
+	public String getUsedCreditPercent() {
+		return UsedCreditPercent;
+	}
+	public void setUsedCreditPercent(String usedCreditPercent) {
+		UsedCreditPercent = usedCreditPercent;
+	}
+	
 	
 }
