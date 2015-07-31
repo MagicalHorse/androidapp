@@ -38,6 +38,7 @@ public final static String QUERENTIHUO="确认提货";//2
 public final static String SHENQINGTUIKUAN="申请退款";//3
 public final static String SHENSU="申诉";//4
 public final static String SHENSULOADING="申诉中";//5
+public final static String CANCELORDER="取消订单";//6
 	
 	/***
 	 * 根据订单状态返回操作按钮
@@ -49,6 +50,7 @@ public final static String SHENSULOADING="申诉中";//5
 		{
 		case 0://代付款
 			view_list.add(createWaitPayButton(activity, 0,orderControlListener));//付款按钮
+			view_list.add(createWaitPayButton(activity, 6,orderControlListener));//取消订单
 			break;
 		case 1://申请退款 确认提货
 			view_list.add(createWaitPayButton(activity, 3,orderControlListener));//申请退款
@@ -107,6 +109,9 @@ public final static String SHENSULOADING="申诉中";//5
 			str=SHENSULOADING;
 			back_resource_id=R.drawable.back_background;
 			break;
+		case 6:
+			str=CANCELORDER;
+			back_resource_id=R.drawable.back_background;
 			
 		}
 		btn.setText(str);
@@ -157,6 +162,9 @@ public final static String SHENSULOADING="申诉中";//5
 		}else if(str.equals(ButtonManager.SHENQINGTUIKUAN))//申请退款
 		{
 			ButtonManager.applyforRefund(activity, baiJiaOrderListInfo);
+		}else if(str.equals(ButtonManager.CANCELORDER))//取消订单
+		{
+			showDiaglog(activity, str, baiJiaOrderListInfo, orderControlListener);
 		}
 	}
 	
@@ -167,13 +175,17 @@ public final static String SHENSULOADING="申诉中";//5
 			
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
+				dialog.cancel();
 				if(str.equals(ButtonManager.QUERENTIHUO))//确认提货
 				{
 					ButtonManager.affirmPUG(activity, baiJiaOrderListInfo, orderControlListener);
-					dialog.cancel();
+					
 				}else if(str.equals(ButtonManager.CANCELPAY))//申请退货
 				{
 					ButtonManager.cancelRefund(activity, baiJiaOrderListInfo, orderControlListener);
+				}else if(str.equals(ButtonManager.CANCELORDER))//取消订单
+				{
+					ButtonManager.cancelOrder(activity, baiJiaOrderListInfo, orderControlListener);
 				}
 			}
 		}).setNegativeButton("否", new DialogInterface.OnClickListener() {
@@ -280,5 +292,27 @@ public final static String SHENSULOADING="申诉中";//5
 		((Activity)context).startActivityForResult(intent, 200);
 	}
 	
+	/***
+	 * 取消订单
+	 * ***/
+	public static void cancelOrder(final Context context,BaiJiaOrderListInfo baiJiaOrderListInfo ,final OrderControlListener orderControlListener)
+	{
+		HttpControl httpControl=new HttpControl();
+		httpControl.cancelOrder(baiJiaOrderListInfo.getOrderNo(), true, new HttpCallBackInterface() {
+			
+			@Override
+			public void http_Success(Object obj) {
+				if(orderControlListener!=null)
+				{
+					orderControlListener.orderCotrol_OnRefuces();//通知刷新页面
+				}
+			}
+			
+			@Override
+			public void http_Fails(int error, String msg) {
+				MyApplication.getInstance().showMessage(context, msg);
+			}
+		}, context);
+	}
 
 }

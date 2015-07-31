@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
@@ -82,7 +83,7 @@ public class FriendSortAdapter extends BaseAdapter implements SectionIndexer{
 		}
 	
 		viewHolder.tvTitle.setText(this.list.get(position).getUserName());
-		MyApplication.getInstance().getImageLoader().displayImage(list.get(position).getUserLogo(), viewHolder.riv_head);
+		initPic(list.get(position).getUserLogo(), viewHolder.riv_head);
 		
 		
 		viewHolder.cb.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -103,7 +104,12 @@ public class FriendSortAdapter extends BaseAdapter implements SectionIndexer{
 
 	}
 	
-
+	/****
+	 * 加载图片
+	 * */
+	void initPic(final String url, final ImageView iv) {
+		MyApplication.getInstance().getBitmapUtil().display(iv, url);
+	}
 
 	final static class ViewHolder {
 		TextView tvLetter;

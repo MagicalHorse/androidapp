@@ -16,7 +16,7 @@ public class TouchImageViewActivity extends Activity {
     	super.onCreate(savedInstanceState);
         String img_url=this.getIntent().getStringExtra("IMG_URL");
         TouchImageView img = new TouchImageView(this);
-        MyApplication.getInstance().getImageLoader().displayImage(img_url, img, MyApplication.getInstance().getDisplayImageOptions());
+        MyApplication.getInstance().getBitmapUtil().display(img, img_url);
         setContentView(img);
     }
 }

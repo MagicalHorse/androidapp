@@ -105,7 +105,7 @@ int maxValue=0;
 		applyforrefund_layout_appealreason_textview=(EditText)parentView.findViewById(R.id.applyforrefund_layout_appealreason_textview);
 		ToolsUtil.setFontStyle(this, parentView, R.id.affirmorder_item_productname_textview,R.id.affirmorder_item_productsize_textview,R.id.affirmorder_item_productcount_textview,R.id.affirmorder_item_productprice_textview,R.id.applyforrefund_layout_server_textview,R.id.applyforrefund_layout_servervalue_textview,R.id.applyforrefund_layout_refundprive_textview,R.id.applyforrefund_layout_refundprivevalue_textview,R.id.applyforrefund_layout_count_textview,R.id.create_dialog_jian_button,R.id.createorder_dialog_layout_countvalue_edittext,R.id.create_dialog_jia_button,R.id.applyforrefund_layout_appealreason_textview,R.id.applyforrefund_layout_footersubmit_button);
 		ProductInfoBean productInfoBean=baiJiaOrderListInfo.getProduct();
-		MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.getImage(ToolsUtil.nullToString(productInfoBean.getImage()), 320, 0), affirmorder_item_icon_imageview, MyApplication.getInstance().getDisplayImageOptions());
+		MyApplication.getInstance().getBitmapUtil().display(affirmorder_item_icon_imageview, ToolsUtil.getImage(ToolsUtil.nullToString(productInfoBean.getImage()), 320, 0));
 		affirmorder_item_productname_textview.setText(ToolsUtil.nullToString(productInfoBean.getName()));
 		affirmorder_item_productsize_textview.setText(ToolsUtil.nullToString(productInfoBean.getProductdesc()));
 		affirmorder_item_productcount_textview.setText("x"+Integer.toString(productInfoBean.getProductCount()));

@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,7 +53,7 @@ public class OrderDetailActivity extends BaseActivityWithTopView {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		MyApplication.getInstance().addActivity(this);//加入回退栈
+		MyApplication.getInstance().addActivity(this);// 加入回退栈
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.order_detail);
 		super.onCreate(savedInstanceState);
@@ -92,21 +93,18 @@ public class OrderDetailActivity extends BaseActivityWithTopView {
 			@Override
 			public void onClick(View v) {
 				String phone = tv_customer_phone_content.getText().toString().trim();
-				if(TextUtils.isEmpty(phone)){
+				if (TextUtils.isEmpty(phone)) {
 					Toast.makeText(mContext, "暂无联系电话", 1000).show();
-				}else{
+				} else {
 					ToolsUtil.callActivity(mContext, phone);
 				}
 			}
 		});
-		FontManager.changeFonts(mContext, order_no_title, order_no_content,
-				order_wating_title, order_wating_content, order_money_title,
-				order_money_count, tv_shifu, order_commission_title,
-				order_commission_count, order_date_title, order_date_count,
-				customer_account_title, customer_account_content,
-				riv_customer_head, tv_customer_phone_title,
-				tv_customer_phone_content, tv_get_address_title,
-				tv_get_address_content, tv_connection);
+		FontManager.changeFonts(mContext, order_no_title, order_no_content, order_wating_title, order_wating_content,
+				order_money_title, order_money_count, tv_shifu, order_commission_title, order_commission_count,
+				order_date_title, order_date_count, customer_account_title, customer_account_content, riv_customer_head,
+				tv_customer_phone_title, tv_customer_phone_content, tv_get_address_title, tv_get_address_content,
+				tv_connection);
 
 	}
 
@@ -130,7 +128,7 @@ public class OrderDetailActivity extends BaseActivityWithTopView {
 				customer_account_content.setText(ToolsUtil.nullToString(orderDetail.getCustomerName()));
 				tv_customer_phone_content.setText(ToolsUtil.nullToString(orderDetail.getCustomerMobile()));
 				tv_get_address_content.setText(ToolsUtil.nullToString(orderDetail.getCustomerAddress()));
-				MyApplication.getInstance().getImageLoader().displayImage(orderDetail.getCustomerLogo(), riv_customer_head);
+				initBitmap(ToolsUtil.nullToString(orderDetail.getCustomerLogo()), riv_customer_head);
 			}
 
 			@Override
@@ -140,20 +138,23 @@ public class OrderDetailActivity extends BaseActivityWithTopView {
 		}, mContext);
 	}
 
-	
-	
 	@Override
 	protected void onDestroy() {
 		MyApplication.getInstance().addActivity(this);
 		super.onDestroy();
 	}
-	
-	  public void onResume() {
-			super.onResume();
-			MobclickAgent.onResume(this);
-			}
-			public void onPause() {
-			super.onPause();
-			MobclickAgent.onPause(this);
-			}
+
+	public void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+
+	public void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
+
+	void initBitmap(final String url, final ImageView iv) {
+		MyApplication.getInstance().getBitmapUtil().display(iv, url);
+	}
 }

@@ -319,7 +319,7 @@ List<BrandInfoInfo> object_list=new ArrayList<BrandInfoInfo>();
 	
 	void initPic(String url,ImageView iv)
 	{
-		MyApplication.getInstance().getImageLoader().displayImage(url, iv, MyApplication.getInstance().getDisplayImageOptions());
+		MyApplication.getInstance().getBitmapUtil().display(iv, url);
 	}
 	
 	

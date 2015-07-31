@@ -227,7 +227,7 @@ public class MeFragmentForBaiJia extends BaseFragment implements OnClickListener
 	 * ******/
 	void setValue(MyInfoBean myInfoBean)
 	{
-		MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.nullToString(myInfoBean.getLogo()), iv_icon, MyApplication.getInstance().getDisplayImageOptions());
+		initPic(ToolsUtil.nullToString(myInfoBean.getLogo()), iv_icon);
 		shop_main_attentionvalue_textview.setText(myInfoBean.getFollowingCount()+"");
 		shop_main_fansvalue_textview.setText(myInfoBean.getFollowerCount()+"");
 		shop_main_praisevalue_textview.setText(myInfoBean.getCommunityCount()+"");
@@ -287,5 +287,12 @@ public class MeFragmentForBaiJia extends BaseFragment implements OnClickListener
 				
 			}
 		}, getActivity());
+	}
+	
+	/****
+	 * 加载图片
+	 * */
+	void initPic(final String url, final ImageView iv) {
+		MyApplication.getInstance().getBitmapUtil().display(iv, url);
 	}
 }

@@ -99,7 +99,7 @@ int buyCount=0;
 	 holder.affirmorder_item_name_textview.setText(ToolsUtil.nullToString(productsDetailsInfoBean.getStoreName()));
 	 if(productsDetailsInfoBean.getProductPic()!=null && productsDetailsInfoBean.getProductPic().size()>0)
 	 {
-		 MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.getImage(ToolsUtil.nullToString(productsDetailsInfoBean.getProductPic().get(0).getLogo()), 320, 0), holder.affirmorder_item_icon_imageview, MyApplication.getInstance().getDisplayImageOptions());
+		 MyApplication.getInstance().getBitmapUtil().display(holder.affirmorder_item_icon_imageview, ToolsUtil.getImage(ToolsUtil.nullToString(productsDetailsInfoBean.getProductPic().get(0).getLogo()), 320, 0));
 	 }
 	 holder.affirmorder_item_productname_textview.setText(ToolsUtil.nullToString(productsDetailsInfoBean.getProductName()));
 	 holder.affirmorder_item_productsize_textview.setText(prioductSizesInfoBean.getSize());

@@ -94,7 +94,7 @@ public class BrandAdapter extends BaseAdapterWithUtil {
 		if(iv!=null)
 		{
 			iv.setVisibility(View.VISIBLE);
-		    MyApplication.getInstance().getImageLoader().displayImage(url, iv, MyApplication.getInstance().getDisplayImageOptions());
+			MyApplication.getInstance().getBitmapUtil().display(iv, url);
 		}
 	}
 

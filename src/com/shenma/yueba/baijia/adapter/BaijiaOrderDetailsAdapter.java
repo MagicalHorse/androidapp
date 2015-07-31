@@ -107,7 +107,7 @@ List<BaiJiaOrdeDetailsInfoBean> obj_list=new ArrayList<BaiJiaOrdeDetailsInfoBean
 	 holder.productinfolist_layout_huodong_linearlayout.removeAllViews();
 	 BaiJiaOrdeDetailsInfoBean baiJiaOrdeDetailsInfoBean= obj_list.get(position);
 	 holder.affirmorder_item_icon_imageview.setTag(baiJiaOrdeDetailsInfoBean);
-	 MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.getImage(ToolsUtil.nullToString(baiJiaOrdeDetailsInfoBean.getProductPic()), 320, 0), holder.affirmorder_item_icon_imageview, MyApplication.getInstance().getDisplayImageOptions());
+	 MyApplication.getInstance().getBitmapUtil().display(holder.affirmorder_item_icon_imageview, ToolsUtil.getImage(ToolsUtil.nullToString(baiJiaOrdeDetailsInfoBean.getProductPic()), 320, 0));
 	 holder.affirmorder_item_productname_textview.setText(ToolsUtil.nullToString(baiJiaOrdeDetailsInfoBean.getProductName()));
 	 holder.affirmorder_item_productsize_textview.setText(ToolsUtil.nullToString(baiJiaOrdeDetailsInfoBean.getSizeName()+"："+baiJiaOrdeDetailsInfoBean.getSizeValue()));
 	 holder.affirmorder_item_productcount_textview.setText(ToolsUtil.nullToString("x"+baiJiaOrdeDetailsInfoBean.getProductCount()));

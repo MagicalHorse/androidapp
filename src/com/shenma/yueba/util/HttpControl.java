@@ -1580,6 +1580,18 @@ public class HttpControl {
 	 * 败家申请退款（认证买手商品退款）
 	 * 
 	 * @param OrderNo String 订单编号" 必填
+     * @return void
+	 * **/
+	public void cancelOrder(String OrderNo, boolean showDialog, final HttpCallBackInterface httpCallBack,Context context) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("OrderNo",OrderNo);
+		BasehttpSend(map, context, HttpConstants.METHOD_CANCELORDER,httpCallBack, BaseRequest.class, showDialog,false);
+	}
+	
+	/**
+	 * 败家取消订单
+	 * 
+	 * @param OrderNo String 订单编号" 必填
      * @param Count int 退货数量
      * @param Reason string 退货原因
      * @return void

@@ -88,9 +88,6 @@ public class MessageFragment extends Fragment{
 	
 	void initView(View v)
 	{
-		/*Fragment recommendedCircleFragment=new RecommendedCircleFragment();
-		Fragment myCircleFragment=new MyCircleFragment();
-		*/
 		fragment_list.add(new FragmentBean("消息", -1, new MsgListView(getActivity())));
 		fragment_list.add(new FragmentBean("动态", -1, new DynamicListView(getActivity())));
 		

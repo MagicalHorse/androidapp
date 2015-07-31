@@ -3,6 +3,7 @@ package im.control;
 import im.form.BaseChatBean;
 import android.content.Context;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TextView.BufferType;
@@ -83,7 +84,10 @@ public class TextViewManager extends ChatBaseManager{
 		chat_layout_item_leftmsg_name_textview.setText(ToolsUtil.nullToString(bean.getUserName()));
 		chat_layout_item_leftmsg_time_textview.setText(ToolsUtil.nullToString(bean.getCreationDate()));
 		chat_layout_item_leftmsg_msg_textview.setText(ToolsUtil.analysisFace(context,(String)bean.getContent()),BufferType.SPANNABLE);
-		MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.nullToString(bean.getLogo()), chat_layout_item_leftmsg_icon_roundimageview, MyApplication.getInstance().getDisplayImageOptions());
-		
+		initBitmap(ToolsUtil.nullToString(bean.getLogo()), chat_layout_item_leftmsg_icon_roundimageview);
+	}
+	
+	void initBitmap(final String url, final ImageView iv) {
+		MyApplication.getInstance().getBitmapUtil().display(iv, url);
 	}
 }

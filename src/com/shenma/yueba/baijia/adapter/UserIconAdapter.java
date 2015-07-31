@@ -70,13 +70,10 @@ public class UserIconAdapter extends BaseAdapter {
 		int width=gridbview.getWidth();
 		width=width/maxCount;
 		Log.i("TAG", "WIDTH:"+width);
-		//riv.setLayoutParams(new AbsListView.LayoutParams(width, width));
-		//riv.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.WRAP_CONTENT, AbsListView.LayoutParams.WRAP_CONTENT));
 		if (position == (maxCount - 1)) {
 			riv.setImageResource(R.drawable.test003);
 		} else {
 			riv.setImageResource(R.drawable.default_pic);
-			//MyApplication.getInstance().getImageLoader().displayImage(usersInfoBean.getLogo(), riv);
 		}
 		riv.setOnClickListener(new OnClickListener() {
 			

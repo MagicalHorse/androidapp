@@ -285,7 +285,7 @@ LinearLayout baijia_orderdetails_footer_right_linearlayout;//按钮的父对象
 		customer_account_content.setText(ToolsUtil.nullToString(baiJiaOrdeDetailsInfoBean.getBuyerName()));
 		tv_customer_phone_content.setText(ToolsUtil.nullToString(baiJiaOrdeDetailsInfoBean.getBuyerMobile()));
 		tv_get_address_content.setText(ToolsUtil.nullToString(baiJiaOrdeDetailsInfoBean.getPickAddress()));
-		MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.nullToString(baiJiaOrdeDetailsInfoBean.getBuyerLogo()), riv_customer_head, MyApplication.getInstance().getDisplayImageOptions());
+		MyApplication.getInstance().getBitmapUtil().display(riv_customer_head, ToolsUtil.nullToString(baiJiaOrdeDetailsInfoBean.getBuyerLogo()));
 		obj_list.add(baiJiaOrdeDetailsInfoBean);
 		riv_customer_head.setTag(baiJiaOrdeDetailsInfoBean.getBuyerId());
 		//如果当前订单状态是已提货 体显示 分享按钮

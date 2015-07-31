@@ -161,8 +161,7 @@ public class PubuliuManager {
     				pubuliy_right_linearlayout.addView(parentview, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
     			}
     			ToolsUtil.setFontStyle(context, parentview, R.id.pubuliu_item_layout_pricevalue_textview,R.id.pubuliu_item_layout_name_textview,R.id.pubuliu_item_layout_like_textview,R.id.pubuliu_item_layout_price_textview);
-    			MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.getImage(ToolsUtil.nullToString(myFavoriteProductListPic.getPic()), 320, 0), iv, MyApplication.getInstance().getDisplayImageOptions());
-    			//MyApplication.getInstance().getImageLoader().displayImage(myFavoriteProductListPic.getPic(), iv, MyApplication.getInstance().getDisplayImageOptions());
+    			initPic(ToolsUtil.getImage(ToolsUtil.nullToString(myFavoriteProductListPic.getPic()), 320, 0), iv);
     		}
     	}
     }
@@ -174,19 +173,7 @@ public class PubuliuManager {
 			switch(v.getId())
 			{
 			case R.id.pubuliu_item_layout_like_textview:
-				/*if(v.getTag()!=null && v.getTag() instanceof MyFavoriteProductListInfo)
-				{
-					MyFavoriteProductListInfo  bean=(MyFavoriteProductListInfo)v.getTag();
-					MyFavoriteProductListLikeUser myFavoriteProductListLikeUser=bean.getLikeUser();
-					if(myFavoriteProductListLikeUser.isIsLike())
-					{
-						submitAttention(0,bean,v);
-					}else
-					{
-						submitAttention(1,bean,v);
-					}
-					
-				}*/
+				
 				if(v.getTag()!=null && v.getTag() instanceof MyFavoriteProductListInfo)
 				{
 					MyFavoriteProductListInfo  bean=(MyFavoriteProductListInfo)v.getTag();
@@ -204,23 +191,12 @@ public class PubuliuManager {
 		}
 	};
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	/****
+	 * 加载图片
+	 * */
+	void initPic(final String url, final ImageView iv) {
+		MyApplication.getInstance().getBitmapUtil().display(iv, url);
+	}
 	
 	
 	/****

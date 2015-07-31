@@ -77,7 +77,11 @@ public class DynamicAdapter extends BaseAdapterWithUtil {
 		holder.tv_name.setText(ToolsUtil.nullToString(infobean.getUserName()));
 		holder.tv_dynamic_type.setText(ToolsUtil.nullToString(infobean.getContext()));
 		holder.tv_time.setText(ToolsUtil.nullToString(infobean.getCreateTime()));
-		MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.nullToString(infobean.getLogo()), holder.iv_dynamic_icon, MyApplication.getInstance().getDisplayImageOptions());
-		MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.nullToString(infobean.getDataLogo()), holder.iv_dynamic_img, MyApplication.getInstance().getDisplayImageOptions());
+		initBitmap(ToolsUtil.nullToString(infobean.getLogo()), holder.iv_dynamic_icon);
+		initBitmap(ToolsUtil.nullToString(infobean.getDataLogo()), holder.iv_dynamic_img);
+	}
+	void initBitmap(final String url, final ImageView iv)
+	{
+		MyApplication.getInstance().getBitmapUtil().display(iv, url);
 	}
 }

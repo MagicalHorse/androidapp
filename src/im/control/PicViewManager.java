@@ -94,10 +94,11 @@ public class PicViewManager extends ChatBaseManager implements OnClickListener{
 			chat_layout_item_leftmsg_name_textview.setText(ToolsUtil.nullToString(picbean.getUserName()));
 			chat_layout_item_leftmsg_time_textview.setText(ToolsUtil.nullToString(picbean.getCreationDate()));
 			chat_layout_item_leftimg_msg_imageview.setTag(bean);
-			MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.nullToString(picbean.getLogo()), chat_layout_item_leftimg_icon_roundimageview, MyApplication.getInstance().getDisplayImageOptions());
+			initBitmap(ToolsUtil.nullToString(picbean.getLogo()), chat_layout_item_leftimg_icon_roundimageview);
+			
 			if(picbean.isSuccess())
 			{
-				MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.nullToString((String)picbean.getContent()), chat_layout_item_leftimg_msg_imageview, MyApplication.getInstance().getDisplayImageOptions());
+				initBitmap(ToolsUtil.nullToString((String)picbean.getContent()), chat_layout_item_leftimg_msg_imageview);
 			}
 			
 			
@@ -139,5 +140,9 @@ public class PicViewManager extends ChatBaseManager implements OnClickListener{
 			
 			break;
 		}
+	}
+	
+	void initBitmap(final String url, final ImageView iv) {
+		MyApplication.getInstance().getBitmapUtil().display(iv, url);
 	}
 }

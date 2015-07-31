@@ -280,14 +280,7 @@ public class CircleInfoActivity extends BaseActivityWithTopView implements
 							tv_top_title_below.setText("人数（"+bean.getMemberCount()+"）");
 							tv_circle_name.setText(ToolsUtil.nullToString(bean
 									.getGroupName()));
-							MyApplication
-									.getInstance()
-									.getImageLoader()
-									.displayImage(
-											ToolsUtil.getImage(ToolsUtil
-													.nullToString(bean
-															.getGroupPic()),
-													100, 100), riv_circle_head, MyApplication.getInstance().getDisplayImageOptions());
+							MyApplication.getInstance().getBitmapUtil().display(riv_circle_head, ToolsUtil.getImage(ToolsUtil.nullToString(bean.getGroupPic()),100, 100));
 							List<Users> users = bean.getUsers();
 							if (users != null && users.size() > 0) {
 								mList.clear();

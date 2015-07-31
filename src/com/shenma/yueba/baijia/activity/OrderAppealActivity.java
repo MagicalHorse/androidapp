@@ -140,7 +140,7 @@ View parementView;
 	 * ***/
 	void setValue()
 	{
-		MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.nullToString(bean.getBuyerLogo()), orderappeal_layout_buyericon_textview, MyApplication.getInstance().getDisplayImageOptions());
+		MyApplication.getInstance().getBitmapUtil().display(orderappeal_layout_buyericon_textview, ToolsUtil.nullToString(bean.getBuyerLogo()));
 		orderappeal_layout_buyernovalue_textview.setText(bean.getBuyerName());
 		orderappeal_layout_buyermobilevalue_textview.setText(bean.getBuyerMobile());
 		orderappeal_layout_goodsaddressvalue_textview.setText(bean.getPickAddress());

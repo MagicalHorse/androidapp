@@ -515,11 +515,6 @@ public class BuyerStreetFragment extends Fragment {
 	 * 加载图片
 	 * */
 	void initPic(final String url, final ImageView iv) {
-		Log.i("TAG", "URL:" + url);
-		MyApplication
-				.getInstance()
-				.getImageLoader()
-				.displayImage(url, iv,
-						MyApplication.getInstance().getDisplayImageOptions());
+		MyApplication.getInstance().getBitmapUtil().display(iv, url);
 	}
 }

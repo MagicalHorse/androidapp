@@ -60,8 +60,7 @@ public class MyCircleForSocialAdapter extends BaseAdapterWithUtil {
 		} else {
 			holder = (Holder) convertView.getTag();
 		}
-
-		MyApplication.getInstance().getImageLoader().displayImage(mList.get(position).getLogo(), holder.ri_circle_head, MyApplication.getInstance().getDisplayImageOptions());
+		initBitmap(mList.get(position).getLogo(), holder.ri_circle_head);
 		holder.tv_circle_name.setText(ToolsUtil.nullToString(mList.get(position).getName()));
 		holder.tv_attention_count.setText("成员："+ToolsUtil.nullToString(mList.get(position).getUserCount()));
 		FontManager.changeFonts(ctx, holder.tv_circle_name,
@@ -73,6 +72,10 @@ public class MyCircleForSocialAdapter extends BaseAdapterWithUtil {
 		RoundImageView ri_circle_head;
 		TextView tv_circle_name;
 		TextView tv_attention_count;
+	}
+	
+	void initBitmap(final String url, final ImageView iv) {
+		MyApplication.getInstance().getBitmapUtil().display(iv, url);
 	}
 
 }

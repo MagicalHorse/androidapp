@@ -332,8 +332,8 @@ public class MyCollectionActivity extends BaseActivityWithTopView{
     				pubuliy_right_linearlayout.addView(parentview, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
     			}
     			ToolsUtil.setFontStyle(MyCollectionActivity.this, parentview, R.id.pubuliu_item_layout_pricevalue_textview,R.id.pubuliu_item_layout_name_textview,R.id.pubuliu_item_layout_like_textview,R.id.pubuliu_item_layout_price_textview);
-    			MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.getImage(ToolsUtil.nullToString(myFavoriteProductListPic.getPic()), 320, 0), iv, MyApplication.getInstance().getDisplayImageOptions());
-    			//MyApplication.getInstance().getImageLoader().displayImage(myFavoriteProductListPic.getPic(), iv, MyApplication.getInstance().getDisplayImageOptions());
+    			MyApplication.getInstance().getBitmapUtil().display(iv, ToolsUtil.getImage(ToolsUtil.nullToString(myFavoriteProductListPic.getPic()), 320, 0));
+    			
     		}
     	}
     }

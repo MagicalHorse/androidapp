@@ -446,7 +446,7 @@ public class ShopMainActivity extends FragmentActivity {
     	}
     	fragmentBean_list.clear();
     	shop_main_head_layout_tab_linearlayout.removeAllViews();
-    	MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.nullToString(userInfoBean.getLogo()), shop_main_layout_icon_imageview, MyApplication.getInstance().getDisplayImageOptions());
+    	MyApplication.getInstance().getBitmapUtil().display(shop_main_layout_icon_imageview, ToolsUtil.nullToString(userInfoBean.getLogo()));
     	shop_main_layout_name_textview.setText(ToolsUtil.nullToString(userInfoBean.getUserName()));
     	shop_main_layout_market_textview.setText(ToolsUtil.nullToString(userInfoBean.getAddress()));
     	shop_main_attentionvalue_textview.setText(ToolsUtil.nullToString(userInfoBean.getFollowingCount()+""));

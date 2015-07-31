@@ -150,13 +150,8 @@ public class AffirmOrderActivity extends BaseActivityWithTopView implements
 		affirmorder_layout_icon_roundimageview.setTag(productsDetailsInfoBean.getBuyerId());
 		affirmorder_layout_icon_roundimageview
 				.setOnClickListener(onClickListener);
-		MyApplication
-				.getInstance()
-				.getImageLoader()
-				.displayImage(
-						ToolsUtil.nullToString(productsDetailsInfoBean
-								.getBuyerLogo()),
-						affirmorder_layout_icon_roundimageview);
+		MyApplication.getInstance().getBitmapUtil().display(affirmorder_layout_icon_roundimageview, ToolsUtil.nullToString(productsDetailsInfoBean.getBuyerLogo()));
+
 		affirmorder_layout_icon_imageview = (ImageView) findViewById(R.id.affirmorder_layout_icon_imageview);
 		// 设置联系电话
 		affirmorder_layout_icon_imageview.setTag(ToolsUtil

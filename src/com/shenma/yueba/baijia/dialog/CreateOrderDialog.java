@@ -101,7 +101,7 @@ public class CreateOrderDialog extends AlertDialog implements android.view.View.
 		List<ProductsDetailsTagInfo> productsDetailsTagInfo_list=productsDetailsInfoBean.getProductPic();
 		if(productsDetailsTagInfo_list!=null && productsDetailsTagInfo_list.size()>0)
 		{
-			MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.getImage(ToolsUtil.nullToString(productsDetailsTagInfo_list.get(0).getLogo()), 320, 0), chat_product_head_layout_imageview, MyApplication.getInstance().getDisplayImageOptions());
+			initBitmap(ToolsUtil.getImage(ToolsUtil.nullToString(productsDetailsTagInfo_list.get(0).getLogo()), 320, 0), chat_product_head_layout_imageview);
 		}
 		//产品名称
 		TextView chat_product_head_layout_name_textview=(TextView)ll.findViewById(R.id.chat_product_head_layout_name_textview);
@@ -355,5 +355,10 @@ public class CreateOrderDialog extends AlertDialog implements android.view.View.
 			create_dialog_jia_button.setSelected(false);
 		}
 		
+	}
+	
+	void initBitmap(final String url, final ImageView iv)
+	{
+		MyApplication.getInstance().getBitmapUtil().display(iv, url);
 	}
 }
