@@ -334,7 +334,7 @@ public class UserConfigActivity extends BaseActivityWithTopView implements
 	protected void onResume() {
 		String iconUrl = SharedUtil.getStringPerfernece(UserConfigActivity.this, SharedUtil.user_logo);
 		if(!TextUtils.isEmpty(iconUrl)){
-			MyApplication.getInstance().getImageLoader().displayImage(iconUrl, people_config_str2_imageview);
+			MyApplication.getInstance().getBitmapUtil().display(people_config_str2_imageview, iconUrl);
 		}
 		tv_nickname_value.setText(SharedUtil.getStringPerfernece(mContext,
 				SharedUtil.user_names));

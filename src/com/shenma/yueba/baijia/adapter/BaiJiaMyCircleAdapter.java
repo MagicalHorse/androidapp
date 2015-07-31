@@ -62,7 +62,7 @@ public class BaiJiaMyCircleAdapter extends BaseAdapterWithUtil {
 			holder = (Holder) convertView.getTag();
 		}
 		MyCircleInfo myCircleInfo = items.get(position);
-		MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.nullToString(myCircleInfo.getLogo()), holder.iv_head,  MyApplication.getInstance().getDisplayImageOptions());
+		MyApplication.getInstance().getBitmapUtil().display(holder.iv_head, ToolsUtil.nullToString(myCircleInfo.getLogo()));
 		
 		holder.tv_product_name.setText(ToolsUtil.nullToString(myCircleInfo.getName()));
 		int count=myCircleInfo.getUnReadCount();

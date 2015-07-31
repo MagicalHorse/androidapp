@@ -69,8 +69,13 @@ public class ImageTextlAdapter extends BaseAdapterWithUtil {
 	{
 		BrandSearchInfo brandSearchInfo=mList.get(position);
 		String url=ToolsUtil.getImage(ToolsUtil.nullToString(brandSearchInfo.getLogo()), 320, 0);
-		MyApplication.getInstance().getImageLoader().displayImage(url, holder.imagetext_item_imageview, MyApplication.getInstance().getDisplayImageOptions());
+		initBitmap(url, holder.imagetext_item_imageview);
 		holder.imagetext_item_textview.setText(brandSearchInfo.getName());
 	}
 
+	void initBitmap(final String url, final ImageView iv)
+	{
+		MyApplication.getInstance().getBitmapUtil().display(iv, url);
+	}
+	
 }

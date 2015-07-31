@@ -2,8 +2,8 @@ package com.shenma.yueba.constants;
 
 public class HttpConstants {
 	
-//    private static String baseUrl = "http://123.57.77.86:8080/app/";//测试地址
-    private static String baseUrl = "http://123.57.52.187:8080/app/";//开发地址
+    private static String baseUrl = "http://123.57.77.86:8080/app/";//测试地址
+//    private static String baseUrl = "http://123.57.52.187:8080/app/";//开发地址
 	private static String USERURL = baseUrl + "User/";// USER接口
 	private static String COMMONURL = baseUrl + "Common/";
 	private static String ADDRESS = baseUrl + "Address/";// 地址管理
@@ -658,6 +658,12 @@ public class HttpConstants {
 	 */
 	
 	public static String METHOD_APPLY_RMA = Order+ "Apply_Rma";
+	
+	/**
+	 * 败家取消订单
+	 */
+	
+	public static String METHOD_CANCELORDER = Order+ "Void";
 	
 	/**
 	 * 败家 确认提货

@@ -101,7 +101,11 @@ public class LinkViewManager extends ChatBaseManager {
 		chat_layout_item_leftmsg_name_textview.setText(ToolsUtil.nullToString(bean.getUserName()));
 		chat_layout_item_leftmsg_time_textview.setText(ToolsUtil.nullToString(bean.getCreationDate()));
 		chat_layout_item_leftmsg_msg_textview.setText(ToolsUtil.analysisFace(context,contecnt_str),BufferType.SPANNABLE);
-		MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.nullToString(bean.getLogo()), chat_layout_item_leftmsg_icon_roundimageview, MyApplication.getInstance().getDisplayImageOptions());
-		MyApplication.getInstance().getImageLoader().displayImage(contecnt_str, chat_layout_item_leftmsg_productimg_textview, MyApplication.getInstance().getDisplayImageOptions());
+		initBitmap(ToolsUtil.nullToString(bean.getLogo()), chat_layout_item_leftmsg_icon_roundimageview);
+		initBitmap(contecnt_str, chat_layout_item_leftmsg_productimg_textview);
+	}
+	
+	void initBitmap(final String url, final ImageView iv) {
+		MyApplication.getInstance().getBitmapUtil().display(iv, url);
 	}
 }

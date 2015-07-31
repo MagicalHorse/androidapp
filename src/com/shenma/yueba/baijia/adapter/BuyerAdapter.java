@@ -3,21 +3,8 @@ package com.shenma.yueba.baijia.adapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.text.TextUtils;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-
+import com.lidroid.xutils.BitmapUtils;
+import com.lidroid.xutils.bitmap.BitmapDisplayConfig;
 import com.shenma.yueba.ChatActivity;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
@@ -39,6 +26,20 @@ import com.shenma.yueba.view.MyGridView;
 import com.shenma.yueba.view.RoundImageView;
 import com.shenma.yueba.view.TagImageView;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
 /**
  * @author gyj
  * @version 创建时间：2015-6-11 上午10:55:13 程序的简单说明
@@ -48,10 +49,11 @@ public class BuyerAdapter extends BaseAdapter {
 	List<ProductsInfoBean> Products = new ArrayList<ProductsInfoBean>();
 	Activity activity;
 	HttpControl httpContril = new HttpControl();
-
+	
 	public BuyerAdapter(List<ProductsInfoBean> Products, Activity activity) {
 		this.Products = Products;
 		this.activity = activity;
+		
 	}
 
 	@Override
@@ -166,8 +168,7 @@ public class BuyerAdapter extends BaseAdapter {
 				params.height = viewWith;
 				riv.setLayoutParams(params);
 				if (i != 8) {
-					MyApplication.getInstance().getImageLoader()
-							.displayImage(users.get(i).getLogo(), riv);
+					initBitmap(users.get(i).getLogo(), riv);
 				} else {
 					riv.setBackgroundResource(R.drawable.test003);
 				}
@@ -265,9 +266,10 @@ public class BuyerAdapter extends BaseAdapter {
 		// 买家头像
 		holder.customImage.setTag(productsInfoBean.getBuyerid());
 		holder.customImage.setImageResource(R.drawable.default_pic);
-		// 下载买家头像
+		/*// 下载买家头像
 		initPic(productsInfoBean.getBuyerLogo(), holder.customImage,
-				R.drawable.default_pic);
+				R.drawable.default_pic);*/
+		initBitmap(productsInfoBean.getBuyerLogo(), holder.customImage);
 		ProductPicInfoBean productPicInfoBean = productsInfoBean
 				.getProductPic();
 		if (productPicInfoBean == null) {
@@ -299,9 +301,7 @@ public class BuyerAdapter extends BaseAdapter {
 		String pic_name = productPicInfoBean.getName();
 		Log.i("TAG", "pic_name=" + pic_name);
 		// 加载商品图片
-		initPic(ToolsUtil.getImage(ToolsUtil.nullToString(pic_name), 640, 0),
-				holder.baijia_tab1_item_productcontent_imageview,
-				R.drawable.default_pic);
+		initBitmap(ToolsUtil.getImage(ToolsUtil.nullToString(pic_name), 640, 0), holder.baijia_tab1_item_productcontent_imageview);
 		LikeUsersInfoBean userinfo = productsInfoBean.getLikeUsers();
 		if (userinfo != null && userinfo.getUsers() != null) {
 			holder.tv_count.setTag(productsInfoBean);
@@ -446,16 +446,10 @@ public class BuyerAdapter extends BaseAdapter {
 				}, activity);
 	}
 
-	/****
-	 * 加载图片
-	 * */
-	void initPic(final String url, final ImageView iv, final int image) {
-		Log.i("TAG", "URL:" + url);
-		MyApplication
-				.getInstance()
-				.getImageLoader()
-				.displayImage(url, iv,
-						MyApplication.getInstance().getDisplayImageOptions());
+	
+	void initBitmap(final String url, final ImageView iv)
+	{
+		MyApplication.getInstance().getBitmapUtil().display(iv, url);
 	}
 
 	/********

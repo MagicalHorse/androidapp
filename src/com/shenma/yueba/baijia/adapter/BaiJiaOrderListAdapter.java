@@ -251,7 +251,7 @@ public class BaiJiaOrderListAdapter extends BaseAdapter {
 	};
 
 	void initPic(ImageView iv, String url) {
-		MyApplication.getInstance().getImageLoader().displayImage(url, iv,MyApplication.getInstance().getDisplayImageOptions());
+		MyApplication.getInstance().getBitmapUtil().display(iv, url);
 	}
 	
 	

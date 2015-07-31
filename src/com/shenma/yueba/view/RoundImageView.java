@@ -74,6 +74,10 @@ public class RoundImageView extends ImageView {
 		this.measure(0, 0);
 		if (drawable.getClass() == NinePatchDrawable.class)
 			return;
+		if(!(drawable instanceof BitmapDrawable))
+		{
+			return;
+		}
 		Bitmap b = ((BitmapDrawable) drawable).getBitmap();
 		Bitmap bitmap = b.copy(Bitmap.Config.ARGB_8888, true);
 		if (defaultWidth == 0) {

@@ -111,11 +111,7 @@ public class MyCircleInfoAdapter extends BaseAdapterWithUtil {
 			holder.iv_delete.setVisibility(View.GONE);
 		}
 		if (!TextUtils.isEmpty(mList.get(position).getLogo())) {
-			MyApplication
-					.getInstance()
-					.getImageLoader()
-					.displayImage(mList.get(position).getLogo(),
-							holder.riv_head);
+			initBitmap(mList.get(position).getLogo(), holder.riv_head);
 		}
 		holder.tv_text.setText(mList.get(position).getNickName());
 
@@ -200,5 +196,10 @@ public class MyCircleInfoAdapter extends BaseAdapterWithUtil {
 
 					}
 				}, ctx);
+	}
+	
+	void initBitmap(final String url, final ImageView iv)
+	{
+		MyApplication.getInstance().getBitmapUtil().display(iv, url);
 	}
 }

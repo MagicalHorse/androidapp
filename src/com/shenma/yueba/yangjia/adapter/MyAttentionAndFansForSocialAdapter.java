@@ -91,8 +91,7 @@ public class MyAttentionAndFansForSocialAdapter extends BaseAdapterWithUtil {
 		} else {
 			holder = (Holder) convertView.getTag();
 		}
-		
-		MyApplication.getInstance().getImageLoader().displayImage(mList.get(position).getUserLogo(), holder.riv_head);
+		initBitmap(ToolsUtil.nullToString(mList.get(position).getUserLogo()), holder.riv_head);
 		holder.tv_name.setText(ToolsUtil.nullToString(mList.get(position).getUserName()));
 		holder.tv_fans_count.setText("粉丝 "+ToolsUtil.nullToString(mList.get(position).getFansCount()));
 		holder.tv_atttention_count.setText("关注  "+ToolsUtil.nullToString(mList.get(position).getFavoiteCount()));
@@ -116,4 +115,7 @@ public class MyAttentionAndFansForSocialAdapter extends BaseAdapterWithUtil {
 		TextView tv_has_attention;
 	}
 
+	void initBitmap(final String url, final ImageView iv) {
+		MyApplication.getInstance().getBitmapUtil().display(iv, url);
+	}
 }

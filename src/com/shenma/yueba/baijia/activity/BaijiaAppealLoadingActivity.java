@@ -154,7 +154,7 @@ HttpControl httpControl=new HttpControl();
 	 * ***/
 	void setValue()
 	{
-		MyApplication.getInstance().getImageLoader().displayImage("", appealloading_layout_buyericon_roundimageview, MyApplication.getInstance().getDisplayImageOptions());
+		MyApplication.getInstance().getBitmapUtil().display(appealloading_layout_buyericon_roundimageview, "");
 		//申诉时间
 		appealloading_layout_appealtimevalue_textview.setText("");
 		//申诉进度

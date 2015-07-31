@@ -61,7 +61,7 @@ public class QRCodeShareDialog extends Dialog implements android.view.View.OnCli
 	void initView()
 	{
 		RoundImageView qzcodeshare_layouyt_customview = (RoundImageView) ll.findViewById(R.id.qzcodeshare_layouyt_customview);
-		MyApplication.getInstance().getImageLoader().displayImage(SharedUtil.getHeadImage(getContext()), qzcodeshare_layouyt_customview);
+		initBitmap(SharedUtil.getHeadImage(getContext()), qzcodeshare_layouyt_customview);
 		qzcodeshare_layouyt_close_imageview=(ImageView)ll.findViewById(R.id.qzcodeshare_layouyt_close_imageview);
 		qzcodeshare_layout_content_imageview = (ImageView)ll.findViewById(R.id.qzcodeshare_layout_content_imageview);
 		qzcodeshare_layout_title_textview=(TextView)ll.findViewById(R.id.qzcodeshare_layout_title_textview);
@@ -99,5 +99,10 @@ public class QRCodeShareDialog extends Dialog implements android.view.View.OnCli
 		case R.id.qzcodeshare_layout_share_button:
 			break;
 		}
+	}
+	
+	void initBitmap(final String url, final ImageView iv)
+	{
+		MyApplication.getInstance().getBitmapUtil().display(iv, url);
 	}
 }

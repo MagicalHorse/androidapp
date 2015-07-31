@@ -98,7 +98,7 @@
             android:id="@+id/baijia_tab1_item_productcontent_imageview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scaleType="fitXY" />
+            android:scaleType="centerCrop" />
 
         <com.shenma.yueba.view.TagImageView
             android:id="@+id/baijia_tab1_item_productcontent_tagimageview"

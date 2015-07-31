@@ -101,7 +101,7 @@ public class MeFragmentForYangJia extends BaseFragment implements
 		tv_nickname.setText(ToolsUtil.nullToString(SharedUtil.getStringPerfernece(getActivity(), SharedUtil.user_names)));
 		String iconUrl = SharedUtil.getStringPerfernece(getActivity(), SharedUtil.user_logo);
 		if(!TextUtils.isEmpty(iconUrl)){
-			MyApplication.getInstance().getImageLoader().displayImage(iconUrl, iv_icon);
+			initBitmap(iconUrl, iv_icon);
 		}
 		super.onResume();
 	}
@@ -142,5 +142,9 @@ public class MeFragmentForYangJia extends BaseFragment implements
 			break;
 		}
 
+	}
+	
+	void initBitmap(final String url, final ImageView iv) {
+		MyApplication.getInstance().getBitmapUtil().display(iv, url);
 	}
 }

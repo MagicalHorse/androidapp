@@ -324,8 +324,7 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView
 				params.height = item_width;
 				riv.setLayoutParams(params);
 				if (i != 8) {
-					MyApplication.getInstance().getImageLoader()
-							.displayImage(users.get(i).getLogo(), riv);
+					initPic(ToolsUtil.nullToString(users.get(i).getLogo()), riv);
 				} else {
 					riv.setBackgroundResource(R.drawable.test003);
 				}
@@ -462,11 +461,7 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView
 	 * */
 	void initPic(final String url, final ImageView iv) {
 		Log.i("TAG", "URL:" + url);
-		MyApplication
-				.getInstance()
-				.getImageLoader()
-				.displayImage(url, iv,
-						MyApplication.getInstance().getDisplayImageOptions());
+		MyApplication.getInstance().getBitmapUtil().display(iv, url);
 	}
 
 	void setFont() {

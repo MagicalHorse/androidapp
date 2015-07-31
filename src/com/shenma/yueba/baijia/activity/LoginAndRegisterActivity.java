@@ -146,7 +146,6 @@ public class LoginAndRegisterActivity extends FragmentActivity implements OnClic
 
 	private void initView() {
 		riv_head = (RoundImageView) findViewById(R.id.riv_head);
-		//MyApplication.getInstance().getImageLoader().displayImage(SharedUtil.getStringPerfernece(LoginAndRegisterActivity.this, SharedUtil.user_logo), riv_head);
 		tv_login = (TextView) findViewById(R.id.tv_login);
 		tv_register = (TextView) findViewById(R.id.tv_register);
 		tv_login.setOnClickListener(this);

@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -173,7 +174,7 @@ public class CircleView extends BaseView{
 				
 			}
 			TuiJianCircleInfo myCircleInfo=items.get(position);
-			MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.nullToString(myCircleInfo.getLogo()), holder.riv,MyApplication.getInstance().getDisplayImageOptions());
+			initPic(ToolsUtil.nullToString(myCircleInfo.getLogo()), holder.riv);
 			holder.tv_circle_name.setText(ToolsUtil.nullToString(myCircleInfo.getName()));
 			holder.tv_count.setText("人数："+myCircleInfo.getMemberCount());
 			holder.tv_address.setText(ToolsUtil.nullToString(myCircleInfo.getAddress()));
@@ -312,5 +313,13 @@ public class CircleView extends BaseView{
 			requestFalshData();
 		}
 		
+	}
+	
+	
+	/****
+	 * 加载图片
+	 * */
+	void initPic(final String url, final ImageView iv) {
+		MyApplication.getInstance().getBitmapUtil().display(iv, url);
 	}
 }

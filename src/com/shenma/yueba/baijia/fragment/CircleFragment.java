@@ -78,10 +78,7 @@ public class CircleFragment extends Fragment {
 	}
 
 	void initView(View v) {
-		/*
-		 * Fragment recommendedCircleFragment=new RecommendedCircleFragment();
-		 * Fragment myCircleFragment=new MyCircleFragment();
-		 */
+		
 		fragment_list.add(new FragmentBean("推荐圈子", -1, new CircleView(getActivity())));
 		fragment_list.add(new FragmentBean("我的圈子", -1, new MyCircleView(getActivity())));
 

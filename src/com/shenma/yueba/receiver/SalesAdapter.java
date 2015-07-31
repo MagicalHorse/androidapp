@@ -61,10 +61,6 @@ public class SalesAdapter extends BaseAdapterWithUtil {
 			holder.tv_size = (TextView) convertView.findViewById(R.id.tv_size);
 			holder.tv_from_title = (TextView) convertView.findViewById(R.id.tv_from_title);
 			holder.tv_from_content = (TextView) convertView.findViewById(R.id.tv_from_content);
-//			MyApplication.getInstance().getImageLoader().displayImage("http://img3.redocn.com/20091221/20091217_fa2a743db1f556f82b9asJ320coGmYFf.jpg", 
-//					holder.iv_icon, MyApplication.getInstance().getRoundDisplayImageOptions());
-//			MyApplication.getInstance().getImageLoader().displayImage("http://img3.redocn.com/20091221/20091217_fa2a743db1f556f82b9asJ320coGmYFf.jpg", 
-//					holder.iv_product, MyApplication.getInstance().getRoundDisplayImageOptions());
 			FontManager.changeFonts(ctx, holder.tv_grade,holder.tv_name,holder.tv_time,holder.tv_money,
 					holder.tv_product_name,holder.tv_description,holder.tv_size,holder.tv_from_title,
 					holder.tv_from_content);

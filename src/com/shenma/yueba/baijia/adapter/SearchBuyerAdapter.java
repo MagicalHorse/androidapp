@@ -5,6 +5,7 @@ import java.util.List;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -72,7 +73,12 @@ public class SearchBuyerAdapter extends BaseAdapterWithUtil {
 	{
 		BrandSearchInfo brandSearchInfo=mList.get(position);
 		String url=ToolsUtil.getImage(ToolsUtil.nullToString(brandSearchInfo.getLogo()), 320, 0);
-		MyApplication.getInstance().getImageLoader().displayImage(url, holder.search_buyer_item_imageview, MyApplication.getInstance().getDisplayImageOptions());
+		initBitmap(url, holder.search_buyer_item_imageview);
 		holder.search_buyer_item_textview.setText(brandSearchInfo.getName());
+	}
+	
+	void initBitmap(final String url, final ImageView iv)
+	{
+		MyApplication.getInstance().getBitmapUtil().display(iv, url);
 	}
 }

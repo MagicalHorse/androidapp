@@ -117,7 +117,7 @@ public class AttationListAdapter extends BaseAdapterWithUtil {
 	void initValue(int position,Holder holder)
 	{
 		AttationAndFansItemBean bean=mList.get(position);
-		MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.nullToString(bean.getUserLogo()), holder.riv_head, MyApplication.getInstance().getDisplayImageOptions());
+		MyApplication.getInstance().getBitmapUtil().display(holder.riv_head, ToolsUtil.nullToString(bean.getUserLogo()));
 		holder.tv_name.setText(ToolsUtil.nullToString(bean.getUserName()));
 		holder.tv_atttention.setTag(bean);
 		holder.tv_fans_count.setText("关注  "+ToolsUtil.nullToString(bean.getFansCount()));

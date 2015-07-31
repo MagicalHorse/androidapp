@@ -128,7 +128,7 @@ public class SameCityAdapter extends BaseAdapterWithUtil {
 		
 		BrandCityWideInfo brandCityWideInfo=items.get(position);
 		holder.iv_head.setTag(brandCityWideInfo.getUserId());
-		MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.nullToString(brandCityWideInfo.getBuyerLogo()), holder.iv_head, MyApplication.getInstance().getDisplayImageOptions());
+		initBitmap(ToolsUtil.nullToString(brandCityWideInfo.getBuyerLogo()), holder.iv_head);
 		holder.nick_name.setText(ToolsUtil.nullToString(brandCityWideInfo.getUserName()));
 		holder.tv_belong.setText(ToolsUtil.nullToString(brandCityWideInfo.getAddress()));
 		holder.tv_attention.setTag(brandCityWideInfo);
@@ -155,15 +155,15 @@ public class SameCityAdapter extends BaseAdapterWithUtil {
 			  {
 			  case 0:
 				  holder.brandlist_item_imageview1.setVisibility(View.VISIBLE);
-				  MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.getImage(ToolsUtil.nullToString(pic_array[0]), 320, 0), holder.brandlist_item_imageview1, MyApplication.getInstance().getDisplayImageOptions());
+				  initBitmap(ToolsUtil.getImage(ToolsUtil.nullToString(pic_array[0]), 320, 0), holder.brandlist_item_imageview1);
 				  break;
 			  case 1:
 				  holder.brandlist_item_imageview2.setVisibility(View.VISIBLE);
-				  MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.getImage(ToolsUtil.nullToString(pic_array[1]), 320, 0), holder.brandlist_item_imageview2, MyApplication.getInstance().getDisplayImageOptions());
+				  initBitmap(ToolsUtil.getImage(ToolsUtil.nullToString(pic_array[1]), 320, 0), holder.brandlist_item_imageview2);
 				  break;
 			  case 2:
 				  holder.brandlist_item_imageview3.setVisibility(View.VISIBLE);
-				  MyApplication.getInstance().getImageLoader().displayImage(ToolsUtil.getImage(ToolsUtil.nullToString(pic_array[2]), 320, 0), holder.brandlist_item_imageview3, MyApplication.getInstance().getDisplayImageOptions());
+				  initBitmap(ToolsUtil.getImage(ToolsUtil.nullToString(pic_array[2]), 320, 0), holder.brandlist_item_imageview3);
 				  break;
 			  }
 			}
@@ -242,6 +242,11 @@ public class SameCityAdapter extends BaseAdapterWithUtil {
 				MyApplication.getInstance().showMessage(ctx, msg);
 			}
 		}, ctx);
+	}
+	
+	void initBitmap(final String url, final ImageView iv)
+	{
+		MyApplication.getInstance().getBitmapUtil().display(iv, url);
 	}
 	
 }

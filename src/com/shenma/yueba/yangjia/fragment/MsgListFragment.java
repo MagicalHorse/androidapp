@@ -91,7 +91,7 @@ public class MsgListFragment extends BaseFragment {
 				Intent intent=new Intent(getActivity(),ChatActivity.class);
 				intent.putExtra("Chat_Type", ChatActivity.chat_type_private);//类型 圈子 还是私聊
 				intent.putExtra("Chat_NAME",msgListInfo.getName());//名字
-				intent.putExtra("toUser_id",msgListInfo.getId());//touser_id
+				intent.putExtra("Chat_RoomID",msgListInfo.getRoomId());//roomid
 				getActivity().startActivity(intent);
 			}
 		});

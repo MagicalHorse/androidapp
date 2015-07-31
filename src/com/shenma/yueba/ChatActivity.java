@@ -837,16 +837,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 				chat_product_head_layout_button.setTag(bean);
 				if (productsDetailsTagInfo_list != null
 						&& productsDetailsTagInfo_list.size() > 0) {
-					MyApplication
-							.getInstance()
-							.getImageLoader()
-							.displayImage(
-									ToolsUtil.nullToString(ToolsUtil.getImage(
-											ToolsUtil
-													.nullToString(productsDetailsTagInfo_list
-															.get(0).getLogo()),
-											320, 0)),
-									chat_product_head_layout_imageview);
+					initBitmap(ToolsUtil.nullToString(ToolsUtil.getImage(ToolsUtil.nullToString(productsDetailsTagInfo_list.get(0).getLogo()),320, 0)), chat_product_head_layout_imageview);
 				}
 
 				chat_product_head_layout_name_textview
@@ -1166,6 +1157,12 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 	void outRoom()
 	{
 		SocketManger.the().outinroon();
+	}
+	
+	
+	void initBitmap(final String url, final ImageView iv)
+	{
+		MyApplication.getInstance().getBitmapUtil().display(iv, url);
 	}
 
 }
