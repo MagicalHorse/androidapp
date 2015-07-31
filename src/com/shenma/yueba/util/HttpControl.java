@@ -127,7 +127,7 @@ public class HttpControl {
 	 */
 
 	public HttpControl() {
-		httpUtils = new HttpUtils();
+		httpUtils = new HttpUtils(8000);
 	}
 
 	/**
@@ -2101,18 +2101,18 @@ public class HttpControl {
 					
 					@Override
 					public void onFailure(HttpException error, String msg) {
-						if(error.getExceptionCode() == 0){
-							Toast.makeText(context, "网络异常，请检查网络", 1000).show();
-						}else{
-
-							if (httpCallBack != null) {
+						if (httpCallBack != null) {
+							if(error.getExceptionCode() == 0){
+								httpCallBack.http_Fails(0, "网络异常，请检查网络");
+							}else 
+							{
 								httpCallBack.http_Fails(0, msg);
 							}
-							if(progressDialog!=null){
-								progressDialog.cancel();
-							}
+							
 						}
-
+						if(progressDialog!=null){
+							progressDialog.cancel();
+						}
 					}
 				});
 	}

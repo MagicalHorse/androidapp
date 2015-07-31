@@ -88,7 +88,7 @@ public class BrandListView extends BaseView{
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,long arg3) {
 				BrandInfo brandInfo=items.get(arg2);
 				Intent intent=new Intent(activity,BaijiaBrandListActivity.class);
-				intent.putExtra("BRANDID", brandInfo.getBrandId());
+				intent.putExtra("BRANDID", brandInfo);
 				activity.startActivity(intent);
 			}
 		});
