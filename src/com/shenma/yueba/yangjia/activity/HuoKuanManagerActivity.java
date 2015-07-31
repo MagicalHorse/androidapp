@@ -33,7 +33,7 @@ public class HuoKuanManagerActivity extends BaseActivityWithTopView implements
 	private TextView tv_tatal_money;
 	private TextView tv_had_withdraw_ratio;
 	private TextView tv_had_withdraw_money;
-	private NumberProgressBar numberbar_had_withdraw;
+	private NumberProgressBar numberbar_had_withdraw,numberbar_week;
 	private TextView tv_can_withdraw_ratio;
 	private TextView tv_can_withdraw_money;
 	private NumberProgressBar numberbar_can_withdraw;
@@ -46,6 +46,7 @@ public class HuoKuanManagerActivity extends BaseActivityWithTopView implements
 	int hadProgress = 0;
 	private int canProgress = 0,freezeProgress = 0,backProgress = 0;
 	private CountDownTimer timer;
+	private TextView tv_tatal_title;//总货款标题
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		MyApplication.getInstance().addActivity(this);// 加入回退栈
@@ -66,11 +67,13 @@ public class HuoKuanManagerActivity extends BaseActivityWithTopView implements
 			}
 			
 		});
+		tv_tatal_title = getView(R.id.tv_tatal_title);
 		tv_in_and_out = getView(R.id.tv_in_and_out);
 		tv_in_and_out.setOnClickListener(this);
 		tv_had_withdraw_ratio = getView(R.id.tv_had_withdraw_ratio);
 		tv_had_withdraw_money = getView(R.id.tv_had_withdraw_money);
 		tv_tatal_money = getView(R.id.tv_tatal_money);
+		numberbar_week = (NumberProgressBar) findViewById(R.id.numberbar_week);
 		numberbar_had_withdraw = (NumberProgressBar) findViewById(R.id.numberbar_had_withdraw);
 		tv_can_withdraw_ratio = getView(R.id.tv_can_withdraw_ratio);
 		tv_can_withdraw_money = getView(R.id.tv_can_withdraw_money);
@@ -83,28 +86,37 @@ public class HuoKuanManagerActivity extends BaseActivityWithTopView implements
 		numberbar_back = (NumberProgressBar) findViewById(R.id.numberbar_back);
 		
 		
+		numberbar_week.setOnProgressBarListener(this);
+		numberbar_week.setReachedBarHeight(20);
+		numberbar_week.setUnreachedBarHeight(0);
+		numberbar_week.setReachedBarColor(getResources().getColor(R.color.main_color));
+		numberbar_week.setProgressTextVisibility(ProgressTextVisibility.Invisible);
+		
+		
 		numberbar_had_withdraw.setOnProgressBarListener(this);
-		numberbar_had_withdraw.setReachedBarHeight(40);
+		numberbar_had_withdraw.setReachedBarHeight(20);
 		numberbar_had_withdraw.setUnreachedBarHeight(0);
+		numberbar_had_withdraw.setReachedBarColor(getResources().getColor(R.color.main_color));
 		numberbar_had_withdraw.setProgressTextVisibility(ProgressTextVisibility.Invisible);
 		
 		
-		
+		numberbar_can_withdraw.setReachedBarColor(getResources().getColor(R.color.main_color));
 		numberbar_can_withdraw.setOnProgressBarListener(this);
-		numberbar_can_withdraw.setReachedBarHeight(40);
+		numberbar_can_withdraw.setReachedBarHeight(20);
 		numberbar_can_withdraw.setUnreachedBarHeight(0);
 		numberbar_can_withdraw.setProgressTextVisibility(ProgressTextVisibility.Invisible);
 		
 		
-		
+		numberbar_freeze.setReachedBarColor(getResources().getColor(R.color.main_color));
 		numberbar_freeze.setOnProgressBarListener(this);
-		numberbar_freeze.setReachedBarHeight(40);
+		numberbar_freeze.setReachedBarHeight(20);
 		numberbar_freeze.setUnreachedBarHeight(0);
 		numberbar_freeze.setProgressTextVisibility(ProgressTextVisibility.Invisible);
 		
 		
+		numberbar_back.setReachedBarColor(getResources().getColor(R.color.main_color));
 		numberbar_back.setOnProgressBarListener(this);
-		numberbar_back.setReachedBarHeight(40);
+		numberbar_back.setReachedBarHeight(20);
 		numberbar_back.setUnreachedBarHeight(0);
 		numberbar_back.setProgressTextVisibility(ProgressTextVisibility.Invisible);
 		
@@ -114,7 +126,7 @@ public class HuoKuanManagerActivity extends BaseActivityWithTopView implements
 						tv_had_withdraw_money, tv_can_withdraw_ratio,
 						tv_can_withdraw_money, tv_freeze_ratio,
 						tv_freeze_money, tv_back_ratio,
-						tv_back_money);
+						tv_back_money,tv_tatal_title);
 	}
 
 	@Override
