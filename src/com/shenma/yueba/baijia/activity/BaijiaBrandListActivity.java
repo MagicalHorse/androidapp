@@ -27,6 +27,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.State;
 import com.handmark.pulltorefresh.library.PullToRefreshGridView;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.modle.BrandInfo;
 import com.shenma.yueba.baijia.modle.BrandInfoInfo;
 import com.shenma.yueba.baijia.modle.BrandInfoInfoBean;
 import com.shenma.yueba.baijia.modle.RequestBrandInfoBean;
@@ -62,7 +63,14 @@ List<BrandInfoInfo> object_list=new ArrayList<BrandInfoInfo>();
 		setContentView(parenetView);
 		super.onCreate(savedInstanceState);
 		httpControl=new HttpControl();
-		BrandId=this.getIntent().getIntExtra("BRANDID", -1);
+		if(this.getIntent().getSerializableExtra("BRANDID")==null)
+		{
+			MyApplication.getInstance().showMessage(BaijiaBrandListActivity.this, "数据错误");
+			finish();
+			return;
+		}
+		BrandInfo brandInfo=(BrandInfo)this.getIntent().getSerializableExtra("BRANDID");
+		BrandId=brandInfo.getBrandId();
 		MyApplication.getInstance().addActivity(this);
 		if(BrandId<0)
 		{
@@ -70,13 +78,13 @@ List<BrandInfoInfo> object_list=new ArrayList<BrandInfoInfo>();
 			finish();
 			return;
 		}
+		setTitle(brandInfo.getBrandName());
 		initView();
 		requestFalshData();
 	}
 	
 	void initView()
 	{
-		setTitle("品牌");
 		FontManager.changeFonts(mContext,tv_top_title);
 		setLeftTextView(new OnClickListener() {
 			
