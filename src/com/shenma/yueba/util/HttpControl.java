@@ -1577,8 +1577,8 @@ public class HttpControl {
 	
 	
 	/**
-	 * 败家申请退款（认证买手商品退款）
 	 * 
+	 * 败家取消订单
 	 * @param OrderNo String 订单编号" 必填
      * @return void
 	 * **/
@@ -1589,8 +1589,8 @@ public class HttpControl {
 	}
 	
 	/**
-	 * 败家取消订单
 	 * 
+	 * 败家申请退款（认证买手商品退款）
 	 * @param OrderNo String 订单编号" 必填
      * @param Count int 退货数量
      * @param Reason string 退货原因
