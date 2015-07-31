@@ -103,7 +103,7 @@ public class HuoKuanIncomeAndOutGoingAdapter extends BaseAdapterWithUtil {
 			}
 		});
 		
-		holder.tv_money_number.setText(ToolsUtil.nullToString(mList.get(position).getAmount()));
+		holder.tv_money_number.setText("￥"+ToolsUtil.nullToString(mList.get(position).getAmount()));
 		holder.tv_status.setText(ToolsUtil.nullToString(mList.get(position).getStatusName()));
 		holder.tv_order_muber.setText(ToolsUtil.nullToString(mList.get(position).getOrderNo()));
 		holder.tv_date.setText(ToolsUtil.nullToString(mList.get(position).getCreateDate()));

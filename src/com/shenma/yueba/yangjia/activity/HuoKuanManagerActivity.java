@@ -44,9 +44,12 @@ public class HuoKuanManagerActivity extends BaseActivityWithTopView implements
 	private TextView tv_back_money;
 	private NumberProgressBar numberbar_back;
 	int hadProgress = 0;
-	private int canProgress = 0,freezeProgress = 0,backProgress = 0;
+	private int canProgress = 0,freezeProgress = 0,backProgress = 0, weekProgress = 0;
 	private CountDownTimer timer;
 	private TextView tv_tatal_title;//总货款标题
+	private TextView tv_week_money;//本周贷款额度
+	private TextView tv_had_used_persent;
+	private TextView tv_week_amount;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		MyApplication.getInstance().addActivity(this);// 加入回退栈
@@ -67,6 +70,9 @@ public class HuoKuanManagerActivity extends BaseActivityWithTopView implements
 			}
 			
 		});
+		tv_week_money = getView(R.id.tv_week_money);
+		tv_had_used_persent = getView(R.id.tv_had_used_persent);
+		tv_week_amount = getView(R.id.tv_week_amount);
 		tv_tatal_title = getView(R.id.tv_tatal_title);
 		tv_in_and_out = getView(R.id.tv_in_and_out);
 		tv_in_and_out.setOnClickListener(this);
@@ -160,6 +166,11 @@ public class HuoKuanManagerActivity extends BaseActivityWithTopView implements
 					tv_had_withdraw_ratio.setText("已提现货款 "+ToolsUtil.nullToString(bean.getData().getPickedPercent()));
 					tv_had_withdraw_money.setText("￥"+ToolsUtil.nullToString(bean.getData().getPickedAmount()));
 					try {
+						weekProgress = (int) (100*(Double.parseDouble(ToolsUtil.nullToString(bean.getData().getUsedCredit()))/Double.parseDouble(ToolsUtil.nullToString(bean.getData().getCredit()))));
+					} catch (Exception e) {
+						weekProgress = 0;
+					}
+					try {
 						hadProgress = (int) (100*(Double.parseDouble(ToolsUtil.nullToString(bean.getData().getPickedAmount()))/Double.parseDouble(ToolsUtil.nullToString(bean.getData().getTotalAmount()))));
 //						if(hadProgress == 0){
 //							hadProgress = 2;
@@ -191,6 +202,9 @@ public class HuoKuanManagerActivity extends BaseActivityWithTopView implements
 					} catch (Exception e) {
 						backProgress = 0;
 					}
+					tv_had_used_persent.setText("已使用额度："+ToolsUtil.nullToString(bean.getData().getUsedCreditPercent()));
+					tv_week_amount.setText("￥"+ToolsUtil.nullToString(bean.getData().getUsedCredit()));
+					tv_week_money.setText("￥"+ToolsUtil.nullToString(bean.getData().getCredit()));
 					tv_can_withdraw_ratio.setText("可提现货款 "+ToolsUtil.nullToString(bean.getData().getCanPickPercent()));
 					tv_can_withdraw_money.setText("￥"+ToolsUtil.nullToString(bean.getData().getCanPickAmount()));
 					tv_freeze_ratio.setText("冻结货款 "+ToolsUtil.nullToString(bean.getData().getFrozenPercent()));
@@ -205,6 +219,7 @@ public class HuoKuanManagerActivity extends BaseActivityWithTopView implements
 								numberbar_can_withdraw.setProgress(canProgress-(int)millisUntilFinished/10);
 								numberbar_freeze.setProgress(freezeProgress-(int)millisUntilFinished/10);
 								numberbar_back.setProgress(backProgress-(int)millisUntilFinished/10);
+								numberbar_week.setProgress(weekProgress-(int)millisUntilFinished/10);
 							}
 							@Override
 							public void onFinish() {

@@ -252,9 +252,9 @@ public class MyApplication extends Application {
 		File cacheDir = StorageUtils.getCacheDirectory(context);
 		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
 				context)
-				.memoryCacheExtraOptions(800, 800)
+				.memoryCacheExtraOptions(300, 300)
 				// default = device screen dimensions
-				.discCacheExtraOptions(800, 800, CompressFormat.JPEG, 50, null)
+				.discCacheExtraOptions(300, 300, CompressFormat.JPEG, 50, null)
 				.threadPoolSize(5)
 				// default
 				.threadPriority(Thread.NORM_PRIORITY - 1)
