@@ -9,8 +9,11 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
@@ -51,20 +54,14 @@ public class BrandAdapter extends BaseAdapterWithUtil {
 		if(convertView == null){
 			holder = new Holder();
 			convertView = View.inflate(ctx, R.layout.brand_list_item, null);
-			holder.iv_brand = (ImageView) convertView.findViewById(R.id.iv_brand);
 			holder.brandlist_item_imageview1 = (ImageView) convertView.findViewById(R.id.brandlist_item_imageview1);
-			holder.brandlist_item_imageview2 = (ImageView) convertView.findViewById(R.id.brandlist_item_imageview2);
-			holder.brandlist_item_imageview3 = (ImageView) convertView.findViewById(R.id.brandlist_item_imageview3);
-			holder.brandlist_item_imageview4 = (ImageView) convertView.findViewById(R.id.brandlist_item_imageview4);
-			/*holder.brandlist_item_imageview1.setOnClickListener(onClickListener);
-			holder.brandlist_item_imageview2.setOnClickListener(onClickListener);
-			holder.brandlist_item_imageview3.setOnClickListener(onClickListener);
-			holder.brandlist_item_imageview4.setOnClickListener(onClickListener);*/
+			holder.brandlist_itemcolor_imageview = (ImageView) convertView.findViewById(R.id.brandlist_itemcolor_imageview);
+			holder.brandlist_itemname_textview = (TextView) convertView.findViewById(R.id.brandlist_itemname_textview);
+			ToolsUtil.setFontStyle(ctx, convertView, R.id.brandlist_itemname_textview);
 			convertView.setTag(holder);
 		}else{
 			holder = (Holder) convertView.getTag();
 		}
-		
 		DisplayMetrics dm=new DisplayMetrics();
 		((Activity)context).getWindowManager().getDefaultDisplay().getMetrics(dm);
 		int width=dm.widthPixels/2;
@@ -72,51 +69,23 @@ public class BrandAdapter extends BaseAdapterWithUtil {
 		{
 			Log.i("TAG", "--->>WIDTH:"+width);
 			int height=3*width/4;
-			holder.brandlist_item_imageview1.setLayoutParams(new LinearLayout.LayoutParams(width, height));
-			holder.brandlist_item_imageview2.setLayoutParams(new LinearLayout.LayoutParams(width, height));
+			convertView.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, height));
+			
+			holder.brandlist_item_imageview1.setLayoutParams(new RelativeLayout.LayoutParams(width, height));
+			//holder.brandlist_itemcolor_imageview.setLayoutParams(new RelativeLayout.LayoutParams(width, height));
 			Log.i("TAG", "--->>WIDTH:"+width+"  height:"+height);
 		}
-		
-		holder.brandlist_item_imageview1.setVisibility(View.INVISIBLE);
-		holder.brandlist_item_imageview2.setVisibility(View.INVISIBLE);
 		BrandInfo brandInfo=items.get(position);
-		//holder.iv_brand.setTag(brandInfo.getBrandId());
-		//initPic(holder.iv_brand, ToolsUtil.nullToString(brandInfo.getBrandLogo()));
-		List<ProductInFo> productInFo_list=brandInfo.getProduct();
-		for(int i=0;i<productInFo_list.size();i++)
-		{
-			ProductInFo productInFo=productInFo_list.get(i);
-			switch(i)
-			{
-			case 0:
-				initPic(holder.brandlist_item_imageview1, ToolsUtil.getImage(ToolsUtil.nullToString(productInFo.getPic()), 320, 0));
-				holder.brandlist_item_imageview1.setTag(productInFo.getProductId());
-				break;
-			case 1:
-				initPic(holder.brandlist_item_imageview2, ToolsUtil.getImage(ToolsUtil.nullToString(productInFo.getPic()), 320, 0));
-				holder.brandlist_item_imageview2.setTag(productInFo.getProductId());
-				break;
-			case 2:
-				initPic(holder.brandlist_item_imageview3, ToolsUtil.getImage(ToolsUtil.nullToString(productInFo.getPic()), 320, 0));
-				holder.brandlist_item_imageview3.setTag(productInFo.getProductId());
-				break;
-			case 3:
-				initPic(holder.brandlist_item_imageview4, ToolsUtil.getImage(ToolsUtil.nullToString(productInFo.getPic()), 320, 0));
-				holder.brandlist_item_imageview4.setTag(productInFo.getProductId());
-				break;
-			}
-		}
-		
+		initPic(holder.brandlist_item_imageview1, ToolsUtil.nullToString(brandInfo.getPic()));
+		holder.brandlist_itemname_textview.setText(ToolsUtil.nullToString(brandInfo.getBrandName()));
 		return convertView;
 	}
 	
 	
 	class Holder{
-		ImageView iv_brand;
 		ImageView brandlist_item_imageview1;
-		ImageView brandlist_item_imageview2;
-		ImageView brandlist_item_imageview3;
-		ImageView brandlist_item_imageview4;
+		ImageView brandlist_itemcolor_imageview;
+		TextView brandlist_itemname_textview;
 		
 	}
 	
