@@ -1,8 +1,6 @@
 package com.shenma.yueba.baijia.modle;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 /**  
  * @author gyj  
@@ -13,8 +11,7 @@ import java.util.List;
 public class BrandInfo implements Serializable{
 	int BrandId;//品牌编号",
     String BrandName="";//品牌名称",
-    String BrandLogo="";//品牌Logo",
-    List<ProductInFo> Product=new ArrayList<ProductInFo>();
+    String Pic="";//品牌Logo",
 	public int getBrandId() {
 		return BrandId;
 	}
@@ -27,16 +24,11 @@ public class BrandInfo implements Serializable{
 	public void setBrandName(String brandName) {
 		BrandName = brandName;
 	}
-	public String getBrandLogo() {
-		return BrandLogo;
+	public String getPic() {
+		return Pic;
 	}
-	public void setBrandLogo(String brandLogo) {
-		BrandLogo = brandLogo;
+	public void setPic(String pic) {
+		Pic = pic;
 	}
-	public List<ProductInFo> getProduct() {
-		return Product;
-	}
-	public void setProduct(List<ProductInFo> product) {
-		Product = product;
-	}
+    
 }

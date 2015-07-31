@@ -18,6 +18,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnPullEventListener;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.State;
+import com.handmark.pulltorefresh.library.PullToRefreshGridView;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
@@ -43,7 +44,7 @@ public class BrandListView extends BaseView{
 	LayoutInflater layoutInflater;
 	
 	private View view;
-	private PullToRefreshListView pull_refresh_list;
+	private PullToRefreshGridView pull_refresh_list;
 	LinearLayout showloading_layout_view;
 	private BrandAdapter brandAdapter;
 	int currPage=Constants.CURRPAGE_VALUE;
@@ -74,18 +75,18 @@ public class BrandListView extends BaseView{
 	
 	void initView()
 	{
-		view=layoutInflater.inflate(R.layout.refresh_listview_without_title_layout, null);
+		view=layoutInflater.inflate(R.layout.refresh_gridview_without_title_layout, null);
 	}
 	
 	void initPullView()
 	{
-		pull_refresh_list=(PullToRefreshListView)view.findViewById(R.id.pull_refresh_list);
+		pull_refresh_list=(PullToRefreshGridView)view.findViewById(R.id.pull_refresh_gridview);
 		pull_refresh_list.setMode(Mode.PULL_FROM_START);
 		pull_refresh_list.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,long arg3) {
-				BrandInfo brandInfo=items.get(arg2-1);
+				BrandInfo brandInfo=items.get(arg2);
 				Intent intent=new Intent(activity,BaijiaBrandListActivity.class);
 				intent.putExtra("BRANDID", brandInfo.getBrandId());
 				activity.startActivity(intent);

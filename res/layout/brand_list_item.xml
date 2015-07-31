@@ -1,80 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingLeft="@dimen/shop_main_width2_dimen"
-    android:paddingRight="@dimen/shop_main_width2_dimen"
-    android:orientation="vertical" >
-    
+    >
 
-    
-    <ImageView 
-        android:visibility="gone"
-        android:id="@+id/iv_brand"
-        android:layout_gravity="center_horizontal"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
+    <ImageView
+        android:id="@+id/brandlist_item_imageview1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_lightgrey"
         android:scaleType="centerCrop"
-        android:src="@drawable/default_pic"
-        />
-    
-    <LinearLayout 
-        android:id="@+id/ll_product_images"
-        android:layout_marginTop="2dip"
+        android:src="@drawable/default_pic" />
+
+    <ImageView
+        android:id="@+id/brandlist_itemcolor_imageview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/jianbian_2x" />
+
+    <TextView
+        android:id="@+id/brandlist_itemname_textview"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:orientation="horizontal"
-        >
-        <ImageView
-            android:padding="2px"
-            android:visibility="invisible"
-            android:background="@color/color_lightgrey"
-            android:id="@+id/brandlist_item_imageview1"
-            android:scaleType="centerCrop"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:src="@drawable/default_pic"
-            />
-        
-        <ImageView
-            android:padding="2px"
-            android:visibility="invisible"
-            android:background="@color/color_lightgrey"
-            android:scaleType="centerCrop"
-            android:id="@+id/brandlist_item_imageview2"
-            android:layout_marginLeft="2px"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:src="@drawable/default_pic"
-            />
-        
-        <ImageView
-            android:visibility="gone"
-            android:padding="2px"
-            android:background="@color/color_lightgrey"
-            android:scaleType="centerCrop"
-            android:id="@+id/brandlist_item_imageview3"
-            android:layout_marginLeft="2px"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:src="@drawable/default_pic"
-            />
-        
-        <ImageView
-            android:visibility="gone"
-            android:padding="2px"
-            android:background="@color/color_lightgrey"
-            android:scaleType="centerCrop"
-            android:id="@+id/brandlist_item_imageview4"
-            android:layout_marginLeft="2px"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:src="@drawable/default_pic"
-            />
-    </LinearLayout>
-    
-</LinearLayout>
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="12dp"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="2"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:text="@null"
+        android:textColor="@color/white"
+        android:textSize="@dimen/textsize12sp" />
+
+</RelativeLayout>
