@@ -8,14 +8,13 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
-import android.app.Dialog;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
-import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Handler;
@@ -25,6 +24,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.RemoteViews;
 import android.widget.TextView;
 
 import com.shenma.yueba.constants.Constants;
@@ -32,7 +32,8 @@ import com.shenma.yueba.util.ToolsUtil;
 
 public class UpdateManager implements View.OnClickListener {
 	private Context mContext;
-
+	NotificationManager notiManage;
+	private RemoteViews contentView;
 	private String newVersionPath;// 更新的新版本链接地址
 	private String updateTitle;// 更新题目
 	private String updateContent;// 更新内容
@@ -66,9 +67,16 @@ public class UpdateManager implements View.OnClickListener {
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
 			case DOWN_UPDATE:
-				progress_bar.setProgress(progress);
+				if (downDialog.isShowing()) {
+					progress_bar.setProgress(progress);
+				} else {
+					showNotificationView();
+				}
 				break;
 			case DOWN_OVER:
+				if(notiManage!=null){
+					notiManage.cancel(1);
+				}
 				// 安装
 				downDialog.dismiss();
 				installApk();
@@ -123,7 +131,7 @@ public class UpdateManager implements View.OnClickListener {
 		TextView bt_quit = (TextView) view.findViewById(R.id.bt_quit);
 		bt_quit.setOnClickListener(this);
 		progress_bar = (ProgressBar) view.findViewById(R.id.progress);
-//		progress_bar.setProgress(50);
+		// progress_bar.setProgress(50);
 		tv_title.setText("更新中...");
 		Button bt_backgroud = (Button) view.findViewById(R.id.bt_backgroud);
 		bt_backgroud.setOnClickListener(this);
@@ -218,9 +226,11 @@ public class UpdateManager implements View.OnClickListener {
 			break;
 		case R.id.bt_quit:// 停止下载
 			interceptFlag = true;
+			downDialog.dismiss();
 			break;
-		case R.id.bt_backgroud://后台运行
-			
+		case R.id.bt_backgroud:// 后台运行
+			downDialog.dismiss();
+			showNotificationView();
 			break;
 		default:
 			break;
@@ -285,4 +295,27 @@ public class UpdateManager implements View.OnClickListener {
 
 		return false;
 	}
+
+	private void showNotificationView() {
+		Notification note;
+		notiManage = (NotificationManager) mContext
+				.getSystemService(Context.NOTIFICATION_SERVICE);
+		note = new Notification();
+		note.flags = Notification.FLAG_AUTO_CANCEL;
+		contentView = new RemoteViews(mContext.getPackageName(),
+				R.layout.download_notification_layout);
+		contentView
+				.setTextViewText(R.id.tv_progress, "当前下载进度" + progress + "%");
+		contentView.setProgressBar(R.id.progress_down, 100, progress, false);
+		note.contentView = contentView;
+		note.tickerText = "正在下载";
+		note.icon = R.drawable.icon;
+		// PendingIntent p=PendingIntent.getActivity(mContext, 0, new
+		// Intent(Intent.ACTION_VIEW), 0);//这个非要不可。
+		// note.contentIntent=p;
+		// note.setLatestEventInfo(TestMapActivity.this, "黄金版电子档",
+		// "龙湖英雄在线",p);//如果要添加上面自定义的显示效果就不能添加此句。
+		notiManage.notify(1, note);
+	}
+
 }
