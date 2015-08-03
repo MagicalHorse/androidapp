@@ -29,6 +29,7 @@ import com.umeng.analytics.MobclickAgent;
 public class HuoKuanManagerActivity extends BaseActivityWithTopView implements
 		OnClickListener, OnProgressBarListener {
 
+	private TextView tv_week_title;
 	private TextView tv_in_and_out;
 	private TextView tv_tatal_money;
 	private TextView tv_had_withdraw_ratio;
@@ -70,6 +71,7 @@ public class HuoKuanManagerActivity extends BaseActivityWithTopView implements
 			}
 			
 		});
+		tv_week_title = getView(R.id.tv_week_title);
 		tv_week_money = getView(R.id.tv_week_money);
 		tv_had_used_persent = getView(R.id.tv_had_used_persent);
 		tv_week_amount = getView(R.id.tv_week_amount);
@@ -132,7 +134,7 @@ public class HuoKuanManagerActivity extends BaseActivityWithTopView implements
 						tv_had_withdraw_money, tv_can_withdraw_ratio,
 						tv_can_withdraw_money, tv_freeze_ratio,
 						tv_freeze_money, tv_back_ratio,
-						tv_back_money,tv_tatal_title);
+						tv_back_money,tv_tatal_title,tv_week_money,tv_had_used_persent,tv_week_amount,tv_week_title);
 	}
 
 	@Override
