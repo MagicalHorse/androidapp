@@ -141,7 +141,7 @@ List<BrandInfoInfo> object_list=new ArrayList<BrandInfoInfo>();
 	 * ***/
 	void requestData()
 	{
-		sendHttp(1,1);
+		sendHttp(currPage,1);
 	}
 	
 	/*****
@@ -164,10 +164,18 @@ List<BrandInfoInfo> object_list=new ArrayList<BrandInfoInfo>();
 			Holder holder;
 			if(convertView==null)
 			{
+				DisplayMetrics dm=new DisplayMetrics();
+				BaijiaBrandListActivity.this.getWindowManager().getDefaultDisplay().getMetrics(dm);
+				int width=dm.widthPixels;
+				int itemwidth=(width/3)-(2*5);
+				
 				holder=new Holder();
 				convertView=(LinearLayout)LinearLayout.inflate(BaijiaBrandListActivity.this, R.layout.brandlist_item_layout, null);
 				holder.imageview=(ImageView)convertView.findViewById(R.id.brandlist_item_layout_imageview);
 				convertView.setTag(holder);
+				
+				Log.i("TAG", "BaiJiaBrandListActivity-->> w:"+itemwidth);
+				holder.imageview.setLayoutParams(new LinearLayout.LayoutParams(itemwidth, itemwidth));
 			}else
 			{
 				holder=(Holder)convertView.getTag();
@@ -179,11 +187,7 @@ List<BrandInfoInfo> object_list=new ArrayList<BrandInfoInfo>();
 				BrandInfoInfo bean=object_list.get(position);
 				url=bean.getPic();
 			}
-			int width=holder.imageview.getWidth();
-			if(width>0)
-			{
-				holder.imageview.setLayoutParams(new LinearLayout.LayoutParams(width, width));
-			}
+			
 			initPic(ToolsUtil.getImage(ToolsUtil.nullToString(url), 320, 0), holder.imageview);
 			return convertView;
 		}
