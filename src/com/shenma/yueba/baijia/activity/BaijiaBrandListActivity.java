@@ -18,6 +18,7 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
+import android.widget.LinearLayout;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
@@ -164,30 +165,26 @@ List<BrandInfoInfo> object_list=new ArrayList<BrandInfoInfo>();
 			if(convertView==null)
 			{
 				holder=new Holder();
-				holder.imageview=new ImageView(BaijiaBrandListActivity.this);
-				holder.imageview.setScaleType(ScaleType.CENTER_CROP);
-				//AbsListView.LayoutParams params=new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT,AbsListView.LayoutParams.MATCH_PARENT);
-				AbsListView.LayoutParams params=new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT,BaijiaBrandListActivity.this.getResources().getDimensionPixelSize(R.dimen.shop_main_width150_dimen));
-				holder.imageview.setLayoutParams(params);
-				holder.imageview.setBackgroundResource(R.drawable.back_background);
-				//holder.imageview.setBackgroundResource(R.color.white);
-				holder.imageview.setPadding(10, 5, 10, 5);
-				convertView=holder.imageview;
+				convertView=(LinearLayout)LinearLayout.inflate(BaijiaBrandListActivity.this, R.layout.brandlist_item_layout, null);
+				holder.imageview=(ImageView)convertView.findViewById(R.id.brandlist_item_layout_imageview);
 				convertView.setTag(holder);
 			}else
 			{
 				holder=(Holder)convertView.getTag();
 			}
-			DisplayMetrics dm=new DisplayMetrics();
-			getWindowManager().getDefaultDisplay().getMetrics(dm);
-			int allwidth=dm.widthPixels;
-			int childheight=allwidth/3;
-			if(childheight>0)
+			
+			String url="";
+			if(position<=(object_list.size()-1))
 			{
-				holder.imageview.setLayoutParams(new AbsListView.LayoutParams(childheight, childheight));
+				BrandInfoInfo bean=object_list.get(position);
+				url=bean.getPic();
 			}
-			BrandInfoInfo bean=object_list.get(position);
-			initPic(ToolsUtil.getImage(ToolsUtil.nullToString(bean.getPic()), 320, 0), holder.imageview);
+			int width=holder.imageview.getWidth();
+			if(width>0)
+			{
+				holder.imageview.setLayoutParams(new LinearLayout.LayoutParams(width, width));
+			}
+			initPic(ToolsUtil.getImage(ToolsUtil.nullToString(url), 320, 0), holder.imageview);
 			return convertView;
 		}
 		
@@ -205,6 +202,7 @@ List<BrandInfoInfo> object_list=new ArrayList<BrandInfoInfo>();
 		
 		@Override
 		public int getCount() {
+			
 			return object_list.size();
 		}
 	};
