@@ -16,7 +16,7 @@
         android:layout_height="match_parent"
         android:numColumns="3"
         android:horizontalSpacing="5dp"
-        android:verticalSpacing="@dimen/shop_main_width5_dimen"
+        android:verticalSpacing="5dp"
         />
     
     <include 
