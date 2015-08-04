@@ -45,18 +45,19 @@
         </LinearLayout>
 
         <TextView
+            android:gravity="center"
             android:id="@+id/tv_attention"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/user_config_iconwidth75_dimen"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:background="@drawable/shape_yellow_bg"
             android:paddingBottom="5dip"
-            android:paddingLeft="10dip"
-            android:paddingRight="10dip"
+            android:paddingLeft="5dip"
+            android:paddingRight="5dip"
             android:paddingTop="5dip"
             android:textSize="@dimen/textsize13sp"
-            android:text="关注" />
+            android:text="取消关注" />
     </RelativeLayout>
 
     <LinearLayout

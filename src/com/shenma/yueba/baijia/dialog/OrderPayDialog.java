@@ -35,12 +35,12 @@ OrderPayOnClick_Listener orderPayOnClick_Listener;
 Button orderpay_dialog_layout_sucess_button;
 Timer timer;
 int maxTime=5;
-	public OrderPayDialog(Context context,OrderPayOnClick_Listener orderPayOnClick_Listener) {
+	public OrderPayDialog(Context context,OrderPayOnClick_Listener orderPayOnClick_Listener,boolean cancelsttaus) {
 		super(context, R.style.MyDialog);
 		//super(context);
 		this.context=context;
 		this.orderPayOnClick_Listener=orderPayOnClick_Listener;
-		this.setCancelable(false);
+		this.setCancelable(cancelsttaus);
 	}
 
 	@Override
