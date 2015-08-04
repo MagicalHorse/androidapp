@@ -215,6 +215,7 @@ public final static String CANCELORDER="取消订单";//6
 			public void http_Success(Object obj) {
 				if(orderControlListener!=null)
 				{
+					MyApplication.getInstance().showMessage(context, QUERENTIHUO+"成功");
 					orderControlListener.orderCotrol_OnRefuces();//通知刷新页面
 				}
 			}
@@ -240,6 +241,7 @@ public final static String CANCELORDER="取消订单";//6
 			public void http_Success(Object obj) {
 				if(orderControlListener!=null)
 				{
+					MyApplication.getInstance().showMessage(context, CANCELPAY+"成功");
 					orderControlListener.orderCotrol_OnRefuces();//通知刷新页面
 				}
 			}
@@ -304,6 +306,7 @@ public final static String CANCELORDER="取消订单";//6
 			public void http_Success(Object obj) {
 				if(orderControlListener!=null)
 				{
+					MyApplication.getInstance().showMessage(context, CANCELORDER+"成功");
 					orderControlListener.orderCotrol_OnRefuces();//通知刷新页面
 				}
 			}

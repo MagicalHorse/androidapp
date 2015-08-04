@@ -297,7 +297,9 @@ public class CreateOrderDialog extends AlertDialog implements android.view.View.
 		isTextButtonEnable();
 	}
 	
-	
+	/*********
+	 * 设置 标签按钮
+	 * ***/
 	void addstandardButton()
 	{
 		for(int i=0;i<size_list.size();i++)

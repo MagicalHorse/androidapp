@@ -114,10 +114,6 @@ public class CityWideListView extends BaseView{
 	
 	void requestFalshData()
 	{
-		if(!MyApplication.getInstance().isUserLogin(activity))
-		{
-			return;
-		}
 		sendHttp(1,0);
 	}
 	

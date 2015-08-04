@@ -242,7 +242,7 @@ public class BaijiaPayActivity extends BaseActivityWithTopView implements
 	 * **/
 	public void showPayDialogLoading() {
 		if (orderPayDialog == null) {
-			orderPayDialog = new OrderPayDialog(BaijiaPayActivity.this, this);
+			orderPayDialog = new OrderPayDialog(BaijiaPayActivity.this, this,true);
 		}
 		orderPayDialog.showDialog();
 		orderPayDialog.showLoading();
@@ -254,7 +254,7 @@ public class BaijiaPayActivity extends BaseActivityWithTopView implements
 	 * **/
 	public void showSucessDialog() {
 		if (orderPayDialog == null) {
-			orderPayDialog = new OrderPayDialog(BaijiaPayActivity.this, this);
+			orderPayDialog = new OrderPayDialog(BaijiaPayActivity.this, this,false);
 		}
 		orderPayDialog.showDialog();
 		orderPayDialog.showSucess();
@@ -266,7 +266,7 @@ public class BaijiaPayActivity extends BaseActivityWithTopView implements
 	 * **/
 	public void showFailsDailog() {
 		if (orderPayDialog == null) {
-			orderPayDialog = new OrderPayDialog(BaijiaPayActivity.this, this);
+			orderPayDialog = new OrderPayDialog(BaijiaPayActivity.this, this,false);
 		}
 		orderPayDialog.showDialog();
 		orderPayDialog.showFails();
