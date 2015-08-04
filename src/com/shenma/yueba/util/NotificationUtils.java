@@ -1,6 +1,5 @@
 package com.shenma.yueba.util;
 
-
 import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -10,8 +9,12 @@ import android.content.Intent;
 import android.graphics.Color;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.baijia.activity.BaiJiaOrderListActivity;
+import com.shenma.yueba.yangjia.activity.EarningManagerActivity;
+import com.shenma.yueba.yangjia.activity.HuoKuanManagerActivity;
 import com.shenma.yueba.yangjia.activity.MainActivityForYangJia;
 import com.shenma.yueba.yangjia.activity.SalesManagerForBuyerActivity;
+import com.umeng.socialize.controller.impl.InitializeController;
 
 /**
  * notificaion工具类
@@ -32,7 +35,8 @@ public class NotificationUtils {
 		// FLAG_NO_CLEAR 该通知不能被状态栏的清除按钮给清除掉
 		// FLAG_ONGOING_EVENT 通知放置在正在运行
 		// FLAG_INSISTENT 是否一直进行，比如音乐一直播放，知道用户响应
-//		notification.flags |= Notification.FLAG_ONGOING_EVENT; // 将此通知放到通知栏的"Ongoing"即"正在运行"组中,加上该属性就不可以滑动删除了
+		// notification.flags |= Notification.FLAG_ONGOING_EVENT; //
+		// 将此通知放到通知栏的"Ongoing"即"正在运行"组中,加上该属性就不可以滑动删除了
 		notification.flags |= Notification.FLAG_AUTO_CANCEL; // 表明在点击了通知栏中的"清除通知"后，此通知不清除，经常与FLAG_ONGOING_EVENT一起使用
 		notification.flags |= Notification.FLAG_SHOW_LIGHTS;
 		// DEFAULT_ALL 使用所有默认值，比如声音，震动，闪屏等等
@@ -51,25 +55,85 @@ public class NotificationUtils {
 			CharSequence type = text[0]; // 通知类型
 			CharSequence content = text[2]; // 通知内容
 			Intent notificationIntent = null;
-			if("Order".equals(type)){
-				notificationIntent = new Intent(ctx,
-						SalesManagerForBuyerActivity.class); // 点击该通知后要跳转的Activity
-			}
-			if("AgreeCertifiedApply".equals(type)){//认证通过
+			// if("Order".equals(type)){
+			// notificationIntent = new Intent(ctx,
+			// SalesManagerForBuyerActivity.class); // 点击该通知后要跳转的Activity
+			// }
+			// if("AgreeCertifiedApply".equals(type)){//认证通过
+			// SharedUtil.setAuditStatus(ctx, "1");
+			// notificationIntent = new Intent(ctx,
+			// MainActivityForYangJia.class); // 点击该通知后要跳转的Activity
+			// }
+			// if("RefuseCertifiedApply".equals(type)){//认证被拒绝
+			// SharedUtil.setAuditStatus(ctx, "-1");
+			// }
+
+			if ("2".equals(type)) {// 认证通过
 				SharedUtil.setAuditStatus(ctx, "1");
 				notificationIntent = new Intent(ctx,
 						MainActivityForYangJia.class); // 点击该通知后要跳转的Activity
 			}
-			if("RefuseCertifiedApply".equals(type)){//认证被拒绝
+			if ("3".equals(type)) {// 认证被拒绝
 				SharedUtil.setAuditStatus(ctx, "-1");
 			}
+			if ("4".equals(type)) {// 用户支付-推送给买手
+				notificationIntent = new Intent(ctx,
+						SalesManagerForBuyerActivity.class); // 点击该通知后要跳转的Activity
+//				notificationIntent.putExtra("index", 2);
+			}
+//			if ("5".equals(type)) {// 用户支付--推送给用户
+//				notificationIntent = new Intent(ctx,
+//						BaiJiaOrderListActivity.class); // 点击该通知后要跳转的Activity
+//				notificationIntent.putExtra("CURRID", 2);//专柜自提
+//			}
+			if ("6".equals(type)) {// 用户申请退款-推送给买手
+				notificationIntent = new Intent(ctx,
+						SalesManagerForBuyerActivity.class); // 点击该通知后要跳转的Activity
+//				notificationIntent.putExtra("index", 3);
+			}
+
+//			if ("7".equals(type)) {// 用户申请退款--推送给用户
+//				notificationIntent = new Intent(ctx,
+//						BaiJiaOrderListActivity.class); // 点击该通知后要跳转的Activity
+//				notificationIntent.putExtra("CURRID", 3);//售后
+//			}
+
+			if ("8".equals(type)) {// 用户收货--推送给买手
+				notificationIntent = new Intent(ctx,
+						SalesManagerForBuyerActivity.class); // 点击该通知后要跳转的Activity
+			}
+
+//			if ("9".equals(type)) {// 用户收货，推送给用户
+//				notificationIntent = new Intent(ctx,
+//						BaiJiaOrderListActivity.class); // 点击该通知后要跳转的Activity
+//				notificationIntent.putExtra("CURRID", 0);//全部订单
+//			}
+
+			if ("10".equals(type)) {// 提现货款 ,
+				notificationIntent = new Intent(ctx,
+						HuoKuanManagerActivity.class); // 点击该通知后要跳转的Activity
+			}
+
+			if ("11".equals(type)) {// 提现收益
+				notificationIntent = new Intent(ctx,
+						EarningManagerActivity.class); // 点击该通知后要跳转的Activity
+			}
+			if ("12".equals(type)) {// 买手同意退货,
+				notificationIntent = new Intent(ctx,
+						BaiJiaOrderListActivity.class); // 点击该通知后要跳转的Activity
+				notificationIntent.putExtra("CURRID", 0);//全部订单
+				}
+			if ("13".equals(type)) {// 买手不同意退货
+				notificationIntent = new Intent(ctx,
+						BaiJiaOrderListActivity.class); // 点击该通知后要跳转的Activity
+				notificationIntent.putExtra("CURRID", 3);//售后
+			}
+
 			PendingIntent contentItent = PendingIntent.getActivity(ctx, 0,
 					notificationIntent, 0);
-			notification.setLatestEventInfo(ctx, title, content,
-					contentItent);
+			notification.setLatestEventInfo(ctx, title, content, contentItent);
 			// 把Notification传递给NotificationManager
 			notificationManager.notify(0, notification);
 		}
-		}
 	}
-
+}
