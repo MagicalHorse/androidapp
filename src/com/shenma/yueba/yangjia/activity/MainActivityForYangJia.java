@@ -175,6 +175,7 @@ private void showDialog() {
 //			CustomProgressDialog dialog = new CustomProgressDialog(MainActivityForYangJia.this).createDialog(MainActivityForYangJia.this);
 //			dialog.show();
 			MyApplication.getInstance().getPublishUtil().setBean(new RequestUploadProductDataBean());
+			MyApplication.getInstance().getPublishUtil().setIndex("0");
 //			Toast.makeText(getApplicationContext(), "相机初始化中...", 1000).show();
 			// 跳转到到自定义相机
 //			Intent intentCamera = new Intent(MainActivityForYangJia.this,CameraAty.class);
