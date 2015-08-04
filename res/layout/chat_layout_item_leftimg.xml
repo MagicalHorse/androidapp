@@ -6,7 +6,7 @@
     android:orientation="vertical" >
 
     <com.shenma.yueba.view.RoundImageView
-        android:id="@+id/chat_layout_item_leftimg_icon_roundimageview"
+        android:id="@+id/chat_layout_item_img_icon_roundimageview"
         android:layout_width="@dimen/user_config_iconwidth60_dimen"
         android:layout_height="@dimen/user_config_iconwidth60_dimen"
         android:src="@drawable/default_pic" />
@@ -17,7 +17,7 @@
         android:layout_marginLeft="@dimen/shop_main_width5_dimen"
         android:layout_marginRight="@dimen/user_config_iconwidth40_dimen"
         android:layout_marginTop="@dimen/shop_main_width15_dimen"
-        android:layout_toRightOf="@id/chat_layout_item_leftimg_icon_roundimageview" >
+        android:layout_toRightOf="@id/chat_layout_item_img_icon_roundimageview" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -25,7 +25,7 @@
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/chat_layout_item_leftmsg_name_textview"
+                android:id="@+id/chat_layout_item_msg_name_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/chat_text_style"
@@ -74,7 +74,7 @@
             </RelativeLayout>
 
             <TextView
-                android:id="@+id/chat_layout_item_leftmsg_time_textview"
+                android:id="@+id/chat_layout_item_msg_time_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/shop_main_lineheight8_dimen"

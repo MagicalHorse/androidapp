@@ -45,6 +45,7 @@ public class ItemCustomerFragment extends BaseFragment implements RefreshOrderLi
 	private String customerId;
 	@SuppressLint("ValidFragment")
 	public ItemCustomerFragment(int tag) {
+		super();
 		this.tag = tag;
 	}
 

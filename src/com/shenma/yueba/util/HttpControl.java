@@ -1998,7 +1998,7 @@ public class HttpControl {
 	 *            Context
 	 * @return RequestParams
 	 * **/
-	RequestParams setBaseRequestParams(Map<String, String> map, Context context) {
+	public RequestParams setBaseRequestParams(Map<String, String> map, Context context) {
 		RequestParams params = new RequestParams();
 		if (params != null) {
 			String versionName = "0";

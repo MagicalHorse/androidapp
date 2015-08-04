@@ -1,7 +1,10 @@
 package im.control;
 
-import im.form.BaseChatBean;
-import im.form.PicChatBean;
+import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.activity.TouchImageViewActivity;
+import com.shenma.yueba.util.ToolsUtil;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -12,41 +15,30 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.shenma.yueba.R;
-import com.shenma.yueba.application.MyApplication;
-import com.shenma.yueba.baijia.activity.TouchImageViewActivity;
-import com.shenma.yueba.util.ToolsUtil;
-import com.shenma.yueba.view.RoundImageView;
+import im.form.BaseChatBean;
+import im.form.PicChatBean;
 
 /**  
  * @author gyj  
  * @version 创建时间：2015-7-3 下午5:10:04  
- * 程序的简单说明  
+ * 程序的简单说明  本类定义 iM 图片数据的视图管理 
+ * 包含图片的上传以及显示
  */
 
 public class PicViewManager extends ChatBaseManager implements OnClickListener{
 	
-	public enum PicView_Type
-	{
-		left,
-		right;
-	}
-	
-	public PicViewManager(Context context,PicView_Type type) {
+	public PicViewManager(Context context,ChatView_Type type) {
 		super(context);
 		this.type=type;
 	}
-	PicView_Type type=PicView_Type.left;
-	RoundImageView chat_layout_item_leftimg_icon_roundimageview;//头像
+	ChatView_Type type=ChatView_Type.left;
 	ImageView chat_layout_item_leftimg_msg_imageview;//图片
-	TextView chat_layout_item_leftmsg_name_textview;//名称
-	TextView chat_layout_item_leftmsg_time_textview;//时间
-	LinearLayout chat_layout_item_leftimg_progress_linearlayout;//进度俯视图
+	LinearLayout chat_layout_item_leftimg_progress_linearlayout;//进度父视图
 	ProgressBar chat_layout_item_leftimg_progress_progressbar;//进度条
 	TextView chat_layout_item_leftimg_progress_textview;//进度文本
 	
 	RelativeLayout ll;
+	
 	/*******
 	 * 初始化左侧视图
 	 * ***/
@@ -65,44 +57,32 @@ public class PicViewManager extends ChatBaseManager implements OnClickListener{
 			ll=(RelativeLayout)view.findViewById(R.id.chat_layout_item_rightimg_include);
 			break;
 		}
-		
-		chat_layout_item_leftimg_icon_roundimageview=(RoundImageView)ll.findViewById(R.id.chat_layout_item_leftimg_icon_roundimageview);
+		//通用对象赋值
+		parentinitView(ll);
 		chat_layout_item_leftimg_msg_imageview=(ImageView)ll.findViewById(R.id.chat_layout_item_leftimg_msg_imageview);
 		chat_layout_item_leftimg_msg_imageview.setOnClickListener(this);
-		chat_layout_item_leftmsg_name_textview=(TextView)ll.findViewById(R.id.chat_layout_item_leftmsg_name_textview);
-		chat_layout_item_leftmsg_time_textview=(TextView)ll.findViewById(R.id.chat_layout_item_leftmsg_time_textview);
 		
 		chat_layout_item_leftimg_progress_linearlayout=(LinearLayout)ll.findViewById(R.id.chat_layout_item_leftimg_progress_linearlayout);
 		chat_layout_item_leftimg_progress_progressbar=(ProgressBar)ll.findViewById(R.id.chat_layout_item_leftimg_progress_progressbar);
 		chat_layout_item_leftimg_progress_textview=(TextView)ll.findViewById(R.id.chat_layout_item_leftimg_progress_textview);
-		
 	}
 	
 	
 	@Override
-	public void isshow(boolean b,BaseChatBean bean) {
-		if(b)
-		{
-			ll.setVisibility(View.VISIBLE);
-		}else
-		{
-			ll.setVisibility(View.GONE);
-		}
+	public void child_isshow(boolean b,BaseChatBean bean) {
+		
 		if(bean!=null && bean instanceof PicChatBean)
 		{
 			PicChatBean picbean=(PicChatBean)bean;
-			chat_layout_item_leftmsg_name_textview.setText(ToolsUtil.nullToString(picbean.getUserName()));
-			chat_layout_item_leftmsg_time_textview.setText(ToolsUtil.nullToString(picbean.getCreationDate()));
 			chat_layout_item_leftimg_msg_imageview.setTag(bean);
-			initBitmap(ToolsUtil.nullToString(picbean.getLogo()), chat_layout_item_leftimg_icon_roundimageview);
-			
+			String user_logo=picbean.getLogo();
+			//如果 图片上传完成 则 显示 图片
 			if(picbean.isSuccess())
 			{
 				initBitmap(ToolsUtil.nullToString((String)picbean.getContent()), chat_layout_item_leftimg_msg_imageview);
 			}
 			
-			
-			//图片
+			//如果图片上传完成 则隐藏进度条 否则显示进度条
 			if(!picbean.isUpload() && picbean.isSuccess())//如果上传完成则  隐藏进度
 			{
 				chat_layout_item_leftimg_progress_linearlayout.setVisibility(View.GONE);
@@ -110,6 +90,7 @@ public class PicViewManager extends ChatBaseManager implements OnClickListener{
 			{
 				chat_layout_item_leftimg_progress_linearlayout.setVisibility(View.VISIBLE);
 			}
+		    
 			//计算上传进度
 			int currcount=picbean.getProgress();
 			int maxcount=picbean.getMaxProgress();

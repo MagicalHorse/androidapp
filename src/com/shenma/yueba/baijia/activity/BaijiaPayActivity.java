@@ -138,7 +138,9 @@ public class BaijiaPayActivity extends BaseActivityWithTopView implements
 		}
 	};
 
-
+     /*****
+      * 查询订单状态
+      * *****/
 	void queyPayStatus() {
 		showPayDialogLoading();
 		httpControl.getBaijiaOrderDetails(creatOrderInfoBean.getOrderNo(),

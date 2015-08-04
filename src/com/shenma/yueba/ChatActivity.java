@@ -1,36 +1,38 @@
 
 package com.shenma.yueba;
 
-/**
- * Copyright (C) 2013-2014 EaseMob Technologies. All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *     http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-import im.control.SocketManger;
-import im.control.SocketManger.SocketManagerListener;
-import im.form.BaseChatBean;
-import im.form.NoticeChatBean;
-import im.form.PicChatBean;
-import im.form.PicChatBean.PicChatBean_Listener;
-import im.form.ProductChatBean;
-import im.form.RequestMessageBean;
-import im.form.RoomBean;
-import im.form.TextChatBean;
-
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
-import roboguice.activity.RoboActivity;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.activity.BaiJiaShareDataActivity;
+import com.shenma.yueba.baijia.activity.CircleInfoActivity;
+import com.shenma.yueba.baijia.adapter.ChattingAdapter;
+import com.shenma.yueba.baijia.dialog.CreateOrderDialog;
+import com.shenma.yueba.baijia.modle.BaiJiaShareInfoBean;
+import com.shenma.yueba.baijia.modle.ProductsDetailsInfoBean;
+import com.shenma.yueba.baijia.modle.ProductsDetailsTagInfo;
+import com.shenma.yueba.baijia.modle.RequestImMessageInfoBean;
+import com.shenma.yueba.baijia.modle.RequestProductDetailsInfoBean;
+import com.shenma.yueba.baijia.modle.RequestRoomInfo;
+import com.shenma.yueba.baijia.modle.RequestRoomInfoBean;
+import com.shenma.yueba.constants.Constants;
+import com.shenma.yueba.util.FontManager;
+import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
+import com.shenma.yueba.util.NetUtils;
+import com.shenma.yueba.util.PhotoUtils;
+import com.shenma.yueba.util.SharedUtil;
+import com.shenma.yueba.util.SoftKeyboardUtil;
+import com.shenma.yueba.util.ToolsUtil;
+import com.shenma.yueba.view.faceview.FaceView;
+import com.shenma.yueba.view.faceview.FaceView.OnChickCallback;
+
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -62,31 +64,31 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.shenma.yueba.application.MyApplication;
-import com.shenma.yueba.baijia.activity.BaiJiaShareDataActivity;
-import com.shenma.yueba.baijia.activity.CircleInfoActivity;
-import com.shenma.yueba.baijia.adapter.ChattingAdapter;
-import com.shenma.yueba.baijia.dialog.CreateOrderDialog;
-import com.shenma.yueba.baijia.modle.BaiJiaShareInfoBean;
-import com.shenma.yueba.baijia.modle.ProductsDetailsInfoBean;
-import com.shenma.yueba.baijia.modle.ProductsDetailsTagInfo;
-import com.shenma.yueba.baijia.modle.RequestImMessageInfoBean;
-import com.shenma.yueba.baijia.modle.RequestProductDetailsInfoBean;
-import com.shenma.yueba.baijia.modle.RequestRoomInfo;
-import com.shenma.yueba.baijia.modle.RequestRoomInfoBean;
-import com.shenma.yueba.constants.Constants;
-import com.shenma.yueba.util.FontManager;
-import com.shenma.yueba.util.HttpControl;
-import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
-import com.shenma.yueba.util.NetUtils;
-import com.shenma.yueba.util.PhotoUtils;
-import com.shenma.yueba.util.SharedUtil;
-import com.shenma.yueba.util.SoftKeyboardUtil;
-import com.shenma.yueba.util.ToolsUtil;
-import com.shenma.yueba.view.faceview.FaceView;
-import com.shenma.yueba.view.faceview.FaceView.OnChickCallback;
+/**
+ * Copyright (C) 2013-2014 EaseMob Technologies. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import im.control.SocketManger;
+import im.control.SocketManger.SocketManagerListener;
+import im.form.BaseChatBean;
+import im.form.NoticeChatBean;
+import im.form.PicChatBean;
+import im.form.PicChatBean.PicChatBean_Listener;
+import im.form.ProductChatBean;
+import im.form.RequestMessageBean;
+import im.form.RoomBean;
+import im.form.TextChatBean;
+import roboguice.activity.RoboActivity;
 
 /**
  * 聊天页面
@@ -131,7 +133,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 	TextView tv_top_title;
 	String littlePicPath;
 	String littlePicPath_cache;
-
+    public static Map<Integer,String> userid_logo=new HashMap<Integer,String>();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -188,7 +190,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 			// 获取房间号
 			getRoomdId(circleId, formUser_id, toUser_id);
 		} else if (chat_type.endsWith(chat_type_private)) {// 如果是私聊
-
+			toUser_id = this.getIntent().getIntExtra("toUser_id", -1);
 			// 如果存在房间号 则直接获取消息信息
 			if (this.getIntent().getStringExtra("Chat_RoomID") != null) {
 				String room_id = this.getIntent().getStringExtra("Chat_RoomID");
@@ -218,7 +220,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 	}
 
 	/**
-	 * initView
+	 *初始化
 	 */
 	protected void initView() {
 		TextView tv_top_left = (TextView) findViewById(R.id.tv_top_left);
@@ -226,22 +228,23 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 
 			@Override
 			public void onClick(View v) {
+				//退出房间
 				outRoom();
 				finish();
 			}
 		});
+		//商品对象
 		chat_product_head_layout_include = (RelativeLayout) findViewById(R.id.chat_product_head_layout_include);
 		tv_top_right = (TextView) findViewById(R.id.tv_top_right);
 		tv_top_right.setOnClickListener(this);
+		
 		manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-		// getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_MASK_ADJUST|
-		// WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		getWindow()
 				.setSoftInputMode(
 						WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
 								| WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+		
 		chat_list = (PullToRefreshListView) findViewById(R.id.chat_list);
-		// chat_list.setMode(Mode.PULL_FROM_START);
 		chat_list.setMode(Mode.DISABLED);
 		chat_list.setOnScrollListener(this);
 		chattingAdapter = new ChattingAdapter(ChatActivity.this, bean_list);
@@ -338,6 +341,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 	protected void onDestroy() {
 		super.onDestroy();
 		SocketManger.the().disContentSocket();
+		userid_logo.clear();
 	}
 
 	@Override
@@ -390,40 +394,9 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 
 	@Override
 	protected void onNewIntent(Intent intent) {
-		// 如果 重新进入页面 判断 是否进入的是同一个 圈子 如果不是 则 关闭页面 重新打开
-		String newchat_type = this.getIntent().getStringExtra("Chat_Type");
-		// 如果是群聊
-		if (newchat_type.equals(chat_type) && chat_type.equals(chat_type_group)) {
-			// 获取圈子di
-			int newcircleId = this.getIntent().getIntExtra("circleId", -1);
-			// 如果当前圈子id相等 则进行页面重新初始化
-			if (newcircleId > 0 && newcircleId == circleId) {
-				// 如股票房间号不存在
-				if (roomId == null || roomId.equals("")) {
-					ishowStatus = true;
-					getRoomdId(circleId, formUser_id, toUser_id);
-				}
-			} else {
-				super.onNewIntent(intent);
-				finish();
-				startActivity(intent);
-			}
-		} else if (newchat_type.equals(chat_type)
-				&& chat_type.equals(chat_type_private))// 如果是私聊
-		{
-			int newtoUser_id = this.getIntent().getIntExtra("toUser_id", -1);
-			if (newtoUser_id > 0 && newtoUser_id == toUser_id) {
-				// 如股票房间号不存在
-				if (roomId == null || roomId.equals("")) {
-					ishowStatus = true;
-					getRoomdId(circleId, formUser_id, toUser_id);
-				}
-			} else {
-				super.onNewIntent(intent);
-				finish();
-				startActivity(intent);
-			}
-		}
+		super.onNewIntent(intent);
+		finish();
+		startActivity(intent);
 	}
 
 	@Override
@@ -512,14 +485,14 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 		bean.setLogo(ToolsUtil.nullToString(usericon));
 		bean.setCreationDate(ToolsUtil.getCurrentTime());
 		bean.setSharelink(content);
-		bean_list.add(bean);
+		addListData(false, bean);
 		if (chattingAdapter != null) {
 			chattingAdapter.notifyDataSetChanged();
 		}
 		pointLast(bean_list.size());
 
 	}
-
+	
 	// 定位到知道位置
 	void pointLast(int i) {
 		if (i <= bean_list.size()) {
@@ -978,8 +951,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 	/*****
 	 * 同步添加数据 到列表
 	 * 
-	 * @param isfirst
-	 *            boolean true 加入列表前面 false 加入列表后面
+	 * @param isfirst  boolean true 加入列表前面 false 加入列表后面
 	 * ****/
 	synchronized void addListData(boolean isfirst, BaseChatBean... chatBean) {
 		if (chatBean != null && chatBean.length > 0) {

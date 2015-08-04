@@ -43,6 +43,7 @@ public class ChattingAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
+		//消息管理对象
 		ChatViewManager vm;
 		if(convertView==null)
 		{

@@ -648,6 +648,12 @@ public class HttpConstants {
 	
 	
 	/**
+	 * 败家 -获取用户头像
+	 */
+	
+	public static String GETUSERICON = USERURL+ "GetUserLogo";
+	
+	/**
 	 *获取用户收藏的商品列表
 	 */
 	

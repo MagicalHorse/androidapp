@@ -86,12 +86,15 @@ int maxValue=0;
 		affirmorder_item_productprice_textview=(TextView)parentView.findViewById(R.id.affirmorder_item_productprice_textview);
 		applyforrefund_layout_refundprivevalue_textview=(TextView)parentView.findViewById(R.id.applyforrefund_layout_refundprivevalue_textview);
 		create_dialog_jian_button=(Button)parentView.findViewById(R.id.create_dialog_jian_button);
+		create_dialog_jian_button.setVisibility(View.GONE);
 		create_dialog_jian_button.setOnClickListener(this);
 		create_dialog_jia_button=(Button)parentView.findViewById(R.id.create_dialog_jia_button);
+		create_dialog_jia_button.setVisibility(View.GONE);
 		create_dialog_jia_button.setOnClickListener(this);
 		applyforrefund_layout_footersubmit_button=(Button)parentView.findViewById(R.id.applyforrefund_layout_footersubmit_button);
 		applyforrefund_layout_footersubmit_button.setOnClickListener(this);
 		createorder_dialog_layout_countvalue_edittext=(EditText)parentView.findViewById(R.id.createorder_dialog_layout_countvalue_edittext);
+		createorder_dialog_layout_countvalue_edittext.setEnabled(false);
 		createorder_dialog_layout_countvalue_edittext.setFocusable(false);
 		createorder_dialog_layout_countvalue_edittext.setOnClickListener(new OnClickListener() {
 			

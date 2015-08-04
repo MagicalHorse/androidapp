@@ -3,7 +3,23 @@ package com.shenma.yueba.baijia.fragment;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.annotation.SuppressLint;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.activity.BaiJiaOrderDetailsActivity;
+import com.shenma.yueba.baijia.adapter.BaiJiaOrderListAdapter;
+import com.shenma.yueba.baijia.adapter.BaiJiaOrderListAdapter.OrderControlListener;
+import com.shenma.yueba.baijia.modle.BaiJiaOrderListInfo;
+import com.shenma.yueba.baijia.modle.RequestBaiJiaOrderListInfoBean;
+import com.shenma.yueba.constants.Constants;
+import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
+import com.shenma.yueba.util.ToolsUtil;
+import com.umeng.socialize.utils.Log;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,35 +28,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListView;
-
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnPullEventListener;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.State;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.shenma.yueba.R;
-import com.shenma.yueba.application.MyApplication;
-import com.shenma.yueba.baijia.activity.BaiJiaOrderDetailsActivity;
-import com.shenma.yueba.baijia.adapter.BaiJiaOrderListAdapter;
-import com.shenma.yueba.baijia.adapter.BaiJiaOrderListAdapter.OrderControlListener;
-import com.shenma.yueba.baijia.modle.BaiJiaOrderListInfo;
-import com.shenma.yueba.baijia.modle.BaiJiaOrderListInfoBean;
-import com.shenma.yueba.baijia.modle.HomeProductListInfoBean;
-import com.shenma.yueba.baijia.modle.RequestBaiJiaOrderListInfoBean;
-import com.shenma.yueba.constants.Constants;
-import com.shenma.yueba.util.HttpControl;
-import com.shenma.yueba.util.ToolsUtil;
-import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
-import com.umeng.socialize.utils.Log;
 
 /**
  * @author gyj
  * @version 创建时间：2015-6-2 上午11:54:43 程序的简单说明 败家订单列表
  */
 
-@SuppressLint("ValidFragment")
+
 public class BaiJiaOrderListFragment extends Fragment implements
 		OrderControlListener {
 	View parentView;
@@ -56,6 +50,7 @@ public class BaiJiaOrderListFragment extends Fragment implements
 	boolean ishow = true;
 
 	public BaiJiaOrderListFragment(int state) {
+		super();
 		this.state = state;
 	}
 
