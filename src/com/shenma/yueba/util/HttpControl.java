@@ -19,7 +19,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.alibaba.sdk.android.oss.OSSService;
 import com.alibaba.sdk.android.oss.OSSServiceProvider;
@@ -40,6 +39,7 @@ import com.shenma.yueba.baijia.modle.BuyerIndexInfoBean;
 import com.shenma.yueba.baijia.modle.CheckVersionBackBean;
 import com.shenma.yueba.baijia.modle.CityListBackBean;
 import com.shenma.yueba.baijia.modle.CityListRequestBean;
+import com.shenma.yueba.baijia.modle.GetUserFlowStatusBackBean;
 import com.shenma.yueba.baijia.modle.HuoKuanManagerBackBean;
 import com.shenma.yueba.baijia.modle.ModifyLogoBackBean;
 import com.shenma.yueba.baijia.modle.MyRequestProductListInfoBean;
@@ -2494,6 +2494,30 @@ public class HttpControl {
 				httpCallBack, UserRequestBean.class, showDialog,
 				false);
 	}
+	
+	
+	/**
+	 * 
+	 * 
+	 * @param phone
+	 *            String手机号码
+	 * @param password
+	 *            String 密码
+	 * @param httpCallBack
+	 *            HttpCallBackInterface回调接口
+	 * @param context
+	 *            Context
+	 * @return void
+	 * **/
+	public void getUserFlowStatus(
+			final HttpCallBackInterface httpCallBack, Context context,
+			boolean showDialog) {
+		BasehttpSend(null, context, HttpConstants.METHOD_GETUSERFLOWSTATUS,
+				httpCallBack, GetUserFlowStatusBackBean.class, showDialog,
+				false);
+	}
+	
+	
 	
 
 	/**
