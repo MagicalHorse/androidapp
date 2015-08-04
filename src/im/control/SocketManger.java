@@ -1,15 +1,9 @@
 package im.control;
 
-import im.form.MessageBean;
-import im.form.RequestMessageBean;
-import im.form.RoomBean;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONObject;
-
-import android.util.Log;
 
 import com.github.nkzawa.emitter.Emitter.Listener;
 import com.github.nkzawa.socketio.client.Ack;
@@ -17,21 +11,28 @@ import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
 import com.google.gson.Gson;
 
+import android.util.Log;
+import im.form.MessageBean;
+import im.form.RequestMessageBean;
+import im.form.RoomBean;
+
 /****
- * 通信管理
+ * 通信管理 本类定义 im 通信 管理类 提供  链接服务器  断开服务器   进入房间 及 发送消息等方法
  * **/
 public class SocketManger {
 	static Socket socket;
 	static SocketManger socketManger;
-	final String URL = "http://182.92.7.70:8001/chat";
+	final String URL = "http://182.92.7.70:8001/chat";//服务器地址
 	//final String URL = "http://192.168.1.145:8000/chat";
-	SocketManagerListener listener;
+	SocketManagerListener listener;//监听对象
     List<MessageBean> mssageBean_list=new ArrayList<MessageBean>();
     
 	private SocketManger() {
 	}
 
-	
+	/****
+	 * 获取  SocketManger 对象
+	 * ****/
 	public static SocketManger the()
 	{
 		if(socketManger==null)
@@ -43,15 +44,20 @@ public class SocketManger {
 	
 	/***
 	 * 建立通信连接
+	 * @param listener  SocketManagerListener 监听对象
 	 * ***/
 	public synchronized void contentSocket(SocketManagerListener listener) {
 		this.listener=listener;
+		//如果对象为null 或者 当前没有链接  则进行链接
 		if(socket==null)
 		{
 			try {
 				socket = IO.socket(URL);
+				//注销事件监听
 				unsetListtener();
+				//设置事件监听
 				setListtener();
+				//链接
 				socket.connect();
 				Log.i("TAG", "---->>>socket create");
 			} catch (Exception e) {
@@ -79,35 +85,7 @@ public class SocketManger {
 		socket = null;
 	}
 
-	/***
-	 * 发送信息
-	 * ***//*
-	public void sendMsg(String fromUserId, String toUserId, String userName,
-			String productId, String body, String fromUserType, String type) {
-		if(!isConnect())
-		{
-			contentSocket();---------------------------------------------
-		}else
-		{
-			Map<String, String> data2 = new HashMap<String, String>();
-			data2.put("fromUserId", fromUserId);
-			data2.put("toUserId", toUserId);
-			data2.put("userName", userName);
-			data2.put("productId", productId);
-			data2.put("body", body);
-			data2.put("fromUserType", fromUserType);
-			data2.put("type", type);
-
-			socket.emit("sendMessage", new JSONObject(data2), new Ack() {
-
-				@Override
-				public void call(Object... arg0) {
-					Log.i("TAG", "sendMessage " + arg0.toString());
-				}
-			});
-		}
-	}
-*/
+	
 	/***
 	 * 发送信息
 	 * @param messageBean MessageBean 发送信息
@@ -285,29 +263,6 @@ public class SocketManger {
 		socket.off(Socket.EVENT_RECONNECT);
 	}
 
-	/*public void inroon(String owner, String room_id, String type,
-			String userName) {
-		Map<String, String> data = new HashMap<String, String>();
-		data.put("owner", owner);
-		data.put("room_id", room_id);
-		data.put("sessionId", "");
-		data.put("signValue", "");
-		data.put("title", "");
-		data.put("token", "");
-		data.put("type", type);
-		data.put("userName", userName);
-		
-		 * Gson gson=new Gson(); String json= gson.toJson(bean);
-		 
-		socket.emit("join room", owner, new JSONObject(data), new Ack() {
-
-			@Override
-			public void call(Object... arg0) {
-				Log.i("TAG", "join room " + arg0.toString());
-			}
-		});
-	}
-*/
 	/****
 	 * 进入房间
 	 * @param owner String 进入者id

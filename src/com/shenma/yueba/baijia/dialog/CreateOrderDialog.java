@@ -288,6 +288,9 @@ public class CreateOrderDialog extends AlertDialog implements android.view.View.
 			if(currvalue>maxValue)
 			{
 				createorder_dialog_layout_countvalue_edittext.setText(Integer.toString(maxValue));
+			}else if(currvalue==0 && maxValue>0)
+			{
+				createorder_dialog_layout_countvalue_edittext.setText(Integer.toString(1));
 			}else
 			{
 				createorder_dialog_layout_countvalue_edittext.setText(Integer.toString(currvalue));
@@ -320,9 +323,7 @@ public class CreateOrderDialog extends AlertDialog implements android.view.View.
 				
 				@Override
 				public void onClick(View v) {
-					currCheckedFouce=(PrioductSizesInfoBean)v.getTag();
-					setCheckFouse();
-					v.setSelected(true);
+					setStyleValue(v);
 				}
 			});
 			flowlayout.addView(btn, lp);
@@ -332,7 +333,22 @@ public class CreateOrderDialog extends AlertDialog implements android.view.View.
 			}
 			setCheckFouse();
 		}
+		if(view_array.size()>0)
+		{
+			setStyleValue(view_array.get(0));
+		}
 	}
+	
+	/******
+	 * 设置当前相中的规格
+	 * ***/
+	void setStyleValue(View v)
+	{
+		currCheckedFouce=(PrioductSizesInfoBean)v.getTag();
+		setCheckFouse();
+		v.setSelected(true);
+	}
+	
 	
 	/*****
 	 * 根据库存 即 商品数量 设置 按钮颜色
