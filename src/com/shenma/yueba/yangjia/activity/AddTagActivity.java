@@ -114,7 +114,7 @@ public class AddTagActivity extends BaseActivityWithTopView implements TextWatch
 				String id = mList.get(position-1).getId();
 				String name = mList.get(position-1).getName();
 				intent.putExtra("id", id);
-				intent.putExtra("type", type);
+				intent.putExtra("type", "1".equals(type)?"51":"50");
 				if(mList.get(position-1).isNewTag()){//如果是添加新标签
 					intent.putExtra("name", et_search.getText().toString().trim());
 				}else{
