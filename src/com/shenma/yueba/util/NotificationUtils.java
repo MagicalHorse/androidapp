@@ -56,19 +56,6 @@ public class NotificationUtils {
 			CharSequence type = text[0]; // 通知类型
 			CharSequence content = text[2]; // 通知内容
 			Intent notificationIntent = null;
-			// if("Order".equals(type)){
-			// notificationIntent = new Intent(ctx,
-			// SalesManagerForBuyerActivity.class); // 点击该通知后要跳转的Activity
-			// }
-			// if("AgreeCertifiedApply".equals(type)){//认证通过
-			// SharedUtil.setAuditStatus(ctx, "1");
-			// notificationIntent = new Intent(ctx,
-			// MainActivityForYangJia.class); // 点击该通知后要跳转的Activity
-			// }
-			// if("RefuseCertifiedApply".equals(type)){//认证被拒绝
-			// SharedUtil.setAuditStatus(ctx, "-1");
-			// }
-
 			if ("2".equals(type)) {// 认证通过
 				SharedUtil.setAuditStatus(ctx, "1");
 				notificationIntent = new Intent(ctx,

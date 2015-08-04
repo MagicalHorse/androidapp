@@ -242,6 +242,13 @@ public class TagImageView extends RelativeLayout {
 		int parentWidth = this.getWidth();
 		int parentHeight = this.getHeight();
 
+		if(parentWidth == 0){
+			parentWidth = ToolsUtil.getDisplayWidth(context);
+		}
+		if(parentHeight == 0){
+			parentHeight = ToolsUtil.getDisplayWidth(context);
+		}
+		
 		int left = tagView.getLeft() + dx;
 		int top = tagView.getTop() + dy;
 

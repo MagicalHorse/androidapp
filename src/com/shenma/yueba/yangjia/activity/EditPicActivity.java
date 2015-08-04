@@ -82,8 +82,8 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 	private Bitmap resultCache;
 	private ArrayList<String> tagNameList = new ArrayList<String>();// 姓名的集合
 	private List<Map<String, Integer>> positionList = new ArrayList<Map<String, Integer>>();// 位置的集合
-	private ArrayList<String> tagIdList = new ArrayList<String>();//id的集合
-	private ArrayList<String> tagTypeList = new ArrayList<String>();//标签类型的集合
+	private ArrayList<String> tagIdList = new ArrayList<String>();// id的集合
+	private ArrayList<String> tagTypeList = new ArrayList<String>();// 标签类型的集合
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -110,7 +110,8 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 				String TagId = bundle.getString("id");
 				String name = bundle.getString("name");
 				String TagType = bundle.getString("type");
-				layout_tag_image.addTextTag(name, startx, starty,TagId,TagType);
+				layout_tag_image.addTextTag(name, startx, starty, TagId,
+						TagType);
 				positionList = layout_tag_image.getPositionList();// 获取标签位置信息
 				tagNameList = layout_tag_image.getTagNameList();// 获取标签文字列表
 				tagIdList = layout_tag_image.getTagIdList();
@@ -125,6 +126,35 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 	@Override
 	protected void onRestart() {
 		Log.i("edit", "onRestart");
+		// layout_tag_image.setIToZero();
+		// // layout_tag_image.clearViewList();
+		// layout_tag_image.clearTagView();
+		// layout_tag_image.getPositionList().clear();
+		// layout_tag_image.getTagNameList().clear();
+		// layout_tag_image.getTagIdList().clear();
+		// layout_tag_image.getTagTypeList().clear();
+		// // if(MyApplication.getInstance().getPublishUtil().isOtherPic()){
+		// ArrayList<List<TagCacheBean>> allTagCacheList = MyApplication
+		// .getInstance().getPublishUtil().getTagCacheList();
+		// List<TagCacheBean> tagCacheList = allTagCacheList.get(Integer
+		// .valueOf(MyApplication.getInstance().getPublishUtil()
+		// .getIndex()));
+		// for (int i = 0; i < tagCacheList.size(); i++) {
+		// String name = tagCacheList.get(i).getName();
+		// int x = tagCacheList.get(i).getX();
+		// int y = tagCacheList.get(i).getY();
+		// String id = tagCacheList.get(i).getId();
+		// String type = tagCacheList.get(i).getType();
+		// layout_tag_image.addTextTag(name, x, y,id,type);
+		// }
+		// }
+
+		super.onRestart();
+	}
+
+	@Override
+	protected void onStart() {
+		Log.i("edit", "onStart");
 		layout_tag_image.setIToZero();
 		// layout_tag_image.clearViewList();
 		layout_tag_image.clearTagView();
@@ -144,11 +174,9 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 			int y = tagCacheList.get(i).getY();
 			String id = tagCacheList.get(i).getId();
 			String type = tagCacheList.get(i).getType();
-			layout_tag_image.addTextTag(name, x, y,id,type);
+			layout_tag_image.addTextTag(name, x, y, id, type);
 		}
-		// }
-
-		super.onRestart();
+		super.onStart();
 	}
 
 	@Override
@@ -226,7 +254,6 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 			tagNameList = layout_tag_image.getTagNameList();// 获取标签文字列表
 			savetagCacheInfo(Integer.valueOf(MyApplication.getInstance()
 					.getPublishUtil().getIndex()));// 缓存标签名称和位置，用于再次回来该页面显示用
-			 savetagCacheInfo(Integer.valueOf(MyApplication.getInstance().getPublishUtil().getIndex()));//缓存标签名称和位置，用于再次回来该页面显示用
 			getUploadTagInfo();// 获取要提交的标签信息
 			TagListBean resultBean = new TagListBean();
 			resultBean.setTagList(setUploadTagInfoToStanderStyle());// 将要提交的标签信息转化成需要的格式
@@ -244,8 +271,10 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 	}
 
 	private List<TagsBean> setUploadTagInfoToStanderStyle() {
-		int index = Integer.valueOf(MyApplication.getInstance().getPublishUtil().getIndex());
-		List<TagCacheBean> cacheTagList = MyApplication.getInstance().getPublishUtil().getTagCacheList().get(index);
+		int index = Integer.valueOf(MyApplication.getInstance()
+				.getPublishUtil().getIndex());
+		List<TagCacheBean> cacheTagList = MyApplication.getInstance()
+				.getPublishUtil().getTagCacheList().get(index);
 		List<TagsBean> tagLists = new ArrayList<TagsBean>();
 		for (int i = 0; i < cacheTagList.size(); i++) {
 			TagsBean tagsBean = new TagsBean();
@@ -257,20 +286,18 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 			tagLists.add(tagsBean);
 		}
 		return tagLists;
-		
-		
-		
-//		List<TagsBean> tagLists = new ArrayList<TagsBean>();
-//		for (int i = 0; i < tagList.size(); i++) {
-//			TagsBean tagsBean = new TagsBean();
-//			tagsBean.setPosX("" + tagList.get(i).getPosX());
-//			tagsBean.setPosY("" + tagList.get(i).getPosY());
-//			tagsBean.setName(tagNameList.get(i));
-//			tagsBean.setSourceId(tagList.get(i).getSourceId());
-//			tagsBean.setSourceType(tagLists.get(i).getSourceType());
-//			tagLists.add(tagsBean);
-//		}
-//		return tagLists;
+
+		// List<TagsBean> tagLists = new ArrayList<TagsBean>();
+		// for (int i = 0; i < tagList.size(); i++) {
+		// TagsBean tagsBean = new TagsBean();
+		// tagsBean.setPosX("" + tagList.get(i).getPosX());
+		// tagsBean.setPosY("" + tagList.get(i).getPosY());
+		// tagsBean.setName(tagNameList.get(i));
+		// tagsBean.setSourceId(tagList.get(i).getSourceId());
+		// tagsBean.setSourceType(tagLists.get(i).getSourceType());
+		// tagLists.add(tagsBean);
+		// }
+		// return tagLists;
 	}
 
 	private void getUploadTagInfo() {
@@ -292,13 +319,16 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 			if (y > 1) {
 				y = 1.0;
 			}
-			tagsBean.setPosX(x+"");
-			tagsBean.setPosY(y+"");
+			tagsBean.setPosX(x + "");
+			tagsBean.setPosY(y + "");
 			tagList.add(tagsBean);
 		}
 	}
 
 	private void savetagCacheInfo(int index) {
+		List<TagCacheBean> tagList = new ArrayList<TagCacheBean>();
+		tagList.addAll(MyApplication.getInstance()
+				.getPublishUtil().getTagCacheList().get(index));
 		MyApplication.getInstance().getPublishUtil().getTagCacheList()
 				.get(index).clear();
 		for (int i = 0; i < tagNameList.size(); i++) {
@@ -306,8 +336,18 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 			tagCacheBean.setName(tagNameList.get(i));
 			tagCacheBean.setX(positionList.get(i).get("x"));
 			tagCacheBean.setY(positionList.get(i).get("y"));
-			tagCacheBean.setId(tagIdList.get(i));
-			tagCacheBean.setType(tagTypeList.get(i));
+
+			if (tagIdList.size() > i) {
+				tagCacheBean.setId(tagIdList.get(i));
+			} else {
+				tagCacheBean.setId(tagList.get(i).getId());
+			}
+
+			if (tagTypeList.size() > i) {
+				tagCacheBean.setType(tagTypeList.get(i));
+			} else {
+				tagCacheBean.setType(tagList.get(i).getType());
+			}
 			MyApplication.getInstance().getPublishUtil().getTagCacheList()
 					.get(index).add(tagCacheBean);
 		}
