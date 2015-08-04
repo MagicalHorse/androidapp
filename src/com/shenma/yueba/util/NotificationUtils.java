@@ -16,6 +16,7 @@ import com.shenma.yueba.yangjia.activity.MainActivityForYangJia;
 import com.shenma.yueba.yangjia.activity.SalesManagerForBuyerActivity;
 import com.umeng.socialize.controller.impl.InitializeController;
 
+
 /**
  * notificaion工具类
  * 
