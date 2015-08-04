@@ -111,7 +111,7 @@
 
                 <include
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="30dp"
                     android:layout_marginLeft="@dimen/shop_main_lineheight10_dimen"
                     layout="@layout/jiaandjia_layout" />
             </LinearLayout>

@@ -321,7 +321,10 @@ public class ShopMainActivity extends FragmentActivity {
     	
     	if(isfirst)
     	{
-    		fragmentManager.beginTransaction().add(R.id.shop_main_layout_tabcontent_framelayout, (ShopPuBuliuFragment)fragmentBean_list.get(_id).getFragment()).commit();
+    		if(!(((ShopPuBuliuFragment)fragmentBean_list.get(_id).getFragment()).isAdded()))
+    		{
+    		  fragmentManager.beginTransaction().add(R.id.shop_main_layout_tabcontent_framelayout, (ShopPuBuliuFragment)fragmentBean_list.get(_id).getFragment()).commit();
+    		}
     	}else
     	{
     		fragmentManager.beginTransaction().replace(R.id.shop_main_layout_tabcontent_framelayout, (ShopPuBuliuFragment)fragmentBean_list.get(_id).getFragment()).commit();

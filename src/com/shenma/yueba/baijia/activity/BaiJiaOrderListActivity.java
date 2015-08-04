@@ -115,7 +115,10 @@ int currid=-1;
 	{
 		if(currid==-1 && i==0)
 		{
-			fragmentManager.beginTransaction().add(R.id.baijia_main_framelayout,(BaiJiaOrderListFragment) fragment_list.get(i).getFragment()).commit();
+			if(!(((BaiJiaOrderListFragment) fragment_list.get(i).getFragment()).isAdded()))
+			{
+			  fragmentManager.beginTransaction().add(R.id.baijia_main_framelayout,(BaiJiaOrderListFragment) fragment_list.get(i).getFragment()).commit();
+			}
 		}
 	    else if(currid==i)
 		{
