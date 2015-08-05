@@ -7,6 +7,7 @@ import java.util.Map;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -19,6 +20,8 @@ import android.widget.Toast;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.activity.BaijiaBrandListActivity;
+import com.shenma.yueba.baijia.modle.ProductsDetailsTagsInfo;
 import com.shenma.yueba.util.ToolsUtil;
 
 /**
@@ -116,8 +119,9 @@ public class TagImageView extends RelativeLayout {
 	 *            x轴的位置
 	 * @param y
 	 *            y轴的位置
+	 * @param bj  Object 数据对象
 	 */
-	public void addTextTagCanNotMove(String content, int tagX, int tagY) {
+	public void addTextTagCanNotMove(String content, int tagX, int tagY,Object obj) {
 		if (tagViewList == null)
 		{
 			tagViewList = new ArrayList<View>();
@@ -136,6 +140,32 @@ public class TagImageView extends RelativeLayout {
 			LayoutInflater mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			View view = mInflater.inflate(R.layout.tag, null);
 			TextView text = (TextView) view.findViewById(R.id.tag_text);
+			text.setTag(obj);
+			text.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					if(v.getTag()!=null && v.getTag() instanceof ProductsDetailsTagsInfo)
+					{
+						ProductsDetailsTagsInfo productsDetailsTagsInfo=(ProductsDetailsTagsInfo)v.getTag();
+						if(productsDetailsTagsInfo.getSourceId()>0)
+						{
+							Intent intent=new Intent(context,BaijiaBrandListActivity.class);
+							intent.putExtra("BrandList_type", BaijiaBrandListActivity.BrandList_type.Type_Brand);
+							intent.putExtra("BrandId", productsDetailsTagsInfo.getSourceId());
+							intent.putExtra("BrandName", productsDetailsTagsInfo.getName());
+							context.startActivity(intent);
+						}else
+						{
+							Intent intent=new Intent(context,BaijiaBrandListActivity.class);
+							intent.putExtra("BrandList_type", BaijiaBrandListActivity.BrandList_type.Type_Text);
+							intent.putExtra("TextName",productsDetailsTagsInfo.getName());
+							context.startActivity(intent);
+						}
+						
+					}
+				}
+			});
 //			android.view.ViewGroup.LayoutParams params = text.getLayoutParams();
 //			params.height = ToolsUtil.px2dip(getContext(), 25);
 //			text.setLayoutParams(params);
@@ -154,6 +184,7 @@ public class TagImageView extends RelativeLayout {
 //		}
 	
 	}
+	
 	
 	/**
 	 * 给标签添加OnTouch监听

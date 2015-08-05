@@ -3,6 +3,21 @@ package com.shenma.yueba.baijia.fragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.activity.BaijiaBrandListActivity;
+import com.shenma.yueba.baijia.adapter.ImageTextlAdapter;
+import com.shenma.yueba.baijia.modle.BrandSearchInfo;
+import com.shenma.yueba.baijia.modle.RequestBrandSearchInfoBean;
+import com.shenma.yueba.constants.Constants;
+import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
+import com.shenma.yueba.util.ToolsUtil;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,26 +27,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnPullEventListener;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.State;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.shenma.yueba.R;
-import com.shenma.yueba.application.MyApplication;
-import com.shenma.yueba.baijia.activity.BaijiaBrandListActivity;
-import com.shenma.yueba.baijia.adapter.ImageTextlAdapter;
-import com.shenma.yueba.baijia.modle.BrandSearchInfo;
-import com.shenma.yueba.baijia.modle.BrandSearchInfoBean;
-import com.shenma.yueba.baijia.modle.RequestBrandInfoBean;
-import com.shenma.yueba.baijia.modle.RequestBrandSearchInfoBean;
-import com.shenma.yueba.constants.Constants;
-import com.shenma.yueba.util.HttpControl;
-import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
-import com.shenma.yueba.util.ToolsUtil;
 
 /**
  * 品牌
@@ -87,7 +82,9 @@ public class BrandFragment extends BaseFragment{
 				{
 					BrandSearchInfo brandSearchInfo=mList.get(arg2-1);
 					Intent intent=new Intent(getActivity(),BaijiaBrandListActivity.class);
-					intent.putExtra("BRANDID", brandSearchInfo.getId());
+					intent.putExtra("BrandList_type", BaijiaBrandListActivity.BrandList_type.Type_Brand);
+					intent.putExtra("BrandId", brandSearchInfo.getId());
+					intent.putExtra("BrandName", brandSearchInfo.getName());
 					getActivity().startActivity(intent);
 				}
 				

@@ -53,7 +53,15 @@ HttpControl httpControl;
 int currPage=Constants.CURRPAGE_VALUE;
 int pageSize=Constants.PAGESIZE_VALUE;
 boolean showDialog=true;
-int BrandId=-1;
+int BrandId=-1;//品牌id
+String BrandName=null;//品牌名字
+String TextName=null;//普通标签名字
+public enum BrandList_type
+{
+	Type_Brand,//品牌
+	Type_Text //普通标签
+}
+
 List<BrandInfoInfo> object_list=new ArrayList<BrandInfoInfo>();
 
 	@Override
@@ -64,22 +72,28 @@ List<BrandInfoInfo> object_list=new ArrayList<BrandInfoInfo>();
 		setContentView(parenetView);
 		super.onCreate(savedInstanceState);
 		httpControl=new HttpControl();
-		if(this.getIntent().getSerializableExtra("BRANDID")==null)
+		
+		//判断当前传递的参数是 品牌还是  普通标签
+		if(this.getIntent().getSerializableExtra("BrandList_type")==null)
 		{
-			MyApplication.getInstance().showMessage(BaijiaBrandListActivity.this, "数据错误");
+			MyApplication.getInstance().showMessage(this, "参数错误");
 			finish();
-			return;
+			return ;
 		}
-		BrandInfo brandInfo=(BrandInfo)this.getIntent().getSerializableExtra("BRANDID");
-		BrandId=brandInfo.getBrandId();
-		MyApplication.getInstance().addActivity(this);
-		if(BrandId<0)
+		BrandList_type type=(BrandList_type)this.getIntent().getSerializableExtra("BrandList_type");
+		switch(type)
 		{
-			MyApplication.getInstance().showMessage(BaijiaBrandListActivity.this, "数据错误");
-			finish();
-			return;
+		case Type_Brand:
+			BrandId=this.getIntent().getIntExtra("BrandId", -1);
+			BrandName=this.getIntent().getStringExtra("BrandName");
+			setTitle(ToolsUtil.nullToString(BrandName));
+			break;
+		case Type_Text:
+			TextName=this.getIntent().getStringExtra("TextName");
+			setTitle(ToolsUtil.nullToString(TextName));
+			break;
+			
 		}
-		setTitle(brandInfo.getBrandName());
 		initView();
 		requestFalshData();
 	}
@@ -223,7 +237,7 @@ List<BrandInfoInfo> object_list=new ArrayList<BrandInfoInfo>();
 	void sendHttp(final int page,final int type)
 	{
 		ToolsUtil.showNoDataView(BaijiaBrandListActivity.this,parenetView,false);
-		httpControl.getBaijiaBrandDetails(page, pageSize, BrandId, showDialog, new HttpCallBackInterface() {
+		httpControl.getBaijiaBrandDetails(page, pageSize, BrandId, TextName,showDialog, new HttpCallBackInterface() {
 			
 			@Override
 			public void http_Success(Object obj) {

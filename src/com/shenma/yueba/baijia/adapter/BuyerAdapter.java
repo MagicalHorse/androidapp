@@ -3,8 +3,6 @@ package com.shenma.yueba.baijia.adapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.lidroid.xutils.BitmapUtils;
-import com.lidroid.xutils.bitmap.BitmapDisplayConfig;
 import com.shenma.yueba.ChatActivity;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
@@ -13,7 +11,7 @@ import com.shenma.yueba.baijia.activity.ShopMainActivity;
 import com.shenma.yueba.baijia.modle.BaseRequest;
 import com.shenma.yueba.baijia.modle.LikeUsersInfoBean;
 import com.shenma.yueba.baijia.modle.ProductPicInfoBean;
-import com.shenma.yueba.baijia.modle.ProductTagsInfoBean;
+import com.shenma.yueba.baijia.modle.ProductsDetailsTagsInfo;
 import com.shenma.yueba.baijia.modle.ProductsInfoBean;
 import com.shenma.yueba.baijia.modle.UsersInfoBean;
 import com.shenma.yueba.util.FontManager;
@@ -228,12 +226,12 @@ public class BuyerAdapter extends BaseAdapter {
 
 	void initValue(Holder holder, ProductsInfoBean productsInfoBean) {
 		holder.baijia_tab1_item_productcontent_tagimageview.removeAllViews();
-		List<ProductTagsInfoBean> tags_list=productsInfoBean.getProductPic().getTags();
+		List<ProductsDetailsTagsInfo> tags_list=productsInfoBean.getProductPic().getTags();
 		if(tags_list!=null && tags_list.size()>0)
 		{
 		   for(int i=0;i<tags_list.size();i++)
 		   {
-			   ProductTagsInfoBean productTagsInfoBean= tags_list.get(i);
+			   ProductsDetailsTagsInfo productTagsInfoBean= tags_list.get(i);
 			   DisplayMetrics displayMetrics = new DisplayMetrics();
 				activity.getWindowManager().getDefaultDisplay()
 						.getMetrics(displayMetrics);
@@ -241,7 +239,7 @@ public class BuyerAdapter extends BaseAdapter {
 			  int tagx= (int)(productTagsInfoBean.getPosX()*height);
 			  int tagy=(int)(productTagsInfoBean.getPosY()*height);
 			  Log.i("TAG", "----->>tagx:"+tagx+"  tagy:"+tagy);
-			  holder.baijia_tab1_item_productcontent_tagimageview.addTextTagCanNotMove(ToolsUtil.nullToString(productTagsInfoBean.getName()), tagx, tagy);
+			  holder.baijia_tab1_item_productcontent_tagimageview.addTextTagCanNotMove(ToolsUtil.nullToString(productTagsInfoBean.getName()), tagx, tagy,productTagsInfoBean);
 		   }
 		}
 		

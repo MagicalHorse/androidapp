@@ -3,6 +3,21 @@ package com.shenma.yueba.baijia.view;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
+import com.handmark.pulltorefresh.library.PullToRefreshGridView;
+import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.activity.BaijiaBrandListActivity;
+import com.shenma.yueba.baijia.adapter.BrandAdapter;
+import com.shenma.yueba.baijia.modle.BrandInfo;
+import com.shenma.yueba.baijia.modle.RequestBrandInfoBean;
+import com.shenma.yueba.constants.Constants;
+import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
+import com.shenma.yueba.util.ToolsUtil;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
@@ -11,27 +26,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnPullEventListener;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.State;
-import com.handmark.pulltorefresh.library.PullToRefreshGridView;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.shenma.yueba.R;
-import com.shenma.yueba.application.MyApplication;
-import com.shenma.yueba.baijia.activity.BaijiaBrandListActivity;
-import com.shenma.yueba.baijia.adapter.BrandAdapter;
-import com.shenma.yueba.baijia.modle.BrandInfo;
-import com.shenma.yueba.baijia.modle.BrandInfoBean;
-import com.shenma.yueba.baijia.modle.RequestBrandInfoBean;
-import com.shenma.yueba.baijia.modle.RequestUserDynamicInfoBean;
-import com.shenma.yueba.constants.Constants;
-import com.shenma.yueba.util.HttpControl;
-import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
-import com.shenma.yueba.util.ToolsUtil;
 
 /**  
  * @author gyj  
@@ -88,7 +82,9 @@ public class BrandListView extends BaseView{
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,long arg3) {
 				BrandInfo brandInfo=items.get(arg2);
 				Intent intent=new Intent(activity,BaijiaBrandListActivity.class);
-				intent.putExtra("BRANDID", brandInfo);
+				intent.putExtra("BrandList_type", BaijiaBrandListActivity.BrandList_type.Type_Brand);
+				intent.putExtra("BrandId", brandInfo.getBrandId());
+				intent.putExtra("BrandName", brandInfo.getBrandName());
 				activity.startActivity(intent);
 			}
 		});

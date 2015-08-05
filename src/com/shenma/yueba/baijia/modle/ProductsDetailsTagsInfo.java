@@ -12,8 +12,16 @@ public class ProductsDetailsTagsInfo implements Serializable {
 	String Name = "";// 名字
 	double PosX;
 	double PosY;
-	String SourceId;
+	int SourceId;
 	String SourceType;
+
+	public String getSourceType() {
+		return SourceType;
+	}
+
+	public void setSourceType(String sourceType) {
+		SourceType = sourceType;
+	}
 
 	public String getId() {
 		return Id;
@@ -47,11 +55,11 @@ public class ProductsDetailsTagsInfo implements Serializable {
 		PosY = posY;
 	}
 
-	public String getSourceId() {
+	public int getSourceId() {
 		return SourceId;
 	}
 
-	public void setSourceId(String sourceId) {
+	public void setSourceId(int sourceId) {
 		SourceId = sourceId;
 	}
 

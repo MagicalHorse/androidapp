@@ -1556,21 +1556,26 @@ public class HttpControl {
 	
 	/**
 	 * 获取败家品牌信息详细
-	 * 
-	 * @param currPage
-	 *            int 当前页
-	 * @param pageSize
-	 *            int 条数
-	 * @param BrandId int 品牌id
+	 * @param currPage  int 当前页
+	 * @param pageSize  int 条数
+	 * @param BrandId int 品牌id   (如果是品牌  就传BrandId    如果是标签就传Name)
+	 * @param Name 标签名字
 	 * @return void
 	 * **/
-	public void getBaijiaBrandDetails(int currPage, int pageSize, int BrandId ,
+	public void getBaijiaBrandDetails(int currPage, int pageSize, int BrandId ,String Name,
 			boolean showDialog, final HttpCallBackInterface httpCallBack,
 			Context context) {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put(Constants.PAGE, Integer.toString(currPage));
 		map.put(Constants.PAGESIZE, Integer.toString(pageSize));
-		map.put("BrandId", Integer.toString(BrandId));
+		if(BrandId>=0)
+		{
+			map.put("BrandId", Integer.toString(BrandId));
+		}
+		if(Name!=null)
+		{
+			map.put("Name", Name);
+		}
 		BasehttpSend(map, context, HttpConstants.METHOD_BRANDMANAGEER_DETAIL, httpCallBack,
 				RequestBrandInfoInfoBean.class, showDialog, false);
 	}
