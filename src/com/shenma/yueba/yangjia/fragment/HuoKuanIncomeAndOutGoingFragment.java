@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,9 +25,12 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.activity.ApplyResultActivity;
+import com.shenma.yueba.baijia.dialog.WeChatDialog;
 import com.shenma.yueba.baijia.fragment.BaseFragment;
 import com.shenma.yueba.baijia.modle.GetUserFlowStatusBackBean;
 import com.shenma.yueba.baijia.modle.UserFlowStatusBean;
+import com.shenma.yueba.util.DialogUtilInter;
+import com.shenma.yueba.util.DialogUtils;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.SharedUtil;
@@ -239,10 +243,16 @@ public class HuoKuanIncomeAndOutGoingFragment extends BaseFragment implements On
 		switch (v.getId()) {
 		case R.id.tv_bottom://提现货款
 			if(!SharedUtil.getBooleanPerfernece(getActivity(), SharedUtil.user_IsBindWeiXin)){
-				Toast.makeText(getActivity(), "正在绑定微信", 1000).show();
-				// 绑定手机号
-				WXLoginUtil wxLoginUtil = new WXLoginUtil(getActivity());
-				wxLoginUtil.initWeiChatLogin(false,false,false);
+				DialogUtils dialog = new DialogUtils();
+				dialog.alertDialog(getActivity(), "提示", "您需要绑定微信才可以提款，现在去绑定吗？", new DialogUtilInter() {
+					@Override
+					public void dialogCallBack(int... which) {
+						Toast.makeText(getActivity(), "正在绑定微信", 1000).show();
+						// 绑定手机号
+						WXLoginUtil wxLoginUtil = new WXLoginUtil(getActivity());
+						wxLoginUtil.initWeiChatLogin(false,false,false);
+					}
+				}, true, "绑定", "取消", false, true);
 				return;
 			}
 			if(ids ==null || ids.size()==0){
@@ -259,7 +269,7 @@ public class HuoKuanIncomeAndOutGoingFragment extends BaseFragment implements On
 	
 	
 	/**
-	 * 绑定微信
+	 * 关注微信账号
 	 */
 	private void GetUserFlowStatus() {
 		final HttpControl httpcon = new HttpControl();
@@ -271,10 +281,10 @@ public class HuoKuanIncomeAndOutGoingFragment extends BaseFragment implements On
 				if(data!=null){
 					boolean isFlow = data.isIsFlow();
 						if(isFlow){//已經关注
-							Toast.makeText(getActivity(), "开始绑定微信", 1000).show();
 							withdraw();
 						}else{//没有关注
-							
+							WeChatDialog dialog = new WeChatDialog(getActivity(),data.getQRCode(),data.getName());
+							dialog.show();
 						}
 					}
 				};

@@ -39,7 +39,7 @@ public class TagImageView extends RelativeLayout {
 	
 	
 	private ArrayList<String> tagNameList =new ArrayList<String>();//姓名的集合
-	private ArrayList<String> tagIdList = new ArrayList<String>();//id的集合
+	private ArrayList<Integer> tagIdList = new ArrayList<Integer>();//id的集合
 	private ArrayList<String> tagTypeList = new ArrayList<String>();//标签类型的集合
 	private int i;
 	/** 上下文对象 */
@@ -80,7 +80,7 @@ public class TagImageView extends RelativeLayout {
 	 * @param y
 	 *            y轴的位置
 	 */
-	public void addTextTag(String content, int tagX, int tagY,String tagId,String tagType) {
+	public void addTextTag(String content, int tagX, int tagY,int tagId,String tagType) {
 		if (tagViewList == null)
 			tagViewList = new ArrayList<View>();
 			LayoutInflater mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -400,11 +400,13 @@ public class TagImageView extends RelativeLayout {
 	
 	
 
-	public ArrayList<String> getTagIdList() {
+
+
+	public ArrayList<Integer> getTagIdList() {
 		return tagIdList;
 	}
 
-	public void setTagIdList(ArrayList<String> tagIdList) {
+	public void setTagIdList(ArrayList<Integer> tagIdList) {
 		this.tagIdList = tagIdList;
 	}
 

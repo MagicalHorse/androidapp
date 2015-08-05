@@ -22,7 +22,10 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.constants.Constants;
@@ -41,13 +44,15 @@ public class WeChatDialog extends Dialog implements
 		android.view.View.OnClickListener, OnLongClickListener {
 	Context context;
 	RelativeLayout ll;
-	kaixiaoPiaoBean obj;
-
-	public WeChatDialog(Context context, kaixiaoPiaoBean obj) {
+	String qrCodePath;
+	String title;
+	private Bitmap bitmap;
+	public WeChatDialog(Context context, String qrCodePath,String title) {
 		super(context, R.style.MyDialog);
 		requestWindowFeature(getWindow().FEATURE_NO_TITLE);
 		this.context = context;
-		this.obj = obj;
+		this.qrCodePath = qrCodePath;
+		this.title = title;
 		setOwnerActivity((Activity) context);
 		// this.getWindow().setBackgroundDrawable(context.getResources().getDrawable(R.color.color_transparent));
 	}
@@ -64,21 +69,42 @@ public class WeChatDialog extends Dialog implements
 	void initView() {
 		ImageView iv_code = (ImageView) ll.findViewById(R.id.iv_code);
 		iv_code.setOnLongClickListener(this);
-		initBitmap(SharedUtil.getHeadImage(getContext()), iv_code);
-		TextView tv_title = (TextView) ll.findViewById(R.id.tv_title);
-		TextView tv_wechat_name = (TextView) ll
-				.findViewById(R.id.tv_wechat_name);
+		TextView tv_wechat_name = (TextView) ll.findViewById(R.id.tv_wechat_name);
 		TextView tv_save = (TextView) ll.findViewById(R.id.tv_save);
+		TextView tv_title = (TextView) ll.findViewById(R.id.tv_title);
+		tv_wechat_name.setText("（"+title+"）");
 		ImageView iv_close = (ImageView) ll.findViewById(R.id.iv_close);
 		iv_close.setOnClickListener(this);
-		byte[] bytes = Base64Coder.decode(obj.getQrCode());
 		LayoutParams params = iv_code.getLayoutParams();
 		params.width = ToolsUtil.getDisplayWidth(context) / 4 * 3;
 		params.height = ToolsUtil.getDisplayWidth(context) / 4 * 3;
 		iv_code.setLayoutParams(params);
-		iv_code.setImageBitmap(BitmapFactory.decodeByteArray(bytes, 0,
-				bytes.length));
-		FontManager.changeFonts(context, tv_title, tv_wechat_name, tv_save);
+		MyApplication.getInstance().getImageLoader().displayImage(qrCodePath, iv_code, new ImageLoadingListener() {
+			
+			@Override
+			public void onLoadingStarted(String arg0, View arg1) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onLoadingFailed(String arg0, View arg1, FailReason arg2) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onLoadingComplete(String arg0, View arg1, Bitmap arg2) {
+				bitmap = arg2;
+			}
+			
+			@Override
+			public void onLoadingCancelled(String arg0, View arg1) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		FontManager.changeFonts(context, tv_wechat_name, tv_save, tv_save,tv_title);
 	}
 
 	@Override
@@ -102,14 +128,6 @@ public class WeChatDialog extends Dialog implements
 		MyApplication.getInstance().getBitmapUtil().display(iv, url);
 	}
 
-	@Override
-	public boolean onLongClick(View arg0) {
-		byte[] bytes = Base64Coder.decode(obj.getQrCode());
-		Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0,
-				bytes.length);
-		saveBitmapToAlbum(context, bitmap);
-		return false;
-	}
 	
 	
 	
@@ -146,6 +164,15 @@ public class WeChatDialog extends Dialog implements
 		    }
 		    // 最后通知图库更新
 		    context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + appDir+fileName)));
+		    Toast.makeText(context, "图片已经保存至相册", 1000).show();
+	}
+
+	@Override
+	public boolean onLongClick(View v) {
+		if(bitmap!=null){
+			saveBitmapToAlbum(context, bitmap);
+		}
+		return false;
 	}
 	
 }

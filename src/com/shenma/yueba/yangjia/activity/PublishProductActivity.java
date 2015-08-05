@@ -165,7 +165,7 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 					for (int j = 0; j < tagsBean.size(); j++) {
 						TagCacheBean tagcacheBean = new TagCacheBean();
 						tagcacheBean.setName(tagsBean.get(j).getName());
-						tagcacheBean.setId(tagsBean.get(j).getSourceId());
+						tagcacheBean.setId(Integer.valueOf(tagsBean.get(j).getSourceId()));
 					    tagcacheBean.setType(tagsBean.get(j).getSourceType());
 					    tagcacheBean.setX((int)(ToolsUtil.getDisplayWidth(mContext)*Double.parseDouble(tagsBean.get(j).getPosX())));
 					    tagcacheBean.setY((int)(ToolsUtil.getDisplayWidth(mContext)*Double.parseDouble(tagsBean.get(j).getPosY())));
@@ -256,6 +256,8 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 				et_guige, et_kucun, tv_add_guige, tv_publish);
 		progressDialog = new CustomProgressDialog(mContext)
 				.createDialog(mContext);
+		progressDialog.setCancelable(true);
+		progressDialog.setCanceledOnTouchOutside(false);
 
 	}
 
@@ -494,6 +496,7 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 			break;
 		case R.id.tv_publish:// 发布商品
 //			MyApplication.getInstance().getPublishUtil().getBean().setImages(null);
+			upPicProgress = 0;
 			uploadImage();
 			break;
 		default:

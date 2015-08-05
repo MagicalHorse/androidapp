@@ -13,6 +13,11 @@ import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.ApplyResultActivity;
 import com.shenma.yueba.baijia.activity.BaseActivityWithTopView;
+import com.shenma.yueba.baijia.dialog.WeChatDialog;
+import com.shenma.yueba.baijia.modle.GetUserFlowStatusBackBean;
+import com.shenma.yueba.baijia.modle.UserFlowStatusBean;
+import com.shenma.yueba.util.DialogUtilInter;
+import com.shenma.yueba.util.DialogUtils;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.SharedUtil;
@@ -66,7 +71,7 @@ public class ApplyWithdrawActivity extends BaseActivityWithTopView implements
 		tv_sure = getView(R.id.tv_sure);
 		tv_sure.setOnClickListener(this);
 		FontManager.changeFonts(mContext, tv_retan_money, et_money, tv_yuan,
-				tv_introduce,tv_sure);
+				tv_introduce,tv_sure,tv_top_title);
 	}
 
 	@Override
@@ -77,10 +82,19 @@ public class ApplyWithdrawActivity extends BaseActivityWithTopView implements
 			if (money.matches("[0-9]+")) {
 				
 				if(SharedUtil.getBooleanPerfernece(mContext, SharedUtil.user_IsBindWeiXin)){
-					getIncomeRedPack();
+					GetUserFlowStatus();
 				}else{
-					WXLoginUtil wxLoginUtil = new WXLoginUtil(mContext);
-					wxLoginUtil.initWeiChatLogin(false,false,false);
+					DialogUtils dialog = new DialogUtils();
+					dialog.alertDialog(mContext, "提示", "您需要绑定微信才可以提款，现在去绑定吗？", new DialogUtilInter() {
+						@Override
+						public void dialogCallBack(int... which) {
+							Toast.makeText(mContext, "正在绑定微信", 1000).show();
+							// 绑定手机号
+							WXLoginUtil wxLoginUtil = new WXLoginUtil(mContext);
+							wxLoginUtil.initWeiChatLogin(false,false,false);
+						}
+					}, true, "绑定", "取消", false, true);
+				
 				}
 			} else {
 				Toast.makeText(mContext, "请输入整数", 1000).show();
@@ -114,6 +128,37 @@ public class ApplyWithdrawActivity extends BaseActivityWithTopView implements
 				}, ApplyWithdrawActivity.this);
 	}
 	
+	
+	
+	
+	
+	/**
+	 * 关注微信账号
+	 */
+	private void GetUserFlowStatus() {
+		final HttpControl httpcon = new HttpControl();
+		httpcon.getUserFlowStatus(new HttpCallBackInterface() {
+			@Override
+			public void http_Success(Object obj) {
+				GetUserFlowStatusBackBean bean = (GetUserFlowStatusBackBean) obj;
+				UserFlowStatusBean data = bean.getData();
+				if(data!=null){
+					boolean isFlow = data.isIsFlow();
+						if(isFlow){//已經关注
+							getIncomeRedPack();
+						}else{//没有关注
+							WeChatDialog dialog = new WeChatDialog(ApplyWithdrawActivity.this,data.getQRCode(),data.getName());
+							dialog.show();
+						}
+					}
+				};
+
+			@Override
+			public void http_Fails(int error, String msg) {
+				Toast.makeText(ApplyWithdrawActivity.this, msg, 1000).show();
+			}
+		}, ApplyWithdrawActivity.this, true);
+	}
 	
 	  @Override
 	    protected void onDestroy() {

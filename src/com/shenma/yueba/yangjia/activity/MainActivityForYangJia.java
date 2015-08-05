@@ -18,6 +18,7 @@ package com.shenma.yueba.yangjia.activity;
 
 import java.util.LinkedList;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -44,6 +45,8 @@ import com.shenma.yueba.baijia.modle.RequestUploadProductDataBean;
 import com.shenma.yueba.camera2.ActivityCapture;
 import com.shenma.yueba.util.FileUtils;
 import com.shenma.yueba.util.FontManager;
+import com.shenma.yueba.util.ToolsUtil;
+import com.shenma.yueba.view.SelecteKXPOrPublishType;
 import com.shenma.yueba.yangjia.fragment.CartFragment;
 import com.shenma.yueba.yangjia.fragment.IndexFragmentForYangJia;
 import com.shenma.yueba.yangjia.fragment.MeFragmentForYangJia;
@@ -102,7 +105,8 @@ public final class MainActivityForYangJia extends FragmentActivity {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				if(event.getAction() == MotionEvent.ACTION_UP){//当手抬起的时候出发事件
-					showDialog();
+//					showDialog();
+					showBottomDialog();
 				}
 				return true;
 			}
@@ -224,4 +228,51 @@ public void onResume() {
 			return super.onKeyDown(keyCode, event);
 		}
 
+		
+		
+		/**
+		 * 弹出选择框(开小票和发布商品)
+		 */
+		protected void showBottomDialog() {
+			ToolsUtil.hideSoftInputKeyBoard(MainActivityForYangJia.this);
+			ShowMenu showMenu = new ShowMenu(MainActivityForYangJia.this, findViewById(R.id.parent),
+					R.layout.main_popwindow);
+			showMenu.createView();
+		}
+
+		/**
+		 * 弹出底部菜单
+		 * 
+		 * @author
+		 */
+		class ShowMenu extends SelecteKXPOrPublishType {
+			public ShowMenu(Activity activity, View parent, int popLayout) {
+				super(activity, parent, popLayout);
+			}
+
+			@Override
+			public void onExitClick(View v) {
+				canceView();
+			}
+
+			@Override
+			public void onPublish(View v) {
+				MyApplication.getInstance().getPublishUtil().setBean(new RequestUploadProductDataBean());
+				MyApplication.getInstance().getPublishUtil().setIndex("0");
+				MyApplication.getInstance().getPublishUtil().getTagCacheList().clear();
+				FileUtils.delAllFile(FileUtils.getRootPath() + "/tagPic/");
+				Intent intentCamera = new Intent(MainActivityForYangJia.this,ActivityCapture.class);
+				startActivity(intentCamera);
+				canceView();
+			}
+
+			@Override
+			public void onKxp(View v) {
+				// 跳转到开下票的界面
+				Intent intentXP = new Intent(MainActivityForYangJia.this,KaiXiaoPiaoActivity.class);
+				startActivity(intentXP);
+				canceView();
+			}
+
+		}
 }
