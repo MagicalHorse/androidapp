@@ -10,23 +10,23 @@
     android:paddingRight="20.0dip" >
 
     <Button
-        android:id="@+id/bt_camera"
+        android:id="@+id/bt_kxp"
         android:layout_width="fill_parent"
         android:layout_height="45dip"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="20.0dip"
         android:background="@drawable/bottom_dialog_button_single"
-        android:text="相机"
+        android:text="开小票"
         android:textColor="@color/text_press_selector"
         android:textSize="20sp" />
 
     <Button
-        android:id="@+id/bt_pic"
+        android:id="@+id/bt_publish"
         android:layout_width="match_parent"
         android:layout_height="45dip"
         android:layout_marginBottom="10dp"
         android:background="@drawable/bottom_dialog_button_single"
-        android:text="相册"
+        android:text="发布商品"
         android:textColor="@color/text_press_selector"
         android:textSize="20sp" />
 

@@ -40,6 +40,7 @@ import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shenma.yueba.R;
@@ -93,7 +94,7 @@ public class ActivityCapture extends Activity implements View.OnClickListener,
 	// };
 
 	final static String TAG = "capture";
-	private ImageView tv_little_pic;// 显示的小图
+	private TextView tv_little_pic;// 显示的小图
 	private ImageView tempImageView;// 临时大图
 
 	@Override
@@ -149,7 +150,7 @@ public class ActivityCapture extends Activity implements View.OnClickListener,
 		bnToggleCamera = (ImageView) findViewById(R.id.bnToggleCamera);
 		tempImageView = (ImageView) findViewById(R.id.tempImageView);
 		bt_light = (ImageView) findViewById(R.id.bt_light);
-		tv_little_pic = (ImageView) findViewById(R.id.tv_little_pic);
+		tv_little_pic = (TextView) findViewById(R.id.tv_little_pic);
 		bnCapture = (ImageView) findViewById(R.id.bnCapture);
 		framelayoutPreview = (FrameLayout) findViewById(R.id.cameraPreview);
 		focuseView = findViewById(R.id.viewFocuse);
@@ -160,6 +161,7 @@ public class ActivityCapture extends Activity implements View.OnClickListener,
 		bnCapture.setRotation(-90);
 		bnToggleCamera.setRotation(-90);
 		bt_light.setRotation(-90);
+		tv_little_pic.setRotation(-90);
 	}
 
 	private void getLocalImage(int reqCode) {
@@ -233,59 +235,73 @@ public class ActivityCapture extends Activity implements View.OnClickListener,
 				if (finalBitmap != null && !finalBitmap.isRecycled()) {
 					addBitmap.recycle();
 				}
+				
+				
+//---------------------------------------------------------------------------------------------------------
+				// tempImageView.setImageBitmap(finalBitmap);
+				// Animation animation = AnimationUtils.loadAnimation(
+				// getApplication(), R.anim.tempview_show);
+				// tempImageView.setAnimation(animation);
+				// animation.setAnimationListener(new AnimationListener() {
+				//
+				// @Override
+				// public void onAnimationStart(Animation animation) {
+				// // TODO Auto-generated method stub
+				//
+				// }
+				//
+				// @Override
+				// public void onAnimationRepeat(Animation animation) {
+				// // TODO Auto-generated method stub
+				//
+				// }
+				//
+				// @Override
+				// public void onAnimationEnd(Animation animation) {
+				// tv_little_pic.setImageBitmap(finalBitmap);
+				// tempImageView.setVisibility(View.GONE);
+				// focuseView.setVisibility(View.GONE);
+				// // camera.setPreviewCallback(null) ;
+				// // camera.stopPreview();
+				// // camera.release();
+				// // camera.open();
+				// // setupDevice();
+				// // camera.stopPreview();
+				// // camera.release();
+				// // openCamera();
+				// // getViews();
+				// // initViews();
+				// // setListeners();
+				// // observer = new
+				// // CaptureSensorsObserver(ActivityCapture.this);
+				// // _orientationEventListener = new
+				// // CaptureOrientationEventListener(ActivityCapture.this);
+				// // getViews();
+				// // initViews();
+				// // setListeners();
+				// // setupDevice();
+				// if (saveBitmapToFile(finalBitmap)) {
+				// MyApplication.getInstance().getPublishUtil()
+				// .setFrom("camera");
+				// Intent intent = new Intent(ActivityCapture.this,
+				// EditPicActivity.class);
+				// startActivity(intent);
+				// finish();
+				// }
+				// }
+				// });
+//-------------------------------------------------------------------------------------------------------------
+				
+				
+				if (saveBitmapToFile(finalBitmap)) {
+					MyApplication.getInstance().getPublishUtil()
+							.setFrom("camera");
+					Intent intent = new Intent(ActivityCapture.this,
+							EditPicActivity.class);
+					startActivity(intent);
+					finish();
+				}
 
-				tempImageView.setImageBitmap(finalBitmap);
-				Animation animation = AnimationUtils.loadAnimation(
-						getApplication(), R.anim.tempview_show);
-				tempImageView.setAnimation(animation);
-				animation.setAnimationListener(new AnimationListener() {
-
-					@Override
-					public void onAnimationStart(Animation animation) {
-						// TODO Auto-generated method stub
-
-					}
-
-					@Override
-					public void onAnimationRepeat(Animation animation) {
-						// TODO Auto-generated method stub
-
-					}
-
-					@Override
-					public void onAnimationEnd(Animation animation) {
-						tv_little_pic.setImageBitmap(finalBitmap);
-						tempImageView.setVisibility(View.GONE);
-						focuseView.setVisibility(View.GONE);
-						// camera.setPreviewCallback(null) ;
-						// camera.stopPreview();
-						// camera.release();
-						// camera.open();
-						// setupDevice();
-						// camera.stopPreview();
-						// camera.release();
-						// openCamera();
-						// getViews();
-						// initViews();
-						// setListeners();
-						// observer = new
-						// CaptureSensorsObserver(ActivityCapture.this);
-						// _orientationEventListener = new
-						// CaptureOrientationEventListener(ActivityCapture.this);
-						// getViews();
-						// initViews();
-						// setListeners();
-						// setupDevice();
-						if (saveBitmapToFile(finalBitmap)) {
-							MyApplication.getInstance().getPublishUtil()
-									.setFrom("camera");
-							Intent intent = new Intent(ActivityCapture.this,
-									EditPicActivity.class);
-							startActivity(intent);
-							finish();
-						}
-					}
-				});
 				//
 				// Intent intent = new Intent();
 				// intent.putExtra(kPhotoPath, photoFile.getAbsolutePath());
@@ -311,7 +327,8 @@ public class ActivityCapture extends Activity implements View.OnClickListener,
 			MyApplication.getInstance().getPublishUtil().setIndex("0");
 		}
 		File file = new File(dir, "joybar_camera"
-				+SharedUtil.getUserId(ActivityCapture.this)+ MyApplication.getInstance().getPublishUtil().getIndex()
+				+ SharedUtil.getUserId(ActivityCapture.this)
+				+ MyApplication.getInstance().getPublishUtil().getIndex()
 				+ ".png");
 		if (file.exists()) {
 			file.delete();
@@ -449,9 +466,9 @@ public class ActivityCapture extends Activity implements View.OnClickListener,
 
 		Camera.Parameters camParmeters = camera.getParameters();
 		List<Size> sizes = camParmeters.getSupportedPreviewSizes();
-//		for (Size size : sizes) {
-//			Log.v(TAG, "w:" + size.width + ",h:" + size.height);
-//		}
+		// for (Size size : sizes) {
+		// Log.v(TAG, "w:" + size.width + ",h:" + size.height);
+		// }
 
 		preview = new CameraPreview(this, camera);
 		cropBorderView = new CameraCropBorderView(this);

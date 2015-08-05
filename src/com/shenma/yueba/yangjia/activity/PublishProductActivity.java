@@ -624,6 +624,7 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 								.getImages().get(0).setImageUrl(imageName1);
 					}
 					if (!TextUtils.isEmpty(pic2)) {
+						upPicProgress = 0;
 						uploadImage();
 					} else {
 						runOnUiThread(new Runnable() {

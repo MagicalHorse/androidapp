@@ -41,6 +41,7 @@ import android.widget.TextView;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.BaseActivityWithTopView;
+import com.shenma.yueba.baijia.modle.RequestUploadProductDataBean;
 import com.shenma.yueba.camera2.ActivityCapture;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.filter.FeatherFilter;
@@ -54,7 +55,11 @@ import com.shenma.yueba.util.FileUtils;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.util.ToolsUtil;
+import com.shenma.yueba.util.pop.SelectePublicType;
+import com.shenma.yueba.view.SelecteKXPOrPublishType;
+import com.shenma.yueba.view.SelecteTagType;
 import com.shenma.yueba.view.TagImageView;
+import com.shenma.yueba.yangjia.activity.MainActivityForYangJia.ShowMenu;
 import com.shenma.yueba.yangjia.modle.TagCacheBean;
 import com.shenma.yueba.yangjia.modle.TagListBean;
 import com.shenma.yueba.yangjia.modle.TagsBean;
@@ -200,12 +205,16 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 			result = BitmapFactory.decodeFile(FileUtils.getRootPath()
 					+ "/tagPic/" + "joybar_camera"
 					+ SharedUtil.getUserId(mContext) + index + ".png");
-			resultCache = result;
+			if(resultCache == null){
+				resultCache = result;
+			}
 		} else if ("picture".equals(MyApplication.getInstance()
 				.getPublishUtil().getFrom())) {// 来自图库
 			Uri uri = MyApplication.getInstance().getPublishUtil().getUri();
 			result = getBitmap(uri);
-			resultCache = result;
+			if(resultCache == null){
+				resultCache = result;
+			}
 		} else if ("publish".equals(MyApplication.getInstance()
 				.getPublishUtil().getFrom())) {// 发布商品返回
 			String index = MyApplication.getInstance().getPublishUtil()
@@ -213,9 +222,12 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 			result = BitmapFactory.decodeFile(FileUtils.getRootPath()
 					+ "/tagPic/" + "tagPic_yuan"
 					+ SharedUtil.getUserId(mContext) + index + ".png");
-			resultCache = BitmapFactory.decodeFile(FileUtils.getRootPath()
-					+ "/tagPic/" + "tagPic" + SharedUtil.getUserId(mContext)
-					+ index + ".png");
+			if(resultCache == null){
+				resultCache = BitmapFactory.decodeFile(FileUtils.getRootPath()
+						+ "/tagPic/" + "tagPic" + SharedUtil.getUserId(mContext)
+						+ index + ".png");
+			}
+			
 		}
 		iv_pic.setImageBitmap(resultCache);
 	}
@@ -263,7 +275,8 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 			startActivity(intent);
 			break;
 		case R.id.iv_pic:// 图片的点击事件
-			showDialog();
+//			showDialog();
+			showBottomDialog();
 			break;
 		default:
 			break;
@@ -871,6 +884,71 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 	//
 	// }
 
+	
+	
+	
+	
+	
+	/**
+	 * 弹出选择框(开小票和发布商品)
+	 */
+	protected void showBottomDialog() {
+		ToolsUtil.hideSoftInputKeyBoard(EditPicActivity.this);
+		ShowMenu showMenu = new ShowMenu(EditPicActivity.this, findViewById(R.id.parent),
+				R.layout.selete_tag_popwindow);
+		showMenu.createView();
+	}
+
+	/**
+	 * 弹出底部菜单
+	 * 
+	 * @author
+	 */
+	class ShowMenu extends SelecteTagType {
+		public ShowMenu(Activity activity, View parent, int popLayout) {
+			super(activity, parent, popLayout);
+		}
+
+		@Override
+		public void onExitClick(View v) {
+			canceView();
+		}
+
+		@Override
+		public void onSeleteBrandTag(View v) {
+			Intent intentAddTag = new Intent(mContext, AddTagActivity.class);
+			intentAddTag.putExtra("type", "1");// 1表示品牌标签，0表示普通标签
+			startActivityForResult(intentAddTag, Constants.REQUESTCODE);
+			canceView();
+		}
+
+		@Override
+		public void onSeleteCommonTag(View v) {
+			Intent intentProduct = new Intent(EditPicActivity.this,
+					AddTagActivity.class);
+			intentProduct.putExtra("type", "0");// 1表示品牌标签，0表示普通标签
+			startActivityForResult(intentProduct, Constants.REQUESTCODE);
+			canceView();
+		}
+
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	@Override
 	protected void onDestroy() {
 		MyApplication.getInstance().removeActivity(this);// 加入回退栈
