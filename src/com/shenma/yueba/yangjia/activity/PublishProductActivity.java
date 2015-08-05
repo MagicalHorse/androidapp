@@ -50,6 +50,7 @@ import com.shenma.yueba.util.SizeBean;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.TagImageView;
 import com.shenma.yueba.yangjia.modle.StateBean;
+import com.shenma.yueba.yangjia.modle.TagCacheBean;
 import com.shenma.yueba.yangjia.modle.TagListBean;
 import com.shenma.yueba.yangjia.modle.TagsBean;
 import com.umeng.analytics.MobclickAgent;
@@ -153,6 +154,29 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 			}
 			MyApplication.getInstance().getPublishUtil().setBean(detailBean);
 			MyApplication.getInstance().getPublishUtil().getBean().setId(productId);
+			
+			
+			
+			MyApplication.getInstance().getPublishUtil().getTagCacheList().clear();
+			ArrayList<List<TagCacheBean>> tagCacheList = MyApplication.getInstance().getPublishUtil().getTagCacheList();
+			for (int i = 0; i < detailBean.getImages().size(); i++) {
+				if(detailBean.getImages().get(i).getTags().size()>0){
+					List<TagsBean> tagsBean = detailBean.getImages().get(i).getTags();
+					for (int j = 0; j < tagsBean.size(); j++) {
+						TagCacheBean tagcacheBean = new TagCacheBean();
+						tagcacheBean.setName(tagsBean.get(j).getName());
+						tagcacheBean.setId(tagsBean.get(j).getSourceId());
+					    tagcacheBean.setType(tagsBean.get(j).getSourceType());
+					    tagcacheBean.setX((int)(ToolsUtil.getDisplayWidth(mContext)*Double.parseDouble(tagsBean.get(j).getPosX())));
+					    tagcacheBean.setY((int)(ToolsUtil.getDisplayWidth(mContext)*Double.parseDouble(tagsBean.get(j).getPosY())));
+					    tagCacheList.get(i).add(tagcacheBean);
+					}
+				}
+			}
+			MyApplication.getInstance().getPublishUtil().setTagCacheList(tagCacheList);
+			
+			
+			
 			et_product_number.setText(ToolsUtil.nullToString(MyApplication.getInstance().getPublishUtil().getBean().getSku_Code()));
 			et_price.setText(ToolsUtil.nullToString(MyApplication.getInstance().getPublishUtil().getBean().getPrice()));
 			et_introduce.setText(ToolsUtil.nullToString(MyApplication.getInstance().getPublishUtil().getBean().getDesc()));

@@ -87,7 +87,7 @@ public class HuoKuanIncomeAndOutGoingAdapter extends BaseAdapterWithUtil {
 		holder.iv_check.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Toast.makeText(ctx, Double.parseDouble(mList.get(position).getAmount())+"", 1000).show();
+				//Toast.makeText(ctx, Double.parseDouble(mList.get(position).getAmount())+"", 1000).show();
 				if(mList.get(position).isChecked()){
 					mList.get(position).setChecked(false);
 					((HuoKuanIncomingAndOutgoingsActivity)ctx).removeIds(mList.get(position).getOrderNo());

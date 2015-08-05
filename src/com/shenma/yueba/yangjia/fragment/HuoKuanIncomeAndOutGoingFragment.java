@@ -25,19 +25,15 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.activity.ApplyResultActivity;
 import com.shenma.yueba.baijia.fragment.BaseFragment;
-import com.shenma.yueba.constants.Constants;
-import com.shenma.yueba.inter.BindInter;
+import com.shenma.yueba.baijia.modle.GetUserFlowStatusBackBean;
+import com.shenma.yueba.baijia.modle.UserFlowStatusBean;
 import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.util.WXLoginUtil;
-import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
-import com.shenma.yueba.yangjia.activity.ApplyWithdrawActivity;
-import com.shenma.yueba.yangjia.activity.OrderDetailActivity;
 import com.shenma.yueba.yangjia.adapter.HuoKuanIncomeAndOutGoingAdapter;
 import com.shenma.yueba.yangjia.modle.HuoKuanItem;
 import com.shenma.yueba.yangjia.modle.HuoKuanListBackBean;
-import com.shenma.yueba.yangjia.modle.OrderItem;
-import com.shenma.yueba.yangjia.modle.OrderListBackBean;
 
 @SuppressLint("ValidFragment")
 public class HuoKuanIncomeAndOutGoingFragment extends BaseFragment implements OnClickListener{
@@ -252,7 +248,7 @@ public class HuoKuanIncomeAndOutGoingFragment extends BaseFragment implements On
 			if(ids ==null || ids.size()==0){
 				Toast.makeText(getActivity(), "请选择提现订单", 1000).show();
 			}else{
-				withdraw();
+				GetUserFlowStatus();
 			}
 			break;
 		default:
@@ -260,4 +256,34 @@ public class HuoKuanIncomeAndOutGoingFragment extends BaseFragment implements On
 		}
 		
 	}
+	
+	
+	/**
+	 * 绑定微信
+	 */
+	private void GetUserFlowStatus() {
+		final HttpControl httpcon = new HttpControl();
+		httpcon.getUserFlowStatus(new HttpCallBackInterface() {
+			@Override
+			public void http_Success(Object obj) {
+				GetUserFlowStatusBackBean bean = (GetUserFlowStatusBackBean) obj;
+				UserFlowStatusBean data = bean.getData();
+				if(data!=null){
+					boolean isFlow = data.isIsFlow();
+						if(isFlow){//已經关注
+							Toast.makeText(getActivity(), "开始绑定微信", 1000).show();
+							withdraw();
+						}else{//没有关注
+							
+						}
+					}
+				};
+
+			@Override
+			public void http_Fails(int error, String msg) {
+				Toast.makeText(getActivity(), msg, 1000).show();
+			}
+		}, getActivity(), true);
+	}
+	
 }
