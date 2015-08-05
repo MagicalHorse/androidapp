@@ -111,7 +111,7 @@ public class AddTagActivity extends BaseActivityWithTopView implements TextWatch
 			public void onItemClick(AdapterView<?> arg0, View arg1, int position,
 					long arg3) {
 				Intent intent = new Intent();
-				String id = mList.get(position-1).getId();
+				int id = mList.get(position-1).getId();
 				String name = mList.get(position-1).getName();
 				intent.putExtra("id", id);
 				intent.putExtra("type", "1".equals(type)?"51":"50");
@@ -184,7 +184,7 @@ public class AddTagActivity extends BaseActivityWithTopView implements TextWatch
 						if(!TextUtils.isEmpty(et_search.getText().toString().trim())){
 							if(!isConstantsKey(et_search.getText().toString().trim(), bean.getData())){
 								TagListItemBean item = new TagListItemBean();
-								item.setId("");
+								item.setId(0);
 								item.setName("添加新标签："+et_search.getText().toString().trim());
 								item.setNewTag(true);
 								mList.add(item);
@@ -193,7 +193,7 @@ public class AddTagActivity extends BaseActivityWithTopView implements TextWatch
 						mList.addAll(bean.getData());
 					}else{
 							TagListItemBean item = new TagListItemBean();
-							item.setId("");
+							item.setId(0);
 							item.setName("添加新标签："+et_search.getText().toString().trim());
 							item.setNewTag(true);
 							mList.add(item);

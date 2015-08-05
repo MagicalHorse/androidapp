@@ -7,7 +7,7 @@ public class TagCacheBean implements Serializable{
 	private int x;
 	private int y;
 	private String name;
-	private String id;
+	private int id;
 	private String type;
 	public int getX() {
 		return x;
@@ -27,10 +27,11 @@ public class TagCacheBean implements Serializable{
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getId() {
+	
+	public int getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	public String getType() {

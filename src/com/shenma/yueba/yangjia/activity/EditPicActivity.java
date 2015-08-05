@@ -87,7 +87,7 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 	private Bitmap resultCache;
 	private ArrayList<String> tagNameList = new ArrayList<String>();// 姓名的集合
 	private List<Map<String, Integer>> positionList = new ArrayList<Map<String, Integer>>();// 位置的集合
-	private ArrayList<String> tagIdList = new ArrayList<String>();// id的集合
+	private ArrayList<Integer> tagIdList = new ArrayList<Integer>();// id的集合
 	private ArrayList<String> tagTypeList = new ArrayList<String>();// 标签类型的集合
 
 	@Override
@@ -112,7 +112,7 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 				&& Constants.RESULTCODE == resultCode) {
 			if (data != null) {
 				Bundle bundle = data.getExtras();
-				String TagId = bundle.getString("id");
+				int TagId = bundle.getInt("id");
 				String name = bundle.getString("name");
 				String TagType = bundle.getString("type");
 				layout_tag_image.addTextTag(name, startx, starty, TagId,
@@ -177,7 +177,7 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 			String name = tagCacheList.get(i).getName();
 			int x = tagCacheList.get(i).getX();
 			int y = tagCacheList.get(i).getY();
-			String id = tagCacheList.get(i).getId();
+			int id = tagCacheList.get(i).getId();
 			String type = tagCacheList.get(i).getType();
 			layout_tag_image.addTextTag(name, x, y, id, type);
 		}
@@ -294,7 +294,7 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 			tagsBean.setPosX("" + tagList.get(i).getPosX());
 			tagsBean.setPosY("" + tagList.get(i).getPosY());
 			tagsBean.setName(cacheTagList.get(i).getName());
-			tagsBean.setSourceId(cacheTagList.get(i).getId());
+			tagsBean.setSourceId(Integer.valueOf(cacheTagList.get(i).getId()));
 			tagsBean.setSourceType(cacheTagList.get(i).getType());
 			tagLists.add(tagsBean);
 		}
