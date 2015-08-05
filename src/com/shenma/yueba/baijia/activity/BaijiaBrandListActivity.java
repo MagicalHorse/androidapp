@@ -276,17 +276,28 @@ List<BrandInfoInfo> object_list=new ArrayList<BrandInfoInfo>();
 		if (page == 1 && (data.getData() == null
 						|| data.getData().getItems() == null || data
 						.getData().getItems().size() == 0)) {
-			brandlist_layout_pullTorefreshgridview.setMode(Mode.PULL_FROM_START);
+			if(brandlist_layout_pullTorefreshgridview!=null)
+			{
+				brandlist_layout_pullTorefreshgridview.setMode(Mode.PULL_FROM_START);
+			}
 			ToolsUtil.showNoDataView(BaijiaBrandListActivity.this, parenetView,true);
 		} else if (page != 1
 				&& (data.getData() == null || data.getData().getItems()==null || data.getData().getItems().size() == 0)) {
-			brandlist_layout_pullTorefreshgridview.setMode(Mode.BOTH);
+			
+			if(brandlist_layout_pullTorefreshgridview!=null)
+			{
+				brandlist_layout_pullTorefreshgridview.setMode(Mode.BOTH);
+			}
+			
 			MyApplication.getInstance().showMessage(
 					BaijiaBrandListActivity.this,
 					BaijiaBrandListActivity.this.getResources().getString(
 							R.string.lastpagedata_str));
 		} else {
-			brandlist_layout_pullTorefreshgridview.setMode(Mode.BOTH);
+			if(brandlist_layout_pullTorefreshgridview!=null)
+			{
+				brandlist_layout_pullTorefreshgridview.setMode(Mode.BOTH);
+			}
 		}
 	}
 	

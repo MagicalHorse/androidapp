@@ -216,14 +216,25 @@ public class CircleListActivity extends BaseActivityWithTopView{
 	
 	void setPageStatus(RequestMyCircleInfoBean data, int page) {
 		if (page == 1 && (data.getData()==null || data.getData().getItems() == null || data.getData().getItems().size()==0)) {
-			pull_refresh_list.setMode(Mode.PULL_FROM_START);
+			if(pull_refresh_list!=null)
+			{
+				pull_refresh_list.setMode(Mode.PULL_FROM_START);
+			}
+			
 			ToolsUtil.showNoDataView(CircleListActivity.this,view,true);
 		} else if (page != 1 && (data.getData()==null || data.getData().getItems()== null || data.getData().getItems().size() == 0)) {
-			pull_refresh_list.setMode(Mode.BOTH);
+			if(pull_refresh_list!=null)
+			{
+				pull_refresh_list.setMode(Mode.BOTH);
+			}
+			
 			MyApplication.getInstance().showMessage(CircleListActivity.this,CircleListActivity.this.getResources().getString(R.string.lastpagedata_str));
 		}else
 		{
-			pull_refresh_list.setMode(Mode.BOTH);
+			if(pull_refresh_list!=null)
+			{
+				pull_refresh_list.setMode(Mode.BOTH);
+			}
 		}
 	}
 	

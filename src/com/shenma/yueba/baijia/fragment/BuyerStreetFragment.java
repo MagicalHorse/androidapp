@@ -306,18 +306,28 @@ public class BuyerStreetFragment extends Fragment {
 				&& (data.getItems() == null
 						|| data.getItems().getProducts() == null || data
 						.getItems().getProducts().size() == 0)) {
-			baijia_contact_listview.setMode(Mode.PULL_FROM_START);
+			if(baijia_contact_listview!=null)
+			{
+				baijia_contact_listview.setMode(Mode.PULL_FROM_START);
+			}
+			
 			ToolsUtil.showNoDataView(getActivity(),parentview,true);
 		} else if (page != 1
 				&& (data.getItems().getProducts() == null || data.getItems()
 						.getProducts().size() == 0)) {
-			baijia_contact_listview.setMode(Mode.BOTH);
+			if(baijia_contact_listview!=null)
+			{
+				baijia_contact_listview.setMode(Mode.BOTH);
+			}
 			MyApplication.getInstance().showMessage(
 					getActivity(),
 					getActivity().getResources().getString(
 							R.string.lastpagedata_str));
 		} else {
-			baijia_contact_listview.setMode(Mode.BOTH);
+			if(baijia_contact_listview!=null)
+			{
+				baijia_contact_listview.setMode(Mode.BOTH);
+			}
 		}
 	}
 

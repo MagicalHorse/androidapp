@@ -224,17 +224,28 @@ public class MyCollectionActivity extends BaseActivityWithTopView{
 		if (page == 1 && (data.getData() == null
 						|| data.getData().getItems() == null || data
 						.getData().getItems().size() == 0)) {
-			shop_main_layout_title_pulltorefreshscrollview.setMode(Mode.PULL_FROM_START);
+			if(shop_main_layout_title_pulltorefreshscrollview!=null)
+			{
+				shop_main_layout_title_pulltorefreshscrollview.setMode(Mode.PULL_FROM_START);
+			}
+			
 			ToolsUtil.showNoDataView(MyCollectionActivity.this, true);
 		} else if (page != 1
 				&& (data.getData() == null || data.getData().getItems()==null || data.getData().getItems().size() == 0)) {
-			shop_main_layout_title_pulltorefreshscrollview.setMode(Mode.BOTH);
+			if(shop_main_layout_title_pulltorefreshscrollview!=null)
+			{
+				shop_main_layout_title_pulltorefreshscrollview.setMode(Mode.BOTH);
+			}
+			
 			MyApplication.getInstance().showMessage(
 					MyCollectionActivity.this,
 					MyCollectionActivity.this.getResources().getString(
 							R.string.lastpagedata_str));
 		} else {
-			shop_main_layout_title_pulltorefreshscrollview.setMode(Mode.BOTH);
+			if(shop_main_layout_title_pulltorefreshscrollview!=null)
+			{
+				shop_main_layout_title_pulltorefreshscrollview.setMode(Mode.BOTH);
+			}
 		}
 	}
 	

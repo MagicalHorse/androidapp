@@ -198,17 +198,27 @@ public class AttationListActivity extends BaseActivityWithTopView implements Att
 		if (page == 1 && (data.getData() == null
 						|| data.getData().getItems() == null || data
 						.getData().getItems().size() == 0)) {
-			pull_refresh_list.setMode(Mode.PULL_FROM_START);
+			if(pull_refresh_list!=null)
+			{
+				pull_refresh_list.setMode(Mode.PULL_FROM_START);
+			}
 			ToolsUtil.showNoDataView(AttationListActivity.this, true);
 		} else if (page != 1
 				&& (data.getData() == null || data.getData().getItems()==null || data.getData().getItems().size() == 0)) {
-			pull_refresh_list.setMode(Mode.BOTH);
+			if(pull_refresh_list!=null)
+			{
+				pull_refresh_list.setMode(Mode.BOTH);
+			}
+			
 			MyApplication.getInstance().showMessage(
 					AttationListActivity.this,
 					AttationListActivity.this.getResources().getString(
 							R.string.lastpagedata_str));
 		} else {
-			pull_refresh_list.setMode(Mode.BOTH);
+			if(pull_refresh_list!=null)
+			{
+				pull_refresh_list.setMode(Mode.BOTH);
+			}
 		}
 	}
 	
