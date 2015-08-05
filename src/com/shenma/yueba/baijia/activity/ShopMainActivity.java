@@ -537,4 +537,20 @@ public class ShopMainActivity extends FragmentActivity {
 		super.onPause();
 		MobclickAgent.onPause(this);
 		}
+		
+		/*****
+		 * 同步数据  根据商品id 同步瀑布里中  商品信息的状态
+		 * **/
+		public void synchronizationData(int _id,int type)
+		{
+			for(int i=0;i<fragmentBean_list.size();i++)
+			{
+				if(i!=currId)
+				{
+					ShopPuBuliuFragment fragment=(ShopPuBuliuFragment)fragmentBean_list.get(i).getFragment();
+					fragment.synchronizationData(_id,type);
+				}
+			}
+			
+		}
 }

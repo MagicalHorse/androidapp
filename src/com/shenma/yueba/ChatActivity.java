@@ -176,7 +176,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 		// 如果是群聊
 		if (chat_type.endsWith(chat_type_group)) {
 			// 获取圈子ID
-			circleId = this.getIntent().getIntExtra("circleId", -1);
+			circleId = this.getIntent().getIntExtra("circleId", -10);
 			// 群聊
 			if (circleId > 0) {
 				// 显示设置
@@ -190,7 +190,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 			// 获取房间号
 			getRoomdId(circleId, formUser_id, toUser_id);
 		} else if (chat_type.endsWith(chat_type_private)) {// 如果是私聊
-			toUser_id = this.getIntent().getIntExtra("toUser_id", -1);
+			toUser_id = this.getIntent().getIntExtra("toUser_id", -10);
 			// 如果存在房间号 则直接获取消息信息
 			if (this.getIntent().getStringExtra("Chat_RoomID") != null) {
 				String room_id = this.getIntent().getStringExtra("Chat_RoomID");
@@ -206,7 +206,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 			} else// 否则 如果存在对方id 则获取房间号
 			{
 				// 私聊 获取 toUser_id
-				toUser_id = this.getIntent().getIntExtra("toUser_id", -1);
+				toUser_id = this.getIntent().getIntExtra("toUser_id", -10);
 				if (toUser_id < 0) {
 					MyApplication.getInstance().showMessage(this, "数据错误");
 					finish();
@@ -860,7 +860,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 		}
 		loadmorePB.setVisibility(View.VISIBLE);
 		isloading = true;
-		getMessageRecord(roomId, -1, currPage, Constants.PAGESIZE_VALUE);
+		getMessageRecord(roomId, -10, currPage, Constants.PAGESIZE_VALUE);
 
 	}
 

@@ -38,6 +38,15 @@ public class PubuliuManager {
 	int leftHeight;//左侧高度
 	int rightHeight;//右侧高度
 	HttpControl httpControl=new HttpControl();
+	PubuliuInterfaceListener pubuliuInterfaceListener;
+	public PubuliuInterfaceListener getPubuliuInterfaceListener() {
+		return pubuliuInterfaceListener;
+	}
+
+	public void setPubuliuInterfaceListener(PubuliuInterfaceListener pubuliuInterfaceListener) {
+		this.pubuliuInterfaceListener = pubuliuInterfaceListener;
+	}
+
 	public PubuliuManager(Context context,View parent)
 	{
 		this.context=context;
@@ -105,12 +114,14 @@ public class PubuliuManager {
     			TextView pubuliu_item_layout_name_textview=(TextView)parentview.findViewById(R.id.pubuliu_item_layout_name_textview);
     			pubuliu_item_layout_name_textview.setText(bean.getName());
     			//收藏
+    			LinearLayout pubuliu_item_layout_like_linearlayout=(LinearLayout)parentview.findViewById(R.id.pubuliu_item_layout_like_linearlayout);
     			TextView pubuliu_item_layout_like_textview=(TextView)parentview.findViewById(R.id.pubuliu_item_layout_like_textview);
-    			pubuliu_item_layout_like_textview.setOnClickListener(onClickListener);
+    			ImageView pubuliu_item_layout_like_imageview=(ImageView)parentview.findViewById(R.id.pubuliu_item_layout_like_imageview);
+    			pubuliu_item_layout_like_linearlayout.setOnClickListener(onClickListener);
     			
-    			pubuliu_item_layout_like_textview.setSelected(bean.isIsFavorite());
+    			pubuliu_item_layout_like_imageview.setSelected(bean.isIsFavorite());
     			pubuliu_item_layout_like_textview.setText(Integer.toString(bean.getFavoriteCount()));
-    			pubuliu_item_layout_like_textview.setTag(bean);
+    			pubuliu_item_layout_like_linearlayout.setTag(bean);
     			/*if(bean.getLikeUser()!=null)
     			{
     				MyFavoriteProductListLikeUser likeuser=bean.getLikeUser();
@@ -172,7 +183,7 @@ public class PubuliuManager {
 		public void onClick(View v) {
 			switch(v.getId())
 			{
-			case R.id.pubuliu_item_layout_like_textview:
+			case R.id.pubuliu_item_layout_like_linearlayout:
 				
 				if(v.getTag()!=null && v.getTag() instanceof MyFavoriteProductListInfo)
 				{
@@ -242,8 +253,10 @@ public class PubuliuManager {
 					
 				}*/
 				
-				if(v!=null && v instanceof TextView)
+				if(v!=null )
 				{
+					TextView pubuliu_item_layout_like_textview=(TextView)v.findViewById(R.id.pubuliu_item_layout_like_textview);
+	    			ImageView pubuliu_item_layout_like_imageview=(ImageView)v.findViewById(R.id.pubuliu_item_layout_like_imageview);
 					//MyFavoriteProductListLikeUser myFavoriteProductListLikeUser=bean.getLikeUser();
 					int count=bean.getFavoriteCount();
 					switch(Status)
@@ -255,19 +268,44 @@ public class PubuliuManager {
 							count=0;
 						}
 						bean.setFavoriteCount(count);
-						v.setSelected(false);
-						((TextView)v).setText(count+"");
+						if(pubuliu_item_layout_like_imageview!=null)
+						{
+							pubuliu_item_layout_like_imageview.setSelected(false);
+						}
+						if(pubuliu_item_layout_like_textview!=null)
+						{
+							pubuliu_item_layout_like_textview.setText(count+"");
+						}
 						bean.setIsFavorite(false);
 						break;
 					case 1:
 						count++;
 						bean.setFavoriteCount(count);
-						((TextView)v).setText(count+"");
-						v.setSelected(true);
 						bean.setIsFavorite(true);
+						if(pubuliu_item_layout_like_imageview!=null)
+						{
+							pubuliu_item_layout_like_imageview.setSelected(true);
+						}
+						if(pubuliu_item_layout_like_textview!=null)
+						{
+							pubuliu_item_layout_like_textview.setText(count+"");
+						}
 						break;
 					}
 					
+				}
+				
+				if(pubuliuInterfaceListener!=null)
+				{
+					switch(Status)
+					{
+					case 0:
+						pubuliuInterfaceListener.UnFavorSucess(bean.getId(),v);
+						break;
+					case 1:
+						pubuliuInterfaceListener.FavorSucess(bean.getId(),v);
+						break;
+					}
 				}
 			}
 			
@@ -276,5 +314,17 @@ public class PubuliuManager {
 				MyApplication.getInstance().showMessage(context, msg);
 			}
 		}, context);
+	}
+	
+	public interface PubuliuInterfaceListener
+	{
+		/**
+		 * 收藏成功 回调
+		 * **/
+		void FavorSucess(int _id,View v);
+		/****
+		 * 取消收藏成功 回调
+		 * **/
+		void UnFavorSucess(int _id,View v);
 	}
 }

@@ -13,11 +13,13 @@ import android.view.ViewGroup;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.activity.ShopMainActivity;
 import com.shenma.yueba.baijia.activity.ShopMainActivity.PubuliuFragmentListener;
 import com.shenma.yueba.baijia.modle.MyFavoriteProductListInfo;
 import com.shenma.yueba.baijia.modle.MyFavoriteProductListInfoBean;
 import com.shenma.yueba.baijia.modle.RequestMyFavoriteProductListInfoBean;
 import com.shenma.yueba.baijia.view.PubuliuManager;
+import com.shenma.yueba.baijia.view.PubuliuManager.PubuliuInterfaceListener;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
@@ -30,8 +32,7 @@ import com.umeng.socialize.utils.Log;
  */
 
 @SuppressLint("ValidFragment")
-public class ShopPuBuliuFragment extends Fragment implements
-		PubuliuFragmentListener {
+public class ShopPuBuliuFragment extends Fragment implements PubuliuFragmentListener ,PubuliuInterfaceListener{
 	int currPage = Constants.CURRPAGE_VALUE;
 	int pageSize = Constants.PAGESIZE_VALUE;
 	PubuliuFragmentListener pubuliuFragmentListener;
@@ -72,6 +73,7 @@ public class ShopPuBuliuFragment extends Fragment implements
 
 	void initView() {
 		pm = new PubuliuManager(getActivity(), parentView);
+		pm.setPubuliuInterfaceListener(this);
 	}
 
 	@Override
@@ -307,5 +309,62 @@ public class ShopPuBuliuFragment extends Fragment implements
 				MyApplication.getInstance().showMessage(getActivity(), msg);
 			}
 		}, getActivity());
+	}
+
+	@Override
+	public void FavorSucess(int _id,View v) {
+		if(getActivity()!=null && getActivity() instanceof ShopMainActivity)
+		{
+			((ShopMainActivity)getActivity()).synchronizationData(_id, 0);
+		}
+	}
+
+	@Override
+	public void UnFavorSucess(int _id,View v) {
+		if(getActivity()!=null && getActivity() instanceof ShopMainActivity)
+		{
+		    ((ShopMainActivity)getActivity()).synchronizationData(_id,1);
+		}
+	}
+	
+	/****
+	 * 同步数据 根据  根据商品id 
+	 * @param _id int 商品id
+	 * @param type int 类型 0：收藏成功  1：取消收藏成功
+	 * ***/
+	public void synchronizationData(int _id,int type)
+	{
+		for(int i=0;i<item.size();i++)
+		{
+			if(item.get(i).getId()==_id)
+			{
+				switch(type)
+				{
+				case 0:
+					item.get(i).setIsFavorite(true);
+					item.get(i).setFavoriteCount(item.get(i).getFavoriteCount()+1);
+					break;
+				case 1:
+					int favoriteCount=item.get(i).getFavoriteCount();
+					if((favoriteCount-1)<0)
+					{
+						favoriteCount=0;
+					}else
+					{
+						favoriteCount-=1;
+					}
+					item.get(i).setFavoriteCount(favoriteCount);
+					item.get(i).setIsFavorite(false);
+					break;
+				}
+			}
+		}
+		
+		
+		//刷新数据
+		if(pm!=null && item!=null)
+		{
+		  pm.onResher(item);
+		}
 	}
 }

@@ -136,7 +136,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/shop_main_lineheight10_dimen"
                 android:background="@color/white"
-                android:visibility="gone" />
+                android:visibility="visible" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -148,7 +148,7 @@
                 <TextView
                     android:id="@+id/affirmorder_item_allcount_textview"
                     android:layout_width="wrap_content"
-                       android:textSize="15sp"
+                    android:textSize="15sp"
                     android:layout_height="wrap_content"
                     android:text="@null" />
 
@@ -173,6 +173,7 @@
             <!-- 打烊购 -->
 
             <RelativeLayout
+                android:visibility="gone"
                 android:id="@+id/affirmorder_item_youhui_linearlayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -192,7 +193,7 @@
                 <TextView
                     android:id="@+id/affirmorder_item_youhuicontext_textview"
                     android:layout_width="wrap_content"
-                       android:textSize="15sp"
+                    android:textSize="15sp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"

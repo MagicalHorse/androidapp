@@ -192,18 +192,20 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView
 		approvebuyerbuybutton.setOnClickListener(this);
 	}
 
-	void startActivity() {
+	void startChatActivity() {
 		if (!MyApplication.getInstance().isUserLogin(
 				ApproveBuyerDetailsActivity.this)) {
 			return;
 		}
-		Intent intent = new Intent(ApproveBuyerDetailsActivity.this,
-				ChatActivity.class);
-		intent.putExtra("Chat_Type", ChatActivity.chat_type_private);
-		intent.putExtra("Chat_NAME", bean.getData().getBuyerName());// 圈子名字
-		intent.putExtra("toUser_id", bean.getData().getBuyerId());// 私聊的话需要传对方id
-		intent.putExtra("DATA", bean);
-		startActivity(intent);
+		if(bean!=null)
+		{
+			Intent intent = new Intent(ApproveBuyerDetailsActivity.this,ChatActivity.class);
+			intent.putExtra("Chat_Type", ChatActivity.chat_type_private);
+			intent.putExtra("Chat_NAME", bean.getData().getBuyerName());// 圈子名字
+			intent.putExtra("toUser_id", bean.getData().getBuyerId());// 私聊的话需要传对方id
+			intent.putExtra("DATA", bean);
+			startActivity(intent);
+		}
 	}
 
 	/***
@@ -342,7 +344,7 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView
 						}
 						Intent intent = new Intent(ApproveBuyerDetailsActivity.this,ShopMainActivity.class);
 						intent.putExtra("DATA", (Integer)v.getTag());
-						ApproveBuyerDetailsActivity.this.startActivity(intent);
+						startActivity(intent);
 					}
 				});
 
@@ -400,6 +402,7 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView
 		}
 		setFont();
 		approvebuyerdetails_srcollview.smoothScrollTo(0, 0);
+		approvebuyerbuybutton.setVisibility(View.VISIBLE);
 	}
 
 	@Override
@@ -568,10 +571,10 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView
 			startActivity(intent);
 			break;
 		case R.id.approvebuyerdetails_layout_siliao_linerlayout:
-			startActivity();
+			startChatActivity();
 			break;
 		case R.id.approvebuyerbuybutton:
-			startActivity();
+			startChatActivity();
 			break;
 		case R.id.approvebuyerdetails_attention_textview:// 喜欢或取消喜欢
 			if (!MyApplication.getInstance().isUserLogin(

@@ -142,7 +142,7 @@
                                 android:layout_width="56dp"
                                 android:layout_height="56dp"
                                 android:layout_centerInParent="true"
-                                android:background="@drawable/chat_image_selector"
+                                android:background="@drawable/chat_imagecamera_selector"
                                 android:clickable="true"
                                 android:onClick="onClick"
                                 android:scaleType="fitCenter" />
@@ -173,7 +173,7 @@
                                 android:layout_width="56dp"
                                 android:layout_height="56dp"
                                 android:layout_centerInParent="true"
-                                android:background="@drawable/chat_image_selector"
+                                android:background="@drawable/chat_imagepic_selector"
                                 android:clickable="true"
                                 android:onClick="onClick"
                                 android:scaleType="fitCenter" />
@@ -203,7 +203,7 @@
                                 android:layout_width="56dp"
                                 android:layout_height="56dp"
                                 android:layout_centerInParent="true"
-                                android:background="@drawable/chat_image_selector"
+                                android:background="@drawable/chat_imagelink_selector"
                                 android:clickable="true"
                                 android:onClick="onClick"
                                 android:scaleType="fitCenter" />
@@ -233,7 +233,7 @@
                                 android:layout_width="56dp"
                                 android:layout_height="56dp"
                                 android:layout_centerInParent="true"
-                                android:background="@drawable/chat_image_selector"
+                                android:background="@drawable/chat_imagecollent_selector"
                                 android:clickable="true"
                                 android:onClick="onClick"
                                 android:scaleType="fitCenter" />

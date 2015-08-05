@@ -6,6 +6,29 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.lidroid.xutils.BitmapUtils;
+import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.activity.WebActivity;
+import com.shenma.yueba.baijia.adapter.BuyerAdapter;
+import com.shenma.yueba.baijia.adapter.ScrollViewPagerAdapter;
+import com.shenma.yueba.baijia.modle.BannersInfoBean;
+import com.shenma.yueba.baijia.modle.FragmentBean;
+import com.shenma.yueba.baijia.modle.HomeProductListInfoBean;
+import com.shenma.yueba.baijia.modle.ProductListInfoBean;
+import com.shenma.yueba.baijia.modle.ProductsInfoBean;
+import com.shenma.yueba.baijia.modle.RequestProductListInfoBean;
+import com.shenma.yueba.constants.Constants;
+import com.shenma.yueba.util.FontManager;
+import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
+import com.shenma.yueba.util.ToolsUtil;
+import com.shenma.yueba.view.FixedSpeedScroller;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -27,35 +50,7 @@ import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
-
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnPullEventListener;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.State;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
-import com.lidroid.xutils.BitmapUtils;
-import com.shenma.yueba.R;
-import com.shenma.yueba.application.MyApplication;
-import com.shenma.yueba.baijia.activity.WebActivity;
-import com.shenma.yueba.baijia.adapter.BuyerAdapter;
-import com.shenma.yueba.baijia.adapter.ScrollViewPagerAdapter;
-import com.shenma.yueba.baijia.modle.BannersInfoBean;
-import com.shenma.yueba.baijia.modle.FragmentBean;
-import com.shenma.yueba.baijia.modle.HomeProductListInfoBean;
-import com.shenma.yueba.baijia.modle.ProductListInfoBean;
-import com.shenma.yueba.baijia.modle.ProductsInfoBean;
-import com.shenma.yueba.baijia.modle.RequestProductListInfoBean;
-import com.shenma.yueba.constants.Constants;
-import com.shenma.yueba.util.FontManager;
-import com.shenma.yueba.util.HttpControl;
-import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
-import com.shenma.yueba.util.ListViewUtils;
-import com.shenma.yueba.util.ToolsUtil;
-import com.shenma.yueba.view.FixedSpeedScroller;
 
 public class BuyerStreetFragment extends Fragment {
 	List<FragmentBean> fragment_list = new ArrayList<FragmentBean>();
@@ -87,7 +82,6 @@ public class BuyerStreetFragment extends Fragment {
 	List<BannersInfoBean> Banners = new ArrayList<BannersInfoBean>();
 	// 商品信息列表
 	List<ProductsInfoBean> Products = new ArrayList<ProductsInfoBean>();
-	BitmapUtils bitmapUtils;
 	List<View> imageViewlist = new ArrayList<View>();
 	BuyerAdapter buyerAdapter;
 
@@ -97,9 +91,7 @@ public class BuyerStreetFragment extends Fragment {
 		this.inflater = inflater;
 		if (parentview == null) {
 			ishow = true;
-			parentview = inflater.inflate(R.layout.buyersteetfragment_layout,
-					null);
-			bitmapUtils = new BitmapUtils(getActivity());
+			parentview = inflater.inflate(R.layout.buyersteetfragment_layout,null);
 			initPullView();
 			initView(parentview);
 			requestFalshData();
@@ -372,7 +364,7 @@ public class BuyerStreetFragment extends Fragment {
 					imageView.setLayoutParams(new ViewGroup.LayoutParams(
 							ViewGroup.LayoutParams.MATCH_PARENT,
 							ViewGroup.LayoutParams.MATCH_PARENT));
-					imageView.setScaleType(ScaleType.FIT_XY);
+					imageView.setScaleType(ScaleType.CENTER_CROP);
 					imageView.setTag(Banners.get(i));
 					imageViewlist.add(imageView);
 					initPic(ToolsUtil.nullToString(ToolsUtil.getImage(Banners
@@ -474,6 +466,7 @@ public class BuyerStreetFragment extends Fragment {
 	 * **/
 	void startTimeToViewPager() {
 		stopTimerToViewPager();
+		
 		if (imageViewlist == null || imageViewlist.size() <= 2) {
 			return;
 		}

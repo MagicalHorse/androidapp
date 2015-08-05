@@ -3,24 +3,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" 
+    android:paddingTop="10dp"
     >
+
     <ImageView
         android:id="@+id/pubuliu_item_layout_imageview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/default_pic"
         android:scaleType="fitXY"
-        />
+        android:src="@drawable/default_pic" />
 
     <TextView
-        android:layout_margin="@dimen/shop_main_width3_dimen"
         android:id="@+id/pubuliu_item_layout_name_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:maxLines="2"
-        android:text="@null"
+        android:layout_margin="@dimen/shop_main_width3_dimen"
         android:ellipsize="end"
-        />
+        android:maxLines="2"
+        android:text="@null" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -45,14 +45,30 @@
             android:text="@null"
             android:textColor="@color/red" />
 
-        <TextView
-            android:id="@+id/pubuliu_item_layout_like_textview"
+        <LinearLayout
+            android:id="@+id/pubuliu_item_layout_like_linearlayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:drawableLeft="@drawable/like_backgroud"
-            android:gravity="center" />
+            android:gravity="left|center_vertical"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:id="@+id/pubuliu_item_layout_like_imageview"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/collect_backgroud" />
+
+            <TextView
+                android:layout_marginLeft="3dp"
+                android:id="@+id/pubuliu_item_layout_like_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@null" />
+        </LinearLayout>
     </RelativeLayout>
 
 </LinearLayout>

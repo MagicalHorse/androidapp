@@ -51,7 +51,7 @@ View parenetView;
 PullToRefreshGridView brandlist_layout_pullTorefreshgridview;
 HttpControl httpControl;
 int currPage=Constants.CURRPAGE_VALUE;
-int pageSize=Constants.PAGESIZE_VALUE;
+int pageSize=20;
 boolean showDialog=true;
 int BrandId=-1;//品牌id
 String BrandName=null;//品牌名字

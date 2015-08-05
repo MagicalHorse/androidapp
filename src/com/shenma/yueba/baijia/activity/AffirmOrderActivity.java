@@ -219,11 +219,7 @@ public class AffirmOrderActivity extends BaseActivityWithTopView implements
 				R.id.affirmorder_item_tihuophonevalue_textview,
 				R.id.affirmorder_item_tihuophonetitle_textview);
 		productsDetailsPromotion = productsDetailsInfoBean.getPromotion();
-		if (productsDetailsPromotion == null) {
-			affirmorder_item_youhui_linearlayout.setVisibility(View.GONE);
-		} else {
-			affirmorder_item_youhui_linearlayout.setVisibility(View.VISIBLE);
-		}
+		
 
 	}
 
@@ -338,17 +334,19 @@ public class AffirmOrderActivity extends BaseActivityWithTopView implements
 										.getData().getSaletotalamount())));
 		if (productsDetailsPromotion != null) {
 			// 设置优惠名称
-			ToolsUtil.setFontStyle(this, parentview,
-					R.id.affirmorder_item_youhuititle_textview,
-					ToolsUtil.nullToString(productsDetailsPromotion.getName()));
+			ToolsUtil.setFontStyle(this, parentview,R.id.affirmorder_item_youhuititle_textview,ToolsUtil.nullToString(productsDetailsPromotion.getName()));
+			
+			if(requestComputeAmountInfoBean.getData()!=null)
+			{
+				if(requestComputeAmountInfoBean.getData().getDiscountamount()>0)
+				{
+					affirmorder_item_youhui_linearlayout.setVisibility(View.VISIBLE);
+				}
+			
 			// 优惠的金额
-			ToolsUtil.setFontStyle(
-					this,
-					parentview,
-					R.id.affirmorder_item_youhuicontext_textview,
-					ToolsUtil.nullToString("立减 "
-							+ Double.toString(requestComputeAmountInfoBean
-									.getData().getDiscountamount())));
+			ToolsUtil.setFontStyle(this,parentview,R.id.affirmorder_item_youhuicontext_textview,ToolsUtil.nullToString("立减 "+ Double.toString(requestComputeAmountInfoBean.getData().getDiscountamount())));
+			
+			}
 		}
 
 	}

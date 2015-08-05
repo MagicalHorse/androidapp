@@ -100,7 +100,8 @@ public class SocketManger {
 			// Map<String, String> data2=getMap(messageBean);
 			 Gson gson=new Gson();
 			 String json=gson.toJson(messageBean);
-			 Log.i("TAG",json);
+			 Log.i("TAG","sendMsg--->>"+json);
+			 Log.i("TAG","sendMsg--->>user_id"+messageBean.getToUserId());
 			try {
 				socket.emit("sendMessage", new JSONObject(json), new Ack() {
 

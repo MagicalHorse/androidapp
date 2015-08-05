@@ -89,6 +89,10 @@ public class SameCityAdapter extends BaseAdapterWithUtil {
 				
 				@Override
 				public void onClick(View v) {
+					if(!MyApplication.getInstance().isUserLogin(ctx))
+					{
+						return;
+					}
 					if(v.getTag()!=null)
 					{
 						BrandCityWideInfo brandCityWideInfo=(BrandCityWideInfo)v.getTag();
