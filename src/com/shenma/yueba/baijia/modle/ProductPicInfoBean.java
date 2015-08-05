@@ -15,7 +15,7 @@ public class ProductPicInfoBean implements Serializable{
 	int SourceId;//产品id
 	String Name="";// 图片地址,
 	//标签列表
-	List<ProductTagsInfoBean> Tags=new ArrayList<ProductTagsInfoBean>();
+	List<ProductsDetailsTagsInfo> Tags=new ArrayList<ProductsDetailsTagsInfo>();
 	public int getId() {
 		return Id;
 	}
@@ -34,10 +34,10 @@ public class ProductPicInfoBean implements Serializable{
 	public void setName(String name) {
 		Name = name;
 	}
-	public List<ProductTagsInfoBean> getTags() {
+	public List<ProductsDetailsTagsInfo> getTags() {
 		return Tags;
 	}
-	public void setTags(List<ProductTagsInfoBean> tags) {
+	public void setTags(List<ProductsDetailsTagsInfo> tags) {
 		Tags = tags;
 	}
 }

@@ -13,6 +13,24 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.alibaba.sdk.android.oss.OSSService;
+import com.alibaba.sdk.android.oss.OSSServiceProvider;
+import com.alibaba.sdk.android.oss.model.AccessControlList;
+import com.alibaba.sdk.android.oss.model.ClientConfiguration;
+import com.alibaba.sdk.android.oss.model.TokenGenerator;
+import com.alibaba.sdk.android.oss.util.OSSToolKit;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnPullEventListener;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.State;
+import com.handmark.pulltorefresh.library.PullToRefreshGridView;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
+import com.shenma.yueba.yangjia.modle.AliYunKeyBackBean;
+import com.shenma.yueba.yangjia.modle.AliYunKeyBean;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -34,7 +52,6 @@ import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.ImageSpan;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -44,26 +61,6 @@ import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.alibaba.sdk.android.oss.OSSService;
-import com.alibaba.sdk.android.oss.OSSServiceProvider;
-import com.alibaba.sdk.android.oss.model.AccessControlList;
-import com.alibaba.sdk.android.oss.model.ClientConfiguration;
-import com.alibaba.sdk.android.oss.model.TokenGenerator;
-import com.alibaba.sdk.android.oss.util.OSSToolKit;
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshGridView;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnPullEventListener;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.State;
-import com.shenma.yueba.R;
-import com.shenma.yueba.application.MyApplication;
-import com.shenma.yueba.baijia.activity.AttationListActivity;
-import com.shenma.yueba.baijia.activity.BaijiaBrandListActivity;
-import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
-import com.shenma.yueba.yangjia.modle.AliYunKeyBackBean;
-import com.shenma.yueba.yangjia.modle.AliYunKeyBean;
 
 public class ToolsUtil {
 

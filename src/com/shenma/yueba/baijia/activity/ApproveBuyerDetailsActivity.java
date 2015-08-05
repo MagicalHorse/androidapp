@@ -35,6 +35,7 @@ import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.adapter.ScrollViewPagerAdapter;
 import com.shenma.yueba.baijia.adapter.UserIconAdapter;
 import com.shenma.yueba.baijia.modle.LikeUsersInfoBean;
+import com.shenma.yueba.baijia.modle.ProductTagsInfoBean;
 import com.shenma.yueba.baijia.modle.ProductsDetailsInfoBean;
 import com.shenma.yueba.baijia.modle.ProductsDetailsPromotion;
 import com.shenma.yueba.baijia.modle.ProductsDetailsTagInfo;
@@ -373,7 +374,7 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView
 					  ProductsDetailsTagsInfo pdtinfo= productsDetailsTagsInfo_list.get(j);
 					  int tagx=(int)(pdtinfo.getPosX()*width);
 					  int tagy=(int)(pdtinfo.getPosY()*height);
-					  tiv.addTextTagCanNotMove(ToolsUtil.nullToString(pdtinfo.getName()), tagx, tagy);
+					  tiv.addTextTagCanNotMove(ToolsUtil.nullToString(pdtinfo.getName()), tagx, tagy,pdtinfo);
 				  }
 				}
 				rl.addView(tiv, new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));

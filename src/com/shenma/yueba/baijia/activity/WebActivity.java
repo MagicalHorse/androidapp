@@ -57,7 +57,7 @@ public class WebActivity extends BaseActivityWithTopView {
 	 * 初始化标题
 	 */
 	private void initBaseView() {
-		setLeftTextView("返回", new OnClickListener() {
+		setLeftTextView("", new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
 				finish();

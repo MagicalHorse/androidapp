@@ -287,17 +287,28 @@ public class CircleView extends BaseView{
 		if (page == 1 && (data.getData() == null
 						|| data.getData().getItems() == null || data
 						.getData().getItems().size() == 0)) {
-			baijia_quanzi_layout_tanb1_gridbview.setMode(Mode.PULL_FROM_START);
+			if(baijia_quanzi_layout_tanb1_gridbview!=null)
+			{
+				baijia_quanzi_layout_tanb1_gridbview.setMode(Mode.PULL_FROM_START);
+			}
+			
 			ToolsUtil.showNoDataView(activity, view,true);
 		} else if (page != 1
 				&& (data.getData() == null || data.getData().getItems()==null || data.getData().getItems().size() == 0)) {
-			baijia_quanzi_layout_tanb1_gridbview.setMode(Mode.BOTH);
+			if(baijia_quanzi_layout_tanb1_gridbview!=null)
+			{
+				baijia_quanzi_layout_tanb1_gridbview.setMode(Mode.BOTH);
+			}
+			
 			MyApplication.getInstance().showMessage(
 					activity,
 					activity.getResources().getString(
 							R.string.lastpagedata_str));
 		} else {
-			baijia_quanzi_layout_tanb1_gridbview.setMode(Mode.BOTH);
+			if(baijia_quanzi_layout_tanb1_gridbview!=null)
+			{
+				baijia_quanzi_layout_tanb1_gridbview.setMode(Mode.BOTH);
+			}
 		}
 	}
 	

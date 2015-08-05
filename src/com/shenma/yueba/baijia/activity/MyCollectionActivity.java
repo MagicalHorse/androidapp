@@ -3,18 +3,6 @@ package com.shenma.yueba.baijia.activity;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.os.Bundle;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.View.OnClickListener;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.ImageView.ScaleType;
-
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
@@ -22,19 +10,27 @@ import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.modle.MyFavoriteProductListInfo;
-import com.shenma.yueba.baijia.modle.MyFavoriteProductListInfoBean;
 import com.shenma.yueba.baijia.modle.MyFavoriteProductListLikeUser;
 import com.shenma.yueba.baijia.modle.MyFavoriteProductListPic;
-import com.shenma.yueba.baijia.modle.RequestBrandInfoBean;
 import com.shenma.yueba.baijia.modle.RequestMyFavoriteProductListInfoBean;
-import com.shenma.yueba.baijia.view.PubuliuManager;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
-import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
+import com.shenma.yueba.util.ToolsUtil;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.utils.Log;
+
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 /**  
  * 我的收藏
@@ -42,7 +38,6 @@ import com.umeng.socialize.utils.Log;
  * @version 创建时间：2015-5-20 上午11:14:57  
  * 程序的简单说明  
  */
-
 
 public class MyCollectionActivity extends BaseActivityWithTopView{
     HttpControl httpCntrol=new HttpControl();
@@ -229,17 +224,28 @@ public class MyCollectionActivity extends BaseActivityWithTopView{
 		if (page == 1 && (data.getData() == null
 						|| data.getData().getItems() == null || data
 						.getData().getItems().size() == 0)) {
-			shop_main_layout_title_pulltorefreshscrollview.setMode(Mode.PULL_FROM_START);
+			if(shop_main_layout_title_pulltorefreshscrollview!=null)
+			{
+				shop_main_layout_title_pulltorefreshscrollview.setMode(Mode.PULL_FROM_START);
+			}
+			
 			ToolsUtil.showNoDataView(MyCollectionActivity.this, true);
 		} else if (page != 1
 				&& (data.getData() == null || data.getData().getItems()==null || data.getData().getItems().size() == 0)) {
-			shop_main_layout_title_pulltorefreshscrollview.setMode(Mode.BOTH);
+			if(shop_main_layout_title_pulltorefreshscrollview!=null)
+			{
+				shop_main_layout_title_pulltorefreshscrollview.setMode(Mode.BOTH);
+			}
+			
 			MyApplication.getInstance().showMessage(
 					MyCollectionActivity.this,
 					MyCollectionActivity.this.getResources().getString(
 							R.string.lastpagedata_str));
 		} else {
-			shop_main_layout_title_pulltorefreshscrollview.setMode(Mode.BOTH);
+			if(shop_main_layout_title_pulltorefreshscrollview!=null)
+			{
+				shop_main_layout_title_pulltorefreshscrollview.setMode(Mode.BOTH);
+			}
 		}
 	}
 	
