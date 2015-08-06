@@ -105,13 +105,13 @@
                     android:id="@+id/applyforrefund_layout_count_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="退款数量:"
+                    android:text="退货数量:"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
                 <include
                     android:layout_width="wrap_content"
-                    android:layout_height="30dp"
+                    android:layout_height="25dp"
                     android:layout_marginLeft="@dimen/shop_main_lineheight10_dimen"
                     layout="@layout/jiaandjia_layout" />
             </LinearLayout>
@@ -133,7 +133,7 @@
                     android:layout_height="@dimen/shop_main_width140_dimen"
                     android:background="@drawable/gray_background"
                     android:gravity="left|top"
-                    android:hint="申诉理由"
+                    android:hint="退货说明"
                     android:maxLength="200"
                     android:textSize="@dimen/textsize13sp" />
             </LinearLayout>
