@@ -4,6 +4,7 @@ package com.shenma.yueba.receiver;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.widget.Toast;
 
 import com.shenma.yueba.util.LogUtil;
 import com.shenma.yueba.util.ParserJson;
@@ -20,7 +21,7 @@ public class MyAlertReciver extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		this.context = context;
-		//做相应的处理 
+		//做相应的处理
 	}
 
 	

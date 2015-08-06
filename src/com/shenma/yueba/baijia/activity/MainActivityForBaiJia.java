@@ -27,6 +27,7 @@ import com.shenma.yueba.baijia.fragment.MessageFragment;
 import com.shenma.yueba.baijia.modle.CheckVersionBackBean;
 import com.shenma.yueba.baijia.modle.FragmentBean;
 import com.shenma.yueba.baijia.modle.VersionUpdateDetail;
+import com.shenma.yueba.util.AlartMangerUtil;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
@@ -50,6 +51,7 @@ public class MainActivityForBaiJia extends FragmentActivity {
 		requestWindowFeature(getWindow().FEATURE_NO_TITLE);
 		setContentView(R.layout.baijia_main_layout);
 		MyApplication.getInstance().addActivity(this);
+		AlartMangerUtil.startHeartAlart(MainActivityForBaiJia.this);
 		initView();
 		initaddFooterView();
 		setCurrView(0);

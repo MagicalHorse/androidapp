@@ -50,8 +50,8 @@ public class ApplyResultActivity extends BaseActivityWithTopView implements OnCl
 			tv_content.setText("货款提现申请已提交，请等待处理");
 			tv_comment.setText("");
 		}
-		if("userCertification".equals(flag)){
-			tv_content.setText("身份认证申请已提交，请等待处理");
+		if("userCertification".equals(flag)){//身份认证
+			tv_content.setText("申请已提交，请等待处理");
 			tv_comment.setText("");
 		}
 	}
@@ -59,9 +59,10 @@ public class ApplyResultActivity extends BaseActivityWithTopView implements OnCl
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.tv_confirm://确定
-			MyApplication.getInstance().removeAllActivity();
-			Intent intent = new Intent(mContext, MainActivityForBaiJia.class);
-			startActivity(intent);
+			ApplyResultActivity.this.finish();
+//			MyApplication.getInstance().removeAllActivity();
+//			Intent intent = new Intent(mContext, MainActivityForBaiJia.class);
+//			startActivity(intent);
 			break;
 
 		default:
@@ -83,18 +84,18 @@ public class ApplyResultActivity extends BaseActivityWithTopView implements OnCl
 
 	
 	
-	@Override
-	public void onBackPressed() {
-		MyApplication.getInstance().removeAllActivity();
-		Intent intent = new Intent(mContext, MainActivityForBaiJia.class);
-		startActivity(intent);
-		super.onBackPressed();
-	}
+//	@Override
+//	public void onBackPressed() {
+//		MyApplication.getInstance().removeAllActivity();
+//		Intent intent = new Intent(mContext, MainActivityForBaiJia.class);
+//		startActivity(intent);
+//		super.onBackPressed();
+//	}
 	
 	
-	@Override
-	protected void onDestroy() {
-		MyApplication.getInstance().removeActivity(this);//加入回退栈
-		super.onDestroy();
-	}
+//	@Override
+//	protected void onDestroy() {
+//		MyApplication.getInstance().removeActivity(this);//加入回退栈
+//		super.onDestroy();
+//	}
 }
