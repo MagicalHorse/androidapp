@@ -371,7 +371,7 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 				}
 			
 			} else {
-				iv_pic.setBackgroundResource(R.drawable.default_pic);
+				iv_pic.setBackgroundResource(R.drawable.add_pic_default);
 			}
 			if (tagList != null && tagList.size() > 0) {
 				bean.setSetTag(true);
