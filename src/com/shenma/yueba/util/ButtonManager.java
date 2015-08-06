@@ -22,6 +22,7 @@ import com.shenma.yueba.baijia.activity.OrderAppealActivity;
 import com.shenma.yueba.baijia.adapter.BaiJiaOrderListAdapter.OrderControlListener;
 import com.shenma.yueba.baijia.modle.BaiJiaOrderListInfo;
 import com.shenma.yueba.baijia.modle.CreatOrderInfoBean;
+import com.shenma.yueba.baijia.modle.PayResponseFormBean;
 import com.shenma.yueba.baijia.modle.ProductInfoBean;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 
@@ -273,13 +274,13 @@ public final static String CANCELORDER="取消订单";//6
 	{
         
         Intent intent=new Intent(context,BaijiaPayActivity.class);
-		CreatOrderInfoBean creatOrderInfoBean=new CreatOrderInfoBean();
-		creatOrderInfoBean.setOrderNo(baiJiaOrderListInfo.getOrderNo());
-		creatOrderInfoBean.setActualAmount(baiJiaOrderListInfo.getAmount());
-		ProductInfoBean productInfoBean=baiJiaOrderListInfo.getProduct();
-		intent.putExtra("PAYDATA", creatOrderInfoBean);
-		intent.putExtra("MessageTitle", productInfoBean.getName());
-		intent.putExtra("MessageDesc", productInfoBean.getProductdesc());
+		PayResponseFormBean bean=new PayResponseFormBean();
+		bean.setOrderNo(baiJiaOrderListInfo.getOrderNo());
+		bean.setPrice(baiJiaOrderListInfo.getAmount());
+		bean.setContent(baiJiaOrderListInfo.getProduct().getName());
+		bean.setDesc(baiJiaOrderListInfo.getProduct().getName()+"  x "+baiJiaOrderListInfo.getProduct().getProductCount());
+		bean.setUrl(com.shenma.yueba.constants.Constants.WX_NOTIFY_URL);
+		intent.putExtra("PAYDATA",bean);
 		((Activity)context).startActivityForResult(intent, 200);
 	}
 	

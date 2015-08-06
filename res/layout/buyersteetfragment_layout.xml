@@ -20,6 +20,7 @@
                     android:id="@+id/baijia_contact_listview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:dividerHeight="1dp"
                     android:paddingLeft="@dimen/shop_main_width5_dimen"
                     android:paddingRight="@dimen/shop_main_width5_dimen" />
 

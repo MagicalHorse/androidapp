@@ -309,8 +309,15 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView
 					.setOnClickListener(this);
 			approvebuyerdetails_layout_shoucang_linerlayout_textview
 					.setTag(Data);
-			approvebuyerdetails_layout_shoucang_linerlayout_textview
-					.setSelected(Data.isIsFavorite());
+			if(Data.isIsFavorite())
+			{
+				approvebuyerdetails_layout_shoucang_linerlayout_textview.setText("取消收藏");
+			}else
+			{
+				approvebuyerdetails_layout_shoucang_linerlayout_textview.setText("收藏");
+				
+			}
+			approvebuyerdetails_layout_shoucang_linerlayout_textview.setSelected(Data.isIsFavorite());
 
 			approvebuyerdetails_attention_textview
 					.setSelected(likeUsersInfoBean.isIsLike());
@@ -431,8 +438,11 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView
 	 * **/
 	void addTabImageView(int size, int value) {
 		appprovebuyer_viewpager_footer_linerlayout.removeAllViews();
-		((RelativeLayout.LayoutParams) appprovebuyer_viewpager_footer_linerlayout
-				.getLayoutParams()).bottomMargin = 40;
+		((RelativeLayout.LayoutParams) appprovebuyer_viewpager_footer_linerlayout.getLayoutParams()).bottomMargin = 40;
+		if(size<=1)
+		{
+			return;
+		}
 		for (int i = 0; i < size; i++) {
 			View v = new View(ApproveBuyerDetailsActivity.this);
 			v.setBackgroundResource(R.drawable.tabround_background);
@@ -685,9 +695,11 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView
 							switch (Status) {
 							case 0:
 								v.setSelected(false);
+								((TextView)v).setText("收藏");
 								bean.setIsFavorite(false);
 								break;
 							case 1:
+								((TextView)v).setText("取消收藏");
 								v.setSelected(true);
 								bean.setIsFavorite(true);
 								break;

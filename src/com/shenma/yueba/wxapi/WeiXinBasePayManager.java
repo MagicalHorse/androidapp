@@ -35,7 +35,6 @@ import com.tencent.mm.sdk.openapi.WXAPIFactory;
 public abstract class WeiXinBasePayManager {
 	protected static String PREFIX_CDATA = "<![CDATA[";
 	protected static String SUFFIX_CDATA = "]]>";
-
 	Context context;
 	Map<String, String> resultunifiedorder;
 	StringBuffer sb;
@@ -43,34 +42,33 @@ public abstract class WeiXinBasePayManager {
 	private ProgressDialog dialog;
 	PayReq req;
 	WeiXinPayManagerListener listener;
-	Map map;
 
 	/*****
 	 * @param context Context
 	 * @param listener WeiXinPayManagerListener 成功失败接口
 	 * @param str_array String[] 传递的对象参数
 	 * ***/
-	public WeiXinBasePayManager(Context context,WeiXinPayManagerListener listener,Map map) {
+	public WeiXinBasePayManager(Context context,WeiXinPayManagerListener listener) {
 		this.context = context;
 		msgApi = WXAPIFactory.createWXAPI(context, null);
 		msgApi.registerApp(Constants.APP_ID);
 		req = new PayReq();
 		sb = new StringBuffer();
 		this.listener = listener;
-		this.map = map;
 	}
 
 	/*****
 	 * 执行操作
 	 * ***/
 	public void execute() {
-		dialog = ProgressDialog.show(context,
-				context.getString(R.string.app_tip),
-				context.getString(R.string.getting_prepayid));
+		dialog =ProgressDialog.show(context, context.getString(R.string.app_tip), context.getString(R.string.getting_prepayid), true, true);
 		ExecuteTask executeTask = new ExecuteTask();
 		executeTask.execute();
 	}
 
+	/*****
+	 * 微信支付成功监听回调
+	 * ***/
 	public interface WeiXinPayManagerListener {
 		//成功
 		void success(Object obj);

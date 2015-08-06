@@ -25,30 +25,32 @@
                 android:scaleType="fitCenter"
                 android:src="@drawable/default_pic" />
 
-            <TextView
-                android:id="@+id/chat_product_head_layout_name_textview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_marginBottom="@dimen/shop_main_width1_dimen"
-                android:layout_marginLeft="5dip"
-                android:layout_marginTop="5dip"
-                android:textSize="15sp"
+            <LinearLayout
+                android:padding="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_toRightOf="@id/chat_product_head_layout_imageview"
-                android:layout_weight="1"
-                android:text="@null" />
+                android:orientation="vertical" >
 
-            <TextView
-                android:id="@+id/chat_product_head_layout_price_textview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:textSize="15sp"
-                android:layout_alignLeft="@id/chat_product_head_layout_name_textview"
-                android:layout_marginBottom="5dip"
-                android:layout_weight="1"
-                android:text="@null"
-                android:textColor="@color/red" />
+                <TextView
+                    android:maxLines="2"
+                    android:id="@+id/chat_product_head_layout_name_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:gravity="left|center_vertical"
+                    android:text="@null"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/chat_product_head_layout_price_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@null"
+                    android:textColor="@color/red"
+                    android:textSize="15sp" />
+            </LinearLayout>
         </RelativeLayout>
 
         <View
@@ -87,14 +89,14 @@
                 android:id="@+id/createorder_dialog_layout_size_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:text="尺码:" />
+                android:text="尺码:"
+                android:textSize="15sp" />
 
             <com.shenma.yueba.view.XCFlowLayout
-                android:layout_marginLeft="5dip"
                 android:id="@+id/flowlayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dip" />
         </LinearLayout>
 
         <View
@@ -113,9 +115,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                 android:textSize="15sp"
                 android:gravity="center"
-                android:text="数量：" />
+                android:text="数量："
+                android:textSize="15sp" />
 
             <include layout="@layout/jiaandjia_layout" />
 
@@ -125,20 +127,22 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dip"
                 android:gravity="center"
-                android:textSize="13sp"
-                android:text="库存：" />
+                android:text="库存："
+                android:textSize="13sp" />
 
             <TextView
                 android:id="@+id/createorder_dialog_layout_repertoryvalue_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textSize="13sp"
-                android:text="0" />
+                android:text="0"
+                android:textSize="13sp" />
         </LinearLayout>
-<View
+
+        <View
             style="@style/style_horizontal_line"
             android:layout_marginTop="10dip" />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -153,17 +157,17 @@
                 android:layout_alignParentLeft="true"
                 android:background="@drawable/graysolid_background"
                 android:text="取消"
-                android:textColor="@color/white"               
-                 android:textSize="@dimen/textsize13sp" />
+                android:textColor="@color/white"
+                android:textSize="@dimen/textsize13sp" />
 
             <Button
                 android:id="@+id/createorder_dialog_layout_submit_button"
                 android:layout_width="@dimen/shop_main_iconwidth80_dimen"
-                 android:textColor="@color/white"    
                 android:layout_height="@dimen/user_config_iconwidth40_dimen"
                 android:layout_alignParentRight="true"
                 android:background="@drawable/yeollowsolid_background"
                 android:text="确定"
+                android:textColor="@color/white"
                 android:textSize="@dimen/textsize13sp" />
         </RelativeLayout>
     </LinearLayout>

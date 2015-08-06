@@ -32,8 +32,10 @@ public class Constants {
 	
 	// API密钥，在商户平台设置
 	public static final String WX_API_KEY = MyApplication.getInstance().getResources().getString(R.string.wenxin_api_key);
-    //回调同志的url
+    //普通支付微信回调通知服务器的url
 	public static final String WX_NOTIFY_URL=HttpConstants.METHOD_WEIXINCALLURL;
+	 //充值并退款微信回调通知服务器的url
+	public static final String WX_PAYAREFUND_URL=HttpConstants.METHOD_PayAndDoRmaResult;
 	
 	
 	

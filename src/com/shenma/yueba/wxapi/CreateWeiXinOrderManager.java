@@ -4,20 +4,16 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.simcpux.Constants;
-
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
-import android.app.Activity;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-
 import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.modle.PayResponseFormBean;
 import com.shenma.yueba.constants.HttpConstants;
 import com.shenma.yueba.wxapi.bean.WenXinErrorBean;
+
+import android.content.Context;
+import net.sourceforge.simcpux.Constants;
 
 /**  
  * @author gyj  
@@ -28,11 +24,15 @@ import com.shenma.yueba.wxapi.bean.WenXinErrorBean;
 public class CreateWeiXinOrderManager extends WeiXinBasePayManager{
 	public static final String WEIXINACTION_FILTER="com.shenma.yueba.weixinpay_intentfilter";
 	WeiXinPayManagerListener listener;
-	Map map;
-	public CreateWeiXinOrderManager(Context context,WeiXinPayManagerListener listener, Map map) {
-		super(context, listener, map);
+	PayResponseFormBean bean;
+	
+	/****
+	 * @param listener WeiXinPayManagerListener
+	 * ***/
+	public CreateWeiXinOrderManager(Context context,WeiXinPayManagerListener listener, PayResponseFormBean bean) {
+		super(context, listener);
 		this.listener=listener;
-		this.map=map;
+		this.bean=bean;
 	}
 
 	@Override
@@ -147,15 +147,21 @@ public class CreateWeiXinOrderManager extends WeiXinBasePayManager{
    			String	nonceStr = genNonceStr();
             List<NameValuePair> packageParams = new LinkedList<NameValuePair>();
    			packageParams.add(new BasicNameValuePair("appid", Constants.APP_ID));
-   			packageParams.add(new BasicNameValuePair("body", (String)map.get("messageTitle")));
+   			String body = "";
+   			if (bean.getContent().length() > 13) {
+   				body = bean.getContent().substring(0, 13) + "...";
+   			} else {
+   				body = bean.getContent();
+   			}
+   			packageParams.add(new BasicNameValuePair("body", body));
    			//packageParams.add(new BasicNameValuePair("body","商品名称")); 
    			//packageParams.add(new BasicNameValuePair("detail", (String)map.get("messageDetail")));//详细
    			packageParams.add(new BasicNameValuePair("mch_id", Constants.MCH_ID));
    			packageParams.add(new BasicNameValuePair("nonce_str", nonceStr));
-   			packageParams.add(new BasicNameValuePair("notify_url", com.shenma.yueba.constants.Constants.WX_NOTIFY_URL));
-   			packageParams.add(new BasicNameValuePair("out_trade_no",(String)map.get("OrderNo")));//商户订单号
+   		    packageParams.add(new BasicNameValuePair("notify_url", bean.getUrl()));
+   			packageParams.add(new BasicNameValuePair("out_trade_no",bean.getOrderNo()));//商户订单号
    			packageParams.add(new BasicNameValuePair("spbill_create_ip","127.0.0.1"));
-   			double d=(Double)map.get("TotalAmount");
+   			double d=bean.getPrice();
    			packageParams.add(new BasicNameValuePair("total_fee", Integer.toString((int)(d*100))));
    			packageParams.add(new BasicNameValuePair("trade_type", "APP"));
 

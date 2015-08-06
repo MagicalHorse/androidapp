@@ -3,6 +3,12 @@ package com.shenma.yueba.baijia.fragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.modle.FragmentBean;
+import com.shenma.yueba.constants.Constants;
+import com.shenma.yueba.util.FontManager;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -18,13 +24,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.shenma.yueba.R;
-import com.shenma.yueba.application.MyApplication;
-import com.shenma.yueba.baijia.modle.FragmentBean;
-import com.shenma.yueba.constants.Constants;
-import com.shenma.yueba.util.FontManager;
-import com.shenma.yueba.util.SharedUtil;
 
 /******
  * @author gyj

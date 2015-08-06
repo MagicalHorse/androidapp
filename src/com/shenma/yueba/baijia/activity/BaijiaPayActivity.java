@@ -1,9 +1,22 @@
 package com.shenma.yueba.baijia.activity;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.dialog.OrderPayDialog;
+import com.shenma.yueba.baijia.dialog.OrderPayDialog.OrderPayOnClick_Listener;
+import com.shenma.yueba.baijia.modle.BaiJiaOrdeDetailsInfoBean;
+import com.shenma.yueba.baijia.modle.BaijiaPayInfoBean;
+import com.shenma.yueba.baijia.modle.PayResponseFormBean;
+import com.shenma.yueba.baijia.modle.RequestBaiJiaOrdeDetailsInfoBean;
+import com.shenma.yueba.util.FontManager;
+import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
+import com.shenma.yueba.wxapi.CreateWeiXinOrderManager;
+import com.shenma.yueba.wxapi.WeiXinBasePayManager.WeiXinPayManagerListener;
+import com.umeng.analytics.MobclickAgent;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -14,21 +27,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.shenma.yueba.R;
-import com.shenma.yueba.application.MyApplication;
-import com.shenma.yueba.baijia.dialog.OrderPayDialog;
-import com.shenma.yueba.baijia.dialog.OrderPayDialog.OrderPayOnClick_Listener;
-import com.shenma.yueba.baijia.modle.BaiJiaOrdeDetailsInfoBean;
-import com.shenma.yueba.baijia.modle.BaijiaPayInfoBean;
-import com.shenma.yueba.baijia.modle.CreatOrderInfoBean;
-import com.shenma.yueba.baijia.modle.RequestBaiJiaOrdeDetailsInfoBean;
-import com.shenma.yueba.util.FontManager;
-import com.shenma.yueba.util.HttpControl;
-import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
-import com.shenma.yueba.wxapi.CreateWeiXinOrderManager;
-import com.shenma.yueba.wxapi.WeiXinBasePayManager.WeiXinPayManagerListener;
-import com.umeng.analytics.MobclickAgent;
 
 /**
  * @author gyj
@@ -45,15 +43,10 @@ public class BaijiaPayActivity extends BaseActivityWithTopView implements
 	private TextView baijiapay_layout_item_textview2;
 	private TextView baijiapay_layout_item_textview3;
 	private TextView baijiapay_layout_item_textview4;
-	private CreatOrderInfoBean creatOrderInfoBean;
+	private PayResponseFormBean payResponseFormBean;
 	private OrderPayDialog orderPayDialog;
 	private HttpControl httpControl = new HttpControl();
-	// 微信支付 商品名描述
-	private String messageTitle = "";
-	// 微信支付商品信息描述
-	private String messageDesc = "";
 	private boolean isBroadcast = false;// 是否注册广播监听 支付结果
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		MyApplication.getInstance().addActivity(this);
@@ -62,20 +55,14 @@ public class BaijiaPayActivity extends BaseActivityWithTopView implements
 		setContentView(parentView);
 		super.onCreate(savedInstanceState);
 		if (this.getIntent().getSerializableExtra("PAYDATA") != null) {
-			creatOrderInfoBean = (CreatOrderInfoBean) this.getIntent()
-					.getSerializableExtra("PAYDATA");
+			payResponseFormBean = (PayResponseFormBean) this.getIntent().getSerializableExtra("PAYDATA");
 		} else {
 			finish();
 			MyApplication.getInstance().showMessage(BaijiaPayActivity.this,
 					"数据错误，请从订单页面进入");
 			return;
 		}
-		if (this.getIntent().getStringExtra("MessageTitle") != null) {
-			messageTitle = this.getIntent().getStringExtra("MessageTitle");
-		}
-		if (this.getIntent().getStringExtra("MessageDesc") != null) {
-			messageDesc = this.getIntent().getStringExtra("MessageDesc");
-		}
+		
 		initView();
 	}
 
@@ -93,8 +80,7 @@ public class BaijiaPayActivity extends BaseActivityWithTopView implements
 		baijiapay_layout_item_textview1 = (TextView) findViewById(R.id.baijiapay_layout_item_textview1);
 		baijiapay_layout_item_textview1.setText("请支付");
 		baijiapay_layout_item_textview2 = (TextView) findViewById(R.id.baijiapay_layout_item_textview2);
-		baijiapay_layout_item_textview2.setText("￥"+Double
-				.toString(creatOrderInfoBean.getActualAmount()));
+		baijiapay_layout_item_textview2.setText("￥"+Double.toString(payResponseFormBean.getPrice()));
 		baijiapay_layout_item_textview3 = (TextView) findViewById(R.id.baijiapay_layout_item_textview3);
 		baijiapay_layout_item_textview4 = (TextView) findViewById(R.id.baijiapay_layout_item_textview4);
 		rl_wechatpay = getView(R.id.rl_wechatpay);
@@ -121,8 +107,7 @@ public class BaijiaPayActivity extends BaseActivityWithTopView implements
 		public void onReceive(Context context, Intent intent) {
 			if (intent == null) {
 				return;
-			} else if (intent.getAction().equals(
-					CreateWeiXinOrderManager.WEIXINACTION_FILTER))// 如果接收到 支付的广播
+			} else if (intent.getAction().equals(CreateWeiXinOrderManager.WEIXINACTION_FILTER))// 如果接收到 支付的广播
 			{
 				String resutl_Code = intent.getStringExtra("Resutl_Code");
 				// MyApplication.getInstance().showMessage(BaijiaPayActivity.this,
@@ -143,7 +128,7 @@ public class BaijiaPayActivity extends BaseActivityWithTopView implements
       * *****/
 	void queyPayStatus() {
 		showPayDialogLoading();
-		httpControl.getBaijiaOrderDetails(creatOrderInfoBean.getOrderNo(),
+		httpControl.getBaijiaOrderDetails(payResponseFormBean.getOrderNo(),
 				true, new HttpCallBackInterface() {
 
 					@Override
@@ -165,7 +150,7 @@ public class BaijiaPayActivity extends BaseActivityWithTopView implements
 							} else {
 								showFailsDailog();
 							}
-
+                           setResult(200, BaijiaPayActivity.this.getIntent().putExtra("PAYRESULT", "SUCESS"));
 						} else {
 							http_Fails(500, "");
 						}
@@ -203,20 +188,11 @@ public class BaijiaPayActivity extends BaseActivityWithTopView implements
 
 	}
 
+	/*******
+	 * 启动微信支付
+	 * ***/
 	void startWenXinPay() {
-
-		Map<String, Object> map = new HashMap<String, Object>();
-		String body = "";
-		if (messageTitle.length() > 13) {
-			body = messageTitle.substring(0, 13) + "...";
-		} else {
-			body = messageTitle;
-		}
-		map.put("messageTitle", body);
-		map.put("TotalAmount", creatOrderInfoBean.getActualAmount());
-		map.put("OrderNo", creatOrderInfoBean.getOrderNo());
-		CreateWeiXinOrderManager cwxm = new CreateWeiXinOrderManager(
-				BaijiaPayActivity.this, new WeiXinPayManagerListener() {
+		CreateWeiXinOrderManager cwxm = new CreateWeiXinOrderManager(BaijiaPayActivity.this, new WeiXinPayManagerListener() {
 
 					@Override
 					public void success(Object obj) {
@@ -225,10 +201,9 @@ public class BaijiaPayActivity extends BaseActivityWithTopView implements
 
 					@Override
 					public void fails(String msg) {
-						MyApplication.getInstance().showMessage(
-								BaijiaPayActivity.this, msg);
+						MyApplication.getInstance().showMessage(BaijiaPayActivity.this, msg);
 					}
-				}, map);
+				}, payResponseFormBean);
 		cwxm.execute();
 	}
 
@@ -289,7 +264,6 @@ public class BaijiaPayActivity extends BaseActivityWithTopView implements
 	@Override
 	public void finish() {
 		super.finish();
-		setResult(200, this.getIntent().putExtra("PAYRESULT", "SUCESS"));
 	}
 
 	public void onResume() {
@@ -301,5 +275,6 @@ public class BaijiaPayActivity extends BaseActivityWithTopView implements
 		super.onPause();
 		MobclickAgent.onPause(this);
 	}
+
 
 }

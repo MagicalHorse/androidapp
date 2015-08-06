@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.adapter.AffirmAdapter;
+import com.shenma.yueba.baijia.modle.PayResponseFormBean;
 import com.shenma.yueba.baijia.modle.PrioductSizesInfoBean;
 import com.shenma.yueba.baijia.modle.ProductsDetailsInfoBean;
 import com.shenma.yueba.baijia.modle.ProductsDetailsPromotion;
@@ -242,9 +243,13 @@ public class AffirmOrderActivity extends BaseActivityWithTopView implements
 							{
 								MyApplication.getInstance().showMessage(AffirmOrderActivity.this, "下单成功");
 								Intent intent=new Intent(AffirmOrderActivity.this,BaijiaPayActivity.class);
-								intent.putExtra("PAYDATA",requestCreatOrderInfoBean.getData());
-								intent.putExtra("MessageTitle", productsDetailsInfoBean.getProductName());
-								intent.putExtra("MessageDesc", ""+productsDetailsInfoBean.getProductName()+"  x "+buyCount);
+								PayResponseFormBean bean=new PayResponseFormBean();
+								bean.setOrderNo(requestCreatOrderInfoBean.getData().getOrderNo());
+								bean.setPrice(requestCreatOrderInfoBean.getData().getActualAmount());
+								bean.setContent(productsDetailsInfoBean.getProductName());
+								bean.setDesc(productsDetailsInfoBean.getProductName()+"  x "+buyCount);
+								bean.setUrl(com.shenma.yueba.constants.Constants.WX_NOTIFY_URL);
+								intent.putExtra("PAYDATA",bean);
 								AffirmOrderActivity.this.startActivity(intent);
 							}
 							finish();
@@ -344,7 +349,7 @@ public class AffirmOrderActivity extends BaseActivityWithTopView implements
 				}
 			
 			// 优惠的金额
-			ToolsUtil.setFontStyle(this,parentview,R.id.affirmorder_item_youhuicontext_textview,ToolsUtil.nullToString("立减 "+ Double.toString(requestComputeAmountInfoBean.getData().getDiscountamount())));
+			ToolsUtil.setFontStyle(this,parentview,R.id.affirmorder_item_youhuicontext_textview,ToolsUtil.nullToString("立减:￥"+ Double.toString(requestComputeAmountInfoBean.getData().getDiscountamount())));
 			
 			}
 		}
