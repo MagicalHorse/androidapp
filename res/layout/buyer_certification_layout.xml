@@ -99,7 +99,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/main_bg"
-                    android:text="身份证/护照" />
+                    android:text="上传身份证或护照" />
 
 
                 <RelativeLayout
@@ -119,6 +119,7 @@
                         />
 
                     <TextView
+                            android:id="@+id/tv_zheng_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
@@ -139,15 +140,26 @@
                         android:src="@drawable/shape_linearlayout10" />
 
                     <TextView
+                        android:id="@+id/tv_fan_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:text="+反面" />
                 </RelativeLayout>
                 
-                 <View
-                    style="@style/style_horizontal_line"
-                    android:layout_margin="10dip" />
+                
+                
+                <TextView
+                    android:gravity="center_vertical"
+                    android:drawableLeft="@drawable/star"
+                    android:paddingRight="10dip"
+                    android:paddingTop="5dip"
+                    android:paddingBottom="5dip"
+                    android:id="@+id/tv_work_card_title"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/main_bg"
+                    android:text="上传手持工牌照片" />
 
                 <RelativeLayout
                     android:id="@+id/rl_work_card"
@@ -164,10 +176,11 @@
                         />
 
                     <TextView
+                        android:id="@+id/tv_work_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:text="+工牌照片" />
+                        android:text="+手持工牌照片" />
                 </RelativeLayout>
                 
             </LinearLayout>

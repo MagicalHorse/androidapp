@@ -75,7 +75,6 @@
                             android:orientation="horizontal" >
 
                             <TextView
-                                android:visibility="gone"
                                 android:id="@+id/tv_store_title"
                                 android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
@@ -84,9 +83,8 @@
                                 android:gravity="center_vertical"
                                 android:text="商场名称"
                                 android:textColor="@color/text_gray_color"
-                                android:textSize="16sp" />
-                        
-                            
+                                android:textSize="16sp"
+                                android:visibility="gone" />
 
                             <TextView
                                 android:id="@+id/tv_store_name"
@@ -106,7 +104,6 @@
                                 android:hint="请输入"
                                 android:paddingLeft="10dip"
                                 android:textColor="@color/text_gray_color" />
-                            
                         </LinearLayout>
 
                         <View style="@style/style_horizontal_line" />
@@ -179,7 +176,8 @@
                         android:orientation="vertical"
                         android:paddingLeft="15dip"
                         android:paddingRight="15dip"
-                        android:paddingTop="10dip" >
+                        android:paddingTop="10dip"
+                        android:paddingBottom="10dip" >
 
                         <TextView
                             android:id="@+id/tv_self_get_point_title"
@@ -231,17 +229,28 @@
 
                         <View style="@style/style_horizontal_line" />
 
-                        <EditText
-                            android:id="@+id/et_street"
+                        <LinearLayout
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="10dip"
-                            android:layout_marginTop="10dip"
-                            android:background="@drawable/shape_linearlayout10"
-                            android:gravity="top"
-                            android:hint="请填写详细地址(顾客支付后到专柜提货的地址，请务必正确填写，否则会影响收款确认)"
-                            android:lines="3"
-                            android:padding="5dip" />
+                            android:background="@drawable/shape_linearlayout10" >
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/star" />
+
+                            <EditText
+                                android:id="@+id/et_street"
+                                android:layout_width="0dip"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="10dip"
+                                android:layout_weight="1"
+                                android:background="@null"
+                                android:gravity="top"
+                                android:hint="请填写详细地址(顾客支付后到专柜提货的地址，请务必正确填写，否则会影响收款确认)"
+                                android:lines="3"
+                                android:paddingTop="5dip" />
+                        </LinearLayout>
                     </LinearLayout>
 
                     <View style="@style/style_horizontal_line" />

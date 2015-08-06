@@ -61,6 +61,10 @@ public class BuyerCertificationActivity1 extends BaseActivityWithTopView
 	private TextView tv_next;// 提交
 	private TextView tv_name;
 	private EditText et_name;//
+	private TextView tv_work_card_title;//
+	private TextView tv_work_title;
+	private TextView tv_zheng_title;
+	private TextView tv_fan_title;
 	private RelativeLayout rl_idcard_positive;
 	private RelativeLayout rl_idcard_reverse;
 	private ImageView iv_idcard_positive;
@@ -82,9 +86,8 @@ public class BuyerCertificationActivity1 extends BaseActivityWithTopView
 		initView();
 	}
 
-	
 	private void initView() {
-		setTitle("身份认证材料");
+		setTitle("提交身份认证");
 		setLeftTextView(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -95,6 +98,10 @@ public class BuyerCertificationActivity1 extends BaseActivityWithTopView
 		tv_get_point = (TextView) findViewById(R.id.tv_get_point);
 		et_info = (EditText) findViewById(R.id.et_info);
 		et_name = (EditText) findViewById(R.id.et_name);
+		tv_work_card_title = (TextView) findViewById(R.id.tv_work_card_title);
+		tv_zheng_title = (TextView) findViewById(R.id.tv_zheng_title);
+		tv_fan_title = (TextView) findViewById(R.id.tv_fan_title);
+		tv_work_title = (TextView) findViewById(R.id.tv_work_title);
 		tv_name = (TextView) findViewById(R.id.tv_name);
 		tv_retain = (TextView) findViewById(R.id.tv_retain);
 		rl_idcard_positive = (RelativeLayout) findViewById(R.id.rl_idcard_positive);
@@ -108,8 +115,11 @@ public class BuyerCertificationActivity1 extends BaseActivityWithTopView
 		rl_work_card.setOnClickListener(this);
 		rl_idcard_positive.setOnClickListener(this);
 		rl_idcard_reverse.setOnClickListener(this);
-		FontManager.changeFonts(mContext, tv_idcard_title, tv_get_point,
-				et_info, tv_retain, tv_next,tv_name,et_name,tv_top_title);
+		FontManager
+				.changeFonts(mContext, tv_idcard_title, tv_get_point, et_info,
+						tv_retain, tv_next, tv_name, et_name, tv_top_title,
+						tv_work_card_title, tv_work_title, tv_zheng_title,
+						tv_fan_title);
 		MyApplication.getInstance().kuanggaobi = (float) 1.76;
 		progressDialog = CustomProgressDialog.createDialog(this);
 	}
@@ -239,12 +249,15 @@ public class BuyerCertificationActivity1 extends BaseActivityWithTopView
 				if (0 == tag) {
 					pic1 = littlePicPath_cache;
 					iv_idcard_positive.setImageBitmap(bm);
+					tv_zheng_title.setVisibility(View.GONE);
 				} else if (1 == tag) {
 					pic2 = littlePicPath_cache;
 					iv_idcard_reverse.setImageBitmap(bm);
+					tv_fan_title.setVisibility(View.GONE);
 				} else if (2 == tag) {
 					pic3 = littlePicPath_cache;
 					iv_work_card.setImageBitmap(bm);
+					tv_work_title.setVisibility(View.GONE);
 				}
 			}
 		}
@@ -258,10 +271,10 @@ public class BuyerCertificationActivity1 extends BaseActivityWithTopView
 							+ UUID.randomUUID().toString()
 							+ "littlePic.jpg";
 					// 裁剪图片
-					startActivityForResult(PhotoUtils.getZoomIntent(Uri
-							.fromFile(new File(littlePicPath)), Uri
-							.fromFile(FileUtils
-									.createNewFile(littlePicPath_cache)),8,5),
+					startActivityForResult(
+							PhotoUtils.getZoomIntent(Uri.fromFile(new File(
+									littlePicPath)), Uri.fromFile(FileUtils
+									.createNewFile(littlePicPath_cache)), 8, 5),
 							PhotoUtils.INTENT_REQUEST_CODE_CROP);
 				}
 			}
@@ -318,8 +331,7 @@ public class BuyerCertificationActivity1 extends BaseActivityWithTopView
 							"pic3",
 							pic3.substring(pic3.lastIndexOf("/") + 1,
 									pic3.length()));
-					intent.putExtra(
-							"name",et_name.getText().toString().trim());
+					intent.putExtra("name", et_name.getText().toString().trim());
 					startActivity(intent);
 				default:
 					break;
@@ -329,20 +341,19 @@ public class BuyerCertificationActivity1 extends BaseActivityWithTopView
 		});
 	}
 
-	
-	  @Override
-	    protected void onDestroy() {
-	    	MyApplication.getInstance().removeActivity(this);//加入回退栈
-	    	super.onDestroy();
-	    }
+	@Override
+	protected void onDestroy() {
+		MyApplication.getInstance().removeActivity(this);// 加入回退栈
+		super.onDestroy();
+	}
 
-	  
-		public void onResume() {
-			super.onResume();
-			MobclickAgent.onResume(this);
-			}
-			public void onPause() {
-			super.onPause();
-			MobclickAgent.onPause(this);
-			}
+	public void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+
+	public void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
 }
