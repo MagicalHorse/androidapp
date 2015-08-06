@@ -81,6 +81,7 @@ public class BuyerAdapter extends BaseAdapter {
 			convertView = activity.getLayoutInflater().inflate(
 					R.layout.buyersteetfragment_item, null);
 			holder.v = convertView;
+			holder.ll_attentionpeople_contener_lineaerlayout=(LinearLayout)convertView.findViewById(R.id.ll_attentionpeople_contener_lineaerlayout);
 			holder.customImage = (RoundImageView) convertView
 					.findViewById(R.id.baijia_tab1_item_icon_imageview);
 			setOnclickListener(holder.customImage);
@@ -144,28 +145,37 @@ public class BuyerAdapter extends BaseAdapter {
 			holder = (Holder) convertView.getTag();
 
 		}
-		LayoutParams textParams = holder.tv_count.getLayoutParams();
-		textParams.width = ToolsUtil.getDisplayWidth(activity) / 7;
-		holder.tv_count.setLayoutParams(textParams);
+		
+		LinearLayout.LayoutParams textParams = (LinearLayout.LayoutParams)holder.ll_attentionpeople_contener_lineaerlayout.getLayoutParams();
+		Log.i("TAG", "LEFT:"+holder.tv_count.getPaddingLeft()+"   RIGHT:"+holder.tv_count.getPaddingRight());
+		//计算出 列表俯视图的宽度
+		int width=ToolsUtil.getDisplayWidth(activity)-textParams.leftMargin-textParams.rightMargin-holder.ll_attentionpeople_contener_lineaerlayout.getPaddingLeft()-holder.ll_attentionpeople_contener_lineaerlayout.getPaddingRight();
+		//设置心的宽度
+		LayoutParams tv_countparams=holder.tv_count.getLayoutParams();
+		tv_countparams.width=width/7;
+		holder.tv_count.setLayoutParams(tv_countparams);
+		//获取用户列表总数
 		int count = Products.get(position).getLikeUsers().getCount();
 		holder.tv_count.setText("" + count);
 
 		if (Products != null && Products.get(position) != null
 				&& Products.get(position).getLikeUsers() != null
 				&& Products.get(position).getLikeUsers().getUsers() != null) {
-			final List<UsersInfoBean> users = Products.get(position)
-					.getLikeUsers().getUsers();
+			final List<UsersInfoBean> users = Products.get(position).getLikeUsers().getUsers();
 			holder.ll_attentionpeople_contener.removeAllViews();
-			for (int i = 0; i < users.size(); i++) {
+			int size=8;
+			if(size>users.size())
+			{
+				size=users.size();
+			}
+			int userItmewidth=width/7*6;
+			for (int i = 0; i < size; i++) {
 				RoundImageView riv = new RoundImageView(activity);
-				int ll_with = ToolsUtil.getDisplayWidth(activity) / 7 * 6;
-				int viewWith = (ll_with / 8);
-				LayoutParams params = new LayoutParams(
-						LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-				params.width = viewWith;
-				params.height = viewWith;
+				//int ll_with = ToolsUtil.getDisplayWidth(activity) / 7 * 6;
+				int viewWith = (userItmewidth / 8);
+				LayoutParams params = new LayoutParams(viewWith, viewWith);
 				riv.setLayoutParams(params);
-				if (i != 8) {
+				if (i != 7) {
 					initBitmap(users.get(i).getLogo(), riv);
 				} else {
 					riv.setBackgroundResource(R.drawable.test003);
@@ -217,7 +227,7 @@ public class BuyerAdapter extends BaseAdapter {
 		// 内容
 		TextView buyersteetfragment_item_footer_linearlyout_content_textview;
 		TagImageView baijia_tab1_item_productcontent_tagimageview;
-
+        LinearLayout ll_attentionpeople_contener_lineaerlayout;//用户列表的父对象
 	}
 
 	/****
