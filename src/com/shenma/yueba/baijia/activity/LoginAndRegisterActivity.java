@@ -49,6 +49,7 @@ public class LoginAndRegisterActivity extends FragmentActivity implements OnClic
 	private LoginFragment loginFragment;
 	private RegisterFragment registerFragment;
 	private RoundImageView riv_head;
+	private TextView tv_top_left;
 	private ArrayList<Fragment> fragmentList = new ArrayList<Fragment>();
 	private ViewPager viewPager;
 	private LinearLayout cursor;
@@ -145,11 +146,13 @@ public class LoginAndRegisterActivity extends FragmentActivity implements OnClic
 	}
 
 	private void initView() {
+		tv_top_left = (TextView) findViewById(R.id.tv_top_left);
 		riv_head = (RoundImageView) findViewById(R.id.riv_head);
 		tv_login = (TextView) findViewById(R.id.tv_login);
 		tv_register = (TextView) findViewById(R.id.tv_register);
 		tv_login.setOnClickListener(this);
 		tv_register.setOnClickListener(this);
+		tv_top_left.setOnClickListener(this);
 		initCursor();
 		FontManager.changeFonts(LoginAndRegisterActivity.this, tv_login,tv_register);
 		
@@ -177,7 +180,8 @@ public class LoginAndRegisterActivity extends FragmentActivity implements OnClic
 		case R.id.tv_register://注册
 			viewPager.setCurrentItem(1);
 			break;
-
+		case R.id.tv_top_left://返回
+			this.finish();
 		default:
 			break;
 		}

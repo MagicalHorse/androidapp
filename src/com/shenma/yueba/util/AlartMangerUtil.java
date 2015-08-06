@@ -13,7 +13,7 @@ import android.content.Intent;
  */
 public class AlartMangerUtil {
 
-	public static int heartBeetTimes = 1000 * 60 * 5;
+	public static int heartBeetTimes = 1000 ;
 
 	public static void startHeartAlart(Context ctx) {
 		Intent intent = new Intent("HeartSocket");

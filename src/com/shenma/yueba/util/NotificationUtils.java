@@ -62,7 +62,7 @@ public class NotificationUtils {
 						MainActivityForYangJia.class); // 点击该通知后要跳转的Activity
 			}
 			if ("3".equals(type)) {// 认证被拒绝
-				SharedUtil.setAuditStatus(ctx, "-1");
+				SharedUtil.setAuditStatus(ctx, "-2");
 			}
 			if ("4".equals(type)) {// 用户支付-推送给买手
 				notificationIntent = new Intent(ctx,

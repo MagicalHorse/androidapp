@@ -19,9 +19,10 @@
         android:orientation="vertical" >
 
         <EditText
-            android:maxLength="20"
             android:id="@+id/et_username"
             android:layout_width="fill_parent"
+            android:maxLength="10"
+            android:singleLine="true"
             android:layout_height="55dip"
             android:background="@color/transparent"
             android:hint="创建用户名"
