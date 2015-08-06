@@ -395,6 +395,10 @@ public class MyCollectionActivity extends BaseActivityWithTopView {
 						
 					}
 				}*/
+				if(arr_list.contains(myFavoriteProductListInfo))
+				{
+					arr_list.remove(myFavoriteProductListInfo);
+				}
 				onResher(arr_list);
 			}
 

@@ -56,6 +56,7 @@ public class MainActivityForBaiJia extends FragmentActivity {
 		checkVersion();
 	}
 
+	
 	private void checkVersion() {
 		HttpControl httpControl = new HttpControl();
 		httpControl.checkVersion(new HttpCallBackInterface() {
@@ -65,8 +66,8 @@ public class MainActivityForBaiJia extends FragmentActivity {
 				if(bean.getData()!=null){
 					String versionRemote = bean.getData().getVersion();
 					String localVersionStr = ToolsUtil.getVersionName(MainActivityForBaiJia.this);
-					float localVersonFloat = Float.valueOf(localVersionStr);
-					if(!versionRemote.equals(localVersonFloat)){
+					//float localVersonFloat = Float.valueOf(localVersionStr);
+					if(!versionRemote.equals(localVersionStr)){
 						UpdateManager manager = new UpdateManager(MainActivityForBaiJia.this, versionRemote+"", bean.getData().getUrl(), bean.getData().getTitle(), bean.getData().getDetails());
 						manager.startUpdate();
 					}
