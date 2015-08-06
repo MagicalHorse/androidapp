@@ -13,6 +13,6 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:scaleType="fitXY"
-            android:src="@drawable/default_pic" />
+            android:src="@drawable/add_pic_default" />
     </com.shenma.yueba.view.TagImageView>
 

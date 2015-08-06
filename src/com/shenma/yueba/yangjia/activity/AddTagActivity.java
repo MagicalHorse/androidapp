@@ -110,6 +110,7 @@ public class AddTagActivity extends BaseActivityWithTopView implements TextWatch
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int position,
 					long arg3) {
+				ToolsUtil.hideSoftKeyboard(mContext, et_search);
 				Intent intent = new Intent();
 				int id = mList.get(position-1).getId();
 				String name = mList.get(position-1).getName();

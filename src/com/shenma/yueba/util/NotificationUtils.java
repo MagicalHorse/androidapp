@@ -117,11 +117,13 @@ public class NotificationUtils {
 				notificationIntent.putExtra("CURRID", 3);//售后
 			}
 
-			PendingIntent contentItent = PendingIntent.getActivity(ctx, 0,
-					notificationIntent, 0);
-			notification.setLatestEventInfo(ctx, title, content, contentItent);
-			// 把Notification传递给NotificationManager
-			notificationManager.notify(0, notification);
+			if(notificationIntent!=null){
+				PendingIntent contentItent = PendingIntent.getActivity(ctx, 0,
+						notificationIntent, 0);
+				notification.setLatestEventInfo(ctx, title, content, contentItent);
+				// 把Notification传递给NotificationManager
+				notificationManager.notify(0, notification);
+			}
 		}
 	}
 }

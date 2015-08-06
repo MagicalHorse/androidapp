@@ -431,6 +431,7 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 					MyApplication.getInstance().getPublishUtil().setUri(null);
 					MyApplication.getInstance().finishActivity(
 							EditPicActivity.class);
+					MyApplication.getInstance().finishActivity(PublishProductActivity.class);
 				}
 
 				@Override
@@ -778,7 +779,7 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 		if(bitmap2!=null){
 			bitmap2.recycle();
 		}
-		MyApplication.getInstance().addActivity(this);
+		MyApplication.getInstance().removeActivity(this);
 		super.onDestroy();
 	}
 	

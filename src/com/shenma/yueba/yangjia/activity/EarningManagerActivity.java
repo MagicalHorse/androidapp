@@ -76,7 +76,7 @@ public class EarningManagerActivity extends BaseActivityWithTopView implements O
 		tv_income_detail = getView(R.id.tv_income_detail);
 		tv_today_income.setText(income!=null?ToolsUtil.nullToString(income.getToday_income()):"");
 		tv_total_income_money.setText(income!=null?ToolsUtil.nullToString(income.getTotal_income()):"");
-		tv_withdraw_cash_money.setText(income!=null?ToolsUtil.nullToString(income.getRequest_amount()):"");
+		tv_withdraw_cash_money.setText(income!=null?ToolsUtil.nullToString(income.getAvail_amount()):"");
 		tv_income_detail.setOnClickListener(this);
 		tv_apply_withdraw.setOnClickListener(this);
 		tv_withdraw_cash_history.setOnClickListener(this);

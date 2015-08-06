@@ -64,7 +64,7 @@ public class IncomeDetailActivity extends BaseFragmentActivity implements
 		tv_top_title = (TextView) findViewById(R.id.tv_top_title);
 		tv_top_left.setVisibility(View.VISIBLE);
 		tv_top_title.setVisibility(View.VISIBLE);
-		tv_top_title.setText("收益明細");
+		tv_top_title.setText("收益明细");
 		tv_top_left.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
