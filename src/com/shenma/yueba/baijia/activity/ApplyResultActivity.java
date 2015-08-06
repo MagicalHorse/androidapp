@@ -37,7 +37,7 @@ public class ApplyResultActivity extends BaseActivityWithTopView implements OnCl
 		tv_content = getView(R.id.tv_content);
 		tv_comment = getView(R.id.tv_comment);
 		tv_confirm = getView(R.id.tv_confirm);
-		setTitle("结果详情");
+		setTitle("结果");
 		tv_confirm.setOnClickListener(this);
 	}
 	private void getIntentData() {
