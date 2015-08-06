@@ -56,6 +56,7 @@ public class MainActivityForBaiJia extends FragmentActivity {
 		checkVersion();
 	}
 
+	
 	private void checkVersion() {
 		HttpControl httpControl = new HttpControl();
 		httpControl.checkVersion(new HttpCallBackInterface() {
