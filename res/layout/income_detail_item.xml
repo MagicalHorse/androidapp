@@ -25,6 +25,7 @@
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/tv_earning_money_title"
             android:text="@null"
+            android:textColor="@color/red_text_color"
             android:textSize="16sp" />
 
         <TextView
