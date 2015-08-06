@@ -318,13 +318,12 @@
 
                 <TextView
                     android:id="@+id/approvebuyerdetails_layout_siliao_linerlayout_textview"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:drawableTop="@drawable/circle_default"
                     android:gravity="center"
                     android:text="私聊"
-                    android:textSize="13dip" />
+                    android:textSize="@dimen/textsize12sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -343,7 +342,7 @@
                     android:drawableTop="@drawable/collect_backgroud"
                     android:gravity="center"
                     android:text="收藏"
-                    android:textSize="13dip" />
+                    android:textSize="@dimen/textsize12sp" />
             </LinearLayout>
         </LinearLayout>
 

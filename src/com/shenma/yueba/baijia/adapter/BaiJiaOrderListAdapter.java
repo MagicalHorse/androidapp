@@ -3,9 +3,17 @@ package com.shenma.yueba.baijia.adapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.modle.BaiJiaOrderListInfo;
+import com.shenma.yueba.baijia.modle.ProductInfoBean;
+import com.shenma.yueba.util.ButtonManager;
+import com.shenma.yueba.util.FontManager;
+import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.ToolsUtil;
+
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -13,21 +21,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
-
-import com.shenma.yueba.R;
-import com.shenma.yueba.application.MyApplication;
-import com.shenma.yueba.baijia.activity.ApplyForRefundActivity;
-import com.shenma.yueba.baijia.activity.BaijiaPayActivity;
-import com.shenma.yueba.baijia.modle.BaiJiaOrderListInfo;
-import com.shenma.yueba.baijia.modle.CreatOrderInfoBean;
-import com.shenma.yueba.baijia.modle.ProductInfoBean;
-import com.shenma.yueba.util.ButtonManager;
-import com.shenma.yueba.util.FontManager;
-import com.shenma.yueba.util.HttpControl;
-import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
-import com.shenma.yueba.util.ToolsUtil;
 
 /**
  * @author gyj

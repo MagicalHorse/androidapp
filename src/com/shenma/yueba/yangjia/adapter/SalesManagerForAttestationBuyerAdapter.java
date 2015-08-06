@@ -2,6 +2,20 @@ package com.shenma.yueba.yangjia.adapter;
 
 import java.util.List;
 
+import com.shenma.yueba.R;
+import com.shenma.yueba.baijia.activity.BaijiaPayActivity;
+import com.shenma.yueba.baijia.adapter.BaseAdapterWithUtil;
+import com.shenma.yueba.baijia.modle.PayResponseFormBean;
+import com.shenma.yueba.inter.RefreshOrderListener;
+import com.shenma.yueba.util.DialogUtilInter;
+import com.shenma.yueba.util.DialogUtils;
+import com.shenma.yueba.util.FontManager;
+import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
+import com.shenma.yueba.util.ToolsUtil;
+import com.shenma.yueba.yangjia.modle.OrderItem;
+import com.shenma.yueba.yangjia.modle.ProductItemBean;
+
 import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
@@ -12,22 +26,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.shenma.yueba.R;
-import com.shenma.yueba.baijia.activity.AffirmOrderActivity;
-import com.shenma.yueba.baijia.activity.BaijiaPayActivity;
-import com.shenma.yueba.baijia.adapter.BaseAdapterWithUtil;
-import com.shenma.yueba.baijia.modle.CreatOrderInfoBean;
-import com.shenma.yueba.baijia.modle.RequestCreatOrderInfoBean;
-import com.shenma.yueba.inter.RefreshOrderListener;
-import com.shenma.yueba.util.DialogUtilInter;
-import com.shenma.yueba.util.DialogUtils;
-import com.shenma.yueba.util.FontManager;
-import com.shenma.yueba.util.HttpControl;
-import com.shenma.yueba.util.ToolsUtil;
-import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
-import com.shenma.yueba.yangjia.modle.OrderItem;
-import com.shenma.yueba.yangjia.modle.ProductItemBean;
 
 public class SalesManagerForAttestationBuyerAdapter extends BaseAdapterWithUtil {
 	private List<OrderItem> mList;
@@ -85,12 +83,16 @@ public class SalesManagerForAttestationBuyerAdapter extends BaseAdapterWithUtil 
 				@Override
 				public void onClick(View v) {
 					if("充值并退款".equals(holder.tv_bottom.getText().toString().trim())){
-						CreatOrderInfoBean bean = new CreatOrderInfoBean();
-						bean.setOrderNo("RMA"+mList.get(position).getOrderNo());
-						bean.setTotalAmount(Double.parseDouble(mList.get(position).getAmount()));
+						
+						OrderItem orderItem=mList.get(position);
 						Intent intent=new Intent(ctx,BaijiaPayActivity.class);
+						PayResponseFormBean bean=new PayResponseFormBean();
+						bean.setOrderNo(orderItem.getRmaNo());
+						bean.setPrice(Double.parseDouble(orderItem.getAmount()));
+						bean.setContent(orderItem.getProducts().get(0).getProductName());
+						bean.setDesc("充值并退款");
+						bean.setUrl(com.shenma.yueba.constants.Constants.WX_PAYAREFUND_URL);
 						intent.putExtra("PAYDATA",bean);
-						intent.putExtra("MessageTitle", "退款订单号："+mList.get(position).getOrderNo());
 						ctx.startActivity(intent);
 					}else if("确认退款".equals(holder.tv_bottom.getText().toString().trim())){
 						dialog.alertDialog(ctx, "提示", "您确认要退款吗？",

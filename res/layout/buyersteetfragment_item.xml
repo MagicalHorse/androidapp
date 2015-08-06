@@ -5,7 +5,9 @@
     android:layout_height="wrap_content"
     android:background="@color/white"
     android:orientation="vertical"
-    android:paddingTop="@dimen/shop_main_lineheight10_dimen" >
+    android:paddingTop="2dp" 
+    android:paddingBottom="8dp"
+    >
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -84,6 +86,7 @@
                         android:ellipsize="end"
                         android:singleLine="true"
                         android:text="5分钟"
+                        android:textColor="@color/text_gray_color"
                         android:textSize="@dimen/textsize12sp" />
                 </LinearLayout>
             </RelativeLayout>

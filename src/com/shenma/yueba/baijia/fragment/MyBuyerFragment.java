@@ -109,14 +109,6 @@ public class MyBuyerFragment extends Fragment {
 		showloading_layout_view.setVisibility(View.GONE);
 		buyerAdapter = new BuyerAdapter(Products, getActivity());
 		baijia_contact_listview.setAdapter(buyerAdapter);
-		baijia_contact_listview.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-				Intent intent = new Intent(getActivity(), ShopMainActivity.class);
-				startActivity(intent);
-			}
-		});
 	}
 
 	/******

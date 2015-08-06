@@ -358,17 +358,24 @@ public class BuyerStreetFragment extends Fragment {
 
 			// 获取活动列表
 			if (item != null && item.getBanners() != null) {
+				//设置viewpager 大小
+				if(item.getBanners().size()>0)
+				{
+					DisplayMetrics dm = new DisplayMetrics();
+					getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
+					int width = dm.widthPixels;
+					int height = width / 2;
+					baijiasteetfragmnet_layout_head_viewpager_relativelayout.setLayoutParams(new LinearLayout.LayoutParams(width,height));
+					((RelativeLayout.LayoutParams) baijia_head_layout.getLayoutParams()).bottomMargin = 40;//设置园点 的位置
+				}
 				Banners = item.getBanners();
 				for (int i = 0; i < Banners.size(); i++) {
 					ImageView imageView = new ImageView(getActivity());
-					imageView.setLayoutParams(new ViewGroup.LayoutParams(
-							ViewGroup.LayoutParams.MATCH_PARENT,
-							ViewGroup.LayoutParams.MATCH_PARENT));
+					imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT));
 					imageView.setScaleType(ScaleType.CENTER_CROP);
 					imageView.setTag(Banners.get(i));
 					imageViewlist.add(imageView);
-					initPic(ToolsUtil.nullToString(ToolsUtil.getImage(Banners
-							.get(i).getPic(), 320, 0)), imageView);
+					initPic(ToolsUtil.nullToString(ToolsUtil.getImage(Banners.get(i).getPic(), 320, 0)), imageView);
 					imageView.setOnClickListener(new OnClickListener() {
 
 						@Override
@@ -384,20 +391,8 @@ public class BuyerStreetFragment extends Fragment {
 				}
 			}
 			if (imageViewlist.size() > 0) {
-				DisplayMetrics dm = new DisplayMetrics();
-				getActivity().getWindowManager().getDefaultDisplay()
-						.getMetrics(dm);
-				int width = dm.widthPixels;
-				int height = width / 2;
-				baijiasteetfragmnet_layout_head_viewpager_relativelayout
-						.setLayoutParams(new LinearLayout.LayoutParams(width,
-								height));
-				((RelativeLayout.LayoutParams) baijia_head_layout
-						.getLayoutParams()).bottomMargin = 40;
-				pagerAdapter = new ScrollViewPagerAdapter(getActivity(),
-						imageViewlist);
-				baijiasteetfragmnet_layout_head_viewpager
-						.setAdapter(pagerAdapter);
+				pagerAdapter = new ScrollViewPagerAdapter(getActivity(),imageViewlist);
+				baijiasteetfragmnet_layout_head_viewpager.setAdapter(pagerAdapter);
 				if (imageViewlist.size() > 0) {
 					setcurrItem(0);
 				}
@@ -435,6 +430,10 @@ public class BuyerStreetFragment extends Fragment {
 	 * **/
 	void addTabImageView(int size, int value) {
 		baijia_head_layout.removeAllViews();
+		if(size<=1)
+		{
+			return;
+		}
 		for (int i = 0; i < size; i++) {
 			View v = new View(getActivity());
 			v.setBackgroundResource(R.drawable.tabround_background);

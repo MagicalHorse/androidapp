@@ -34,7 +34,6 @@
         android:paddingBottom="@dimen/shop_main_lineheight8_dimen"
         android:paddingTop="@dimen/shop_main_lineheight8_dimen"
         android:text="@null"
-        android:textColor="@color/color_textgray"
         android:textSize="@dimen/textsize11sp" />
 
     <View style="@style/style_horizontal_line" />

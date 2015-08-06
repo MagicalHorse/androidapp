@@ -14,6 +14,13 @@ public class OrderItem {
 	private String GoodsAmount;//货款金额
 	private boolean IsGoodsPick;//是否已经提款
 	private boolean IsNeedRma;//是否显示退款相关
+	private String RmaNo="";//充值并退款号
+	public String getRmaNo() {
+		return RmaNo;
+	}
+	public void setRmaNo(String rmaNo) {
+		RmaNo = rmaNo;
+	}
 	private List<ProductItemBean> Products;
 	public String getOrderNo() {
 		return OrderNo;
