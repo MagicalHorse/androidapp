@@ -2,8 +2,8 @@ package com.shenma.yueba.constants;
 
 public class HttpConstants {
 	
-    //private static String baseUrl = "http://123.57.77.86:8080/app/";//测试地址
-    private static String baseUrl = "http://123.57.52.187:8080/app/";//开发地址
+    private static String baseUrl = "http://123.57.77.86:8080/app/";//测试地址
+//    private static String baseUrl = "http://123.57.52.187:8080/app/";//开发地址
 	private static String USERURL = baseUrl + "User/";// USER接口
 	private static String COMMONURL = baseUrl + "Common/";
 	private static String ADDRESS = baseUrl + "Address/";// 地址管理
