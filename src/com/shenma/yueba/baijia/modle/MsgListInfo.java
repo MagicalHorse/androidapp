@@ -11,7 +11,6 @@ import java.io.Serializable;
 public class MsgListInfo implements Serializable{
 	    
 		String Name="";// 用户名字
-		String UpdateTime="";// 更新时间，
 		String Logo="";//用户头像,
         int UnReadCount;//未读条数
         String UnReadMessage="";//最后一条信息内容，如果没有则返回  "暂无消息"
@@ -31,12 +30,7 @@ public class MsgListInfo implements Serializable{
 		public void setName(String name) {
 			Name = name;
 		}
-		public String getUpdateTime() {
-			return UpdateTime;
-		}
-		public void setUpdateTime(String updateTime) {
-			UpdateTime = updateTime;
-		}
+		
 		public String getLogo() {
 			return Logo;
 		}

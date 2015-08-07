@@ -291,67 +291,45 @@
         </LinearLayout>
     </ScrollView>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/approvebuyerdetails_footer"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
         android:visibility="visible" >
-
-        <View style="@style/style_horizontal_line" />
-
-        <LinearLayout
-            android:id="@+id/footer_left_linerlayout"
-            android:layout_width="@dimen/shop_main_width100_dimen"
+        <LinearLayout 
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginRight="@dimen/shop_main_width25_dimen"
-            android:orientation="horizontal" >
-
-            <LinearLayout
-                android:id="@+id/approvebuyerdetails_layout_siliao_linerlayout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="@dimen/shop_main_width5_dimen" >
-
-                <TextView
+            android:orientation="horizontal"
+            >
+            <TextView
                     android:id="@+id/approvebuyerdetails_layout_siliao_linerlayout_textview"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:drawableTop="@drawable/circle_default"
                     android:gravity="center"
                     android:text="私聊"
                     android:textSize="@dimen/textsize12sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/approvebuyerdetails_layout_shoucang_linerlayout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="@dimen/shop_main_width5_dimen" >
-
-                <TextView
+            
+            <TextView
+                    android:layout_marginLeft="8dp"
                     android:id="@+id/approvebuyerdetails_layout_shoucang_linerlayout_textview"
-                    android:layout_width="match_parent"
+                    android:layout_width="60dp"
                     android:layout_height="match_parent"
                     android:drawableTop="@drawable/collect_backgroud"
                     android:gravity="center"
                     android:text="收藏"
                     android:textSize="@dimen/textsize12sp" />
-            </LinearLayout>
         </LinearLayout>
-
+       
         <LinearLayout
+            android:layout_weight="1"
             android:id="@+id/footer_right_linerlayout"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/shop_main_lineheight8_dimen"
-            android:layout_toRightOf="@id/footer_left_linerlayout" >
+            android:layout_marginLeft="15dp" >
 
             <Button
                 android:id="@+id/approvebuyer_addcartbutton"
@@ -365,7 +343,7 @@
                 android:visibility="gone" />
 
             <Button
-                android:visibility="gone"
+                android:visibility="visible"
                 android:id="@+id/approvebuyerbuybutton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -376,6 +354,6 @@
                 android:textColor="@color/white"
                 android:textSize="15dip" />
         </LinearLayout>
-    </RelativeLayout>
+       </LinearLayout>
 
 </RelativeLayout>

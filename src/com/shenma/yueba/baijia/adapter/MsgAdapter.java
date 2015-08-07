@@ -48,10 +48,10 @@ public class MsgAdapter extends BaseAdapterWithUtil {
 			convertView = View.inflate(ctx, R.layout.msg_item, null);
 			holder.iv_msg = (RoundImageView)convertView.findViewById(R.id.iv_msg);
 			holder.tv_name = (TextView) convertView.findViewById(R.id.tv_name);
-			holder.tv_time = (TextView) convertView.findViewById(R.id.tv_time);
+			holder.tv_time = (TextView) convertView.findViewById(R.id.mgstv_time);
 			holder.tv_msg = (TextView) convertView.findViewById(R.id.tv_msg);
 			holder.tv_msg_count = (TextView) convertView.findViewById(R.id.tv_msg_count);
-			FontManager.changeFonts(ctx, holder.tv_name,holder.tv_time,holder.tv_msg);
+			//FontManager.changeFonts(ctx, holder.tv_name,holder.tv_time,holder.tv_msg);
 			convertView.setTag(holder);
 		}else{
 			holder = (Holder) convertView.getTag();
@@ -82,7 +82,7 @@ public class MsgAdapter extends BaseAdapterWithUtil {
 		}
 		initBitmap(ToolsUtil.nullToString(msgListInf.getLogo()), holder.iv_msg);
 		holder.tv_name.setText(ToolsUtil.nullToString(msgListInf.getName()));
-		holder.tv_time.setText(ToolsUtil.nullToString(msgListInf.getUpdateTime()));
+		holder.tv_time.setText(ToolsUtil.nullToString(msgListInf.getUnReadLastTime()));
 		holder.tv_msg.setText(ToolsUtil.nullToString(msgListInf.getUnReadMessage()));
 	}
 	
