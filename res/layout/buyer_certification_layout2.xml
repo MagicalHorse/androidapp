@@ -61,7 +61,7 @@
                             android:id="@+id/tv_store_info_title"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
-                            android:text="商城专柜信息"
+                            android:text="商场专柜信息"
                             android:textSize="18sp" />
 
                         <View
@@ -70,7 +70,8 @@
 
                         <LinearLayout
                             android:layout_width="fill_parent"
-                            android:layout_height="40dip"
+                            android:layout_height="wrap_content"
+                              android:minHeight="40dip"
                             android:gravity="center_vertical"
                             android:orientation="horizontal" >
 
@@ -102,16 +103,20 @@
                                 android:layout_height="wrap_content"
                                 android:background="@null"
                                 android:hint="请输入"
+                                android:maxLength="50"
+                                android:maxLines="3"
                                 android:paddingLeft="10dip"
-                                android:textColor="@color/text_gray_color" />
+                                android:textColor="@color/text_gray_color"
+                                android:textSize="16sp" />
                         </LinearLayout>
 
                         <View style="@style/style_horizontal_line" />
 
                         <LinearLayout
                             android:layout_width="fill_parent"
-                            android:layout_height="40dip"
+                            android:layout_height="wrap_content"
                             android:gravity="center_vertical"
+                            android:minHeight="40dip"
                             android:orientation="horizontal" >
 
                             <TextView
@@ -130,15 +135,19 @@
                                 android:layout_height="wrap_content"
                                 android:background="@null"
                                 android:hint="请输入"
+                                android:maxLength="50"
+                                android:maxLines="3"
                                 android:paddingLeft="10dip"
-                                android:textColor="@color/text_gray_color" />
+                                android:textColor="@color/text_gray_color"
+                                android:textSize="16sp" />
                         </LinearLayout>
 
                         <View style="@style/style_horizontal_line" />
 
                         <LinearLayout
+                             android:minHeight="40dip"
                             android:layout_width="fill_parent"
-                            android:layout_height="40dip"
+                            android:layout_height="wrap_content"
                             android:gravity="center_vertical"
                             android:orientation="horizontal" >
 
@@ -158,8 +167,11 @@
                                 android:layout_height="wrap_content"
                                 android:background="@null"
                                 android:hint="请输入楼层，区号"
+                                android:maxLength="50"
+                                android:maxLines="3"
                                 android:paddingLeft="10dip"
-                                android:textColor="@color/text_gray_color" />
+                                android:textColor="@color/text_gray_color"
+                                android:textSize="16sp" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -174,10 +186,10 @@
                         android:layout_height="wrap_content"
                         android:background="@color/white"
                         android:orientation="vertical"
+                        android:paddingBottom="10dip"
                         android:paddingLeft="15dip"
                         android:paddingRight="15dip"
-                        android:paddingTop="10dip"
-                        android:paddingBottom="10dip" >
+                        android:paddingTop="10dip" >
 
                         <TextView
                             android:id="@+id/tv_self_get_point_title"
@@ -249,6 +261,7 @@
                                 android:gravity="top"
                                 android:hint="请填写详细地址(顾客支付后到专柜提货的地址，请务必正确填写，否则会影响收款确认)"
                                 android:lines="3"
+                                android:maxLength="500"
                                 android:paddingTop="5dip" />
                         </LinearLayout>
                     </LinearLayout>

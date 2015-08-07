@@ -78,7 +78,11 @@ public class SalesManagerForBuyerActivity extends BaseFragmentActivity implement
 		tv_top_title = (TextView) findViewById(R.id.tv_top_title);
 		tv_top_left.setVisibility(View.VISIBLE);
 		tv_top_title.setVisibility(View.VISIBLE);
-		tv_top_title.setText("销售管理");
+		if(TextUtils.isEmpty(customerId)){
+			tv_top_title.setText("销售管理");
+		}else{
+			tv_top_title.setText("订单管理");
+		}
 		tv_top_left.setOnClickListener(this);
 		iv_cursor_left = (ImageView) findViewById(R.id.iv_cursor_left);
 		iv_cursor_left2 = (ImageView) findViewById(R.id.iv_cursor_left2);
