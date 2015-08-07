@@ -1,8 +1,11 @@
 package com.shenma.yueba.yangjia.activity;
 
-import android.content.Intent;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import android.os.Bundle;
-import android.os.CountDownTimer;
+import android.os.Handler;
+import android.text.format.Time;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -12,11 +15,10 @@ import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.BaseActivityWithTopView;
 import com.shenma.yueba.baijia.modle.HuoKuanManagerBackBean;
-import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
-import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
+import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.progressbar.NumberProgressBar;
 import com.shenma.yueba.view.progressbar.NumberProgressBar.ProgressTextVisibility;
 import com.shenma.yueba.view.progressbar.OnProgressBarListener;
@@ -48,11 +50,27 @@ public class HuoKuanManagerActivity extends BaseActivityWithTopView implements
 	private NumberProgressBar numberbar_back;
 	int hadProgress = 0;
 	private int canProgress = 0,freezeProgress = 0,backProgress = 0, weekProgress = 0;
-	private CountDownTimer timer;
+//	private CountDownTimer timer;
 	private TextView tv_tatal_title;//总货款标题
 	private TextView tv_week_money;//本周贷款额度
 	private TextView tv_had_used_persent;
 	private TextView tv_week_amount;
+	private int i = 0;
+	private Handler mHandler = new Handler(){
+		public void handleMessage(android.os.Message msg) {
+			int newHadProgress = (int) (((double)hadProgress*(double)i)/((double)100));
+			numberbar_had_withdraw.setProgress(newHadProgress);
+			int newCanProgress = (int) (((double)canProgress*(double)i)/((double)100));
+			numberbar_can_withdraw.setProgress(newCanProgress);
+			int newfreezeProgress = (int) (((double)freezeProgress*(double)i)/((double)100));
+			numberbar_freeze.setProgress(newfreezeProgress);
+			int newbackProgress = (int) (((double)backProgress*(double)i)/((double)100));
+			numberbar_back.setProgress(newbackProgress);
+			int newweekProgress = (int) (((double)weekProgress*(double)i)/((double)100));
+			numberbar_week.setProgress(newweekProgress);
+			
+		};
+	};
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		MyApplication.getInstance().addActivity(this);// 加入回退栈
@@ -173,7 +191,7 @@ public class HuoKuanManagerActivity extends BaseActivityWithTopView implements
 						double userdCredit = Double.parseDouble(bean.getData().getUsedCredit());
 						double allCredit = Double.parseDouble(ToolsUtil.nullToString(bean.getData().getCredit()));
 						if((userdCredit/allCredit)<1 && (userdCredit/allCredit)>0){
-							weekProgress = 5;
+							weekProgress = 1;
 						}else{
 							weekProgress = (int) (100*(userdCredit/allCredit));
 						}
@@ -183,7 +201,7 @@ public class HuoKuanManagerActivity extends BaseActivityWithTopView implements
 					try {
 						double had = (100*(Double.parseDouble(ToolsUtil.nullToString(bean.getData().getPickedAmount()))/Double.parseDouble(ToolsUtil.nullToString(bean.getData().getTotalAmount()))));
 						if(had>0 && had<1){
-							hadProgress = 5;
+							hadProgress = 1;
 						}else{
 							hadProgress = (int)had;
 						}
@@ -196,7 +214,7 @@ public class HuoKuanManagerActivity extends BaseActivityWithTopView implements
 					try {
 						double can = (100*(Double.parseDouble(ToolsUtil.nullToString(bean.getData().getCanPickAmount()))/Double.parseDouble(ToolsUtil.nullToString(bean.getData().getTotalAmount()))));
 						if(can>0 && can<1){
-							canProgress = 5;
+							canProgress = 1;
 						}else{
 							canProgress = (int)can;
 						}
@@ -209,7 +227,7 @@ public class HuoKuanManagerActivity extends BaseActivityWithTopView implements
 					try {
 						double freeze = (100*(Double.parseDouble(ToolsUtil.nullToString(bean.getData().getFrozenAmount()))/Double.parseDouble(ToolsUtil.nullToString(bean.getData().getTotalAmount()))));
 						if(freeze>0 && freeze<1){
-							freezeProgress = 5;
+							freezeProgress = 1;
 						}else{
 							freezeProgress = (int)freeze;
 						}
@@ -222,7 +240,7 @@ public class HuoKuanManagerActivity extends BaseActivityWithTopView implements
 					try {
 						double back = (100*(Double.parseDouble(ToolsUtil.nullToString(bean.getData().getRmaAmount()))/Double.parseDouble(ToolsUtil.nullToString(bean.getData().getTotalAmount()))));
 						if(back>0 && back<1){
-							backProgress = 5;
+							backProgress = 1;
 						}else{
 							backProgress = (int)back;
 						}
@@ -242,28 +260,41 @@ public class HuoKuanManagerActivity extends BaseActivityWithTopView implements
 					tv_back_ratio.setText("退款 "+ToolsUtil.nullToString(bean.getData().getRmaPercent()));
 					tv_back_money.setText("￥"+ToolsUtil.nullToString(bean.getData().getRmaAmount()));
 					tv_tatal_money.setText("￥"+ToolsUtil.nullToString(bean.getData().getTotalAmount()));
-					timer = new CountDownTimer(1000, 10) {
-							@Override
-							public void onTick(long millisUntilFinished) {
-								double progress = ((double)(1000-millisUntilFinished)/(double)1000);
-								numberbar_had_withdraw.setProgress((int)hadProgress-(int)millisUntilFinished/10);
-								numberbar_can_withdraw.setProgress(canProgress-(int)millisUntilFinished/10);
-								numberbar_freeze.setProgress(freezeProgress-(int)millisUntilFinished/10);
-								numberbar_back.setProgress(backProgress-(int)millisUntilFinished/10);
-								numberbar_week.setProgress(weekProgress-(int)millisUntilFinished/10);
-								
+//					timer = new CountDownTimer(1000, 2) {
+//							@Override
+//							public void onTick(long millisUntilFinished) {
+//								double progress = ((double)(1000-millisUntilFinished)/(double)1000);
+////								numberbar_had_withdraw.setProgress((int)hadProgress-(int)millisUntilFinished/10);
+////								numberbar_can_withdraw.setProgress(canProgress-(int)millisUntilFinished/10);
+////								numberbar_freeze.setProgress(freezeProgress-(int)millisUntilFinished/10);
+////								numberbar_back.setProgress(backProgress-(int)millisUntilFinished/10);
+////								numberbar_week.setProgress(weekProgress-(int)millisUntilFinished/10);
+//								
 //								numberbar_had_withdraw.setProgress(hadProgress);
 //								numberbar_can_withdraw.setProgress(canProgress);
 //								numberbar_freeze.setProgress(freezeProgress);
 //								numberbar_back.setProgress(backProgress);
 //								numberbar_week.setProgress(weekProgress);
+//							}
+//							@Override
+//							public void onFinish() {
+//								// TODO Auto-generated method stub
+//								
+//							}
+//						}.start();
+						
+					final Timer timer = new Timer();
+					timer.schedule(new TimerTask() {
+						@Override
+						public void run() {
+							if(i>=100){
+								timer.cancel();
+							}else{
+								i++;
+								 mHandler.sendEmptyMessage(0);
 							}
-							@Override
-							public void onFinish() {
-								// TODO Auto-generated method stub
-								
-							}
-						}.start();
+						}
+					}, 0, 2);
 				}
 			}
 			
@@ -282,9 +313,9 @@ public class HuoKuanManagerActivity extends BaseActivityWithTopView implements
 	
 	  @Override
 	    protected void onDestroy() {
-		  if(timer!=null){
-			  timer.cancel();
-		  }
+//		  if(timer!=null){
+//			  timer.cancel();
+//		  }
 	    	MyApplication.getInstance().removeActivity(this);//加入回退栈
 	    	super.onDestroy();
 	    }

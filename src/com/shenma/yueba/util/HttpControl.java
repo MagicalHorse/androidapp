@@ -232,7 +232,7 @@ public class HttpControl {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put(Constants.TYPE,"0");//0表示android 1表示IOS
 		BasehttpSend(map, context, HttpConstants.METHOD_VERSION_UPDATE,
-				httpCallBack, CheckVersionBackBean.class, true, false);
+				httpCallBack, CheckVersionBackBean.class, false, false);
 	}
 
 	
