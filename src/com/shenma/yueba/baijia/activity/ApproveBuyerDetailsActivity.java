@@ -300,10 +300,10 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView
 			// 喜欢
 			TextView approvebuyerdetails_attention_textview = (TextView) findViewById(R.id.approvebuyerdetails_attention_textview);
 			ViewGroup.LayoutParams tv_params=approvebuyerdetails_attention_textview.getLayoutParams();
-			tv_params.height=item_width;
+			tv_params.height=item_width;//设置 新型图片的高度
 			approvebuyerdetails_attention_textview.setLayoutParams(tv_params);
 			
-			// 收藏
+			// 收藏按钮
 			TextView approvebuyerdetails_layout_shoucang_linerlayout_textview = (TextView) findViewById(R.id.approvebuyerdetails_layout_shoucang_linerlayout_textview);
 			approvebuyerdetails_layout_shoucang_linerlayout_textview
 					.setOnClickListener(this);
@@ -325,15 +325,20 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView
 					.getCount() + "");
 			approvebuyerdetails_attention_textview.setTag(Data);
 			approvebuyerdetails_attention_textview.setOnClickListener(this);
+			
+			//已收藏的 用户列表
 			List<UsersInfoBean> users = likeUsersInfoBean.getUsers();
-			for (int i = 0; i < users.size(); i++) {
+			int size=8;
+			//如果当前的列表个数 超过8个 则只显示前8个
+			if(size>users.size())
+			{
+				size=users.size();
+			}
+			for (int i = 0; i < size; i++) {
 				RoundImageView riv = new RoundImageView(ApproveBuyerDetailsActivity.this);
-				LayoutParams params = new LayoutParams(
-						LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-				params.width = item_width;
-				params.height = item_width;
+				LayoutParams params = new LayoutParams(item_width,item_width);
 				riv.setLayoutParams(params);
-				if (i != 8) {
+				if (i != 7) {
 					initPic(ToolsUtil.nullToString(users.get(i).getLogo()), riv);
 				} else {
 					riv.setBackgroundResource(R.drawable.test003);
@@ -575,6 +580,10 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.approvebuyerdetails_icon_imageview:// 头像
+			if(!MyApplication.getInstance().isUserLogin(this))
+			{
+				return;
+			}
 			Intent intent = new Intent(ApproveBuyerDetailsActivity.this,
 					ShopMainActivity.class);
 			intent.putExtra("DATA", bean.getData().getBuyerId());
