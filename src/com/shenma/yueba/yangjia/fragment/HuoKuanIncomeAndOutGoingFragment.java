@@ -29,6 +29,7 @@ import com.shenma.yueba.baijia.dialog.WeChatDialog;
 import com.shenma.yueba.baijia.fragment.BaseFragment;
 import com.shenma.yueba.baijia.modle.GetUserFlowStatusBackBean;
 import com.shenma.yueba.baijia.modle.UserFlowStatusBean;
+import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.DialogUtilInter;
 import com.shenma.yueba.util.DialogUtils;
 import com.shenma.yueba.util.HttpControl;
@@ -120,6 +121,10 @@ public class HuoKuanIncomeAndOutGoingFragment extends BaseFragment implements On
 	}
 
 	
+	//重置提现货款按钮
+	public void reSetTv_bottom(){
+		tv_bottom.setText("提现货款");
+	}
 	
 	public String setListToString(List<String> ids) {
 		StringBuffer sb = new StringBuffer();
@@ -146,28 +151,32 @@ public class HuoKuanIncomeAndOutGoingFragment extends BaseFragment implements On
 		}
 	}
 	
-	public void getData(int tag, Context ctx) {
+	public void getData(boolean isRefresh,int tag, Context ctx) {
 		this.tag = tag;
 		if (tag == 0) {// 可提现
 			status = "1";
-			if (mList.size() != 0) {
+			if (mList.size() != 0 && !isRefresh) {
 				return;
 			}
 		} else if (tag == 1) {// 冻结中
 			status = "0";
-			if (mList.size() != 0) {
+			if (mList.size() != 0 && !isRefresh) {
 				return;
 			}
 		} else if (tag == 2) {// 已提现
 			status = "2";
-			if (mList.size() != 0) {
+			if (mList.size() != 0 && !isRefresh) {
 				return;
 			}
 		} else if (tag == 3) {// 退款
 			status = "3";
-			if (mList.size() != 0) {
+			if (mList.size() != 0 && !isRefresh) {
 				return;
 			}
+		}
+		if(isRefresh){
+			mList.clear();
+			page = 1;
 		}
 		getDataFromNet(true, ctx);
 	}
@@ -185,7 +194,9 @@ public class HuoKuanIncomeAndOutGoingFragment extends BaseFragment implements On
              }, 100);
 				HuoKuanListBackBean bean = (HuoKuanListBackBean) obj;
 				if (isRefresh) {
-					ids.clear();
+					ids.clear();//清空保存的ID
+					adapter.clearCountList();//清空数据和价格
+					tv_bottom.setText("提现货款");//初始化提现货款按钮
 					if (bean.getData() != null
 							&& bean.getData().getItems() != null
 							&& bean.getData().getItems().size() > 0) {
@@ -229,11 +240,15 @@ public class HuoKuanIncomeAndOutGoingFragment extends BaseFragment implements On
 				Intent intent = new Intent(getActivity(),
 						ApplyResultActivity.class);
 				intent.putExtra("flag", "withdrawGoods");// 提现货款
-				startActivity(intent);
+				getActivity().startActivityForResult(intent, Constants.REQUESTCODE);
+				if(adapter!=null){
+					adapter.clearCountList();
+				}
 			}
 			@Override
 			public void http_Fails(int error, String msg) {
 				Toast.makeText(getActivity(), msg, 1000).show();
+				
 				
 			}
 		}, getActivity());

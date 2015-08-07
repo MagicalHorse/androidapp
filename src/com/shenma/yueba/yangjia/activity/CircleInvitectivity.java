@@ -89,7 +89,7 @@ public class CircleInvitectivity extends BaseActivityWithTopView implements
 	}
 
 	private void initViews() {
-		setTitle("邀请商圈");
+		setTitle("邀请好友");
 		setLeftTextView(new OnClickListener() {
 			@Override
 			public void onClick(View v) {

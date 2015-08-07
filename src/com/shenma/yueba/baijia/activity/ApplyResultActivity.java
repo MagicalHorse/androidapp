@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.yangjia.activity.MainActivityForYangJia;
 import com.umeng.analytics.MobclickAgent;
@@ -22,6 +23,7 @@ public class ApplyResultActivity extends BaseActivityWithTopView implements OnCl
 	private TextView tv_content;//内容
 	private TextView tv_comment;//标记
 	private TextView tv_confirm;//确定
+	private String flag;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -41,7 +43,7 @@ public class ApplyResultActivity extends BaseActivityWithTopView implements OnCl
 		tv_confirm.setOnClickListener(this);
 	}
 	private void getIntentData() {
-		String flag = getIntent().getStringExtra("flag");
+		flag = getIntent().getStringExtra("flag");
 		if("applaywithdraw".equals(flag)){//申请提现
 			tv_content.setText("提现申请已提交，请等待处理");
 			tv_comment.setText("预计1小时内到帐");
@@ -59,7 +61,14 @@ public class ApplyResultActivity extends BaseActivityWithTopView implements OnCl
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.tv_confirm://确定
-			ApplyResultActivity.this.finish();
+			if("withdrawGoods".equals(flag)){//提现货款
+				setResult(Constants.RESULTCODE);
+				ApplyResultActivity.this.finish();
+			}else{
+				finish();
+			}
+		
+			
 //			MyApplication.getInstance().removeAllActivity();
 //			Intent intent = new Intent(mContext, MainActivityForBaiJia.class);
 //			startActivity(intent);
@@ -84,13 +93,14 @@ public class ApplyResultActivity extends BaseActivityWithTopView implements OnCl
 
 	
 	
-//	@Override
-//	public void onBackPressed() {
-//		MyApplication.getInstance().removeAllActivity();
-//		Intent intent = new Intent(mContext, MainActivityForBaiJia.class);
-//		startActivity(intent);
-//		super.onBackPressed();
-//	}
+	@Override
+	public void onBackPressed() {
+		if("withdrawGoods".equals(flag)){//提现货款
+			setResult(Constants.RESULTCODE);
+			ApplyResultActivity.this.finish();
+		}
+			super.onBackPressed();
+	}
 	
 	
 //	@Override

@@ -163,7 +163,7 @@ public class BuyerCertificationActivity2 extends BaseActivityWithTopView
 	}
 
 	private void initView() {
-		setTitle("身份认证材料");
+		setTitle("提交身份认证");
 		setLeftTextView(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -221,7 +221,7 @@ public class BuyerCertificationActivity2 extends BaseActivityWithTopView
 		FontManager.changeFonts(mContext, tv_store_info_title,
 				tv_self_get_point_title, tv_store_name,et_store_name, tv_zhuangui_title,
 				et_zhuangui_name, tv_number_title, et_number_name, tv_confirm,
-				et_street);
+				et_street,tv_top_title,tv_province,tv_city,tv_county_town);
 	}
 
 	@Override

@@ -451,8 +451,7 @@ public class UserConfigActivity extends BaseActivityWithTopView implements
 				if(bean.getData()!=null){
 					String versionRemote = bean.getData().getVersion();
 					String localVersionStr = ToolsUtil.getVersionName(UserConfigActivity.this);
-					float localVersonFloat = Float.valueOf(localVersionStr);
-					if(!versionRemote.equals(localVersonFloat)){
+					if(!versionRemote.equals(localVersionStr)){
 						UpdateManager manager = new UpdateManager(UserConfigActivity.this, versionRemote+"", bean.getData().getUrl(), bean.getData().getTitle(), bean.getData().getDetails());
 						manager.startUpdate();
 					}else{
