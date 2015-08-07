@@ -49,6 +49,14 @@ public class HuoKuanIncomeAndOutGoingAdapter extends BaseAdapterWithUtil {
 		// TODO Auto-generated method stub
 		return position;
 	}
+	
+	
+	public void clearCountList(){
+		if(mList!=null){
+			mList.clear();
+		}
+		prices = 0;
+	}
 
 	@SuppressWarnings("null")
 	@Override

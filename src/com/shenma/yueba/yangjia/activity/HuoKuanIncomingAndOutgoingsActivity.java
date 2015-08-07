@@ -3,6 +3,7 @@ package com.shenma.yueba.yangjia.activity;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import com.shenma.yueba.BaseFragmentActivity;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.yangjia.fragment.HuoKuanIncomeAndOutGoingFragment;
 import com.umeng.analytics.MobclickAgent;
@@ -57,7 +59,7 @@ public class HuoKuanIncomingAndOutgoingsActivity extends BaseFragmentActivity im
 		setFragmentList();
 		initView();
 		initViewPager();
-		fragmentList.get(0).getData(0,HuoKuanIncomingAndOutgoingsActivity.this);
+		fragmentList.get(0).getData(true,0,HuoKuanIncomingAndOutgoingsActivity.this);
 	}
 
 	
@@ -120,7 +122,7 @@ public class HuoKuanIncomingAndOutgoingsActivity extends BaseFragmentActivity im
 			 * 页面跳转完成后调用的方法
 			 */
 			public void onPageSelected(int arg0) {
-				fragmentList.get(arg0).getData(arg0,HuoKuanIncomingAndOutgoingsActivity.this);
+				fragmentList.get(arg0).getData(false,arg0,HuoKuanIncomingAndOutgoingsActivity.this);
 				for (int i = 0; i < fragmentList.size(); i++) {
 					if(arg0 != i){
 						fragmentList.get(arg0).tv_nodata.setVisibility(View.GONE);
@@ -197,6 +199,17 @@ public class HuoKuanIncomingAndOutgoingsActivity extends BaseFragmentActivity im
 		}
 
 	}
+	
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if(requestCode == Constants.REQUESTCODE && resultCode == Constants.RESULTCODE){//提现货款
+			fragmentList.get(0).reSetTv_bottom();//重置提现货款的底部按钮
+			fragmentList.get(0).getData(true,0,HuoKuanIncomingAndOutgoingsActivity.this);//重新刷新列表
+		}
+		super.onActivityResult(requestCode, resultCode, data);
+	}
+	
 	
 	
 	  @Override
