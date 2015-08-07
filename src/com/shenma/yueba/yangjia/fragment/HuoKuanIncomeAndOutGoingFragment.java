@@ -194,7 +194,9 @@ public class HuoKuanIncomeAndOutGoingFragment extends BaseFragment implements On
              }, 100);
 				HuoKuanListBackBean bean = (HuoKuanListBackBean) obj;
 				if (isRefresh) {
-					ids.clear();
+					ids.clear();//清空保存的ID
+					adapter.clearCountList();//清空数据和价格
+					tv_bottom.setText("提现货款");//初始化提现货款按钮
 					if (bean.getData() != null
 							&& bean.getData().getItems() != null
 							&& bean.getData().getItems().size() > 0) {
@@ -239,10 +241,14 @@ public class HuoKuanIncomeAndOutGoingFragment extends BaseFragment implements On
 						ApplyResultActivity.class);
 				intent.putExtra("flag", "withdrawGoods");// 提现货款
 				getActivity().startActivityForResult(intent, Constants.REQUESTCODE);
+				if(adapter!=null){
+					adapter.clearCountList();
+				}
 			}
 			@Override
 			public void http_Fails(int error, String msg) {
 				Toast.makeText(getActivity(), msg, 1000).show();
+				
 				
 			}
 		}, getActivity());
@@ -290,9 +296,6 @@ public class HuoKuanIncomeAndOutGoingFragment extends BaseFragment implements On
 				if(data!=null){
 					boolean isFlow = data.isIsFlow();
 						if(isFlow){//已經关注
-							if(adapter!=null){
-								adapter.clearCountList();
-							}
 							withdraw();
 						}else{//没有关注
 							WeChatDialog dialog = new WeChatDialog(getActivity(),data.getQRCode(),data.getName());
