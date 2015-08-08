@@ -271,6 +271,7 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 			iv_pic.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
+					ToolsUtil.hideSoftKeyboard(mContext, et_product_number);
 					StateBean bean = (StateBean) v.getTag();
 					if (dataList.contains(bean)) {
 						index = dataList.indexOf(bean);
@@ -402,9 +403,6 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 	}
 
 	private void publishProduct() {
-		if (progressDialog.isShowing()) {
-			progressDialog.dismiss();
-		}
 		HttpControl httpControl = new HttpControl();
 		List<ProductImagesBean> imageList = MyApplication.getInstance()
 				.getPublishUtil().getBean().getImages();
@@ -422,6 +420,9 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 					.getPublishUtil().getBean(), new HttpCallBackInterface() {
 				@Override
 				public void http_Success(Object obj) {
+					if(progressDialog!=null && progressDialog.isShowing()){
+						progressDialog.dismiss();
+					}
 					Toast.makeText(mContext, "发布成功", 1000).show();
 //					FileUtils.delAllFile(FileUtils.getRootPath() + "/tagPic/");
 					PublishProductActivity.this.finish();
@@ -444,6 +445,9 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 					.getPublishUtil().getBean(), new HttpCallBackInterface() {
 				@Override
 				public void http_Success(Object obj) {
+					if(progressDialog!=null && progressDialog.isShowing()){
+						progressDialog.dismiss();
+					}
 					Toast.makeText(mContext, "修改成功", 1000).show();
 //					FileUtils.delAllFile(FileUtils.getRootPath() + "/tagPic/");
 					setResult(101);
@@ -661,9 +665,6 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 					}
 					break;
 				case 2:// 第三张上传完毕
-					if (progressDialog.isShowing()) {
-						progressDialog.dismiss();
-					}
 					if (new File(FileUtils.getRootPath() + "/tagPic/"
 							+ "tagPic" + SharedUtil.getUserId(mContext)
 							+ "2.png").exists()) {

@@ -55,7 +55,7 @@ public class AboutActivity extends BaseActivityWithTopView {
 	private TextView tv_version;
 	private TextView tv_content;
 	private TextView tv_right;
-
+	private TextView tv_company_name;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		MyApplication.getInstance().addActivity(this);//加入回退栈
@@ -74,9 +74,11 @@ public class AboutActivity extends BaseActivityWithTopView {
 			}
 		});
 		tv_version = getView(R.id.tv_version);
+		tv_version.setText("版本 "+ToolsUtil.getVersionName(mContext));
 		tv_content = getView(R.id.tv_content);
 		tv_right = getView(R.id.tv_right);
-		FontManager.changeFonts(mContext, tv_version, tv_content, tv_right);
+		tv_company_name = getView(R.id.tv_company_name);
+		FontManager.changeFonts(mContext, tv_version, tv_content, tv_right,tv_company_name,tv_top_title);
 	}
 	
 	

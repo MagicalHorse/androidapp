@@ -175,7 +175,7 @@ public class HttpControl {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put(Constants.LOGO, logo);
 		BasehttpSend(map, context, HttpConstants.changeUserLogo, httpCallBack,
-				ModifyLogoBackBean.class, true, false);
+				ModifyLogoBackBean.class, false, false);
 	}
 	
 	
@@ -1306,7 +1306,7 @@ public class HttpControl {
 		map.put("json",
 				BaseGsonUtils.getObjectToJson(requestUploadProductDataBean));
 		BasehttpSend(map, context, HttpConstants.METHOD_PRODUCTMANAGER_CREATE,
-				httpCallBack, BaseRequest.class, true, false);
+				httpCallBack, BaseRequest.class, false, false);
 	}
 
 	
