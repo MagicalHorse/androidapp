@@ -158,8 +158,7 @@ public class BaijiaPayActivity extends BaseActivityWithTopView implements
 
 					@Override
 					public void http_Fails(int error, String msg) {
-						MyApplication.getInstance().showMessage(
-								BaijiaPayActivity.this, "查询失败，请在订单页面查看订单状态");
+						MyApplication.getInstance().showMessage(BaijiaPayActivity.this, "查询失败，请在订单页面查看订单状态");
 						cancelPayDialog();
 					}
 				}, BaijiaPayActivity.this);
@@ -219,9 +218,8 @@ public class BaijiaPayActivity extends BaseActivityWithTopView implements
 	 * **/
 	public void showPayDialogLoading() {
 		if (orderPayDialog == null) {
-			orderPayDialog = new OrderPayDialog(BaijiaPayActivity.this, this,false);
+			orderPayDialog = new OrderPayDialog(BaijiaPayActivity.this, this,true);
 		}
-		orderPayDialog.showDialog();
 		orderPayDialog.showLoading();
 
 	}
@@ -231,9 +229,8 @@ public class BaijiaPayActivity extends BaseActivityWithTopView implements
 	 * **/
 	public void showSucessDialog() {
 		if (orderPayDialog == null) {
-			orderPayDialog = new OrderPayDialog(BaijiaPayActivity.this, this,false);
+			orderPayDialog = new OrderPayDialog(BaijiaPayActivity.this, this,true);
 		}
-		orderPayDialog.showDialog();
 		orderPayDialog.showSucess();
 
 	}
@@ -243,21 +240,21 @@ public class BaijiaPayActivity extends BaseActivityWithTopView implements
 	 * **/
 	public void showFailsDailog() {
 		if (orderPayDialog == null) {
-			orderPayDialog = new OrderPayDialog(BaijiaPayActivity.this, this,false);
+			orderPayDialog = new OrderPayDialog(BaijiaPayActivity.this, this,true);
 		}
-		orderPayDialog.showDialog();
 		orderPayDialog.showFails();
 
 	}
 
 	public void cancelPayDialog() {
 		if (orderPayDialog != null) {
-			orderPayDialog.cancel();
+			orderPayDialog.dismiss();
 		}
 	}
 
 	@Override
 	public void on_Click() {
+		cancelPayDialog();
 		finish();
 	}
 

@@ -3,21 +3,22 @@ package com.shenma.yueba.baijia.dialog;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com.shenma.yueba.R;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
+import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import com.shenma.yueba.R;
 
 /**  
  * @author gyj  
@@ -25,7 +26,7 @@ import com.shenma.yueba.R;
  * 程序的简单说明  
  */
 
-public class OrderPayDialog extends AlertDialog{
+public class OrderPayDialog extends AlertDialog implements DialogInterface.OnKeyListener{
 View ll;
 Context context;
 ProgressBar orderpay_dialog_layout_progressbar;
@@ -35,22 +36,23 @@ OrderPayOnClick_Listener orderPayOnClick_Listener;
 Button orderpay_dialog_layout_sucess_button;
 Timer timer;
 int maxTime=5;
+boolean cancelsttaus=true;
 	public OrderPayDialog(Context context,OrderPayOnClick_Listener orderPayOnClick_Listener,boolean cancelsttaus) {
-		super(context, R.style.MyDialog);
-		//super(context);
+		//super(context, R.style.MyDialog);
+		super(context);
 		this.context=context;
 		this.orderPayOnClick_Listener=orderPayOnClick_Listener;
-		this.setCancelable(cancelsttaus);
+		this.cancelsttaus=cancelsttaus;
 	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		
 		super.onCreate(savedInstanceState);
 		ll=(LinearLayout)LinearLayout.inflate(context, R.layout.orderpay_dialog_layout, null);
-		
+		setCancelable(cancelsttaus);
 		setContentView(ll);
 		initView();
+		setOnKeyListener(this);
 	}
 	
 	public void showDialog()
@@ -89,6 +91,7 @@ int maxTime=5;
 	 * **/
 	public void showLoading()
 	{
+		showDialog();
 		orderpay_dialog_layout_textview.setVisibility(View.VISIBLE);
 		orderpay_dialog_layout_progressbar.setVisibility(View.GONE);
 		orderpay_dialog_layout_sucess_textview.setVisibility(View.GONE);
@@ -100,6 +103,7 @@ int maxTime=5;
 	 * **/
 	public void showSucess()
 	{
+		showDialog();
 		startTimer();
 		orderpay_dialog_layout_sucess_textview.setText("支付成功");
 		orderpay_dialog_layout_textview.setVisibility(View.GONE);
@@ -113,6 +117,7 @@ int maxTime=5;
 	 * **/
 	public void showFails()
 	{
+		showDialog();
 		startTimer();
 		orderpay_dialog_layout_sucess_textview.setText("支付未成功\n可能是网络延时导致,请稍后查询或联系客服人员");
 		orderpay_dialog_layout_textview.setVisibility(View.GONE);
@@ -177,4 +182,24 @@ int maxTime=5;
 	public void cancel() {
 		stopTimer();
 	};
+
+	@Override
+	public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+		// TODO Auto-generated method stub
+		if(event.getAction()==KeyEvent.ACTION_DOWN)
+		{
+			if(keyCode==KeyEvent.KEYCODE_BACK)
+			{
+				if(cancelsttaus)
+				{
+					dismiss();
+					if(orderPayOnClick_Listener!=null)
+					{
+						orderPayOnClick_Listener.on_Click();
+					}
+				}
+			}
+		}
+		return true;
+	}
 }

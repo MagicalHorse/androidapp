@@ -58,7 +58,7 @@ public class BaiJiaShareDataAdapter extends BaseAdapter{
 		if(convertView==null)
 		{
 			holder=new Holder();
-			convertView=(RelativeLayout)LinearLayout.inflate(context, R.layout.baijiashare_layout_item, null);
+			convertView=(LinearLayout)LinearLayout.inflate(context, R.layout.baijiashare_layout_item, null);
 			ToolsUtil.setFontStyle(context, convertView, R.id.baijiashare_layout_item_names_textview,R.id.baijiashare_layout_item_prices_textview);
 			holder.baijiashare_layout_item_heads_imageview=(ImageView)convertView.findViewById(R.id.baijiashare_layout_item_heads_imageview);
 			holder.baijiashare_layout_item_icons_imageview=(ImageView)convertView.findViewById(R.id.baijiashare_layout_item_icons_imageview);

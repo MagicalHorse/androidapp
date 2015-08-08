@@ -3,13 +3,22 @@ package com.shenma.yueba.baijia.dialog;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.activity.AffirmOrderActivity;
+import com.shenma.yueba.baijia.dialog.OrderPayDialog.OrderPayOnClick_Listener;
+import com.shenma.yueba.baijia.modle.PrioductSizesInfoBean;
+import com.shenma.yueba.baijia.modle.ProductsDetailsInfoBean;
+import com.shenma.yueba.baijia.modle.ProductsDetailsTagInfo;
+import com.shenma.yueba.baijia.modle.RequestProductDetailsInfoBean;
+import com.shenma.yueba.util.FontManager;
+import com.shenma.yueba.util.ToolsUtil;
+import com.shenma.yueba.view.XCFlowLayout;
+
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Paint;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.Selection;
@@ -19,31 +28,14 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.ViewGroup.LayoutParams;
 import android.view.ViewGroup.MarginLayoutParams;
-import android.widget.AbsListView;
-import android.widget.BaseAdapter;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.shenma.yueba.R;
-import com.shenma.yueba.application.MyApplication;
-import com.shenma.yueba.baijia.activity.AffirmOrderActivity;
-import com.shenma.yueba.baijia.modle.PrioductSizesInfoBean;
-import com.shenma.yueba.baijia.modle.ProductsDetailsInfoBean;
-import com.shenma.yueba.baijia.modle.ProductsDetailsTagInfo;
-import com.shenma.yueba.baijia.modle.RequestProductDetailsInfoBean;
-import com.shenma.yueba.util.FontManager;
-import com.shenma.yueba.util.ToolsUtil;
-import com.shenma.yueba.view.XCFlowLayout;
 
 /**  
  * @author gyj  
@@ -251,7 +243,6 @@ public class CreateOrderDialog extends AlertDialog implements android.view.View.
 				MyApplication.getInstance().showMessage(context, "请选择商品规格");
 				return;
 			}
-			
 			Intent intent=new Intent(context,AffirmOrderActivity.class);
 			intent.putExtra("COUNT", count);//购买数量
 			intent.putExtra("CHECKEDPrioductSizes", currCheckedFouce);//选择的规格尺寸
