@@ -82,28 +82,31 @@ public class SalesManagerForAttestationBuyerAdapter extends BaseAdapterWithUtil 
 			holder.tv_bottom.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					if("充值并退款".equals(holder.tv_bottom.getText().toString().trim())){
-						
-						OrderItem orderItem=mList.get(position);
-						Intent intent=new Intent(ctx,BaijiaPayActivity.class);
-						PayResponseFormBean bean=new PayResponseFormBean();
-						bean.setOrderNo(orderItem.getRmaNo());
-						bean.setPrice(Double.parseDouble(orderItem.getAmount()));
-						bean.setContent(orderItem.getProducts().get(0).getProductName());
-						bean.setDesc("充值并退款");
-						bean.setUrl(com.shenma.yueba.constants.Constants.WX_PAYAREFUND_URL);
-						intent.putExtra("PAYDATA",bean);
-						ctx.startActivity(intent);
-					}else if("确认退款".equals(holder.tv_bottom.getText().toString().trim())){
-						dialog.alertDialog(ctx, "提示", "您确认要退款吗？",
-								new DialogUtilInter() {
-									@Override
-									public void dialogCallBack(int... which) {
-										confirmBack(position);
+					if(v.getTag()!=null && v.getTag() instanceof OrderItem)
+					{
+						final OrderItem orderItem=(OrderItem)v.getTag();
+						if("充值并退款".equals(holder.tv_bottom.getText().toString().trim())){
+							
+							Intent intent=new Intent(ctx,BaijiaPayActivity.class);
+							PayResponseFormBean bean=new PayResponseFormBean();
+							bean.setOrderNo(orderItem.getRmaNo());
+							bean.setPrice(Double.parseDouble(orderItem.getAmount()));
+							bean.setContent(ToolsUtil.nullToString(orderItem.getProducts().get(0).getName()));
+							bean.setDesc("充值并退款");
+							bean.setUrl(com.shenma.yueba.constants.Constants.WX_PAYAREFUND_URL);
+							intent.putExtra("PAYDATA",bean);
+							ctx.startActivity(intent);
+						}else if("确认退款".equals(holder.tv_bottom.getText().toString().trim())){
+							dialog.alertDialog(ctx, "提示", "您确认要退款吗？",
+									new DialogUtilInter() {
+										@Override
+										public void dialogCallBack(int... which) {
+											confirmBack(orderItem);
 
-									}
-								}, true, "确定", "取消", true, true);
-					}
+										}
+									}, true, "确定", "取消", true, true);
+						}
+					}	
 				}
 			});
 			FontManager.changeFonts(ctx, holder.tv_order_number,holder.tv_order_status,
@@ -121,9 +124,11 @@ public class SalesManagerForAttestationBuyerAdapter extends BaseAdapterWithUtil 
 				if("3".equals(mList.get(position).getStatus()) && mList.get(position).isIsNeedRma()){
 					holder.ll_bottom.setVisibility(View.VISIBLE);
 					if(mList.get(position).isIsGoodsPick()){//订单状态为退货处理中
+						holder.tv_bottom.setTag(item);
 						holder.tv_bottom.setText("充值并退款");
 					}else{//还未提款
 						holder.tv_bottom.setText("确认退款");
+						holder.tv_bottom.setTag(item);
 					}
 				}else{
 					holder.ll_bottom.setVisibility(View.GONE);
@@ -174,9 +179,9 @@ public class SalesManagerForAttestationBuyerAdapter extends BaseAdapterWithUtil 
 	 * 确认退款
 	 * @param position
 	 */
-	private void confirmBack(final int position){
+	private void confirmBack(OrderItem orderItem){
 		HttpControl httpControl = new HttpControl();
-		httpControl.comformBack(mList.get(position).getOrderNo(), new HttpCallBackInterface() {
+		httpControl.comformBack(orderItem.getOrderNo(), new HttpCallBackInterface() {
 			@Override
 			public void http_Success(Object obj) {
 				Toast.makeText(ctx, "退款成功", 1000).show();

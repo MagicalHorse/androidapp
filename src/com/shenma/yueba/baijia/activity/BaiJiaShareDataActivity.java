@@ -47,6 +47,7 @@ public class BaiJiaShareDataActivity extends BaseActivityWithTopView{
 	boolean showDialog=true;
 	String type=null;
 	HttpControl httpControl=new HttpControl();
+	String title="";
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		MyApplication.getInstance().addActivity(this);//加入回退栈
@@ -57,21 +58,21 @@ public class BaiJiaShareDataActivity extends BaseActivityWithTopView{
 		type=this.getIntent().getStringExtra("TYPE");
 		if(type.equals(LINK))
 		{
-			
+			title="发送链接";
 		}else if(type.equals(COLLECT))
 		{
-			
+			title="我的收藏";
 		}else
 		{
 			finish();
 			return;
 		}
+		setTitle(title);
 		requestFalshData();
 	}
 	
 	void initView()
 	{   
-		setTitle("分享");
 		setLeftTextView(new OnClickListener() {
 			
 			@Override

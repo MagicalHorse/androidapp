@@ -8,6 +8,8 @@ import java.util.TimerTask;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -70,7 +72,7 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView
 	// 滚动视图 主要内容
 	ScrollView approvebuyerdetails_srcollview;
 	// 底部购物车父视图
-	RelativeLayout approvebuyerdetails_footer;
+	LinearLayout approvebuyerdetails_footer;
 	TextView approvebuyerdetails_closeingtime_textview;// 打烊时间
 	TextView approvebuyerdetails_closeinginfo_textview;// 打烊信息
 	int childWidth = 0;
@@ -85,9 +87,9 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView
 	// 头像
 	RoundImageView approvebuyerdetails_icon_imageview;
 	// 私聊
-	LinearLayout approvebuyerdetails_layout_siliao_linerlayout;
-	// 收藏
-	LinearLayout approvebuyerdetails_layout_shoucang_linerlayout;
+	TextView approvebuyerdetails_layout_siliao_linerlayout_textview;
+	TextView approvebuyerdetails_layout_shoucang_linerlayout_textview;//收藏
+	
 	// 加入购物车
 	Button approvebuyer_addcartbutton;
 	// 直接购买
@@ -124,6 +126,9 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView
 				ApproveBuyerDetailsActivity.this.finish();
 			}
 		});
+		
+		// 收藏按钮
+	    approvebuyerdetails_layout_shoucang_linerlayout_textview = (TextView) findViewById(R.id.approvebuyerdetails_layout_shoucang_linerlayout_textview);
 		//头像包裹视图
 		ll_attentionpeople_contener=(LinearLayout)findViewById(R.id.ll_attentionpeople_contener);
 		// 活动父视图
@@ -132,7 +137,7 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView
 		approvebuyerdetails_closeingtime_textview = (TextView) findViewById(R.id.approvebuyerdetails_closeingtime_textview);
 		// 打烊信息
 		approvebuyerdetails_closeinginfo_textview = (TextView) findViewById(R.id.approvebuyerdetails_closeinginfo_textview);
-		approvebuyerdetails_footer = (RelativeLayout) findViewById(R.id.approvebuyerdetails_footer);
+		approvebuyerdetails_footer = (LinearLayout) findViewById(R.id.approvebuyerdetails_footer);
 		approvebuyerdetails_srcollview = (ScrollView) findViewById(R.id.approvebuyerdetails_srcollview);
 
 		appprovebuyer_viewpager_footer_linerlayout = (LinearLayout) findViewById(R.id.appprovebuyer_viewpager_footer_linerlayout);
@@ -183,9 +188,8 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView
 		approvebuyerdetails_icon_imageview = (RoundImageView) findViewById(R.id.approvebuyerdetails_icon_imageview);
 		approvebuyerdetails_icon_imageview.setOnClickListener(this);
 
-		approvebuyerdetails_layout_siliao_linerlayout = (LinearLayout) findViewById(R.id.approvebuyerdetails_layout_siliao_linerlayout);
-		approvebuyerdetails_layout_siliao_linerlayout.setOnClickListener(this);
-		approvebuyerdetails_layout_shoucang_linerlayout = (LinearLayout) findViewById(R.id.approvebuyerdetails_layout_shoucang_linerlayout);
+		approvebuyerdetails_layout_siliao_linerlayout_textview = (TextView) findViewById(R.id.approvebuyerdetails_layout_siliao_linerlayout_textview);
+		approvebuyerdetails_layout_siliao_linerlayout_textview.setOnClickListener(this);
 
 		approvebuyer_addcartbutton = (Button) findViewById(R.id.approvebuyer_addcartbutton);
 		approvebuyerbuybutton = (Button) findViewById(R.id.approvebuyerbuybutton);
@@ -295,7 +299,7 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView
 		setdataValue(R.id.approvebuyerdetails_producename_textview, productName);
 		LikeUsersInfoBean likeUsersInfoBean = Data.getLikeUsers();
 		if (likeUsersInfoBean != null) {
-			int linkwidt=ll_attentionpeople_contener.getWidth();
+			int linkwidt=ll_attentionpeople_contener.getWidth()-((LinearLayout.LayoutParams)ll_attentionpeople_contener.getLayoutParams()).leftMargin-((LinearLayout.LayoutParams)ll_attentionpeople_contener.getLayoutParams()).rightMargin;
 			int item_width=linkwidt/8;
 			// 喜欢
 			TextView approvebuyerdetails_attention_textview = (TextView) findViewById(R.id.approvebuyerdetails_attention_textview);
@@ -304,7 +308,6 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView
 			approvebuyerdetails_attention_textview.setLayoutParams(tv_params);
 			
 			// 收藏按钮
-			TextView approvebuyerdetails_layout_shoucang_linerlayout_textview = (TextView) findViewById(R.id.approvebuyerdetails_layout_shoucang_linerlayout_textview);
 			approvebuyerdetails_layout_shoucang_linerlayout_textview
 					.setOnClickListener(this);
 			approvebuyerdetails_layout_shoucang_linerlayout_textview
@@ -510,13 +513,9 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView
 		// 自提地址
 		setdataValue(R.id.approvebuyerdetails_addressvalue_textview, null);
 		// 收藏
-		setdataValue(
-				R.id.approvebuyerdetails_layout_shoucang_linerlayout_textview,
-				null);
+		setdataValue(R.id.approvebuyerdetails_layout_shoucang_linerlayout_textview,null);	
 		// 私聊
-		setdataValue(
-				R.id.approvebuyerdetails_layout_siliao_linerlayout_textview,
-				null);
+		setdataValue(R.id.approvebuyerdetails_layout_siliao_linerlayout_textview,null);
 		// 喜欢人数
 		setdataValue(R.id.approvebuyerdetails_attention_textview, null);
 		FontManager.changeFonts(this, approvebuyer_addcartbutton);
@@ -589,7 +588,7 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView
 			intent.putExtra("DATA", bean.getData().getBuyerId());
 			startActivity(intent);
 			break;
-		case R.id.approvebuyerdetails_layout_siliao_linerlayout:
+		case R.id.approvebuyerdetails_layout_siliao_linerlayout_textview:
 			startChatActivity();
 			break;
 		case R.id.approvebuyerbuybutton:
