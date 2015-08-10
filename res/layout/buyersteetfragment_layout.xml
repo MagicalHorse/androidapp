@@ -24,7 +24,6 @@
 
         <include
             android:id="@+id/showloading_layout_view"
-            android:layout_centerInParent="true"
             layout="@layout/showloading_layout"
             android:visibility="gone" />
         <!-- 无数据视图 -->
