@@ -832,6 +832,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 				chat_product_head_layout_button,tv_top_right);
 	}
 
+	
 	@Override
 	public void onScroll(AbsListView view, int firstVisibleItem,
 			int visibleItemCount, int totalItemCount) {
