@@ -115,8 +115,7 @@ int maxValue=0;
 		maxValue=baiJiaOrderListInfo.getOrderProductCount();
 		createorder_dialog_layout_countvalue_edittext.setText(Integer.toString(baiJiaOrderListInfo.getOrderProductCount()));
 		affirmorder_item_productprice_textview.setText("￥"+Double.toString(productInfoBean.getPrice()));
-		
-		applyforrefund_layout_refundprivevalue_textview.setText(Double.toString(baiJiaOrderListInfo.getAmount()));
+		applyforrefund_layout_refundprivevalue_textview.setText("￥"+Double.toString(baiJiaOrderListInfo.getAmount()));
 		
         createorder_dialog_layout_countvalue_edittext.addTextChangedListener(new TextWatcher() {
 			
@@ -252,7 +251,7 @@ int maxValue=0;
 		double avgprice=allprice/baiJiaOrderListInfo.getOrderProductCount();
 		double refundprice=avgprice*count;
 		String str=ToolsUtil.DounbleToString_2(refundprice);
-		applyforrefund_layout_refundprivevalue_textview.setText(str);
+		applyforrefund_layout_refundprivevalue_textview.setText("￥"+str);
 		if(count==baiJiaOrderListInfo.getOrderProductCount())
 		{
 			applyforrefund_layout_refundprivevalue_textview.setText(Double.toString(baiJiaOrderListInfo.getAmount()));
