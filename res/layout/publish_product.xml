@@ -210,6 +210,8 @@
                         android:inputType="number"
                             android:digits="0123456789"
                         android:padding="5dip"
+                        android:singleLine="true"
+                        android:maxLength="8"
                         android:textColor="@color/text_gray_color"
                         android:textSize="18sp" />
 

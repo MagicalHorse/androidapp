@@ -8,6 +8,7 @@ import java.io.Serializable;
  */
 
 public class UserInfo implements Serializable {
+	private String updateUrl;//版本更新的地址
 	private String level;//用户级别
 	private boolean IsBindMobile;// 是否绑定手机号
 	private boolean IsBindWeiXin;// 是否绑定微信号
@@ -262,6 +263,14 @@ public class UserInfo implements Serializable {
 
 	public void setIsOpenPush(boolean isOpenPush) {
 		IsOpenPush = isOpenPush;
+	}
+
+	public String getUpdateUrl() {
+		return updateUrl;
+	}
+
+	public void setUpdateUrl(String updateUrl) {
+		this.updateUrl = updateUrl;
 	}
 
 	

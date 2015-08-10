@@ -118,6 +118,7 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 			}
 			tv_publish.setText("修改");
 			if(detailBean!=null){
+				 List<ProductImagesBean> images = detailBean.getImages();
 				MyApplication.getInstance().getPublishUtil().setBean(detailBean);
 			}else{
 		    	detailBean =  MyApplication.getInstance().getPublishUtil().getBean();
@@ -127,13 +128,24 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 		if (bean != null) {
 			tagList = bean.getTagList();
 			if(tagList!=null && tagList.size()>0){
+				int index = Integer.valueOf(MyApplication.getInstance().getPublishUtil().getIndex());
+				List<ProductImagesBean> images = MyApplication.getInstance().getPublishUtil().getBean().getImages();
+				if(images.size()<=index+1){
+					for (int i = 0; i < index+1-images.size(); i++) {
+						ProductImagesBean productImagesBean = new ProductImagesBean();
+						MyApplication
+						.getInstance()
+						.getPublishUtil()
+						.getBean()
+						.getImages().add(productImagesBean);
+					}
+				}
 				MyApplication
 				.getInstance()
 				.getPublishUtil()
 				.getBean()
 				.getImages()
-				.get(Integer.valueOf(MyApplication.getInstance()
-						.getPublishUtil().getIndex())).setTags(tagList);
+				.get(index).setTags(tagList);
 			}
 		}
 		

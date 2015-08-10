@@ -12,6 +12,7 @@ import android.text.TextUtils;
  * 
  */
 public class SharedUtil {
+	private static final String updateUrl = "updateUrl";//版本更新地址
 	public static final String install_flag = "install_flag";
 	public static final String user_id = "user_id";//登录用户id
 	public static final String user_level = "level";//用户级别
@@ -222,6 +223,18 @@ public class SharedUtil {
 				.putBoolean(friend_msg, friendMsgState).commit();
 	}
 
+	public static String getUpdateUrl(Context context) {
+		return getSharedPreferences(context).getString(updateUrl, "");
+	}
+
+	public static void setUpdateUrl(Context context, String update) {
+		if (update != null) {
+			getSharedPreferences(context).edit().putString(updateUrl, update)
+					.commit();
+		}
+	}
+	
+	
 	public static String getUserType(Context context) {
 		return getSharedPreferences(context).getString(user_type, "");
 	}
