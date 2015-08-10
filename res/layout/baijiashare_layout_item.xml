@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/shop_main_width100_dimen"
     android:padding="@dimen/shop_main_width15_dimen"
     android:background="@color/white"
+    android:gravity="left|center_vertical"
     >
     
     <ImageView
-        android:layout_centerVertical="true"
         android:layout_width="@dimen/shop_main_marginleft30_dimen"
         android:layout_height="@dimen/shop_main_marginleft30_dimen"
         android:id="@+id/baijiashare_layout_item_heads_imageview"
@@ -16,15 +16,13 @@
         />
 
     <ImageView
-        android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/shop_main_lineheight8_dimen"
         android:id="@+id/baijiashare_layout_item_icons_imageview"
         android:layout_toRightOf="@id/baijiashare_layout_item_heads_imageview"
         android:layout_width="@dimen/shop_main_iconwidth80_dimen"
-        android:layout_height="match_parent"
+        android:layout_height="@dimen/shop_main_iconwidth80_dimen"
         android:src="@drawable/default_pic"
-        android:background="@color/color_lightgrey"
-        android:scaleType="fitCenter"
+        android:scaleType="centerCrop"
         />
     
     <RelativeLayout 
@@ -35,6 +33,7 @@
         android:layout_height="match_parent"
         >
     <TextView
+        android:maxLines="3"
         android:gravity="left|center_vertical"
         android:layout_above="@+id/baijiashare_layout_item_prices_textview"
         android:layout_marginLeft="@dimen/shop_main_width5_dimen"
@@ -59,4 +58,4 @@
     
     
     
-</RelativeLayout>
+</LinearLayout>
