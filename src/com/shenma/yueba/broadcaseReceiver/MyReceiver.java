@@ -36,9 +36,9 @@ public class MyReceiver extends BroadcastReceiver {
 			}
 				NotificationUtils.showNotification(context,type,title,message);
 		}
-		
-		
-		
+		if(JPushInterface.ACTION_NOTIFICATION_RECEIVED.equals(intent.getAction())){//系统通知
+			
+		}
 	
 	}
 

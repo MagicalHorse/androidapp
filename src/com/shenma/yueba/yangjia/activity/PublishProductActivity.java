@@ -130,8 +130,9 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 			if(tagList!=null && tagList.size()>0){
 				int index = Integer.valueOf(MyApplication.getInstance().getPublishUtil().getIndex());
 				List<ProductImagesBean> images = MyApplication.getInstance().getPublishUtil().getBean().getImages();
-				if(images.size()<=index+1){
-					for (int i = 0; i < index+1-images.size(); i++) {
+				int currentLength = images.size();
+				if(currentLength<index+1){
+					for (int i = 0; i < index-currentLength+1; i++) {
 						ProductImagesBean productImagesBean = new ProductImagesBean();
 						MyApplication
 						.getInstance()

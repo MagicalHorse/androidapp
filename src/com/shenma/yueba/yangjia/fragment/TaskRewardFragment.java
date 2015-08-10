@@ -15,7 +15,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.fragment.BaseFragment;
 import com.shenma.yueba.util.FontManager;
@@ -38,14 +41,16 @@ public class TaskRewardFragment extends BaseFragment {
 
 	private List<TaskListItem> mList = new ArrayList<TaskListItem>();
 	private View view;
-	private ListView lv;
+	private PullToRefreshListView pull_refresh_list;
 	private TastRewardAdapter adapter;
-	private TextView  tv_top_title;
+	private TextView tv_top_title;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		getTastReward();
+		getTastReward(true);
 	}
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -57,7 +62,7 @@ public class TaskRewardFragment extends BaseFragment {
 		if (parent != null) {
 			parent.removeView(view);
 		}
-//		getIndexInfo(true);//联网获取数据
+		// getIndexInfo(true);//联网获取数据
 		return view;
 	}
 
@@ -66,45 +71,61 @@ public class TaskRewardFragment extends BaseFragment {
 		tv_top_title = (TextView) view.findViewById(R.id.tv_top_title);
 		tv_top_title.setVisibility(View.VISIBLE);
 		tv_top_title.setText("奖励");
-		lv =  (ListView) view.findViewById(R.id.lv);
-		lv.setOnItemClickListener(new OnItemClickListener() {
+		pull_refresh_list = (PullToRefreshListView) view
+				.findViewById(R.id.pull_refresh_list);
+		pull_refresh_list.setMode(Mode.PULL_DOWN_TO_REFRESH);
+		pull_refresh_list
+				.setOnRefreshListener(new OnRefreshListener<ListView>() {
+
+					@Override
+					public void onRefresh(
+							PullToRefreshBase<ListView> refreshView) {
+						getTastReward(false);
+
+					}
+				});
+		pull_refresh_list.setOnItemClickListener(new OnItemClickListener() {
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int position,
-					long arg3) {
-				Intent intent = new Intent(getActivity(), RewardDetailActivity.class);
-				intent.putExtra("promotionId", mList.get(position).getId());
-				intent.putExtra("titleName", mList.get(position).getName());
+			public void onItemClick(AdapterView<?> arg0, View arg1,
+					int position, long arg3) {
+				Intent intent = new Intent(getActivity(),
+						RewardDetailActivity.class);
+				intent.putExtra("promotionId", mList.get(position - 1).getId());
+				intent.putExtra("titleName", mList.get(position - 1).getName());
 				startActivity(intent);
 			}
 		});
 		FontManager.changeFonts(getActivity(), tv_top_title);
 	}
-	
 
-	
-	public void getTastReward(){
+	public void getTastReward(boolean isShowDialog) {
 		HttpControl httpControl = new HttpControl();
 		httpControl.getTaskRewardList(true, new HttpCallBackInterface() {
 			@Override
 			public void http_Success(Object obj) {
+				if(pull_refresh_list!=null){
+					pull_refresh_list.postDelayed(new Runnable() {
+						@Override
+						public void run() {
+							pull_refresh_list.onRefreshComplete();
+						}
+					}, 100);
+				}
 				TastRewardListBackBean bean = (TastRewardListBackBean) obj;
-				if(bean.getData()!=null){
-				mList.addAll(bean.getData());
-				adapter = new TastRewardAdapter(getActivity(), mList);
-				lv.setAdapter(adapter);
+				if (bean.getData() != null) {
+					mList.clear();
+					mList.addAll(bean.getData());
+					adapter = new TastRewardAdapter(getActivity(), mList);
+					pull_refresh_list.setAdapter(adapter);
 				}
 			}
-			
+
 			@Override
 			public void http_Fails(int error, String msg) {
 				Toast.makeText(getActivity(), msg, 1000).show();
 			}
-		}, getActivity());
-		
-		
-	}
-	
-	
+		}, getActivity(), isShowDialog);
+
 	}
 
-	
+}

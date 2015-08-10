@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -1349,10 +1350,10 @@ public class HttpControl {
 	 * @return void
 	 * **/ 
 	public void getTaskRewardList( boolean showDialog,
-			final HttpCallBackInterface httpCallBack, Context context) {
+			final HttpCallBackInterface httpCallBack, Context context,boolean isShowDialog) {
 		Map<String, String> map = new HashMap<String, String>();
 		BasehttpSend(map, context, HttpConstants.METHOD_PROMOTION_LIST,
-				httpCallBack, TastRewardListBackBean.class, showDialog, false);
+				httpCallBack, TastRewardListBackBean.class, isShowDialog, false);
 	}
 	
 	
@@ -2246,7 +2247,7 @@ public class HttpControl {
 					http.setDoInput(true);
 					http.setDoOutput(true);
 					http.setReadTimeout(10000);
-					http.setConnectTimeout(3000);
+					http.setConnectTimeout(5000);
 					http.setRequestMethod("POST");
 					http.setRequestProperty("Content-type",
 							"application/json;charset=UTF-8");
@@ -2271,9 +2272,16 @@ public class HttpControl {
 						handler.sendError("连接失败");
 					}
 				} catch (Exception e) {
-
-					e.printStackTrace();
-					handler.sendError(e.getMessage());
+					if(e!=null ){
+						if (e instanceof SocketTimeoutException) {
+							Log.i("error", "shuyu---"+e.getMessage()+"tostring---"+e.toString());
+							handler.sendError("网络超时，请稍后重试");
+						}else{
+							Log.i("error", "bushuyu---"+e.getMessage()+"tostring---"+e.toString());
+							e.printStackTrace();
+							handler.sendError(e.getMessage());
+						}
+					}
 				}
 			};
 		}.start();

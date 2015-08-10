@@ -16,6 +16,8 @@ import com.shenma.yueba.baijia.activity.BaseActivityWithTopView;
 import com.shenma.yueba.baijia.dialog.WeChatDialog;
 import com.shenma.yueba.baijia.modle.GetUserFlowStatusBackBean;
 import com.shenma.yueba.baijia.modle.UserFlowStatusBean;
+import com.shenma.yueba.constants.Constants;
+import com.shenma.yueba.constants.HttpConstants;
 import com.shenma.yueba.util.DialogUtilInter;
 import com.shenma.yueba.util.DialogUtils;
 import com.shenma.yueba.util.FontManager;
@@ -117,7 +119,7 @@ public class ApplyWithdrawActivity extends BaseActivityWithTopView implements
 						Intent intent = new Intent(ApplyWithdrawActivity.this,
 								ApplyResultActivity.class);
 						intent.putExtra("flag", "applaywithdraw");// 申请提现
-						startActivity(intent);
+						startActivityForResult(intent, Constants.REQUESTCODE);
 					}
 
 					@Override
@@ -173,5 +175,19 @@ public class ApplyWithdrawActivity extends BaseActivityWithTopView implements
 			public void onPause() {
 			super.onPause();
 			MobclickAgent.onPause(this);
+			}
+			
+			
+			
+			
+			@Override
+			protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+				if(requestCode == Constants.REQUESTCODE && resultCode == Constants.RESULTCODE){
+					Intent intent = new Intent();
+					intent.putExtra("data", et_money.getText().toString().trim());
+					setResult(Constants.RESULTCODE,intent);
+					finish();
+				}
+				super.onActivityResult(requestCode, resultCode, data);
 			}
 }
