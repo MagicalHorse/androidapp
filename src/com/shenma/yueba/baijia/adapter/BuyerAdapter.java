@@ -177,14 +177,16 @@ public class BuyerAdapter extends BaseAdapter {
 				riv.setLayoutParams(params);
 				if (i != 7) {
 					initBitmap(users.get(i).getLogo(), riv);
+					riv.setTag(users.get(i).getUserId());
 				} else {
+					riv.setTag(null);
 					riv.setBackgroundResource(R.drawable.test003);
 				}
-				riv.setTag(users.get(i).getUserId());
+				
 				riv.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						if (((Integer)v.getTag()) <= 0) {
+						if (v.getTag()==null || ((Integer)v.getTag()) <= 0) {
 							return;
 						}
 						Intent intent = new Intent(activity,

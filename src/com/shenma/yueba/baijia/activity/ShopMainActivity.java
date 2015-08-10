@@ -114,6 +114,7 @@ public class ShopMainActivity extends FragmentActivity {
 		shop_main_fans_linearlayout=(LinearLayout)findViewById(R.id.shop_main_fans_linearlayout);
 		shop_main_fans_linearlayout.setOnClickListener(onClickListener);
 		shop_main_layout_title_pulltorefreshscrollview=(PullToRefreshScrollView)findViewById(R.id.shop_main_layout_title_pulltorefreshscrollview);
+		ToolsUtil.initPullResfresh(shop_main_layout_title_pulltorefreshscrollview, ShopMainActivity.this);
 		shop_main_layout_title_pulltorefreshscrollview.setMode(Mode.BOTH);
 		shop_main_layout_title_pulltorefreshscrollview.setOnRefreshListener(new OnRefreshListener2() {
 
@@ -348,12 +349,12 @@ public class ShopMainActivity extends FragmentActivity {
         		fragment.onPuBuliuRefersh();
 			}else
 			{
-				shop_main_layout_title_pulltorefreshscrollview.onRefreshComplete();
+				ToolsUtil.pullResfresh(shop_main_layout_title_pulltorefreshscrollview);
 			}
 			
 		}else
 		{
-			shop_main_layout_title_pulltorefreshscrollview.onRefreshComplete();
+			ToolsUtil.pullResfresh(shop_main_layout_title_pulltorefreshscrollview);
 		}
     }
     
@@ -371,12 +372,12 @@ public class ShopMainActivity extends FragmentActivity {
 				fragment.onPuBuliuaddData();
 			}else
 			{
-				shop_main_layout_title_pulltorefreshscrollview.onRefreshComplete();
+				ToolsUtil.pullResfresh(shop_main_layout_title_pulltorefreshscrollview);
 			}
 			
 		}else
     	{
-    		shop_main_layout_title_pulltorefreshscrollview.onRefreshComplete();
+			ToolsUtil.pullResfresh(shop_main_layout_title_pulltorefreshscrollview);
     	}
     }
     

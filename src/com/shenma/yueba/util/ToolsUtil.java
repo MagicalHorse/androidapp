@@ -25,6 +25,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.OnPullEventListener;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.State;
 import com.handmark.pulltorefresh.library.PullToRefreshGridView;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
@@ -59,6 +60,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -312,7 +314,7 @@ public class ToolsUtil {
 							.get(str2);
 					Drawable d = context.getResources().getDrawable(face);
 					if (d != null) {
-						d.setBounds(0, 0, 80, 80);// 设置表情图片的显示大小
+						d.setBounds(0, 0, 60, 60);// 设置表情图片的显示大小
 						ImageSpan span = new ImageSpan(d,
 								ImageSpan.ALIGN_BOTTOM);
 						value.setSpan(span, k, m,
@@ -939,8 +941,48 @@ public class ToolsUtil {
 	}
 	
 	
+	public static void initPullResfresh(final PullToRefreshScrollView pullListView,final Activity activity)
+	{
+		if(pullListView!=null && activity!=null)
+		{
+			pullListView.setOnPullEventListener(new OnPullEventListener<ScrollView>() {
+
+				@Override
+				public void onPullEvent(PullToRefreshBase<ScrollView> refreshView,
+						State state, Mode direction) {
+					// 设置标签显示的内容
+					if (direction == Mode.PULL_FROM_START) {
+						pullListView.getLoadingLayoutProxy().setPullLabel(activity.getResources().getString(R.string.Refreshonstr));
+						pullListView.getLoadingLayoutProxy().setRefreshingLabel(activity.getResources().getString(R.string.Refreshloadingstr));
+						pullListView.getLoadingLayoutProxy().setReleaseLabel(activity.getResources().getString(R.string.Loosentherefresh));
+					} else if (direction == Mode.PULL_FROM_END) {
+						pullListView.getLoadingLayoutProxy().setPullLabel(activity.getResources().getString(R.string.Thedropdownloadstr));
+						pullListView.getLoadingLayoutProxy().setRefreshingLabel(activity.getResources().getString(R.string.RefreshLoadingstr));
+						pullListView.getLoadingLayoutProxy().setReleaseLabel(activity.getResources().getString(R.string.Loosentheloadstr));
+					}
+				}
+			});
+		}
+	}
+	
+	
 	
 	public static void pullResfresh(final PullToRefreshListView pullListView)
+	{
+		if(pullListView!=null)
+		{
+			pullListView.postDelayed(new Runnable() {
+				
+				@Override
+				public void run() {
+					pullListView.onRefreshComplete();
+				}
+			}, 100);
+		}
+	}
+	
+	
+	public static void pullResfresh(final PullToRefreshScrollView pullListView)
 	{
 		if(pullListView!=null)
 		{

@@ -227,7 +227,7 @@ public class ShopPuBuliuFragment extends Fragment implements PubuliuFragmentList
 		View v = getActivity().findViewById(
 				R.id.shop_main_layout_title_pulltorefreshscrollview);
 		if (v != null && v instanceof PullToRefreshScrollView) {
-			((PullToRefreshScrollView) v).onRefreshComplete();
+			ToolsUtil.pullResfresh(((PullToRefreshScrollView) v));
 		}
 		}
 	}
@@ -264,15 +264,18 @@ public class ShopPuBuliuFragment extends Fragment implements PubuliuFragmentList
 				{
 					if(page==1)
 					{
-						View v=getActivity().findViewById(R.id.shop_main_head_layout_horizontal_line_include);
-						if(v!=null)
+						if(getActivity()!=null)
 						{
-							v.setVisibility(View.GONE);
-						}else
-						{
-							v.setVisibility(View.VISIBLE);
+							View v=getActivity().findViewById(R.id.shop_main_head_layout_horizontal_line_include);
+							if(v!=null)
+							{
+								v.setVisibility(View.GONE);
+							}else
+							{
+								v.setVisibility(View.VISIBLE);
+							}
+							ToolsUtil.showNoDataView(getActivity(), true);
 						}
-						ToolsUtil.showNoDataView(getActivity(), true);
 					}else
 					{
 						MyApplication.getInstance().showMessage(getActivity(), "没有更多信息");

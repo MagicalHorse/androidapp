@@ -100,16 +100,11 @@ public class DynamicListView extends BaseView{
 			@Override
 			public void onPullDownToRefresh(PullToRefreshBase refreshView) {
 				
-				//SystemClock.sleep(100);
-				Log.i("TAG", "onPullDownToRefresh");
-				//pulltorefreshscrollview.setRefreshing();
 				requestFalshData();
 			}
 
 			@Override
 			public void onPullUpToRefresh(PullToRefreshBase refreshView) {
-				//SystemClock.sleep(100);
-				//pulltorefreshscrollview.setRefreshing();
 				Log.i("TAG", "onPullUpToRefresh");
 				requestData();
 			}
