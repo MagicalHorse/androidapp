@@ -302,17 +302,16 @@ public class BuyerCertificationActivity2 extends BaseActivityWithTopView
 			}
 			break;
 		case R.id.tv_confirm:// 提交申请
-
-			/*if (TextUtils.isEmpty(store_id)) {//
-				Toast.makeText(mContext, "请选择商场", 1000).show();
+			if (TextUtils.isEmpty(et_store_name.getText().toString())) {//
+				Toast.makeText(mContext, "商场名称不能为空", 1000).show();
 				return;
-			}*/
+			}
 			if (TextUtils.isEmpty(et_zhuangui_name.getText().toString().trim())) {//
-				Toast.makeText(mContext, "请填写专柜名称", 1000).show();
+				Toast.makeText(mContext, "专柜名称不能为空", 1000).show();
 				return;
 			}
 			if (TextUtils.isEmpty(et_number_name.getText().toString().trim())) {//
-				Toast.makeText(mContext, "请填写专柜位置", 1000).show();
+				Toast.makeText(mContext, "专柜位置不能为空", 1000).show();
 				return;
 			}
 			if (TextUtils.isEmpty(province_id)) {//

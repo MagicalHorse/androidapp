@@ -12,6 +12,7 @@ import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.BaseActivityWithTopView;
 import com.shenma.yueba.baijia.modle.Income;
+import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.ToolsUtil;
 import com.umeng.analytics.MobclickAgent;
@@ -85,6 +86,11 @@ public class EarningManagerActivity extends BaseActivityWithTopView implements O
 				,tv_total_income_money,tv_income_detail);
 	}
 
+	//刷新可提现收益
+	public void refreshAvailAcount(String currentAcount){
+		tv_withdraw_cash_money.setText(currentAcount);
+	}
+	
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
@@ -97,12 +103,29 @@ public class EarningManagerActivity extends BaseActivityWithTopView implements O
 		case R.id.tv_apply_withdraw://申请提现
 			Intent intent = new Intent(this,ApplyWithdrawActivity.class);
 			intent.putExtra("money", tv_withdraw_cash_money.getText().toString().trim());
-			startActivity(intent);
+			startActivityForResult(intent, Constants.REQUESTCODE);
 		default:
 			break;
 		}
 	}
 	
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if(requestCode == Constants.REQUESTCODE && resultCode == Constants.RESULTCODE){
+			if(data!=null){
+				String acount = data.getStringExtra("data");
+				try {
+					double retain = Double.valueOf(income.getAvail_amount().toString().trim()) - Double.valueOf(acount);
+					tv_withdraw_cash_money.setText(ToolsUtil.DounbleToString_2(retain));
+					income.setAvail_amount(ToolsUtil.DounbleToString_2(retain));
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+			}
+		}
+		super.onActivityResult(requestCode, resultCode, data);
+	}
 	
 	
 	  @Override

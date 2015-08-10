@@ -39,6 +39,7 @@
             android:layout_centerVertical="true"
             android:singleLine="true"
             android:text="@null"
+            android:textColor="@color/text_gray_color"
             android:textSize="@dimen/textsize13sp" />
 
         <TextView

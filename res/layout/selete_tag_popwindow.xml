@@ -16,7 +16,7 @@
         android:layout_marginBottom="10dp"
         android:layout_marginTop="20.0dip"
         android:background="@drawable/bottom_dialog_button_single"
-        android:text="品牌标签"
+        android:text="普通标签"
         android:textColor="@color/text_press_selector"
         android:textSize="20sp" />
 
@@ -26,7 +26,7 @@
         android:layout_height="45dip"
         android:layout_marginBottom="10dp"
         android:background="@drawable/bottom_dialog_button_single"
-        android:text="普通标签"
+        android:text="品牌标签"
         android:textColor="@color/text_press_selector"
         android:textSize="20sp" />
 

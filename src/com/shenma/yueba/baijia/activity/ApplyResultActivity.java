@@ -64,6 +64,9 @@ public class ApplyResultActivity extends BaseActivityWithTopView implements OnCl
 			if("withdrawGoods".equals(flag)){//提现货款
 				setResult(Constants.RESULTCODE);
 				ApplyResultActivity.this.finish();
+			}else if("applaywithdraw".equals(flag)){//申请提现
+				setResult(Constants.RESULTCODE);
+				ApplyResultActivity.this.finish();
 			}else{
 				finish();
 			}
@@ -99,6 +102,7 @@ public class ApplyResultActivity extends BaseActivityWithTopView implements OnCl
 			setResult(Constants.RESULTCODE);
 			ApplyResultActivity.this.finish();
 		}
+		
 			super.onBackPressed();
 	}
 	

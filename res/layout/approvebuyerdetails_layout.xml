@@ -305,10 +305,11 @@
             android:orientation="horizontal"
             >
             <TextView
+                android:layout_marginTop="2px"
                     android:id="@+id/approvebuyerdetails_layout_siliao_linerlayout_textview"
-                    android:layout_width="wrap_content"
+                    android:layout_width="45dip"
                     android:layout_height="match_parent"
-                    android:drawableTop="@drawable/circle_default"
+                    android:drawableTop="@drawable/circle_default3"
                     android:gravity="center"
                     android:text="私聊"
                     android:textSize="@dimen/textsize12sp" />
@@ -316,7 +317,7 @@
             <TextView
                     android:layout_marginLeft="8dp"
                     android:id="@+id/approvebuyerdetails_layout_shoucang_linerlayout_textview"
-                    android:layout_width="60dp"
+                    android:layout_width="45dp"
                     android:layout_height="match_parent"
                     android:drawableTop="@drawable/collect_backgroud"
                     android:gravity="center"

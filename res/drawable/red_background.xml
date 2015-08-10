@@ -9,6 +9,6 @@
         android:color="@color/red"
         />
     <corners
-        android:radius="10dp"
+        android:radius="3dp"
         />
 </shape>
