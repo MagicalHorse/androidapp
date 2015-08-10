@@ -1325,7 +1325,7 @@ public class HttpControl {
 		map.put("json",
 				BaseGsonUtils.getObjectToJson(requestUploadProductDataBean));
 		BasehttpSend(map, context, HttpConstants.METHOD_PRODUCTMANAGER_UPDATE,
-				httpCallBack, BaseRequest.class, true, false);
+				httpCallBack, BaseRequest.class, false, false);
 	}
 
 	
@@ -2329,6 +2329,7 @@ public class HttpControl {
 			Log.i("token",userInfo.getToken());
 			SharedUtil.setStringPerfernece(context, SharedUtil.user_token,
 					userInfo.getToken());
+			SharedUtil.setUpdateUrl(context, userInfo.getUpdateUrl());
 			SharedUtil.setBooleanPerfernece(context,
 					SharedUtil.user_loginstatus, true);
 			SharedUtil.setStringPerfernece(context,

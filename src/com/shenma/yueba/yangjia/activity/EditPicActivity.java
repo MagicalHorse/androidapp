@@ -226,6 +226,10 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 				resultCache = BitmapFactory.decodeFile(FileUtils.getRootPath()
 						+ "/tagPic/" + "tagPic" + SharedUtil.getUserId(mContext)
 						+ index + ".png");
+			}else{//新增逻辑
+				resultCache = BitmapFactory.decodeFile(FileUtils.getRootPath()
+						+ "/tagPic/" + "tagPic" + SharedUtil.getUserId(mContext)
+						+ index + ".png");
 			}
 			
 		}
