@@ -308,10 +308,8 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView
 			approvebuyerdetails_attention_textview.setLayoutParams(tv_params);
 			
 			// 收藏按钮
-			approvebuyerdetails_layout_shoucang_linerlayout_textview
-					.setOnClickListener(this);
-			approvebuyerdetails_layout_shoucang_linerlayout_textview
-					.setTag(Data);
+			approvebuyerdetails_layout_shoucang_linerlayout_textview.setOnClickListener(this);
+			approvebuyerdetails_layout_shoucang_linerlayout_textview.setTag(Data);
 			if(Data.isIsFavorite())
 			{
 				approvebuyerdetails_layout_shoucang_linerlayout_textview.setText("取消收藏");
@@ -343,10 +341,11 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView
 				riv.setLayoutParams(params);
 				if (i != 7) {
 					initPic(ToolsUtil.nullToString(users.get(i).getLogo()), riv);
+					riv.setTag(users.get(i).getUserId());
 				} else {
+					riv.setTag(null);
 					riv.setBackgroundResource(R.drawable.test003);
 				}
-				riv.setTag(users.get(i).getUserId());
 				riv.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
@@ -354,7 +353,7 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView
 						{
 							return;
 						}
-						if (((Integer)v.getTag()) <= 0) {
+						if (v.getTag()==null || ((Integer)v.getTag()) <= 0) {
 							return;
 						}
 						Intent intent = new Intent(ApproveBuyerDetailsActivity.this,ShopMainActivity.class);

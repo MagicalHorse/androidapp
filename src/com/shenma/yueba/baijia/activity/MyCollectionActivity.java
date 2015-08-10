@@ -38,6 +38,7 @@ import android.widget.TextView;
  * @version 创建时间：2015-5-20 上午11:14:57 程序的简单说明
  */
 
+
 public class MyCollectionActivity extends BaseActivityWithTopView {
 	HttpControl httpCntrol = new HttpControl();
 	int currPage = Constants.CURRPAGE_VALUE;
@@ -83,8 +84,8 @@ public class MyCollectionActivity extends BaseActivityWithTopView {
 		initPuBuView(pubuliu_layout_include);
 		pubuliy_left_linearlayout = (LinearLayout) findViewById(R.id.pubuliy_left_linearlayout);
 		pubuliy_right_linearlayout = (LinearLayout) findViewById(R.id.pubuliy_right_linearlayout);
-		shop_main_layout_title_pulltorefreshscrollview = (PullToRefreshScrollView) findViewById(
-				R.id.shop_main_layout_title_pulltorefreshscrollview);
+		shop_main_layout_title_pulltorefreshscrollview = (PullToRefreshScrollView) findViewById(R.id.shop_main_layout_title_pulltorefreshscrollview);
+		ToolsUtil.initPullResfresh(shop_main_layout_title_pulltorefreshscrollview, MyCollectionActivity.this);
 		shop_main_layout_title_pulltorefreshscrollview.setMode(Mode.PULL_FROM_START);
 		shop_main_layout_title_pulltorefreshscrollview.setOnRefreshListener(new OnRefreshListener2() {
 
@@ -164,7 +165,7 @@ public class MyCollectionActivity extends BaseActivityWithTopView {
 			@Override
 			public void http_Success(Object obj) {
 				currPage = page;
-				shop_main_layout_title_pulltorefreshscrollview.onRefreshComplete();
+				ToolsUtil.pullResfresh(shop_main_layout_title_pulltorefreshscrollview);
 				showDialog = false;
 				if (obj != null && obj instanceof RequestMyFavoriteProductListInfoBean) {
 					RequestMyFavoriteProductListInfoBean bean = (RequestMyFavoriteProductListInfoBean) obj;
@@ -186,7 +187,7 @@ public class MyCollectionActivity extends BaseActivityWithTopView {
 
 			@Override
 			public void http_Fails(int error, String msg) {
-				shop_main_layout_title_pulltorefreshscrollview.onRefreshComplete();
+				ToolsUtil.pullResfresh(shop_main_layout_title_pulltorefreshscrollview);
 				MyApplication.getInstance().showMessage(MyCollectionActivity.this, msg);
 			}
 		}, MyCollectionActivity.this);

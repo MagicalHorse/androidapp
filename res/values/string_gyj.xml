@@ -33,10 +33,10 @@
     <string name="getting_prepayid">正在获取订单信息...</string>
     
     <!-- 刷新提示信息 -->
-    <string name="Refreshonstr">上拉刷新</string>
+    <string name="Refreshonstr">下拉刷新</string>
     <string name="Refreshloadingstr">刷新中...</string>
     <string name="Loosentherefresh">松开刷新</string>
-    <string name="Thedropdownloadstr">下拉加载</string>
+    <string name="Thedropdownloadstr">上拉加载</string>
     <string name="RefreshLoadingstr">加载中...</string>
     <string name="Loosentheloadstr">松开加载</string>
     

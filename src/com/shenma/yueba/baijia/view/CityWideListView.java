@@ -89,16 +89,11 @@ public class CityWideListView extends BaseView{
 			@Override
 			public void onPullDownToRefresh(PullToRefreshBase refreshView) {
 				
-				//SystemClock.sleep(myCircleAdapter);
-				Log.i("TAG", "onPullDownToRefresh");
-				//pulltorefreshscrollview.setRefreshing();
 				requestFalshData();
 			}
 
 			@Override
 			public void onPullUpToRefresh(PullToRefreshBase refreshView) {
-				//SystemClock.sleep(myCircleAdapter);
-				//pulltorefreshscrollview.setRefreshing();
 				Log.i("TAG", "onPullUpToRefresh");
 				requestData();
 			}
