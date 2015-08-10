@@ -42,7 +42,10 @@ public class XCFlowLayout extends ViewGroup{
         //记录每一行的宽度和高度
         int lineWidth = 0;
         int lineHeight = 0;
-        
+        int marTop=0;
+        int marbutton=0;
+        int paddingTop=0;
+        int paddingBotton=0;
         //获取子view的个数
         int childCount = getChildCount();
         for(int i = 0;i < childCount; i ++){
@@ -52,12 +55,15 @@ public class XCFlowLayout extends ViewGroup{
             //得到LayoutParams
             MarginLayoutParams lp = (MarginLayoutParams) getLayoutParams();
             //子View占据的宽度
-            int childWidth = child.getMeasuredWidth() + lp.leftMargin + lp.rightMargin;
+            int childWidth = child.getMeasuredWidth() ;
             //子View占据的高度
-            int childHeight = child.getMeasuredHeight() + lp.topMargin + lp.bottomMargin;
+            int childHeight = child.getMeasuredHeight();
             
-            int chidePadiingHeight=child.getPaddingTop()+child.getPaddingBottom();
-            
+            //int chidePadiingHeight=child.getPaddingTop()+child.getPaddingBottom();
+            marTop=lp.topMargin;
+            marbutton=lp.bottomMargin;
+            paddingTop=child.getPaddingTop();
+            paddingBotton=child.getPaddingBottom();
             //换行时候
             if(lineWidth + childWidth > sizeWidth){
                 //对比得到最大的宽度
@@ -66,7 +72,7 @@ public class XCFlowLayout extends ViewGroup{
                 lineWidth = childWidth;
                 //记录行高
                 height += lineHeight;
-                lineHeight = childHeight+chidePadiingHeight;
+                lineHeight = childHeight;
             }else{//不换行情况
                 //叠加行宽
                 lineWidth += childWidth;
@@ -79,6 +85,7 @@ public class XCFlowLayout extends ViewGroup{
                 height += lineHeight;
             }
         }
+        height+=paddingTop+paddingBotton+marTop+marbutton;
         //wrap_content
         setMeasuredDimension(modeWidth == MeasureSpec.EXACTLY ? sizeWidth : width,
                 modeHeight == MeasureSpec.EXACTLY ? sizeHeight : height);

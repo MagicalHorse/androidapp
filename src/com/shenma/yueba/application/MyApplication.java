@@ -307,7 +307,10 @@ public class MyApplication extends Application {
 	 *            msg 提示的消息
 	 * ***/
 	public void showMessage(Context context, String msg) {
-		Toast.makeText(context, msg, 1000).show();
+		if(context!=null && msg!=null)
+		{
+		   Toast.makeText(context, msg, 1000).show();
+		}
 	}
 
 	/*****
