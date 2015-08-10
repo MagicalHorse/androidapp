@@ -829,7 +829,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 		FontManager.changeFonts(this, chat_product_head_layout_name_textview,
 				chat_product_head_layout_name_textview,
 				chat_product_head_layout_price_textview,
-				chat_product_head_layout_button);
+				chat_product_head_layout_button,tv_top_right);
 	}
 
 	@Override
