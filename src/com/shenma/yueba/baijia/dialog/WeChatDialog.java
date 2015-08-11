@@ -54,6 +54,8 @@ public class WeChatDialog extends Dialog implements
 		this.qrCodePath = qrCodePath;
 		this.title = title;
 		setOwnerActivity((Activity) context);
+		setCancelable(true);
+		setCanceledOnTouchOutside(false);
 		// this.getWindow().setBackgroundDrawable(context.getResources().getDrawable(R.color.color_transparent));
 	}
 

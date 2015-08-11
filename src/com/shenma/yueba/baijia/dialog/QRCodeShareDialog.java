@@ -46,6 +46,8 @@ public class QRCodeShareDialog extends Dialog implements android.view.View.OnCli
 		this.context=context;
 		this.obj=obj;
 		setOwnerActivity((Activity)context);
+		setCancelable(true);
+		setCanceledOnTouchOutside(false);
         //this.getWindow().setBackgroundDrawable(context.getResources().getDrawable(R.color.color_transparent));
 	}
 
