@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import im.control.SocketManger;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
@@ -170,6 +171,7 @@ public class FillPersonDataActivity extends BaseActivityWithTopView {
 				if(obj!=null && obj instanceof UserRequestBean)
 				{
 					finish();
+					SocketManger.the().onLineToUserID();
 					UserRequestBean bean=(UserRequestBean)obj;
 					httpControl.setLoginInfo(FillPersonDataActivity.this, bean);
 					Intent intent=new Intent(FillPersonDataActivity.this,MainActivityForBaiJia.class);

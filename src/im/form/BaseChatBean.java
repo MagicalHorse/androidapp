@@ -1,15 +1,13 @@
 package im.form;
 
-import im.control.ChatBaseManager;
-import im.control.SocketManger.SocketManagerListener;
-
 import java.io.Serializable;
-
-import android.content.Context;
 
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.util.ToolsUtil;
+
+import android.content.Context;
+import im.control.ChatBaseManager;
 
 /**  
  * @author gyj  
@@ -149,7 +147,7 @@ public abstract class  BaseChatBean implements Serializable{
 	/******
 	 * 发送数据
 	 * ***/
-	public abstract void sendData(SocketManagerListener listener);
+	public abstract void sendData();
 	/***
 	 * 赋值 讲 接收到的消息数据 进行赋值
 	 * **/

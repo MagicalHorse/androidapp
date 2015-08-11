@@ -88,7 +88,6 @@ public class MsgListView extends BaseView{
 				int to_userid=msgListInfo.getId();
 				Log.i("TAG", "----->>to_userid:"+to_userid);
 				intent.putExtra("toUser_id", to_userid);
-				intent.putExtra("Chat_Type", ChatActivity.chat_type_private);//类型 圈子 还是私聊
 				intent.putExtra("Chat_NAME",msgListInfo.getName());//名字
 				intent.putExtra("Chat_RoomID",msgListInfo.getRoomId());//roomid
 				activity.startActivity(intent);

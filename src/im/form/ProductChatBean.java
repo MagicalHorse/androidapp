@@ -2,8 +2,6 @@ package im.form;
 
 import android.content.Context;
 import im.control.SocketManger;
-import im.control.SocketManger.SocketManagerListener;
-import im.form.BaseChatBean.SendStatus;
 
 /**  
  * @author gyj  
@@ -20,9 +18,9 @@ public class ProductChatBean extends BaseChatBean{
 	}
 
 	@Override
-	public void sendData(SocketManagerListener listener) {
+	public void sendData() {
 		MessageBean bean=getMessageBean();
-		SocketManger.the().sendMsg(bean,listener);
+		SocketManger.the().sendMsg(bean);
 	}
 
 	@Override

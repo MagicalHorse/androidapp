@@ -1,16 +1,14 @@
 package im.form;
 
-import im.control.SocketManger;
-import im.control.SocketManger.SocketManagerListener;
-import android.content.Context;
-import android.os.SystemClock;
-
 import com.alibaba.sdk.android.oss.callback.SaveCallback;
 import com.alibaba.sdk.android.oss.model.OSSException;
 import com.shenma.yueba.baijia.modle.RequestUploadChatImageInfo;
 import com.shenma.yueba.baijia.modle.RequestUploadChatImageInfoBean;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
+
+import android.content.Context;
+import im.control.SocketManger;
 
 /**  
  * @author gyj  
@@ -87,10 +85,8 @@ public void setPicaddress(String picaddress) {
 	public PicChatBean(Context context) {
 		super(ChatType.pic_type,RequestMessageBean.type_img,context);
 	}
-	SocketManagerListener sockerManagerlistener;
 	@Override
-	public void sendData(SocketManagerListener sockerManagerlistener) {
-		this.sockerManagerlistener=sockerManagerlistener;  
+	public void sendData() {
 		UploadAlI();//上传阿里云
 	}
 
@@ -106,7 +102,7 @@ public void setPicaddress(String picaddress) {
 	{
 		content=url;
 		MessageBean bean=getMessageBean();
-		SocketManger.the().sendMsg(bean,sockerManagerlistener);
+		SocketManger.the().sendMsg(bean);
 		if(listener!=null)
 		{
 			listener.pic_notifaction();

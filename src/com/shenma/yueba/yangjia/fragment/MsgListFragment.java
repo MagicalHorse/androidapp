@@ -89,7 +89,6 @@ public class MsgListFragment extends BaseFragment {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,long arg3) {
 				MsgListInfo msgListInfo=mList.get(arg2-1);
 				Intent intent=new Intent(getActivity(),ChatActivity.class);
-				intent.putExtra("Chat_Type", ChatActivity.chat_type_private);//类型 圈子 还是私聊
 				intent.putExtra("Chat_NAME",msgListInfo.getName());//名字
 				intent.putExtra("Chat_RoomID",msgListInfo.getRoomId());//roomid
 				getActivity().startActivity(intent);

@@ -118,17 +118,16 @@ public class SalesManagerForAttestationBuyerAdapter extends BaseAdapterWithUtil 
 		}
 		OrderItem item = mList.get(position);
 		if(item!=null){
+			holder.tv_bottom.setTag(item);
 			if(0 == tag){//全部订单
 				holder.tv_commission.setText(TextUtils.isEmpty(item.getInCome())?"":"佣金：￥"+item.getInCome());
 				ToolsUtil.setTextColorBlackAndRed(holder.tv_money_payed, "实付：￥", ToolsUtil.getTextColorRed(item.getAmount()));
 				if("3".equals(mList.get(position).getStatus()) && mList.get(position).isIsNeedRma()){
 					holder.ll_bottom.setVisibility(View.VISIBLE);
 					if(mList.get(position).isIsGoodsPick()){//订单状态为退货处理中
-						holder.tv_bottom.setTag(item);
 						holder.tv_bottom.setText("充值并退款");
 					}else{//还未提款
 						holder.tv_bottom.setText("确认退款");
-						holder.tv_bottom.setTag(item);
 					}
 				}else{
 					holder.ll_bottom.setVisibility(View.GONE);

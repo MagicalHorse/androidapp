@@ -116,7 +116,6 @@ public class CircleView extends BaseView{
 				}
 				TuiJianCircleInfo myCircleInfo=items.get(arg2);
 				Intent intent=new Intent(activity,ChatActivity.class);
-				intent.putExtra("Chat_Type", ChatActivity.chat_type_group);
 				intent.putExtra("Chat_NAME",myCircleInfo.getName());//圈子名字
 				intent.putExtra("circleId", myCircleInfo.getId());
 				activity.startActivity(intent);

@@ -111,7 +111,6 @@ public class CircleListActivity extends BaseActivityWithTopView{
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,long arg3) {
 				MyCircleInfo myCircleInfo=items.get(arg2-1);
 				Intent intent=new Intent(CircleListActivity.this,ChatActivity.class);
-				intent.putExtra("Chat_Type", ChatActivity.chat_type_group);//类型 圈子 还是私聊
 				intent.putExtra("Chat_NAME",myCircleInfo.getName());//圈子名字
 				intent.putExtra("circleId",myCircleInfo.getId());
 				startActivity(intent);

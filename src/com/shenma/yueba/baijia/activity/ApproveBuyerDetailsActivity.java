@@ -6,10 +6,28 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com.shenma.yueba.ChatActivity;
+import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.adapter.ScrollViewPagerAdapter;
+import com.shenma.yueba.baijia.modle.LikeUsersInfoBean;
+import com.shenma.yueba.baijia.modle.ProductsDetailsInfoBean;
+import com.shenma.yueba.baijia.modle.ProductsDetailsPromotion;
+import com.shenma.yueba.baijia.modle.ProductsDetailsTagInfo;
+import com.shenma.yueba.baijia.modle.ProductsDetailsTagsInfo;
+import com.shenma.yueba.baijia.modle.RequestProductDetailsInfoBean;
+import com.shenma.yueba.baijia.modle.UsersInfoBean;
+import com.shenma.yueba.util.FontManager;
+import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
+import com.shenma.yueba.util.ToolsUtil;
+import com.shenma.yueba.view.FixedSpeedScroller;
+import com.shenma.yueba.view.RoundImageView;
+import com.shenma.yueba.view.TagImageView;
+import com.umeng.analytics.MobclickAgent;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Paint;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -30,29 +48,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-
-import com.shenma.yueba.ChatActivity;
-import com.shenma.yueba.R;
-import com.shenma.yueba.application.MyApplication;
-import com.shenma.yueba.baijia.adapter.ScrollViewPagerAdapter;
-import com.shenma.yueba.baijia.adapter.UserIconAdapter;
-import com.shenma.yueba.baijia.modle.LikeUsersInfoBean;
-import com.shenma.yueba.baijia.modle.ProductTagsInfoBean;
-import com.shenma.yueba.baijia.modle.ProductsDetailsInfoBean;
-import com.shenma.yueba.baijia.modle.ProductsDetailsPromotion;
-import com.shenma.yueba.baijia.modle.ProductsDetailsTagInfo;
-import com.shenma.yueba.baijia.modle.ProductsDetailsTagsInfo;
-import com.shenma.yueba.baijia.modle.RequestProductDetailsInfoBean;
-import com.shenma.yueba.baijia.modle.UsersInfoBean;
-import com.shenma.yueba.util.FontManager;
-import com.shenma.yueba.util.HttpControl;
-import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
-import com.shenma.yueba.util.ToolsUtil;
-import com.shenma.yueba.view.FixedSpeedScroller;
-import com.shenma.yueba.view.MyGridView;
-import com.shenma.yueba.view.RoundImageView;
-import com.shenma.yueba.view.TagImageView;
-import com.umeng.analytics.MobclickAgent;
 
 /**
  * @author gyj
@@ -204,7 +199,6 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView
 		if(bean!=null)
 		{
 			Intent intent = new Intent(ApproveBuyerDetailsActivity.this,ChatActivity.class);
-			intent.putExtra("Chat_Type", ChatActivity.chat_type_private);
 			intent.putExtra("Chat_NAME", bean.getData().getBuyerName());// 圈子名字
 			intent.putExtra("toUser_id", bean.getData().getBuyerId());// 私聊的话需要传对方id
 			intent.putExtra("DATA", bean);

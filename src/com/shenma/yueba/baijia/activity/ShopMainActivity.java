@@ -172,7 +172,6 @@ public class ShopMainActivity extends FragmentActivity {
 				}
 				Intent siliaointent=new Intent(ShopMainActivity.this,ChatActivity.class);
 				siliaointent.putExtra("Chat_NAME", userInfoBean.getUserName());
-				siliaointent.putExtra("Chat_Type", ChatActivity.chat_type_private);
 				siliaointent.putExtra("toUser_id",userID);
 				startActivity(siliaointent);
 				break;
