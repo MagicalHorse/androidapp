@@ -305,6 +305,7 @@
                             android:src="@drawable/tanhao" />
 
                         <TextView
+                            android:id="@+id/tv_tishi"
                             android:layout_marginLeft="10dip"
                             android:textColor="@color/text_gray_color"
                             android:layout_width="fill_parent"

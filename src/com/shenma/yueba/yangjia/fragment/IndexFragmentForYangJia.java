@@ -26,6 +26,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.lidroid.xutils.BitmapUtils;
 import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.adapter.MyFragmentPagerAdapter;
 import com.shenma.yueba.baijia.fragment.BaseFragment;
 import com.shenma.yueba.baijia.fragment.MyBuyerFragment;
@@ -36,6 +37,7 @@ import com.shenma.yueba.baijia.modle.Goodsamount;
 import com.shenma.yueba.baijia.modle.Income;
 import com.shenma.yueba.baijia.modle.Order;
 import com.shenma.yueba.baijia.modle.Product;
+import com.shenma.yueba.inter.IndexRefreshInter;
 import com.shenma.yueba.util.Base64Coder;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
@@ -55,7 +57,7 @@ import com.shenma.yueba.yangjia.activity.SocialManagerActivity;
  * @author a
  */
 public class IndexFragmentForYangJia extends BaseFragment implements
-		OnClickListener {
+		OnClickListener ,IndexRefreshInter{
 	private View view;
 	private ImageView iv_cursor_left, iv_cursor_center, iv_cursor_right;
 	private Button bt_cart;
@@ -128,6 +130,7 @@ public class IndexFragmentForYangJia extends BaseFragment implements
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		bitmapUtils = new BitmapUtils(getActivity());
+		MyApplication.getInstance().getIndexRefreshService().addToList(this);
 		super.onCreate(savedInstanceState);
 	}
 	@Override
@@ -441,6 +444,17 @@ public class IndexFragmentForYangJia extends BaseFragment implements
 		
 		
 		}
+	@Override
+	public void refresh() {
+		getIndexInfo(false);
+	}
+	
+	
+	@Override
+	public void onDestroy() {
+		MyApplication.getInstance().getIndexRefreshService().removeFromList(this);
+		super.onDestroy();
+	}
 	
 	
 	

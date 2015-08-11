@@ -40,6 +40,8 @@ import com.shenma.yueba.baijia.activity.LoginAndRegisterActivity;
 import com.shenma.yueba.baijia.modle.UserRequestBean;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.db.DBHelper;
+import com.shenma.yueba.refreshservice.HuoKuanManagerRefreshService;
+import com.shenma.yueba.refreshservice.IndexRefreshService;
 import com.shenma.yueba.util.LocationUtil;
 import com.shenma.yueba.util.PublishPicUtil;
 import com.shenma.yueba.util.SharedUtil;
@@ -47,6 +49,9 @@ import com.shenma.yueba.util.ToolsUtil;
 
 public class MyApplication extends Application {
 
+	
+	private IndexRefreshService indexRefreshService;
+	private HuoKuanManagerRefreshService huoKuanManagerRefreshService;
 	private static List<Activity> activityList = new LinkedList<Activity>();
 	private static MyApplication instance;
 	private BitmapUtils bitmapUtils;
@@ -75,6 +80,8 @@ public class MyApplication extends Application {
 	public void onCreate() {
 		super.onCreate();
 		instance = this;
+		indexRefreshService = new IndexRefreshService();
+		huoKuanManagerRefreshService= new HuoKuanManagerRefreshService();
 		initBitmapUtils();
 		initImageLoader(getApplicationContext());
 		initDisplayImageOptions();
@@ -90,8 +97,28 @@ public class MyApplication extends Application {
 
 	
 	
+	/**
+	 * 养家首页的刷新
+	 * @return
+	 */
+	public IndexRefreshService getIndexRefreshService(){
+		if(indexRefreshService ==null){
+			return new IndexRefreshService();
+		}
+		return indexRefreshService;
+	}
 	
-	
+
+	/**
+	 * 货款管理的刷新
+	 * @return
+	 */
+	public HuoKuanManagerRefreshService getHuoKuanManagerRefreshService(){
+		if(huoKuanManagerRefreshService ==null){
+			return new HuoKuanManagerRefreshService();
+		}
+		return huoKuanManagerRefreshService;
+	}
 	
 	
 	

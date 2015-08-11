@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.graphics.Color;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.BaiJiaOrderListActivity;
 import com.shenma.yueba.yangjia.activity.EarningManagerActivity;
 import com.shenma.yueba.yangjia.activity.HuoKuanManagerActivity;
@@ -87,6 +88,7 @@ public class NotificationUtils {
 //			}
 
 			if ("8".equals(type)) {// 用户收货--推送给买手
+				MyApplication.getInstance().getIndexRefreshService().refreshList();
 				notificationIntent = new Intent(ctx,
 						SalesManagerForBuyerActivity.class); // 点击该通知后要跳转的Activity
 			}
