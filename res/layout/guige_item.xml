@@ -12,6 +12,7 @@
         android:layout_weight="1"
         android:background="@drawable/shape_linearlayout10"
         android:hint="规格"
+          android:maxLength="20"
         android:padding="5dip"
         android:textColor="@color/text_gray_color"
         android:textSize="18sp" />
