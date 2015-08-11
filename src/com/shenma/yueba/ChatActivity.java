@@ -35,6 +35,7 @@ import com.shenma.yueba.view.faceview.FaceView.OnChickCallback;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -63,6 +64,8 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import im.broadcast.ImBroadcastReceiver;
+import im.broadcast.ImBroadcastReceiver.ImBroadcastReceiverLinstener;
 
 /**
  * Copyright (C) 2013-2014 EaseMob Technologies. All rights reserved.
@@ -79,7 +82,6 @@ import android.widget.Toast;
  */
 
 import im.control.SocketManger;
-import im.control.SocketManger.SocketManagerListener;
 import im.form.BaseChatBean;
 import im.form.NoticeChatBean;
 import im.form.PicChatBean;
@@ -95,7 +97,7 @@ import roboguice.activity.RoboActivity;
  * 
  */
 public class ChatActivity extends RoboActivity implements OnClickListener,
-		OnChickCallback, OnScrollListener, SocketManagerListener {
+		OnChickCallback, OnScrollListener,ImBroadcastReceiverLinstener {
 	public static final int Result_code_link = 400;// 链接
 	public static final int Result_code_collection = 500;// 收藏
 	LinkedList<BaseChatBean> bean_list = new LinkedList<BaseChatBean>();// 消息列表
@@ -117,9 +119,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 	CreateOrderDialog createOrderDialog;// 创建订单对话框
 	HttpControl httpControl = new HttpControl();
 	boolean ishowStatus = true;
-	String chat_type = null;
-	public final static String chat_type_group = "group";// 群聊
-	public final static String chat_type_private = "private";// 私聊
+
 	int formUser_id;
 	int toUser_id;
 	int circleId;// 圈子id
@@ -134,19 +134,23 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 	String littlePicPath;
 	String littlePicPath_cache;
     public static Map<Integer,String> userid_logo=new HashMap<Integer,String>();
-	
+    ImBroadcastReceiver imBroadcastReceiver;
+    boolean isregister=false;
+    
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		MyApplication.getInstance().addActivity(this);// 加入回退栈
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_chat);
+		imBroadcastReceiver=new ImBroadcastReceiver(this);
+		registerImBroadcastReceiver();
 		SocketManger.the();
 		// 我的 userid
 		formUser_id = Integer.parseInt(SharedUtil.getStringPerfernece(this,SharedUtil.user_id));
 		initView();
 		// 设置购买商品信息 视图
-		setProduct();
+		setProduct(this.getIntent());
 
 		// 我的昵称
 		userName = SharedUtil.getStringPerfernece(getApplicationContext(),
@@ -163,62 +167,75 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 			tv_top_title.setVisibility(View.VISIBLE);
 			FontManager.changeFonts(this, tv_top_title);
 		}
-		if (this.getIntent().getStringExtra("Chat_Type") == null)// 获取聊天类型
+		
+		//获取圈子id
+		circleId = this.getIntent().getIntExtra("circleId", -10);
+		//获取roomid
+		roomId = this.getIntent().getStringExtra("Chat_RoomID");
+		//获取私聊的对方id
+		toUser_id = this.getIntent().getIntExtra("toUser_id", -10);
+		// 群聊
+		if (circleId > 0) {
+			// 显示设置
+			tv_top_right.setVisibility(View.VISIBLE);
+		} else {
+			// 隐藏设置
+			tv_top_right.setVisibility(View.GONE);
+
+		}
+		if(roomId!=null)
 		{
-			MyApplication.getInstance().showMessage(this, "数据错误");
-			//离开房间
-			outRoom();
+			getMessageByRoomID();
+		}else if(circleId>-1)
+		{
+			getMessageByCircleId();
+		}else if(toUser_id>-1)
+		{
+			getMessageByToUserId();
+		}else
+		{
 			finish();
 			return;
 		}
-		// 获取 聊天类型（即 群聊/私聊）
-		chat_type = this.getIntent().getStringExtra("Chat_Type");
-		// 如果是群聊
-		if (chat_type.endsWith(chat_type_group)) {
-			// 获取圈子ID
-			circleId = this.getIntent().getIntExtra("circleId", -10);
-			// 群聊
-			if (circleId > 0) {
-				// 显示设置
-				tv_top_right.setVisibility(View.VISIBLE);
-			} else {
-				// 隐藏设置
-				tv_top_right.setVisibility(View.GONE);
-
-			}
-
-			// 获取房间号
-			getRoomdId(circleId, formUser_id, toUser_id);
-		} else if (chat_type.endsWith(chat_type_private)) {// 如果是私聊
-			toUser_id = this.getIntent().getIntExtra("toUser_id", -10);
-			// 如果存在房间号 则直接获取消息信息
-			if (this.getIntent().getStringExtra("Chat_RoomID") != null) {
-				String room_id = this.getIntent().getStringExtra("Chat_RoomID");
-				if (!room_id.equals("")) {
-					// 获取到 room_id;
-					roomId = room_id;
-					// 获取历史消息
-					getMessage();
-					SocketManger.the().contentSocket(this);
-					
-					inroom();
-				}
-			} else// 否则 如果存在对方id 则获取房间号
-			{
-				// 私聊 获取 toUser_id
-				toUser_id = this.getIntent().getIntExtra("toUser_id", -10);
-				if (toUser_id < 0) {
-					MyApplication.getInstance().showMessage(this, "数据错误");
-					finish();
-					return;
-				}
-				// 获取房间号
-				getRoomdId(circleId, formUser_id, toUser_id);
-			}
-		}
-
 	}
-
+	
+	
+	
+	/*******
+	 * 通过用圈子id获取历史数据信息
+	 * ***/
+	void getMessageByCircleId()
+	{
+		// 获取房间号
+		getRoomdId(circleId, formUser_id, toUser_id);
+	}
+	
+	
+	
+	/*******
+	 * 通过用户id与 对方ID 获取历史数据信息
+	 * ***/
+	void getMessageByToUserId()
+	{
+		// 获取房间号
+		getRoomdId(circleId, formUser_id, toUser_id);
+	}
+	
+	
+	
+	/*******
+	 * 通过房间号 获取历史数据信息
+	 * ***/
+	void getMessageByRoomID()
+	{
+		// 获取历史消息
+		getMessage();
+		inroom();
+	}
+	
+	
+	
+	
 	/**
 	 *初始化
 	 */
@@ -340,8 +357,8 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		SocketManger.the().disContentSocket();
 		userid_logo.clear();
+		unRegisterImBroadcastReceiver();
 	}
 
 	@Override
@@ -364,14 +381,14 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 		}
 	}
 
-	/**
+/*	*//**
 	 * 返回
 	 * 
 	 * @param view
-	 */
+	 *//*
 	public void back(View view) {
 		finish();
-	}
+	}*/
 
 	/**
 	 * 覆盖手机返回键
@@ -481,7 +498,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 		bean.setRoom_No(roomId);
 		bean.setUserName(userName);
 		bean.setIsoneself(true);
-		bean.sendData(this);// 发送数据
+		bean.sendData();// 发送数据
 		bean.setLogo(ToolsUtil.nullToString(usericon));
 		bean.setCreationDate(ToolsUtil.getCurrentTime());
 		bean.setSharelink(content);
@@ -496,15 +513,12 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 	// 定位到知道位置
 	void pointLast(int i) {
 		if (i <= bean_list.size()) {
-			chat_list.getRefreshableView().setSelection(i);
+			if(chat_list!=null)
+			{
+				chat_list.getRefreshableView().setSelection(i);
+			}
+			
 		}
-
-		// chat_list.getRefreshableView().smoothScrollToPosition(i);
-		/*
-		 * if(bean_list.size()>0 && i<=bean_list.size()) {
-		 * chat_list.getRefreshableView().smoothScrollToPosition(i); }
-		 */
-
 	}
 
 	@Override
@@ -768,9 +782,9 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 	/*****
 	 * 设置商品信息(如果存在商品信息)
 	 * ***/
-	void setProduct() {
+	void setProduct(Intent intent) {
 		// 判断是否传递了商品的信息
-		if (this.getIntent().getSerializableExtra("DATA") == null) {
+		if (intent.getSerializableExtra("DATA") == null) {
 			chat_product_head_layout_include.setVisibility(View.GONE);
 			return;
 		} else {
@@ -865,44 +879,6 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 
 	}
 
-	@Override
-	public void error(Object... obj) {
-
-	}
-
-	@Override
-	public void connectSucess(Object... obj) {
-		inroom();
-	}
-
-	@Override
-	public void disconnectSucess(Object... obj) {
-
-	}
-
-	@Override
-	public void sendMsgListener(Object obj) {// 接收到信息
-		if (obj != null && obj instanceof RequestMessageBean) {
-			BaseChatBean baseChatBean = null;
-			RequestMessageBean bean = (RequestMessageBean) obj;
-			String type = bean.getType();
-			if (type.equals(RequestMessageBean.type_img))// 如果是图片
-			{
-				baseChatBean = new PicChatBean(ChatActivity.this);
-			} else if (type.equals(RequestMessageBean.type_produtc_img))// 如果是商品图片
-			{
-				baseChatBean = new ProductChatBean(ChatActivity.this);
-			} else if (type.equals(RequestMessageBean.notice))// 如果是广播
-			{
-
-			} else {
-				baseChatBean = new TextChatBean(ChatActivity.this);
-
-			}
-			// 通知更新
-			notification(baseChatBean, bean);
-		}
-	}
 
 	void notification(final BaseChatBean baseChatBean,
 			final RequestMessageBean bean) {
@@ -934,7 +910,6 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 		roomBean.setRoom_id(roomId);
 		//roomBean.setTitle();ssss
 		roomBean.setUserName(userName);
-		roomBean.setType(chat_type);
 		int[] userint = new int[int_array.size()];
 		for (int i = 0; i < int_array.size(); i++) {
 			userint[i] = int_array.get(i);
@@ -992,10 +967,9 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 								requestRoomInfo = bean.getData();
 								roomId = bean.getData().getId();
 								// 进入房间
-								SocketManger.the().contentSocket(ChatActivity.this);
 								int_array = requestRoomInfo.getUserList();
-								inroom();
 								getMessage();// 获取历史数据
+								inroom();
 							}
 
 						}
@@ -1138,6 +1112,58 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 		MyApplication.getInstance().getBitmapUtil().display(iv, url);
 	}
 
+	
+	/******
+	 * 注册广播监听 用于接收消息
+	 * ***/
+	void registerImBroadcastReceiver()
+	{
+		if(!isregister)
+		{
+			isregister=true;
+			this.registerReceiver(imBroadcastReceiver, new IntentFilter(ImBroadcastReceiver.IntentFilter));
+		}
+		
+	}
+	
+	/****
+	 * 注销广播监听
+	 * **/
+	void unRegisterImBroadcastReceiver()
+	{
+		if(isregister)
+		{
+			this.unregisterReceiver(imBroadcastReceiver);
+		}
+		
+	}
+
+
+
+	@Override
+	public void newMessage(Object obj) {
+		if (obj != null && obj instanceof RequestMessageBean) {
+			BaseChatBean baseChatBean = null;
+			RequestMessageBean bean = (RequestMessageBean) obj;
+			String type = bean.getType();
+			if (type.equals(RequestMessageBean.type_img))// 如果是图片
+			{
+				baseChatBean = new PicChatBean(ChatActivity.this);
+			} else if (type.equals(RequestMessageBean.type_produtc_img))// 如果是商品图片
+			{
+				baseChatBean = new ProductChatBean(ChatActivity.this);
+			} else if (type.equals(RequestMessageBean.notice))// 如果是广播
+			{
+
+			} else {
+				baseChatBean = new TextChatBean(ChatActivity.this);
+
+			}
+			// 通知更新
+			notification(baseChatBean, bean);
+		}
+	}
+	
 }
 
 

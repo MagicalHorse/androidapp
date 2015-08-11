@@ -287,7 +287,7 @@ public class ToolsUtil {
 					int face = MyApplication.getInstance().getFaceMap().get(str2);
 					Drawable d = context.getResources().getDrawable(face);
 					if (d != null) {
-						d.setBounds(0, 0, 60, 60);// 设置表情图片的显示大小
+						d.setBounds(0, 0, 45, 45);// 设置表情图片的显示大小
 						ImageSpan span = new ImageSpan(d, ImageSpan.ALIGN_BOTTOM);
 						value.setSpan(span, k, m, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 					}
@@ -554,7 +554,7 @@ public class ToolsUtil {
 
 			@Override
 			public void http_Fails(int error, String msg) {
-				// TODO Auto-generated method stub
+				
 
 			}
 		}, ctx);
@@ -921,4 +921,5 @@ public class ToolsUtil {
 			}, 1000);
 		}
 	}
+
 }

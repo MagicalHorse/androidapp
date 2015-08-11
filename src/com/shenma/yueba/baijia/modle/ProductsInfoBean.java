@@ -19,6 +19,15 @@ public class ProductsInfoBean implements Serializable{
 	String ProductName="";// 产品名字
 	int ProductId; //产品编号
 	String ShareLink="";//分享链接
+	String ShareDesc="";
+	
+	
+	public String getShareDesc() {
+		return ShareDesc;
+	}
+	public void setShareDesc(String shareDesc) {
+		ShareDesc = shareDesc;
+	}
 	public String getShareLink() {
 		return ShareLink;
 	}

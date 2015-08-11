@@ -1,6 +1,19 @@
 package com.shenma.yueba.baijia.fragment;
 
 
+import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.activity.FindPasswordActivity;
+import com.shenma.yueba.baijia.activity.MainActivityForBaiJia;
+import com.shenma.yueba.baijia.modle.UserRequestBean;
+import com.shenma.yueba.util.FontManager;
+import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
+import com.shenma.yueba.util.JpushUtils;
+import com.shenma.yueba.util.WXLoginUtil;
+import com.umeng.socialize.controller.UMServiceFactory;
+import com.umeng.socialize.controller.UMSocialService;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -12,20 +25,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.shenma.yueba.R;
-import com.shenma.yueba.application.MyApplication;
-import com.shenma.yueba.baijia.activity.FindPasswordActivity;
-import com.shenma.yueba.baijia.activity.MainActivityForBaiJia;
-import com.shenma.yueba.baijia.modle.UserRequestBean;
-import com.shenma.yueba.util.FontManager;
-import com.shenma.yueba.util.HttpControl;
-import com.shenma.yueba.util.ToolsUtil;
-import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
-import com.shenma.yueba.util.JpushUtils;
-import com.shenma.yueba.util.WXLoginUtil;
-import com.umeng.socialize.controller.UMServiceFactory;
-import com.umeng.socialize.controller.UMSocialService;
+import im.control.SocketManger;
 
 public class LoginFragment extends BaseFragment implements OnClickListener {
 
@@ -115,11 +115,13 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
 							String flag = getActivity().getIntent().getStringExtra("flag");
 							UserRequestBean bean = (UserRequestBean) obj;
 							httpControl.setLoginInfo(getActivity(), bean);
+							SocketManger.the().onLineToUserID();
 							if("needLogin".equals(flag)){
 								
 							}else if (obj != null && obj instanceof UserRequestBean) {
+								
 								Intent intent = new Intent(getActivity(),MainActivityForBaiJia.class);
-								intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+								//intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 								JpushUtils jpushUtils = new JpushUtils(getActivity());
 								jpushUtils.setAlias(bean.getData().getId()+"");
 								startActivity(intent);

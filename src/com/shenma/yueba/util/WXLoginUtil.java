@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
+import im.control.SocketManger;
 
 import com.shenma.yueba.baijia.activity.MainActivityForBaiJia;
 import com.shenma.yueba.baijia.modle.UserRequestBean;
@@ -143,6 +144,7 @@ public class WXLoginUtil {
 				if (obj != null && obj instanceof UserRequestBean) {
 					UserRequestBean bean = (UserRequestBean) obj;
 					httpcon.setLoginInfo(ctx, bean);
+					SocketManger.the().onLineToUserID();
 					Intent intent = new Intent(ctx,
 							MainActivityForBaiJia.class);
 					intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

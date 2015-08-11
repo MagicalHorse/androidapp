@@ -90,7 +90,7 @@ public class MyApplication extends Application {
 		initJpush();
 		dbHelper = RoboGuice.getBaseApplicationInjector(this).getInstance(
 				DBHelper.class);
-		socketManger.the().contentSocket(null);
+		socketManger.the().contentSocket();
 		LocationUtil locationUtil = new LocationUtil(this);
 		locationUtil.getLocation();
 	}

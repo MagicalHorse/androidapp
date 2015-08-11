@@ -383,8 +383,6 @@ public class BuyerAdapter extends BaseAdapter {
 						ProductsInfoBean bean = (ProductsInfoBean) v.getTag();
 						Intent intentsiliao = new Intent(activity,
 								ChatActivity.class);
-						intentsiliao.putExtra("Chat_Type",
-								ChatActivity.chat_type_private);
 						intentsiliao.putExtra("Chat_NAME", bean.getBuyerName());// 圈子名字
 						intentsiliao.putExtra("toUser_id", bean.getBuyerid());
 						activity.startActivity(intentsiliao);
@@ -395,9 +393,10 @@ public class BuyerAdapter extends BaseAdapter {
 					if (!MyApplication.getInstance().isUserLogin(activity)) {
 						return;
 					}
+					
 					if (v.getTag() != null && v.getTag() instanceof ProductsInfoBean) {
 						ProductsInfoBean bean = (ProductsInfoBean) v.getTag();
-						String content = bean.getProductName();
+						String content = ToolsUtil.nullToString(bean.getShareDesc());
 						String url = bean.getShareLink();
 						String icon = ToolsUtil.getImage(ToolsUtil.nullToString(bean.getProductPic().getName()),320, 0);
 						shareUrl(bean.getProductId(), "",content, url, icon);

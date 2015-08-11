@@ -23,13 +23,17 @@ import com.shenma.yueba.baijia.modle.BaiJiaOrderListInfo;
 import com.shenma.yueba.baijia.modle.ProductInfoBean;
 import com.shenma.yueba.baijia.modle.RequestBaiJiaOrdeDetailsInfoBean;
 import com.shenma.yueba.util.ButtonManager;
+import com.shenma.yueba.util.DialogUtilInter;
+import com.shenma.yueba.util.DialogUtils;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.ListViewUtils;
 import com.shenma.yueba.util.ShareUtil;
 import com.shenma.yueba.util.ShareUtil.ShareListener;
+import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.util.ToolsUtil;
+import com.shenma.yueba.util.WXLoginUtil;
 import com.shenma.yueba.view.RoundImageView;
 import com.umeng.analytics.MobclickAgent;
 
@@ -135,7 +139,6 @@ LinearLayout baijia_orderdetails_footer_right_linearlayout;//按钮的父对象
 		{
 		case R.id.baijia_orderdetails_lianxibuyer_textview://联系买手
 			Intent intentbuter=new Intent(BaiJiaOrderDetailsActivity.this,ChatActivity.class);
-			intentbuter.putExtra("Chat_Type", ChatActivity.chat_type_private);
 			intentbuter.putExtra("Chat_NAME",bean.getData().getBuyerName());//圈子名字
 			intentbuter.putExtra("toUser_id", bean.getData().getBuyerId());
 			startActivity(intentbuter);
@@ -176,20 +179,42 @@ LinearLayout baijia_orderdetails_footer_right_linearlayout;//按钮的父对象
 	 * ****/
 	void shareUrl()
 	{
-		final BaiJiaOrdeDetailsInfoBean infobean=bean.getData();
-		String name=infobean.getProductName();
-		ShareUtil.shareAll(BaiJiaOrderDetailsActivity.this,"", name, infobean.getShareLink(),ToolsUtil.getImage(ToolsUtil.nullToString(infobean.getProductPic()), 320, 0),new ShareListener() {
-			
-			@Override
-			public void sharedListener_sucess() {
-				requestShared(infobean.getOrderNo());
-			}
-			
-			@Override
-			public void sharedListener_Fails(String msg) {
-				MyApplication.getInstance().showMessage(BaiJiaOrderDetailsActivity.this, msg);
-			}
-		});
+		//判断当前是否绑定微信 如果绑定 则可以分享  如果没绑定 则 提示绑定
+		if(SharedUtil.getBooleanPerfernece(BaiJiaOrderDetailsActivity.this, SharedUtil.user_IsBindWeiXin))
+		{
+			final BaiJiaOrdeDetailsInfoBean infobean=bean.getData();
+			ShareUtil.shareAll(BaiJiaOrderDetailsActivity.this,"", ToolsUtil.nullToString(infobean.getShareDesc()), infobean.getShareLink(),ToolsUtil.getImage(ToolsUtil.nullToString(infobean.getProductPic()), 320, 0),new ShareListener() {
+				
+				@Override
+				public void sharedListener_sucess() {
+					requestShared(infobean.getOrderNo());
+				}
+				
+				@Override
+				public void sharedListener_Fails(String msg) {
+					MyApplication.getInstance().showMessage(BaiJiaOrderDetailsActivity.this, msg);
+				}
+			});
+		}else
+		{
+			DialogUtils dialog = new DialogUtils();                                                                        			
+			dialog.alertDialog(BaiJiaOrderDetailsActivity.this, "提示", "您确认要下架该商品吗？",
+					new DialogUtilInter() {
+						@Override
+						public void dialogCallBack(int... which) {
+							//启动微信 进行绑定
+							// 绑定微信
+							WXLoginUtil wxLoginUtil = new WXLoginUtil(BaiJiaOrderDetailsActivity.this);
+							wxLoginUtil.initWeiChatLogin(false,false,true);
+
+						}
+					}, true, "确定", "取消", true, true);
+
+		}
+		
+		
+		
+		
 	}
 	
 	
@@ -288,8 +313,8 @@ LinearLayout baijia_orderdetails_footer_right_linearlayout;//按钮的父对象
 		MyApplication.getInstance().getBitmapUtil().display(riv_customer_head, ToolsUtil.nullToString(baiJiaOrdeDetailsInfoBean.getBuyerLogo()));
 		obj_list.add(baiJiaOrdeDetailsInfoBean);
 		riv_customer_head.setTag(baiJiaOrdeDetailsInfoBean.getBuyerId());
-		//如果当前订单状态是已提货 体显示 分享按钮
-		if(bean.getData().getOrderStatus()==16)
+		//是否显示分享按钮
+		if(bean.getData().isIsShareable())
 		{
 			baijia_orderdetails_xjfx_textview.setVisibility(View.VISIBLE);
 		}

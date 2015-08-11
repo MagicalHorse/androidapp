@@ -1,7 +1,6 @@
 package im.form;
 
 import android.content.Context;
-import im.control.SocketManger.SocketManagerListener;
 
 /**  
  * @author gyj  
@@ -16,7 +15,7 @@ public class NoticeChatBean extends BaseChatBean{
 	}
 
 	@Override
-	public void sendData(SocketManagerListener listener) {
+	public void sendData() {
 		
 	}
 

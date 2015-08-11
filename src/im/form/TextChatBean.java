@@ -1,14 +1,7 @@
 package im.form;
 
-import im.control.SocketManger;
-import im.control.SocketManger.SocketManagerListener;
-import im.form.BaseChatBean.ChatType;
-
 import android.content.Context;
-
-import com.shenma.yueba.application.MyApplication;
-import com.shenma.yueba.util.SharedUtil;
-import com.shenma.yueba.util.ToolsUtil;
+import im.control.SocketManger;
 
 /**  
  * @author gyj  
@@ -23,9 +16,9 @@ public class TextChatBean extends BaseChatBean{
 	}
 
 	@Override
-	public void sendData(SocketManagerListener listener) {
+	public void sendData() {
 		MessageBean bean=getMessageBean();
-		SocketManger.the().sendMsg(bean,listener);
+		SocketManger.the().sendMsg(bean);
 	}
 
 	/*****
