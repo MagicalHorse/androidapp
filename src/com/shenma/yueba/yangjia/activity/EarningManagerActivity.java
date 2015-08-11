@@ -119,6 +119,7 @@ public class EarningManagerActivity extends BaseActivityWithTopView implements O
 					double retain = Double.valueOf(income.getAvail_amount().toString().trim()) - Double.valueOf(acount);
 					tv_withdraw_cash_money.setText(ToolsUtil.DounbleToString_2(retain));
 					income.setAvail_amount(ToolsUtil.DounbleToString_2(retain));
+					MyApplication.getInstance().getIndexRefreshService().refreshList();
 				} catch (Exception e) {
 					// TODO: handle exception
 				}

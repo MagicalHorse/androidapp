@@ -24,6 +24,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.ApplyResultActivity;
 import com.shenma.yueba.baijia.dialog.WeChatDialog;
 import com.shenma.yueba.baijia.fragment.BaseFragment;
@@ -244,6 +245,8 @@ public class HuoKuanIncomeAndOutGoingFragment extends BaseFragment implements On
 				if(adapter!=null){
 					adapter.clearCountList();
 				}
+				MyApplication.getInstance().getHuoKuanManagerRefreshService().refreshList();
+				MyApplication.getInstance().getIndexRefreshService().refreshList();
 			}
 			@Override
 			public void http_Fails(int error, String msg) {

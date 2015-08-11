@@ -119,6 +119,10 @@ public class HuoKuanIncomeAndOutGoingAdapter extends BaseAdapterWithUtil {
 										+ ToolsUtil.DounbleToString_2(prices)
 										+ "元");
 					}
+					if(prices == 0){
+						((HuoKuanIncomingAndOutgoingsActivity) ctx)
+						.setHuoKuanCount("提现货款");
+					}
 				} else {
 					mList.get(position).setChecked(true);
 					((HuoKuanIncomingAndOutgoingsActivity) ctx).setIds(mList
@@ -131,6 +135,10 @@ public class HuoKuanIncomeAndOutGoingAdapter extends BaseAdapterWithUtil {
 								.setHuoKuanCount("提现货款"
 										+ ToolsUtil.DounbleToString_2(prices)
 										+ "元");
+					}
+					if(prices == 0){
+						((HuoKuanIncomingAndOutgoingsActivity) ctx)
+						.setHuoKuanCount("提现货款");
 					}
 				}
 				notifyDataSetChanged();
