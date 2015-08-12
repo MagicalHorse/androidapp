@@ -36,6 +36,7 @@
     <color name="grid_state_focused">#80000000</color>
     <color name="top_bg">#ebeef0</color>
     <color name="white">#ffffff</color>
+    <color name="order_dialog_bg">#66333333</color>
     <color name="choose_eara_item_press_color">#f4f4f4</color>
     <color name="transparent">#00000000</color>
     <color name="textcolor">#212121</color>
