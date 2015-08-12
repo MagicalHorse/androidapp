@@ -3,11 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="10dip" >
+    android:paddingTop="5dip" 
+    android:paddingBottom="5dip"
+    android:paddingLeft="10dip"
+    android:paddingRight="10dip"
+    >
 
     <RelativeLayout
-        android:layout_width="@dimen/shop_main_iconwidth80_dimen"
-        android:layout_height="@dimen/shop_main_iconwidth80_dimen" >
+        android:layout_width="65dip"
+        android:layout_height="65dip" >
 
         <com.shenma.yueba.view.RoundImageView
             android:id="@+id/iv_msg"
@@ -55,10 +59,10 @@
                 android:textSize="@dimen/textsize15sp" />
 
             <TextView
+                android:layout_gravity="center_vertical"
                 android:id="@+id/mgstv_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
                 android:ellipsize="end"
                 android:singleLine="true"
                 android:text="3333"
