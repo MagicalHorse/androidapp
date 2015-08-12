@@ -380,10 +380,13 @@ public class IndexFragmentForYangJia extends BaseFragment implements
 		case R.id.bt_top_right:
 //			SocicalShareUtil shareUtil = new SocicalShareUtil(getActivity());
 //			shareUtil.showShareDialog();
-			Log.i("share", "---desc--"+data.getShare().getDesc());
-			Log.i("share", "---link--"+data.getShare().getShare_link());
-			Log.i("share", "---logo--"+data.getShare().getLogo());
-			ShareUtil.shareAll(getActivity(),data.getShare().getTitle(), data.getShare().getDesc(),  data.getShare().getShare_link(),  ToolsUtil.getImage(data.getShare().getLogo(), 200, 200),null);
+//			Log.i("share", "---desc--"+data.getShare().getDesc());
+//			Log.i("share", "---link--"+data.getShare().getShare_link());
+//			Log.i("share", "---logo--"+data.getShare().getLogo());
+			if(data!=null && data.getShare()!=null){
+				ShareUtil.shareAll(getActivity(),data.getShare().getTitle(), data.getShare().getDesc(),  data.getShare().getShare_link(),  ToolsUtil.getImage(data.getShare().getLogo(), 200, 200),null);
+			}
+			
 		default:
 			break;
 		}
