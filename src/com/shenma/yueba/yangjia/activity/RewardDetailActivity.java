@@ -98,7 +98,7 @@ public class RewardDetailActivity extends BaseActivityWithTopView{
 		lv.setAdapter(adapter);
 		ListViewUtils.setListViewHeightBasedOnChildren(lv);
 		FontManager.changeFonts(mContext, tv_reward_title,
-				tv_reward_introduce, tv_progress_content, tv_progress_title, tv_history_title,tv_nodata);
+				tv_reward_introduce, tv_progress_content, tv_progress_title, tv_history_title,tv_nodata,tv_top_title);
 	}
 
 	
