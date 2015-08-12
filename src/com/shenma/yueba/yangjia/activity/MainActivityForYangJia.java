@@ -148,55 +148,6 @@ private View getTabItemView(int index) {
 }
 
 
-private void showDialog() {
-	final AlertDialog dialog = new AlertDialog.Builder(MainActivityForYangJia.this)
-			.create();
-	dialog.setCanceledOnTouchOutside(true);
-	dialog.show();
-	Window window = dialog.getWindow();
-	// 设置布局
-	window.setContentView(R.layout.alertdialog);
-	// 设置宽高
-	window.setLayout(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
-	window.setGravity(Gravity.BOTTOM);
-	// 设置弹出的动画效果
-	window.setWindowAnimations(R.style.AnimBottom);
-	// 设置监听
-	Button bt_kxp = (Button) window.findViewById(R.id.bt_kxp);
-	Button bt_publish = (Button) window.findViewById(R.id.bt_publish);
-	bt_kxp.setOnClickListener(new OnClickListener() {
-		@Override
-		public void onClick(View v) {
-			dialog.cancel();
-			// 跳转到开下票的界面
-			Intent intentXP = new Intent(MainActivityForYangJia.this,KaiXiaoPiaoActivity.class);
-			startActivity(intentXP);
-		}
-	});
-	bt_publish.setOnClickListener(new OnClickListener() {
-		@Override
-		public void onClick(View v) {
-//			CustomProgressDialog dialog = new CustomProgressDialog(MainActivityForYangJia.this).createDialog(MainActivityForYangJia.this);
-//			dialog.show();
-			MyApplication.getInstance().getPublishUtil().setBean(new RequestUploadProductDataBean());
-			MyApplication.getInstance().getPublishUtil().setIndex("0");
-			MyApplication.getInstance().getPublishUtil().getTagCacheList().clear();
-//			Toast.makeText(getApplicationContext(), "相机初始化中...", 1000).show();
-			// 跳转到到自定义相机
-//			Intent intentCamera = new Intent(MainActivityForYangJia.this,CameraAty.class);
-//			startActivity(intentCamera);
-			FileUtils.delAllFile(FileUtils.getRootPath() + "/tagPic/");
-			Intent intentCamera = new Intent(MainActivityForYangJia.this,ActivityCapture.class);
-			startActivity(intentCamera);
-			dialog.cancel();
-		}
-	});
-	FontManager.changeFonts(MainActivityForYangJia.this, bt_kxp,bt_publish);
-	// 因为我们用的是windows的方法，所以不管ok活cancel都要加上“dialog.cancel()”这句话，
-	// 不然有程序崩溃的可能，仅仅是一种可能，但我们还是要排除这一点，对吧？
-	// 用AlertDialog的两个Button，即使监听里什么也不写，点击后也是会吧dialog关掉的，不信的同学可以去试下
-}
-
 
 @Override
 protected void onDestroy() {
