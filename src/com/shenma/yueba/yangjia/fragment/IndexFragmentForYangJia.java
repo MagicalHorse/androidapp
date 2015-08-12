@@ -387,6 +387,7 @@ public class IndexFragmentForYangJia extends BaseFragment implements
 				ShareUtil.shareAll(getActivity(),data.getShare().getTitle(), data.getShare().getDesc(),  data.getShare().getShare_link(),  ToolsUtil.getImage(data.getShare().getLogo(), 200, 200),null);
 			}
 			
+			
 		default:
 			break;
 		}
