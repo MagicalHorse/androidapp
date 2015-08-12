@@ -190,6 +190,7 @@ public abstract class  BaseChatBean implements Serializable{
 	public MessageBean getMessageBean()
 	{
 		MessageBean bean=new MessageBean();
+		bean.setRoomId(room_No);
 		bean.setBody((String)content);
 		bean.setFromUserId(Integer.toString(from_id));
 		bean.setProductId(Integer.toString(productId));

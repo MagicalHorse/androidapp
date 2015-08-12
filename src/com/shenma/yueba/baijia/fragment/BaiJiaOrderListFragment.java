@@ -16,9 +16,6 @@ import com.shenma.yueba.baijia.modle.RequestBaiJiaOrderListInfoBean;
 import com.shenma.yueba.broadcaseReceiver.OrderBroadcaseReceiver;
 import com.shenma.yueba.broadcaseReceiver.OrderBroadcaseReceiver.OrderBroadcaseListener;
 import com.shenma.yueba.constants.Constants;
-import com.shenma.yueba.util.ButtonManager;
-import com.shenma.yueba.util.DialogUtilInter;
-import com.shenma.yueba.util.DialogUtils;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.ToolsUtil;
@@ -33,6 +30,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.LinearLayout;
 
 /**
  * @author gyj
@@ -49,12 +47,13 @@ public class BaiJiaOrderListFragment extends Fragment implements OrderBroadcaseL
 	int pagersize = Constants.PAGESIZE_VALUE;
 	int state = -1;// 订单类型 全部订单 0，待付款 1， 专柜自提 2， 售后 3
 
+	LinearLayout showloading_layout_view;//加载进度条
 	HttpControl httpControl = new HttpControl();
 	RequestBaiJiaOrderListInfoBean requestBaiJiaOrderListInfoBean;
 	boolean ishow = true;
 	OrderBroadcaseReceiver orderBroadcaseReceiver;
 	boolean isBroadcase=false;
-	
+	boolean isruning=false;//是否执行网络访问  true是  false 否
 	
 	public BaiJiaOrderListFragment(int state) {
 		super();
@@ -93,7 +92,9 @@ public class BaiJiaOrderListFragment extends Fragment implements OrderBroadcaseL
 	}
 	
 	void initView() {
+		showloading_layout_view=(LinearLayout)parentView.findViewById(R.id.showloading_layout_view);
 		pull_refresh_list = (PullToRefreshListView) parentView.findViewById(R.id.pull_refresh_list);
+		
 		// 设置标签显示的内容
 		baiJiaOrderListAdapter = new BaiJiaOrderListAdapter(object_list,getActivity());
 		pull_refresh_list.setAdapter(baiJiaOrderListAdapter);
@@ -135,6 +136,10 @@ public class BaiJiaOrderListFragment extends Fragment implements OrderBroadcaseL
 	 * 请求加载数据
 	 * ***/
 	public void requestData() {
+		if(isruning)
+		{
+			return;
+		}
 		sendRequestData(currpage, 1);
 	}
 
@@ -142,6 +147,10 @@ public class BaiJiaOrderListFragment extends Fragment implements OrderBroadcaseL
 	 * 请求刷新数据
 	 * ***/
 	public void requestFalshData() {
+		if(isruning)
+		{
+			return;
+		}
 		sendRequestData(1, 0);
 	}
 
@@ -154,6 +163,7 @@ public class BaiJiaOrderListFragment extends Fragment implements OrderBroadcaseL
 	 *            int 0 刷新 1 加载
 	 * ***/
 	void sendRequestData(final int page, final int type) {
+		isruning=true;
 		ToolsUtil.showNoDataView(getActivity(),parentView,false);
 		Log.i("TAG", "currpage=" + page + "   pagesize=" + pagersize);
 		httpControl.getBaijiaOrderList(page, pagersize, state, ishow,
@@ -161,6 +171,11 @@ public class BaiJiaOrderListFragment extends Fragment implements OrderBroadcaseL
 
 					@Override
 					public void http_Success(Object obj) {
+						isruning=false;
+						if(showloading_layout_view!=null)
+						{
+							showloading_layout_view.setVisibility(View.GONE);
+						}
 						ToolsUtil.pullResfresh(pull_refresh_list);
 						currpage=page;
 						ishow = false;
@@ -184,9 +199,13 @@ public class BaiJiaOrderListFragment extends Fragment implements OrderBroadcaseL
 
 					@Override
 					public void http_Fails(int error, String msg) {
+						isruning=false;
 						MyApplication.getInstance().showMessage(getActivity(),msg);
 						ToolsUtil.pullResfresh(pull_refresh_list);
-						
+						if(showloading_layout_view!=null)
+						{
+							showloading_layout_view.setVisibility(View.GONE);
+						}
 					}
 				}, getActivity());
 
@@ -298,28 +317,9 @@ public class BaiJiaOrderListFragment extends Fragment implements OrderBroadcaseL
 	
 	@Override
 	public void falshData(final BaiJiaOrderListInfo info,String str) {
-		ishow = true;
+		ishow = false;
+		showloading_layout_view.setVisibility(View.VISIBLE);
 		requestFalshData();
-		if(str!=null)
-		{
-			if(str.equals(ButtonManager.WAITPAY))
-			{
-				if(getActivity()!=null && info!=null)
-				{
-					//询问是否 进入订单详情
-					DialogUtils dialog = new DialogUtils();                                                                        			
-					dialog.alertDialog(getActivity(), "提示", "是否查看该订单",
-							new DialogUtilInter() {
-								@Override
-								public void dialogCallBack(int... which) {
-									Intent intent=new Intent(getActivity(),BaiJiaOrderDetailsActivity.class);
-									intent.putExtra("ORDER_ID", info.getOrderNo());
-									getActivity().startActivity(intent);
-								}
-							}, true, "是", "", true, true);
-				}
-			}
-		}
 	}
 	
 }

@@ -16,7 +16,13 @@ public class MessageBean implements Serializable{
 	String body="";//信息内容
 	String logo="";//图片
 	String sharelink="";
-	
+	String roomId="";
+	public String getRoomId() {
+		return roomId;
+	}
+	public void setRoomId(String roomId) {
+		this.roomId = roomId;
+	}
 	public String getSharelink() {
 		return sharelink;
 	}

@@ -124,6 +124,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 	int toUser_id;
 	int circleId;// 圈子id
 	int currPage = Constants.CURRPAGE_VALUE;
+	String socketType="private";
 	String roomId = null;
 	String userName = "";
 	String usericon = "";
@@ -206,6 +207,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 	 * ***/
 	void getMessageByCircleId()
 	{
+		socketType="group";
 		// 获取房间号
 		getRoomdId(circleId, formUser_id, toUser_id);
 	}
@@ -217,6 +219,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 	 * ***/
 	void getMessageByToUserId()
 	{
+		socketType="private";
 		// 获取房间号
 		getRoomdId(circleId, formUser_id, toUser_id);
 	}
@@ -228,6 +231,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 	 * ***/
 	void getMessageByRoomID()
 	{
+		socketType="private";
 		// 获取历史消息
 		getMessage();
 		inroom();
@@ -498,10 +502,12 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 		bean.setRoom_No(roomId);
 		bean.setUserName(userName);
 		bean.setIsoneself(true);
-		bean.sendData();// 发送数据
 		bean.setLogo(ToolsUtil.nullToString(usericon));
 		bean.setCreationDate(ToolsUtil.getCurrentTime());
 		bean.setSharelink(content);
+		bean.setType(socketType);
+		bean.sendData();// 发送数据
+		
 		addListData(false, bean);
 		if (chattingAdapter != null) {
 			chattingAdapter.notifyDataSetChanged();
@@ -908,6 +914,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 		RoomBean roomBean = new RoomBean();
 		roomBean.setOwner(Integer.toString(formUser_id));
 		roomBean.setRoom_id(roomId);
+		roomBean.setType(socketType);
 		//roomBean.setTitle();ssss
 		roomBean.setUserName(userName);
 		int[] userint = new int[int_array.size()];
@@ -1063,21 +1070,25 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 			{
 				BaseChatBean bean = new PicChatBean(ChatActivity.this);
 				bean.setValue(items.get(i));
+				bean.setType(socketType);
 				addListData(true, bean);
 			} else if (type.equals(RequestMessageBean.type_produtc_img))// 是商品图片
 			{
 				BaseChatBean bean = new ProductChatBean(ChatActivity.this);
 				bean.setValue(items.get(i));
+				bean.setType(socketType);
 				addListData(true, bean);
 			} else if (type.equals(RequestMessageBean.notice))// 广播
 			{
 				BaseChatBean bean = new NoticeChatBean(ChatActivity.this);
 				bean.setValue(items.get(i));
+				bean.setType(socketType);
 				addListData(true, bean);
 			} else if (type.equals(RequestMessageBean.type_empty))// 文本信息
 			{
 				BaseChatBean bean = new TextChatBean(ChatActivity.this);
 				bean.setValue(items.get(i));
+				bean.setType(socketType);
 				addListData(true, bean);
 			}
 		}

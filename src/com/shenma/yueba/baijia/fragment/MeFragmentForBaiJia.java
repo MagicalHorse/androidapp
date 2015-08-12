@@ -22,6 +22,8 @@ import com.shenma.yueba.baijia.activity.BuyerCertificationActivity1;
 import com.shenma.yueba.baijia.activity.CircleListActivity;
 import com.shenma.yueba.baijia.activity.MyCollectionActivity;
 import com.shenma.yueba.baijia.activity.UserConfigActivity;
+import com.shenma.yueba.baijia.modle.BaiJiaCheckBuyerStatusBean;
+import com.shenma.yueba.baijia.modle.BaiJiaCheckBuyerStatusBeanRequest;
 import com.shenma.yueba.baijia.modle.MyInfoBean;
 import com.shenma.yueba.baijia.modle.RequestMyInfoBean;
 import com.shenma.yueba.util.HttpControl;
@@ -196,21 +198,7 @@ public class MeFragmentForBaiJia extends BaseFragment implements OnClickListener
 		case R.id.tv_buyer://申请买手或者我是买手
 			break;
 		case R.id.tv_will_yangjia://我要养家
-			/**
-			 * -2表示还没有申请过认证买手  ，-1表示身亲被拒绝  ，0表示正在申请中，1表示申请通过
-			 */
-			if("0".equals(SharedUtil.getAuditStatus(getActivity()))){//正在审核，不可再次点击审核
-				Toast.makeText(getActivity(), "申请审核中，请耐心等待...", Toast.LENGTH_LONG).show();
-			}else if("-2".equals(SharedUtil.getAuditStatus(getActivity()))){//还未审核，可以进入
-				Intent buyerCertificaitonIntent = new Intent(getActivity(),BuyerCertificationActivity1.class);
-				startActivity(buyerCertificaitonIntent);
-			}else if("-1".equals(SharedUtil.getAuditStatus(getActivity()))){//表示身亲被拒绝
-				Toast.makeText(getActivity(), "您的审核已被拒绝，请三天后重试...", Toast.LENGTH_LONG).show();
-			}else if("1".equals(SharedUtil.getAuditStatus(getActivity()))){//表示申请通过
-				MyApplication.getInstance().removeAllActivity();
-				Intent intentyangjia=new Intent(getActivity(), MainActivityForYangJia.class);
-				startActivity(intentyangjia);
-			}
+			getCheckBuyerStatus();
 			break;
 		case R.id.tv_my_collection://我的收藏
 			Intent intent5 = new Intent(getActivity(),MyCollectionActivity.class);
@@ -221,6 +209,83 @@ public class MeFragmentForBaiJia extends BaseFragment implements OnClickListener
 		}
 
 	}
+	
+	/***
+	 * 获取当前用户的认证状态
+	 * **/
+	void getCheckBuyerStatus()
+	{
+		HttpControl httpcontrol=new HttpControl();
+		httpcontrol.getCheckBuyerStatus(true, new HttpCallBackInterface() {
+			
+			@Override
+			public void http_Success(Object obj) {
+				if(obj==null || !(obj instanceof BaiJiaCheckBuyerStatusBeanRequest))
+				{
+					http_Fails(500, "获取用户权限失败 请重试");
+				}else
+				{
+					BaiJiaCheckBuyerStatusBeanRequest request=(BaiJiaCheckBuyerStatusBeanRequest)obj;
+					if(request.getData()==null)
+					{
+						http_Fails(500, "获取用户权限失败 请重试");
+					}else
+					{
+						BaiJiaCheckBuyerStatusBean baiJiaCheckBuyerStatusBean=request.getData();
+						forwardYangJia(baiJiaCheckBuyerStatusBean);
+					}
+				}
+			}
+			
+			@Override
+			public void http_Fails(int error, String msg) {
+				MyApplication.getInstance().showMessage(getActivity(), msg);
+			}
+		}, getActivity());
+	}
+	
+	
+	
+	
+	void forwardYangJia(BaiJiaCheckBuyerStatusBean baiJiaCheckBuyerStatusBean)
+	{
+		//-1  不可以养家  0  可以提交资料    1  已经是买手 可以进入首页
+		switch(baiJiaCheckBuyerStatusBean.getStatus())
+		{
+		case -1:
+			MyApplication.getInstance().showMessage(getActivity(), ToolsUtil.nullToString(baiJiaCheckBuyerStatusBean.getMessage()));
+			break;
+		case 0:
+			Intent buyerCertificaitonIntent = new Intent(getActivity(),BuyerCertificationActivity1.class);
+			startActivity(buyerCertificaitonIntent);
+			break;
+		case 1:
+			MyApplication.getInstance().removeAllActivity();
+			Intent intentyangjia=new Intent(getActivity(), MainActivityForYangJia.class);
+			startActivity(intentyangjia);
+			break;
+		}
+		/**
+		 * -2表示还没有申请过认证买手  ，-1表示身亲被拒绝  ，0表示正在申请中，1表示申请通过
+		 *//*
+		if("0".equals(SharedUtil.getAuditStatus(getActivity()))){//正在审核，不可再次点击审核
+			Toast.makeText(getActivity(), "申请审核中，请耐心等待...", Toast.LENGTH_LONG).show();
+		}else if("-2".equals(SharedUtil.getAuditStatus(getActivity()))){//还未审核，可以进入
+			Intent buyerCertificaitonIntent = new Intent(getActivity(),BuyerCertificationActivity1.class);
+			startActivity(buyerCertificaitonIntent);
+		}else if("-1".equals(SharedUtil.getAuditStatus(getActivity()))){//表示身亲被拒绝
+			Toast.makeText(getActivity(), "您的审核已被拒绝，请三天后重试...", Toast.LENGTH_LONG).show();
+		}else if("1".equals(SharedUtil.getAuditStatus(getActivity()))){//表示申请通过
+			MyApplication.getInstance().removeAllActivity();
+			Intent intentyangjia=new Intent(getActivity(), MainActivityForYangJia.class);
+			startActivity(intentyangjia);
+		}*/
+	}
+	
+	
+	
+	
+	
 	
 	/*****
 	 * 设置数据

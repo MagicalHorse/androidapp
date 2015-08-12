@@ -593,6 +593,15 @@ public class HttpConstants {
 	
 	public static String GETORDERLISTDETAILS = Order+ "GetUserOrderDetail";
 	
+	/**
+	 * 败家 -获取用户是否可以养家等操作
+	 */
+	
+	public static String METHODCHECKBUYERSTATUS = USERURL+ "CheckBuyerStatus";
+	
+	
+	
+	
 	
 	/**
 	 * 败家 -获取订单详情
