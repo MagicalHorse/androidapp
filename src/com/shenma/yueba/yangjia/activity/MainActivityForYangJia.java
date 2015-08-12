@@ -149,6 +149,7 @@ private View getTabItemView(int index) {
 
 
 
+
 @Override
 protected void onDestroy() {
 	MyApplication.getInstance().addActivity(this);
