@@ -402,7 +402,7 @@ public class ShopMainActivity extends FragmentActivity {
     
     void getBaijiaUserInfo()
     {
-    	httpControl.getBaijiaUserInfo(userID,true, new HttpCallBackInterface() {
+    	httpControl.getBaijiaUserInfo(userID,false, new HttpCallBackInterface() {
 			
 			@Override
 			public void http_Success(Object obj) {

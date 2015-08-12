@@ -251,6 +251,7 @@ public class AffirmOrderActivity extends BaseActivityWithTopView implements
 								bean.setUrl(com.shenma.yueba.constants.Constants.WX_NOTIFY_URL);
 								intent.putExtra("PAYDATA",bean);
 								AffirmOrderActivity.this.startActivity(intent);
+								ToolsUtil.sendOrderBroadcase();
 							}
 							finish();
 						}

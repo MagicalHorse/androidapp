@@ -32,10 +32,8 @@ public class BaiJiaOrderListAdapter extends BaseAdapter {
 	List<BaiJiaOrderListInfo> object_list = new ArrayList<BaiJiaOrderListInfo>();
 	Context context;
     HttpControl httpControl=new HttpControl();
-    OrderControlListener orderControlListener;
-	public BaiJiaOrderListAdapter(OrderControlListener orderControlListener,List<BaiJiaOrderListInfo> object_list,Context context) {
+	public BaiJiaOrderListAdapter(List<BaiJiaOrderListInfo> object_list,Context context) {
 		this.object_list = object_list;
-		this.orderControlListener=orderControlListener;
 		this.context = context;
 
 	}
@@ -203,7 +201,7 @@ public class BaiJiaOrderListAdapter extends BaseAdapter {
 	 * ***/
 	void setButtonStatus(Holder holder,BaiJiaOrderListInfo bean) {
 		holder.baijiaorder_layout_item_status.removeAllViews();
-		List<View> view_list= ButtonManager.getButton((Activity)context, bean.getOrderStatus(),orderControlListener);
+		List<View> view_list= ButtonManager.getButton((Activity)context, bean.getOrderStatus());
 		if(view_list!=null)
 		{
 			for(int i=0;i<view_list.size();i++)
@@ -246,11 +244,5 @@ public class BaiJiaOrderListAdapter extends BaseAdapter {
 
 	void initPic(ImageView iv, String url) {
 		MyApplication.getInstance().getBitmapUtil().display(iv, url);
-	}
-	
-	
-	public interface OrderControlListener
-	{
-		void orderCotrol_OnRefuces();
 	}
 }

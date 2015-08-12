@@ -3,10 +3,16 @@ package com.shenma.yueba.baijia.activity;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.annotation.SuppressLint;
+import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.fragment.BaiJiaOrderListFragment;
+import com.shenma.yueba.baijia.modle.FragmentBean;
+import com.shenma.yueba.broadcaseReceiver.OrderBroadcaseReceiver;
+import com.shenma.yueba.util.FontManager;
+import com.umeng.analytics.MobclickAgent;
+
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.view.Gravity;
@@ -16,13 +22,6 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.shenma.yueba.R;
-import com.shenma.yueba.application.MyApplication;
-import com.shenma.yueba.baijia.fragment.BaiJiaOrderListFragment;
-import com.shenma.yueba.baijia.modle.FragmentBean;
-import com.shenma.yueba.util.FontManager;
-import com.umeng.analytics.MobclickAgent;
 
 /**  
  * @author gyj  
@@ -36,6 +35,7 @@ FrameLayout baijia_main_framelayout;
 LinearLayout baijia_fragment_tab1_head_linearlayout;
 List<FragmentBean> fragment_list=new ArrayList<FragmentBean>();
 List<View> footer_list=new ArrayList<View>();
+OrderBroadcaseReceiver orderBroadcaseReceiver;
 int currid=-1;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -153,7 +153,7 @@ int currid=-1;
 		}
 	}
 	
-	@Override
+	/*@Override
 		protected void onActivityResult(int arg0, int arg1, Intent arg2) {
 			if(arg0==200)
 			{
@@ -171,7 +171,7 @@ int currid=-1;
 				}
 			}
 		}
-	
+	*/
 	
 	
 	public void onResume() {
@@ -188,4 +188,5 @@ int currid=-1;
 		MyApplication.getInstance().removeActivity(this);//加入回退栈
 		super.onDestroy();
 	}
+
 }
