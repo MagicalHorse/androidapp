@@ -15,4 +15,8 @@
 
     <include layout="@layout/nodata_layout" />
 
+   <include
+            android:id="@+id/showloading_layout_view"
+            layout="@layout/showloading_layout"
+            android:visibility="gone" />
 </RelativeLayout>
