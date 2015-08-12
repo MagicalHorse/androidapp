@@ -228,6 +228,14 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 				PublishProductActivity.this.finish();
 			}
 		});
+		setTopRightTextView("取消发布", new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				MyApplication.getInstance().finishActivity(EditPicActivity.class);
+				MyApplication.getInstance().finishActivity(ActivityCapture.class);
+				MyApplication.getInstance().finishActivity(PublishProductActivity.class);
+			}
+		});
 		ll_pictures_container = getView(R.id.ll_pictures_container);
 		ll_guige_container = getView(R.id.ll_guige_container);
 		tv_product_number = getView(R.id.tv_product_number);
@@ -264,7 +272,7 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 		tv_publish = getView(R.id.tv_publish);
 		tv_add_guige.setOnClickListener(this);
 		tv_publish.setOnClickListener(this);
-		FontManager.changeFonts(mContext, tv_top_title,tv_product_number, et_product_number,
+		FontManager.changeFonts(mContext, tv_top_title,tv_top_right,tv_product_number, et_product_number,
 				tv_price_title, et_price, tv_yuan, et_introduce, tv_retain,
 				et_guige, et_kucun, tv_add_guige, tv_publish);
 		progressDialog = new CustomProgressDialog(mContext)
