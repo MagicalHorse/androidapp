@@ -9,6 +9,7 @@
     android:paddingRight="10dip"
     >
 
+
     <RelativeLayout
         android:layout_width="65dip"
         android:layout_height="65dip" >
