@@ -36,6 +36,10 @@
     <View style="@style/style_horizontal_line" />
 
     <include 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="8dip"
+        android:paddingRight="8dip"
         layout="@layout/productinfolist_layout" />
 
     <View style="@style/style_horizontal_line" />

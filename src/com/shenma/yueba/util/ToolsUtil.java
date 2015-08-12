@@ -28,6 +28,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.broadcaseReceiver.OrderBroadcaseReceiver;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.yangjia.modle.AliYunKeyBackBean;
 import com.shenma.yueba.yangjia.modle.AliYunKeyBean;
@@ -921,5 +922,16 @@ public class ToolsUtil {
 			}, 1000);
 		}
 	}
+	
+	
+	/*******
+	 * 发送 订单通知 刷新 广播
+	 * ****/
+	public static void sendOrderBroadcase()
+	{
+		Intent intent=new Intent(OrderBroadcaseReceiver.IntentFilter);
+		MyApplication.getInstance().getApplicationContext().sendBroadcast(intent);
+	}
+
 
 }

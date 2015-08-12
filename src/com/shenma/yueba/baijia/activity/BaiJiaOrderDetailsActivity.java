@@ -3,7 +3,32 @@ package com.shenma.yueba.baijia.activity;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.shenma.yueba.ChatActivity;
+import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.adapter.BaijiaOrderDetailsAdapter;
+import com.shenma.yueba.baijia.modle.BaiJiaOrdeDetailsInfoBean;
+import com.shenma.yueba.baijia.modle.BaiJiaOrderListInfo;
+import com.shenma.yueba.baijia.modle.ProductInfoBean;
+import com.shenma.yueba.baijia.modle.RequestBaiJiaOrdeDetailsInfoBean;
+import com.shenma.yueba.broadcaseReceiver.OrderBroadcaseReceiver;
+import com.shenma.yueba.broadcaseReceiver.OrderBroadcaseReceiver.OrderBroadcaseListener;
+import com.shenma.yueba.util.ButtonManager;
+import com.shenma.yueba.util.DialogUtilInter;
+import com.shenma.yueba.util.DialogUtils;
+import com.shenma.yueba.util.FontManager;
+import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
+import com.shenma.yueba.util.ShareUtil;
+import com.shenma.yueba.util.ShareUtil.ShareListener;
+import com.shenma.yueba.util.SharedUtil;
+import com.shenma.yueba.util.ToolsUtil;
+import com.shenma.yueba.util.WXLoginUtil;
+import com.shenma.yueba.view.RoundImageView;
+import com.umeng.analytics.MobclickAgent;
+
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -13,37 +38,13 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.shenma.yueba.ChatActivity;
-import com.shenma.yueba.R;
-import com.shenma.yueba.application.MyApplication;
-import com.shenma.yueba.baijia.adapter.BaiJiaOrderListAdapter.OrderControlListener;
-import com.shenma.yueba.baijia.adapter.BaijiaOrderDetailsAdapter;
-import com.shenma.yueba.baijia.modle.BaiJiaOrdeDetailsInfoBean;
-import com.shenma.yueba.baijia.modle.BaiJiaOrderListInfo;
-import com.shenma.yueba.baijia.modle.ProductInfoBean;
-import com.shenma.yueba.baijia.modle.RequestBaiJiaOrdeDetailsInfoBean;
-import com.shenma.yueba.util.ButtonManager;
-import com.shenma.yueba.util.DialogUtilInter;
-import com.shenma.yueba.util.DialogUtils;
-import com.shenma.yueba.util.FontManager;
-import com.shenma.yueba.util.HttpControl;
-import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
-import com.shenma.yueba.util.ListViewUtils;
-import com.shenma.yueba.util.ShareUtil;
-import com.shenma.yueba.util.ShareUtil.ShareListener;
-import com.shenma.yueba.util.SharedUtil;
-import com.shenma.yueba.util.ToolsUtil;
-import com.shenma.yueba.util.WXLoginUtil;
-import com.shenma.yueba.view.RoundImageView;
-import com.umeng.analytics.MobclickAgent;
-
 /**  
  * @author gyj  
  * @version 创建时间：2015-6-1 下午4:06:26  
  * 程序的简单说明   败家订单详情页面
  */
 
-public class BaiJiaOrderDetailsActivity extends BaseActivityWithTopView implements OnClickListener,OrderControlListener{
+public class BaiJiaOrderDetailsActivity extends BaseActivityWithTopView implements OnClickListener,OrderBroadcaseListener{
 View parentView;
 ListView baijia_orderdetails_layout_lsitview;
 TextView baijia_orderdetails_lianxibuyer_textview;//联系买手
@@ -64,6 +65,8 @@ HttpControl httpControl=new HttpControl();
 RequestBaiJiaOrdeDetailsInfoBean bean;
 BaijiaOrderDetailsAdapter baijiaOrderDetailsAdapter;
 LinearLayout baijia_orderdetails_footer_right_linearlayout;//按钮的父对象
+OrderBroadcaseReceiver orderBroadcaseReceiver;
+boolean isBroadcase=false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +84,8 @@ LinearLayout baijia_orderdetails_footer_right_linearlayout;//按钮的父对象
 		orderNo=this.getIntent().getStringExtra("ORDER_ID");
 		initView();
 		requestData();
+		orderBroadcaseReceiver=new OrderBroadcaseReceiver(this);
+		registerBroadcase();
 	}
 	
 	void initView()
@@ -320,7 +325,7 @@ LinearLayout baijia_orderdetails_footer_right_linearlayout;//按钮的父对象
 		}
 		
 		//根据订单状态 设置按钮
-		List<View> view_list=ButtonManager.getButton(this, bean.getData().getOrderStatus(),this);
+		List<View> view_list=ButtonManager.getButton(this, bean.getData().getOrderStatus());
 		baijia_orderdetails_footer_right_linearlayout.removeAllViews();
 		if(view_list!=null)
 		{
@@ -347,12 +352,6 @@ LinearLayout baijia_orderdetails_footer_right_linearlayout;//按钮的父对象
 		
 		//ListViewUtils.setListViewHeightBasedOnChildren(baijia_orderdetails_layout_lsitview);
 	}
-
-	@Override
-	public void orderCotrol_OnRefuces() {
-		requestData();
-	}
-	
 	
 	@Override
 	protected void onActivityResult(int arg0, int arg1, Intent arg2) {
@@ -383,5 +382,37 @@ LinearLayout baijia_orderdetails_footer_right_linearlayout;//按钮的父对象
 	protected void onDestroy() {
 		MyApplication.getInstance().removeActivity(this);//加入回退栈
 		super.onDestroy();
+		unRegisterBroadcase();
+	}
+	
+	
+	/****
+	 * 注册 订单广播接收器
+	 * ***/
+	void registerBroadcase()
+	{
+		if(!isBroadcase)
+		{
+			this.registerReceiver(orderBroadcaseReceiver, new IntentFilter(OrderBroadcaseReceiver.IntentFilter));
+		}
+	}
+	
+	
+	
+	/****
+	 * 注销订单广播接收器
+	 * ***/
+	void unRegisterBroadcase()
+	{
+		if(isBroadcase)
+		{
+			this.unregisterReceiver(orderBroadcaseReceiver);
+		}
+		
+	}
+
+	@Override
+	public void falshData(BaiJiaOrderListInfo info,String str) {
+		requestData();
 	}
 }

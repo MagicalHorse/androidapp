@@ -259,6 +259,7 @@
         layout="@layout/chat_product_head_layout"
         />
     <RelativeLayout
+        android:background="@color/main_bg"
         android:layout_below="@+id/chat_product_head_layout_include"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

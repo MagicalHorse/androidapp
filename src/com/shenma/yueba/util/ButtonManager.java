@@ -3,6 +3,16 @@ package com.shenma.yueba.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.activity.ApplyForRefundActivity;
+import com.shenma.yueba.baijia.activity.BaijiaAppealLoadingActivity;
+import com.shenma.yueba.baijia.activity.BaijiaPayActivity;
+import com.shenma.yueba.baijia.modle.BaiJiaOrderListInfo;
+import com.shenma.yueba.baijia.modle.PayResponseFormBean;
+import com.shenma.yueba.broadcaseReceiver.OrderBroadcaseReceiver;
+import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -12,19 +22,6 @@ import android.content.Intent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-
-import com.shenma.yueba.R;
-import com.shenma.yueba.application.MyApplication;
-import com.shenma.yueba.baijia.activity.ApplyForRefundActivity;
-import com.shenma.yueba.baijia.activity.BaijiaAppealLoadingActivity;
-import com.shenma.yueba.baijia.activity.BaijiaPayActivity;
-import com.shenma.yueba.baijia.activity.OrderAppealActivity;
-import com.shenma.yueba.baijia.adapter.BaiJiaOrderListAdapter.OrderControlListener;
-import com.shenma.yueba.baijia.modle.BaiJiaOrderListInfo;
-import com.shenma.yueba.baijia.modle.CreatOrderInfoBean;
-import com.shenma.yueba.baijia.modle.PayResponseFormBean;
-import com.shenma.yueba.baijia.modle.ProductInfoBean;
-import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 
 /**  
  * @author gyj  
@@ -44,27 +41,27 @@ public final static String CANCELORDER="取消订单";//6
 	/***
 	 * 根据订单状态返回操作按钮
 	 * **/
-	public static List<View> getButton(Activity activity,int type,OrderControlListener orderControlListener)
+	public static List<View> getButton(Activity activity,int type)
 	{
 		List<View> view_list=new ArrayList<View>();
 		switch(type)
 		{
 		case 0://代付款
-			view_list.add(createWaitPayButton(activity, 0,orderControlListener));//付款按钮
-			view_list.add(createWaitPayButton(activity, 6,orderControlListener));//取消订单
+			view_list.add(createWaitPayButton(activity, 0));//付款按钮
+			view_list.add(createWaitPayButton(activity, 6));//取消订单
 			break;
 		case 1://申请退款 确认提货
-			view_list.add(createWaitPayButton(activity, 3,orderControlListener));//申请退款
-			view_list.add(createWaitPayButton(activity, 2,orderControlListener));// 确认提货
+			view_list.add(createWaitPayButton(activity, 3));//申请退款
+			view_list.add(createWaitPayButton(activity, 2));// 确认提货
 			break;
 		case 15://确认提货  申请退款
 		case 16:
 			//view_list.add(createWaitPayButton(activity, 2));//确认提货
-			view_list.add(createWaitPayButton(activity, 3,orderControlListener));//申请退款
+			view_list.add(createWaitPayButton(activity, 3));//申请退款
 			break;
 		//申请退款
 		case 3:
-			view_list.add(createWaitPayButton(activity, 1,orderControlListener));//撤销退款
+			view_list.add(createWaitPayButton(activity, 1));//撤销退款
 			//撤销退款
 			break;
 		}
@@ -77,9 +74,9 @@ public final static String CANCELORDER="取消订单";//6
 	/***
 	 * 创建操作按钮
 	 * **/
-	static View createWaitPayButton(Activity activity,int type,OrderControlListener orderControlListener)
+	static View createWaitPayButton(Activity activity,int type)
 	{
-		CustonOnClickListener custonOnClickListener=new CustonOnClickListener(activity,orderControlListener);
+		CustonOnClickListener custonOnClickListener=new CustonOnClickListener(activity);
 		View v=activity.getLayoutInflater().inflate(R.layout.button_layout, null);
 		Button btn=(Button)v.findViewById(R.id.baijia_orderdetails_sqtk_button);
 		String str="";
@@ -124,16 +121,14 @@ public final static String CANCELORDER="取消订单";//6
 	
 	static class CustonOnClickListener implements OnClickListener
 	{
-		OrderControlListener orderControlListener;
 		Activity activity;
-		CustonOnClickListener(Activity activity,OrderControlListener orderControlListener)
+		CustonOnClickListener(Activity activity)
 		{
 			this.activity=activity;
-			this.orderControlListener=orderControlListener;
 		}
 		@Override
 		public void onClick(View v) {
-			buttonControl(v,activity,orderControlListener);
+			buttonControl(v,activity);
 		}
 	}
 
@@ -142,7 +137,7 @@ public final static String CANCELORDER="取消订单";//6
 	/****
 	 * 按钮控制
 	 * ***/
-	static void buttonControl(View btn,Activity activity,OrderControlListener orderControlListener)
+	static void buttonControl(View btn,Activity activity)
 	{
 		if(btn==null || btn.getTag()==null || !(btn.getTag() instanceof BaiJiaOrderListInfo))
         {
@@ -155,22 +150,22 @@ public final static String CANCELORDER="取消订单";//6
 			ButtonManager.payOrder(activity, baiJiaOrderListInfo);
 		}else if(str.equals(ButtonManager.CANCELPAY))//撤销退货
 		{
-			showDiaglog(activity, str, baiJiaOrderListInfo, orderControlListener);
+			showDiaglog(activity, str, baiJiaOrderListInfo);
 		}else if(str.equals(ButtonManager.QUERENTIHUO))//确认提货
 		{
-			showDiaglog(activity,str,baiJiaOrderListInfo,orderControlListener);
+			showDiaglog(activity,str,baiJiaOrderListInfo);
 			
 		}else if(str.equals(ButtonManager.SHENQINGTUIKUAN))//申请退款
 		{
 			ButtonManager.applyforRefund(activity, baiJiaOrderListInfo);
 		}else if(str.equals(ButtonManager.CANCELORDER))//取消订单
 		{
-			showDiaglog(activity, str, baiJiaOrderListInfo, orderControlListener);
+			showDiaglog(activity, str, baiJiaOrderListInfo);
 		}
 	}
 	
 	
-	static void showDiaglog(final Activity activity,final String str,final BaiJiaOrderListInfo baiJiaOrderListInfo ,final OrderControlListener orderControlListener)
+	static void showDiaglog(final Activity activity,final String str,final BaiJiaOrderListInfo baiJiaOrderListInfo)
 	{
 		Dialog dialog=new AlertDialog.Builder(activity).setTitle("确认").setMessage("是否 "+str).setPositiveButton("是", new DialogInterface.OnClickListener() {
 			
@@ -179,14 +174,14 @@ public final static String CANCELORDER="取消订单";//6
 				dialog.cancel();
 				if(str.equals(ButtonManager.QUERENTIHUO))//确认提货
 				{
-					ButtonManager.affirmPUG(activity, baiJiaOrderListInfo, orderControlListener);
+					ButtonManager.affirmPUG(activity, baiJiaOrderListInfo);
 					
 				}else if(str.equals(ButtonManager.CANCELPAY))//申请退货
 				{
-					ButtonManager.cancelRefund(activity, baiJiaOrderListInfo, orderControlListener);
+					ButtonManager.cancelRefund(activity, baiJiaOrderListInfo);
 				}else if(str.equals(ButtonManager.CANCELORDER))//取消订单
 				{
-					ButtonManager.cancelOrder(activity, baiJiaOrderListInfo, orderControlListener);
+					ButtonManager.cancelOrder(activity, baiJiaOrderListInfo);
 				}
 			}
 		}).setNegativeButton("否", new DialogInterface.OnClickListener() {
@@ -207,18 +202,15 @@ public final static String CANCELORDER="取消订单";//6
 	 * 确认提货
 	 * ***/
 	
-	public static void affirmPUG(final Context context,BaiJiaOrderListInfo baiJiaOrderListInfo ,final OrderControlListener orderControlListener)
+	public static void affirmPUG(final Context context,BaiJiaOrderListInfo baiJiaOrderListInfo)
 	{
 		HttpControl httpControl=new HttpControl();
 		httpControl.affirmPickToGood(baiJiaOrderListInfo.getOrderNo(), true, new HttpCallBackInterface() {
 			
 			@Override
 			public void http_Success(Object obj) {
-				if(orderControlListener!=null)
-				{
-					MyApplication.getInstance().showMessage(context, QUERENTIHUO+"成功");
-					orderControlListener.orderCotrol_OnRefuces();//通知刷新页面
-				}
+				MyApplication.getInstance().showMessage(context, QUERENTIHUO+"成功");
+				ToolsUtil.sendOrderBroadcase();
 			}
 			
 			@Override
@@ -232,7 +224,7 @@ public final static String CANCELORDER="取消订单";//6
 	/****
 	 * 撤销退货
 	 * **/
-	public static void cancelRefund(final Context context,BaiJiaOrderListInfo baiJiaOrderListInfo ,final OrderControlListener orderControlListener)
+	public static void cancelRefund(final Context context,BaiJiaOrderListInfo baiJiaOrderListInfo)
 	{
 		
 		HttpControl httpControl=new HttpControl();
@@ -240,11 +232,8 @@ public final static String CANCELORDER="取消订单";//6
 			
 			@Override
 			public void http_Success(Object obj) {
-				if(orderControlListener!=null)
-				{
-					MyApplication.getInstance().showMessage(context, CANCELPAY+"成功");
-					orderControlListener.orderCotrol_OnRefuces();//通知刷新页面
-				}
+				MyApplication.getInstance().showMessage(context, CANCELPAY+"成功");
+				ToolsUtil.sendOrderBroadcase();
 			}
 			
 			@Override
@@ -264,7 +253,8 @@ public final static String CANCELORDER="取消订单";//6
 		
 		Intent intent=new Intent(context,ApplyForRefundActivity.class);
 		intent.putExtra("DATA", baiJiaOrderListInfo);
-		((Activity)context).startActivityForResult(intent, 200);
+		context.startActivity(intent);
+		//((Activity)context).startActivityForResult(intent, 200);
 	}
 	
 	/***
@@ -281,7 +271,8 @@ public final static String CANCELORDER="取消订单";//6
 		bean.setDesc(baiJiaOrderListInfo.getProduct().getName()+"  x "+baiJiaOrderListInfo.getProduct().getProductCount());
 		bean.setUrl(com.shenma.yueba.constants.Constants.WX_NOTIFY_URL);
 		intent.putExtra("PAYDATA",bean);
-		((Activity)context).startActivityForResult(intent, 200);
+		context.startActivity(intent);
+		//((Activity)context).startActivityForResult(intent, 200);
 	}
 	
 	
@@ -292,24 +283,22 @@ public final static String CANCELORDER="取消订单";//6
 	{
 		Intent intent=new Intent(context,BaijiaAppealLoadingActivity.class);
 		intent.putExtra("DATA", baiJiaOrderListInfo);
-		((Activity)context).startActivityForResult(intent, 200);
+		context.startActivity(intent);
+		//((Activity)context).startActivityForResult(intent, 200);
 	}
 	
 	/***
 	 * 取消订单
 	 * ***/
-	public static void cancelOrder(final Context context,BaiJiaOrderListInfo baiJiaOrderListInfo ,final OrderControlListener orderControlListener)
+	public static void cancelOrder(final Context context,BaiJiaOrderListInfo baiJiaOrderListInfo)
 	{
 		HttpControl httpControl=new HttpControl();
 		httpControl.cancelOrder(baiJiaOrderListInfo.getOrderNo(), true, new HttpCallBackInterface() {
 			
 			@Override
 			public void http_Success(Object obj) {
-				if(orderControlListener!=null)
-				{
-					MyApplication.getInstance().showMessage(context, CANCELORDER+"成功");
-					orderControlListener.orderCotrol_OnRefuces();//通知刷新页面
-				}
+				MyApplication.getInstance().showMessage(context, CANCELORDER+"成功");
+				ToolsUtil.sendOrderBroadcase();
 			}
 			
 			@Override
@@ -318,5 +307,5 @@ public final static String CANCELORDER="取消订单";//6
 			}
 		}, context);
 	}
-
+	
 }

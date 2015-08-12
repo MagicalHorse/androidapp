@@ -225,7 +225,8 @@ int maxValue=0;
 				}else
 				{
 					MyApplication.getInstance().showMessage(ApplyForRefundActivity.this, "申请成功");
-					setResult(200, ApplyForRefundActivity.this.getIntent().putExtra("PAYRESULT", "SUCESS"));
+					//setResult(200, ApplyForRefundActivity.this.getIntent().putExtra("PAYRESULT", "SUCESS"));
+					ToolsUtil.sendOrderBroadcase();
 					finish();
 				}
 			}

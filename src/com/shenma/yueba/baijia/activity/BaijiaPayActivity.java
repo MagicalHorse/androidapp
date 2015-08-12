@@ -14,6 +14,7 @@ import com.shenma.yueba.baijia.modle.RequestBaiJiaOrdeDetailsInfoBean;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
+import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.wxapi.CreateWeiXinOrderManager;
 import com.shenma.yueba.wxapi.WeiXinBasePayManager.WeiXinPayManagerListener;
 import com.umeng.analytics.MobclickAgent;
@@ -150,7 +151,8 @@ public class BaijiaPayActivity extends BaseActivityWithTopView implements
 							} else {
 								showFailsDailog();
 							}
-                           setResult(200, BaijiaPayActivity.this.getIntent().putExtra("PAYRESULT", "SUCESS"));
+							ToolsUtil.sendOrderBroadcase();
+                           //setResult(200, BaijiaPayActivity.this.getIntent().putExtra("PAYRESULT", "SUCESS"));
 						} else {
 							http_Fails(500, "");
 						}

@@ -11,16 +11,21 @@ import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.BaiJiaOrderDetailsActivity;
 import com.shenma.yueba.baijia.adapter.BaiJiaOrderListAdapter;
-import com.shenma.yueba.baijia.adapter.BaiJiaOrderListAdapter.OrderControlListener;
 import com.shenma.yueba.baijia.modle.BaiJiaOrderListInfo;
 import com.shenma.yueba.baijia.modle.RequestBaiJiaOrderListInfoBean;
+import com.shenma.yueba.broadcaseReceiver.OrderBroadcaseReceiver;
+import com.shenma.yueba.broadcaseReceiver.OrderBroadcaseReceiver.OrderBroadcaseListener;
 import com.shenma.yueba.constants.Constants;
+import com.shenma.yueba.util.ButtonManager;
+import com.shenma.yueba.util.DialogUtilInter;
+import com.shenma.yueba.util.DialogUtils;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.ToolsUtil;
 import com.umeng.socialize.utils.Log;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -35,8 +40,7 @@ import android.widget.AdapterView.OnItemClickListener;
  */
 
 
-public class BaiJiaOrderListFragment extends Fragment implements
-		OrderControlListener {
+public class BaiJiaOrderListFragment extends Fragment implements OrderBroadcaseListener {
 	View parentView;
 	PullToRefreshListView pull_refresh_list;
 	BaiJiaOrderListAdapter baiJiaOrderListAdapter;
@@ -48,7 +52,10 @@ public class BaiJiaOrderListFragment extends Fragment implements
 	HttpControl httpControl = new HttpControl();
 	RequestBaiJiaOrderListInfoBean requestBaiJiaOrderListInfoBean;
 	boolean ishow = true;
-
+	OrderBroadcaseReceiver orderBroadcaseReceiver;
+	boolean isBroadcase=false;
+	
+	
 	public BaiJiaOrderListFragment(int state) {
 		super();
 		this.state = state;
@@ -58,6 +65,7 @@ public class BaiJiaOrderListFragment extends Fragment implements
 	public void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
+		orderBroadcaseReceiver=new OrderBroadcaseReceiver(this);
 	}
 
 	@Override
@@ -66,12 +74,13 @@ public class BaiJiaOrderListFragment extends Fragment implements
 		if (parentView == null) {
 			parentView = inflater.inflate(R.layout.baijiaorderlistfragment_layout, null);
 			initView();
-			//requestFalshData();
+		    requestFalshData();
 		}
 		ViewGroup vp = (ViewGroup) parentView.getParent();
 		if (vp != null) {
 			vp.removeView(parentView);
 		}
+		registerBroadcase();
 		return parentView;
 	}
 
@@ -79,14 +88,14 @@ public class BaiJiaOrderListFragment extends Fragment implements
 	@Override
 	public void onResume() {
 		super.onResume();
-		ishow=true;
-		requestFalshData();
+		/*ishow=true;
+		requestFalshData();*/
 	}
 	
 	void initView() {
 		pull_refresh_list = (PullToRefreshListView) parentView.findViewById(R.id.pull_refresh_list);
 		// 设置标签显示的内容
-		baiJiaOrderListAdapter = new BaiJiaOrderListAdapter(this, object_list,getActivity());
+		baiJiaOrderListAdapter = new BaiJiaOrderListAdapter(object_list,getActivity());
 		pull_refresh_list.setAdapter(baiJiaOrderListAdapter);
 		pull_refresh_list.setMode(Mode.PULL_FROM_START);
 		ToolsUtil.initPullResfresh(pull_refresh_list, getActivity());
@@ -245,10 +254,72 @@ public class BaiJiaOrderListFragment extends Fragment implements
 			baiJiaOrderListAdapter.notifyDataSetChanged();
 		}
 	}
-
+	
 	@Override
-	public void orderCotrol_OnRefuces() {
+	public void onDestroyView() {
+		super.onDestroyView();
+		unRegisterBroadcase();
+	}
+	
+	
+	/****
+	 * 注册 订单广播接收器
+	 * ***/
+	void registerBroadcase()
+	{
+		if(getActivity()!=null)
+		{
+			if(!isBroadcase)
+			{
+				getActivity().registerReceiver(orderBroadcaseReceiver, new IntentFilter(OrderBroadcaseReceiver.IntentFilter));
+			}
+			
+		}
+		
+	}
+	
+	
+	
+	/****
+	 * 注销订单广播接收器
+	 * ***/
+	void unRegisterBroadcase()
+	{
+		if(getActivity()!=null)
+		{
+			if(isBroadcase)
+			{
+				getActivity().unregisterReceiver(orderBroadcaseReceiver);
+			}
+			
+		}
+		
+	}
+	
+	@Override
+	public void falshData(final BaiJiaOrderListInfo info,String str) {
 		ishow = true;
 		requestFalshData();
+		if(str!=null)
+		{
+			if(str.equals(ButtonManager.WAITPAY))
+			{
+				if(getActivity()!=null && info!=null)
+				{
+					//询问是否 进入订单详情
+					DialogUtils dialog = new DialogUtils();                                                                        			
+					dialog.alertDialog(getActivity(), "提示", "是否查看该订单",
+							new DialogUtilInter() {
+								@Override
+								public void dialogCallBack(int... which) {
+									Intent intent=new Intent(getActivity(),BaiJiaOrderDetailsActivity.class);
+									intent.putExtra("ORDER_ID", info.getOrderNo());
+									getActivity().startActivity(intent);
+								}
+							}, true, "是", "", true, true);
+				}
+			}
+		}
 	}
+	
 }

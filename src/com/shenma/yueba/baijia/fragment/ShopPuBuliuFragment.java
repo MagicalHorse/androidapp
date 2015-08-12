@@ -42,6 +42,7 @@ public class ShopPuBuliuFragment extends Fragment implements PubuliuFragmentList
 	int Filter;//int 0:全部商品,1:上新商品 2:我收藏的商品（用于买家显示）
 	int userID;
 	List<MyFavoriteProductListInfo> item = new ArrayList<MyFavoriteProductListInfo>();
+	boolean ishow=false;
 	/*****
 	 * @param Filter int 0:全部商品,1:上新商品
 	 * ***/
@@ -78,6 +79,7 @@ public class ShopPuBuliuFragment extends Fragment implements PubuliuFragmentList
 
 	@Override
 	public void onPuBuliuRefersh() {
+		ishow=true;
 		refreshLoading();
 		switch(Filter)
 		{
@@ -120,7 +122,7 @@ public class ShopPuBuliuFragment extends Fragment implements PubuliuFragmentList
 	void sendHttp(final int page,final int type)
 	{
 		ToolsUtil.showNoDataView(getActivity(), false);
-		httpControl.GetBaijiaGetUserProductList(userID,page, pageSize, Filter, false, new HttpCallBackInterface() {
+		httpControl.GetBaijiaGetUserProductList(userID,page, pageSize, Filter, ishow, new HttpCallBackInterface() {
 			
 			@Override
 			public void http_Success(Object obj) {
@@ -173,6 +175,7 @@ public class ShopPuBuliuFragment extends Fragment implements PubuliuFragmentList
 	 * 刷新数据完成
 	 * ***/
 	void onRefresh(List<MyFavoriteProductListInfo> _list) {
+		ishow=false;
 		currPage++;
 		item.clear();
 		if(_list==null|| _list.size()<1)
@@ -198,6 +201,7 @@ public class ShopPuBuliuFragment extends Fragment implements PubuliuFragmentList
 	 * 加载数据完成
 	 * ***/
 	void onAddData(List<MyFavoriteProductListInfo> _list) {
+		ishow=false;
 		currPage++;
 		if(_list==null|| _list.size()<1)
 		{
