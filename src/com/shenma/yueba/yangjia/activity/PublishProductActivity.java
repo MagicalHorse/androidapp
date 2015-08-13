@@ -7,16 +7,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Bitmap.CompressFormat;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
@@ -30,25 +29,22 @@ import android.widget.Toast;
 
 import com.alibaba.sdk.android.oss.callback.SaveCallback;
 import com.alibaba.sdk.android.oss.model.OSSException;
-import com.lidroid.xutils.BitmapUtils;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.BaseActivityWithTopView;
-import com.shenma.yueba.baijia.activity.BuyerCertificationActivity2;
 import com.shenma.yueba.baijia.modle.RequestUploadProductDataBean;
 import com.shenma.yueba.camera2.ActivityCapture;
 import com.shenma.yueba.util.CustomProgressDialog;
 import com.shenma.yueba.util.FileUtils;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
-import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.ProductImagesBean;
+import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.util.SizeBean;
 import com.shenma.yueba.util.ToolsUtil;
-import com.shenma.yueba.view.TagImageView;
 import com.shenma.yueba.yangjia.modle.StateBean;
 import com.shenma.yueba.yangjia.modle.TagCacheBean;
 import com.shenma.yueba.yangjia.modle.TagListBean;
@@ -63,7 +59,7 @@ import com.umeng.analytics.MobclickAgent;
  */
 public class PublishProductActivity extends BaseActivityWithTopView implements
 		OnClickListener {
-	private Bitmap bitmap0,bitmap1,bitmap2;
+	private Bitmap bitmap0, bitmap1, bitmap2;
 	public String pic1, pic2, pic3, pic;
 	private LinearLayout ll_guige_container;
 	private TextView tv_product_number;
@@ -93,7 +89,7 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		MyApplication.getInstance().addActivity(this);//加入回退栈
+		MyApplication.getInstance().addActivity(this);// 加入回退栈
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.publish_product);
 		super.onCreate(savedInstanceState);
@@ -108,53 +104,54 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 		RequestUploadProductDataBean detailBean = (RequestUploadProductDataBean) getIntent()
 				.getSerializableExtra("data");
 		productId = getIntent().getStringExtra("id");
-		if(TextUtils.isEmpty(productId) && TextUtils.isEmpty(MyApplication.getInstance().getPublishUtil().getBean().getId())){//说明是修改商品
+		if (TextUtils.isEmpty(productId)
+				&& TextUtils.isEmpty(MyApplication.getInstance()
+						.getPublishUtil().getBean().getId())) {// 说明是修改商品
 			tv_publish.setText("发布");
-		}else{
-			if(productId!=null){
-				MyApplication.getInstance().getPublishUtil().getBean().setId(productId);
-			}else{
-				productId = MyApplication.getInstance().getPublishUtil().getBean().getId();
+		} else {
+			if (productId != null) {
+				MyApplication.getInstance().getPublishUtil().getBean()
+						.setId(productId);
+			} else {
+				productId = MyApplication.getInstance().getPublishUtil()
+						.getBean().getId();
 			}
 			tv_publish.setText("修改");
-			if(detailBean!=null){
-				 List<ProductImagesBean> images = detailBean.getImages();
-				MyApplication.getInstance().getPublishUtil().setBean(detailBean);
-			}else{
-		    	detailBean =  MyApplication.getInstance().getPublishUtil().getBean();
-		    }
-		}
-		
-		if (bean != null) {
-			tagList = bean.getTagList();
-			if(tagList!=null && tagList.size()>0){
-				int index = Integer.valueOf(MyApplication.getInstance().getPublishUtil().getIndex());
-				List<ProductImagesBean> images = MyApplication.getInstance().getPublishUtil().getBean().getImages();
-				int currentLength = images.size();
-				if(currentLength<index+1){
-					for (int i = 0; i < index-currentLength+1; i++) {
-						ProductImagesBean productImagesBean = new ProductImagesBean();
-						MyApplication
-						.getInstance()
-						.getPublishUtil()
-						.getBean()
-						.getImages().add(productImagesBean);
-					}
-				}
-				MyApplication
-				.getInstance()
-				.getPublishUtil()
-				.getBean()
-				.getImages()
-				.get(index).setTags(tagList);
+			if (detailBean != null) {
+				List<ProductImagesBean> images = detailBean.getImages();
+				MyApplication.getInstance().getPublishUtil()
+						.setBean(detailBean);
+			} else {
+				detailBean = MyApplication.getInstance().getPublishUtil()
+						.getBean();
 			}
 		}
-		
+
+		if (bean != null) {
+			tagList = bean.getTagList();
+			if (tagList != null && tagList.size() > 0) {
+				int index = Integer.valueOf(MyApplication.getInstance()
+						.getPublishUtil().getIndex());
+				List<ProductImagesBean> images = MyApplication.getInstance()
+						.getPublishUtil().getBean().getImages();
+				int currentLength = images.size();
+				if (currentLength < index + 1) {
+					for (int i = 0; i < index - currentLength + 1; i++) {
+						ProductImagesBean productImagesBean = new ProductImagesBean();
+						MyApplication.getInstance().getPublishUtil().getBean()
+								.getImages().add(productImagesBean);
+					}
+				}
+				MyApplication.getInstance().getPublishUtil().getBean()
+						.getImages().get(index).setTags(tagList);
+			}
+		}
+
 		// 修改商品
 		if (detailBean != null) {
-			if("editPic".equals(from)){
-				
-			}else if("productManager".equals(from)){
+			if ("editPic".equals(from)) {
+
+			} else if ("productManager".equals(from)) {
 				FileUtils.delAllFile(FileUtils.getRootPath() + "/tagPic/");
 			}
 			List<ProductImagesBean> imagesList = MyApplication.getInstance()
@@ -166,74 +163,89 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 				}
 			}
 			MyApplication.getInstance().getPublishUtil().setBean(detailBean);
-			MyApplication.getInstance().getPublishUtil().getBean().setId(productId);
-			
-			
-			
-			MyApplication.getInstance().getPublishUtil().getTagCacheList().clear();
-			ArrayList<List<TagCacheBean>> tagCacheList = MyApplication.getInstance().getPublishUtil().getTagCacheList();
+			MyApplication.getInstance().getPublishUtil().getBean()
+					.setId(productId);
+
+			MyApplication.getInstance().getPublishUtil().getTagCacheList()
+					.clear();
+			ArrayList<List<TagCacheBean>> tagCacheList = MyApplication
+					.getInstance().getPublishUtil().getTagCacheList();
 			for (int i = 0; i < detailBean.getImages().size(); i++) {
-				if(detailBean.getImages().get(i).getTags().size()>0){
-					List<TagsBean> tagsBean = detailBean.getImages().get(i).getTags();
+				if (detailBean.getImages().get(i).getTags().size() > 0) {
+					List<TagsBean> tagsBean = detailBean.getImages().get(i)
+							.getTags();
 					for (int j = 0; j < tagsBean.size(); j++) {
 						TagCacheBean tagcacheBean = new TagCacheBean();
 						tagcacheBean.setName(tagsBean.get(j).getName());
-						tagcacheBean.setId(Integer.valueOf(tagsBean.get(j).getSourceId()));
-					    tagcacheBean.setType(tagsBean.get(j).getSourceType());
-					    tagcacheBean.setX((int)(ToolsUtil.getDisplayWidth(mContext)*Double.parseDouble(tagsBean.get(j).getPosX())));
-					    tagcacheBean.setY((int)(ToolsUtil.getDisplayWidth(mContext)*Double.parseDouble(tagsBean.get(j).getPosY())));
-					    tagCacheList.get(i).add(tagcacheBean);
+						tagcacheBean.setId(Integer.valueOf(tagsBean.get(j)
+								.getSourceId()));
+						tagcacheBean.setType(tagsBean.get(j).getSourceType());
+						tagcacheBean.setX((int) (ToolsUtil
+								.getDisplayWidth(mContext) * Double
+								.parseDouble(tagsBean.get(j).getPosX())));
+						tagcacheBean.setY((int) (ToolsUtil
+								.getDisplayWidth(mContext) * Double
+								.parseDouble(tagsBean.get(j).getPosY())));
+						tagCacheList.get(i).add(tagcacheBean);
 					}
 				}
 			}
-			MyApplication.getInstance().getPublishUtil().setTagCacheList(tagCacheList);
-			
-			
-			
-			et_product_number.setText(ToolsUtil.nullToString(MyApplication.getInstance().getPublishUtil().getBean().getSku_Code()));
-			et_price.setText(ToolsUtil.nullToString(MyApplication.getInstance().getPublishUtil().getBean().getPrice()));
-			et_introduce.setText(ToolsUtil.nullToString(MyApplication.getInstance().getPublishUtil().getBean().getDesc()));
-			List<SizeBean> sizeList = MyApplication.getInstance().getPublishUtil().getBean().getSizes();
-			if(sizeList!=null){
+			MyApplication.getInstance().getPublishUtil()
+					.setTagCacheList(tagCacheList);
+
+			et_product_number.setText(ToolsUtil.nullToString(MyApplication
+					.getInstance().getPublishUtil().getBean().getSku_Code()));
+			et_price.setText(ToolsUtil.nullToString(MyApplication.getInstance()
+					.getPublishUtil().getBean().getPrice()));
+			et_introduce.setText(ToolsUtil.nullToString(MyApplication
+					.getInstance().getPublishUtil().getBean().getDesc()));
+			List<SizeBean> sizeList = MyApplication.getInstance()
+					.getPublishUtil().getBean().getSizes();
+			if (sizeList != null) {
 				for (int i = 0; i < sizeList.size(); i++) {
-					if(i == 0){
+					if (i == 0) {
 						et_guige.setText(sizeList.get(i).getName());
 						et_kucun.setText(sizeList.get(i).getInventory());
-					}else{
-						View view = View.inflate(mContext, R.layout.guige_item, null);
-						EditText et_guige = (EditText) view.findViewById(R.id.et_guige);
-						EditText et_kucun = (EditText) view.findViewById(R.id.et_kucun);
-						FontManager.changeFonts(mContext, et_guige,et_kucun);
+					} else {
+						View view = View.inflate(mContext, R.layout.guige_item,
+								null);
+						EditText et_guige = (EditText) view
+								.findViewById(R.id.et_guige);
+						EditText et_kucun = (EditText) view
+								.findViewById(R.id.et_kucun);
+						FontManager.changeFonts(mContext, et_guige, et_kucun);
 						et_guige.setText(sizeList.get(i).getName());
 						et_kucun.setText(sizeList.get(i).getInventory());
 						ll_guige_container.addView(view);
 					}
 					ll_guige_container.setVisibility(View.VISIBLE);
-				
+
 				}
 			}
 			return;
 		}
-		
-		setImageView();
 
+		setImageView();
 
 	}
 
 	private void initView() {
 		setTitle("发布商品");
-		setLeftTextView(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				PublishProductActivity.this.finish();
-			}
-		});
+//		setLeftTextView(new OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				PublishProductActivity.this.finish();
+//			}
+//		});
 		setTopRightTextView("取消发布", new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				MyApplication.getInstance().finishActivity(EditPicActivity.class);
-				MyApplication.getInstance().finishActivity(ActivityCapture.class);
-				MyApplication.getInstance().finishActivity(PublishProductActivity.class);
+				MyApplication.getInstance().finishActivity(
+						EditPicActivity.class);
+				MyApplication.getInstance().finishActivity(
+						ActivityCapture.class);
+				MyApplication.getInstance().finishActivity(
+						PublishProductActivity.class);
 			}
 		});
 		ll_pictures_container = getView(R.id.ll_pictures_container);
@@ -272,9 +284,10 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 		tv_publish = getView(R.id.tv_publish);
 		tv_add_guige.setOnClickListener(this);
 		tv_publish.setOnClickListener(this);
-		FontManager.changeFonts(mContext, tv_top_title,tv_top_right,tv_product_number, et_product_number,
-				tv_price_title, et_price, tv_yuan, et_introduce, tv_retain,
-				et_guige, et_kucun, tv_add_guige, tv_publish);
+		FontManager.changeFonts(mContext, tv_top_title, tv_top_right,
+				tv_product_number, et_product_number, tv_price_title, et_price,
+				tv_yuan, et_introduce, tv_retain, et_guige, et_kucun,
+				tv_add_guige, tv_publish);
 		progressDialog = new CustomProgressDialog(mContext)
 				.createDialog(mContext);
 		progressDialog.setCancelable(true);
@@ -286,13 +299,76 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 		for (int i = 0; i < 3; i++) {
 			StateBean bean = new StateBean();
 			View view = View.inflate(mContext, R.layout.tag_imageview, null);
-			TagImageView layout_tag_image = (TagImageView) view
-					.findViewById(R.id.layout_tag_image);
-			ImageView iv_pic = (ImageView) view.findViewById(R.id.iv_pic);
+			final ImageView iv_pic = (ImageView) view.findViewById(R.id.iv_pic);
+			final ImageView iv_delete = (ImageView) view
+					.findViewById(R.id.iv_delete);
+			iv_delete.setTag(i);
+			// iv_pic.setTag(i);
+			iv_delete.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					int deletePosition = (Integer) iv_delete.getTag();// 获取删除属于哪个view的标记
+					// int picPosition = (Integer) iv_pic.getTag();//删除的图片的tag
+					// 以下是清空缓存的标签
+					ArrayList<List<TagCacheBean>> tagList = MyApplication
+							.getInstance().getPublishUtil().getTagCacheList();
+					if (tagList.size() > deletePosition) {
+						MyApplication
+								.getInstance()
+								.getPublishUtil()
+								.getTagCacheList()
+								.set(deletePosition,
+										new ArrayList<TagCacheBean>());
+					}
+					// 以下是清除缓存的图片
+					List<ProductImagesBean> imagesList = MyApplication
+							.getInstance().getPublishUtil().getBean()
+							.getImages();
+					if (imagesList.size() > deletePosition) {
+						MyApplication.getInstance().getPublishUtil().getBean()
+								.getImages()
+								.set(deletePosition, new ProductImagesBean());
+					}
+					iv_pic.setImageBitmap(null);
+					iv_pic.setBackgroundResource(R.drawable.add_pic_default);
+					iv_delete.setVisibility(View.GONE);
+					StateBean bean = (StateBean) iv_pic.getTag();
+					bean.setSetPic(false);
+					iv_pic.setTag(bean);
+					File file = null;
+					if (deletePosition == 0) {
+						if (new File(FileUtils.getRootPath() + "/tagPic/" + "tagPic"
+								+ SharedUtil.getUserId(mContext) + "0.png").exists()) {
+							file = new File(FileUtils.getRootPath() + "/tagPic/" + "tagPic"
+									+ SharedUtil.getUserId(mContext) + "0.png");
+							pic1 = "";
+						}
+					}
+					if (deletePosition == 1) {
+						if (new File(FileUtils.getRootPath() + "/tagPic/" + "tagPic"
+								+ SharedUtil.getUserId(mContext) + "1.png").exists()) {
+							file = new File(FileUtils.getRootPath() + "/tagPic/" + "tagPic"
+									+ SharedUtil.getUserId(mContext) + "1.png");
+							pic2 = "";
+						}
+					}
+					if (deletePosition == 2) {
+						if (new File(FileUtils.getRootPath() + "/tagPic/" + "tagPic"
+								+ SharedUtil.getUserId(mContext) + "2.png").exists()) {
+							file = new File(FileUtils.getRootPath() + "/tagPic/" + "tagPic"
+									+ SharedUtil.getUserId(mContext) + "2.png");
+							pic3 = "";
+						}
+					}
+					if (file!=null && file.exists()) {
+						file.delete();
+					}
+				}
+			});
 			iv_pic.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					ToolsUtil.hideSoftKeyboard(mContext, et_product_number);
+					ToolsUtil.hideSoftKeyboard(mContext, et_product_number);// 隐藏软键盘
 					StateBean bean = (StateBean) v.getTag();
 					if (dataList.contains(bean)) {
 						index = dataList.indexOf(bean);
@@ -304,19 +380,22 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 								canClick = false;
 							}
 						}
-						if (canClick) {
+						if (true) {
 							if (bean.isSetPic()) {
 								Intent intent = new Intent(
 										PublishProductActivity.this,
 										EditPicActivity.class);
 								MyApplication.getInstance().getPublishUtil()
 										.setFrom("publish");
-								if(!(""+index).equals(MyApplication.getInstance().getPublishUtil().getIndex())){
-									MyApplication.getInstance().getPublishUtil()
-									.setOtherPic(true);
-								}else{
-									MyApplication.getInstance().getPublishUtil()
-									.setOtherPic(false);
+								if (!("" + index).equals(MyApplication
+										.getInstance().getPublishUtil()
+										.getIndex())) {
+									MyApplication.getInstance()
+											.getPublishUtil().setOtherPic(true);
+								} else {
+									MyApplication.getInstance()
+											.getPublishUtil()
+											.setOtherPic(false);
 								}
 								MyApplication.getInstance().getPublishUtil()
 										.setIndex(index + "");
@@ -343,6 +422,7 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 					}
 				}
 			});
+
 			RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
 					LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 			params.height = ToolsUtil.getDisplayWidth(mContext) / 3
@@ -350,6 +430,7 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 			params.width = ToolsUtil.getDisplayWidth(mContext) / 3
 					- ToolsUtil.dip2px(mContext, 15);
 			iv_pic.setLayoutParams(params);
+
 			bean.setPosition(i);
 			// for (int j = 0; j <tagList.size(); j++) {
 			// double x= tagList.get(j).get("x");
@@ -359,39 +440,52 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 			// ((int)(iv_pic.getHeight()*y)));
 			// }
 
-			File files = new File(FileUtils.getRootPath() + "/tagPic/" + "tagPic"+ SharedUtil.getUserId(mContext) + i + ".png");
+			File files = new File(FileUtils.getRootPath() + "/tagPic/"
+					+ "tagPic" + SharedUtil.getUserId(mContext) + i + ".png");
 			if (files.exists()) {
 				BitmapFactory.Options options = new BitmapFactory.Options();
 				options.inSampleSize = 2;
 				switch (i) {
 				case 0:
-					if(bitmap0!=null){
+					if (bitmap0 != null) {
 						bitmap0 = null;
 					}
-					bitmap0 = BitmapFactory.decodeFile(FileUtils.getRootPath() + "/tagPic/" + "tagPic"+ SharedUtil.getUserId(mContext) + i + ".png", options);
+					bitmap0 = BitmapFactory.decodeFile(
+							FileUtils.getRootPath() + "/tagPic/" + "tagPic"
+									+ SharedUtil.getUserId(mContext) + i
+									+ ".png", options);
 					iv_pic.setImageBitmap(bitmap0);
+					iv_delete.setVisibility(View.VISIBLE);
 					bean.setSetPic(true);
 					break;
 				case 1:
-					if(bitmap1!=null){
+					if (bitmap1 != null) {
 						bitmap1 = null;
 					}
-					bitmap1 = BitmapFactory.decodeFile(FileUtils.getRootPath() + "/tagPic/" + "tagPic"+ SharedUtil.getUserId(mContext) + i + ".png", options);
+					bitmap1 = BitmapFactory.decodeFile(
+							FileUtils.getRootPath() + "/tagPic/" + "tagPic"
+									+ SharedUtil.getUserId(mContext) + i
+									+ ".png", options);
 					iv_pic.setImageBitmap(bitmap1);
+					iv_delete.setVisibility(View.VISIBLE);
 					bean.setSetPic(true);
 					break;
 				case 2:
-					if(bitmap2!=null){
+					if (bitmap2 != null) {
 						bitmap2 = null;
 					}
-					bitmap2 = BitmapFactory.decodeFile(FileUtils.getRootPath() + "/tagPic/" + "tagPic"+ SharedUtil.getUserId(mContext) + i + ".png", options);
+					bitmap2 = BitmapFactory.decodeFile(
+							FileUtils.getRootPath() + "/tagPic/" + "tagPic"
+									+ SharedUtil.getUserId(mContext) + i
+									+ ".png", options);
 					iv_pic.setImageBitmap(bitmap2);
+					iv_delete.setVisibility(View.VISIBLE);
 					bean.setSetPic(true);
 					break;
 				default:
 					break;
 				}
-			
+
 			} else {
 				iv_pic.setBackgroundResource(R.drawable.add_pic_default);
 			}
@@ -426,26 +520,29 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 	private void publishProduct() {
 		HttpControl httpControl = new HttpControl();
 		List<ProductImagesBean> imageList = MyApplication.getInstance()
-				.getPublishUtil().getBean().getImages();
+				.getPublishUtil().getBean().getImages();// 获取所有缓存的图片
 		List<ProductImagesBean> cacheImageList = new ArrayList<ProductImagesBean>();
 		for (int i = 0; i < imageList.size(); i++) {
 			if (!TextUtils.isEmpty(imageList.get(i).getImageUrl())) {
 				cacheImageList.add(imageList.get(i));
 			}
 		}
-		MyApplication.getInstance().getPublishUtil().getBean().setImages(cacheImageList);
-		
-		String id = MyApplication.getInstance().getPublishUtil().getBean().getId();
-		if(TextUtils.isEmpty(id)){
+		MyApplication.getInstance().getPublishUtil().getBean()
+				.setImages(cacheImageList);
+
+		String id = MyApplication.getInstance().getPublishUtil().getBean()
+				.getId();
+		if (TextUtils.isEmpty(id)) {
 			httpControl.createBuyerProductInfo(MyApplication.getInstance()
 					.getPublishUtil().getBean(), new HttpCallBackInterface() {
 				@Override
 				public void http_Success(Object obj) {
-					if(progressDialog!=null && progressDialog.isShowing()){
+					if (progressDialog != null && progressDialog.isShowing()) {
 						progressDialog.dismiss();
 					}
 					Toast.makeText(mContext, "发布成功", 1000).show();
-//					FileUtils.delAllFile(FileUtils.getRootPath() + "/tagPic/");
+					// FileUtils.delAllFile(FileUtils.getRootPath() +
+					// "/tagPic/");
 					PublishProductActivity.this.finish();
 					MyApplication.getInstance().getPublishUtil().setBean(null);
 					MyApplication.getInstance().getPublishUtil().setIndex("0");
@@ -453,7 +550,8 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 					MyApplication.getInstance().getPublishUtil().setUri(null);
 					MyApplication.getInstance().finishActivity(
 							EditPicActivity.class);
-					MyApplication.getInstance().finishActivity(PublishProductActivity.class);
+					MyApplication.getInstance().finishActivity(
+							PublishProductActivity.class);
 				}
 
 				@Override
@@ -461,16 +559,17 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 					Toast.makeText(mContext, msg, 1000).show();
 				}
 			}, PublishProductActivity.this);
-		}else{
+		} else {
 			httpControl.updateBuyerProductInfo(MyApplication.getInstance()
 					.getPublishUtil().getBean(), new HttpCallBackInterface() {
 				@Override
 				public void http_Success(Object obj) {
-					if(progressDialog!=null && progressDialog.isShowing()){
+					if (progressDialog != null && progressDialog.isShowing()) {
 						progressDialog.dismiss();
 					}
 					Toast.makeText(mContext, "修改成功", 1000).show();
-//					FileUtils.delAllFile(FileUtils.getRootPath() + "/tagPic/");
+					// FileUtils.delAllFile(FileUtils.getRootPath() +
+					// "/tagPic/");
 					setResult(101);
 					PublishProductActivity.this.finish();
 					MyApplication.getInstance().getPublishUtil().setBean(null);
@@ -480,14 +579,15 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 					MyApplication.getInstance().finishActivity(
 							EditPicActivity.class);
 				}
+
 				@Override
 				public void http_Fails(int error, String msg) {
 					Toast.makeText(mContext, msg, 1000).show();
 				}
 			}, PublishProductActivity.this);
-			
+
 		}
-		
+
 	}
 
 	@Override
@@ -517,11 +617,11 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 
 				}
 			});
-			FontManager.changeFonts(mContext, et_guige,et_kucun);
+			FontManager.changeFonts(mContext, et_guige, et_kucun);
 			ll_guige_container.addView(view);
 			break;
 		case R.id.tv_publish:// 发布商品
-//			MyApplication.getInstance().getPublishUtil().getBean().setImages(null);
+			// MyApplication.getInstance().getPublishUtil().getBean().setImages(null);
 			upPicProgress = 0;
 			uploadImage();
 			break;
@@ -536,7 +636,6 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 				+ SharedUtil.getUserId(mContext) + "0.png").exists()) {
 			pic1 = FileUtils.getRootPath() + "/tagPic/" + "tagPic"
 					+ SharedUtil.getUserId(mContext) + "0.png";
-			pic = pic1;
 		}
 		if (new File(FileUtils.getRootPath() + "/tagPic/" + "tagPic"
 				+ SharedUtil.getUserId(mContext) + "1.png").exists()) {
@@ -613,17 +712,24 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 		}
 		HttpControl httpControl = new HttpControl();
 		if (upPicProgress == 0) {
-			pic = pic1;
+			if(!TextUtils.isEmpty(pic1)){//第一张图片不为空，上传第一张图片
+				pic = pic1;
+			}else{//第一张图片为空，设置标记位，开始上传第二张
+				upPicProgress = 1;
+			}
+			
 		}
-		if (upPicProgress == 1) {
-			pic = pic2;
+		if (upPicProgress == 1) {//如果第二张不为空，上传第二张图片
+			if(!TextUtils.isEmpty(pic2)){
+				pic = pic2;
+			}else{//第二张为空，设置标记位，上传第三张图片
+				upPicProgress = 2;
+			}
 		}
 		if (upPicProgress == 2) {
-			pic = pic3;
-		}
-		if (TextUtils.isEmpty(pic)) {
-			Toast.makeText(mContext, "商品图片不能为空", 1000).show();
-			return;
+			if(!TextUtils.isEmpty(pic3)){//如果第三章不为空，上传第三章
+				pic = pic3;
+			}
 		}
 		httpControl.syncUpload(pic, new SaveCallback() {
 
@@ -643,7 +749,6 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 			public void onSuccess(String arg0) {
 				switch (upPicProgress) {
 				case 0:// 第一张图片上传完毕
-					upPicProgress = 1;
 					if (new File(FileUtils.getRootPath() + "/tagPic/"
 							+ "tagPic" + SharedUtil.getUserId(mContext)
 							+ "0.png").exists()) {
@@ -652,15 +757,20 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 						MyApplication.getInstance().getPublishUtil().getBean()
 								.getImages().get(0).setImageUrl(imageName1);
 					}
-					if (!TextUtils.isEmpty(pic2)) {
+					if (!TextUtils.isEmpty(pic2)) {//第二张图片不为空
+						upPicProgress = 1;
 						uploadImage();
 					} else {
-						runOnUiThread(new Runnable() {
-							public void run() {
-								publishProduct();
-							}
-						});
-
+						if (!TextUtils.isEmpty(pic3)) {//第三张图片不为空
+							upPicProgress = 2;
+							uploadImage();
+						}else{
+							runOnUiThread(new Runnable() {
+								public void run() {
+									publishProduct();
+								}
+							});
+						}
 					}
 					break;
 				case 1:// 第二张上传完毕
@@ -669,13 +779,14 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 							+ "1.png").exists()) {
 						String imageName2 = pic2.substring(
 								pic2.lastIndexOf("/") + 1, pic2.length());
-						List<ProductImagesBean> aa = MyApplication.getInstance().getPublishUtil().getBean()
+						List<ProductImagesBean> aa = MyApplication
+								.getInstance().getPublishUtil().getBean()
 								.getImages();
 						MyApplication.getInstance().getPublishUtil().getBean()
 								.getImages().get(1).setImageUrl(imageName2);
 					}
-					upPicProgress = 2;
 					if (!TextUtils.isEmpty(pic3)) {
+						upPicProgress = 2;
 						uploadImage();
 					} else {
 						runOnUiThread(new Runnable() {
@@ -694,7 +805,7 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 						MyApplication.getInstance().getPublishUtil().getBean()
 								.getImages().get(2).setImageUrl(imageName3);
 					}
-//					MyApplication.getInstance().getPublishUtil().setBean(null);
+					// MyApplication.getInstance().getPublishUtil().setBean(null);
 					runOnUiThread(new Runnable() {
 						public void run() {
 							publishProduct();
@@ -711,108 +822,116 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 	private void saveBitmapToFile(final int index, String imageUrl) {
 		File dir = new File(FileUtils.getRootPath() + "/tagPic/");
 		if (!dir.exists()) {
-				dir.mkdirs();
+			dir.mkdirs();
 		}
 		File file = new File(dir, "tagPic" + SharedUtil.getUserId(mContext)
 				+ index + ".png");
-		File file2 = new File(dir, "tagPic_yuan" + SharedUtil.getUserId(mContext)
-				+ index + ".png");
-		 if(!file.exists() && !file2.exists()){
-			 try {
-					final FileOutputStream out = new FileOutputStream(file);
-					final FileOutputStream out2 = new FileOutputStream(file2);
-					
-					MyApplication.getInstance().getImageLoader()
-							.loadImage(imageUrl, new ImageLoadingListener() {
-								@Override
-								public void onLoadingStarted(String arg0, View arg1) {
+		File file2 = new File(dir, "tagPic_yuan"
+				+ SharedUtil.getUserId(mContext) + index + ".png");
+		if (!file.exists() && !file2.exists()) {
+			try {
+				final FileOutputStream out = new FileOutputStream(file);
+				final FileOutputStream out2 = new FileOutputStream(file2);
 
+				MyApplication.getInstance().getImageLoader()
+						.loadImage(imageUrl, new ImageLoadingListener() {
+							@Override
+							public void onLoadingStarted(String arg0, View arg1) {
+
+							}
+
+							@Override
+							public void onLoadingFailed(String arg0, View arg1,
+									FailReason arg2) {
+
+							}
+
+							@Override
+							public void onLoadingComplete(String arg0,
+									View arg1, Bitmap bitmap) {
+								try {
+									bitmap.compress(Bitmap.CompressFormat.PNG,
+											100, out);
+									out.flush();
+									out.close();
+
+									bitmap.compress(Bitmap.CompressFormat.PNG,
+											100, out2);
+									out2.flush();
+									out2.close();
+								} catch (Exception e) {
+									// TODO: handle exception
 								}
 
-								@Override
-								public void onLoadingFailed(String arg0, View arg1,
-										FailReason arg2) {
-
+								if (index < MyApplication.getInstance()
+										.getPublishUtil().getBean().getImages()
+										.size() - 1) {
+									saveBitmapToFile(index + 1,
+											MyApplication.getInstance()
+													.getPublishUtil().getBean()
+													.getImages().get(index + 1)
+													.getImageUrl());
+								} else {
+									setImageView();
 								}
 
-								@Override
-								public void onLoadingComplete(String arg0, View arg1,
-										Bitmap bitmap) {
-									try {
-										bitmap.compress(Bitmap.CompressFormat.PNG, 100,
-												out);
-										out.flush();
-										out.close();
-										
-										bitmap.compress(Bitmap.CompressFormat.PNG, 100,
-												out2);
-										out2.flush();
-										out2.close();
-									} catch (Exception e) {
-										// TODO: handle exception
-									}
+							}
 
-									if (index < MyApplication.getInstance()
-											.getPublishUtil().getBean().getImages()
-											.size()-1) {
-										saveBitmapToFile(index + 1, MyApplication
-												.getInstance().getPublishUtil()
-												.getBean().getImages().get(index+1)
-												.getImageUrl());
-									} else {
-										setImageView();
-									}
+							@Override
+							public void onLoadingCancelled(String arg0,
+									View arg1) {
 
-								}
+							}
+						});
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
-								@Override
-								public void onLoadingCancelled(String arg0, View arg1) {
+		} else {
+			setImageView();
+		}
 
-								}
-							});
-				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
-		 }else{
-			 setImageView();
-		 }
-		
 	}
-	
-	@Override
-	public void onBackPressed() {
-		// TODO Auto-generated method stub
-		super.onBackPressed();
-	}
-	
+
+
 	@Override
 	protected void onDestroy() {
-		if(bitmap0!=null){
+		if (bitmap0 != null) {
 			bitmap0.recycle();
 		}
-		if(bitmap1!=null){
+		if (bitmap1 != null) {
 			bitmap1.recycle();
 		}
-		if(bitmap2!=null){
+		if (bitmap2 != null) {
 			bitmap2.recycle();
 		}
 		MyApplication.getInstance().removeActivity(this);
 		super.onDestroy();
 	}
+
+	public void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+
+	public void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
 	
 	
 	
-	  public void onResume() {
-			super.onResume();
-			MobclickAgent.onResume(this);
-			}
-			public void onPause() {
-			super.onPause();
-			MobclickAgent.onPause(this);
-			}
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if(keyCode == KeyEvent.KEYCODE_BACK && KeyEvent.ACTION_DOWN == event.getAction()){
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
+	}
+	
+	
 }

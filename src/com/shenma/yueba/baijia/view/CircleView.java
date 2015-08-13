@@ -3,8 +3,25 @@ package com.shenma.yueba.baijia.view;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
+import com.handmark.pulltorefresh.library.PullToRefreshGridView;
+import com.shenma.yueba.ChatActivity;
+import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.modle.FragmentBean;
+import com.shenma.yueba.baijia.modle.RequestTuiJianCircleInfoBean;
+import com.shenma.yueba.baijia.modle.TuiJianCircleInfo;
+import com.shenma.yueba.constants.Constants;
+import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
+import com.shenma.yueba.util.ToolsUtil;
+import com.shenma.yueba.view.RoundImageView;
+
 import android.app.Activity;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,30 +29,13 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnPullEventListener;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.State;
-import com.handmark.pulltorefresh.library.PullToRefreshGridView;
-import com.shenma.yueba.ChatActivity;
-import com.shenma.yueba.R;
-import com.shenma.yueba.application.MyApplication;
-import com.shenma.yueba.baijia.modle.FragmentBean;
-import com.shenma.yueba.baijia.modle.RequestBrandCityWideInfoBean;
-import com.shenma.yueba.baijia.modle.RequestTuiJianCircleInfoBean;
-import com.shenma.yueba.baijia.modle.TuiJianCircleInfo;
-import com.shenma.yueba.baijia.modle.TuiJianCircleInfoBean;
-import com.shenma.yueba.constants.Constants;
-import com.shenma.yueba.util.HttpControl;
-import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
-import com.shenma.yueba.util.ToolsUtil;
-import com.shenma.yueba.view.RoundImageView;
+import im.broadcast.ImBroadcastReceiver;
+import im.broadcast.ImBroadcastReceiver.ImBroadcastReceiverLinstener;
+import im.broadcast.ImBroadcastReceiver.RECEIVER_type;
+import im.form.RequestMessageBean;
 
 public class CircleView extends BaseView{
 	Activity activity;
@@ -53,6 +53,9 @@ public class CircleView extends BaseView{
 	boolean showDialog=true;
 	boolean isFirst=true;
 	HttpControl httpCntrol=new HttpControl();
+	ImBroadcastReceiver imBroadcastReceiver;
+	boolean isImBroadcase=false;
+	
 	public CircleView(Activity activity)
 	{
 		if(view==null)
@@ -62,6 +65,7 @@ public class CircleView extends BaseView{
 			view=inflater.inflate(R.layout.circleview_layout, null);
 			initPullView();
 			initView(view);
+			
 		}
 	}
 

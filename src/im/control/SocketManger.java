@@ -14,6 +14,7 @@ import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.util.SharedUtil;
 
 import android.content.Intent;
+import android.os.SystemClock;
 import android.util.Log;
 import im.broadcast.ImBroadcastReceiver;
 import im.form.MessageBean;
@@ -70,6 +71,7 @@ public class SocketManger {
 		}else if(!socket.connected())
 		{
 			Log.i("TAG", "---->>>socket unconnect");
+			socket.close();
 			socket.connect();
 		}else if(socket.connected())
 		{
@@ -148,6 +150,7 @@ public class SocketManger {
 
 			@Override
 			public void call(Object... arg0) {
+				 Log.i("TAG","---->>>socket  Socket.EVENT_CONNECT");
 				//登录
 				onLineToUserID();
 				inroon(userId, roomBean);
@@ -158,7 +161,8 @@ public class SocketManger {
 
 			@Override
 			public void call(Object... arg0) {
-				Log.i("TAG", "---->>>socket Socket.EVENT_CONNECT_ERROR");
+				SystemClock.sleep(800);
+				Log.i("TAG", "---->>>socket Socket.EVENT_CONNECT_ERROR   arg0:"+arg0);
 				contentSocket();
 			}
 		});
@@ -225,15 +229,18 @@ public class SocketManger {
 			public void call(Object... arg0) {
 				if(arg0[0]!=null && arg0[0] instanceof JSONObject)
 				{
-				JSONObject json=(JSONObject)arg0[0];
-				Log.i("TAG", "---->>>socket room message");	
-				Gson gson=new Gson();
-				Object obj=gson.fromJson(json.toString(), RequestMessageBean.class);
-				if(obj!=null && obj instanceof RequestMessageBean)
-				{
-					RequestMessageBean requestMessageBean=(RequestMessageBean)obj;
-					
-				}
+					JSONObject json=(JSONObject)arg0[0];
+					Log.i("TAG", "---->>>socket room message");	
+					Gson gson=new Gson();
+					Object obj=gson.fromJson(json.toString(), RequestMessageBean.class);
+					if(obj!=null && obj instanceof RequestMessageBean)
+					{
+						RequestMessageBean requestMessageBean=(RequestMessageBean)obj;
+						Intent intent=new Intent();
+						intent.setAction(ImBroadcastReceiver.IntentFilterRoomMsg);
+						intent.putExtra("Data", requestMessageBean);
+						MyApplication.getInstance().getApplicationContext().sendBroadcast(intent);
+					}
 				}
 			}
 		});

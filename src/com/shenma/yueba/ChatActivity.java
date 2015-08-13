@@ -66,6 +66,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import im.broadcast.ImBroadcastReceiver;
 import im.broadcast.ImBroadcastReceiver.ImBroadcastReceiverLinstener;
+import im.broadcast.ImBroadcastReceiver.RECEIVER_type;
 
 /**
  * Copyright (C) 2013-2014 EaseMob Technologies. All rights reserved.
@@ -505,7 +506,6 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 		bean.setLogo(ToolsUtil.nullToString(usericon));
 		bean.setCreationDate(ToolsUtil.getCurrentTime());
 		bean.setSharelink(content);
-		bean.setType(socketType);
 		bean.sendData();// 发送数据
 		
 		addListData(false, bean);
@@ -1150,7 +1150,9 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 	}
 
 
-
+    /***********
+     *  socket 接收到 信息的 回调接口
+     * *****/
 	@Override
 	public void newMessage(Object obj) {
 		if (obj != null && obj instanceof RequestMessageBean) {
@@ -1173,6 +1175,21 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 			// 通知更新
 			notification(baseChatBean, bean);
 		}
+	}
+
+
+
+	@Override
+	public void roomMessage(Object obj) {
+		
+	}
+
+
+
+	@Override
+	public void clearMsgNotation(RECEIVER_type type) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

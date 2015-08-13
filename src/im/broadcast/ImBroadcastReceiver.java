@@ -9,13 +9,14 @@ import android.content.Intent;
  * 
  * *****/
 public class ImBroadcastReceiver extends BroadcastReceiver{
-public final static String IntentFilter="com.shenma.yueba.im";
+public final static String IntentFilter="com.shenma.yueba.im";//加入房间后 获去到的消息的过滤
+public final static String IntentFilterRoomMsg="com.shenma.yueba.im.roonmsg";//不在房间内 获取消息的过滤
+public final static String IntentFilterClearMsg="com.shenma.yueba.im.roonmsg";//清除消息红色原点的过来
 ImBroadcastReceiverLinstener imBroadcastReceiverLinstener;
-public enum RECEIVER_type
+public static enum RECEIVER_type
 {
-	connect,//链接成功
-	newMessage,//新消息
-	roomMessage//房间消息
+	circle,//链接成功
+	msg,//新消息
 }
 
 
@@ -37,6 +38,23 @@ public enum RECEIVER_type
 						imBroadcastReceiverLinstener.newMessage(obj);
 					}
 				}
+			}else if(intent.getAction().equals(IntentFilterRoomMsg))
+			{
+				if(imBroadcastReceiverLinstener!=null)
+				{
+					Object obj=intent.getSerializableExtra("Data");
+					if(obj!=null)
+					{
+						imBroadcastReceiverLinstener.roomMessage(obj);
+					}
+				}
+			}else if(intent.getAction().equals(IntentFilterClearMsg))
+			{
+				if(intent.getSerializableExtra("RECEIVER_type")!=null)
+				{
+					RECEIVER_type type=(RECEIVER_type)intent.getSerializableExtra("RECEIVER_type");
+					imBroadcastReceiverLinstener.clearMsgNotation(type);
+				}
 			}
 		}
 	}
@@ -44,8 +62,19 @@ public enum RECEIVER_type
 	public interface ImBroadcastReceiverLinstener
 	{
 		/*****
-		 * 接收到消息
+		 * 加入 房间内 接收到消息
 		 * ****/
 		void newMessage(Object obj);
+		
+		/*****
+		 * 不在房间内 接收到消息
+		 * ****/
+		void roomMessage(Object obj);
+		
+		/******
+		 * 清除原点
+		 * @param type RECEIVER_type 对应的 数据类型
+		 * ****/
+		void clearMsgNotation(RECEIVER_type type);
 	}
 }

@@ -13,6 +13,7 @@ import com.shenma.yueba.baijia.modle.ProductInfoBean;
 import com.shenma.yueba.baijia.modle.RequestBaiJiaOrdeDetailsInfoBean;
 import com.shenma.yueba.broadcaseReceiver.OrderBroadcaseReceiver;
 import com.shenma.yueba.broadcaseReceiver.OrderBroadcaseReceiver.OrderBroadcaseListener;
+import com.shenma.yueba.inter.BindInter;
 import com.shenma.yueba.util.ButtonManager;
 import com.shenma.yueba.util.DialogUtilInter;
 import com.shenma.yueba.util.DialogUtils;
@@ -44,7 +45,7 @@ import android.widget.TextView;
  * 程序的简单说明   败家订单详情页面
  */
 
-public class BaiJiaOrderDetailsActivity extends BaseActivityWithTopView implements OnClickListener,OrderBroadcaseListener{
+public class BaiJiaOrderDetailsActivity extends BaseActivityWithTopView implements OnClickListener,OrderBroadcaseListener,BindInter{
 View parentView;
 ListView baijia_orderdetails_layout_lsitview;
 TextView baijia_orderdetails_lianxibuyer_textview;//联系买手
@@ -188,7 +189,7 @@ boolean isBroadcase=false;
 		if(SharedUtil.getBooleanPerfernece(BaiJiaOrderDetailsActivity.this, SharedUtil.user_IsBindWeiXin))
 		{
 			final BaiJiaOrdeDetailsInfoBean infobean=bean.getData();
-			ShareUtil.shareAll(BaiJiaOrderDetailsActivity.this,"", ToolsUtil.nullToString(infobean.getShareDesc()), infobean.getShareLink(),ToolsUtil.getImage(ToolsUtil.nullToString(infobean.getProductPic()), 320, 0),new ShareListener() {
+			ShareUtil.shareAll(BaiJiaOrderDetailsActivity.this,ToolsUtil.nullToString(infobean.getShareDesc()), ToolsUtil.nullToString(infobean.getShareDesc()), infobean.getShareLink(),ToolsUtil.getImage(ToolsUtil.nullToString(infobean.getProductPic()), 320, 0),new ShareListener() {
 				
 				@Override
 				public void sharedListener_sucess() {
@@ -203,7 +204,7 @@ boolean isBroadcase=false;
 		}else
 		{
 			DialogUtils dialog = new DialogUtils();                                                                        			
-			dialog.alertDialog(BaiJiaOrderDetailsActivity.this, "提示", "您确认要下架该商品吗？",
+			dialog.alertDialog(BaiJiaOrderDetailsActivity.this, "您还未绑定过微信", "是否绑定微信",
 					new DialogUtilInter() {
 						@Override
 						public void dialogCallBack(int... which) {
@@ -414,5 +415,22 @@ boolean isBroadcase=false;
 	@Override
 	public void falshData(BaiJiaOrderListInfo info,String str) {
 		requestData();
+	}
+
+	@Override
+	public void refresh() {
+		final BaiJiaOrdeDetailsInfoBean infobean=bean.getData();
+		ShareUtil.shareAll(BaiJiaOrderDetailsActivity.this,"", ToolsUtil.nullToString(infobean.getShareDesc()), infobean.getShareLink(),ToolsUtil.getImage(ToolsUtil.nullToString(infobean.getProductPic()), 320, 0),new ShareListener() {
+			
+			@Override
+			public void sharedListener_sucess() {
+				requestShared(infobean.getOrderNo());
+			}
+			
+			@Override
+			public void sharedListener_Fails(String msg) {
+				MyApplication.getInstance().showMessage(BaiJiaOrderDetailsActivity.this, msg);
+			}
+		});
 	}
 }

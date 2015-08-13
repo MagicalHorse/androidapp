@@ -17,6 +17,10 @@ import im.control.ChatBaseManager;
 
 public abstract class  BaseChatBean implements Serializable{
 	Context context;
+	/*****
+	 * @param chattype ChatType 发送消息的文本类型(根据此类型 设置 视图的样式)
+	 * @param type  String （消息的类型  即 发送消息时 type 对应的信息）
+	 * ***/
 	public BaseChatBean(ChatType chattype,String type,Context context)
 	{
 		this.chattype=chattype;
@@ -24,7 +28,9 @@ public abstract class  BaseChatBean implements Serializable{
 		this.context=context;
 	}
 	
-	
+	/***
+	 * 发送消息的文本类型
+	 * **/
 	public enum ChatType
 	{
 		link_type,//链接信息
@@ -54,7 +60,7 @@ public abstract class  BaseChatBean implements Serializable{
 	String userName="";
 	String logo="";
 	int productId;
-	String type="";
+	String type="";//信息的类型 默认为 文本    sss
 	String creationDate="";
 	String sharelink="";
 	

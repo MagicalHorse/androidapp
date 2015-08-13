@@ -66,6 +66,7 @@ public class ChatViewManager {
 		//根据消息的类型 设置 消息对应的布局样式
 		switch(bean.getChattype())
 		{
+		//根据 类型 设置 当前 消息 对应的 视图样式
 		case link_type://链接信息
 			if(bean.isIsoneself())
 			{

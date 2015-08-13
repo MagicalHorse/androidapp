@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 
+import com.shenma.yueba.ChatActivity;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.BaiJiaOrderListActivity;
@@ -116,6 +117,11 @@ public class NotificationUtils {
 			if ("13".equals(type)) {// 买手不同意退货
 				notificationIntent = new Intent(ctx,
 						BaiJiaOrderListActivity.class); // 点击该通知后要跳转的Activity
+				notificationIntent.putExtra("CURRID", 3);//售后
+			}
+			if("14".equals(type))//未读消息
+			{
+				notificationIntent = new Intent(ctx,ChatActivity.class); // 点击该通知后要跳转的Activity
 				notificationIntent.putExtra("CURRID", 3);//售后
 			}
 

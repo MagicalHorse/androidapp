@@ -109,8 +109,8 @@ public class ShareUtil {
 		wxCircleHandler.addToSocialSDK();
 		CircleShareContent circleMedia = new CircleShareContent();
 	
-		if(!TextUtils.isEmpty(title)){
-			circleMedia.setTitle(title);
+		if(!TextUtils.isEmpty(content)){
+			circleMedia.setTitle(content);
 		}
 		
 		if(!TextUtils.isEmpty(content)){

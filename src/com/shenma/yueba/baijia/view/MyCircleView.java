@@ -5,11 +5,16 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import im.broadcast.ImBroadcastReceiver;
+import im.broadcast.ImBroadcastReceiver.ImBroadcastReceiverLinstener;
+import im.broadcast.ImBroadcastReceiver.RECEIVER_type;
+import im.form.RequestMessageBean;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
@@ -40,7 +45,7 @@ import com.shenma.yueba.util.ToolsUtil;
  * 
  */
 
-public class MyCircleView extends BaseView{
+public class MyCircleView extends BaseView implements ImBroadcastReceiverLinstener{
 	private View view;
 	private PullToRefreshListView pull_refresh_list;
 	LinearLayout showloading_layout_view;
@@ -53,7 +58,9 @@ public class MyCircleView extends BaseView{
 	HttpControl httpCntrol=new HttpControl();
 	List<MyCircleInfo> items=new ArrayList<MyCircleInfo>();
 	boolean isFirst=true;
-	
+	ImBroadcastReceiver imBroadcastReceiver;
+	boolean isImBroadcase=false;
+	List<String> roomid_list=new ArrayList<String>();//存储未读消息的roomid
 	public MyCircleView(Activity activity)
 	{
 		if(view == null)
@@ -61,7 +68,8 @@ public class MyCircleView extends BaseView{
 			this.activity=activity;
 			initView();
 			initPullView();
-			//requestFalshData();
+			imBroadcastReceiver=new ImBroadcastReceiver(this);
+			registImBroacase();
 		}
 	}
 	
@@ -111,6 +119,8 @@ public class MyCircleView extends BaseView{
 				intent.putExtra("Chat_NAME",myCircleInfo.getName());//圈子名字
 				intent.putExtra("circleId",myCircleInfo.getId());//圈子id
 				activity.startActivity(intent);
+				//比对roomid 进行比对
+				equalRooId(myCircleInfo.getRoomId());
 			}
 		});
 	}
@@ -132,7 +142,7 @@ public class MyCircleView extends BaseView{
 	}
 	
 	
-	void addData(RequestMyCircleInfoBean bean)
+	synchronized void addData(RequestMyCircleInfoBean bean)
 	{
 		isFirst=false;
 		currPage++;
@@ -140,7 +150,16 @@ public class MyCircleView extends BaseView{
 		{
 			if(bean.getData().getItems()!=null)
 			{
-				items.addAll(bean.getData().getItems());
+				
+				for(int i=0;i<bean.getData().getItems().size();i++)
+				{
+					//比对数据是存在
+					if(!equalData(bean.getData().getItems().get(i)))
+					{
+						items.add(bean.getData().getItems().get(i));
+					}
+				}
+				//items.addAll(bean.getData().getItems());
 			}
 		}
 		showloading_layout_view.setVisibility(View.GONE);
@@ -169,6 +188,24 @@ public class MyCircleView extends BaseView{
 		}
 		
 		
+	}
+	
+	/*****
+	 * 比对 参数对象的 roomID在 items中是否存在    存在 true   不存在 false
+	 * **/
+	boolean equalData(MyCircleInfo info)
+	{
+		for(int i=0;i<items.size();i++)
+		{
+			if(items.get(i).getRoomId().equals(info.getRoomId()))
+			{
+				return true;
+			}else
+			{
+				return false;
+			}
+		}
+		return false;
 	}
 	
 	/******
@@ -251,5 +288,86 @@ public class MyCircleView extends BaseView{
 			requestFalshData();
 		}*/
 		requestFalshData();
+	}
+	
+	
+	void registImBroacase()
+	{
+		if(!isImBroadcase)
+		{
+			if(activity!=null)
+			{
+				isImBroadcase=true;
+				activity.registerReceiver(imBroadcastReceiver, new IntentFilter(ImBroadcastReceiver.IntentFilterRoomMsg));
+			}
+		}
+	}
+	
+	
+	void unRegistImBroacase()
+	{
+		if(isImBroadcase)
+		{
+			if(activity!=null)
+			{
+				isImBroadcase=false;
+				activity.unregisterReceiver(imBroadcastReceiver);
+			}
+		}
+	}
+
+
+	@Override
+	public void newMessage(Object obj) {
+		
+	}
+
+
+	@Override
+	public void roomMessage(Object obj) {
+		if(obj!=null && obj instanceof RequestMessageBean)
+		{
+			RequestMessageBean	bean=(RequestMessageBean)obj;
+			int touserid=bean.getToUserId();
+			if(touserid<=0)
+			{
+				String roomid=bean.getRoomId();
+				if(roomid!=null)
+				{
+					if(!roomid_list.contains(roomid))
+					{
+						roomid_list.add(roomid);
+						//通知 数据更新
+						//ssssssss
+					}
+				}
+			}
+		}
+	}
+
+
+	@Override
+	public void clearMsgNotation(RECEIVER_type type) {
+		
+	}
+	
+	/********
+	 * 根据 roomid查找 匹配的数据  如果roomid_list 数据为空 则 发送广播 通知 消除红点
+	 * ****/
+	void equalRooId(String roomId)
+	{
+		if(roomid_list.contains(roomId))
+		{
+			roomid_list.remove(roomId);
+		}
+		if(roomid_list.size()==0)
+		{
+			if(activity!=null)
+			{
+				Intent intent=new Intent(ImBroadcastReceiver.IntentFilterClearMsg);
+				intent.putExtra("RECEIVER_type", RECEIVER_type.circle);
+				activity.sendBroadcast(intent);
+			}
+		}
 	}
 }

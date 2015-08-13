@@ -57,7 +57,6 @@ boolean cancelsttaus=true;
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		ll=(LinearLayout)LinearLayout.inflate(context, R.layout.orderpay_dialog_layout, null);
-		setCancelable(cancelsttaus);
 		setContentView(ll);
 		initView();
 		setOnKeyListener(this);
@@ -86,6 +85,11 @@ boolean cancelsttaus=true;
 				intent.putExtra("ORDER_ID", payResponseFormBean.getOrderNo());
 				intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 				context.startActivity(intent);
+				dismiss();
+				if(orderPayOnClick_Listener!=null)
+				{
+					orderPayOnClick_Listener.on_Click();
+				}
 			}
 		});
 		orderpay_dialog_layout_queryorder_button.setText(Html.fromHtml("<u>"+context.getResources().getString(R.string.queryorderdesc)+"</u>"));
@@ -141,7 +145,7 @@ boolean cancelsttaus=true;
 	{
 		showDialog();
 		startTimer();
-		orderpay_dialog_layout_sucess_textview.setText("查询失败\n请手动刷新");
+		orderpay_dialog_layout_sucess_textview.setText("支付结果\n查询失败请手动刷新");
 		orderpay_dialog_layout_textview.setVisibility(View.GONE);
 		orderpay_dialog_layout_progressbar.setVisibility(View.GONE);
 		orderpay_dialog_layout_sucess_textview.setVisibility(View.VISIBLE);
@@ -202,7 +206,7 @@ boolean cancelsttaus=true;
 		};
 	};
 	
-	public void cancel() {
+	public void dismiss() {
 		stopTimer();
 	};
 

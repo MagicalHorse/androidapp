@@ -61,7 +61,7 @@ public abstract class WeiXinBasePayManager {
 	 * 执行操作
 	 * ***/
 	public void execute() {
-		dialog =ProgressDialog.show(context, context.getString(R.string.app_tip), context.getString(R.string.getting_prepayid), true, true);
+		dialog =ProgressDialog.show(context, context.getString(R.string.app_tip), context.getString(R.string.getting_prepayid), false, true);
 		ExecuteTask executeTask = new ExecuteTask();
 		executeTask.execute();
 	}

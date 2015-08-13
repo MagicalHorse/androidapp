@@ -299,7 +299,8 @@
                 android:textSize="@dimen/textsize11sp" />
 
             <TextView
-                android:visibility="gone"
+                android:drawablePadding="3dp"
+                android:visibility="visible"
                 android:layout_marginLeft="20dp"
                 android:id="@+id/baijia_orderdetails_xjfx_textview"
                 android:layout_width="wrap_content"
