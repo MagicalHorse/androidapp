@@ -48,8 +48,7 @@ import com.shenma.yueba.yangjia.activity.AboutActivity;
 import com.shenma.yueba.yangjia.activity.ModifyNickNameActivity;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.bean.SHARE_MEDIA;
-import com.umeng.socialize.controller.UMServiceFactory;
-import com.umeng.socialize.controller.UMSocialService;
+import com.umeng.socialize.utils.OauthHelper;
 
 
 /*****
@@ -395,8 +394,9 @@ public class UserConfigActivity extends BaseActivityWithTopView implements
 			}
 			break;
 		case R.id.user_config_exit_button:// 退出登录
-		   WXLoginUtil utils =new WXLoginUtil(mContext);
-		   utils.logoutWx();
+//		   WXLoginUtil utils =new WXLoginUtil(mContext);
+//		   utils.logoutWx();
+		   OauthHelper.remove(mContext, SHARE_MEDIA.WEIXIN);
 			MyApplication.removeAllActivity();
 			Intent intentLogin = new Intent(mContext, SplashActivity.class);
 			HttpControl httpControl=new HttpControl();

@@ -25,6 +25,7 @@ import com.umeng.socialize.controller.listener.SocializeListeners.SocializeClien
 import com.umeng.socialize.controller.listener.SocializeListeners.UMAuthListener;
 import com.umeng.socialize.controller.listener.SocializeListeners.UMDataListener;
 import com.umeng.socialize.exception.SocializeException;
+import com.umeng.socialize.utils.OauthHelper;
 import com.umeng.socialize.weixin.controller.UMWXHandler;
 
 public class WXLoginUtil {
@@ -139,6 +140,7 @@ public class WXLoginUtil {
 	
 	
 	public void logoutWx(){
+		
 		mController = UMServiceFactory.getUMSocialService("com.umeng.login");
 		// 添加微信平台
 		UMWXHandler wxHandler = new UMWXHandler(ctx, Constants.WX_APP_ID,
