@@ -38,6 +38,19 @@
         android:textSize="@dimen/textsize18sp"
         android:text="支付成功"
         />
+    
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/orderpay_dialog_layout_queryorder_button"
+        android:layout_marginTop="@dimen/shop_main_width15_dimen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/queryorderdesc"
+        android:textColor="@color/color_skyblue"
+        />
+    
+    
+    
     <Button
         android:padding="@dimen/shop_main_width5_dimen"
         android:textSize="@dimen/textsize12sp"

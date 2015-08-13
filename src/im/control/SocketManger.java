@@ -12,7 +12,6 @@ import com.github.nkzawa.socketio.client.Socket;
 import com.google.gson.Gson;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.util.SharedUtil;
-import com.shenma.yueba.util.ToolsUtil;
 
 import android.content.Intent;
 import android.util.Log;
@@ -30,7 +29,8 @@ public class SocketManger {
 	final String URL = "http://182.92.7.70:8000/chat";//服务器地址
 	//final String URL = "http://192.168.1.145:8000/chat";
     List<MessageBean> mssageBean_list=new ArrayList<MessageBean>();
-    
+    String userId=null;
+    RoomBean roomBean=null;
 	private SocketManger() {
 	}
 
@@ -150,6 +150,7 @@ public class SocketManger {
 			public void call(Object... arg0) {
 				//登录
 				onLineToUserID();
+				inroon(userId, roomBean);
 			}
 		});
 		// 连接失败监听
@@ -284,21 +285,27 @@ public class SocketManger {
 	public void inroon(String userId,RoomBean bean) {
 		//Map<String, String> data2=getMap(bean);
 		//Log.i("TAG", new JSONObject(data2).toString());
-		Gson gson=new Gson();
-		String json=gson.toJson(bean);
-		Log.i("TAG", json);
-		try {
-			Log.i("TAG", "---->>>socket inroom");
-			socket.emit("join room", userId, new JSONObject(json), new Ack() {
+		if(userId!=null && bean!=null)
+		{
+			this.userId=userId;
+			roomBean=bean;
+			Gson gson=new Gson();
+			String json=gson.toJson(bean);
+			Log.i("TAG", json);
+			try {
+				Log.i("TAG", "---->>>socket inroom    json:"+json);
+				socket.emit("join room", userId, new JSONObject(json), new Ack() {
 
-				@Override
-				public void call(Object... arg0) {
-					Log.i("TAG", "---->>>socket inroom");
-				}
-			});
-		} catch (Exception e) {
-			Log.i("TAG", "---->>>socket inroom error:"+e.getMessage());
+					@Override
+					public void call(Object... arg0) {
+						Log.i("TAG", "---->>>socket inroom");
+					}
+				});
+			} catch (Exception e) {
+				Log.i("TAG", "---->>>socket inroom error:"+e.getMessage());
+			}
 		}
+		
 	}
 	
 	
@@ -338,7 +345,8 @@ public class SocketManger {
 	public void outinroon() {
 		
 		try {
-			Log.i("TAG", "---->>>socket inroom");
+			roomBean=null;
+			Log.i("TAG", "---->>>socket outinroon");
 			socket.emit("leaveRoom", new Ack() {
 
 				@Override

@@ -160,8 +160,8 @@ public class BaijiaPayActivity extends BaseActivityWithTopView implements
 
 					@Override
 					public void http_Fails(int error, String msg) {
+						showFailsDailog();
 						MyApplication.getInstance().showMessage(BaijiaPayActivity.this, "查询失败，请在订单页面查看订单状态");
-						cancelPayDialog();
 					}
 				}, BaijiaPayActivity.this);
 	}
@@ -220,18 +220,18 @@ public class BaijiaPayActivity extends BaseActivityWithTopView implements
 	 * **/
 	public void showPayDialogLoading() {
 		if (orderPayDialog == null) {
-			orderPayDialog = new OrderPayDialog(BaijiaPayActivity.this, this,true);
+			orderPayDialog = new OrderPayDialog(payResponseFormBean,BaijiaPayActivity.this, this,true);
 		}
 		orderPayDialog.showLoading();
 
 	}
 
 	/***
-	 * 显示查询成为（即支付成功）
+	 * 显示查询成功（即支付成功）
 	 * **/
 	public void showSucessDialog() {
 		if (orderPayDialog == null) {
-			orderPayDialog = new OrderPayDialog(BaijiaPayActivity.this, this,true);
+			orderPayDialog = new OrderPayDialog(payResponseFormBean,BaijiaPayActivity.this, this,true);
 		}
 		orderPayDialog.showSucess();
 
@@ -242,7 +242,7 @@ public class BaijiaPayActivity extends BaseActivityWithTopView implements
 	 * **/
 	public void showFailsDailog() {
 		if (orderPayDialog == null) {
-			orderPayDialog = new OrderPayDialog(BaijiaPayActivity.this, this,true);
+			orderPayDialog = new OrderPayDialog(payResponseFormBean,BaijiaPayActivity.this, this,true);
 		}
 		orderPayDialog.showFails();
 

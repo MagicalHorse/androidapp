@@ -40,6 +40,8 @@
     <string name="RefreshLoadingstr">加载中...</string>
     <string name="Loosentheloadstr">松开加载</string>
     
+    <string name="queryorderdesc">查看订单详情</string>
+    
     
     
 </resources>

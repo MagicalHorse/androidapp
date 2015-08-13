@@ -29,6 +29,7 @@ import android.widget.TextView;
  */
 
 public class BaiJiaOrderListAdapter extends BaseAdapter {
+	
 	List<BaiJiaOrderListInfo> object_list = new ArrayList<BaiJiaOrderListInfo>();
 	Context context;
     HttpControl httpControl=new HttpControl();

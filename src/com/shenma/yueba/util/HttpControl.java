@@ -34,6 +34,7 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.modle.ApplyAuthBuyerBean;
+import com.shenma.yueba.baijia.modle.BaiJiaCheckBuyerStatusBeanRequest;
 import com.shenma.yueba.baijia.modle.BaseRequest;
 import com.shenma.yueba.baijia.modle.BrandDetailInfoBean;
 import com.shenma.yueba.baijia.modle.BuyerIndexInfoBean;
@@ -129,6 +130,8 @@ public class HttpControl {
 
 	public HttpControl() {
 		httpUtils = new HttpUtils(8000);
+		httpUtils.configSoTimeout(8000);
+		httpUtils.configTimeout(8000);
 	}
 
 	/**
@@ -1435,6 +1438,19 @@ public class HttpControl {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("OrderNo",orderNo);
 		BasehttpSend(map, context, HttpConstants.GETORDERLISTDETAILS, httpCallBack,RequestBaiJiaOrdeDetailsInfoBean.class, showDialog, false);
+	}
+	
+	
+	
+	/**
+	 * 败家  获取用户是否可以养家等操作
+	 * 
+	 * @param OrderNo String 订单号
+	 * @return void
+	 * **/
+	public void getCheckBuyerStatus(boolean showDialog, final HttpCallBackInterface httpCallBack,Context context) {
+		Map<String, String> map = new HashMap<String, String>();
+		BasehttpSend(map, context, HttpConstants.METHODCHECKBUYERSTATUS, httpCallBack,BaiJiaCheckBuyerStatusBeanRequest.class, showDialog, false);
 	}
 	
 	

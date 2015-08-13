@@ -8,7 +8,7 @@ public class RoomBean {
 	String  signValue= "";
 	String  title= "";
 	String   token= "";
-	String  type= "public";
+	String  type= "private";
 	String userName= "gyj";
 	int[] users;
 	

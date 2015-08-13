@@ -4,13 +4,17 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.baijia.activity.BaiJiaOrderDetailsActivity;
+import com.shenma.yueba.baijia.modle.PayResponseFormBean;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Html;
 import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.View;
@@ -29,18 +33,22 @@ import android.widget.TextView;
 public class OrderPayDialog extends AlertDialog implements DialogInterface.OnKeyListener{
 View ll;
 Context context;
+TextView orderpay_dialog_layout_queryorder_button;//查询订单
 ProgressBar orderpay_dialog_layout_progressbar;
 TextView orderpay_dialog_layout_textview;
 TextView orderpay_dialog_layout_sucess_textview;
 OrderPayOnClick_Listener orderPayOnClick_Listener;
 Button orderpay_dialog_layout_sucess_button;
 Timer timer;
-int maxTime=5;
+final int maxCount=10;
+int maxTime=maxCount;
+PayResponseFormBean payResponseFormBean;
 boolean cancelsttaus=true;
-	public OrderPayDialog(Context context,OrderPayOnClick_Listener orderPayOnClick_Listener,boolean cancelsttaus) {
+	public OrderPayDialog(PayResponseFormBean payResponseFormBean,Context context,OrderPayOnClick_Listener orderPayOnClick_Listener,boolean cancelsttaus) {
 		//super(context, R.style.MyDialog);
 		super(context);
 		this.context=context;
+		this.payResponseFormBean=payResponseFormBean;
 		this.orderPayOnClick_Listener=orderPayOnClick_Listener;
 		this.cancelsttaus=cancelsttaus;
 	}
@@ -69,6 +77,18 @@ boolean cancelsttaus=true;
 	
 	void initView()
 	{
+		orderpay_dialog_layout_queryorder_button=(TextView)ll.findViewById(R.id.orderpay_dialog_layout_queryorder_button);
+		orderpay_dialog_layout_queryorder_button.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent=new Intent(context,BaiJiaOrderDetailsActivity.class);
+				intent.putExtra("ORDER_ID", payResponseFormBean.getOrderNo());
+				intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+				context.startActivity(intent);
+			}
+		});
+		orderpay_dialog_layout_queryorder_button.setText(Html.fromHtml("<u>"+context.getResources().getString(R.string.queryorderdesc)+"</u>"));
 		orderpay_dialog_layout_progressbar=(ProgressBar)ll.findViewById(R.id.orderpay_dialog_layout_progressbar);
 		orderpay_dialog_layout_textview=(TextView)ll.findViewById(R.id.orderpay_dialog_layout_textview);
 		orderpay_dialog_layout_sucess_textview=(TextView)ll.findViewById(R.id.orderpay_dialog_layout_sucess_textview);
@@ -96,6 +116,7 @@ boolean cancelsttaus=true;
 		orderpay_dialog_layout_progressbar.setVisibility(View.GONE);
 		orderpay_dialog_layout_sucess_textview.setVisibility(View.GONE);
 		orderpay_dialog_layout_sucess_button.setVisibility(View.GONE);
+		orderpay_dialog_layout_queryorder_button.setVisibility(View.GONE);
 	}
 	
 	/***
@@ -110,6 +131,7 @@ boolean cancelsttaus=true;
 		orderpay_dialog_layout_progressbar.setVisibility(View.GONE);
 		orderpay_dialog_layout_sucess_textview.setVisibility(View.VISIBLE);
 		orderpay_dialog_layout_sucess_button.setVisibility(View.VISIBLE);
+		orderpay_dialog_layout_queryorder_button.setVisibility(View.VISIBLE);
 	}
 	
 	/***
@@ -119,11 +141,12 @@ boolean cancelsttaus=true;
 	{
 		showDialog();
 		startTimer();
-		orderpay_dialog_layout_sucess_textview.setText("支付未成功\n可能是网络延时导致,请稍后查询或联系客服人员");
+		orderpay_dialog_layout_sucess_textview.setText("查询失败\n请手动刷新");
 		orderpay_dialog_layout_textview.setVisibility(View.GONE);
 		orderpay_dialog_layout_progressbar.setVisibility(View.GONE);
 		orderpay_dialog_layout_sucess_textview.setVisibility(View.VISIBLE);
 		orderpay_dialog_layout_sucess_button.setVisibility(View.VISIBLE);
+		orderpay_dialog_layout_queryorder_button.setVisibility(View.VISIBLE);
 	}
 	
 	
@@ -137,7 +160,7 @@ boolean cancelsttaus=true;
 	{
 		stopTimer();
 		timer=new Timer();
-		maxTime=5;
+		maxTime=maxCount;
 		timer.scheduleAtFixedRate(new TimerTask() {
 			
 			@Override

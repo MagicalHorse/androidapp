@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:orientation="vertical" >
+    android:orientation="vertical" 
+    >
 
     <include
         android:id="@+id/applyforrefund_layout_head_include"
@@ -11,6 +12,8 @@
         android:background="@color/white" />
 
     <ScrollView
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/applyforrefund_layout_footer_linearlayout"
@@ -24,8 +27,6 @@
             android:paddingTop="@dimen/shop_main_width15_dimen" >
 
             <include
-                   android:layout_marginLeft="5dip"
-            android:layout_marginRight="5dip"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 layout="@layout/productinfolist_layout"
@@ -44,8 +45,6 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingBottom="5dip"
-                android:paddingLeft="10dip"
-                android:paddingRight="10dip"
                 android:paddingTop="5dip" >
 
                 <TextView
@@ -79,8 +78,6 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingBottom="5dip"
-                android:paddingLeft="10dip"
-                android:paddingRight="10dip"
                 android:paddingTop="5dip" >
 
                 <TextView
@@ -114,8 +111,6 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingBottom="5dip"
-                android:paddingLeft="10dip"
-                android:paddingRight="10dip"
                 android:paddingTop="5dip" >
 
                 <TextView
@@ -142,9 +137,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/shop_main_width15_dimen"
-                android:background="@color/white"
-                android:paddingLeft="10dip"
-                android:paddingRight="10dip" >
+                android:background="@color/white" >
 
                 <EditText
                     android:id="@+id/applyforrefund_layout_appealreason_textview"
