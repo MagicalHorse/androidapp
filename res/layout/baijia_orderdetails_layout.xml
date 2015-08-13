@@ -300,7 +300,7 @@
 
             <TextView
                 android:drawablePadding="3dp"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:layout_marginLeft="20dp"
                 android:id="@+id/baijia_orderdetails_xjfx_textview"
                 android:layout_width="wrap_content"
