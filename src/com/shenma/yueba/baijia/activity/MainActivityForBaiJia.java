@@ -26,12 +26,12 @@ import com.shenma.yueba.baijia.fragment.MeFragmentForBaiJia;
 import com.shenma.yueba.baijia.fragment.MessageFragment;
 import com.shenma.yueba.baijia.modle.CheckVersionBackBean;
 import com.shenma.yueba.baijia.modle.FragmentBean;
-import com.shenma.yueba.baijia.modle.VersionUpdateDetail;
 import com.shenma.yueba.util.AlartMangerUtil;
 import com.shenma.yueba.util.HttpControl;
-import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
+import com.shenma.yueba.util.ToolsUtil;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.socialize.common.SocializeConstants;
 
 public class MainActivityForBaiJia extends FragmentActivity {
 	FrameLayout baijia_main_framelayout;
@@ -56,6 +56,7 @@ public class MainActivityForBaiJia extends FragmentActivity {
 		initaddFooterView();
 		setCurrView(0);
 		checkVersion();
+		Toast.makeText(this, ""+SocializeConstants.SDK_VERSION, 1000).show();
 	}
 
 	
