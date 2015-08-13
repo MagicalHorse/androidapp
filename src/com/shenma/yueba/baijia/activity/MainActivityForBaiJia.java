@@ -33,6 +33,7 @@ import com.shenma.yueba.util.ToolsUtil;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.common.SocializeConstants;
 
+
 public class MainActivityForBaiJia extends FragmentActivity {
 	FrameLayout baijia_main_framelayout;
 	private long exitTime = 0;// 初始化退出时间，用于两次点击返回退出程序
