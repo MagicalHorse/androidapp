@@ -3,6 +3,7 @@ package com.shenma.yueba.baijia.activity;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -15,6 +16,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import im.broadcast.ImBroadcastReceiver;
+import im.broadcast.ImBroadcastReceiver.ImBroadcastReceiverLinstener;
+import im.broadcast.ImBroadcastReceiver.RECEIVER_type;
+import im.form.RequestMessageBean;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.UpdateManager;
@@ -34,7 +39,7 @@ import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.common.SocializeConstants;
 
 
-public class MainActivityForBaiJia extends FragmentActivity {
+public class MainActivityForBaiJia extends FragmentActivity implements ImBroadcastReceiverLinstener{
 	FrameLayout baijia_main_framelayout;
 	private long exitTime = 0;// 初始化退出时间，用于两次点击返回退出程序
 	LinearLayout baijia_main_foot_linearlayout;
@@ -45,7 +50,8 @@ public class MainActivityForBaiJia extends FragmentActivity {
 	Fragment indexFragmentForBaiJia, circleFragment, messageFragment,
 			findFragment, meFragmentForBaiJia;
 	FragmentManager fragmentManager;
-
+	ImBroadcastReceiver imBroadcastReceiver;
+	boolean isbroadcase=false;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -53,11 +59,13 @@ public class MainActivityForBaiJia extends FragmentActivity {
 		setContentView(R.layout.baijia_main_layout);
 		MyApplication.getInstance().addActivity(this);
 		AlartMangerUtil.startHeartAlart(MainActivityForBaiJia.this);
+		imBroadcastReceiver=new ImBroadcastReceiver(this);
 		initView();
 		initaddFooterView();
 		setCurrView(0);
 		checkVersion();
 		Toast.makeText(this, ""+SocializeConstants.SDK_VERSION, 1000).show();
+		registerBroadcase();
 	}
 
 	
@@ -234,5 +242,117 @@ public class MainActivityForBaiJia extends FragmentActivity {
 			return true; // 返回true表示执行结束不需继续执行父类按键响应
 		}
 		return super.onKeyDown(keyCode, event);
+	}
+
+
+	/******
+	 * 注册 消息广播监听
+	 * ***/
+	void registerBroadcase()
+	{
+		if(!isbroadcase)
+		{
+			isbroadcase=true;
+			MainActivityForBaiJia.this.registerReceiver(imBroadcastReceiver, new IntentFilter(ImBroadcastReceiver.IntentFilterRoomMsg));
+		}
+		
+	}
+	
+	
+	/******
+	 * 注册 消息广播监听
+	 * ***/
+	void unregisterBroadcase()
+	{
+		if(isbroadcase)
+		{
+			MainActivityForBaiJia.this.unregisterReceiver(imBroadcastReceiver);
+			isbroadcase=false;
+		}
+		
+	}
+
+
+	@Override
+	public void newMessage(Object obj) {
+		
+		
+	}
+
+
+	@Override
+	public void roomMessage(Object obj) {
+	   if(obj!=null && obj instanceof RequestMessageBean)
+	   {
+		   RequestMessageBean bean=(RequestMessageBean)obj;
+		   int touserid=bean.getToUserId();
+		   if(touserid<=0)//群聊信息
+		   {
+			   //设置显示原点
+			   setShowCircleView(true);
+		   }else//私聊信息
+		   {
+			   setShowMsgView(true);
+		   }
+	   }
+	}
+	
+	/****
+	 * 接收到通知   圈子 显示 或隐藏 提示红点
+	 * ***/
+	void setShowCircleView(boolean b)
+	{
+		setRedView(1, b);
+	}
+	
+	/***
+	 * 设置 红色的按钮显示或隐藏
+	 * @param i int 需要控制的 item 的 下标
+	 * @param b  boolean 是否显示 true显示  false否
+	 * **/
+	void setRedView(int i,boolean b)
+	{
+	   if(i<footer_list.size())
+	   {
+		   switch(i)
+			{
+	    	   case 1:
+	    		   View view=footer_list.get(i).findViewById(R.id.round_view);
+	    		   if(view!=null)
+	    		   {
+	    			  if(b)
+	    			  {
+	    				  view.setVisibility(View.VISIBLE);
+	    			  }else
+	    			  {
+	    				  view.setVisibility(View.GONE);
+	    			  }
+	    		   }
+	    		   break;
+			}
+	   }
+		
+	}
+	
+	/****
+	 * 接收到通知  消息   显示 或隐藏 提示红点
+	 * ***/
+	void setShowMsgView(boolean b)
+	{
+		setRedView(2, b);
+	}
+
+
+	@Override
+	public void clearMsgNotation(RECEIVER_type type) {
+		switch(type)
+		{
+		case circle:
+			setShowCircleView(false);
+			break;
+		case msg:
+			setShowMsgView(false);
+			break;
+		}
 	}
 }
