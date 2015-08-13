@@ -7,12 +7,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Bitmap.CompressFormat;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -30,25 +28,22 @@ import android.widget.Toast;
 
 import com.alibaba.sdk.android.oss.callback.SaveCallback;
 import com.alibaba.sdk.android.oss.model.OSSException;
-import com.lidroid.xutils.BitmapUtils;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.BaseActivityWithTopView;
-import com.shenma.yueba.baijia.activity.BuyerCertificationActivity2;
 import com.shenma.yueba.baijia.modle.RequestUploadProductDataBean;
 import com.shenma.yueba.camera2.ActivityCapture;
 import com.shenma.yueba.util.CustomProgressDialog;
 import com.shenma.yueba.util.FileUtils;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
-import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.ProductImagesBean;
+import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.util.SizeBean;
 import com.shenma.yueba.util.ToolsUtil;
-import com.shenma.yueba.view.TagImageView;
 import com.shenma.yueba.yangjia.modle.StateBean;
 import com.shenma.yueba.yangjia.modle.TagCacheBean;
 import com.shenma.yueba.yangjia.modle.TagListBean;
@@ -286,13 +281,31 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 		for (int i = 0; i < 3; i++) {
 			StateBean bean = new StateBean();
 			View view = View.inflate(mContext, R.layout.tag_imageview, null);
-			TagImageView layout_tag_image = (TagImageView) view
-					.findViewById(R.id.layout_tag_image);
 			ImageView iv_pic = (ImageView) view.findViewById(R.id.iv_pic);
+			final ImageView iv_delete = (ImageView) view.findViewById(R.id.iv_delete);
+			iv_delete.setTag(i);
+			iv_delete.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					int position = (Integer)iv_delete.getTag();//获取删除属于哪个view的标记
+					
+					//以下是清空缓存的标签
+					ArrayList<List<TagCacheBean>> tagList = MyApplication.getInstance().getPublishUtil().getTagCacheList();
+					if(tagList.size()>position){
+						MyApplication.getInstance().getPublishUtil().getTagCacheList().set(position, new ArrayList<TagCacheBean>());
+					}
+					//以下是清除缓存的图片
+					List<ProductImagesBean> imagesList = MyApplication.getInstance().getPublishUtil().getBean().getImages();
+					if(imagesList.size()>position){
+						MyApplication.getInstance().getPublishUtil().getBean().getImages().set(position,new ProductImagesBean());
+					}
+					
+				}
+			});
 			iv_pic.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					ToolsUtil.hideSoftKeyboard(mContext, et_product_number);
+					ToolsUtil.hideSoftKeyboard(mContext, et_product_number);//隐藏软键盘
 					StateBean bean = (StateBean) v.getTag();
 					if (dataList.contains(bean)) {
 						index = dataList.indexOf(bean);
@@ -343,6 +356,7 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 					}
 				}
 			});
+			
 			RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
 					LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 			params.height = ToolsUtil.getDisplayWidth(mContext) / 3
@@ -350,6 +364,10 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 			params.width = ToolsUtil.getDisplayWidth(mContext) / 3
 					- ToolsUtil.dip2px(mContext, 15);
 			iv_pic.setLayoutParams(params);
+			
+			
+		
+			
 			bean.setPosition(i);
 			// for (int j = 0; j <tagList.size(); j++) {
 			// double x= tagList.get(j).get("x");
@@ -370,6 +388,7 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 					}
 					bitmap0 = BitmapFactory.decodeFile(FileUtils.getRootPath() + "/tagPic/" + "tagPic"+ SharedUtil.getUserId(mContext) + i + ".png", options);
 					iv_pic.setImageBitmap(bitmap0);
+					iv_delete.setVisibility(View.VISIBLE);
 					bean.setSetPic(true);
 					break;
 				case 1:
@@ -378,6 +397,7 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 					}
 					bitmap1 = BitmapFactory.decodeFile(FileUtils.getRootPath() + "/tagPic/" + "tagPic"+ SharedUtil.getUserId(mContext) + i + ".png", options);
 					iv_pic.setImageBitmap(bitmap1);
+					iv_delete.setVisibility(View.VISIBLE);
 					bean.setSetPic(true);
 					break;
 				case 2:
@@ -386,6 +406,7 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 					}
 					bitmap2 = BitmapFactory.decodeFile(FileUtils.getRootPath() + "/tagPic/" + "tagPic"+ SharedUtil.getUserId(mContext) + i + ".png", options);
 					iv_pic.setImageBitmap(bitmap2);
+					iv_delete.setVisibility(View.VISIBLE);
 					bean.setSetPic(true);
 					break;
 				default:
@@ -426,7 +447,7 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 	private void publishProduct() {
 		HttpControl httpControl = new HttpControl();
 		List<ProductImagesBean> imageList = MyApplication.getInstance()
-				.getPublishUtil().getBean().getImages();
+				.getPublishUtil().getBean().getImages();//获取所有缓存的图片
 		List<ProductImagesBean> cacheImageList = new ArrayList<ProductImagesBean>();
 		for (int i = 0; i < imageList.size(); i++) {
 			if (!TextUtils.isEmpty(imageList.get(i).getImageUrl())) {

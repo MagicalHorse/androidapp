@@ -1,5 +1,7 @@
 package com.shenma.yueba.util;
 
+import im.control.SocketManger;
+
 import java.util.Map;
 import java.util.Set;
 
@@ -9,7 +11,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
-import im.control.SocketManger;
 
 import com.shenma.yueba.baijia.activity.MainActivityForBaiJia;
 import com.shenma.yueba.baijia.modle.UserRequestBean;
@@ -17,8 +18,10 @@ import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.inter.BindInter;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.bean.SocializeEntity;
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
+import com.umeng.socialize.controller.listener.SocializeListeners.SocializeClientListener;
 import com.umeng.socialize.controller.listener.SocializeListeners.UMAuthListener;
 import com.umeng.socialize.controller.listener.SocializeListeners.UMDataListener;
 import com.umeng.socialize.exception.SocializeException;
@@ -131,6 +134,36 @@ public class WXLoginUtil {
 						Toast.makeText(ctx, "授权取消", Toast.LENGTH_SHORT).show();
 					}
 				});
+	}
+	
+	
+	
+	public void logoutWx(){
+		mController = UMServiceFactory.getUMSocialService("com.umeng.login");
+		// 添加微信平台
+		UMWXHandler wxHandler = new UMWXHandler(ctx, Constants.WX_APP_ID,
+				"1a8fd52d8cb2b6099b1c4c669e5e2717");
+		wxHandler.addToSocialSDK();
+		mController.loginout(ctx, new SocializeClientListener() {
+			
+			@Override
+			public void onStart() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onComplete(int status, SocializeEntity arg1) {
+				if (status == 200) {
+					 Toast.makeText(ctx, "删除成功.", 
+					Toast.LENGTH_SHORT).show();
+					 } else {
+					 Toast.makeText(ctx, "删除失败", 
+					Toast.LENGTH_SHORT).show();
+					 }
+				
+			}
+		});
 	}
 
 	/**

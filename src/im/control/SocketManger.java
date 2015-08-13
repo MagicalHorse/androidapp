@@ -27,7 +27,7 @@ import im.form.RoomBean;
 public class SocketManger {
 	static Socket socket;
 	static SocketManger socketManger;
-	final String URL = "http://182.92.7.70:8001/chat";//服务器地址
+	final String URL = "http://182.92.7.70:8000/chat";//服务器地址
 	//final String URL = "http://192.168.1.145:8000/chat";
     List<MessageBean> mssageBean_list=new ArrayList<MessageBean>();
     
