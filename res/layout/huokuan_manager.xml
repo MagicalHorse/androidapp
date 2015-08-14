@@ -28,7 +28,8 @@
     <com.handmark.pulltorefresh.library.PullToRefreshScrollView
         android:id="@+id/pull_refresh_scrollview"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/tv_in_and_out"
         android:layout_below="@id/view_line_top"
         android:scrollbars="none" >
 

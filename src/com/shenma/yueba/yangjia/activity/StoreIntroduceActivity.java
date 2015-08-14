@@ -60,12 +60,12 @@ public class StoreIntroduceActivity extends BaseActivityWithTopView {
 		et_modify_info = (EditText) findViewById(R.id.et_modify_info);
 		et_modify_info.setText(SharedUtil.getStringPerfernece(mContext,SharedUtil.user_Description));
 		tv_retain = (TextView) findViewById(R.id.tv_retain);
-		tv_retain.setText(300 - et_modify_info.getText().toString().trim().length()+"字");
+		tv_retain.setText(200 - et_modify_info.getText().toString().trim().length()+"字");
 		et_modify_info.addTextChangedListener(new TextWatcher() {
 			
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
-				tv_retain.setText(300 - s.toString().trim().length()+"字");
+				tv_retain.setText(200 - s.toString().trim().length()+"字");
 			}
 			
 			@Override
@@ -81,7 +81,7 @@ public class StoreIntroduceActivity extends BaseActivityWithTopView {
 				
 			}
 		});
-		FontManager.changeFonts(mContext, et_modify_info,tv_top_title,tv_retain);
+		FontManager.changeFonts(mContext, et_modify_info,tv_top_title,tv_retain,tv_top_right);
 	}
 	
 	
