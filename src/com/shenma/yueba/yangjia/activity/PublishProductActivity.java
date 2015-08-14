@@ -37,6 +37,8 @@ import com.shenma.yueba.baijia.activity.BaseActivityWithTopView;
 import com.shenma.yueba.baijia.modle.RequestUploadProductDataBean;
 import com.shenma.yueba.camera2.ActivityCapture;
 import com.shenma.yueba.util.CustomProgressDialog;
+import com.shenma.yueba.util.DialogUtilInter;
+import com.shenma.yueba.util.DialogUtils;
 import com.shenma.yueba.util.FileUtils;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
@@ -99,7 +101,7 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 
 	private void getIntentData() {
 		from = getIntent().getStringExtra("from");
-		TagListBean bean = (TagListBean) getIntent().getSerializableExtra(
+		TagListBean tagListBean = (TagListBean) getIntent().getSerializableExtra(
 				"tagListBean");
 		RequestUploadProductDataBean detailBean = (RequestUploadProductDataBean) getIntent()
 				.getSerializableExtra("data");
@@ -117,6 +119,19 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 						.getBean().getId();
 			}
 			tv_publish.setText("修改");
+			setTitle("修改商品");
+			setTopRightTextView("");//取消右上角按钮
+			setLeftTextView(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					MyApplication.getInstance().finishActivity(
+							EditPicActivity.class);
+					MyApplication.getInstance().finishActivity(
+							ActivityCapture.class);
+					MyApplication.getInstance().finishActivity(
+							PublishProductActivity.class);
+				}
+			});
 			if (detailBean != null) {
 				List<ProductImagesBean> images = detailBean.getImages();
 				MyApplication.getInstance().getPublishUtil()
@@ -127,8 +142,8 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 			}
 		}
 
-		if (bean != null) {
-			tagList = bean.getTagList();
+		if (tagListBean != null) {
+			tagList = tagListBean.getTagList();
 			if (tagList != null && tagList.size() > 0) {
 				int index = Integer.valueOf(MyApplication.getInstance()
 						.getPublishUtil().getIndex());
@@ -158,8 +173,10 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 					.getPublishUtil().getBean().getImages();
 			if (imagesList != null && imagesList.size() > 0) {
 				String imageUrl = imagesList.get(0).getImageUrl();
-				if (!TextUtils.isEmpty(imageUrl)) {
+				if (!TextUtils.isEmpty(imageUrl)) {//缓存有网络图片地址
 					saveBitmapToFile(0, imageUrl);
+				}else{//说明图片已经本地修改的时候删除完，所以没有了图片
+					setImageView();
 				}
 			}
 			MyApplication.getInstance().getPublishUtil().setBean(detailBean);
@@ -928,7 +945,29 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if(keyCode == KeyEvent.KEYCODE_BACK && KeyEvent.ACTION_DOWN == event.getAction()){
-			return true;
+			if("发布".equals(tv_publish.getText().toString().trim())){
+				DialogUtils utils = new DialogUtils();
+				utils.alertDialog(mContext, "提示", "您确定要取消发布商品吗？",
+						new DialogUtilInter() {
+							@Override
+							public void dialogCallBack(int... which) {
+								MyApplication.getInstance().finishActivity(
+										EditPicActivity.class);
+								MyApplication.getInstance().finishActivity(
+										ActivityCapture.class);
+								MyApplication.getInstance().finishActivity(
+										PublishProductActivity.class);
+							}
+						}, true, "确定", "取消", false, true);
+			}else{//修改
+				MyApplication.getInstance().finishActivity(
+						EditPicActivity.class);
+				MyApplication.getInstance().finishActivity(
+						ActivityCapture.class);
+				MyApplication.getInstance().finishActivity(
+						PublishProductActivity.class);
+			}
+
 		}
 		return super.onKeyDown(keyCode, event);
 	}

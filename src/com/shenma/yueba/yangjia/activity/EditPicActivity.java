@@ -51,6 +51,8 @@ import com.shenma.yueba.filter.NightVisionFilter;
 import com.shenma.yueba.filter.RainBowFilter;
 import com.shenma.yueba.filter.SepiaFilter;
 import com.shenma.yueba.filter.XRadiationFilter;
+import com.shenma.yueba.util.DialogUtilInter;
+import com.shenma.yueba.util.DialogUtils;
 import com.shenma.yueba.util.FileUtils;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.SharedUtil;
@@ -205,14 +207,14 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 			result = BitmapFactory.decodeFile(FileUtils.getRootPath()
 					+ "/tagPic/" + "joybar_camera"
 					+ SharedUtil.getUserId(mContext) + index + ".png");
-			if(resultCache == null){
+			if (resultCache == null) {
 				resultCache = result;
 			}
 		} else if ("picture".equals(MyApplication.getInstance()
 				.getPublishUtil().getFrom())) {// 来自图库
 			Uri uri = MyApplication.getInstance().getPublishUtil().getUri();
 			result = getBitmap(uri);
-			if(resultCache == null){
+			if (resultCache == null) {
 				resultCache = result;
 			}
 		} else if ("publish".equals(MyApplication.getInstance()
@@ -222,16 +224,16 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 			result = BitmapFactory.decodeFile(FileUtils.getRootPath()
 					+ "/tagPic/" + "tagPic_yuan"
 					+ SharedUtil.getUserId(mContext) + index + ".png");
-			if(resultCache == null){
+			if (resultCache == null) {
 				resultCache = BitmapFactory.decodeFile(FileUtils.getRootPath()
-						+ "/tagPic/" + "tagPic" + SharedUtil.getUserId(mContext)
-						+ index + ".png");
-			}else{//新增逻辑
+						+ "/tagPic/" + "tagPic"
+						+ SharedUtil.getUserId(mContext) + index + ".png");
+			} else {// 新增逻辑
 				resultCache = BitmapFactory.decodeFile(FileUtils.getRootPath()
-						+ "/tagPic/" + "tagPic" + SharedUtil.getUserId(mContext)
-						+ index + ".png");
+						+ "/tagPic/" + "tagPic"
+						+ SharedUtil.getUserId(mContext) + index + ".png");
 			}
-			
+
 		}
 		iv_pic.setImageBitmap(resultCache);
 	}
@@ -279,7 +281,7 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 			startActivity(intent);
 			break;
 		case R.id.iv_pic:// 图片的点击事件
-//			showDialog();
+			// showDialog();
 			showBottomDialog();
 			break;
 		default:
@@ -344,8 +346,8 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 
 	private void savetagCacheInfo(int index) {
 		List<TagCacheBean> tagList = new ArrayList<TagCacheBean>();
-		tagList.addAll(MyApplication.getInstance()
-				.getPublishUtil().getTagCacheList().get(index));
+		tagList.addAll(MyApplication.getInstance().getPublishUtil()
+				.getTagCacheList().get(index));
 		MyApplication.getInstance().getPublishUtil().getTagCacheList()
 				.get(index).clear();
 		for (int i = 0; i < tagNameList.size(); i++) {
@@ -462,9 +464,22 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 
 	@Override
 	public void onBackPressed() {
-		finish();
-		startActivity(new Intent(EditPicActivity.this, ActivityCapture.class));
-		super.onBackPressed();
+		// finish();
+		// startActivity(new Intent(EditPicActivity.this,
+		// ActivityCapture.class));
+		DialogUtils utils = new DialogUtils();
+		utils.alertDialog(mContext, "提示", "您确定要取消发布商品吗？",
+				new DialogUtilInter() {
+					@Override
+					public void dialogCallBack(int... which) {
+						MyApplication.getInstance().finishActivity(
+								EditPicActivity.class);
+						MyApplication.getInstance().finishActivity(
+								ActivityCapture.class);
+						MyApplication.getInstance().finishActivity(
+								PublishProductActivity.class);
+					}
+				}, true, "确定", "取消", false, true);
 	}
 
 	/**
@@ -888,18 +903,13 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 	//
 	// }
 
-	
-	
-	
-	
-	
 	/**
 	 * 弹出选择框(开小票和发布商品)
 	 */
 	protected void showBottomDialog() {
 		ToolsUtil.hideSoftInputKeyBoard(EditPicActivity.this);
-		ShowMenu showMenu = new ShowMenu(EditPicActivity.this, findViewById(R.id.parent),
-				R.layout.selete_tag_popwindow);
+		ShowMenu showMenu = new ShowMenu(EditPicActivity.this,
+				findViewById(R.id.parent), R.layout.selete_tag_popwindow);
 		showMenu.createView();
 	}
 
@@ -936,23 +946,7 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 		}
 
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	@Override
 	protected void onDestroy() {
 		MyApplication.getInstance().removeActivity(this);// 加入回退栈

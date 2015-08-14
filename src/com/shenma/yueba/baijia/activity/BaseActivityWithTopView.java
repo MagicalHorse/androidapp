@@ -1,6 +1,7 @@
 package com.shenma.yueba.baijia.activity;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -54,8 +55,12 @@ public abstract class BaseActivityWithTopView extends BaseActivity {
 
 	// 设置右侧的TextView
 	protected void setTopRightTextView(String titleStr) {
-		tv_top_right.setVisibility(View.VISIBLE);
-		tv_top_right.setText(titleStr);
+		if(TextUtils.isEmpty(titleStr)){
+			tv_top_right.setVisibility(View.GONE);
+		}else{
+			tv_top_right.setVisibility(View.VISIBLE);
+			tv_top_right.setText(titleStr);
+		}
 	}
 
 	// 设置右侧的TextView
