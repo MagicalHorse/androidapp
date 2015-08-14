@@ -12,6 +12,7 @@ import android.widget.SectionIndexer;
 import android.widget.TextView;
 
 import com.shenma.yueba.R;
+import com.shenma.yueba.util.FontManager;
 
 public class SortAdapter extends BaseAdapter implements SectionIndexer{
 	private List<SortModel> list = null;
@@ -73,7 +74,7 @@ public class SortAdapter extends BaseAdapter implements SectionIndexer{
 		}
 	
 		viewHolder.tvTitle.setText(this.list.get(position).getName());
-		
+		FontManager.changeFonts(mContext, viewHolder.tvTitle,viewHolder.tvLetter);
 		return view;
 
 	}
