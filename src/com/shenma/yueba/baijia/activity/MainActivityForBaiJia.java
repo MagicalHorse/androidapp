@@ -314,22 +314,17 @@ public class MainActivityForBaiJia extends FragmentActivity implements ImBroadca
 	{
 	   if(i<footer_list.size())
 	   {
-		   switch(i)
-			{
-	    	   case 1:
-	    		   View view=footer_list.get(i).findViewById(R.id.round_view);
-	    		   if(view!=null)
-	    		   {
-	    			  if(b)
-	    			  {
-	    				  view.setVisibility(View.VISIBLE);
-	    			  }else
-	    			  {
-	    				  view.setVisibility(View.GONE);
-	    			  }
-	    		   }
-	    		   break;
-			}
+		   View view=footer_list.get(i).findViewById(R.id.round_view);
+		   if(view!=null)
+		   {
+			  if(b)
+			  {
+				  view.setVisibility(View.VISIBLE);
+			  }else
+			  {
+				  view.setVisibility(View.GONE);
+			  }
+		   }
 	   }
 		
 	}

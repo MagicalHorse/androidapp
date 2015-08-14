@@ -140,7 +140,7 @@ public class BaiJiaOrderListFragment extends Fragment implements OrderBroadcaseL
 		{
 			return;
 		}
-		sendRequestData(currpage, 1);
+		sendRequestData(currpage,pagersize,1);
 	}
 
 	/*****
@@ -151,7 +151,23 @@ public class BaiJiaOrderListFragment extends Fragment implements OrderBroadcaseL
 		{
 			return;
 		}
-		sendRequestData(1, 0);
+		sendRequestData(1,pagersize,0);
+	}
+	
+	
+	/*****
+	 * 请求刷新数据(根据 当前页 加载 当前 指定页数的 数据  即   当前页  为1    加载的数据为 1*page)
+	 * ***/
+	public void requestFalshData(int currpage) {
+		if(isruning)
+		{
+			return;
+		}
+		if((currpage-1)>0)
+		{
+			sendRequestData(1,(currpage-1)*pagersize,0);
+		}
+		
 	}
 
 	/******
@@ -162,11 +178,11 @@ public class BaiJiaOrderListFragment extends Fragment implements OrderBroadcaseL
 	 * @param type
 	 *            int 0 刷新 1 加载
 	 * ***/
-	void sendRequestData(final int page, final int type) {
+	void sendRequestData(final int page,final int _pagersize,final int type) {
 		isruning=true;
 		ToolsUtil.showNoDataView(getActivity(),parentView,false);
 		Log.i("TAG", "currpage=" + page + "   pagesize=" + pagersize);
-		httpControl.getBaijiaOrderList(page, pagersize, state, ishow,
+		httpControl.getBaijiaOrderList(page, _pagersize, state, ishow,
 				new HttpCallBackInterface() {
 
 					@Override
@@ -177,7 +193,14 @@ public class BaiJiaOrderListFragment extends Fragment implements OrderBroadcaseL
 							showloading_layout_view.setVisibility(View.GONE);
 						}
 						ToolsUtil.pullResfresh(pull_refresh_list);
-						currpage=page;
+						if(_pagersize==pagersize)
+						{
+							currpage=page;
+						}else
+						{
+							currpage=_pagersize/10;
+						}
+						
 						ishow = false;
 						if (obj != null&& obj instanceof RequestBaiJiaOrderListInfoBean) {
 							requestBaiJiaOrderListInfoBean = (RequestBaiJiaOrderListInfoBean) obj;
@@ -319,7 +342,7 @@ public class BaiJiaOrderListFragment extends Fragment implements OrderBroadcaseL
 	public void falshData(final BaiJiaOrderListInfo info,String str) {
 		ishow = false;
 		showloading_layout_view.setVisibility(View.VISIBLE);
-		requestFalshData();
+		requestFalshData(currpage);
 	}
 	
 }

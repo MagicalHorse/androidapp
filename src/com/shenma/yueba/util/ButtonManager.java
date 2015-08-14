@@ -31,7 +31,7 @@ import android.widget.Button;
 
 public class ButtonManager {
 public final static String WAITPAY="付款";//0
-public final static String CANCELPAY="撤销退货";//1
+public final static String CANCELPAY="撤销退款";//1
 public final static String QUERENTIHUO="确认提货";//2
 public final static String SHENQINGTUIKUAN="申请退款";//3
 public final static String SHENSU="申诉";//4

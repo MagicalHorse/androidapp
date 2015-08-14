@@ -71,7 +71,7 @@ public class SocketManger {
 		}else if(!socket.connected())
 		{
 			Log.i("TAG", "---->>>socket unconnect");
-			socket.close();
+			//socket.close();
 			socket.connect();
 		}else if(socket.connected())
 		{
@@ -292,24 +292,31 @@ public class SocketManger {
 	public void inroon(String userId,RoomBean bean) {
 		//Map<String, String> data2=getMap(bean);
 		//Log.i("TAG", new JSONObject(data2).toString());
-		if(userId!=null && bean!=null)
+		if(socket.connected())
 		{
-			this.userId=userId;
-			roomBean=bean;
-			Gson gson=new Gson();
-			String json=gson.toJson(bean);
-			Log.i("TAG", json);
-			try {
-				Log.i("TAG", "---->>>socket inroom    json:"+json);
-				socket.emit("join room", userId, new JSONObject(json), new Ack() {
+			if(bean==null || bean.getRoom_id()==null || bean.getRoom_id().equals(""))
+			{
+				return;
+			}
+			if(userId!=null && bean!=null)
+			{
+				this.userId=userId;
+				roomBean=bean;
+				Gson gson=new Gson();
+				String json=gson.toJson(bean);
+				Log.i("TAG", json);
+				try {
+					Log.i("TAG", "---->>>socket inroom    json:"+json);
+					socket.emit("join room", userId, new JSONObject(json), new Ack() {
 
-					@Override
-					public void call(Object... arg0) {
-						Log.i("TAG", "---->>>socket inroom");
-					}
-				});
-			} catch (Exception e) {
-				Log.i("TAG", "---->>>socket inroom error:"+e.getMessage());
+						@Override
+						public void call(Object... arg0) {
+							Log.i("TAG", "---->>>socket inroom");
+						}
+					});
+				} catch (Exception e) {
+					Log.i("TAG", "---->>>socket inroom error:"+e.getMessage());
+				}
 			}
 		}
 		

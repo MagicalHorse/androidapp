@@ -323,6 +323,9 @@ boolean isBroadcase=false;
 		if(bean.getData().isIsShareable())
 		{
 			baijia_orderdetails_xjfx_textview.setVisibility(View.VISIBLE);
+		}else
+		{
+			baijia_orderdetails_xjfx_textview.setVisibility(View.GONE);
 		}
 		
 		//根据订单状态 设置按钮

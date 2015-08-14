@@ -171,11 +171,11 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 		}
 		
 		//获取圈子id
-		circleId = this.getIntent().getIntExtra("circleId", -10);
+		circleId = this.getIntent().getIntExtra("circleId", 0);
 		//获取roomid
 		roomId = this.getIntent().getStringExtra("Chat_RoomID");
 		//获取私聊的对方id
-		toUser_id = this.getIntent().getIntExtra("toUser_id", -10);
+		toUser_id = this.getIntent().getIntExtra("toUser_id", 0);
 		// 群聊
 		if (circleId > 0) {
 			// 显示设置
@@ -372,7 +372,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 		if (fView.getVisibility() == View.VISIBLE) {
 			hideFace();
 		}
-		inroom();
+		//inroom();
 	}
 
 	/**
@@ -976,6 +976,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 								// 进入房间
 								int_array = requestRoomInfo.getUserList();
 								getMessage();// 获取历史数据
+								Log.i("TAG", "---->>>socket roomId:"+roomId);
 								inroom();
 							}
 
