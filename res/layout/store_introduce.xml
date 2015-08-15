@@ -34,7 +34,7 @@
             android:layout_marginBottom="5dip"
             android:layout_marginRight="10dip"
             android:gravity="right"
-            android:text="300字" />
+            android:text="200字" />
     </LinearLayout>
 
 </LinearLayout>

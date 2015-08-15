@@ -4,16 +4,19 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <include layout="@layout/title_for_common"/>
-    
+    <include layout="@layout/title_for_common" />
+
+    <View style="@style/style_horizontal_line" />
+
     <com.shenma.yueba.util.sore.ClearEditText
         android:id="@+id/filter_edit"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dip"
-        android:background="@drawable/search_bar_edit_selector"
+        android:layout_height="40dip"
+        android:background="@null"
         android:drawableLeft="@drawable/search_bar_icon_normal"
         android:hint="请输入关键字"
+        android:paddingLeft="5dip"
+        android:paddingRight="5dip"
         android:singleLine="true"
         android:textSize="15.0dip" />
 
@@ -25,16 +28,16 @@
             android:id="@+id/country_lvcountry"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:scrollbars="none"
             android:layout_gravity="center"
-            android:divider="@null" />
+            android:divider="@null"
+            android:scrollbars="none" />
 
         <TextView
             android:id="@+id/dialog"
             android:layout_width="80.0dip"
             android:layout_height="80.0dip"
             android:layout_gravity="center"
-            android:background="@drawable/show_head_toast_bg"
+            android:background="@drawable/shape_selected_bg"
             android:gravity="center"
             android:textColor="#ffffffff"
             android:textSize="30.0dip"

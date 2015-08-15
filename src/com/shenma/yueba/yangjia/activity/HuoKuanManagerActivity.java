@@ -8,8 +8,13 @@ import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.BaseActivityWithTopView;
@@ -33,6 +38,7 @@ import com.umeng.analytics.MobclickAgent;
 public class HuoKuanManagerActivity extends BaseActivityWithTopView implements
 		OnClickListener, OnProgressBarListener, HuoKuanManagerRefreshInter {
 
+	private PullToRefreshScrollView pull_refresh_scrollview;
 	private TextView tv_week_title;
 	private TextView tv_in_and_out;
 	private TextView tv_tatal_money;
@@ -94,6 +100,18 @@ public class HuoKuanManagerActivity extends BaseActivityWithTopView implements
 				HuoKuanManagerActivity.this.finish();
 			}
 
+		});
+		pull_refresh_scrollview =  getView(R.id.pull_refresh_scrollview);
+		pull_refresh_scrollview.setOnRefreshListener(new OnRefreshListener<ScrollView>() {
+			@Override
+			public void onRefresh(PullToRefreshBase<ScrollView> refreshView) {
+    	if(ToolsUtil.isNetworkConnected(HuoKuanManagerActivity.this)){
+    		//刷新数据
+    		getHuoKuanManagerInfo(false);
+    	}else{
+			Toast.makeText(HuoKuanManagerActivity.this, "网络不可用，请稍后重试", 1000).show();
+		}
+			}
 		});
 		tv_tishi = getView(R.id.tv_tishi);
 		tv_week_title = getView(R.id.tv_week_title);
@@ -184,11 +202,13 @@ public class HuoKuanManagerActivity extends BaseActivityWithTopView implements
 	}
 
 	private void getHuoKuanManagerInfo(boolean showDialog) {
+		i = 0;
 		HttpControl httpContorl = new HttpControl();
 		httpContorl.getHuoKuanManagerInfo(new HttpCallBackInterface() {
 
 			@Override
 			public void http_Success(Object obj) {
+				pull_refresh_scrollview.onRefreshComplete();
 				HuoKuanManagerBackBean bean = (HuoKuanManagerBackBean) obj;
 				if (bean != null && bean.getData() != null) {
 					tv_had_withdraw_ratio.setText("已提现货款 "
@@ -348,13 +368,14 @@ public class HuoKuanManagerActivity extends BaseActivityWithTopView implements
 								mHandler.sendEmptyMessage(0);
 							}
 						}
-					}, 0, 2);
+					}, 0, 6);
 				}
 			}
 
 			@Override
 			public void http_Fails(int error, String msg) {
-				// TODO Auto-generated method stub
+				Toast.makeText(mContext, msg, 1000).show();
+				pull_refresh_scrollview.onRefreshComplete();
 
 			}
 		}, HuoKuanManagerActivity.this, showDialog, true);

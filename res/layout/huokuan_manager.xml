@@ -25,10 +25,13 @@
         android:textColor="@color/main_color"
         android:textSize="22sp" />
 
-    <ScrollView
+    <com.handmark.pulltorefresh.library.PullToRefreshScrollView
+        android:id="@+id/pull_refresh_scrollview"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/view_line_top" >
+        android:layout_above="@id/tv_in_and_out"
+        android:layout_below="@id/view_line_top"
+        android:scrollbars="none" >
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -306,15 +309,15 @@
 
                         <TextView
                             android:id="@+id/tv_tishi"
-                            android:layout_marginLeft="10dip"
-                            android:textColor="@color/text_gray_color"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
-                            android:text="亲爱的买手，您申请的提现货款将在30分钟内到账，以企业红包形式转账至您的微信零钱，请及时查收!" />
+                            android:layout_marginLeft="10dip"
+                            android:text="亲爱的买手，您申请的提现货款将在30分钟内到账，以企业红包形式转账至您的微信零钱，请及时查收!"
+                            android:textColor="@color/text_gray_color" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-    </ScrollView>
+    </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
 
 </RelativeLayout>

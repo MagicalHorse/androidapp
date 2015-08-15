@@ -27,6 +27,7 @@ import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.modle.CityBean;
 import com.shenma.yueba.baijia.modle.CityBeanList;
 import com.shenma.yueba.baijia.modle.CityListRequestBean;
+import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.sore.CharacterParser;
@@ -106,7 +107,7 @@ public class CityListActivity extends BaseActivityWithTopView {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				//这里要利用adapter.getItem(position)来获取当前position所对应的对象
-				Toast.makeText(getApplication(), ((SortModel)adapter.getItem(position)).getName(), Toast.LENGTH_SHORT).show();
+				//Toast.makeText(getApplication(), ((SortModel)adapter.getItem(position)).getName(), Toast.LENGTH_SHORT).show();
 				List<SortModel> sortmodel=adapter.getListData();
 				if(sortmodel!=null)
 				{
@@ -160,6 +161,9 @@ public class CityListActivity extends BaseActivityWithTopView {
 			public void afterTextChanged(Editable s) {
 			}
 		});
+		
+		
+		FontManager.changeFonts(mContext, tv_top_title,mClearEditText);
 	}
 
 	/*****

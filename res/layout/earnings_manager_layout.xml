@@ -41,7 +41,7 @@
                     android:layout_alignParentRight="true"
                     android:src="@drawable/help" />
 
-                <TextView
+                <com.shenma.yueba.view.RiseNumberTextView
                     android:id="@+id/tv_today_income"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -70,10 +70,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                       android:textColor="@color/text_gray_color"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:text="总收益（元）" />
 
-                <TextView
+                <com.shenma.yueba.view.RiseNumberTextView
                     android:layout_width="fill_parent"
                     android:id="@+id/tv_total_income_money"
                     android:layout_height="wrap_content"
@@ -101,7 +101,7 @@
                     android:gravity="center"
                     android:padding="10dip"
                     android:text="收益明细"
-                    android:textSize="20sp" />
+                     android:textSize="18sp"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -119,9 +119,9 @@
                     android:layout_height="wrap_content"
                     android:text="可提现收益（元	）"
                     android:textColor="@color/text_gray_color"
-                    android:textSize="20sp" />
+                     android:textSize="18sp"/>
 
-                <TextView
+                <com.shenma.yueba.view.RiseNumberTextView
                     android:id="@+id/tv_withdraw_cash_money"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -148,7 +148,7 @@
                     android:gravity="center"
                     android:padding="10dip"
                     android:text="提现历史"
-                    android:textSize="20sp" />
+                     android:textSize="18sp"/>
 
                 <View style="@style/style_vertical_line" />
 
@@ -160,7 +160,7 @@
                     android:gravity="center"
                     android:padding="10dip"
                     android:text="申请提现"
-                    android:textSize="20sp" />
+                     android:textSize="18sp" />
             </LinearLayout>
 
  <View style="@style/style_horizontal_line" />
