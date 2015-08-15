@@ -36,6 +36,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TabHost.TabSpec;
+import im.control.SocketManger;
 import android.widget.TextView;
 import android.widget.Toast;
 

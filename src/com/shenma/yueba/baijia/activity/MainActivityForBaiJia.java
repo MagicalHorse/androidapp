@@ -3,6 +3,23 @@ package com.shenma.yueba.baijia.activity;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.shenma.yueba.R;
+import com.shenma.yueba.UpdateManager;
+import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.fragment.CircleFragment;
+import com.shenma.yueba.baijia.fragment.FindFragment;
+import com.shenma.yueba.baijia.fragment.IndexFragmentForBaiJia;
+import com.shenma.yueba.baijia.fragment.MeFragmentForBaiJia;
+import com.shenma.yueba.baijia.fragment.MessageFragment;
+import com.shenma.yueba.baijia.modle.CheckVersionBackBean;
+import com.shenma.yueba.baijia.modle.FragmentBean;
+import com.shenma.yueba.util.AlartMangerUtil;
+import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
+import com.shenma.yueba.util.ToolsUtil;
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.socialize.common.SocializeConstants;
+
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -20,23 +37,6 @@ import im.broadcast.ImBroadcastReceiver;
 import im.broadcast.ImBroadcastReceiver.ImBroadcastReceiverLinstener;
 import im.broadcast.ImBroadcastReceiver.RECEIVER_type;
 import im.form.RequestMessageBean;
-
-import com.shenma.yueba.R;
-import com.shenma.yueba.UpdateManager;
-import com.shenma.yueba.application.MyApplication;
-import com.shenma.yueba.baijia.fragment.CircleFragment;
-import com.shenma.yueba.baijia.fragment.FindFragment;
-import com.shenma.yueba.baijia.fragment.IndexFragmentForBaiJia;
-import com.shenma.yueba.baijia.fragment.MeFragmentForBaiJia;
-import com.shenma.yueba.baijia.fragment.MessageFragment;
-import com.shenma.yueba.baijia.modle.CheckVersionBackBean;
-import com.shenma.yueba.baijia.modle.FragmentBean;
-import com.shenma.yueba.util.AlartMangerUtil;
-import com.shenma.yueba.util.HttpControl;
-import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
-import com.shenma.yueba.util.ToolsUtil;
-import com.umeng.analytics.MobclickAgent;
-import com.umeng.socialize.common.SocializeConstants;
 
 
 public class MainActivityForBaiJia extends FragmentActivity implements ImBroadcastReceiverLinstener{
@@ -64,7 +64,7 @@ public class MainActivityForBaiJia extends FragmentActivity implements ImBroadca
 		initaddFooterView();
 		setCurrView(0);
 		checkVersion();
-//		Toast.makeText(this, ""+SocializeConstants.SDK_VERSION, 1000).show();
+		Toast.makeText(this, ""+SocializeConstants.SDK_VERSION, 1000).show();
 		registerBroadcase();
 	}
 
@@ -178,7 +178,7 @@ public class MainActivityForBaiJia extends FragmentActivity implements ImBroadca
 
 			break;
 		}
-
+		setRedView(i,false);//清除红点
 		if (currid == -1 && i == 0) {
 			if(!(((Fragment)fragment_list.get(i).getFragment()).isAdded()))
 			{
@@ -238,6 +238,7 @@ public class MainActivityForBaiJia extends FragmentActivity implements ImBroadca
 						Toast.LENGTH_SHORT).show();
 			} else {
 				MyApplication.getInstance().exit();
+				
 			}
 			return true; // 返回true表示执行结束不需继续执行父类按键响应
 		}
@@ -288,21 +289,20 @@ public class MainActivityForBaiJia extends FragmentActivity implements ImBroadca
 		   int touserid=bean.getToUserId();
 		   if(touserid<=0)//群聊信息
 		   {
-			   //设置显示原点
-			   setShowCircleView(true);
+			   if(currid!=1)
+			   {
+				 //设置显示原点
+				   setRedView(1, true);
+			   }
+			   
 		   }else//私聊信息
 		   {
-			   setShowMsgView(true);
+			   if(currid!=2)
+			   {
+				   setRedView(2, true);
+			   }
 		   }
 	   }
-	}
-	
-	/****
-	 * 接收到通知   圈子 显示 或隐藏 提示红点
-	 * ***/
-	void setShowCircleView(boolean b)
-	{
-		setRedView(1, b);
 	}
 	
 	/***
@@ -312,7 +312,7 @@ public class MainActivityForBaiJia extends FragmentActivity implements ImBroadca
 	 * **/
 	void setRedView(int i,boolean b)
 	{
-	   if(i<footer_list.size())
+	   if(i>-1 && i<footer_list.size())
 	   {
 		   View view=footer_list.get(i).findViewById(R.id.round_view);
 		   if(view!=null)
@@ -328,25 +328,16 @@ public class MainActivityForBaiJia extends FragmentActivity implements ImBroadca
 	   }
 		
 	}
-	
-	/****
-	 * 接收到通知  消息   显示 或隐藏 提示红点
-	 * ***/
-	void setShowMsgView(boolean b)
-	{
-		setRedView(2, b);
-	}
-
 
 	@Override
 	public void clearMsgNotation(RECEIVER_type type) {
 		switch(type)
 		{
 		case circle:
-			setShowCircleView(false);
+			setRedView(1, false);
 			break;
 		case msg:
-			setShowMsgView(false);
+			setRedView(2, false);
 			break;
 		}
 	}

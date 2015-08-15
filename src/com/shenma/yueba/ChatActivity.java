@@ -169,13 +169,14 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 			tv_top_title.setVisibility(View.VISIBLE);
 			FontManager.changeFonts(this, tv_top_title);
 		}
-		
+		Intent getintent=this.getIntent();
 		//获取圈子id
-		circleId = this.getIntent().getIntExtra("circleId", 0);
+		circleId = getintent.getIntExtra("circleId", 0);
 		//获取roomid
-		roomId = this.getIntent().getStringExtra("Chat_RoomID");
+		roomId = getintent.getStringExtra("Chat_RoomID");
 		//获取私聊的对方id
-		toUser_id = this.getIntent().getIntExtra("toUser_id", 0);
+		toUser_id = getintent.getIntExtra("toUser_id", 0);
+		
 		// 群聊
 		if (circleId > 0) {
 			// 显示设置

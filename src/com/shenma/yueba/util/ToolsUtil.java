@@ -13,6 +13,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.alibaba.sdk.android.oss.OSSService;
 import com.alibaba.sdk.android.oss.OSSServiceProvider;
 import com.alibaba.sdk.android.oss.model.AccessControlList;
@@ -35,6 +38,9 @@ import com.shenma.yueba.yangjia.modle.AliYunKeyBean;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.app.ActivityManager.RunningTaskInfo;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -64,6 +70,9 @@ import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+import cn.jpush.android.api.JPushInterface;
+import im.broadcast.ImBroadcastReceiver;
+import im.form.RequestMessageBean;
 
 public class ToolsUtil {
 	public static final Pattern EMOTION_URL = Pattern.compile("\\[(\\S+?)\\]");
@@ -933,5 +942,72 @@ public class ToolsUtil {
 		MyApplication.getInstance().getApplicationContext().sendBroadcast(intent);
 	}
 
+	
+	
+	
+	/**
+	 * 判断当前应用程序处于前台还是后台
+	 * @return true 在前台  false不在前台
+	 */
+	public static boolean isApplicationBroughtToBackground(final String packagename) {
+		ActivityManager am = (ActivityManager)MyApplication.getInstance().getSystemService(Context.ACTIVITY_SERVICE);
+		List<RunningTaskInfo> tasks = am.getRunningTasks(1);
+		if (!tasks.isEmpty()) {
+			ComponentName topActivity = tasks.get(0).topActivity;
+			String name=topActivity.getClassName().toString();
+			if (name.equals(packagename)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
+	
+	/*****
+	 * 发送 接收到新消息广播  （ 广播通知 显示 状态栏通知）
+	 * ***/
+	public static void sendNoticationBroadcase(RequestMessageBean requestMessageBean)
+	{
+		JSONObject jsonobject=new JSONObject();
+		 try {
+			jsonobject.put("type", "14");
+			jsonobject.put("roomid", requestMessageBean.getRoomId());
+			jsonobject.put("fromuserid", requestMessageBean.getFromUserId());
+			jsonobject.put("username", requestMessageBean.getUserName());
+			Intent notificationintent=new Intent(JPushInterface.ACTION_MESSAGE_RECEIVED);
+			 notificationintent.putExtra(JPushInterface.EXTRA_MESSAGE, requestMessageBean.getBody());
+			 notificationintent.putExtra(JPushInterface.EXTRA_TITLE, requestMessageBean.getUserName());
+			 notificationintent.putExtra(JPushInterface.EXTRA_EXTRA, jsonobject.toString());
+			 MyApplication.getInstance().getApplicationContext().sendBroadcast(notificationintent);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+	}
+	
+	
+	/****
+	 * 发送 通知 广播  通知消息 更新数据
+	 * ***/
+	public static void sendRoomMsgImBroadcast(RequestMessageBean bean)
+	{
+		Intent intent=new Intent();
+		intent.setAction(ImBroadcastReceiver.IntentFilterRoomMsg);
+		intent.putExtra("Data", bean);
+		MyApplication.getInstance().getApplicationContext().sendBroadcast(intent);
+	}
+	
+	
+	/****
+	 * 发送 通知 广播  通知消息 更新数据
+	 * ***/
+	public static void sendMsgImBroadcast(RequestMessageBean bean)
+	{
+		Intent intent=new Intent();
+		intent.setAction(ImBroadcastReceiver.IntentFilter);
+		intent.putExtra("Data", bean);
+		MyApplication.getInstance().getApplicationContext().sendBroadcast(intent);
+	}
 
 }

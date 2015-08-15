@@ -10,13 +10,13 @@ import com.github.nkzawa.socketio.client.Ack;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
 import com.google.gson.Gson;
+import com.shenma.yueba.ChatActivity;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.util.SharedUtil;
+import com.shenma.yueba.util.ToolsUtil;
 
-import android.content.Intent;
 import android.os.SystemClock;
 import android.util.Log;
-import im.broadcast.ImBroadcastReceiver;
 import im.form.MessageBean;
 import im.form.RequestMessageBean;
 import im.form.RoomBean;
@@ -28,11 +28,12 @@ public class SocketManger {
 	static Socket socket;
 	static SocketManger socketManger;
 	final String URL = "http://182.92.7.70:8000/chat";//服务器地址
+	//final String URL = "http://182.92.7.70:8000/chat?userid=";//服务器地址
 	//final String URL = "http://192.168.1.145:8000/chat";
     List<MessageBean> mssageBean_list=new ArrayList<MessageBean>();
     String userId=null;
     RoomBean roomBean=null;
-	private SocketManger() {
+    private SocketManger() {
 	}
 
 	/****
@@ -87,6 +88,7 @@ public class SocketManger {
 		{
 			unsetListtener();
 			if (isConnect()) {
+				Log.i("TAG","---->>>socket  disconnect--->>");
 				socket.disconnect();
 			}
 		}
@@ -214,7 +216,14 @@ public class SocketManger {
 				if(obj!=null && obj instanceof RequestMessageBean)
 				{
 					RequestMessageBean requestMessageBean=(RequestMessageBean)obj;
-					sendMsgImBroadcast(requestMessageBean);
+					if(ToolsUtil.isApplicationBroughtToBackground(MyApplication.getInstance().getPackageName().toString()+".ChatActivity"))
+					{
+						ToolsUtil.sendMsgImBroadcast(requestMessageBean);
+					}else
+					{
+						ToolsUtil.sendNoticationBroadcase(requestMessageBean);
+					}
+					
 				}
 				}
 			}
@@ -235,11 +244,15 @@ public class SocketManger {
 					Object obj=gson.fromJson(json.toString(), RequestMessageBean.class);
 					if(obj!=null && obj instanceof RequestMessageBean)
 					{
-						RequestMessageBean requestMessageBean=(RequestMessageBean)obj;
-						Intent intent=new Intent();
-						intent.setAction(ImBroadcastReceiver.IntentFilterRoomMsg);
-						intent.putExtra("Data", requestMessageBean);
-						MyApplication.getInstance().getApplicationContext().sendBroadcast(intent);
+						final RequestMessageBean requestMessageBean=(RequestMessageBean)obj;
+						if(ToolsUtil.isApplicationBroughtToBackground(MyApplication.getInstance().getPackageName().toString()+".ChatActivity"))
+						{
+							
+						}else
+						{
+							ToolsUtil.sendRoomMsgImBroadcast(requestMessageBean);
+							ToolsUtil.sendNoticationBroadcase(requestMessageBean);
+						}
 					}
 				}
 			}
@@ -317,6 +330,7 @@ public class SocketManger {
 				} catch (Exception e) {
 					Log.i("TAG", "---->>>socket inroom error:"+e.getMessage());
 				}
+				onLineToUserID();
 			}
 		}
 		
@@ -391,14 +405,4 @@ public class SocketManger {
 		}
 	}
 	
-	/******
-	 * 发送广播 通知 数据更新
-	 * ****/
-	void sendMsgImBroadcast(RequestMessageBean bean)
-	{
-		Intent intent=new Intent();
-		intent.setAction(ImBroadcastReceiver.IntentFilter);
-		intent.putExtra("Data", bean);
-		MyApplication.getInstance().getApplicationContext().sendBroadcast(intent);
-	}
 }

@@ -15,8 +15,11 @@ public final static String IntentFilterClearMsg="com.shenma.yueba.im.roonmsg";//
 ImBroadcastReceiverLinstener imBroadcastReceiverLinstener;
 public static enum RECEIVER_type
 {
+	home,//主页
 	circle,//链接成功
 	msg,//新消息
+	find,//发现
+	config//个人
 }
 
 

@@ -1,13 +1,5 @@
 package com.shenma.yueba.util;
 
-import android.annotation.SuppressLint;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
-
 import com.shenma.yueba.ChatActivity;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
@@ -16,7 +8,14 @@ import com.shenma.yueba.yangjia.activity.EarningManagerActivity;
 import com.shenma.yueba.yangjia.activity.HuoKuanManagerActivity;
 import com.shenma.yueba.yangjia.activity.MainActivityForYangJia;
 import com.shenma.yueba.yangjia.activity.SalesManagerForBuyerActivity;
-import com.umeng.socialize.controller.impl.InitializeController;
+
+import android.annotation.SuppressLint;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
 
 
 /**
@@ -54,9 +53,12 @@ public class NotificationUtils {
 		notification.ledOnMS = 60000; // 闪光时间，毫秒
 		if (text.length >= 2) {
 			// 设置通知的事件消息
-			CharSequence title = text[1]; // 通知标题
 			CharSequence type = text[0]; // 通知类型
+			CharSequence title = text[1]; // 通知标题
 			CharSequence content = text[2]; // 通知内容
+			CharSequence roomid = text[3]; // 房间id
+			CharSequence toUser_id = text[4]; //发送者id
+			CharSequence username = text[5]; //方式这名称
 			Intent notificationIntent = null;
 			if ("2".equals(type)) {// 认证通过
 				SharedUtil.setAuditStatus(ctx, "1");
@@ -110,24 +112,24 @@ public class NotificationUtils {
 						EarningManagerActivity.class); // 点击该通知后要跳转的Activity
 			}
 			if ("12".equals(type)) {// 买手同意退货,
-				notificationIntent = new Intent(ctx,
-						BaiJiaOrderListActivity.class); // 点击该通知后要跳转的Activity
+				notificationIntent = new Intent(ctx,BaiJiaOrderListActivity.class); // 点击该通知后要跳转的Activity
 				notificationIntent.putExtra("CURRID", 0);//全部订单
 				}
 			if ("13".equals(type)) {// 买手不同意退货
-				notificationIntent = new Intent(ctx,
-						BaiJiaOrderListActivity.class); // 点击该通知后要跳转的Activity
+				notificationIntent = new Intent(ctx,BaiJiaOrderListActivity.class); // 点击该通知后要跳转的Activity
 				notificationIntent.putExtra("CURRID", 3);//售后
 			}
 			if("14".equals(type))//未读消息
 			{
 				notificationIntent = new Intent(ctx,ChatActivity.class); // 点击该通知后要跳转的Activity
-				notificationIntent.putExtra("CURRID", 3);//售后
+				notificationIntent.setFlags(Intent. FLAG_ACTIVITY_REORDER_TO_FRONT);
+				notificationIntent.putExtra("Chat_RoomID", roomid.toString());
+				notificationIntent.putExtra("Chat_NAME", username.toString());
+				notificationIntent.putExtra("toUser_id", Integer.valueOf(toUser_id.toString()));
 			}
 
 			if(notificationIntent!=null){
-				PendingIntent contentItent = PendingIntent.getActivity(ctx, 0,
-						notificationIntent, 0);
+				PendingIntent contentItent = PendingIntent.getActivity(ctx, 0,notificationIntent, 0);
 				notification.setLatestEventInfo(ctx, title, content, contentItent);
 				// 把Notification传递给NotificationManager
 				notificationManager.notify(0, notification);

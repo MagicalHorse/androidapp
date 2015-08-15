@@ -3,6 +3,21 @@ package com.shenma.yueba.baijia.view;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.shenma.yueba.ChatActivity;
+import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.adapter.BaiJiaMyCircleAdapter;
+import com.shenma.yueba.baijia.modle.MyCircleInfo;
+import com.shenma.yueba.baijia.modle.RequestMyCircleInfoBean;
+import com.shenma.yueba.constants.Constants;
+import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
+import com.shenma.yueba.util.ToolsUtil;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -11,36 +26,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.LinearLayout;
 import im.broadcast.ImBroadcastReceiver;
 import im.broadcast.ImBroadcastReceiver.ImBroadcastReceiverLinstener;
 import im.broadcast.ImBroadcastReceiver.RECEIVER_type;
 import im.form.RequestMessageBean;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnPullEventListener;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.State;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.shenma.yueba.ChatActivity;
-import com.shenma.yueba.R;
-import com.shenma.yueba.application.MyApplication;
-import com.shenma.yueba.baijia.activity.CircleInfoActivity;
-import com.shenma.yueba.baijia.adapter.BaiJiaMyCircleAdapter;
-import com.shenma.yueba.baijia.modle.MyCircleInfo;
-import com.shenma.yueba.baijia.modle.MyCircleInfoBean;
-import com.shenma.yueba.baijia.modle.RequestMyCircleInfoBean;
-import com.shenma.yueba.baijia.modle.RequestTuiJianCircleInfoBean;
-import com.shenma.yueba.constants.Constants;
-import com.shenma.yueba.util.HttpControl;
-import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
-import com.shenma.yueba.util.ToolsUtil;
 
 /**
- * 我的买手
- * 
+ * 我的圈子
  * @author a
  * 
  */
@@ -53,14 +46,13 @@ public class MyCircleView extends BaseView implements ImBroadcastReceiverLinsten
 	LayoutInflater inflater;
 	BaiJiaMyCircleAdapter myCircleAdapter;
 	int currPage=Constants.CURRPAGE_VALUE;
-	int pageSize=Constants.PAGESIZE_VALUE;
+	int pageSize=Constants.PAGESIZE_VALUE*100;
 	boolean showDialog=true;
 	HttpControl httpCntrol=new HttpControl();
 	List<MyCircleInfo> items=new ArrayList<MyCircleInfo>();
 	boolean isFirst=true;
 	ImBroadcastReceiver imBroadcastReceiver;
 	boolean isImBroadcase=false;
-	List<String> roomid_list=new ArrayList<String>();//存储未读消息的roomid
 	public MyCircleView(Activity activity)
 	{
 		if(view == null)
@@ -119,8 +111,6 @@ public class MyCircleView extends BaseView implements ImBroadcastReceiverLinsten
 				intent.putExtra("Chat_NAME",myCircleInfo.getName());//圈子名字
 				intent.putExtra("circleId",myCircleInfo.getId());//圈子id
 				activity.startActivity(intent);
-				//比对roomid 进行比对
-				equalRooId(myCircleInfo.getRoomId());
 			}
 		});
 	}
@@ -334,12 +324,7 @@ public class MyCircleView extends BaseView implements ImBroadcastReceiverLinsten
 				String roomid=bean.getRoomId();
 				if(roomid!=null)
 				{
-					if(!roomid_list.contains(roomid))
-					{
-						roomid_list.add(roomid);
-						//通知 数据更新
-						//ssssssss
-					}
+					requestFalshData();
 				}
 			}
 		}
@@ -349,25 +334,5 @@ public class MyCircleView extends BaseView implements ImBroadcastReceiverLinsten
 	@Override
 	public void clearMsgNotation(RECEIVER_type type) {
 		
-	}
-	
-	/********
-	 * 根据 roomid查找 匹配的数据  如果roomid_list 数据为空 则 发送广播 通知 消除红点
-	 * ****/
-	void equalRooId(String roomId)
-	{
-		if(roomid_list.contains(roomId))
-		{
-			roomid_list.remove(roomId);
-		}
-		if(roomid_list.size()==0)
-		{
-			if(activity!=null)
-			{
-				Intent intent=new Intent(ImBroadcastReceiver.IntentFilterClearMsg);
-				intent.putExtra("RECEIVER_type", RECEIVER_type.circle);
-				activity.sendBroadcast(intent);
-			}
-		}
 	}
 }

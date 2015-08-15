@@ -3,21 +3,9 @@ package com.shenma.yueba.baijia.view;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnPullEventListener;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.State;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.shenma.yueba.ChatActivity;
 import com.shenma.yueba.R;
@@ -25,19 +13,32 @@ import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.adapter.MsgAdapter;
 import com.shenma.yueba.baijia.modle.MsgListInfo;
 import com.shenma.yueba.baijia.modle.RequestMsgListInfoBean;
-import com.shenma.yueba.baijia.modle.RequestMyCircleInfoBean;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.ToolsUtil;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.LinearLayout;
+import im.broadcast.ImBroadcastReceiver;
+import im.broadcast.ImBroadcastReceiver.ImBroadcastReceiverLinstener;
+import im.broadcast.ImBroadcastReceiver.RECEIVER_type;
+import im.form.RequestMessageBean;
+
 /**  
- * @author gyj  
+ * @author gyj   我的消息
  * @version 创建时间：2015-5-19 下午2:03:37  
  * 程序的简单说明  
  */
 
-public class MsgListView extends BaseView{
+public class MsgListView extends BaseView implements ImBroadcastReceiverLinstener{
 	Activity activity;
 	LayoutInflater layoutInflater;
 	boolean showDialog=true;
@@ -45,14 +46,15 @@ public class MsgListView extends BaseView{
 	// 当前页
 	int currpage = Constants.CURRPAGE_VALUE;
 	// 每页显示的条数
-	int pagesize = Constants.PAGESIZE_VALUE;
+	int pagesize = Constants.PAGESIZE_VALUE*100;
 	private List<MsgListInfo> mList = new ArrayList<MsgListInfo>();
 	private View view;
 	private PullToRefreshListView pull_refresh_list;
 	LinearLayout showloading_layout_view;
 	MsgAdapter msgAdapter;
-	
-	
+	boolean isruning=false;
+	boolean isImBroadcase=false;
+	ImBroadcastReceiver imBroadcastReceiver;
 	public MsgListView(Activity activity)
 	{
 		this.activity=activity;
@@ -63,8 +65,11 @@ public class MsgListView extends BaseView{
 		if(view==null)
 		{
 			layoutInflater=activity.getLayoutInflater();
+			imBroadcastReceiver=new ImBroadcastReceiver(this);
 			initView();
 			initPullView();
+			firstInitData();
+			registImBroacase();
 		}
 		return view;
 	}
@@ -119,6 +124,11 @@ public class MsgListView extends BaseView{
 	 * 请求加载数据
 	 * ***/
 	public void requestData() {
+		if(isruning)
+		{
+			return;
+		}
+		isruning=true;
 		sendHttp(currpage, 1);
 	}
 
@@ -127,6 +137,11 @@ public class MsgListView extends BaseView{
 	 * ***/
 	public void requestFalshData() {
 		isfirstStatus=true;
+		if(isruning)
+		{
+			return;
+		}
+		isruning=true;
 		sendHttp(1, 0);
 	}
 	
@@ -139,13 +154,13 @@ public class MsgListView extends BaseView{
 	 * ***/
 	void sendHttp(final int page,final int type)
 	{
-		
 		ToolsUtil.showNoDataView(activity, view, false);
 		HttpControl httpControl=new HttpControl();
 		httpControl.GetBaijiaMessageList(page, pagesize, showDialog, new HttpCallBackInterface() {
 			
 			@Override
 			public void http_Success(Object obj) {
+				isruning=false;
 				isfirstStatus=false;
 				currpage=page;
 				showDialog=false;
@@ -171,6 +186,7 @@ public class MsgListView extends BaseView{
 			
 			@Override
 			public void http_Fails(int error, String msg) {
+				isruning=false;
 				isfirstStatus=false;
 				MyApplication.getInstance().showMessage(activity,msg);
 				ToolsUtil.pullResfresh(pull_refresh_list);
@@ -231,7 +247,7 @@ public class MsgListView extends BaseView{
 	/***
 	 * 加载数据
 	 * **/
-	void addData(RequestMsgListInfoBean bean) {
+	synchronized void addData(RequestMsgListInfoBean bean) {
 		currpage++;
 		showDialog = false;
 		if (bean.getData() != null) {
@@ -253,5 +269,58 @@ public class MsgListView extends BaseView{
 			   return ;
 		   }
 		   requestFalshData();
+	}
+	
+	
+	void registImBroacase()
+	{
+		if(!isImBroadcase)
+		{
+			if(activity!=null)
+			{
+				isImBroadcase=true;
+				activity.registerReceiver(imBroadcastReceiver, new IntentFilter(ImBroadcastReceiver.IntentFilterRoomMsg));
+			}
+		}
+	}
+	
+	
+	void unRegistImBroacase()
+	{
+		if(isImBroadcase)
+		{
+			if(activity!=null)
+			{
+				isImBroadcase=false;
+				activity.unregisterReceiver(imBroadcastReceiver);
+			}
+		}
+	}
+
+	@Override
+	public void newMessage(Object obj) {
+		
+	}
+
+	@Override
+	public void roomMessage(Object obj) {
+		if(obj!=null && obj instanceof RequestMessageBean)
+		{
+			RequestMessageBean	bean=(RequestMessageBean)obj;
+			int touserid=bean.getToUserId();
+			if(touserid>0)
+			{
+				String roomid=bean.getRoomId();
+				if(roomid!=null)
+				{
+					requestFalshData();
+				}
+			}
+		}
+	}
+
+	@Override
+	public void clearMsgNotation(RECEIVER_type type) {
+		
 	}
 }

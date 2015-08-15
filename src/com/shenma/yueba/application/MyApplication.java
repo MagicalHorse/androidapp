@@ -1,24 +1,11 @@
 
 package com.shenma.yueba.application;
 
-import im.control.SocketManger;
-
 import java.io.File;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
-import roboguice.RoboGuice;
-import android.app.Activity;
-import android.app.Application;
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Bitmap.CompressFormat;
-import android.graphics.Typeface;
-import android.widget.Toast;
-import cn.jpush.android.api.JPushInterface;
 
 import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.bitmap.BitmapCommonUtils;
@@ -47,6 +34,18 @@ import com.shenma.yueba.util.PublishPicUtil;
 import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.util.ToolsUtil;
 
+import android.app.Activity;
+import android.app.Application;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
+import android.graphics.Typeface;
+import android.widget.Toast;
+import cn.jpush.android.api.JPushInterface;
+import im.control.SocketManger;
+import roboguice.RoboGuice;
+
 public class MyApplication extends Application {
 
 	
@@ -73,7 +72,6 @@ public class MyApplication extends Application {
 	private DisplayImageOptions optionsForRound;
 	private UserRequestBean userRequestBean;
 	private Typeface tf;
-	SocketManger socketManger;
 	private PublishPicUtil publishPicUtil;
 
 	@Override
@@ -82,6 +80,7 @@ public class MyApplication extends Application {
 		instance = this;
 		indexRefreshService = new IndexRefreshService();
 		huoKuanManagerRefreshService= new HuoKuanManagerRefreshService();
+		SocketManger.the().contentSocket();
 		initBitmapUtils();
 		initImageLoader(getApplicationContext());
 		initDisplayImageOptions();
@@ -90,7 +89,6 @@ public class MyApplication extends Application {
 		initJpush();
 		dbHelper = RoboGuice.getBaseApplicationInjector(this).getInstance(
 				DBHelper.class);
-		socketManger.the().contentSocket();
 		LocationUtil locationUtil = new LocationUtil(this);
 		locationUtil.getLocation();
 	}

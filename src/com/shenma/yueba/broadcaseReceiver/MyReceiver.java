@@ -20,6 +20,9 @@ import com.shenma.yueba.util.SharedUtil;
 public class MyReceiver extends BroadcastReceiver {
 	private static final String TAG = "JPush";
 	private String type;//推送的消息类型
+	private String roomid;//消息推送 房间号
+	private String fromuserid;//发送人id
+	private String username;//放松人名称
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		
@@ -31,10 +34,23 @@ public class MyReceiver extends BroadcastReceiver {
 			try {
 				JSONObject jsonObject = new JSONObject(extra);
 				type = jsonObject.getString("type");
+				if(jsonObject.has("roomid"))
+				{
+					roomid=jsonObject.getString("roomid");
+				}
+				if(jsonObject.has("fromuserid"))
+				{
+					fromuserid=jsonObject.getString("fromuserid");
+				}
+				if(jsonObject.has("username"))
+				{
+					username=jsonObject.getString("username");
+				}
+				
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
-				NotificationUtils.showNotification(context,type,title,message);
+				NotificationUtils.showNotification(context,type,title,message,roomid,fromuserid,username);
 		}
 		if(JPushInterface.ACTION_NOTIFICATION_RECEIVED.equals(intent.getAction())){//系统通知
 			

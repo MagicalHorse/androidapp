@@ -166,6 +166,9 @@ public class BaiJiaOrderListFragment extends Fragment implements OrderBroadcaseL
 		if((currpage-1)>0)
 		{
 			sendRequestData(1,(currpage-1)*pagersize,0);
+		}else
+		{
+			sendRequestData(1,currpage*pagersize,0);
 		}
 		
 	}
