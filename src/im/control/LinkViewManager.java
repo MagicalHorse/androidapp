@@ -2,12 +2,10 @@ package im.control;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
-import com.shenma.yueba.baijia.activity.ApproveBuyerDetailsActivity;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.ToolsUtil;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -73,9 +71,7 @@ public class LinkViewManager extends ChatBaseManager {
 				{
 					//点击内容区域 进行相应操作
 					BaseChatBean bean=(BaseChatBean)v.getTag();
-					Intent intent=new Intent(context,ApproveBuyerDetailsActivity.class);
-					intent.putExtra("productID", bean.getProductId());
-					context.startActivity(intent);
+					ToolsUtil.forwardProductInfoActivity(context,bean.getProductId());
 				}
 				
 			}

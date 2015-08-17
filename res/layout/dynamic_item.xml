@@ -67,6 +67,7 @@
             android:layout_width="50dip"
             android:layout_height="50dip"
             android:layout_alignParentRight="true"
+            android:scaleType="centerCrop"
             android:background="@drawable/default_pic" />
     
    </RelativeLayout>

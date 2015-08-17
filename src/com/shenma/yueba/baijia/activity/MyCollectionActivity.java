@@ -315,11 +315,7 @@ public class MyCollectionActivity extends BaseActivityWithTopView {
 							return;
 						}
 						MyFavoriteProductListInfo bean = (MyFavoriteProductListInfo) v.getTag();
-						Intent intent = new Intent(MyCollectionActivity.this, ApproveBuyerDetailsActivity.class);
-						intent.putExtra("productID", bean.getId());
-						startActivity(intent);
-						// MyApplication.getInstance().showMessage(context,
-						// "点击了");
+						ToolsUtil.forwardProductInfoActivity(MyCollectionActivity.this,bean.getId());
 					}
 				});
 				iv.setImageResource(R.drawable.default_pic);

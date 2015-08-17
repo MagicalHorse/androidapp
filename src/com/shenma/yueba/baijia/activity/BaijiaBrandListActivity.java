@@ -139,9 +139,7 @@ List<BrandInfoInfo> object_list=new ArrayList<BrandInfoInfo>();
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,long arg3) {
 				BrandInfoInfo brandInfoInfo=object_list.get(arg2);
-				Intent intent=new Intent(BaijiaBrandListActivity.this,ApproveBuyerDetailsActivity.class);
-				intent.putExtra("productID", brandInfoInfo.getProductId());
-				startActivity(intent);
+				ToolsUtil.forwardProductInfoActivity(BaijiaBrandListActivity.this,brandInfoInfo.getProductId());
 			}
 		});
 	}

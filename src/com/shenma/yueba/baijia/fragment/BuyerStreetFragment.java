@@ -10,7 +10,6 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.lidroid.xutils.BitmapUtils;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.WebActivity;
@@ -197,6 +196,9 @@ public class BuyerStreetFragment extends Fragment {
 						return false;
 					}
 				});
+		
+		buyerAdapter = new BuyerAdapter(Products, getActivity());
+		baijia_contact_listview.setAdapter(buyerAdapter);
 
 	}
 
@@ -236,9 +238,7 @@ public class BuyerStreetFragment extends Fragment {
 						currpage = page;
 						ishow = false;
 						buyersteet_newtextview.setText("最新上新");
-						FontManager.changeFonts(getActivity(),
-								buyersteet_newtextview);
-						baijia_contact_listview.setMode(Mode.BOTH);
+						FontManager.changeFonts(getActivity(),buyersteet_newtextview);
 						ToolsUtil.pullResfresh(baijia_contact_listview);
 						if (obj != null && obj instanceof RequestProductListInfoBean) {
 							RequestProductListInfoBean bean = (RequestProductListInfoBean) obj;
@@ -328,17 +328,16 @@ public class BuyerStreetFragment extends Fragment {
 	 * ***/
 	void falshData(HomeProductListInfoBean data) {
 		Products.clear();
+		currpage++;
 		if (data != null) {
 
 			ProductListInfoBean item = data.getItems();
 			if (item.getProducts() != null) {
 				if (item.getProducts().size() > 0) {
-					currpage++;
+					
 					Products.addAll(item.getProducts());
 				}
 			}
-			buyerAdapter = new BuyerAdapter(Products, getActivity());
-			baijia_contact_listview.setAdapter(buyerAdapter);
 		}
 		if (buyerAdapter != null) {
 			buyerAdapter.notifyDataSetChanged();
@@ -408,8 +407,6 @@ public class BuyerStreetFragment extends Fragment {
 	public void onResume() {
 
 		super.onResume();
-		baijia_contact_listview.setFocusable(false);
-		baijia_contact_listview.setFocusableInTouchMode(false);
 		startTimeToViewPager();
 	}
 

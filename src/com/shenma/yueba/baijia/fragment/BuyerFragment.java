@@ -9,7 +9,6 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
-import com.shenma.yueba.baijia.activity.ShopMainActivity;
 import com.shenma.yueba.baijia.adapter.SearchBuyerAdapter;
 import com.shenma.yueba.baijia.modle.BrandSearchInfo;
 import com.shenma.yueba.baijia.modle.BrandSearchInfoBean;
@@ -19,7 +18,6 @@ import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.ToolsUtil;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -81,9 +79,7 @@ public class BuyerFragment extends BaseFragment{
 				if((arg2-1)>=0 && (arg2-1)<mList.size())
 				{
 					BrandSearchInfo brandSearchInfo=mList.get(arg2-1);
-					Intent intent=new Intent(getActivity(),ShopMainActivity.class);
-					intent.putExtra("DATA", brandSearchInfo.getId());
-					getActivity().startActivity(intent);
+					ToolsUtil.forwardShopMainActivity(getActivity(),brandSearchInfo.getId());
 				}
 				
 			}

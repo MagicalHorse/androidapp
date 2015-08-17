@@ -6,8 +6,6 @@ import java.util.List;
 import com.shenma.yueba.ChatActivity;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
-import com.shenma.yueba.baijia.activity.ApproveBuyerDetailsActivity;
-import com.shenma.yueba.baijia.activity.ShopMainActivity;
 import com.shenma.yueba.baijia.modle.BaseRequest;
 import com.shenma.yueba.baijia.modle.LikeUsersInfoBean;
 import com.shenma.yueba.baijia.modle.ProductPicInfoBean;
@@ -189,10 +187,7 @@ public class BuyerAdapter extends BaseAdapter {
 						if (v.getTag()==null || ((Integer)v.getTag()) <= 0) {
 							return;
 						}
-						Intent intent = new Intent(activity,
-								ShopMainActivity.class);
-						intent.putExtra("DATA", (Integer)v.getTag());
-						activity.startActivity(intent);
+						ToolsUtil.forwardShopMainActivity(activity,(Integer)v.getTag());
 					}
 				});
 
@@ -339,10 +334,7 @@ public class BuyerAdapter extends BaseAdapter {
 				case R.id.baijia_tab1_item_productcontent_imageview:
 					if (v.getTag() != null && v.getTag() instanceof Integer) {
 						Integer _id = (Integer) v.getTag();
-						Intent intent = new Intent(activity,
-								ApproveBuyerDetailsActivity.class);
-						intent.putExtra("productID", _id);
-						activity.startActivity(intent);
+						ToolsUtil.forwardProductInfoActivity(activity,_id);
 					}
 					break;
 				case R.id.baijia_tab1_item_icon_imageview:// 商铺详细
@@ -353,9 +345,7 @@ public class BuyerAdapter extends BaseAdapter {
 					if (v.getTag() == null || !(v.getTag() instanceof Integer)) {
 						return;
 					}
-					Intent intent = new Intent(activity, ShopMainActivity.class);
-					intent.putExtra("DATA", (Integer) v.getTag());
-					activity.startActivity(intent);
+					ToolsUtil.forwardShopMainActivity(activity,(Integer)v.getTag());
 					break;
 				case R.id.tv_count:// 商品喜欢/取消喜欢
 					if (!MyApplication.getInstance().isUserLogin(activity)) {
@@ -500,8 +490,7 @@ public class BuyerAdapter extends BaseAdapter {
 							MyApplication.getInstance().showMessage(activity,
 									"分享成功");
 						} else {
-							MyApplication.getInstance().showMessage(activity,
-									"分享失败");
+							/*MyApplication.getInstance().showMessage(activity,"分享失败");*/
 						}
 					}
 

@@ -49,7 +49,7 @@ public class IndexFragmentForBaiJia extends Fragment {
 		if (v == null) {
 			v = inflater.inflate(R.layout.indexfragmentforbaijia_layout, null);
 			initView(v);
-			baijia_fragment_tab1_pagerview.setOffscreenPageLimit(0);
+			//baijia_fragment_tab1_pagerview.setOffscreenPageLimit(0);
 		}
 		ViewGroup vp = (ViewGroup) v.getParent();
 		if (vp != null) {
@@ -105,10 +105,8 @@ public class IndexFragmentForBaiJia extends Fragment {
 			baijia_fragment_tab1_head_linearlayout.addView(rl, param);
 			footer_list.add(rl);
 		}
-		baijia_fragment_tab1_pagerview = (ViewPager) v
-				.findViewById(R.id.baijia_fragment_tab1_pagerview);
-		// baijia_fragment_tab1_pagerview.setOffscreenPageLimit(fragment_list.size());
-		baijia_fragment_tab1_pagerview.setAdapter(new FragmentPagerAdapter(
+		baijia_fragment_tab1_pagerview = (ViewPager) v.findViewById(R.id.baijia_fragment_tab1_pagerview);
+	    baijia_fragment_tab1_pagerview.setAdapter(new FragmentPagerAdapter(
 				fragmentManager) {
 
 			@Override
@@ -166,9 +164,9 @@ public class IndexFragmentForBaiJia extends Fragment {
 	 * 设置当前需要显示的 item
 	 * ***/
 	void setCurrView(int i) {
-		/*if (currid == i) {
+		if (currid == i) {
 			return;
-		}*/
+		}
 		currid = i;
 		setTextColor(i);
 		baijia_fragment_tab1_pagerview.setCurrentItem(i);

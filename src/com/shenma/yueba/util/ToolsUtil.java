@@ -31,6 +31,9 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.activity.ApproveBuyerDetailsActivity;
+import com.shenma.yueba.baijia.activity.CircleInfoActivity;
+import com.shenma.yueba.baijia.activity.ShopMainActivity;
 import com.shenma.yueba.broadcaseReceiver.OrderBroadcaseReceiver;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.yangjia.modle.AliYunKeyBackBean;
@@ -1008,6 +1011,53 @@ public class ToolsUtil {
 		intent.setAction(ImBroadcastReceiver.IntentFilter);
 		intent.putExtra("Data", bean);
 		MyApplication.getInstance().getApplicationContext().sendBroadcast(intent);
+	}
+	
+	
+	/******
+	 * 跳转到个人主页
+	 * @param context Context
+	 * @param id int
+	 * ****/
+	public static void forwardShopMainActivity(Context ctx,int id)
+	{
+		Intent intent =new Intent(ctx,ShopMainActivity.class);
+		intent.putExtra("userID", id);
+		ctx.startActivity(intent);
+	}
+	
+	
+	/******
+	 * 跳转到商品详情
+	 * @param context Context
+	 * @param id int
+	 * ****/
+	public static void forwardProductInfoActivity(Context ctx,int id)
+	{
+		Intent intent =new Intent(ctx,ApproveBuyerDetailsActivity.class);
+		intent.putExtra("productID", id);
+		ctx.startActivity(intent);
+	}
+	
+	
+	/******
+	 * 跳转到圈子详情
+	 * @param context Context
+	 * @param id int
+	 * @param requestCode int 是否需要返回数据 resultCode>0 将以startActivityForResult 方式启动   否则 以普通方式启动
+	 * ****/
+	public static void forwardCircleActivity(Context ctx,int id,int requestCode)
+	{
+		Intent intent =new Intent(ctx,CircleInfoActivity.class);
+		intent.putExtra("circleId", id);
+		if(requestCode>0)
+		{
+			((Activity)ctx).startActivityForResult(intent, requestCode);
+		}else
+		{
+			ctx.startActivity(intent);
+		}
+		
 	}
 
 }

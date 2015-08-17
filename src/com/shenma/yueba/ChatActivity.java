@@ -11,7 +11,6 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.BaiJiaShareDataActivity;
-import com.shenma.yueba.baijia.activity.CircleInfoActivity;
 import com.shenma.yueba.baijia.adapter.ChattingAdapter;
 import com.shenma.yueba.baijia.dialog.CreateOrderDialog;
 import com.shenma.yueba.baijia.modle.BaiJiaShareInfoBean;
@@ -426,9 +425,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.tv_top_right:// 设置
-			Intent intent = new Intent(this, CircleInfoActivity.class);
-			intent.putExtra("circleId", circleId);
-			startActivityForResult(intent, Constants.REQUESTCODE);
+			ToolsUtil.forwardCircleActivity(this, circleId, -1);
 			break;
 		case R.id.iv_emoticons_normal:// 点击显示表情框
 			showOrHideIMM();

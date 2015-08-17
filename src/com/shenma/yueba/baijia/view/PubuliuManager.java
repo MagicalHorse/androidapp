@@ -2,27 +2,22 @@ package com.shenma.yueba.baijia.view;
 
 import java.util.List;
 
+import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.modle.MyFavoriteProductListInfo;
+import com.shenma.yueba.baijia.modle.MyFavoriteProductListPic;
+import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
+import com.shenma.yueba.util.ToolsUtil;
+import com.umeng.socialize.utils.Log;
+
 import android.content.Context;
-import android.content.Intent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.shenma.yueba.R;
-import com.shenma.yueba.application.MyApplication;
-import com.shenma.yueba.baijia.activity.ApproveBuyerDetailsActivity;
-import com.shenma.yueba.baijia.modle.BrandCityWideInfo;
-import com.shenma.yueba.baijia.modle.MyFavoriteProductListInfo;
-import com.shenma.yueba.baijia.modle.MyFavoriteProductListLikeUser;
-import com.shenma.yueba.baijia.modle.MyFavoriteProductListPic;
-import com.shenma.yueba.util.FontManager;
-import com.shenma.yueba.util.HttpControl;
-import com.shenma.yueba.util.ToolsUtil;
-import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
-import com.umeng.socialize.utils.Log;
 
 /**  
  * @author gyj  
@@ -152,10 +147,7 @@ public class PubuliuManager {
 							return;
 						}
 						MyFavoriteProductListInfo bean=(MyFavoriteProductListInfo)v.getTag();
-						Intent intent=new Intent(context,ApproveBuyerDetailsActivity.class);
-						intent.putExtra("productID", bean.getId());
-						context.startActivity(intent);
-						//MyApplication.getInstance().showMessage(context, "点击了");
+						ToolsUtil.forwardProductInfoActivity(context,bean.getId());
 					}
 				});
     			iv.setImageResource(R.drawable.default_pic);

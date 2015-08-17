@@ -152,10 +152,7 @@ boolean isBroadcase=false;
 		case R.id.riv_customer_head://头像
 			if(v.getTag()!=null && v.getTag() instanceof Integer)
 			{
-				Intent iconIntent=new Intent(BaiJiaOrderDetailsActivity.this,ShopMainActivity.class);
-				iconIntent.putExtra("DATA", (Integer)v.getTag());
-				startActivity(iconIntent);
-				
+				ToolsUtil.forwardShopMainActivity(mContext,(Integer)v.getTag());
 			}
 			
 			break;

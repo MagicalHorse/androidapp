@@ -350,9 +350,7 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView
 						if (v.getTag()==null || ((Integer)v.getTag()) <= 0) {
 							return;
 						}
-						Intent intent = new Intent(ApproveBuyerDetailsActivity.this,ShopMainActivity.class);
-						intent.putExtra("DATA", (Integer)v.getTag());
-						startActivity(intent);
+						ToolsUtil.forwardShopMainActivity(mContext, (Integer)v.getTag());
 					}
 				});
 
@@ -576,10 +574,7 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView
 			{
 				return;
 			}
-			Intent intent = new Intent(ApproveBuyerDetailsActivity.this,
-					ShopMainActivity.class);
-			intent.putExtra("DATA", bean.getData().getBuyerId());
-			startActivity(intent);
+			ToolsUtil.forwardShopMainActivity(mContext,bean.getData().getBuyerId());
 			break;
 		case R.id.approvebuyerdetails_layout_siliao_linerlayout_textview:
 			startChatActivity();

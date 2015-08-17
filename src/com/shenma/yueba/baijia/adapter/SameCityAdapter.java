@@ -2,29 +2,22 @@ package com.shenma.yueba.baijia.adapter;
 
 import java.util.List;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.LinearLayout.LayoutParams;
-import android.widget.TextView;
-
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
-import com.shenma.yueba.baijia.activity.ApproveBuyerDetailsActivity;
-import com.shenma.yueba.baijia.activity.ShopMainActivity;
 import com.shenma.yueba.baijia.modle.BrandCityWideInfo;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.RoundImageView;
+
+import android.content.Context;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 public class SameCityAdapter extends BaseAdapterWithUtil {
 	private List<BrandCityWideInfo> items;
@@ -195,18 +188,14 @@ public class SameCityAdapter extends BaseAdapterWithUtil {
 			case R.id.brandlist_item_imageview1:
 			case R.id.brandlist_item_imageview2:
 			case R.id.brandlist_item_imageview3:
-				Intent intent=new Intent(ctx,ApproveBuyerDetailsActivity.class);
-				intent.putExtra("productID",(Integer)v.getTag());
-				ctx.startActivity(intent);
+				ToolsUtil.forwardProductInfoActivity(ctx,(Integer)v.getTag());
 				break;
 			case R.id.iv_head://头像
 			    if(v.getTag()==null)
 			    {
 			    	return;
 			    }
-				Intent iconintent=new Intent(ctx,ShopMainActivity.class);
-			    iconintent.putExtra("DATA", (Integer)v.getTag());
-			    ctx.startActivity(iconintent);
+			    ToolsUtil.forwardShopMainActivity(ctx,(Integer)v.getTag());
 			}
 		}
 	};

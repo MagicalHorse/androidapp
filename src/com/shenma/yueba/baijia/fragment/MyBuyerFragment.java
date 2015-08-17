@@ -11,7 +11,6 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.lidroid.xutils.BitmapUtils;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
-import com.shenma.yueba.baijia.activity.ShopMainActivity;
 import com.shenma.yueba.baijia.adapter.BuyerAdapter;
 import com.shenma.yueba.baijia.modle.FragmentBean;
 import com.shenma.yueba.baijia.modle.MyHomeProductListInfoBean;
@@ -23,7 +22,6 @@ import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.ToolsUtil;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -31,8 +29,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 
 public class MyBuyerFragment extends Fragment {
@@ -86,7 +82,6 @@ public class MyBuyerFragment extends Fragment {
 
 	void initPullView() {
 		baijia_contact_listview = (PullToRefreshListView) parentview.findViewById(R.id.baijia_contact_listview);
-		baijia_contact_listview.setMode(Mode.BOTH);
 		ToolsUtil.initPullResfresh(baijia_contact_listview, getActivity());
 
 		baijia_contact_listview.setOnRefreshListener(new OnRefreshListener2() {

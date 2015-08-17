@@ -47,7 +47,7 @@ public class DynamicListView extends BaseView{
 	// 当前页
 	int currpage = Constants.CURRPAGE_VALUE;
 	// 每页显示的条数
-	int pagesize = Constants.PAGESIZE_VALUE;
+	int pagesize = Constants.PAGESIZE_VALUE*50;
 	private List<UserDynamicInfo> mList = new ArrayList<UserDynamicInfo>();
 	private View view;
 	private PullToRefreshListView pull_refresh_list;
@@ -85,6 +85,24 @@ public class DynamicListView extends BaseView{
 
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,long arg3) {
+				
+				UserDynamicInfo msgListInfo=mList.get(arg2-1);
+				int type=msgListInfo.getType();  
+				switch(type)
+				{
+				case 0://0：关注了某人
+					ToolsUtil.forwardShopMainActivity(activity,msgListInfo.getDataId());
+					break;
+				case 1://1：加入了圈子
+					ToolsUtil.forwardCircleActivity(activity,msgListInfo.getDataId(),-1);
+					break;
+				case 2://2：购买了商品
+					ToolsUtil.forwardProductInfoActivity(activity,msgListInfo.getDataId());
+					break;
+				case 3://3：赞了某件商品
+					ToolsUtil.forwardProductInfoActivity(activity,msgListInfo.getDataId());
+					break;
+				}
 				/*UserDynamicInfo msgListInfo=mList.get(arg2-1);
 				Intent intent=new Intent(activity,ChatActivity.class);
 				intent.putExtra("Chat_Type", ChatActivity.chat_type_private);//类型 圈子 还是私聊

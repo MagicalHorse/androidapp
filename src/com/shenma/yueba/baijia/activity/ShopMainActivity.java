@@ -79,7 +79,7 @@ public class ShopMainActivity extends FragmentActivity {
     	requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.shop_main_layout);
 		super.onCreate(savedInstanceState);
-		userID=this.getIntent().getIntExtra("DATA", -1);
+		userID=this.getIntent().getIntExtra("userID", -1);
 		if(userID<0)
 		{
 			MyApplication.getInstance().showMessage(ShopMainActivity.this, "数据错误，请重试");
@@ -402,7 +402,7 @@ public class ShopMainActivity extends FragmentActivity {
     
     void getBaijiaUserInfo()
     {
-    	httpControl.getBaijiaUserInfo(userID,false, new HttpCallBackInterface() {
+    	httpControl.getBaijiaUserInfo(userID,true, new HttpCallBackInterface() {
 			
 			@Override
 			public void http_Success(Object obj) {

@@ -185,9 +185,7 @@ int maxValue=0;
 			submit();
 			break;
 		case R.id.affirmorder_item_icon_imageview:
-			Intent intent=new Intent(ApplyForRefundActivity.this,ApproveBuyerDetailsActivity.class);
-			intent.putExtra("productID", baiJiaOrderListInfo.getProduct().getProductId());
-			startActivity(intent);
+			ToolsUtil.forwardProductInfoActivity(ApplyForRefundActivity.this, baiJiaOrderListInfo.getProduct().getProductId());
 			break;
 		}
 	}

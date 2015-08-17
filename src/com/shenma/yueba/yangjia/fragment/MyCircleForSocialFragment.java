@@ -3,6 +3,19 @@ package com.shenma.yueba.yangjia.fragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.shenma.yueba.ChatActivity;
+import com.shenma.yueba.R;
+import com.shenma.yueba.baijia.fragment.BaseFragment;
+import com.shenma.yueba.constants.Constants;
+import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
+import com.shenma.yueba.yangjia.adapter.MyCircleForSocialAdapter;
+import com.shenma.yueba.yangjia.modle.CircleListBackBean;
+import com.shenma.yueba.yangjia.modle.CirlceItemBean;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,25 +23,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.TextView;
 import android.widget.Toast;
-
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.shenma.yueba.ChatActivity;
-import com.shenma.yueba.R;
-import com.shenma.yueba.baijia.activity.CircleInfoActivity;
-import com.shenma.yueba.baijia.fragment.BaseFragment;
-import com.shenma.yueba.constants.Constants;
-import com.shenma.yueba.util.HttpControl;
-import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
-import com.shenma.yueba.yangjia.adapter.MyCircleForSocialAdapter;
-import com.shenma.yueba.yangjia.adapter.SalesManagerForAttestationBuyerAdapter;
-import com.shenma.yueba.yangjia.modle.CircleListBackBean;
-import com.shenma.yueba.yangjia.modle.OrderListBackBean;
-import com.shenma.yueba.yangjia.modle.CirlceItemBean;
 
 /**
  * 社交管理中的-----我的圈子

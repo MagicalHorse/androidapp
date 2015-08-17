@@ -3,8 +3,14 @@ package com.shenma.yueba.baijia.adapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.modle.BaiJiaOrdeDetailsInfoBean;
+import com.shenma.yueba.baijia.modle.OrderPromotions;
+import com.shenma.yueba.util.FontManager;
+import com.shenma.yueba.util.ToolsUtil;
+
 import android.content.Context;
-import android.content.Intent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -12,15 +18,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.shenma.yueba.R;
-import com.shenma.yueba.application.MyApplication;
-import com.shenma.yueba.baijia.activity.ApproveBuyerDetailsActivity;
-import com.shenma.yueba.baijia.activity.BaiJiaOrderDetailsActivity;
-import com.shenma.yueba.baijia.modle.BaiJiaOrdeDetailsInfoBean;
-import com.shenma.yueba.baijia.modle.OrderPromotions;
-import com.shenma.yueba.util.FontManager;
-import com.shenma.yueba.util.ToolsUtil;
 
 /**  
  * @author gyj  
@@ -73,10 +70,8 @@ List<BaiJiaOrdeDetailsInfoBean> obj_list=new ArrayList<BaiJiaOrdeDetailsInfoBean
 				public void onClick(View v) {
 					if(v.getTag()!=null && v.getTag() instanceof BaiJiaOrdeDetailsInfoBean)
 					{
-					BaiJiaOrdeDetailsInfoBean bean=(BaiJiaOrdeDetailsInfoBean)v.getTag();
-					Intent intent=new Intent(context,ApproveBuyerDetailsActivity.class);
-					intent.putExtra("productID", bean.getProductId());
-					context.startActivity(intent);
+					   BaiJiaOrdeDetailsInfoBean bean=(BaiJiaOrdeDetailsInfoBean)v.getTag();
+					   ToolsUtil.forwardProductInfoActivity(context,bean.getProductId());
 					}
 				}
 			});

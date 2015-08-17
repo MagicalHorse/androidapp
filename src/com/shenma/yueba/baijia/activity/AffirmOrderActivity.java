@@ -272,9 +272,7 @@ public class AffirmOrderActivity extends BaseActivityWithTopView implements
 			switch (v.getId()) {
 			case R.id.affirmorder_layout_icon_roundimageview:
 				if (v.getTag() != null && v.getTag() instanceof Integer) {
-					Intent intent = new Intent(AffirmOrderActivity.this,ShopMainActivity.class);
-					intent.putExtra("DATA", (Integer)v.getTag());
-					startActivity(intent);
+					ToolsUtil.forwardShopMainActivity(mContext, (Integer)v.getTag());
 				}
 
 				break;

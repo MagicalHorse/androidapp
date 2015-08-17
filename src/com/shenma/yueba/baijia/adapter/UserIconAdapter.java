@@ -3,22 +3,18 @@ package com.shenma.yueba.baijia.adapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.shenma.yueba.R;
+import com.shenma.yueba.baijia.modle.UsersInfoBean;
+import com.shenma.yueba.util.ToolsUtil;
+import com.shenma.yueba.view.RoundImageView;
+
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.AbsListView.LayoutParams;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
-
-import com.shenma.yueba.R;
-import com.shenma.yueba.application.MyApplication;
-import com.shenma.yueba.baijia.activity.ShopMainActivity;
-import com.shenma.yueba.baijia.modle.UsersInfoBean;
-import com.shenma.yueba.view.RoundImageView;
 
 /**
  * @author gyj
@@ -83,9 +79,7 @@ public class UserIconAdapter extends BaseAdapter {
 				{
 					return;
 				}
-				Intent intent=new Intent(context,ShopMainActivity.class);
-				intent.putExtra("DATA", (Integer)v.getTag());
-				context.startActivity(intent);
+				ToolsUtil.forwardShopMainActivity(context,(Integer)v.getTag());
 			}
 		});
 		return riv;
