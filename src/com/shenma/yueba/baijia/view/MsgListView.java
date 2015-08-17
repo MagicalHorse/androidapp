@@ -52,7 +52,6 @@ public class MsgListView extends BaseView implements ImBroadcastReceiverLinstene
 	private PullToRefreshListView pull_refresh_list;
 	LinearLayout showloading_layout_view;
 	MsgAdapter msgAdapter;
-	boolean isruning=false;
 	boolean isImBroadcase=false;
 	ImBroadcastReceiver imBroadcastReceiver;
 	public MsgListView(Activity activity)
@@ -124,11 +123,6 @@ public class MsgListView extends BaseView implements ImBroadcastReceiverLinstene
 	 * 请求加载数据
 	 * ***/
 	public void requestData() {
-		if(isruning)
-		{
-			return;
-		}
-		isruning=true;
 		sendHttp(currpage, 1);
 	}
 
@@ -137,11 +131,6 @@ public class MsgListView extends BaseView implements ImBroadcastReceiverLinstene
 	 * ***/
 	public void requestFalshData() {
 		isfirstStatus=true;
-		if(isruning)
-		{
-			return;
-		}
-		isruning=true;
 		sendHttp(1, 0);
 	}
 	
@@ -160,7 +149,6 @@ public class MsgListView extends BaseView implements ImBroadcastReceiverLinstene
 			
 			@Override
 			public void http_Success(Object obj) {
-				isruning=false;
 				isfirstStatus=false;
 				currpage=page;
 				showDialog=false;
@@ -186,7 +174,6 @@ public class MsgListView extends BaseView implements ImBroadcastReceiverLinstene
 			
 			@Override
 			public void http_Fails(int error, String msg) {
-				isruning=false;
 				isfirstStatus=false;
 				MyApplication.getInstance().showMessage(activity,msg);
 				ToolsUtil.pullResfresh(pull_refresh_list);

@@ -18,34 +18,12 @@ package com.shenma.yueba.yangjia.activity;
 
 import java.util.LinkedList;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTabHost;
-import android.view.Gravity;
-import android.view.KeyEvent;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
-import android.view.Window;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout.LayoutParams;
-import android.widget.TabHost.TabSpec;
-import im.control.SocketManger;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.activity.MainActivityForBaiJia;
 import com.shenma.yueba.baijia.modle.RequestUploadProductDataBean;
 import com.shenma.yueba.camera2.ActivityCapture;
 import com.shenma.yueba.util.FileUtils;
-import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.SelecteKXPOrPublishType;
 import com.shenma.yueba.yangjia.fragment.CartFragment;
@@ -55,13 +33,35 @@ import com.shenma.yueba.yangjia.fragment.MessageFragmentForYangJia;
 import com.shenma.yueba.yangjia.fragment.TaskRewardFragment;
 import com.umeng.analytics.MobclickAgent;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTabHost;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
+import android.view.Window;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.TabHost.OnTabChangeListener;
+import android.widget.TabHost.TabSpec;
+import android.widget.TextView;
+import android.widget.Toast;
+import im.broadcast.ImBroadcastReceiver;
+import im.broadcast.ImBroadcastReceiver.ImBroadcastReceiverLinstener;
+import im.broadcast.ImBroadcastReceiver.RECEIVER_type;
+
 
 /**
  * 养家模式
  * @author a
  *
  */
-public final class MainActivityForYangJia extends FragmentActivity {
+public final class MainActivityForYangJia extends FragmentActivity implements ImBroadcastReceiverLinstener{
 
 	static final int MENU_MANUAL_REFRESH = 0;
 	static final int MENU_DISABLE_SCROLL = 1;
@@ -80,8 +80,9 @@ public final class MainActivityForYangJia extends FragmentActivity {
 		private String mTextviewArray[] = { "主页", "红榜", "发布", "消息","我" };
 	// 定义数组来存放Fragment界面
 	private Class fragmentArray[] = { IndexFragmentForYangJia.class,TaskRewardFragment.class,CartFragment.class,MessageFragmentForYangJia.class,MeFragmentForYangJia.class};
-
-	
+	View round_view;//消息的原点
+	ImBroadcastReceiver imBroadcastReceiver;
+	boolean isbroadcase=false;
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -89,6 +90,7 @@ public final class MainActivityForYangJia extends FragmentActivity {
 		MyApplication.getInstance().addActivity(this);//加入回退栈
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
+		imBroadcastReceiver=new ImBroadcastReceiver(this);
 		initView();
 		
 //		CustomProgressDialog progressDialog = CustomProgressDialog.createDialog(this);
@@ -101,6 +103,16 @@ public final class MainActivityForYangJia extends FragmentActivity {
 	 * 初始化组件
 	 */
 	private void initView() {
+		TextView yangjia_msg_textview=(TextView)findViewById(R.id.yangjia_msg_textview);
+		round_view=findViewById(R.id.round_view);
+		registerBroadcase();
+//		yangjia_msg_textview.setOnClickListener(new OnClickListener() {
+//			
+//			@Override
+//			public void onClick(View v) {
+//				setRedView(false);
+//			}
+//		});
 		TextView tv_center = (TextView) findViewById(R.id.tv_center);
 		tv_center.setOnTouchListener(new OnTouchListener() {
 			@Override
@@ -133,6 +145,16 @@ public final class MainActivityForYangJia extends FragmentActivity {
 			mTabHost.addTab(tabSpec, fragmentArray[i], null);
 		}
 		mTabHost.getTabWidget().setDividerDrawable(null);  //去掉tab之间的竖线
+		mTabHost.setOnTabChangedListener(new OnTabChangeListener() {
+			
+			@Override
+			public void onTabChanged(String tabId) {
+				if(tabId.equals("消息"))
+				{
+					setRedView(false);
+				}
+			}
+		});
 	}
 	
 /**
@@ -155,6 +177,7 @@ private View getTabItemView(int index) {
 protected void onDestroy() {
 	MyApplication.getInstance().addActivity(this);
 	super.onDestroy();
+	unregisterBroadcase();
 }
 
 public void onResume() {
@@ -227,5 +250,76 @@ public void onResume() {
 				canceView();
 			}
 
+		}
+
+		@Override
+		public void newMessage(Object obj) {
+			// TODO Auto-generated method stub
+			if(!mTabHost.getCurrentTabTag().equals("消息"))
+			{
+				setRedView(true);
+			}
+				
+		}
+
+		@Override
+		public void roomMessage(Object obj) {
+			// TODO Auto-generated method stub
+			if(!mTabHost.getCurrentTabTag().equals("消息"))
+			{
+				setRedView(true);
+			}
+		}
+
+		@Override
+		public void clearMsgNotation(RECEIVER_type type) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		/***
+		 * 设置 红色的按钮显示或隐藏
+		 * @param i int 需要控制的 item 的 下标
+		 * @param b  boolean 是否显示 true显示  false否
+		 * **/
+		void setRedView(boolean b)
+		{
+			if(round_view!=null)
+			   {
+				  if(b)
+				  {
+					  round_view.setVisibility(View.VISIBLE);
+				  }else
+				  {
+					  round_view.setVisibility(View.GONE);
+				  }
+			   }
+		}
+		
+		/******
+		 * 注册 消息广播监听
+		 * ***/
+		void registerBroadcase()
+		{
+			if(!isbroadcase)
+			{
+				isbroadcase=true;
+				MainActivityForYangJia.this.registerReceiver(imBroadcastReceiver, new IntentFilter(ImBroadcastReceiver.IntentFilterRoomMsg));
+			}
+			
+		}
+		
+		
+		/******
+		 * 注册 消息广播监听
+		 * ***/
+		void unregisterBroadcase()
+		{
+			if(isbroadcase)
+			{
+				MainActivityForYangJia.this.unregisterReceiver(imBroadcastReceiver);
+				isbroadcase=false;
+			}
+			
 		}
 }

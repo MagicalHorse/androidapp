@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import im.broadcast.ImBroadcastReceiver;
+import im.broadcast.ImBroadcastReceiver.ImBroadcastReceiverLinstener;
+import im.broadcast.ImBroadcastReceiver.RECEIVER_type;
+import im.form.RequestMessageBean;
 import android.widget.ListView;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -38,7 +43,7 @@ import com.shenma.yueba.util.ToolsUtil;
  * @author a
  *
  */
-public class MsgListFragment extends BaseFragment {
+public class MsgListFragment extends BaseFragment implements ImBroadcastReceiverLinstener{
 	private MsgAdapter msgAdapter;
 	boolean showDialog=true;
 	boolean  isfirststatus=false;
@@ -50,6 +55,9 @@ public class MsgListFragment extends BaseFragment {
 	private List<MsgListInfo> mList = new ArrayList<MsgListInfo>();
 	private View view;
 	private PullToRefreshListView pull_refresh_list;
+	boolean isImBroadcase=false;
+	ImBroadcastReceiver imBroadcastReceiver;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -62,7 +70,9 @@ public class MsgListFragment extends BaseFragment {
 
 		if (view == null) {
 			view = inflater.inflate(R.layout.refresh_listview_without_title_layout, null);
+			imBroadcastReceiver=new ImBroadcastReceiver(this);
 			initPullView();
+			registImBroacase();
 		}
 		// 缓存的rootView需要判断是否已经被加过parent，如果有parent需要从parent删除，要不然会发生这个rootview已经有parent的错误。
 		ViewGroup parent = (ViewGroup) view.getParent();
@@ -89,6 +99,7 @@ public class MsgListFragment extends BaseFragment {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,long arg3) {
 				MsgListInfo msgListInfo=mList.get(arg2-1);
 				Intent intent=new Intent(getActivity(),ChatActivity.class);
+				intent.putExtra("toUser_id", msgListInfo.getId());
 				intent.putExtra("Chat_NAME",msgListInfo.getName());//名字
 				intent.putExtra("Chat_RoomID",msgListInfo.getRoomId());//roomid
 				getActivity().startActivity(intent);
@@ -254,5 +265,65 @@ public class MsgListFragment extends BaseFragment {
 		}
 		requestFalshData();
 	}
+
+	@Override
+	public void newMessage(Object obj) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void roomMessage(Object obj) {
+		if(obj!=null && obj instanceof RequestMessageBean)
+		{
+			RequestMessageBean	bean=(RequestMessageBean)obj;
+			int touserid=bean.getToUserId();
+			if(touserid>0)
+			{
+				String roomid=bean.getRoomId();
+				if(roomid!=null)
+				{
+					requestFalshData();
+				}
+			}
+		}
+	}
+
+	@Override
+	public void clearMsgNotation(RECEIVER_type type) {
+		// TODO Auto-generated method stub
+		
+	}
 	
+	void registImBroacase()
+	{
+		if(!isImBroadcase)
+		{
+			if(getActivity()!=null)
+			{
+				isImBroadcase=true;
+				getActivity().registerReceiver(imBroadcastReceiver, new IntentFilter(ImBroadcastReceiver.IntentFilterRoomMsg));
+			}
+		}
+	}
+	
+	
+	void unRegistImBroacase()
+	{
+		if(isImBroadcase)
+		{
+			if(getActivity()!=null)
+			{
+				isImBroadcase=false;
+				getActivity().unregisterReceiver(imBroadcastReceiver);
+			}
+		}
+	}
+	
+	@Override
+	public void onDestroyView() {
+		// TODO Auto-generated method stub
+		super.onDestroyView();
+		unRegistImBroacase();
+	}
 }

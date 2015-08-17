@@ -117,6 +117,7 @@ public class BuyerStreetFragment extends Fragment {
 				.findViewById(R.id.baijia_contact_listview);
 		// 设置标签显示的内容
 		baijia_contact_listview.setMode(Mode.PULL_FROM_START);
+		baijia_contact_listview.onRefreshComplete();
 		ToolsUtil.initPullResfresh(baijia_contact_listview, getActivity());
 
 		baijia_contact_listview.setOnRefreshListener(new OnRefreshListener2() {
@@ -360,12 +361,16 @@ public class BuyerStreetFragment extends Fragment {
 				//设置viewpager 大小
 				if(item.getBanners().size()>0)
 				{
-					DisplayMetrics dm = new DisplayMetrics();
-					getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
-					int width = dm.widthPixels;
-					int height = width / 2;
-					baijiasteetfragmnet_layout_head_viewpager_relativelayout.setLayoutParams(new LinearLayout.LayoutParams(width,height));
-					((RelativeLayout.LayoutParams) baijia_head_layout.getLayoutParams()).bottomMargin = 40;//设置园点 的位置
+					if(getActivity()!=null)
+					{
+						DisplayMetrics dm = new DisplayMetrics();
+						getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
+						int width = dm.widthPixels;
+						int height = width / 2;
+						baijiasteetfragmnet_layout_head_viewpager_relativelayout.setLayoutParams(new LinearLayout.LayoutParams(width,height));
+						((RelativeLayout.LayoutParams) baijia_head_layout.getLayoutParams()).bottomMargin = 40;//设置园点 的位置
+					}
+					
 				}
 				Banners = item.getBanners();
 				for (int i = 0; i < Banners.size(); i++) {

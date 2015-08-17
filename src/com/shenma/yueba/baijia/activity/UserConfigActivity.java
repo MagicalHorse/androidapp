@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import im.control.SocketManger;
 
 import com.alibaba.sdk.android.oss.callback.SaveCallback;
 import com.alibaba.sdk.android.oss.model.OSSException;
@@ -398,6 +399,7 @@ public class UserConfigActivity extends BaseActivityWithTopView implements
 			httpControl.setUnLoginInfo(UserConfigActivity.this);
 			JpushUtils jpushUtils = new JpushUtils(mContext);
 			jpushUtils.setAlias("");//取消别名设置
+			SocketManger.the().disContentSocket();
 			startActivity(intentLogin);
 			break;
 		case R.id.tv_about:// 关于我们

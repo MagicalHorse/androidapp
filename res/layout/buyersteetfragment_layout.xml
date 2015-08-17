@@ -18,6 +18,8 @@
 
         <com.handmark.pulltorefresh.library.PullToRefreshListView
                     android:id="@+id/baijia_contact_listview"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:dividerHeight="1dp" />

@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/parent"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:id="@+id/parent"
     android:background="#ffffff"
-    android:orientation="vertical" 
-    >
+    android:orientation="vertical" >
 
     <FrameLayout
         android:id="@+id/realtabcontent"
         android:layout_width="fill_parent"
         android:layout_height="0dip"
-        android:background="@color/gray_bg"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:background="@color/gray_bg" />
 
     <View
         android:layout_width="fill_parent"
@@ -24,12 +23,11 @@
         android:layout_height="50dip" >
 
         <android.support.v4.app.FragmentTabHost
-            android:layout_marginTop="5dip"
-            android:layout_marginBottom="5dip"
             android:id="@android:id/tabhost"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-             >
+            android:layout_marginBottom="5dip"
+            android:layout_marginTop="5dip" >
 
             <FrameLayout
                 android:id="@android:id/tabcontent"
@@ -47,39 +45,51 @@
                 android:layout_width="0dip"
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
-                android:visibility="invisible"
-                 />
+                android:visibility="invisible" />
 
             <TextView
                 android:layout_width="0dip"
                 android:layout_height="fill_parent"
-                android:layout_weight="1"
-                />
+                android:layout_weight="1" />
 
-            
             <TextView
                 android:id="@+id/tv_center"
-                android:background="@color/gray_bg"
                 android:layout_width="0dip"
-                android:drawableTop="@drawable/tab_publish_selector"
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
+                android:background="@color/gray_bg"
+                android:drawableTop="@drawable/tab_publish_selector"
                 android:focusable="true"
                 android:gravity="center"
-                android:textColor="@color/text_gray_color"
-                 />
+                android:textColor="@color/text_gray_color" />
+
+            <RelativeLayout
+                android:layout_width="0dip"
+                android:layout_height="fill_parent"
+                android:layout_weight="1" >
+
+                <TextView
+                    android:id="@+id/yangjia_msg_textview"
+                    android:layout_height="fill_parent"
+                    android:layout_width="match_parent"
+                    />
+
+                <View
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="13dp"
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/round_view"
+                    android:layout_width="7dp"
+                    android:layout_height="7dp"
+                    android:layout_alignTop="@id/yangjia_msg_textview"
+                    android:background="@drawable/round_background_maincolor"
+                    android:visibility="gone" />
+            </RelativeLayout>
 
             <TextView
                 android:layout_width="0dip"
                 android:layout_height="fill_parent"
-                android:layout_weight="1"
-                 />
-
-            <TextView
-                android:layout_width="0dip"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"
-                />
+                android:layout_weight="1" />
         </LinearLayout>
     </RelativeLayout>
 

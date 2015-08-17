@@ -358,6 +358,7 @@ public class MyApplication extends Application {
 	 * **/
 	public void startLogin(final Context context,final String msg)
 	{
+		SocketManger.the().disContentSocket();
 	    ((Activity)context).runOnUiThread(new Runnable() {
 			
 			@Override

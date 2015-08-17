@@ -227,12 +227,12 @@ public class MyBuyerFragment extends Fragment {
 					Products.addAll(item.getProducts());
 				}
 			}
-			if (getActivity() != null) {
+			/*if (getActivity() != null) {
 				buyerAdapter = new BuyerAdapter(Products, getActivity());
 				if (baijia_contact_listview != null) {
 					baijia_contact_listview.setAdapter(buyerAdapter);
 				}
-			}
+			}*/
 		}
 		if (buyerAdapter != null) {
 			buyerAdapter.notifyDataSetChanged();
@@ -248,5 +248,14 @@ public class MyBuyerFragment extends Fragment {
 			requestFalshData();
 		}
 
+	}
+	
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		if(parentview!=null)
+		{
+			parentview=null;
+		}
 	}
 }
