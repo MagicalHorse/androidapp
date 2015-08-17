@@ -129,7 +129,7 @@ public class NotificationUtils {
 			}
 
 			if(notificationIntent!=null){
-				PendingIntent contentItent = PendingIntent.getActivity(ctx, 0,notificationIntent, 0);
+				PendingIntent contentItent = PendingIntent.getActivity(ctx, 0,notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 				notification.setLatestEventInfo(ctx, title, content, contentItent);
 				// 把Notification传递给NotificationManager
 				notificationManager.notify(0, notification);
