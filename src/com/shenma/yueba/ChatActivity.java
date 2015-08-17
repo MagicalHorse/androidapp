@@ -303,6 +303,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 
 			@Override
 			public void onClick(View v) {
+				hideFace();
 				iv_emoticons_normal.setVisibility(View.VISIBLE);
 				btnContainer.setVisibility(View.GONE);
 				pointLast(bean_list.size());
