@@ -63,8 +63,10 @@ public class HuoKuanIncomingAndOutgoingsActivity extends BaseFragmentActivity im
 	}
 
 	
-	public void setHuoKuanCount(String content){
+	public void setHuoKuanCount(String content,double price){
 		fragmentList.get(0).tv_bottom.setText(content);
+		fragmentList.get(0).tv_bottom.setTag(price+"");
+		
 	}
 	
 	public void setIds(String id){

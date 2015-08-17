@@ -5,6 +5,7 @@
     android:orientation="horizontal"
     android:paddingTop="5dip" 
     android:paddingBottom="5dip"
+    android:background="@color/white"
     android:paddingLeft="10dip"
     android:paddingRight="10dip"
     >
@@ -57,7 +58,7 @@
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:singleLine="true"
-                android:text="2222"
+                android:text="@null"
                 android:textSize="@dimen/textsize15sp" />
 
             <TextView
@@ -67,7 +68,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:singleLine="true"
-                android:text="3333"
+                android:text="@null"
                 android:textSize="@dimen/textsize11sp" />
         </LinearLayout>
 
@@ -80,7 +81,7 @@
             android:ellipsize="end"
             android:gravity="left|center_vertical"
             android:singleLine="true"
-            android:text="2222"
+            android:text="@null"
             android:textColor="@color/text_gray_color"
             android:textSize="@dimen/textsize12sp" />
     </LinearLayout>

@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="80dip"
+    android:background="@color/white"
     android:orientation="horizontal"
     android:padding="10dip" >
 
@@ -33,7 +34,7 @@
             android:id="@+id/tv_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="叮当猫"
+            android:text="@null"
             android:textSize="@dimen/textsize14sp" />
 
         <TextView
@@ -44,7 +45,7 @@
             android:layout_width="match_parent"
             android:singleLine="true"
             android:layout_height="match_parent"
-            android:text="加入圈子"
+            android:text="@null"
             android:textColor="@color/text_gray_color"
             android:textSize="@dimen/textsize13sp" />
 
@@ -55,7 +56,7 @@
             android:id="@+id/tv_time"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="2019-01-29 19:39"
+            android:text="@null"
             android:textColor="@color/text_gray_color"
             android:textSize="@dimen/textsize12sp" />
         

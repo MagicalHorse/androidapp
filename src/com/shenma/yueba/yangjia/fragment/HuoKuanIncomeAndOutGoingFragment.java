@@ -118,6 +118,7 @@ public class HuoKuanIncomeAndOutGoingFragment extends BaseFragment implements On
 		}
 		adapter = new HuoKuanIncomeAndOutGoingAdapter(
 				getActivity(), mList, tag);
+		rlv.setAdapter(adapter);
 		return rootView;
 	}
 
@@ -196,19 +197,21 @@ public class HuoKuanIncomeAndOutGoingFragment extends BaseFragment implements On
 				HuoKuanListBackBean bean = (HuoKuanListBackBean) obj;
 				if (isRefresh) {
 					ids.clear();//清空保存的ID
+					mList.clear();//清空列表
 					adapter.clearCountList();//清空数据和价格
 					tv_bottom.setText("提现货款");//初始化提现货款按钮
 					if (bean.getData() != null
-							&& bean.getData().getItems() != null
-							&& bean.getData().getItems().size() > 0) {
-						tv_nodata.setVisibility(View.GONE);
-						mList.clear();
+							&& bean.getData().getItems() != null) {
+						if(bean.getData().getItems().size()>0){
+							tv_nodata.setVisibility(View.GONE);
+						}else{
+							tv_nodata.setVisibility(View.VISIBLE);
+						}
 						mList.addAll(bean.getData().getItems());
-						rlv.setAdapter(adapter);
-					} else {
-						tv_nodata.setVisibility(View.VISIBLE);
+					}else{
+						mList.clear();//清空列表
 					}
-
+					adapter.notifyDataSetChanged();
 				} else {
 					if (bean.getData().getItems() != null
 							&& bean.getData().getItems().size() > 0) {
@@ -299,7 +302,13 @@ public class HuoKuanIncomeAndOutGoingFragment extends BaseFragment implements On
 				if(data!=null){
 					boolean isFlow = data.isIsFlow();
 						if(isFlow){//已經关注
-							withdraw();
+							DialogUtils dialogUtil = new DialogUtils();
+							dialogUtil.alertDialog(getActivity(), "提示", "您确定提取货款 ￥"+tv_bottom.getTag()+" 到微信零钱中吗？", new DialogUtilInter() {
+								@Override
+								public void dialogCallBack(int... which) {
+									withdraw();
+								}
+							}, true, "确定", "取消", false, true);
 						}else{//没有关注
 							WeChatDialog dialog = new WeChatDialog(getActivity(),data.getQRCode(),data.getName());
 							dialog.show();
