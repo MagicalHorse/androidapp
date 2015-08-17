@@ -165,8 +165,7 @@ public class ProductManagerFragmentForOnLineAdapter extends BaseAdapterWithUtil 
 							.getBrandName(),
 							mList.get(position).getShareLink(),
 							mList.get(position).getDetail().getImages().get(0)
-									.getImageUrl()
-									+ "_240x0.jpg", new ShareListener() {
+									.getImageUrl(), new ShareListener() {
 
 								@Override
 								public void sharedListener_sucess() {
