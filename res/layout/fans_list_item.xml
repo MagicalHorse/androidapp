@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="70dip"
+    android:layout_height="wrap_content"
     android:background="@color/white" >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="10dip"
         android:orientation="horizontal" >
 
         <com.shenma.yueba.view.RoundImageView
             android:id="@+id/riv_head"
             android:layout_width="60dip"
             android:layout_height="60dip"
-            android:layout_margin="5dip"
             android:src="@drawable/default_pic" />
 
         <LinearLayout
