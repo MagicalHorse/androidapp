@@ -161,11 +161,9 @@ public class ProductManagerFragmentForOnLineAdapter extends BaseAdapterWithUtil 
 			@Override
 			public void onClick(View v) {
 				if ("分享".equals(((TextView) v).getText().toString().trim())) {
-					ShareUtil.shareAll((Activity) ctx, "",mList.get(position)
-							.getBrandName(),
+					ShareUtil.shareAll((Activity) ctx, mList.get(position).getProductName(),mList.get(position).getProductName(),
 							mList.get(position).getShareLink(),
-							mList.get(position).getDetail().getImages().get(0)
-									.getImageUrl(), new ShareListener() {
+							mList.get(position).getPic(), new ShareListener() {
 
 								@Override
 								public void sharedListener_sucess() {
