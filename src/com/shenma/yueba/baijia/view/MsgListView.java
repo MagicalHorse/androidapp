@@ -42,7 +42,7 @@ public class MsgListView extends BaseView implements ImBroadcastReceiverLinstene
 	Activity activity;
 	LayoutInflater layoutInflater;
 	boolean showDialog=true;
-	boolean isfirstStatus=false;
+	boolean isruning=false;
 	// 当前页
 	int currpage = Constants.CURRPAGE_VALUE;
 	// 每页显示的条数
@@ -123,6 +123,11 @@ public class MsgListView extends BaseView implements ImBroadcastReceiverLinstene
 	 * 请求加载数据
 	 * ***/
 	public void requestData() {
+		if(isruning)
+		{
+			return;
+		}
+		isruning=true;
 		sendHttp(currpage, 1);
 	}
 
@@ -130,7 +135,11 @@ public class MsgListView extends BaseView implements ImBroadcastReceiverLinstene
 	 * 请求刷新数据
 	 * ***/
 	public void requestFalshData() {
-		isfirstStatus=true;
+		if(isruning)
+		{
+			return;
+		}
+		isruning=true;
 		sendHttp(1, 0);
 	}
 	
@@ -149,9 +158,8 @@ public class MsgListView extends BaseView implements ImBroadcastReceiverLinstene
 			
 			@Override
 			public void http_Success(Object obj) {
-				isfirstStatus=false;
+				isruning=false;
 				currpage=page;
-				showDialog=false;
 				ToolsUtil.pullResfresh(pull_refresh_list);
 				if(obj!=null && obj instanceof RequestMsgListInfoBean)
 				{
@@ -174,7 +182,7 @@ public class MsgListView extends BaseView implements ImBroadcastReceiverLinstene
 			
 			@Override
 			public void http_Fails(int error, String msg) {
-				isfirstStatus=false;
+				isruning=false;
 				MyApplication.getInstance().showMessage(activity,msg);
 				ToolsUtil.pullResfresh(pull_refresh_list);
 			}
@@ -251,11 +259,7 @@ public class MsgListView extends BaseView implements ImBroadcastReceiverLinstene
 	
 	@Override
 	public void firstInitData() {
-		if(isfirstStatus)
-		   {
-			   return ;
-		   }
-		   requestFalshData();
+		requestFalshData();
 	}
 	
 	

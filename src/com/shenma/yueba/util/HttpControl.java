@@ -1553,14 +1553,16 @@ public class HttpControl {
 	 *            int 条数
 	 * @param CityId
 	 *            int 城市编号 int 条数
+	 *  @param userid int 用户id
 	 * @return void
 	 * **/
-	public void getBrandCity_Wide(int currPage, int pageSize, int CityId,
+	public void getBrandCity_Wide(int currPage, int pageSize, int CityId,int userid,
 			boolean showDialog, final HttpCallBackInterface httpCallBack,
 			Context context) {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put(Constants.PAGE, Integer.toString(currPage));
 		map.put(Constants.PAGESIZE, Integer.toString(pageSize));
+		map.put("userid", Integer.toString(userid));
 		map.put(Constants.LONGITUDE, SharedUtil.getStringPerfernece(context,"longitude"));
 		map.put(Constants.LATITUDE, SharedUtil.getStringPerfernece(context,"latitude"));
 		map.put(Constants.PAGESIZE, Integer.toString(pageSize));

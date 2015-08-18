@@ -52,7 +52,7 @@ public class MyBuyerFragment extends Fragment {
 	List<ProductsInfoBean> Products = new ArrayList<ProductsInfoBean>();
 	BitmapUtils bitmapUtils;
 	BuyerAdapter buyerAdapter;
-	boolean isFirst = true;// 是否第一次加载数据
+	boolean isruning = false;// 是否第一次加载数据
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -110,6 +110,11 @@ public class MyBuyerFragment extends Fragment {
 	 * 上啦加载数据
 	 ***/
 	void requestData() {
+		if(isruning)
+		{
+			return;
+		}
+		isruning=true;
 		sendRequestData(currpage, 1);
 	}
 
@@ -117,7 +122,11 @@ public class MyBuyerFragment extends Fragment {
 	 * 下拉刷新数据
 	 ***/
 	void requestFalshData() {
-		isFirst = false;
+		if(isruning)
+		{
+			return;
+		}
+		isruning=true;
 		sendRequestData(1, 0);
 
 	}
@@ -137,7 +146,7 @@ public class MyBuyerFragment extends Fragment {
 
 			@Override
 			public void http_Success(Object obj) {
-				ishow = false;
+				isruning=false;
 				ToolsUtil.pullResfresh(baijia_contact_listview);
 				currpage = page;
 				if (obj != null && obj instanceof MyRequestProductListInfoBean) {
@@ -160,6 +169,7 @@ public class MyBuyerFragment extends Fragment {
 
 			@Override
 			public void http_Fails(int error, String msg) {
+				isruning=false;
 				ToolsUtil.pullResfresh(baijia_contact_listview);
 				MyApplication.getInstance().showMessage(getActivity(), msg);
 			}
@@ -196,6 +206,7 @@ public class MyBuyerFragment extends Fragment {
 	 **/
 	void addData(MyHomeProductListInfoBean data) {
 		currpage++;
+		ishow=false;
 		if (data != null) {
 			MyProductListInfoBean item = data.getItems();
 			if (item.getProducts() != null) {
@@ -216,6 +227,7 @@ public class MyBuyerFragment extends Fragment {
 	 ***/
 	void falshData(MyHomeProductListInfoBean data) {
 		// showloading_layout_view.setVisibility(View.GONE);
+		ishow=false;
 		Products.clear();
 		currpage++;
 		if (data != null) {
@@ -244,7 +256,7 @@ public class MyBuyerFragment extends Fragment {
 	 * 首次加载
 	 ***/
 	public void firstInitData() {
-		if (isFirst) {
+		if (Products.size()<=0) {
 			requestFalshData();
 		}
 

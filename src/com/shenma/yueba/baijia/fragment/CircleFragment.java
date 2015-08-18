@@ -69,9 +69,13 @@ public class CircleFragment extends Fragment {
 		super.onResume();
 		if (currid > -1 && currid < fragment_list.size()) {
 			BaseView bv = (BaseView) fragment_list.get(currid).getFragment();
-			if (bv != null) {
-				bv.firstInitData();
+			if(currid==1)
+			{
+				if (bv != null) {
+					bv.firstInitData();
+				}
 			}
+			
 
 		}
 
@@ -181,8 +185,7 @@ public class CircleFragment extends Fragment {
 	public void onDetach() {
 		super.onDetach();
 		try {
-			Field childFragmentManager = Fragment.class
-					.getDeclaredField("mChildFragmentManager");
+			Field childFragmentManager = Fragment.class.getDeclaredField("mChildFragmentManager");
 			childFragmentManager.setAccessible(true);
 			childFragmentManager.set(this, null);
 

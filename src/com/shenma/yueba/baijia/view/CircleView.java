@@ -21,7 +21,6 @@ import com.shenma.yueba.view.RoundImageView;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,9 +32,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import im.broadcast.ImBroadcastReceiver;
-import im.broadcast.ImBroadcastReceiver.ImBroadcastReceiverLinstener;
-import im.broadcast.ImBroadcastReceiver.RECEIVER_type;
-import im.form.RequestMessageBean;
 
 public class CircleView extends BaseView{
 	Activity activity;
@@ -51,7 +47,7 @@ public class CircleView extends BaseView{
 	int currPage=Constants.CURRPAGE_VALUE;
 	int pageSize=Constants.PAGESIZE_VALUE;
 	boolean showDialog=true;
-	boolean isFirst=true;
+	boolean isruning=false;
 	HttpControl httpCntrol=new HttpControl();
 	ImBroadcastReceiver imBroadcastReceiver;
 	boolean isImBroadcase=false;
@@ -74,10 +70,6 @@ public class CircleView extends BaseView{
 		//this.activity=activity;
 		baijia_quanzi_layout_tanb1_gridbview.setFocusable(false);
 		baijia_quanzi_layout_tanb1_gridbview.setFocusableInTouchMode(false);
-		if(view!=null)
-		{
-           firstInitData();
-		}
 		return view;
 	}
 	
@@ -192,17 +184,28 @@ public class CircleView extends BaseView{
 	
 	void requestData()
 	{
+		if(isruning)
+		{
+			return;
+		}
+		isruning=true;
 		sendHttp(currPage,1);
 	}
 	
 	void requestFalshData()
 	{
+		if(isruning)
+		{
+			return;
+		}
+		isruning=true;
 		sendHttp(1,0);
 	}
 	
 	
 	void addData(RequestTuiJianCircleInfoBean bean)
 	{
+		isruning=false;
 		showDialog=false;
 		currPage++;
 		if(bean.getData()!=null)
@@ -222,7 +225,7 @@ public class CircleView extends BaseView{
 	
 	void falshData(RequestTuiJianCircleInfoBean bean)
 	{
-		isFirst=false;
+		isruning=false;
 		currPage++;
 		items.clear();
 		if(bean.getData()!=null)
@@ -248,8 +251,7 @@ public class CircleView extends BaseView{
 			@Override
 			public void http_Success(Object obj) {
 				currPage=page;
-				showDialog=false;
-				
+				isruning=false;
 				ToolsUtil.pullResfresh(baijia_quanzi_layout_tanb1_gridbview);
 				if(obj!=null && obj instanceof RequestTuiJianCircleInfoBean)
 				{
@@ -265,6 +267,7 @@ public class CircleView extends BaseView{
 
 					setPageStatus(bean, page);
 				} else {
+					isruning=false;
 					http_Fails(500, activity.getResources()
 							.getString(R.string.errorpagedata_str));
 				}
@@ -316,12 +319,10 @@ public class CircleView extends BaseView{
 	 * ***/
 	public void firstInitData()
 	{
-		this.activity=activity;
-		if(isFirst)
+		if(items.size()<=0)
 		{
 			requestFalshData();
 		}
-		
 	}
 	
 	

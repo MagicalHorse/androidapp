@@ -1,5 +1,6 @@
 package com.shenma.yueba.baijia.fragment;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -139,8 +140,9 @@ public class IndexFragmentForBaiJia extends Fragment {
 									getActivity())) {
 								baijia_fragment_tab1_pagerview.setCurrentItem(0, false);
 							}else{
-								setTextColor(arg0);
 								baijia_fragment_tab1_pagerview.setCurrentItem(1, true);
+								setCurrView(1);
+								
 								((MyBuyerFragment)fragment_list.get(arg0).getFragment()).firstInitData();
 							}
 							break;
@@ -193,5 +195,21 @@ public class IndexFragmentForBaiJia extends Fragment {
 			}
 
 		}
+	}
+	
+	@Override
+	public void onDetach() {
+		super.onDetach();
+		try {
+			Field childFragmentManager = Fragment.class.getDeclaredField("mChildFragmentManager");
+			childFragmentManager.setAccessible(true);
+			childFragmentManager.set(this, null);
+
+		} catch (NoSuchFieldException e) {
+			throw new RuntimeException(e);
+		} catch (IllegalAccessException e) {
+			throw new RuntimeException(e);
+		}
+
 	}
 }

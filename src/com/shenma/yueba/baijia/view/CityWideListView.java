@@ -31,6 +31,7 @@ import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
+import com.shenma.yueba.util.SharedUtil;
 
 /**  
  * @author gyj  
@@ -160,7 +161,16 @@ public class CityWideListView extends BaseView{
 	void sendHttp(final int page,final int type)
 	{
 		ToolsUtil.showNoDataView(activity, view,false);
-		httpCntrol.getBrandCity_Wide(page, pageSize, CityId, showDialog,new HttpCallBackInterface() {
+		String loginid=SharedUtil.getStringPerfernece(MyApplication.getInstance().getApplicationContext(), SharedUtil.user_id);
+		int userid=0;
+		if(loginid==null || loginid.equals(""))
+		{
+			userid=0;
+		}else
+		{
+			userid=Integer.parseInt(loginid);
+		}
+		httpCntrol.getBrandCity_Wide(page, pageSize, CityId,userid,showDialog,new HttpCallBackInterface() {
 			
 			@Override
 			public void http_Success(Object obj) {
