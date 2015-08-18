@@ -164,6 +164,7 @@
                 android:paddingLeft="@dimen/margin_left_and_right"
                 android:paddingRight="@dimen/margin_left_and_right"
                 android:textColor="@color/black"
+                android:lineSpacingExtra="2dip"
                 android:textSize="@dimen/textsize13sp" />
 
             <RelativeLayout

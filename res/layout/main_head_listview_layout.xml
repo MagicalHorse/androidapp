@@ -38,6 +38,5 @@
         android:text="@null"
         android:textSize="@dimen/textsize11sp" />
 
-    <View style="@style/style_horizontal_line" />
 
 </LinearLayout>
