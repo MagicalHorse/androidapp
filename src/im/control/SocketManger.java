@@ -26,8 +26,8 @@ import im.form.RoomBean;
 public class SocketManger {
 	static Socket socket;
 	static SocketManger socketManger;
-	final String URL = "http://182.92.7.70:8000/chat";//服务器地址
-	//final String URL = "http://182.92.7.70:8000/chat?userid=";//服务器地址
+	//String URL = "http://182.92.7.70:8000/chat";//服务器地址
+	final String URL = "http://182.92.7.70:8000/chat?userid=";//服务器地址
 	//final String URL = "http://192.168.1.145:8000/chat";
     List<MessageBean> mssageBean_list=new ArrayList<MessageBean>();
     String userId=null;
@@ -57,7 +57,16 @@ public class SocketManger {
 		if(socket==null)
 		{
 			try {
-				socket = IO.socket(URL);
+				//获取当前用户的userID
+				String useriD=SharedUtil.getStringPerfernece(MyApplication.getInstance().getApplicationContext(), SharedUtil.user_id);
+				if(useriD==null || useriD.equals(""))
+				{
+					Log.i("TAG", "---->>>socket create  useriD:"+useriD);
+					return;
+				}
+				String http_url=URL+useriD;
+				Log.i("TAG", "---->>>socket create  http_url:"+http_url);
+				socket = IO.socket(http_url);
 				//注销事件监听
 				unsetListtener();
 				//设置事件监听

@@ -317,7 +317,7 @@
             <TextView
                     android:layout_marginLeft="8dp"
                     android:id="@+id/approvebuyerdetails_layout_shoucang_linerlayout_textview"
-                    android:layout_width="45dp"
+                    android:layout_width="55dp"
                     android:layout_height="match_parent"
                     android:drawableTop="@drawable/collect_backgroud"
                     android:gravity="center"
