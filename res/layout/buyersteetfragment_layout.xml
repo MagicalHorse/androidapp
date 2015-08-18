@@ -1,36 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:orientation="vertical" >
+    android:background="@color/white" >
 
-    <TextView
-        android:id="@+id/focus_textview"
-        android:layout_width="wrap_content"
-        android:layout_height="1px"
-        android:focusable="true"
-        android:focusableInTouchMode="true" />
-
-    <RelativeLayout
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
+        android:id="@+id/baijia_contact_listview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        android:dividerHeight="0dp"/>
 
-        <com.handmark.pulltorefresh.library.PullToRefreshListView
-                    android:id="@+id/baijia_contact_listview"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:dividerHeight="1dp" />
+    <include
+        android:id="@+id/showloading_layout_view"
+        layout="@layout/showloading_layout"
+        android:visibility="gone" />
+    <!-- 无数据视图 -->
 
-        <include
-            android:id="@+id/showloading_layout_view"
-            layout="@layout/showloading_layout"
-            android:visibility="gone" />
-        <!-- 无数据视图 -->
+    <include layout="@layout/nodata_layout" />
 
-        <include layout="@layout/nodata_layout" />
-    </RelativeLayout>
-
-</LinearLayout>
+</RelativeLayout>

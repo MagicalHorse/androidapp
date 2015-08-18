@@ -225,6 +225,7 @@ public class CircleView extends BaseView{
 	
 	void falshData(RequestTuiJianCircleInfoBean bean)
 	{
+		showDialog=false;
 		isruning=false;
 		currPage++;
 		items.clear();

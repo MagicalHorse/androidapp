@@ -58,7 +58,6 @@ public class BuyerStreetFragment extends Fragment {
 	int currid = -1;
 	FragmentManager fragmentManager;
 	PullToRefreshListView baijia_contact_listview;
-	TextView focus_textview;
 	// tab原点的 父视图
 	LinearLayout baijia_head_layout;
 	// 最新上新
@@ -99,8 +98,6 @@ public class BuyerStreetFragment extends Fragment {
 		if (vp != null) {
 			vp.removeView(parentview);
 		}
-		focus_textview.setFocusable(true);
-		focus_textview.setFocusableInTouchMode(true);
 		return parentview;
 
 	}
@@ -153,7 +150,6 @@ public class BuyerStreetFragment extends Fragment {
 				.findViewById(R.id.buyersteet_newtextview);
 		baijia_head_layout = (LinearLayout) head_ll
 				.findViewById(R.id.baijia_head_layout);
-		focus_textview = (TextView) v.findViewById(R.id.focus_textview);
 		showloading_layout_view = (LinearLayout) v
 				.findViewById(R.id.showloading_layout_view);
 		showloading_layout_view.setVisibility(View.GONE);

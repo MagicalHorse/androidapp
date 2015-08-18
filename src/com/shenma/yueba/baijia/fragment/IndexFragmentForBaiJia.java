@@ -15,6 +15,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.Gravity;
@@ -107,7 +109,7 @@ public class IndexFragmentForBaiJia extends Fragment {
 			footer_list.add(rl);
 		}
 		baijia_fragment_tab1_pagerview = (ViewPager) v.findViewById(R.id.baijia_fragment_tab1_pagerview);
-	    baijia_fragment_tab1_pagerview.setAdapter(new FragmentPagerAdapter(
+	    baijia_fragment_tab1_pagerview.setAdapter(new FragmentStatePagerAdapter(
 				fragmentManager) {
 
 			@Override
@@ -121,8 +123,23 @@ public class IndexFragmentForBaiJia extends Fragment {
 
 				return (Fragment) fragment_list.get(arg0).getFragment();
 			}
+			
+			@Override
+					public Object instantiateItem(ViewGroup container, int position) {
+						// TODO Auto-generated method stub
+						return super.instantiateItem(container, position);
+					}
+			
+			@Override
+					public void destroyItem(ViewGroup container, int position, Object object) {
+						// TODO Auto-generated method stub
+						super.destroyItem(container, position, object);
+					}
 
 		});
+		
+		
+		
 
 		baijia_fragment_tab1_pagerview
 				.setOnPageChangeListener(new OnPageChangeListener() {

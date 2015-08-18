@@ -73,6 +73,7 @@ import com.shenma.yueba.baijia.modle.UserInfo;
 import com.shenma.yueba.baijia.modle.UserRequestBean;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.constants.HttpConstants;
+import com.shenma.yueba.view.MyGridView;
 import com.shenma.yueba.yangjia.modle.AliYunKeyBackBean;
 import com.shenma.yueba.yangjia.modle.AttationAndFansListBackBean;
 import com.shenma.yueba.yangjia.modle.BuyerProductManagerListBack;
@@ -1927,6 +1928,7 @@ public class HttpControl {
 								httpCallBack.http_Success(bean);
 							}else if(bean.getStatusCode()==401)//如果token 失效
 							{
+								setUnLoginInfo(MyApplication.getInstance().getApplicationContext());
 								MyApplication.getInstance().startLogin(context,"登录已经失效,请重新登录");
 							}
 							else {
