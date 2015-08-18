@@ -44,6 +44,7 @@ public class SocketManger {
 		{
 			socketManger=new SocketManger();
 		}
+		socketManger.contentSocket();
 		return socketManger;
 	}
 	
@@ -342,7 +343,7 @@ public class SocketManger {
 	 * @param bean RoomBean 信息
 	 * ***/
 	public void online(int userId) {
-		if(socket.connected())
+		if(socket!=null && socket.connected())
 		{
 			try {
 				Log.i("TAG", "---->>>socket online  userId:"+userId);
