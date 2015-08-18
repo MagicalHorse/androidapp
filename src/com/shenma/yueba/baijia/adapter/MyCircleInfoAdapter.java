@@ -3,6 +3,16 @@ package com.shenma.yueba.baijia.adapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Context;
+import android.content.Intent;
+import android.text.TextUtils;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.CircleInfoActivity;
@@ -11,18 +21,9 @@ import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
-import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.RoundImageView;
+import com.shenma.yueba.yangjia.activity.CircleInvitectivity;
 import com.shenma.yueba.yangjia.modle.Users;
-
-import android.content.Context;
-import android.text.TextUtils;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 public class MyCircleInfoAdapter extends BaseAdapterWithUtil {
 	private Context ctx;
@@ -146,7 +147,13 @@ public class MyCircleInfoAdapter extends BaseAdapterWithUtil {
 
 				if (position == mList.size() - 2) {
 					// 邀请加入圈子
-					ToolsUtil.forwardCircleActivity(ctx, Integer.parseInt(circleId), Constants.REQUESTCODE);
+					Intent intent = new Intent(ctx, CircleInvitectivity.class);
+					intent.putExtra("circleId", circleId);
+					((CircleInfoActivity) ctx).startActivityForResult(intent,
+							Constants.REQUESTCODE);
+					
+					
+					
 					
 				}
 			}

@@ -100,43 +100,42 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 		OnChickCallback, OnScrollListener,ImBroadcastReceiverLinstener {
 	public static final int Result_code_link = 400;// 链接
 	public static final int Result_code_collection = 500;// 收藏
-	LinkedList<BaseChatBean> bean_list = new LinkedList<BaseChatBean>();// 消息列表
-	RelativeLayout chat_product_head_layout_include;// 商品信息
-	TextView tv_top_right;// 头部右侧按钮
-	InputMethodManager manager;
-	PullToRefreshListView chat_list;
-	FaceView fView;// 表情列表视图
-	EditText mEditTextContent;// 信息文本框
-	RelativeLayout edittext_layout;// 文本框的父视图对象
-	Button buttonSend;// 发生按钮
-	LinearLayout btnContainer;// 扩展视图（照相 图片 链接 收藏 ）
-	ImageView iv_emoticons_normal;// 表情按钮
-	ProgressBar loadmorePB;// 加载进度条
-	Button btnMore;// 扩展更多按钮
+	private LinkedList<BaseChatBean> bean_list = new LinkedList<BaseChatBean>();// 消息列表
+	private RelativeLayout chat_product_head_layout_include;// 商品信息
+	private TextView tv_top_right;// 头部右侧按钮
+	private InputMethodManager manager;
+	private PullToRefreshListView chat_list;
+	private FaceView fView;// 表情列表视图
+	private EditText mEditTextContent;// 信息文本框
+	private RelativeLayout edittext_layout;// 文本框的父视图对象
+	private Button buttonSend;// 发生按钮
+	private LinearLayout btnContainer;// 扩展视图（照相 图片 链接 收藏 ）
+	private ImageView iv_emoticons_normal;// 表情按钮
+	private ProgressBar loadmorePB;// 加载进度条
+	private Button btnMore;// 扩展更多按钮
 	boolean isloading = false;// 是否加载中
 	boolean haveMoreData = true;// 是否有更多的数据可以加载
-	ChattingAdapter chattingAdapter;
-	CreateOrderDialog createOrderDialog;// 创建订单对话框
-	HttpControl httpControl = new HttpControl();
-	boolean ishowStatus = true;
-
-	int formUser_id;
-	int toUser_id;
-	int circleId;// 圈子id
-	int currPage = Constants.CURRPAGE_VALUE;
-	String socketType="private";
-	String roomId = null;
-	String userName = "";
-	String usericon = "";
-	RequestRoomInfo requestRoomInfo;
-	List<Integer> int_array=new ArrayList<Integer>();
-	String chat_name = "";
-	TextView tv_top_title;
-	String littlePicPath;
-	String littlePicPath_cache;
+	private ChattingAdapter chattingAdapter;
+	private CreateOrderDialog createOrderDialog;// 创建订单对话框
+	private HttpControl httpControl = new HttpControl();
+	private boolean ishowStatus = true;
+	private int formUser_id;
+	private int toUser_id;
+	private int circleId;// 圈子id
+	private int currPage = Constants.CURRPAGE_VALUE;
+	private String socketType="private";
+	private String roomId = null;
+	private String userName = "";
+	private String usericon = "";
+	private RequestRoomInfo requestRoomInfo;
+	private List<Integer> int_array=new ArrayList<Integer>();
+	private String chat_name = "";
+	private TextView tv_top_title;
+	private String littlePicPath;
+	private String littlePicPath_cache;
     public static Map<Integer,String> userid_logo=new HashMap<Integer,String>();
-    ImBroadcastReceiver imBroadcastReceiver;
-    boolean isregister=false;
+    private  ImBroadcastReceiver imBroadcastReceiver;
+    private boolean isregister=false;
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -144,19 +143,15 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_chat);
-		imBroadcastReceiver=new ImBroadcastReceiver(this);
-		registerImBroadcastReceiver();
-		SocketManger.the();
+		imBroadcastReceiver=new ImBroadcastReceiver(this);//初始化广播监听
+		registerImBroadcastReceiver();//注册广播
 		// 我的 userid
-		formUser_id = Integer.parseInt(SharedUtil.getStringPerfernece(this,SharedUtil.user_id));
+		formUser_id = Integer.parseInt(SharedUtil.getUserId(ChatActivity.this));
+		// 我的昵称
+		userName = SharedUtil.getUserNames(ChatActivity.this);
 		initView();
 		// 设置购买商品信息 视图
 		setProduct(this.getIntent());
-
-		// 我的昵称
-		userName = SharedUtil.getStringPerfernece(getApplicationContext(),
-				SharedUtil.user_names);
-
 		// 我的头像
 		usericon = SharedUtil.getStringPerfernece(this, SharedUtil.user_logo);
 		if (this.getIntent().getStringExtra("Chat_NAME") != null)// 名字
@@ -166,7 +161,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 			tv_top_title = (TextView) findViewById(R.id.tv_top_title);
 			tv_top_title.setText(chat_name);
 			tv_top_title.setVisibility(View.VISIBLE);
-			FontManager.changeFonts(this, tv_top_title);
+			FontManager.changeFonts(this, tv_top_title,tv_top_right);
 		}
 		Intent getintent=ChatActivity.this.getIntent();
 		//获取圈子id
@@ -848,7 +843,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 		FontManager.changeFonts(this, chat_product_head_layout_name_textview,
 				chat_product_head_layout_name_textview,
 				chat_product_head_layout_price_textview,
-				chat_product_head_layout_button,tv_top_right);
+				chat_product_head_layout_button);
 	}
 
 	
