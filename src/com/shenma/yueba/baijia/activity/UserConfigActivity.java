@@ -430,7 +430,7 @@ public class UserConfigActivity extends BaseActivityWithTopView implements
 					SharedUtil.setBooleanPerfernece(mContext,
 							SharedUtil.user_canPush, true);
 					switchButton.setBackgroundResource(R.drawable.on);
-					Toast.makeText(mContext, "开启", 1000).show();
+					Toast.makeText(mContext, "已开启", 1000).show();
 				}
 			}
 
