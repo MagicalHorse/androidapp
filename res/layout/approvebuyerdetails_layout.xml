@@ -9,7 +9,7 @@
         android:id="@+id/approvebuyerdetails_srcollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/approvebuyerdetails_footer"
+        android:layout_above="@+id/ll_footer"
         android:visibility="visible" >
 
         <LinearLayout
@@ -154,7 +154,7 @@
                     android:layout_marginTop="@dimen/shop_main_width5_dimen"
                     android:text="*商品只支持商城自提"
                     android:textColor="@color/red_text_color"
-                    android:textSize="@dimen/textsize15sp" />
+                    android:textSize="@dimen/textsize12sp" />
             </RelativeLayout>
 
             <TextView
@@ -164,7 +164,7 @@
                 android:paddingLeft="@dimen/margin_left_and_right"
                 android:paddingRight="@dimen/margin_left_and_right"
                 android:textColor="@color/black"
-                android:textSize="@dimen/textsize16sp" />
+                android:textSize="@dimen/textsize13sp" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -178,7 +178,7 @@
                     android:paddingLeft="@dimen/margin_left_and_right"
                     android:text="自提地点:"
                     android:textColor="@color/color_textgray"
-                    android:textSize="@dimen/textsize14sp" />
+                    android:textSize="@dimen/textsize12sp" />
 
                 <TextView
                     android:id="@+id/approvebuyerdetails_addressvalue_textview"
@@ -187,7 +187,7 @@
                     android:layout_marginTop="@dimen/shop_main_width5_dimen"
                     android:layout_toRightOf="@id/approvebuyerdetails_address_textview"
                     android:textColor="@color/color_textgray"
-                    android:textSize="@dimen/textsize14sp" />
+                    android:textSize="@dimen/textsize12sp" />
             </RelativeLayout>
 
             <View
@@ -223,6 +223,7 @@
                         android:id="@+id/approvebuyerdetails_closeingtime_textview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                         android:lineSpacingExtra="2dip"
                         android:layout_marginLeft="@dimen/shop_main_width5_dimen"
                         android:text="@null"
                         android:textColor="@color/color_textgray"
@@ -248,6 +249,7 @@
                         android:id="@+id/approvebuyerdetails_closeinginfo_textview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:lineSpacingExtra="2dip"
                         android:layout_marginLeft="@dimen/shop_main_width5_dimen"
                         android:textColor="@color/color_textgray"
                         android:textSize="@dimen/textsize13sp" />
@@ -292,69 +294,81 @@
     </ScrollView>
 
     <LinearLayout
-        android:id="@+id/approvebuyerdetails_footer"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:id="@+id/ll_footer"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
-        android:visibility="visible" >
-        <LinearLayout 
-            android:layout_marginLeft="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <View style="@style/style_horizontal_line" />
+
+        <LinearLayout
+            android:id="@+id/approvebuyerdetails_footer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
-            >
-            <TextView
-                android:layout_marginTop="2px"
+            android:visibility="visible" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+
+                <TextView
                     android:id="@+id/approvebuyerdetails_layout_siliao_linerlayout_textview"
-                    android:layout_width="45dip"
-                    android:layout_height="match_parent"
+                    android:layout_width="55dp"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="3dip"
                     android:drawableTop="@drawable/circle_default3"
                     android:gravity="center"
                     android:text="私聊"
                     android:textSize="@dimen/textsize12sp" />
-            
-            <TextView
-                    android:layout_marginLeft="8dp"
+
+                <TextView
                     android:id="@+id/approvebuyerdetails_layout_shoucang_linerlayout_textview"
                     android:layout_width="55dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:drawablePadding="3dip"
                     android:drawableTop="@drawable/collect_backgroud"
                     android:gravity="center"
                     android:text="收藏"
                     android:textSize="@dimen/textsize12sp" />
-        </LinearLayout>
-       
-        <LinearLayout
-            android:layout_weight="1"
-            android:id="@+id/footer_right_linerlayout"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="15dp" >
+            </LinearLayout>
 
-            <Button
-                android:id="@+id/approvebuyer_addcartbutton"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/footer_right_linerlayout"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:background="@drawable/addcart_background"
-                android:paddingLeft="@dimen/shop_main_lineheight10_dimen"
-                android:paddingRight="@dimen/shop_main_lineheight10_dimen"
-                android:text="加入购物车"
-                android:textSize="18dip"
-                android:visibility="gone" />
+                android:layout_marginLeft="15dp"
+                android:layout_weight="1" >
 
-            <Button
-                android:visibility="visible"
-                android:id="@+id/approvebuyerbuybutton"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="5dip"
-                android:background="@drawable/nowbuy_background"
-                android:gravity="center"
-                android:text="我要买"
-                android:textColor="@color/white"
-                android:textSize="15dip" />
+                <Button
+                    android:id="@+id/approvebuyer_addcartbutton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/addcart_background"
+                    android:paddingLeft="@dimen/shop_main_lineheight10_dimen"
+                    android:paddingRight="@dimen/shop_main_lineheight10_dimen"
+                    android:text="加入购物车"
+                    android:textSize="18dip"
+                    android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/approvebuyerbuybutton"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dip"
+                    android:background="@drawable/nowbuy_background"
+                    android:gravity="center"
+                    android:text="我要买"
+                    android:textColor="@color/white"
+                    android:textSize="15dip"
+                    android:visibility="visible" />
+            </LinearLayout>
         </LinearLayout>
-       </LinearLayout>
+    </LinearLayout>
 
 </RelativeLayout>

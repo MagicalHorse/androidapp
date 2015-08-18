@@ -37,6 +37,7 @@
             android:background="#aaffffff"
             android:orientation="horizontal"
             android:paddingTop="4dp" 
+            android:paddingBottom="4dip"
             android:gravity="center_vertical"
             >
             <RelativeLayout
@@ -57,8 +58,8 @@
                     android:minHeight="40dp"
                     android:onClick="editClick"
                     android:paddingBottom="3dp"
-                    android:paddingLeft="1dp"
-                    android:paddingRight="1dp"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
                     android:paddingTop="3dp"
                     android:textSize="18sp"
                     />

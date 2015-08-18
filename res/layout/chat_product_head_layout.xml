@@ -12,7 +12,7 @@
         android:layout_width="@dimen/user_config_iconwidth50_dimen"
         android:layout_height="@dimen/user_config_iconwidth50_dimen"
         android:layout_centerVertical="true"
-        android:scaleType="fitCenter"
+        android:scaleType="centerCrop"
         android:src="@drawable/default_pic" />
 
     <LinearLayout
