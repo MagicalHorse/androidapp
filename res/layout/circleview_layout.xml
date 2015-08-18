@@ -4,13 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/focus_textview"
-        android:layout_width="wrap_content"
-        android:layout_height="1px"
-        android:focusable="true"
-        android:focusableInTouchMode="true" />
-
     <com.handmark.pulltorefresh.library.PullToRefreshGridView
         android:paddingTop="@dimen/shop_main_width5_dimen"
         android:paddingBottom="@dimen/shop_main_lineheight10_dimen"
@@ -21,14 +14,12 @@
         android:gravity="fill"
         android:horizontalSpacing="1dp"
         android:numColumns="2"
-        android:showDividers="none"
         android:stretchMode="columnWidth"
         android:verticalSpacing="@dimen/shop_main_width25_dimen" />
 
     <include
         android:id="@+id/showloading_layout_view"
         android:visibility="gone"
-        android:layout_centerInParent="true"
         layout="@layout/showloading_layout" />
     
     <include layout="@layout/nodata_layout"/>

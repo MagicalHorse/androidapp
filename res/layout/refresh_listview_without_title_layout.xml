@@ -20,7 +20,6 @@
         android:layout_above="@id/ll_bottom_layout"
         android:cacheColorHint="#00000000"
         android:divider="@color/main_bg"
-        android:background="@color/main_bg"
         android:dividerHeight="1dip"
         android:fadingEdge="none"
         android:fastScrollEnabled="false"

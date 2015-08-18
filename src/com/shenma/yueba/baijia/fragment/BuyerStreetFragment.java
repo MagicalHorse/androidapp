@@ -82,7 +82,7 @@ public class BuyerStreetFragment extends Fragment {
 	List<ProductsInfoBean> Products = new ArrayList<ProductsInfoBean>();
 	List<View> imageViewlist = new ArrayList<View>();
 	BuyerAdapter buyerAdapter;
-
+	LinearLayout head_ll;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -134,16 +134,16 @@ public class BuyerStreetFragment extends Fragment {
 
 	void initView(View v) {
 
-		LinearLayout head_ll = (LinearLayout) LinearLayout.inflate(
+		head_ll = (LinearLayout) LinearLayout.inflate(
 				getActivity(), R.layout.main_head_listview_layout, null);
-
+		head_ll.setVisibility(View.GONE);
 		AbsListView.LayoutParams layoutParams = new AbsListView.LayoutParams(
 				AbsListView.LayoutParams.MATCH_PARENT,
 				AbsListView.LayoutParams.WRAP_CONTENT);
 		head_ll.setLayoutParams(layoutParams);
 		ListView lv = baijia_contact_listview.getRefreshableView();
+		//lv.setHeaderDividersEnabled(false);
 		lv.addHeaderView(head_ll);
-
 		baijiasteetfragmnet_layout_head_viewpager_relativelayout = (RelativeLayout) head_ll
 				.findViewById(R.id.baijiasteetfragmnet_layout_head_viewpager_relativelayout);
 		buyersteet_newtextview = (TextView) head_ll
@@ -196,6 +196,7 @@ public class BuyerStreetFragment extends Fragment {
 		
 		buyerAdapter = new BuyerAdapter(Products, getActivity());
 		baijia_contact_listview.setAdapter(buyerAdapter);
+		baijia_contact_listview.setDividerPadding(0);
 
 	}
 
@@ -336,6 +337,8 @@ public class BuyerStreetFragment extends Fragment {
 				}
 			}
 		}
+		ListView lv = baijia_contact_listview.getRefreshableView();
+		lv.setDividerHeight(5);
 		if (buyerAdapter != null) {
 			buyerAdapter.notifyDataSetChanged();
 		}
@@ -345,6 +348,7 @@ public class BuyerStreetFragment extends Fragment {
 	 * 设置顶部活动内容
 	 * ****/
 	void setViewPagerItem(HomeProductListInfoBean data) {
+		head_ll.setVisibility(View.VISIBLE);
 		stopTimerToViewPager();
 		currid = -1;
 		Banners.clear();
