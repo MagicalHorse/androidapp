@@ -7,9 +7,6 @@ import java.util.List;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.modle.FragmentBean;
-import com.shenma.yueba.baijia.view.BaseView;
-import com.shenma.yueba.baijia.view.BuyerStreetView;
-import com.shenma.yueba.baijia.view.MyBuyerView;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.FontManager;
 
@@ -17,6 +14,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -34,7 +33,7 @@ import android.widget.TextView;
  * @date 2015-05-19 买手主页Fragment 主要布局采用viewPager+Linerlayout实现TAB效果切换数据
  * 
  * ****/
-public class IndexFragmentForBaiJia extends Fragment {
+public class IndexFragmentForBaiJia2bak extends Fragment {
 	// 存储切换的数据
 	List<FragmentBean> fragment_list = new ArrayList<FragmentBean>();
 	// 存储Tab切换的视图对象
@@ -72,16 +71,17 @@ public class IndexFragmentForBaiJia extends Fragment {
 	 * 初始化视图
 	 * ***/
 	void initView(View v) {
-		fragmentManager = ((FragmentActivity) getActivity()).getSupportFragmentManager();
-		BuyerStreetView buyerStreetView=new BuyerStreetView(getActivity());
-		MyBuyerView myBuyerView = new MyBuyerView(getActivity());
-		
+		fragmentManager = ((FragmentActivity) getActivity())
+				.getSupportFragmentManager();
+		Fragment buyerStreetFragment = new BuyerStreetFragment();
+		// Fragment theySayFragment=new TheySayFragment();
+		Fragment myBuyerFragment = new MyBuyerFragment();
 		if(fragment_list!=null){
 			fragment_list.clear();
 		}
-		fragment_list.add(new FragmentBean("买手街", -1, buyerStreetView));
+		fragment_list.add(new FragmentBean("买手街", -1, buyerStreetFragment));
 		// fragment_list.add(new FragmentBean("TA们说", -1, theySayFragment));
-		fragment_list.add(new FragmentBean("我的买手", -1, myBuyerView));
+		fragment_list.add(new FragmentBean("我的买手", -1, myBuyerFragment));
 		baijia_fragment_tab1_head_linearlayout = (LinearLayout) v
 				.findViewById(R.id.baijia_fragment_tab1_head_linearlayout);
 		for (int i = 0; i < fragment_list.size(); i++) {
@@ -109,33 +109,45 @@ public class IndexFragmentForBaiJia extends Fragment {
 			footer_list.add(rl);
 		}
 		baijia_fragment_tab1_pagerview = (ViewPager) v.findViewById(R.id.baijia_fragment_tab1_pagerview);
-	    baijia_fragment_tab1_pagerview.setAdapter(new PagerAdapter() {
-			
-			@Override
-			public boolean isViewFromObject(View arg0, Object arg1) {
-				
-				return arg0==arg1;
-			}
-			
+	    baijia_fragment_tab1_pagerview.setAdapter(new FragmentStatePagerAdapter(
+				fragmentManager) {
+
 			@Override
 			public int getCount() {
-				
+
 				return fragment_list.size();
 			}
-			
+
 			@Override
-			public Object instantiateItem(ViewGroup container, int position) {
-				View v=((BaseView)fragment_list.get(position).getFragment()).getView();
-				container.addView(v, 0);
-				return v;
+			public android.support.v4.app.Fragment getItem(int arg0) {
+
+				return (Fragment) fragment_list.get(arg0).getFragment();
 			}
 			
 			@Override
-			public void destroyItem(ViewGroup container, int position, Object object) {
-				View v=((BaseView)fragment_list.get(position).getFragment()).getView();
-				container.removeView(v);
-				//super.destroyItem(container, position, object);
-			}
+					public Object instantiateItem(ViewGroup container, int position) {
+						
+				        Fragment fragment= (Fragment)super.instantiateItem(container, position);
+				        if(fragment!=null)
+				        {
+				        	fragmentManager.beginTransaction().attach(fragment);
+				        }else
+				        {
+				        	fragment=getItem(position);
+				        	if(!fragment.isAdded())
+				        	{
+				        		fragmentManager.beginTransaction().add(container.getId(), fragment);
+				        	}
+				        }
+						return fragment;
+					}
+			
+			@Override
+					public void destroyItem(ViewGroup container, int position, Object object) {
+						
+						super.destroyItem(container, position, object);
+					}
+
 		});
 		
 		
@@ -151,7 +163,6 @@ public class IndexFragmentForBaiJia extends Fragment {
 						switch (arg0) {
 						case 0:
 							setCurrView(0);
-							((BaseView)fragment_list.get(arg0).getFragment()).firstInitData();
 							break;
 						case 1:
 							if (!MyApplication.getInstance().isUserLogin(
@@ -161,7 +172,7 @@ public class IndexFragmentForBaiJia extends Fragment {
 								baijia_fragment_tab1_pagerview.setCurrentItem(1, true);
 								setCurrView(1);
 								
-								((BaseView)fragment_list.get(arg0).getFragment()).firstInitData();
+								((MyBuyerFragment)fragment_list.get(arg0).getFragment()).firstInitData();
 							}
 							break;
 						}

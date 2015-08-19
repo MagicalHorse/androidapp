@@ -1,5 +1,6 @@
 package com.shenma.yueba.baijia.activity;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,6 +52,8 @@ public class MainActivityForBaiJia extends FragmentActivity implements ImBroadca
 	FragmentManager fragmentManager;
 	ImBroadcastReceiver imBroadcastReceiver;
 	boolean isbroadcase=false;
+
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -150,7 +153,7 @@ public class MainActivityForBaiJia extends FragmentActivity implements ImBroadca
 		}
 	}
 
-	void setCurrView(int i) {
+	synchronized void setCurrView(int i) {
 		switch (i) {
 		case 0:
 
@@ -188,10 +191,11 @@ public class MainActivityForBaiJia extends FragmentActivity implements ImBroadca
 		}
 		currid = i;
 		setTextColor(i);
-		fragmentManager
-				.beginTransaction()
-				.replace(R.id.baijia_main_framelayout,
-						(Fragment) fragment_list.get(i).getFragment()).commit();
+		if(!(((Fragment)fragment_list.get(i).getFragment()).isAdded()))
+		{
+			fragmentManager.beginTransaction().replace(R.id.baijia_main_framelayout,(Fragment) fragment_list.get(i).getFragment()).commit();
+		}
+		
 
 	}
 
@@ -213,11 +217,33 @@ public class MainActivityForBaiJia extends FragmentActivity implements ImBroadca
 	}
 
 	public void onResume() {
+		if(fragmentManager!=null)
+		{
+			if(currid>=0)
+			{
+				if(!(((Fragment)fragment_list.get(currid).getFragment()).isAdded()))
+				{
+				   fragmentManager.beginTransaction().add(R.id.baijia_main_framelayout,(Fragment)fragment_list.get(currid).getFragment()).commit();
+				}
+			}
+		}
 		super.onResume();
 		MobclickAgent.onResume(this);
 	}
 
 	public void onPause() {
+		if(fragmentManager!=null)
+		{
+			if(currid>=0)
+			{
+				if((((Fragment)fragment_list.get(currid).getFragment()).isAdded()))
+				{
+					fragmentManager.beginTransaction().remove((Fragment)fragment_list.get(currid).getFragment()).commit();
+				}
+			}
+			
+			
+		}
 		super.onPause();
 		MobclickAgent.onPause(this);
 	}
