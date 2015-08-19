@@ -126,13 +126,25 @@ public class IndexFragmentForBaiJia extends Fragment {
 			
 			@Override
 					public Object instantiateItem(ViewGroup container, int position) {
-						// TODO Auto-generated method stub
-						return super.instantiateItem(container, position);
+						
+				        Fragment fragment= (Fragment)super.instantiateItem(container, position);
+				        if(fragment!=null)
+				        {
+				        	fragmentManager.beginTransaction().attach(fragment);
+				        }else
+				        {
+				        	fragment=getItem(position);
+				        	if(!fragment.isAdded())
+				        	{
+				        		fragmentManager.beginTransaction().add(container.getId(), fragment);
+				        	}
+				        }
+						return fragment;
 					}
 			
 			@Override
 					public void destroyItem(ViewGroup container, int position, Object object) {
-						// TODO Auto-generated method stub
+						
 						super.destroyItem(container, position, object);
 					}
 

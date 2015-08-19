@@ -38,6 +38,7 @@ import com.shenma.yueba.broadcaseReceiver.OrderBroadcaseReceiver;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.yangjia.modle.AliYunKeyBackBean;
 import com.shenma.yueba.yangjia.modle.AliYunKeyBean;
+import com.shenma.yueba.yangjia.modle.Share;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -982,7 +983,12 @@ public class ToolsUtil {
 			 notificationintent.putExtra(JPushInterface.EXTRA_MESSAGE, requestMessageBean.getBody());
 			 notificationintent.putExtra(JPushInterface.EXTRA_TITLE, requestMessageBean.getUserName());
 			 notificationintent.putExtra(JPushInterface.EXTRA_EXTRA, jsonobject.toString());
-			 MyApplication.getInstance().getApplicationContext().sendBroadcast(notificationintent);
+			 //如果消息免打扰  没有开启 则 弹出 通知
+			 if(!SharedUtil.getBooleanPerfernece(MyApplication.getInstance().getApplicationContext(), SharedUtil.user_canPush))
+			 {
+				 MyApplication.getInstance().getApplicationContext().sendBroadcast(notificationintent);
+			 }
+			
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
