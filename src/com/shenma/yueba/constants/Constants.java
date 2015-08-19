@@ -6,6 +6,20 @@ import com.shenma.yueba.application.MyApplication;
 import android.os.Environment;
 
 public class Constants {
+	public static final String PublishStatus = "1";//发布状态 ，开发环境
+//  public static final String PublishStatus = "2";//发布状态 ，生产环境
+	
+	
+	
+	
+	
+	
+    public static final String aliyunDirForDev =  "apprss";//阿里云目录，开发环境
+    public static final String aliyunDirForWork =  "app-prod-rss";//阿里云目录，生产环境
+    
+    
+    
+    
 	// 常量字段
 	public static final int CURRPAGE_VALUE = 1;// 当前页
 	public static final int PAGESIZE_VALUE = 10;// 没有显示的个数
@@ -26,12 +40,12 @@ public class Constants {
 	// appid
 	// 请同时修改 androidmanifest.xml里面，.PayActivityd里的属性<data
 	// android:scheme="wxb4ba3c02aa476ea1"/>为新设置的appid
-	public static final String WX_APP_ID = MyApplication.getInstance().getResources().getString(R.string.wenxin_appid);
+	public static final String WX_APP_ID = Constants.PublishStatus.equals("1")?MyApplication.getInstance().getResources().getString(R.string.wenxin_appid):MyApplication.getInstance().getResources().getString(R.string.wenxin_appid_work);
 	// 商户号
-	public static final String WX_MCH_ID = MyApplication.getInstance().getResources().getString(R.string.wenxin_shanghuno);
+	public static final String WX_MCH_ID =  Constants.PublishStatus.equals("1")?MyApplication.getInstance().getResources().getString(R.string.wenxin_shanghuno):MyApplication.getInstance().getResources().getString(R.string.wenxin_shanghuno_work);
 	
 	// API密钥，在商户平台设置
-	public static final String WX_API_KEY = MyApplication.getInstance().getResources().getString(R.string.wenxin_api_key);
+	public static final String WX_API_KEY = Constants.PublishStatus.equals("1")?MyApplication.getInstance().getResources().getString(R.string.wenxin_api_key):MyApplication.getInstance().getResources().getString(R.string.wenxin_api_key_work);
     //普通支付微信回调通知服务器的url
 	public static final String WX_NOTIFY_URL=HttpConstants.METHOD_WEIXINCALLURL;
 	 //充值并退款微信回调通知服务器的url

@@ -640,9 +640,13 @@
         <meta-data
             android:name="JPUSH_CHANNEL"
             android:value="developer-default" />
-        <meta-data
+       <!--  <meta-data
             android:name="JPUSH_APPKEY"
-            android:value="bd04e24380b02b787b18d013" />
+            android:value="bd04e24380b02b787b18d013" /> 开发测试环境 -->
+            <!-- 正式生产环境 -->
+           <meta-data
+            android:name="JPUSH_APPKEY"
+            android:value="3f6d5f186c19271a004b248e" />
  <!-- </>值来自开发者平台取得的AppKey -->
 
     </application>

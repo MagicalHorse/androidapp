@@ -29,6 +29,11 @@
     <string name="wenxin_api_key">9b1c4c669e5e27171a8fd52d8cb2b609</string>
     <string name="wenxin_appsecret">1a8fd52d8cb2b6099b1c4c669e5e2717</string>
     
+     <string name="wenxin_appid_work">wx0bd15e11e7c3090f</string>
+    <string name="wenxin_shanghuno_work">1249135301</string>
+    <string name="wenxin_api_key_work">shoppingappc4f62a8bc2b571351b577</string>
+    <string name="wenxin_appsecret_work">e3ff58518855345970755d08a3540c26</string>
+    
     <string name="app_tip">提示</string>
     <string name="getting_prepayid">正在获取订单信息...</string>
     

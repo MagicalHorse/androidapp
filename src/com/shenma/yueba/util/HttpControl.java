@@ -2460,7 +2460,7 @@ public class HttpControl {
 	public void syncUpload(String imageLocalPath, SaveCallback callBack) {
 		if(!TextUtils.isEmpty(imageLocalPath)){
 			ossService = OSSServiceProvider.getService();
-			bucket = ossService.getOssBucket("apprss");
+			bucket = ossService.getOssBucket("1".equals(Constants.PublishStatus)?Constants.aliyunDirForDev:Constants.aliyunDirForWork);//开发环境和生产环境的判断
 			OSSFile bigfFile = ossService.getOssFile(bucket, imageLocalPath
 					.substring(imageLocalPath.lastIndexOf("/") + 1,
 							imageLocalPath.length()));
