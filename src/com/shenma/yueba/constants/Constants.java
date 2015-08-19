@@ -6,8 +6,9 @@ import com.shenma.yueba.application.MyApplication;
 import android.os.Environment;
 
 public class Constants {
-//	public static final String PublishStatus = "1";//发布状态 ，开发环境
-  public static final String PublishStatus = "2";//发布状态 ，生产环境
+//	public static final String PublishStatus = "1";//开发环境
+  public static final String PublishStatus = "2";//生产环境
+//  public static final String PublishStatus = "3";//测试环境
 	
 	
 	
@@ -40,12 +41,12 @@ public class Constants {
 	// appid
 	// 请同时修改 androidmanifest.xml里面，.PayActivityd里的属性<data
 	// android:scheme="wxb4ba3c02aa476ea1"/>为新设置的appid
-	public static final String WX_APP_ID = Constants.PublishStatus.equals("1")?MyApplication.getInstance().getResources().getString(R.string.wenxin_appid):MyApplication.getInstance().getResources().getString(R.string.wenxin_appid_work);
+	public static final String WX_APP_ID = Constants.PublishStatus.equals("2")?MyApplication.getInstance().getResources().getString(R.string.wenxin_appid_work):MyApplication.getInstance().getResources().getString(R.string.wenxin_appid);
 	// 商户号
-	public static final String WX_MCH_ID =  Constants.PublishStatus.equals("1")?MyApplication.getInstance().getResources().getString(R.string.wenxin_shanghuno):MyApplication.getInstance().getResources().getString(R.string.wenxin_shanghuno_work);
+	public static final String WX_MCH_ID =  Constants.PublishStatus.equals("2")?MyApplication.getInstance().getResources().getString(R.string.wenxin_shanghuno_work):MyApplication.getInstance().getResources().getString(R.string.wenxin_shanghuno);
 	
 	// API密钥，在商户平台设置
-	public static final String WX_API_KEY = Constants.PublishStatus.equals("1")?MyApplication.getInstance().getResources().getString(R.string.wenxin_api_key):MyApplication.getInstance().getResources().getString(R.string.wenxin_api_key_work);
+	public static final String WX_API_KEY = Constants.PublishStatus.equals("2")?MyApplication.getInstance().getResources().getString(R.string.wenxin_api_key_work):MyApplication.getInstance().getResources().getString(R.string.wenxin_api_key);
     //普通支付微信回调通知服务器的url
 	public static final String WX_NOTIFY_URL=HttpConstants.METHOD_WEIXINCALLURL;
 	 //充值并退款微信回调通知服务器的url

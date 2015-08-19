@@ -2,8 +2,8 @@ package com.shenma.yueba.constants;
 
 public class HttpConstants {
 	
-	private static String baseUrlForWriteForWork = "http://appw.joybar.com.cn/";//正式生产环境的写操作接口（写）
-	private static String baseUrlForReadForWork = "http://appr.joybar.com.cn/";//正式生产环境的读取操作（读）
+	private static String baseUrlForWriteForWork = getServerUrlForWrite();//正式生产环境的写操作接口（写）
+	private static String baseUrlForReadForWork = getServerUrlForRead();//正式生产环境的读取操作（读）
 	private static String USERURLFORWRITE = baseUrlForWriteForWork + "User/";// USER接口(写)
 	private static String USERURLFORREAD = baseUrlForReadForWork + "User/";// USER接口(读)
 	private static String COMMONURLFORWRITE = baseUrlForWriteForWork + "Common/";//通用接口（写）
@@ -1402,4 +1402,35 @@ public class HttpConstants {
 //	public static String METHOD_PayAndDoRmaResult = weixinPAYCallBackUrl+ "PayAndDoRmaResult";
 	
 	
+	
+	/**
+	 * 获取写数据接口的url
+	 * @return
+	 */
+	private static String getServerUrlForWrite(){
+		if(Constants.PublishStatus.equals("1")){//开发环境
+			return "http://123.57.52.187:8080/app/";
+		}else if(Constants.PublishStatus.equals("2")){//正式环境
+			return "http://appw.joybar.com.cn/app/";
+		}else if(Constants.PublishStatus.equals("3")){//测试环境
+			return "http://123.57.77.86:8080/app/";
+		}else{
+			return "";
+		}
+	}
+	/**
+	 * 获取读数据接口的url
+	 * @return
+	 */
+	private static String getServerUrlForRead(){
+		if(Constants.PublishStatus.equals("1")){//开发环境
+			return "http://123.57.52.187:8080/app/";
+		}else if(Constants.PublishStatus.equals("2")){//正式环境
+			return "http://appr.joybar.com.cn/app/";
+		}else if(Constants.PublishStatus.equals("3")){//测试环境
+			return "http://123.57.77.86:8080/app/";
+		}else{
+			return "";
+		}
+	}
 }
