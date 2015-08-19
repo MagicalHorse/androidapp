@@ -1400,6 +1400,6 @@ public class HttpConstants {
 //	 *充值并退款微信回调地址
 //	 * **/
 //	public static String METHOD_PayAndDoRmaResult = weixinPAYCallBackUrl+ "PayAndDoRmaResult";
-//	
-//	
+	
+	
 }
