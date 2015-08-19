@@ -12,7 +12,6 @@
         android:name="com.shenma.yueba.permission.JPUSH_MESSAGE"
         android:protectionLevel="signature" />
 
-    
     <!-- Required  一些系统要求的权限，如访问网络等 -->
     <uses-permission android:name="com.shenma.yueba.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
@@ -138,15 +137,6 @@
             </intent-filter>
         </activity>
 
-        <!-- 友盟AppKey， 需要替换成你自己的 -->
-        <meta-data
-            android:name="UMENG_APPKEY"
-            android:value="555321fae0f55ae751002b84" >
-        </meta-data>
-        <!-- 4eaee02c527015373b000003 -->
-        <!-- android:value="52a98cf856240b902211203e" > -->
-
-
         <!-- *************************    分享相关的注册 START **************************** -->
         <!-- 分享内容编辑页 -->
         <activity
@@ -196,7 +186,7 @@
         <activity
             android:name="com.shenma.yueba.yangjia.activity.BigImageShowActivity"
             android:screenOrientation="portrait" />
-         <activity
+        <activity
             android:name="com.shenma.yueba.GuideActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -354,15 +344,15 @@
         <!-- 败家订单申请退页面 -->
         <activity
             android:name="com.shenma.yueba.baijia.activity.ApplyForRefundActivity"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
         </activity>
 
         <!-- 败家订单申诉页面 -->
         <activity
-            android:windowSoftInputMode="adjustResize|stateHidden"
             android:name="com.shenma.yueba.baijia.activity.OrderAppealActivity"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
         </activity>
 
         <!-- 败家订单申诉中页面 -->
@@ -433,19 +423,17 @@
         <activity
             android:name="com.shenma.yueba.baijia.activity.BaijiaBrandListActivity"
             android:screenOrientation="portrait" />
-        
-        <!--败家 粉丝  关注列表-->
+
+        <!-- 败家 粉丝  关注列表 -->
         <activity
             android:name="com.shenma.yueba.baijia.activity.AttationListActivity"
             android:screenOrientation="portrait" />
-        
-         <!--败家 图片放大-->
+
+        <!-- 败家 图片放大 -->
         <activity
             android:name="com.shenma.yueba.baijia.activity.TouchImageViewActivity"
             android:screenOrientation="portrait" />
 
-        
-        
         <!-- 聊天界面 -->
         <activity
             android:name="com.shenma.yueba.ChatActivity"
@@ -515,16 +503,14 @@
                 <action android:name="HeartSocket" />
             </intent-filter>
         </receiver>
-        
-        <receiver android:name="com.shenma.yueba.receiver.BatteryReceiver">
-           <intent-filter>
-               <action android:name="android.intent.action.BATTERY_CHANGED" />
-               <action android:name="android.intent.action.BATTERY_OKAY"/>
-               <action android:name="android.intent.action.BATTERY_LOW"/>
-           </intent-filter>
+        <receiver android:name="com.shenma.yueba.receiver.BatteryReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BATTERY_CHANGED" />
+                <action android:name="android.intent.action.BATTERY_OKAY" />
+                <action android:name="android.intent.action.BATTERY_LOW" />
+            </intent-filter>
         </receiver>
 
-        
         <!-- 系统启动的广播 -->
         <receiver android:name="com.shenma.yueba.receiver.BootReceiver" >
             <intent-filter>
@@ -595,7 +581,7 @@
             android:enabled="true" >
             <intent-filter android:priority="1000" >
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" />
- <!-- Required  显示通知栏 -->
+                <!-- Required  显示通知栏 -->
                 <category android:name="com.shenma.yueba" />
             </intent-filter>
             <intent-filter>
@@ -620,35 +606,55 @@
             android:enabled="true" >
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.REGISTRATION" />
- Required  用户注册SDK的intent
+ Required  用户注册SDK的intent
                 <action android:name="cn.jpush.android.intent.UNREGISTRATION" />
                 <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" />
- Required  用户接收SDK消息的intent
+ Required  用户接收SDK消息的intent
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" />
- Required  用户接收SDK通知栏信息的intent
+ Required  用户接收SDK通知栏信息的intent
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />
- Required  用户打开自定义通知栏的intent
+ Required  用户打开自定义通知栏的intent
                 <action android:name="cn.jpush.android.intent.ACTION_RICHPUSH_CALLBACK" />
- Optional 用户接受Rich Push Javascript 回调函数的intent
+ Optional 用户接受Rich Push Javascript 回调函数的intent
                 <action android:name="cn.jpush.android.intent.CONNECTION" />
-接收网络变化 连接/断开 since 1.6.3
+接收网络变化 连接/断开 since 1.6.3
                 <category android:name="com.shenma.yueba" />
             </intent-filter>
         </receiver>
 
-        <!-- Required  . Enable it you can get statistics data with channel -->
+        <!-- 友盟开发、测试环境 -->
+     <!--    <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="555321fae0f55ae751002b84" >
+        </meta-data>
+        测试，开发环境
         <meta-data
             android:name="JPUSH_CHANNEL"
             android:value="developer-default" />
-       <!--  <meta-data
+        <meta-data
             android:name="JPUSH_APPKEY"
-            android:value="bd04e24380b02b787b18d013" /> 开发测试环境 -->
-            <!-- 正式生产环境 -->
-           <meta-data
+            android:value="bd04e24380b02b787b18d013" /> -->
+
+        
+        
+        
+        
+        
+        
+        
+        <!-- 友盟生产环境 -->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="55d43ae267e58eacaa002df8" >
+        </meta-data>
+
+        <!-- 正式生产环境 -->
+        <meta-data
+            android:name="JPUSH_CHANNEL"
+            android:value="developer-default" />
+        <meta-data
             android:name="JPUSH_APPKEY"
             android:value="3f6d5f186c19271a004b248e" />
- <!-- </>值来自开发者平台取得的AppKey -->
-
     </application>
 
 </manifest>

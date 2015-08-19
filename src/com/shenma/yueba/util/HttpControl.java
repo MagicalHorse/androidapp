@@ -130,9 +130,9 @@ public class HttpControl {
 	 */
 
 	public HttpControl() {
-		httpUtils = new HttpUtils(8000);
-		httpUtils.configSoTimeout(8000);
-		httpUtils.configTimeout(8000);
+		httpUtils = new HttpUtils(30000);
+		httpUtils.configSoTimeout(30000);
+		httpUtils.configTimeout(30000);
 	}
 
 	/**
@@ -2102,7 +2102,6 @@ public class HttpControl {
 			 }
 		} catch (Exception e) {
 		}
-	
 		httpUtils.send(HttpMethod.POST, method.trim(),
 				setBaseRequestParams(map, context),
 				new RequestCallBack<String>() {
@@ -2267,7 +2266,7 @@ public class HttpControl {
 					http.setDoInput(true);
 					http.setDoOutput(true);
 					http.setReadTimeout(10000);
-					http.setConnectTimeout(5000);
+					http.setConnectTimeout(6*5000);
 					http.setRequestMethod("POST");
 					http.setRequestProperty("Content-type",
 							"application/json;charset=UTF-8");
@@ -2460,7 +2459,7 @@ public class HttpControl {
 	public void syncUpload(String imageLocalPath, SaveCallback callBack) {
 		if(!TextUtils.isEmpty(imageLocalPath)){
 			ossService = OSSServiceProvider.getService();
-			bucket = ossService.getOssBucket("1".equals(Constants.PublishStatus)?Constants.aliyunDirForDev:Constants.aliyunDirForWork);//开发环境和生产环境的判断
+			bucket = ossService.getOssBucket("2".equals(Constants.PublishStatus)?Constants.aliyunDirForWork:Constants.aliyunDirForDev);//开发环境和生产环境的判断
 			OSSFile bigfFile = ossService.getOssFile(bucket, imageLocalPath
 					.substring(imageLocalPath.lastIndexOf("/") + 1,
 							imageLocalPath.length()));
