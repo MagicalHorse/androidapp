@@ -21,6 +21,7 @@ import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
+import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.RoundImageView;
 import com.shenma.yueba.yangjia.activity.CircleInvitectivity;
 import com.shenma.yueba.yangjia.modle.Users;
@@ -74,13 +75,15 @@ public class MyCircleInfoAdapter extends BaseAdapterWithUtil {
 		} else {
 			holder = (Holder) convertView.getTag();
 		}
-
+		holder.riv_head.setTag(mList.get(position));
 		if (IsOwer) {
 			if (position == mList.size() - 2) {
+				holder.riv_head.setTag(null);
 				holder.riv_head.setBackgroundResource(R.drawable.plus);
 				holder.tv_text.setText("邀请好友");
 
 			} else if (position == mList.size() - 1) {
+				holder.riv_head.setTag(null);
 				holder.riv_head.setBackgroundResource(R.drawable.reduce);
 				holder.tv_text.setText("删除成员");
 			}
@@ -129,11 +132,12 @@ public class MyCircleInfoAdapter extends BaseAdapterWithUtil {
 			@Override
 			public void onClick(View v) {
 
-				//如果不是创建者 则不响应
-				if(!IsOwer)
+				if(v.getTag()!=null && v.getTag() instanceof Users)
 				{
-					return;
+					Users users=(Users)v.getTag();
+					ToolsUtil.forwardShopMainActivity(ctx,Integer.parseInt(users.getUserId()));
 				}
+				
 				// 踢出圈子
 				if (position == mList.size() - 1) {
 					if (showDelete == true) {
