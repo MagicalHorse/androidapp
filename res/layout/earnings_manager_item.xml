@@ -17,7 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="5dip"
+        android:layout_marginLeft="8dip"
         android:layout_toRightOf="@id/iv_earnings_left"
         android:text="收益管理"
         android:textColor="@color/text_gray_color"

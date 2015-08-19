@@ -20,6 +20,6 @@
         android:layout_marginTop="5dip"
         android:text="@null"
         android:textColor="@color/text_gray_color"
-        android:textSize="18sp" />
+        android:textSize="@dimen/center_text_size" />
 
 </LinearLayout>

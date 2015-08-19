@@ -57,7 +57,7 @@
                 android:layout_width="0dip"
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
-                android:background="@color/gray_bg"
+                android:background="@null"
                 android:drawableTop="@drawable/tab_publish_selector"
                 android:focusable="true"
                 android:gravity="center"

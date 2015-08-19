@@ -42,7 +42,7 @@
                 android:layout_marginTop="5dip"
                 android:text="@null"
                 android:textColor="@color/white"
-                android:textSize="20sp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/tv_grade"
@@ -67,7 +67,7 @@
             android:padding="15dip"
             android:text="店铺预览"
             android:textColor="@color/black"
-            android:textSize="17sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tv_store_introduce"
@@ -79,7 +79,7 @@
             android:padding="15dip"
             android:text="店铺说明"
             android:textColor="@color/black"
-            android:textSize="17sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tv_invite_buyer"
@@ -91,7 +91,7 @@
             android:padding="15dip"
             android:text="邀请买手"
             android:textColor="@color/black"
-            android:textSize="17sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tv_to_baijia"
@@ -103,7 +103,7 @@
             android:padding="15dip"
             android:text="我要败家"
             android:textColor="@color/black"
-            android:textSize="17sp" />
+            android:textSize="16sp" />
     </LinearLayout>
 
 </ScrollView>

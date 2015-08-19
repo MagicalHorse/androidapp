@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.view.RoundImageView;
 import com.shenma.yueba.yangjia.activity.CircleInvitectivity;
 import com.shenma.yueba.yangjia.modle.FansItemBean;
@@ -100,6 +101,7 @@ public class FriendSortAdapter extends BaseAdapter implements SectionIndexer{
 			}
 		});
 		viewHolder.cb.setChecked(list.get(position).isChecked());
+		FontManager.changeFonts(mContext, viewHolder.tvTitle,viewHolder.tvLetter);
 		return view;
 
 	}

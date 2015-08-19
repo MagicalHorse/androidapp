@@ -12,9 +12,10 @@
   <dimen name="margin_left_or_right">15dip</dimen>
   <dimen name="default_button_height">45dip</dimen>
   <dimen name="title_image_with_height">25dip</dimen>
-  <dimen name="index_big_size_font">18sp</dimen>
+    <dimen name="center_text_size">16sp</dimen>
+  <dimen name="index_big_size_font">16sp</dimen>
   <dimen name="index_center_size_font">17sp</dimen>
-  <dimen name="index_little_size_font">16sp</dimen>
+  <dimen name="index_little_size_font">14sp</dimen>
   <dimen name="corsur_margin">10dip</dimen>
   <dimen name="bottom_item_height">60dip</dimen>
   

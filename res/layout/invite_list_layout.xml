@@ -44,6 +44,7 @@
                 android:layout_centerVertical="true"
                 android:button="@drawable/checkbox_selector"
                 android:paddingLeft="10dp"
+                android:textSize="13sp"
                 android:text="全部" />
 
             <TextView

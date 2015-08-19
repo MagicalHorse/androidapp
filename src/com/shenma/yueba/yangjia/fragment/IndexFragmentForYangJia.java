@@ -281,7 +281,7 @@ public class IndexFragmentForYangJia extends BaseFragment implements
 				tv_online_share_title, tv_online_share_count,
 				tv_all_share_title, tv_all_share_count,
 				tv_huokuan_title,tv_today_huokuan_title,tv_today_huokuan_money,tv_today_huokuan_yuan,
-				tv_all_huokuan_title,tv_all_huokuan_money,tv_all_huokuan_yuan);
+				tv_all_huokuan_title,tv_all_huokuan_money,tv_all_huokuan_yuan,tv_qr_name);
 	}
 
 
