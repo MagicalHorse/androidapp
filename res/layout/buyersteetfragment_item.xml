@@ -26,7 +26,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dip"
+            android:layout_height="48dip"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/shop_main_lineheight8_dimen"
             android:layout_toRightOf="@id/baijia_tab1_item_icon_imageview"
