@@ -13,6 +13,7 @@ import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.modle.MyCircleInfo;
 import com.shenma.yueba.util.ToolsUtil;
+import com.shenma.yueba.view.RoundImageView;
 
 public class BaiJiaMyCircleAdapter extends BaseAdapterWithUtil {
 	BitmapUtils bu;
@@ -49,7 +50,7 @@ public class BaiJiaMyCircleAdapter extends BaseAdapterWithUtil {
 		if (convertView == null) {
 			holder = new Holder();
 			convertView = View.inflate(ctx, R.layout.my_circle_item, null);
-			holder.iv_head = (ImageView) convertView.findViewById(R.id.iv_head);
+			holder.riv_head = (RoundImageView) convertView.findViewById(R.id.riv_head);
 			holder.tv_msg_count = (TextView) convertView
 					.findViewById(R.id.tv_msg_count);
 			holder.tv_product_name = (TextView) convertView
@@ -62,7 +63,7 @@ public class BaiJiaMyCircleAdapter extends BaseAdapterWithUtil {
 			holder = (Holder) convertView.getTag();
 		}
 		MyCircleInfo myCircleInfo = items.get(position);
-		MyApplication.getInstance().getBitmapUtil().display(holder.iv_head, ToolsUtil.nullToString(myCircleInfo.getLogo()));
+		MyApplication.getInstance().getBitmapUtil().display(holder.riv_head, ToolsUtil.nullToString(myCircleInfo.getLogo()));
 		
 		holder.tv_product_name.setText(ToolsUtil.nullToString(myCircleInfo.getName()));
 		int count=myCircleInfo.getUnReadCount();
@@ -83,7 +84,7 @@ public class BaiJiaMyCircleAdapter extends BaseAdapterWithUtil {
 	}
 
 	class Holder {
-		ImageView iv_head;
+		RoundImageView riv_head;
 		TextView tv_msg_count;
 		TextView tv_product_name;
 		TextView tv_msg;

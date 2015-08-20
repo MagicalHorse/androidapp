@@ -11,11 +11,11 @@
         android:layout_height="60dip"
          >
 
-        <ImageView
-            android:id="@+id/iv_head"
+        <com.shenma.yueba.view.RoundImageView
+            android:id="@+id/riv_head"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/default_pic" />
+            android:src="@drawable/default_pic" />
 
         <TextView
             android:id="@+id/tv_msg_count"
