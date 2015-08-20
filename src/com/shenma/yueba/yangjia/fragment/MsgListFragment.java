@@ -3,7 +3,21 @@ package com.shenma.yueba.yangjia.fragment;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.content.Intent;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.adapter.MsgAdapter;
+import com.shenma.yueba.baijia.fragment.BaseFragment;
+import com.shenma.yueba.baijia.modle.MsgListInfo;
+import com.shenma.yueba.baijia.modle.RequestMsgListInfoBean;
+import com.shenma.yueba.constants.Constants;
+import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
+import com.shenma.yueba.util.ToolsUtil;
+
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,26 +30,6 @@ import im.broadcast.ImBroadcastReceiver;
 import im.broadcast.ImBroadcastReceiver.ImBroadcastReceiverLinstener;
 import im.broadcast.ImBroadcastReceiver.RECEIVER_type;
 import im.form.RequestMessageBean;
-import android.widget.ListView;
-
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnPullEventListener;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.State;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.shenma.yueba.ChatActivity;
-import com.shenma.yueba.R;
-import com.shenma.yueba.application.MyApplication;
-import com.shenma.yueba.baijia.adapter.MsgAdapter;
-import com.shenma.yueba.baijia.fragment.BaseFragment;
-import com.shenma.yueba.baijia.modle.MsgListInfo;
-import com.shenma.yueba.baijia.modle.RequestBrandSearchInfoBean;
-import com.shenma.yueba.baijia.modle.RequestMsgListInfoBean;
-import com.shenma.yueba.constants.Constants;
-import com.shenma.yueba.util.HttpControl;
-import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
-import com.shenma.yueba.util.ToolsUtil;
 
 
 /**
@@ -98,11 +92,12 @@ public class MsgListFragment extends BaseFragment implements ImBroadcastReceiver
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,long arg3) {
 				MsgListInfo msgListInfo=mList.get(arg2-1);
-				Intent intent=new Intent(getActivity(),ChatActivity.class);
+				/*Intent intent=new Intent(getActivity(),ChatActivity.class);
 				intent.putExtra("toUser_id", msgListInfo.getId());
 				intent.putExtra("Chat_NAME",msgListInfo.getName());//名字
 				intent.putExtra("Chat_RoomID",msgListInfo.getRoomId());//roomid
-				getActivity().startActivity(intent);
+				getActivity().startActivity(intent);*/
+				ToolsUtil.forwardChatActivity(getActivity(),msgListInfo.getName(), msgListInfo.getId(),0, msgListInfo.getRoomId(),null);
 			}
 		});
 		ToolsUtil.initPullResfresh(pull_refresh_list, getActivity());

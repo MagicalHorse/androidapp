@@ -222,7 +222,7 @@ public class MainActivityForBaiJia extends FragmentActivity implements ImBroadca
 			{
 				if(!(((Fragment)fragment_list.get(currid).getFragment()).isAdded()))
 				{
-				   fragmentManager.beginTransaction().add(R.id.baijia_main_framelayout,(Fragment)fragment_list.get(currid).getFragment()).commit();
+				   fragmentManager.beginTransaction().add(R.id.baijia_main_framelayout,(Fragment)fragment_list.get(currid).getFragment()).commitAllowingStateLoss();
 				}
 			}
 		}
@@ -231,22 +231,29 @@ public class MainActivityForBaiJia extends FragmentActivity implements ImBroadca
 	}
 
 	public void onPause() {
+		
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
+
+	
+	@Override
+	protected void onStop() {
 		if(fragmentManager!=null)
 		{
 			if(currid>=0)
 			{
 				if((((Fragment)fragment_list.get(currid).getFragment()).isAdded()))
 				{
-					fragmentManager.beginTransaction().remove((Fragment)fragment_list.get(currid).getFragment()).commit();
+					fragmentManager.beginTransaction().remove((Fragment)fragment_list.get(currid).getFragment()).commitAllowingStateLoss();
 				}
 			}
 			
 			
 		}
-		super.onPause();
-		MobclickAgent.onPause(this);
+		super.onStop();
 	}
-
+	
 	@Override
 	protected void onDestroy() {
 		MyApplication.getInstance().removeActivity(this);// 加入回退栈

@@ -437,7 +437,6 @@
         <!-- 聊天界面 -->
         <activity
             android:name="com.shenma.yueba.ChatActivity"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait" >
         </activity>
         <!-- 店铺介绍界面 -->

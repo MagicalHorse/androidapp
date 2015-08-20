@@ -138,8 +138,7 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
 					}, getActivity());
 			// }
 
-			// Intent intent2 = new Intent(getActivity(), ChatActivity.class);
-			// startActivity(intent2);
+			
 			break;
 		case R.id.tv_wechat:// 微信登录
 			WXLoginUtil wxLoginUtil = new WXLoginUtil(getActivity());

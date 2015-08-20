@@ -15,16 +15,9 @@ package com.shenma.yueba.view;
  */
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
-import android.text.ClipboardManager;
-import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.widget.EditText;
-
-import com.shenma.yueba.ChatActivity;
 
 /**
  * 自定义的textview，用来处理复制粘贴的消息

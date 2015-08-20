@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.shenma.yueba.ChatActivity;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.adapter.ScrollViewPagerAdapter;
@@ -27,7 +26,6 @@ import com.shenma.yueba.view.TagImageView;
 import com.umeng.analytics.MobclickAgent;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -198,11 +196,12 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView
 		}
 		if(bean!=null)
 		{
-			Intent intent = new Intent(ApproveBuyerDetailsActivity.this,ChatActivity.class);
+			/*Intent intent = new Intent(ApproveBuyerDetailsActivity.this,ChatActivity.class);
 			intent.putExtra("Chat_NAME", bean.getData().getBuyerName());// 圈子名字
 			intent.putExtra("toUser_id", bean.getData().getBuyerId());// 私聊的话需要传对方id
 			intent.putExtra("DATA", bean);
-			startActivity(intent);
+			startActivity(intent);*/
+			ToolsUtil.forwardChatActivity(ApproveBuyerDetailsActivity.this, bean.getData().getBuyerName(), bean.getData().getBuyerId(), 0, null,bean);
 		}
 	}
 

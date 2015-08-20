@@ -3,7 +3,23 @@ package com.shenma.yueba.baijia.activity;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.content.Intent;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.adapter.BaiJiaMyCircleAdapter;
+import com.shenma.yueba.baijia.modle.MyCircleInfo;
+import com.shenma.yueba.baijia.modle.RequestMyCircleInfoBean;
+import com.shenma.yueba.baijia.view.MyCircleView;
+import com.shenma.yueba.constants.Constants;
+import com.shenma.yueba.util.FontManager;
+import com.shenma.yueba.util.HttpControl;
+import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
+import com.shenma.yueba.util.ToolsUtil;
+import com.umeng.analytics.MobclickAgent;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,29 +27,6 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnPullEventListener;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.State;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.shenma.yueba.ChatActivity;
-import com.shenma.yueba.R;
-import com.shenma.yueba.application.MyApplication;
-import com.shenma.yueba.baijia.adapter.BaiJiaMyCircleAdapter;
-import com.shenma.yueba.baijia.modle.MyCircleInfo;
-import com.shenma.yueba.baijia.modle.MyCircleInfoBean;
-import com.shenma.yueba.baijia.modle.RequestBaiJiaOrderListInfoBean;
-import com.shenma.yueba.baijia.modle.RequestMyCircleInfoBean;
-import com.shenma.yueba.baijia.view.MyCircleView;
-import com.shenma.yueba.constants.Constants;
-import com.shenma.yueba.util.FontManager;
-import com.shenma.yueba.util.HttpControl;
-import com.shenma.yueba.util.ToolsUtil;
-import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
-import com.umeng.analytics.MobclickAgent;
 
 
 /**  
@@ -110,10 +103,11 @@ public class CircleListActivity extends BaseActivityWithTopView{
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,long arg3) {
 				MyCircleInfo myCircleInfo=items.get(arg2-1);
-				Intent intent=new Intent(CircleListActivity.this,ChatActivity.class);
+				/*Intent intent=new Intent(CircleListActivity.this,ChatActivity.class);
 				intent.putExtra("Chat_NAME",myCircleInfo.getName());//圈子名字
 				intent.putExtra("circleId",myCircleInfo.getId());
-				startActivity(intent);
+				startActivity(intent);*/
+				ToolsUtil.forwardChatActivity(CircleListActivity.this, myCircleInfo.getName(), 0, myCircleInfo.getId(), null,null);
 			}
 		});
 	}

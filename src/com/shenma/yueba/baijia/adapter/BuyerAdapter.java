@@ -3,7 +3,6 @@ package com.shenma.yueba.baijia.adapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.shenma.yueba.ChatActivity;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.modle.BaseRequest;
@@ -23,7 +22,6 @@ import com.shenma.yueba.view.RoundImageView;
 import com.shenma.yueba.view.TagImageView;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -371,11 +369,11 @@ public class BuyerAdapter extends BaseAdapter {
 					if (v.getTag() != null
 							&& v.getTag() instanceof ProductsInfoBean) {
 						ProductsInfoBean bean = (ProductsInfoBean) v.getTag();
-						Intent intentsiliao = new Intent(activity,
-								ChatActivity.class);
+						/*Intent intentsiliao = new Intent(activity,ChatActivity.class);
 						intentsiliao.putExtra("Chat_NAME", bean.getBuyerName());// 圈子名字
 						intentsiliao.putExtra("toUser_id", bean.getBuyerid());
-						activity.startActivity(intentsiliao);
+						activity.startActivity(intentsiliao);*/
+						ToolsUtil.forwardChatActivity(activity, bean.getBuyerName(), bean.getBuyerid(),0, null,null);
 					}
 
 					break;

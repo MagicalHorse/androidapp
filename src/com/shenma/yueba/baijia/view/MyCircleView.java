@@ -7,7 +7,6 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.shenma.yueba.ChatActivity;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.adapter.BaiJiaMyCircleAdapter;
@@ -19,7 +18,6 @@ import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.ToolsUtil;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.content.IntentFilter;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -107,10 +105,11 @@ public class MyCircleView extends BaseView implements ImBroadcastReceiverLinsten
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,long arg3) {
 				MyCircleInfo myCircleInfo=items.get(arg2-1);
-				Intent intent=new Intent(activity,ChatActivity.class);
+				/*Intent intent=new Intent(activity,ChatActivity.class);
 				intent.putExtra("Chat_NAME",myCircleInfo.getName());//圈子名字
 				intent.putExtra("circleId",myCircleInfo.getId());//圈子id
-				activity.startActivity(intent);
+				activity.startActivity(intent);*/
+				ToolsUtil.forwardChatActivity(activity, myCircleInfo.getName(), 0,myCircleInfo.getId(), null,null);
 			}
 		});
 	}

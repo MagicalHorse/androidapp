@@ -3,23 +3,10 @@ package com.shenma.yueba.baijia.activity;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.Window;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
-import com.shenma.yueba.ChatActivity;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.fragment.ShopPuBuliuFragment;
@@ -32,6 +19,18 @@ import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.RoundImageView;
 import com.umeng.analytics.MobclickAgent;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.Window;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 /*****
  * 本类定义 店铺商品首页显示页面 
  * 1.显示商家logo  名称  地址   店铺描述 以及 商品图片等信息
@@ -170,10 +169,12 @@ public class ShopMainActivity extends FragmentActivity {
 				if (!MyApplication.getInstance().isUserLogin(ShopMainActivity.this)) {
 					return;
 				}
-				Intent siliaointent=new Intent(ShopMainActivity.this,ChatActivity.class);
+				/*Intent siliaointent=new Intent(ShopMainActivity.this,ChatActivity.class);
+				siliaointent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 				siliaointent.putExtra("Chat_NAME", userInfoBean.getUserName());
 				siliaointent.putExtra("toUser_id",userID);
-				startActivity(siliaointent);
+				startActivity(siliaointent);*/
+				ToolsUtil.forwardChatActivity(ShopMainActivity.this, userInfoBean.getUserName(), userID, 0, null,null);
 				break;
 			case R.id.shop_stay_layout_parent_linearlayout:
 				if(v.getTag()!=null && v.getTag() instanceof Integer)

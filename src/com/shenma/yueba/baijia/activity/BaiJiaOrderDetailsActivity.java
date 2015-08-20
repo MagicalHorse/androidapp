@@ -3,7 +3,6 @@ package com.shenma.yueba.baijia.activity;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.shenma.yueba.ChatActivity;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.adapter.BaijiaOrderDetailsAdapter;
@@ -144,10 +143,11 @@ boolean isBroadcase=false;
 		switch(v.getId())
 		{
 		case R.id.baijia_orderdetails_lianxibuyer_textview://联系买手
-			Intent intentbuter=new Intent(BaiJiaOrderDetailsActivity.this,ChatActivity.class);
+			/*Intent intentbuter=new Intent(BaiJiaOrderDetailsActivity.this,ChatActivity.class);
 			intentbuter.putExtra("Chat_NAME",bean.getData().getBuyerName());//圈子名字
 			intentbuter.putExtra("toUser_id", bean.getData().getBuyerId());
-			startActivity(intentbuter);
+			startActivity(intentbuter);*/
+			ToolsUtil.forwardChatActivity(BaiJiaOrderDetailsActivity.this, bean.getData().getBuyerName(), bean.getData().getBuyerId(), 0, null,null);
 			break;
 		case R.id.riv_customer_head://头像
 			if(v.getTag()!=null && v.getTag() instanceof Integer)

@@ -29,11 +29,13 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.State;
 import com.handmark.pulltorefresh.library.PullToRefreshGridView;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
+import com.shenma.yueba.ChatActivity;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.ApproveBuyerDetailsActivity;
 import com.shenma.yueba.baijia.activity.CircleInfoActivity;
 import com.shenma.yueba.baijia.activity.ShopMainActivity;
+import com.shenma.yueba.baijia.modle.RequestProductDetailsInfoBean;
 import com.shenma.yueba.broadcaseReceiver.OrderBroadcaseReceiver;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.yangjia.modle.AliYunKeyBackBean;
@@ -1033,6 +1035,29 @@ public class ToolsUtil {
 	}
 	
 	
+	/*****
+	 *  跳转到聊天界面
+	 * @param context Context
+	 * @param Chat_NAME String  圈子名称  没有 传 null
+	 * @param toUser_id int 私聊对象id  没有 传 0
+	 * @param circleId int 圈子id  没有 传 0
+	 * @param Chat_RoomID String 房间id  没有 传 null
+	 * @param bean RequestProductDetailsInfoBean 商品信息 没有穿null
+	 * ****/
+	public static void forwardChatActivity(Context ctx,String Chat_NAME,int toUser_id,int circleId,String Chat_RoomID,RequestProductDetailsInfoBean bean)
+	{
+		Intent intent=new Intent(ctx,ChatActivity.class);
+		intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+		intent.putExtra("Chat_NAME",Chat_NAME);
+		intent.putExtra("circleId",circleId);
+		intent.putExtra("toUser_id",toUser_id);
+		intent.putExtra("Chat_RoomID",Chat_RoomID);
+		intent.putExtra("DATA",bean);
+		ctx.startActivity(intent);
+	}
+	
+	
+	
 	/******
 	 * 跳转到商品详情
 	 * @param context Context
@@ -1044,7 +1069,6 @@ public class ToolsUtil {
 		intent.putExtra("productID", id);
 		ctx.startActivity(intent);
 	}
-	
 	
 	/******
 	 * 跳转到圈子详情

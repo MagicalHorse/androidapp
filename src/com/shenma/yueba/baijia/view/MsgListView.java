@@ -7,7 +7,6 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.shenma.yueba.ChatActivity;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.adapter.MsgAdapter;
@@ -19,7 +18,6 @@ import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.ToolsUtil;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.content.IntentFilter;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -88,13 +86,14 @@ public class MsgListView extends BaseView implements ImBroadcastReceiverLinstene
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,long arg3) {
 				MsgListInfo msgListInfo=mList.get(arg2-1);
-				Intent intent=new Intent(activity,ChatActivity.class);
+				//Intent intent=new Intent(activity,ChatActivity.class);
 				int to_userid=msgListInfo.getId();
 				Log.i("TAG", "----->>to_userid:"+to_userid);
-				intent.putExtra("toUser_id", to_userid);
+				/*intent.putExtra("toUser_id", to_userid);
 				intent.putExtra("Chat_NAME",msgListInfo.getName());//名字
 				intent.putExtra("Chat_RoomID",msgListInfo.getRoomId());//roomid
-				activity.startActivity(intent);
+				activity.startActivity(intent);*/
+				ToolsUtil.forwardChatActivity(activity, msgListInfo.getName(), to_userid,0, msgListInfo.getRoomId(),null);
 			}
 		});
 		

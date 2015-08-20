@@ -7,7 +7,6 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshGridView;
-import com.shenma.yueba.ChatActivity;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.modle.FragmentBean;
@@ -20,7 +19,6 @@ import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.RoundImageView;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -111,10 +109,11 @@ public class CircleView extends BaseView{
 					return;
 				}
 				TuiJianCircleInfo myCircleInfo=items.get(arg2);
-				Intent intent=new Intent(activity,ChatActivity.class);
+				/*Intent intent=new Intent(activity,ChatActivity.class);
 				intent.putExtra("Chat_NAME",myCircleInfo.getName());//圈子名字
 				intent.putExtra("circleId", myCircleInfo.getId());
-				activity.startActivity(intent);
+				activity.startActivity(intent);*/
+				ToolsUtil.forwardChatActivity(activity, myCircleInfo.getName(), 0,myCircleInfo.getId(), null,null);
 			}
 		});
 	}

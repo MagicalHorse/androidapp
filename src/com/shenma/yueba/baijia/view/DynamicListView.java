@@ -3,35 +3,27 @@ package com.shenma.yueba.baijia.view;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnPullEventListener;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.State;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.shenma.yueba.ChatActivity;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.adapter.DynamicAdapter;
-import com.shenma.yueba.baijia.adapter.MsgAdapter;
-import com.shenma.yueba.baijia.modle.MsgListInfo;
-import com.shenma.yueba.baijia.modle.RequestMsgListInfoBean;
 import com.shenma.yueba.baijia.modle.RequestUserDynamicInfoBean;
 import com.shenma.yueba.baijia.modle.UserDynamicInfo;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.ToolsUtil;
+
+import android.app.Activity;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.LinearLayout;
 
 /**  
  * @author gyj  
@@ -103,12 +95,7 @@ public class DynamicListView extends BaseView{
 					ToolsUtil.forwardProductInfoActivity(activity,msgListInfo.getDataId());
 					break;
 				}
-				/*UserDynamicInfo msgListInfo=mList.get(arg2-1);
-				Intent intent=new Intent(activity,ChatActivity.class);
-				intent.putExtra("Chat_Type", ChatActivity.chat_type_private);//类型 圈子 还是私聊
-				intent.putExtra("Chat_NAME",msgListInfo.getName());//名字
-				intent.putExtra("toUser_id",msgListInfo.getId());//touser_id
-				activity.startActivity(intent);*/
+				
 			}
 		});
 		ToolsUtil.initPullResfresh(pull_refresh_list, activity);
