@@ -399,6 +399,7 @@ public class UserConfigActivity extends BaseActivityWithTopView implements
 			break;
 		case R.id.user_config_exit_button:// 退出登录
 			OauthHelper.remove(mContext, SHARE_MEDIA.WEIXIN);
+			OauthHelper.removeTokenExpiresIn(mContext,  SHARE_MEDIA.WEIXIN);
 			MyApplication.removeAllActivity();
 			Intent intentLogin = new Intent(mContext, SplashActivity.class);
 			HttpControl httpControl=new HttpControl();
