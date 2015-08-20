@@ -97,8 +97,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dip"
-            android:gravity="right"
-            android:paddingRight="15dip" >
+            android:paddingLeft="15dip" >
 
             <CheckBox
                 android:id="@+id/cb_tiaokuan"

@@ -54,6 +54,7 @@ public class RegisterFragment extends BaseFragment implements OnClickListener {
 			tv_confirm = (TextView) view.findViewById(R.id.tv_confirm);
 			tv_mobile_title = (TextView) view.findViewById(R.id.tv_mobile_title);
 			cb_tiaokuan = (CheckBox) view.findViewById(R.id.cb_tiaokuan);
+			cb_tiaokuan.setChecked(true);
 			tv_tiaokuan = (TextView) view.findViewById(R.id.tv_tiaokuan);
 			tv_confirm.setOnClickListener(this);
 			tv_getcode.setOnClickListener(this);
@@ -83,10 +84,6 @@ public class RegisterFragment extends BaseFragment implements OnClickListener {
 				//判断手机号码是否合法  由于现在新手机号有扩充，正则表达式判断可能会有错误
 				if(et_mobile.getText().toString().trim().length()!=11){
 					Toast.makeText(getActivity(), "请输入正确的手机号", 1000).show();
-					break;
-				}
-				if(!cb_tiaokuan.isChecked()){
-					Toast.makeText(getActivity(), "请同意服务条款", 1000).show();
 					break;
 				}
 				HttpControl httpControl=new HttpControl();
@@ -124,6 +121,10 @@ public class RegisterFragment extends BaseFragment implements OnClickListener {
 				Toast.makeText(getActivity(), "验证码不能为空", 1000).show();
 				return;
 			}
+			if(!cb_tiaokuan.isChecked()){
+				Toast.makeText(getActivity(), "请同意服务条款", 1000).show();
+				break;
+			}
 			HttpControl httpControl=new HttpControl();
 			httpControl.validVerifyCode(et_mobile.getText().toString().trim(), et_code.getText().toString().trim(), new HttpCallBackInterface() {
 				
@@ -144,6 +145,8 @@ public class RegisterFragment extends BaseFragment implements OnClickListener {
 			break;
 		case R.id.tv_tiaokuan://进入服务条款
 			Intent intentTiaoKuan = new Intent(getActivity(), WebActivity.class);
+			intentTiaoKuan.putExtra("url", "http://r.joybar.com.cn/agreement.html");
+			intentTiaoKuan.putExtra("title", "服务条款");
 			startActivity(intentTiaoKuan);
 		default:
 			break;
