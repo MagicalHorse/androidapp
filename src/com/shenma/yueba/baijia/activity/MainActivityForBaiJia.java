@@ -18,6 +18,7 @@ import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.ToolsUtil;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.socialize.common.SocializeConstants;
 
 import android.content.IntentFilter;
 import android.os.Bundle;
