@@ -137,7 +137,10 @@ public class MyCircleInfoAdapter extends BaseAdapterWithUtil {
 					Users users=(Users)v.getTag();
 					ToolsUtil.forwardShopMainActivity(ctx,Integer.parseInt(users.getUserId()));
 				}
-				
+				if(!IsOwer)
+				{
+					return;
+				}
 				// 踢出圈子
 				if (position == mList.size() - 1) {
 					if (showDelete == true) {

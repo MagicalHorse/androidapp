@@ -320,7 +320,7 @@ public class CircleView extends BaseView{
 	 * ***/
 	public void firstInitData()
 	{
-		if(items.size()<=0)
+		if(items.size()<=0 && showDialog)
 		{
 			requestFalshData();
 		}
