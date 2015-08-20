@@ -185,6 +185,7 @@
                     android:id="@+id/approvebuyerdetails_addressvalue_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:lineSpacingExtra="2dip"
                     android:layout_marginTop="@dimen/shop_main_width5_dimen"
                     android:layout_toRightOf="@id/approvebuyerdetails_address_textview"
                     android:textColor="@color/color_textgray"

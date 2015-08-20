@@ -113,7 +113,7 @@
             android:layout_toRightOf="@id/iv_product"
             android:ellipsize="end"
             android:maxLines="2"
-            android:lineSpacingExtra="1dip"
+            android:lineSpacingExtra="2dip"
             android:layout_marginRight="20dip"
             android:text=",这是一双好鞋，穿起来舒服这是一双好鞋，穿起来舒服这是一双好鞋，穿起来舒服"
             android:textColor="@color/text_gray_color"

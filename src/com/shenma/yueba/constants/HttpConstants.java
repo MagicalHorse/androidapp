@@ -50,7 +50,7 @@ public class HttpConstants {
 	/**
 	 * 微信登录
 	 */
-	public static String METHOD_wxLogin = USERURLFORREAD + "OutSiteLogin";
+	public static String METHOD_wxLogin = USERURLFORWRITE + "OutSiteLogin";
 	
 	/*****
 	 * 微信创建统一订单

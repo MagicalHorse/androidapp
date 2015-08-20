@@ -114,6 +114,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/shop_main_width5_dimen"
         android:ellipsize="end"
+         android:lineSpacingExtra="2dip"
         android:maxLines="3"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"

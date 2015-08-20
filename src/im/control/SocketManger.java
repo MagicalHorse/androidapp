@@ -28,7 +28,7 @@ public class SocketManger {
 	static SocketManger socketManger;
 	//String URL = "http://182.92.7.70:8000/chat";//服务器地址
 	//chat.joybar.com.cn
-	final String URL = "http://182.92.7.70:8000/chat?userid=";//服务器地址
+	final String URL = "http://chat.joybar.com.cn/chat?userid=";//服务器地址
 	//final String URL = "http://192.168.1.145:8000/chat";
     List<MessageBean> mssageBean_list=new ArrayList<MessageBean>();
     String userId=null;

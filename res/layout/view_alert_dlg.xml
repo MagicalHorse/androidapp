@@ -39,7 +39,7 @@
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:text="消息"
-                    android:lineSpacingExtra="5dp"
+                   android:lineSpacingExtra="2dip"
                     android:gravity="center"
                     android:layout_marginBottom="15dp"/>
 
