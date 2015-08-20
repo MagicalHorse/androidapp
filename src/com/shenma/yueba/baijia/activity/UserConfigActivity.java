@@ -285,7 +285,9 @@ public class UserConfigActivity extends BaseActivityWithTopView implements
 
 			@Override
 			public void onFailure(String arg0, OSSException arg1) {
-				// TODO Auto-generated method stub
+				if (progressDialog!=null && progressDialog.isShowing()) {
+					progressDialog.dismiss();
+				}
 
 			}
 

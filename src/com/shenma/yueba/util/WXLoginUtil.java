@@ -73,6 +73,7 @@ public class WXLoginUtil {
 					public void onError(SocializeException e,
 							SHARE_MEDIA platform) {
 						Toast.makeText(ctx, "授权错误", Toast.LENGTH_SHORT).show();
+						Log.i("wx", e.getMessage()+"-----"+e.getStackTrace());
 					}
 
 					@Override

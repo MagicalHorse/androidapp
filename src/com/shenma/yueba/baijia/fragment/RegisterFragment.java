@@ -9,12 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.activity.FillPersonDataActivity;
+import com.shenma.yueba.baijia.activity.WebActivity;
 import com.shenma.yueba.baijia.modle.CommonBackBean;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.FontManager;
@@ -33,6 +35,8 @@ public class RegisterFragment extends BaseFragment implements OnClickListener {
 	private int maxSecond = 90;
 	private String getCodeString = "获取验证码";
 	private View view;
+	private CheckBox cb_tiaokuan;
+    private TextView tv_tiaokuan;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -49,9 +53,12 @@ public class RegisterFragment extends BaseFragment implements OnClickListener {
 			et_code = (EditText) view.findViewById(R.id.et_code);
 			tv_confirm = (TextView) view.findViewById(R.id.tv_confirm);
 			tv_mobile_title = (TextView) view.findViewById(R.id.tv_mobile_title);
+			cb_tiaokuan = (CheckBox) view.findViewById(R.id.cb_tiaokuan);
+			tv_tiaokuan = (TextView) view.findViewById(R.id.tv_tiaokuan);
 			tv_confirm.setOnClickListener(this);
 			tv_getcode.setOnClickListener(this);
-			FontManager.changeFonts(getActivity(), et_mobile,tv_getcode,et_code,tv_confirm,tv_mobile_title);
+			tv_tiaokuan.setOnClickListener(this);
+			FontManager.changeFonts(getActivity(), et_mobile,tv_getcode,et_code,tv_confirm,tv_mobile_title,tv_tiaokuan);
 		}
 		// 缓存的rootView需要判断是否已经被加过parent，如果有parent需要从parent删除，要不然会发生这个rootview已经有parent的错误。
 		ViewGroup parent = (ViewGroup) view.getParent();
@@ -76,6 +83,10 @@ public class RegisterFragment extends BaseFragment implements OnClickListener {
 				//判断手机号码是否合法  由于现在新手机号有扩充，正则表达式判断可能会有错误
 				if(et_mobile.getText().toString().trim().length()!=11){
 					Toast.makeText(getActivity(), "请输入正确的手机号", 1000).show();
+					break;
+				}
+				if(!cb_tiaokuan.isChecked()){
+					Toast.makeText(getActivity(), "请同意服务条款", 1000).show();
 					break;
 				}
 				HttpControl httpControl=new HttpControl();
@@ -131,6 +142,9 @@ public class RegisterFragment extends BaseFragment implements OnClickListener {
 				}
 			}, getActivity());
 			break;
+		case R.id.tv_tiaokuan://进入服务条款
+			Intent intentTiaoKuan = new Intent(getActivity(), WebActivity.class);
+			startActivity(intentTiaoKuan);
 		default:
 			break;
 		}

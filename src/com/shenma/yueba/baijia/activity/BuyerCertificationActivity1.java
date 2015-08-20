@@ -298,7 +298,9 @@ public class BuyerCertificationActivity1 extends BaseActivityWithTopView
 
 			@Override
 			public void onFailure(String arg0, OSSException arg1) {
-				// TODO Auto-generated method stub
+				if (progressDialog!=null && progressDialog.isShowing()) {
+					progressDialog.dismiss();
+				}
 
 			}
 
