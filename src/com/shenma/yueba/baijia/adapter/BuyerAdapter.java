@@ -270,7 +270,7 @@ public class BuyerAdapter extends BaseAdapter {
 		String url = productsInfoBean.getBuyerLogo() + "640x0.jpg";
 		// 买家头像
 		holder.customImage.setTag(productsInfoBean.getBuyerid());
-		holder.customImage.setImageResource(R.drawable.default_pic);
+		//holder.customImage.setImageResource(R.drawable.default_pic);
 		/*// 下载买家头像
 		initPic(productsInfoBean.getBuyerLogo(), holder.customImage,
 				R.drawable.default_pic);*/

@@ -244,7 +244,7 @@ public class MyBuyerView extends BaseView {
 	 * 首次加载
 	 ***/
 	public void firstInitData() {
-		if (Products.size()<=0) {
+		if (Products.size()<=0 && ishow) {
 			requestFalshData();
 		}
 

@@ -38,6 +38,7 @@
             android:layout_width="fill_parent"
             android:layout_height="55dip"
             android:background="@color/white"
+            android:singleLine="true"
             android:password="true"
             android:hint="设置密码"
             android:paddingLeft="@dimen/margin_left_and_right" />
@@ -54,6 +55,7 @@
             android:background="@color/white"
             android:hint="再次输入密码"
             android:password="true"
+            android:singleLine="true"
             android:paddingLeft="@dimen/margin_left_and_right" />
 
     </LinearLayout>

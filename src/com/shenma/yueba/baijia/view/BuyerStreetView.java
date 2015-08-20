@@ -516,7 +516,7 @@ public class BuyerStreetView extends BaseView {
 
 	@Override
 	public void firstInitData() {
-		if(Products.size()<=0)
+		if(Products.size()<=0 && ishow)
 		{
 			requestFalshData();
 		}
