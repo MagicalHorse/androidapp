@@ -13,8 +13,8 @@
 
         <com.shenma.yueba.view.RoundImageView
             android:id="@+id/riv_head"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:src="@drawable/default_pic" />
 
         <TextView

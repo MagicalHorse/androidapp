@@ -233,7 +233,6 @@ public class BuyerStreetView extends BaseView {
 					public void http_Success(Object obj) {
 						isruning=false;
 						currpage = page;
-						ishow = false;
 						buyersteet_newtextview.setText("最新上新");
 						FontManager.changeFonts(activity,buyersteet_newtextview);
 						ToolsUtil.pullResfresh(baijia_contact_listview);
