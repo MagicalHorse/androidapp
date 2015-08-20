@@ -75,7 +75,7 @@ public class BuyerStreetView extends BaseView {
 	int pagesize = Constants.PAGESIZE_VALUE;
 	int maxcount = 8;
 	// 是否显示进度条
-	boolean ishow = false;
+	boolean ishow = true;
 	List<BannersInfoBean> Banners = new ArrayList<BannersInfoBean>();
 	// 商品信息列表
 	List<ProductsInfoBean> Products = new ArrayList<ProductsInfoBean>();
@@ -89,7 +89,6 @@ public class BuyerStreetView extends BaseView {
 		this.activity=activity;
 		if (parentview == null) {
 			inflater=activity.getLayoutInflater();
-			ishow = true;
 			parentview = inflater.inflate(R.layout.buyersteetfragment_layout,null);
 			initPullView();
 			initView(parentview);
@@ -270,6 +269,7 @@ public class BuyerStreetView extends BaseView {
 	 * 加载数据
 	 * **/
 	void addData(HomeProductListInfoBean data) {
+		ishow=false;
 		if (data != null) {
 
 			showloading_layout_view.setVisibility(View.GONE);
@@ -324,6 +324,7 @@ public class BuyerStreetView extends BaseView {
 	 * 刷新viewpager数据
 	 * ***/
 	void falshData(HomeProductListInfoBean data) {
+		ishow=false;
 		Products.clear();
 		currpage++;
 		if (data != null) {

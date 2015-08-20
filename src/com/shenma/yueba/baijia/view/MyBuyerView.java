@@ -45,7 +45,7 @@ public class MyBuyerView extends BaseView {
 	int pagesize = Constants.PAGESIZE_VALUE;
 	int maxcount = 8;
 	// 是否显示进度条
-	boolean ishow = false;
+	boolean ishow = true;
 	// 商品信息列表
 	List<ProductsInfoBean> Products = new ArrayList<ProductsInfoBean>();
 	BitmapUtils bitmapUtils;
@@ -59,7 +59,6 @@ public class MyBuyerView extends BaseView {
 		this.activity=activity;
 		if (parentview == null) {
 			inflater=activity.getLayoutInflater();
-			ishow = true;
 			parentview = inflater.inflate(R.layout.mybuyer_home_layout, null);
 			bitmapUtils = new BitmapUtils(activity);
 			initPullView();
