@@ -188,15 +188,14 @@ public class MainActivityForBaiJia extends FragmentActivity implements ImBroadca
 			}
 		} else if (currid == i) {
 			return;
+		}else{
+			if(!(((Fragment)fragment_list.get(i).getFragment()).isAdded()))
+			{
+				fragmentManager.beginTransaction().replace(R.id.baijia_main_framelayout,(Fragment) fragment_list.get(i).getFragment()).commit();
+			}
 		}
 		currid = i;
 		setTextColor(i);
-		if(!(((Fragment)fragment_list.get(i).getFragment()).isAdded()))
-		{
-			fragmentManager.beginTransaction().replace(R.id.baijia_main_framelayout,(Fragment) fragment_list.get(i).getFragment()).commit();
-		}
-		
-
 	}
 
 	void setTextColor(int value) {
@@ -217,7 +216,7 @@ public class MainActivityForBaiJia extends FragmentActivity implements ImBroadca
 	}
 
 	public void onResume() {
-		if(fragmentManager!=null)
+		/*if(fragmentManager!=null)
 		{
 			if(currid>=0)
 			{
@@ -226,7 +225,7 @@ public class MainActivityForBaiJia extends FragmentActivity implements ImBroadca
 				   fragmentManager.beginTransaction().add(R.id.baijia_main_framelayout,(Fragment)fragment_list.get(currid).getFragment()).commitAllowingStateLoss();
 				}
 			}
-		}
+		}*/
 		super.onResume();
 		MobclickAgent.onResume(this);
 	}
@@ -240,7 +239,7 @@ public class MainActivityForBaiJia extends FragmentActivity implements ImBroadca
 	
 	@Override
 	protected void onStop() {
-		if(fragmentManager!=null)
+		/*if(fragmentManager!=null)
 		{
 			if(currid>=0)
 			{
@@ -251,7 +250,7 @@ public class MainActivityForBaiJia extends FragmentActivity implements ImBroadca
 			}
 			
 			
-		}
+		}*/
 		super.onStop();
 	}
 	
