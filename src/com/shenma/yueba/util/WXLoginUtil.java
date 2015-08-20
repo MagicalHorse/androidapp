@@ -44,7 +44,7 @@ public class WXLoginUtil {
 		mController = UMServiceFactory.getUMSocialService("com.umeng.login");
 		// 添加微信平台
 		UMWXHandler wxHandler = new UMWXHandler(ctx, Constants.WX_APP_ID,
-				"1a8fd52d8cb2b6099b1c4c669e5e2717");
+				Constants.WX_SECRET);
 		wxHandler.addToSocialSDK();
 		/*
 		 * mController.doOauthVerify(ctx, SHARE_MEDIA.WEIXIN, new

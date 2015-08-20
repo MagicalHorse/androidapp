@@ -44,6 +44,8 @@ public class Constants {
 	public static final String WX_APP_ID = Constants.PublishStatus.equals("2")?MyApplication.getInstance().getResources().getString(R.string.wenxin_appid_work):MyApplication.getInstance().getResources().getString(R.string.wenxin_appid);
 	// 商户号
 	public static final String WX_MCH_ID =  Constants.PublishStatus.equals("2")?MyApplication.getInstance().getResources().getString(R.string.wenxin_shanghuno_work):MyApplication.getInstance().getResources().getString(R.string.wenxin_shanghuno);
+	// 商户号
+		public static final String WX_SECRET =  Constants.PublishStatus.equals("2")?MyApplication.getInstance().getResources().getString(R.string.wenxin_appsecret_work):MyApplication.getInstance().getResources().getString(R.string.wenxin_appsecret);
 	
 	// API密钥，在商户平台设置
 	public static final String WX_API_KEY = Constants.PublishStatus.equals("2")?MyApplication.getInstance().getResources().getString(R.string.wenxin_api_key_work):MyApplication.getInstance().getResources().getString(R.string.wenxin_api_key);
