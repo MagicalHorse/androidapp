@@ -22,14 +22,20 @@ import com.shenma.yueba.baijia.activity.BuyerCertificationActivity1;
 import com.shenma.yueba.baijia.activity.CircleListActivity;
 import com.shenma.yueba.baijia.activity.MyCollectionActivity;
 import com.shenma.yueba.baijia.activity.UserConfigActivity;
+import com.shenma.yueba.baijia.dialog.WeChatDialog;
 import com.shenma.yueba.baijia.modle.BaiJiaCheckBuyerStatusBean;
 import com.shenma.yueba.baijia.modle.BaiJiaCheckBuyerStatusBeanRequest;
+import com.shenma.yueba.baijia.modle.GetUserFlowStatusBackBean;
 import com.shenma.yueba.baijia.modle.MyInfoBean;
 import com.shenma.yueba.baijia.modle.RequestMyInfoBean;
+import com.shenma.yueba.baijia.modle.UserFlowStatusBean;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
+import com.shenma.yueba.util.DialogUtilInter;
+import com.shenma.yueba.util.DialogUtils;
 import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.util.ToolsUtil;
+import com.shenma.yueba.util.WXLoginUtil;
 import com.shenma.yueba.yangjia.activity.MainActivityForYangJia;
 
 /**
@@ -256,8 +262,20 @@ public class MeFragmentForBaiJia extends BaseFragment implements OnClickListener
 			MyApplication.getInstance().showMessage(getActivity(), ToolsUtil.nullToString(baiJiaCheckBuyerStatusBean.getMessage()));
 			break;
 		case 0:
-			Intent buyerCertificaitonIntent = new Intent(getActivity(),BuyerCertificationActivity1.class);
-			startActivity(buyerCertificaitonIntent);
+			if(!SharedUtil.getBooleanPerfernece(getActivity(), SharedUtil.user_IsBindWeiXin)){
+				DialogUtils dialog = new DialogUtils();
+				dialog.alertDialog(getActivity(), "提示", "您需要绑定微信才可以提款，现在去绑定吗？", new DialogUtilInter() {
+					@Override
+					public void dialogCallBack(int... which) {
+						Toast.makeText(getActivity(), "正在绑定微信", 1000).show();
+						// 绑定手机号
+						WXLoginUtil wxLoginUtil = new WXLoginUtil(getActivity());
+						wxLoginUtil.initWeiChatLogin(false,false,false);
+					}
+				}, true, "绑定", "取消", false, true);
+				return;
+			}
+			GetUserFlowStatus();
 			break;
 		case 1:
 			MyApplication.getInstance().removeAllActivity();
@@ -359,5 +377,36 @@ public class MeFragmentForBaiJia extends BaseFragment implements OnClickListener
 	 * */
 	void initPic(final String url, final ImageView iv) {
 		MyApplication.getInstance().getBitmapUtil().display(iv, url);
+	}
+	
+	
+	
+	/**
+	 * 关注微信账号
+	 */
+	private void GetUserFlowStatus() {
+		final HttpControl httpcon = new HttpControl();
+		httpcon.getUserFlowStatus(new HttpCallBackInterface() {
+			@Override
+			public void http_Success(Object obj) {
+				GetUserFlowStatusBackBean bean = (GetUserFlowStatusBackBean) obj;
+				UserFlowStatusBean data = bean.getData();
+				if(data!=null){
+					boolean isFlow = data.isIsFlow();
+						if(isFlow){//已經关注
+							Intent buyerCertificaitonIntent = new Intent(getActivity(),BuyerCertificationActivity1.class);
+							startActivity(buyerCertificaitonIntent);
+						}else{//没有关注
+							WeChatDialog dialog = new WeChatDialog(getActivity(),data.getQRCode(),data.getName());
+							dialog.show();
+						}
+					}
+				};
+
+			@Override
+			public void http_Fails(int error, String msg) {
+				Toast.makeText(getActivity(), msg, 1000).show();
+			}
+		}, getActivity(), true);
 	}
 }

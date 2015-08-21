@@ -225,9 +225,9 @@ public class MyCircleInfoAdapter extends BaseAdapterWithUtil {
 		File cacheDir = StorageUtils.getCacheDirectory(ctx);
 		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
 				ctx)
-				.memoryCacheExtraOptions(60, 60)
+				.memoryCacheExtraOptions(40, 40)
 				// default = device screen dimensions
-				.discCacheExtraOptions(60, 60, CompressFormat.JPEG, 50, null)
+				.discCacheExtraOptions(40, 40, CompressFormat.JPEG, 50, null)
 				.threadPoolSize(5)
 				// default
 				.threadPriority(Thread.NORM_PRIORITY - 1)
