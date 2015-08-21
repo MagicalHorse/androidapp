@@ -22,7 +22,14 @@ public class UserInfoBean implements Serializable{
 	int FavoriteCount;//收藏数
 	int CommunityCount;// 圈子个数
 	String Logo="";//头像
+	int ProductCount;//商品总数
 	
+	public int getProductCount() {
+		return ProductCount;
+	}
+	public void setProductCount(int productCount) {
+		ProductCount = productCount;
+	}
 	public String getLogo() {
 		return Logo;
 	}

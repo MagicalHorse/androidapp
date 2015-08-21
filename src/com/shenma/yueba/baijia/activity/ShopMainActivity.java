@@ -265,13 +265,13 @@ public class ShopMainActivity extends FragmentActivity {
 	
 	
 	
-    /****
+   /* *//****
      * 设置 tab切换文字的信息 以及是否显示底部横条
      * @param v View 父类视图
      * @param str1 信息1
      * @param str2 信息2
      * @param b boolean是否显示 横条 true显示  false不显示
-     * */
+     * *//*
     void setTabView(View v,String str1,String str2,boolean b)
     {
     	TextView shop_stay_layout_item_textview1=(TextView)v.findViewById(R.id.shop_stay_layout_item_textview1);
@@ -286,7 +286,7 @@ public class ShopMainActivity extends FragmentActivity {
     	{
     		shop_stay_layout_item_line_view.setVisibility(View.GONE);
     	}
-    }
+    }*/
 	
     /*****
      * 设置fragment显示的内容
@@ -478,7 +478,10 @@ public class ShopMainActivity extends FragmentActivity {
     		TextView tv2=(TextView)ll.findViewById(R.id.shop_stay_layout_item_textview2);
     		if(bean.getIcon()>0)
     		{
-    		  tv2.setText(bean.getIcon());	
+    		  tv2.setText(bean.getIcon()+"");	
+    		}else
+    		{
+    			tv2.setText(0+"");	
     		}
 			FontManager.changeFonts(ShopMainActivity.this, tv1,tv2);
     		LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -490,15 +493,21 @@ public class ShopMainActivity extends FragmentActivity {
 				View shop_stay_layout_tabline_relativelayout=(View)ll.findViewById(R.id.shop_stay_layout_tabline_relativelayout);
 				shop_stay_layout_tabline_relativelayout.setVisibility(View.GONE);
 			}
+			
 		}
     	
-    	if(fragmentBean_list.size()==1)
-    	{
-    		shop_main_head_layout_tab_linearlayout.setVisibility(View.GONE);
-    	}
     	if(view_list.size()>0)
 		{
 		   setItem(true,0);
+		}
+    	
+    	if(view_list.size()==1)
+		{
+			View shop_stay_layout_item_line_view=view_list.get(0).findViewById(R.id.shop_stay_layout_item_line_view);
+			if(shop_stay_layout_item_line_view!=null)
+			{
+				shop_stay_layout_item_line_view.setVisibility(View.INVISIBLE);
+			}
 		}
     }
     
@@ -509,8 +518,8 @@ public class ShopMainActivity extends FragmentActivity {
     {
     	ShopPuBuliuFragment shopPuBuliuFragment1=new ShopPuBuliuFragment(0,userID);
 		ShopPuBuliuFragment ShopPuBuliuFragment2=new ShopPuBuliuFragment(1,userID);
-		fragmentBean_list.add(new FragmentBean("商品", -1, shopPuBuliuFragment1));
-		fragmentBean_list.add(new FragmentBean("上新", -1, ShopPuBuliuFragment2));
+		fragmentBean_list.add(new FragmentBean("商品", userInfoBean.getProductCount(), shopPuBuliuFragment1));
+		fragmentBean_list.add(new FragmentBean("上新", userInfoBean.getNewProductCount(), ShopPuBuliuFragment2));
     }
     
     /*****
@@ -519,7 +528,7 @@ public class ShopMainActivity extends FragmentActivity {
     void initUserPuBu()
     {
     	ShopPuBuliuFragment shopPuBuliuFragment3=new ShopPuBuliuFragment(2,userID);
-		fragmentBean_list.add(new FragmentBean("我的收藏", -1, shopPuBuliuFragment3));
+		fragmentBean_list.add(new FragmentBean("我的收藏",userInfoBean.getFavoriteCount() , shopPuBuliuFragment3));
     }
     
     

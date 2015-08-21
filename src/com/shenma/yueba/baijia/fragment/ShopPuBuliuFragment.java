@@ -270,14 +270,14 @@ public class ShopPuBuliuFragment extends Fragment implements PubuliuFragmentList
 					{
 						if(getActivity()!=null)
 						{
-							View v=getActivity().findViewById(R.id.shop_main_head_layout_horizontal_line_include);
+							/*View v=getActivity().findViewById(R.id.shop_main_head_layout_horizontal_line_include);
 							if(v!=null)
 							{
 								v.setVisibility(View.GONE);
 							}else
 							{
 								v.setVisibility(View.VISIBLE);
-							}
+							}*/
 							ToolsUtil.showNoDataView(getActivity(), true);
 						}
 					}else
