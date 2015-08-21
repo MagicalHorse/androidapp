@@ -195,6 +195,7 @@ public class BuyerStreetView extends BaseView {
 		{
 			return;
 		}
+		baijia_contact_listview.setRefreshing();
 		isruning=true;
 		sendRequestData(currpage, 1);
 	}
@@ -207,6 +208,7 @@ public class BuyerStreetView extends BaseView {
 		{
 			return;
 		}
+		baijia_contact_listview.setRefreshing();
 		isruning=true;
 		stopTimerToViewPager();
 		currid = -1;

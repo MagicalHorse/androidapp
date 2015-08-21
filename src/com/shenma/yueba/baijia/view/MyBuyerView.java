@@ -33,7 +33,7 @@ public class MyBuyerView extends BaseView {
 	List<FragmentBean> fragment_list = new ArrayList<FragmentBean>();
 	List<View> footer_list = new ArrayList<View>();
 	FragmentManager fragmentManager;
-	PullToRefreshListView baijia_contact_listview;
+	PullToRefreshListView baijia_mybuyercontact_listview;
 	View parentview;
 	LayoutInflater inflater;
 	LinearLayout showloading_layout_view;
@@ -68,10 +68,11 @@ public class MyBuyerView extends BaseView {
 	}
 	
 	void initPullView() {
-		baijia_contact_listview = (PullToRefreshListView) parentview.findViewById(R.id.baijia_contact_listview);
-		ToolsUtil.initPullResfresh(baijia_contact_listview, activity);
+		baijia_mybuyercontact_listview = (PullToRefreshListView) parentview.findViewById(R.id.baijia_mybuyercontact_listview);
+		baijia_mybuyercontact_listview.setMode(Mode.PULL_FROM_START);
+		ToolsUtil.initPullResfresh(baijia_mybuyercontact_listview, activity);
 
-		baijia_contact_listview.setOnRefreshListener(new OnRefreshListener2() {
+		baijia_mybuyercontact_listview.setOnRefreshListener(new OnRefreshListener2() {
 
 			@Override
 			public void onPullDownToRefresh(PullToRefreshBase refreshView) {
@@ -90,7 +91,7 @@ public class MyBuyerView extends BaseView {
 		showloading_layout_view = (LinearLayout) v.findViewById(R.id.showloading_layout_view);
 		showloading_layout_view.setVisibility(View.GONE);
 		buyerAdapter = new BuyerAdapter(Products, activity);
-		baijia_contact_listview.setAdapter(buyerAdapter);
+		baijia_mybuyercontact_listview.setAdapter(buyerAdapter);
 	}
 
 	/******
@@ -102,6 +103,7 @@ public class MyBuyerView extends BaseView {
 			return;
 		}
 		isruning=true;
+		baijia_mybuyercontact_listview.setRefreshing();
 		sendRequestData(currpage, 1);
 	}
 
@@ -113,6 +115,7 @@ public class MyBuyerView extends BaseView {
 		{
 			return;
 		}
+		baijia_mybuyercontact_listview.setRefreshing();
 		isruning=true;
 		sendRequestData(1, 0);
 
@@ -134,7 +137,7 @@ public class MyBuyerView extends BaseView {
 			@Override
 			public void http_Success(Object obj) {
 				isruning=false;
-				ToolsUtil.pullResfresh(baijia_contact_listview);
+				ToolsUtil.pullResfresh(baijia_mybuyercontact_listview);
 				currpage = page;
 				if (obj != null && obj instanceof MyRequestProductListInfoBean) {
 					MyRequestProductListInfoBean bean = (MyRequestProductListInfoBean) obj;
@@ -157,7 +160,7 @@ public class MyBuyerView extends BaseView {
 			@Override
 			public void http_Fails(int error, String msg) {
 				isruning=false;
-				ToolsUtil.pullResfresh(baijia_contact_listview);
+				ToolsUtil.pullResfresh(baijia_mybuyercontact_listview);
 				MyApplication.getInstance().showMessage(activity, msg);
 			}
 		}, activity, ishow, false);
@@ -166,23 +169,23 @@ public class MyBuyerView extends BaseView {
 	void setPageStatus(MyHomeProductListInfoBean data, int page) {
 		if (page == 1 && (data.getItems() == null || data.getItems().getProducts() == null
 				|| data.getItems().getProducts().size() == 0)) {
-			if(baijia_contact_listview!=null)
+			if(baijia_mybuyercontact_listview!=null)
 			{
-				baijia_contact_listview.setMode(Mode.PULL_FROM_START);
+				baijia_mybuyercontact_listview.setMode(Mode.PULL_FROM_START);
 			}
 			ToolsUtil.showNoDataView(activity, parentview, true);
 		} else if (page != 1 && (data.getItems().getProducts() == null || data.getItems().getProducts().size() == 0)) {
-			if(baijia_contact_listview!=null)
+			if(baijia_mybuyercontact_listview!=null)
 			{
-				baijia_contact_listview.setMode(Mode.BOTH);
+				baijia_mybuyercontact_listview.setMode(Mode.BOTH);
 			}
 			
 			MyApplication.getInstance().showMessage(activity,
 					activity.getResources().getString(R.string.lastpagedata_str));
 		} else {
-			if(baijia_contact_listview!=null)
+			if(baijia_mybuyercontact_listview!=null)
 			{
-				baijia_contact_listview.setMode(Mode.BOTH);
+				baijia_mybuyercontact_listview.setMode(Mode.BOTH);
 			}
 			
 		}
@@ -228,8 +231,8 @@ public class MyBuyerView extends BaseView {
 			}
 			/*if (activity != null) {
 				buyerAdapter = new BuyerAdapter(Products, activity);
-				if (baijia_contact_listview != null) {
-					baijia_contact_listview.setAdapter(buyerAdapter);
+				if (baijia_mybuyercontact_listview != null) {
+					baijia_mybuyercontact_listview.setAdapter(buyerAdapter);
 				}
 			}*/
 		}
