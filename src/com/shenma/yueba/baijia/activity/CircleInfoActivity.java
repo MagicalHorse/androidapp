@@ -44,6 +44,7 @@ import com.shenma.yueba.yangjia.activity.ModifyCircleNameActivity;
 import com.shenma.yueba.yangjia.modle.CircleDetailBackBean;
 import com.shenma.yueba.yangjia.modle.CircleDetailBean;
 import com.shenma.yueba.yangjia.modle.Users;
+import com.shenma.yueba.yangjia.modle.Users.User_Type;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -287,8 +288,14 @@ public class CircleInfoActivity extends BaseActivityWithTopView implements
 								mList.addAll(users);
 								if(bean.isIsOwer())
 								{
-								mList.add(new Users());
-								mList.add(new Users());
+								  Users adduser=new Users();
+								  adduser.setUser_Type(User_Type.jia);
+								  adduser.setNickName("邀请好友");
+								  mList.add(adduser);
+								  Users jianuser=new Users();
+								  jianuser.setUser_Type(User_Type.jian);
+								  jianuser.setNickName("删除成员");
+								  mList.add(jianuser);
 								}
 								adapter = new MyCircleInfoAdapter(mContext, mList,circleId,bean.isIsOwer());
 								gv_circle.setAdapter(adapter);

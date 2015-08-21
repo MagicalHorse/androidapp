@@ -229,7 +229,7 @@ public class SocketManger {
 					if(ToolsUtil.isApplicationBroughtToBackground(MyApplication.getInstance().getPackageName().toString()+".ChatActivity"))
 					{
 						ToolsUtil.sendMsgImBroadcast(requestMessageBean);
-					}else
+					}else if(requestMessageBean.getToUserId()>0)
 					{
 						ToolsUtil.sendNoticationBroadcase(requestMessageBean);
 					}
@@ -261,7 +261,11 @@ public class SocketManger {
 						}else
 						{
 							ToolsUtil.sendRoomMsgImBroadcast(requestMessageBean);
-							ToolsUtil.sendNoticationBroadcase(requestMessageBean);
+							if(requestMessageBean.getToUserId()>0)
+							{
+								ToolsUtil.sendNoticationBroadcase(requestMessageBean);
+							}
+							
 						}
 					}
 				}

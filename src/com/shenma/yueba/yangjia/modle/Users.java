@@ -2,11 +2,25 @@ package com.shenma.yueba.yangjia.modle;
 
 public class Users {
 
-	
+	public enum User_Type
+	{
+		data,//普通数据
+		jia,//添加
+		jian//减
+	}
 	private String UserId;
 	private String NickName;
 	private String Logo;
 	private boolean showDelete;
+	private User_Type user_Type=User_Type.data;
+	
+	
+	public User_Type getUser_Type() {
+		return user_Type;
+	}
+	public void setUser_Type(User_Type user_Type) {
+		this.user_Type = user_Type;
+	}
 	public String getUserId() {
 		return UserId;
 	}

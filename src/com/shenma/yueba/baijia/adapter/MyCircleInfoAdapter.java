@@ -3,16 +3,6 @@ package com.shenma.yueba.baijia.adapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.content.Context;
-import android.content.Intent;
-import android.text.TextUtils;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.CircleInfoActivity;
@@ -26,12 +16,20 @@ import com.shenma.yueba.view.RoundImageView;
 import com.shenma.yueba.yangjia.activity.CircleInvitectivity;
 import com.shenma.yueba.yangjia.modle.Users;
 
+import android.content.Context;
+import android.content.Intent;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
 public class MyCircleInfoAdapter extends BaseAdapterWithUtil {
 	private Context ctx;
-	private boolean showDelete;
+	private boolean showDelete=false;
 	private List<Users> mList = new ArrayList<Users>();
 	private String circleId;
-	boolean IsOwer = false;// 是否为创建者
 
 	public MyCircleInfoAdapter(Context ctx, List<Users> mList, String cirlceId,
 			boolean IsOwer) {
@@ -39,23 +37,22 @@ public class MyCircleInfoAdapter extends BaseAdapterWithUtil {
 		this.circleId = cirlceId;
 		this.mList = mList;
 		this.ctx = ctx;
-		this.IsOwer = IsOwer;
 	}
 
 	public int getCount() {
-		// TODO Auto-generated method stub
+		
 		return mList.size();
 	}
 
 	@Override
 	public Object getItem(int arg0) {
-		// TODO Auto-generated method stub
+		
 		return mList.get(arg0);
 	}
 
 	@Override
 	public long getItemId(int position) {
-		// TODO Auto-generated method stub
+		
 		return position;
 	}
 
@@ -72,99 +69,111 @@ public class MyCircleInfoAdapter extends BaseAdapterWithUtil {
 					.findViewById(R.id.iv_delete);
 			FontManager.changeFonts(ctx, holder.tv_text);
 			convertView.setTag(holder);
+			
+			holder.iv_delete.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					if(v.getTag()!=null && v.getTag() instanceof Users)
+					{
+						Users u=(Users)v.getTag();
+						// 删除成员
+						renameCircleName(circleId,u.getUserId(),ctx, true);
+					}
+				}
+			});
+			
+			
+			holder.riv_head.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+
+					if(v.getTag()!=null && v.getTag() instanceof Users)
+					{
+						Users users=(Users)v.getTag();
+						switch(users.getUser_Type())
+						{
+						case data:
+							ToolsUtil.forwardShopMainActivity(ctx,Integer.parseInt(users.getUserId()));
+							break;
+						case jia:
+							// 邀请加入圈子
+							Intent intent = new Intent(ctx, CircleInvitectivity.class);
+							intent.putExtra("circleId", circleId);
+							((CircleInfoActivity) ctx).startActivityForResult(intent,
+									Constants.REQUESTCODE);
+							break;
+						case jian:
+							if(showDelete)
+							{
+								showDelete=false;
+								for(int i=0;i<mList.size();i++)
+								{
+									mList.get(i).setShowDelete(false);
+								}
+								notifyDataSetChanged();
+								
+							}else
+							{
+								showDelete=true;
+								for(int i=0;i<mList.size();i++)
+								{
+									mList.get(i).setShowDelete(true);
+								}
+								notifyDataSetChanged();
+							}
+							break;
+						
+						}
+					}
+					
+				}
+			});
+			
 		} else {
 			holder = (Holder) convertView.getTag();
 		}
-		holder.riv_head.setTag(mList.get(position));
-		if (IsOwer) {
-			if (position == mList.size() - 2) {
-				holder.riv_head.setTag(null);
-				holder.riv_head.setBackgroundResource(R.drawable.plus);
-				holder.tv_text.setText("邀请好友");
-
-			} else if (position == mList.size() - 1) {
-				holder.riv_head.setTag(null);
-				holder.riv_head.setBackgroundResource(R.drawable.reduce);
-				holder.tv_text.setText("删除成员");
-			}
-
+		
+		Users users=mList.get(position);
+		holder.riv_head.setTag(users);
+		holder.iv_delete.setTag(users);
+		holder.tv_text.setText(users.getNickName());
+		switch(users.getUser_Type())
+		{
+		  case data:
+			  initBitmap(ToolsUtil.nullToString(users.getLogo()), holder.riv_head);
+			  if(users.isShowDelete())
+			  {
+				  holder.iv_delete.setVisibility(View.VISIBLE);
+			  }
+			  break;
+		  case jia:
+			  holder.riv_head.setImageResource(R.drawable.plus);
+			  break;
+		  case jian:
+			  holder.riv_head.setImageResource(R.drawable.reduce);
+			  break;
 		}
-
-		//如果显示 删除图标
-		if (showDelete) {
-			if (position == 0) {
-			} else {
-				holder.iv_delete.setVisibility(View.VISIBLE);
-			}
-			if(IsOwer)
+		
+		if(users.isShowDelete())
+		{
+			switch(users.getUser_Type())
 			{
-				if (position == mList.size() - 2) {
-					holder.iv_delete.setVisibility(View.GONE);
-
-				} else if (position == mList.size() - 1) {
-					holder.iv_delete.setVisibility(View.GONE);
-				}
+			  case data:
+				  holder.iv_delete.setVisibility(View.VISIBLE);
+				  break;
+			  case jia:
+				  holder.iv_delete.setVisibility(View.GONE);
+				  break;
+			  case jian:
+				  holder.iv_delete.setVisibility(View.GONE);
+				  break;
 			}
-			
-		} else {
+		}else
+		{
 			holder.iv_delete.setVisibility(View.GONE);
 		}
-		if (!TextUtils.isEmpty(mList.get(position).getLogo())) {
-			initBitmap(mList.get(position).getLogo(), holder.riv_head);
-		}
-		holder.tv_text.setText(mList.get(position).getNickName());
-
-		holder.iv_delete.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				//如果不是创建者 则不响应
-				if(!IsOwer)
-				{
-					return;
-				}
-				// 删除成员
-				renameCircleName(circleId, mList.get(position).getUserId(),
-						ctx, true);
-			}
-		});
-		holder.riv_head.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-
-				if(v.getTag()!=null && v.getTag() instanceof Users)
-				{
-					Users users=(Users)v.getTag();
-					ToolsUtil.forwardShopMainActivity(ctx,Integer.parseInt(users.getUserId()));
-				}
-				if(!IsOwer)
-				{
-					return;
-				}
-				// 踢出圈子
-				if (position == mList.size() - 1) {
-					if (showDelete == true) {
-						showDelete = false;
-						notifyDataSetChanged();
-					} else {
-						showDelete = true;
-						notifyDataSetChanged();
-					}
-				}
-
-				if (position == mList.size() - 2) {
-					// 邀请加入圈子
-					Intent intent = new Intent(ctx, CircleInvitectivity.class);
-					intent.putExtra("circleId", circleId);
-					((CircleInfoActivity) ctx).startActivityForResult(intent,
-							Constants.REQUESTCODE);
-					
-					
-					
-					
-				}
-			}
-		});
+		
 		return convertView;
 	}
 
