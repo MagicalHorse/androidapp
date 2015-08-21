@@ -66,7 +66,7 @@ public class MainActivityForBaiJia extends FragmentActivity implements ImBroadca
 		initaddFooterView();
 		setCurrView(0);
 		checkVersion();
-//		Toast.makeText(this, ""+SocializeConstants.SDK_VERSION, 1000).show();
+		Toast.makeText(this, ""+SocializeConstants.SDK_VERSION, 1000).show();
 		registerBroadcase();
 	}
 
