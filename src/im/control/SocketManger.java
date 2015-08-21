@@ -11,6 +11,7 @@ import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
 import com.google.gson.Gson;
 import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.util.ToolsUtil;
 
@@ -26,10 +27,7 @@ import im.form.RoomBean;
 public class SocketManger {
 	static Socket socket;
 	static SocketManger socketManger;
-	//String URL = "http://182.92.7.70:8000/chat";//服务器地址
-	//chat.joybar.com.cn
-	final String URL = "http://chat.joybar.com.cn/chat?userid=";//服务器地址
-	//final String URL = "http://192.168.1.145:8000/chat";
+	final String URL = "2".equals(Constants.PublishStatus)?"http://chat.joybar.com.cn/chat?userid=":"http://182.92.7.70:8000/chat?userid=";//服务器地址
     List<MessageBean> mssageBean_list=new ArrayList<MessageBean>();
     String userId=null;
     RoomBean roomBean=null;
