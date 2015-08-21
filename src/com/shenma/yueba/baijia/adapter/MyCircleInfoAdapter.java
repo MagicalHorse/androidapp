@@ -153,10 +153,6 @@ public class MyCircleInfoAdapter extends BaseAdapterWithUtil {
 		{
 		  case data:
 			  initBitmap(ToolsUtil.nullToString(users.getLogo()), holder.riv_head);
-			  if(users.isShowDelete())
-			  {
-				  holder.iv_delete.setVisibility(View.VISIBLE);
-			  }
 			  break;
 		  case jia:
 			  holder.riv_head.setImageResource(R.drawable.plus);
