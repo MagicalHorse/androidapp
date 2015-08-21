@@ -3,35 +3,26 @@ package com.shenma.yueba.baijia.view;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.Activity;
-import android.os.Handler;
-import android.os.Message;
-import android.os.SystemClock;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnPullEventListener;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.State;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.adapter.SameCityAdapter;
 import com.shenma.yueba.baijia.modle.BrandCityWideInfo;
-import com.shenma.yueba.baijia.modle.BrandCityWideInfoBean;
 import com.shenma.yueba.baijia.modle.RequestBrandCityWideInfoBean;
-import com.shenma.yueba.baijia.modle.RequestBrandInfoBean;
-import com.shenma.yueba.baijia.modle.SameCityBean;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.HttpControl;
-import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.SharedUtil;
+import com.shenma.yueba.util.ToolsUtil;
+
+import android.app.Activity;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.LinearLayout;
 
 /**  
  * @author gyj  
@@ -52,9 +43,8 @@ public class CityWideListView extends BaseView{
 	boolean showDialog=true;
 	HttpControl httpCntrol=new HttpControl();
 	List<BrandCityWideInfo> items=new ArrayList<BrandCityWideInfo>();
-	boolean isfirst=true;
 	int CityId=0;//当前城市id
-	
+	boolean isruning=false;
 	public CityWideListView(Activity activity)
 	{
 		this.activity=activity;
@@ -105,17 +95,30 @@ public class CityWideListView extends BaseView{
 	
 	void requestData()
 	{
+		if(isruning)
+		{
+			return;
+		}
+		pull_refresh_list.setRefreshing();
+		isruning=true;
 		sendHttp(currPage,1);
 	}
 	
 	void requestFalshData()
 	{
+		if(isruning)
+		{
+			return;
+		}
+		pull_refresh_list.setRefreshing();
+		isruning=true;
 		sendHttp(1,0);
 	}
 	
 	
 	void addData(RequestBrandCityWideInfoBean bean)
 	{
+		showDialog=false;
 		currPage++;
 		if(bean.getData()!=null)
 		{
@@ -135,7 +138,8 @@ public class CityWideListView extends BaseView{
 	
 	void falshData(RequestBrandCityWideInfoBean bean)
 	{
-		isfirst=false;
+		showDialog=false;
+		
 		currPage++;
 		items.clear();
 		if(bean.getData()!=null)
@@ -174,8 +178,8 @@ public class CityWideListView extends BaseView{
 			
 			@Override
 			public void http_Success(Object obj) {
-				showDialog=false;
 				currPage=page;
+				isruning=false;
 				ToolsUtil.pullResfresh(pull_refresh_list);
 				
 				if(obj!=null && obj instanceof RequestBrandCityWideInfoBean)
@@ -200,6 +204,7 @@ public class CityWideListView extends BaseView{
 			
 			@Override
 			public void http_Fails(int error, String msg) {
+				isruning=false;
 				ToolsUtil.pullResfresh(pull_refresh_list);
 				MyApplication.getInstance().showMessage(activity, msg);
 			}
@@ -239,7 +244,7 @@ public class CityWideListView extends BaseView{
 	
 	@Override
 	public void firstInitData() {
-		if(isfirst)
+		if(items.size()<=0 && showDialog)
 		{
 			requestFalshData();
 		}

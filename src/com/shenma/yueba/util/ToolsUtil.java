@@ -41,6 +41,7 @@ import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.yangjia.modle.AliYunKeyBackBean;
 import com.shenma.yueba.yangjia.modle.AliYunKeyBean;
 import com.shenma.yueba.yangjia.modle.Share;
+import com.umeng.socialize.utils.Log;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -60,6 +61,7 @@ import android.net.Uri;
 import android.os.Environment;
 import android.os.StatFs;
 import android.os.StrictMode;
+import android.os.SystemClock;
 import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -738,6 +740,7 @@ public class ToolsUtil {
 	 *            boolean 是否显示 true 显示 false 不显示
 	 ***/
 	public static void showNoDataView(final Activity activity, final boolean status) {
+		Log.i("request", "------------->>>> showNoDataView:" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())+" activity:"+activity+ "  status:"+status);
 		if (activity != null) {
 			activity.runOnUiThread(new Runnable() {
 
@@ -767,6 +770,7 @@ public class ToolsUtil {
 	 *            boolean 是否显示 true 显示 false 不显示
 	 ***/
 	public static void showNoDataView(final Activity activity, final View parentView, final boolean status) {
+		Log.i("request", "------------->>>> showNoDataView:" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())+" activity:"+activity+ "  status:"+status);
 		if (activity != null) {
 			activity.runOnUiThread(new Runnable() {
 
@@ -821,6 +825,7 @@ public class ToolsUtil {
 	}
 
 	public static void initPullResfresh(final PullToRefreshListView pullListView, final Activity activity) {
+		Log.i("request", "------------->>>> initPullResfresh:" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())+" activity:"+activity);
 		if (pullListView != null && activity != null) {
 			pullListView.setOnPullEventListener(new OnPullEventListener<ListView>() {
 
@@ -849,6 +854,7 @@ public class ToolsUtil {
 	}
 
 	public static void initPullResfresh(final PullToRefreshGridView pullListView, final Activity activity) {
+		Log.i("request", "------------->>>> initPullResfresh:" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())+" activity:"+activity);
 		if (pullListView != null && activity != null) {
 			pullListView.setOnPullEventListener(new OnPullEventListener<GridView>() {
 
@@ -876,6 +882,7 @@ public class ToolsUtil {
 	}
 
 	public static void initPullResfresh(final PullToRefreshScrollView pullListView, final Activity activity) {
+		Log.i("request", "------------->>>> initPullResfresh:" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())+"  activity："+activity);
 		if (pullListView != null && activity != null) {
 			pullListView.setOnPullEventListener(new OnPullEventListener<ScrollView>() {
 
@@ -903,6 +910,7 @@ public class ToolsUtil {
 	}
 
 	public static void pullResfresh(final PullToRefreshListView pullListView) {
+		Log.i("request", "------------->>>> pullResfresh:" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())+"  pullListView:"+pullListView);
 		if (pullListView != null) {
 			pullListView.postDelayed(new Runnable() {
 
@@ -915,6 +923,7 @@ public class ToolsUtil {
 	}
 
 	public static void pullResfresh(final PullToRefreshScrollView pullListView) {
+		Log.i("request", "------------->>>> pullResfresh:" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())+"  pullListView:"+pullListView);
 		if (pullListView != null) {
 			pullListView.postDelayed(new Runnable() {
 
@@ -927,6 +936,7 @@ public class ToolsUtil {
 	}
 
 	public static void pullResfresh(final PullToRefreshGridView pullListView) {
+		Log.i("request", "------------->>>> pullResfresh:" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())+"  pullListView:"+pullListView);
 		if (pullListView != null) {
 			pullListView.postDelayed(new Runnable() {
 
@@ -934,7 +944,7 @@ public class ToolsUtil {
 				public void run() {
 					pullListView.onRefreshComplete();
 				}
-			}, 1000);
+			}, 500);
 		}
 	}
 	

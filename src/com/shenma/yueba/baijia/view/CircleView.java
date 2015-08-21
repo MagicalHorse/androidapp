@@ -187,6 +187,7 @@ public class CircleView extends BaseView{
 		{
 			return;
 		}
+		baijia_quanzi_layout_tanb1_gridbview.setRefreshing();
 		isruning=true;
 		sendHttp(currPage,1);
 	}
@@ -197,6 +198,7 @@ public class CircleView extends BaseView{
 		{
 			return;
 		}
+		baijia_quanzi_layout_tanb1_gridbview.setRefreshing();
 		isruning=true;
 		sendHttp(1,0);
 	}

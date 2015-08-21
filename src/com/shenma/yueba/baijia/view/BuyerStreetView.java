@@ -183,7 +183,6 @@ public class BuyerStreetView extends BaseView {
 		
 		buyerAdapter = new BuyerAdapter(Products, activity);
 		baijia_contact_listview.setAdapter(buyerAdapter);
-		baijia_contact_listview.setDividerPadding(0);
 
 	}
 
@@ -195,6 +194,7 @@ public class BuyerStreetView extends BaseView {
 		{
 			return;
 		}
+		baijia_contact_listview.setRefreshing();
 		isruning=true;
 		sendRequestData(currpage, 1);
 	}
@@ -207,6 +207,7 @@ public class BuyerStreetView extends BaseView {
 		{
 			return;
 		}
+		baijia_contact_listview.setRefreshing();
 		isruning=true;
 		stopTimerToViewPager();
 		currid = -1;
