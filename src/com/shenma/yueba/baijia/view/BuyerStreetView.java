@@ -183,7 +183,6 @@ public class BuyerStreetView extends BaseView {
 		
 		buyerAdapter = new BuyerAdapter(Products, activity);
 		baijia_contact_listview.setAdapter(buyerAdapter);
-		baijia_contact_listview.setDividerPadding(0);
 
 	}
 

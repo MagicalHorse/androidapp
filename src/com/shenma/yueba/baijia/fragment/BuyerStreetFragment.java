@@ -196,7 +196,6 @@ public class BuyerStreetFragment extends Fragment {
 		
 		buyerAdapter = new BuyerAdapter(Products, getActivity());
 		baijia_contact_listview.setAdapter(buyerAdapter);
-		baijia_contact_listview.setDividerPadding(0);
 
 	}
 
