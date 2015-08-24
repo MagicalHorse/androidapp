@@ -372,4 +372,11 @@ public class MainActivityForBaiJia extends FragmentActivity implements ImBroadca
 			break;
 		}
 	}
+	
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		// TODO Auto-generated method stub
+		//super.onSaveInstanceState(outState);//禁止应用保持fragment 的数据
+	}
+	
 }

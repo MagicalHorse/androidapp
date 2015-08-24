@@ -103,6 +103,7 @@ public class ShopMainActivity extends FragmentActivity {
 			
 			@Override
 			public void onClick(View v) {
+				
 				ShopMainActivity.this.finish();
 			}
 		});
@@ -320,15 +321,21 @@ public class ShopMainActivity extends FragmentActivity {
     		}
     	}
     	
+    	try
+    	{
     	if(isfirst)
     	{
     		if(!(((ShopPuBuliuFragment)fragmentBean_list.get(_id).getFragment()).isAdded()))
     		{
-    		  fragmentManager.beginTransaction().add(R.id.shop_main_layout_tabcontent_framelayout, (ShopPuBuliuFragment)fragmentBean_list.get(_id).getFragment()).commit();
+    		  fragmentManager.beginTransaction().add(R.id.shop_main_layout_tabcontent_framelayout, (ShopPuBuliuFragment)fragmentBean_list.get(_id).getFragment()).commitAllowingStateLoss();
     		}
     	}else
     	{
-    		fragmentManager.beginTransaction().replace(R.id.shop_main_layout_tabcontent_framelayout, (ShopPuBuliuFragment)fragmentBean_list.get(_id).getFragment()).commit();
+    		fragmentManager.beginTransaction().replace(R.id.shop_main_layout_tabcontent_framelayout, (ShopPuBuliuFragment)fragmentBean_list.get(_id).getFragment()).commitAllowingStateLoss();
+    	}
+    	}catch(Exception e)
+    	{
+    		
     	}
     	
     }
@@ -562,5 +569,11 @@ public class ShopMainActivity extends FragmentActivity {
 				}
 			}
 			
+		}
+		
+		@Override
+		protected void onSaveInstanceState(Bundle outState) {
+			// TODO Auto-generated method stub
+			//super.onSaveInstanceState(outState);
 		}
 }

@@ -13,6 +13,7 @@ import com.shenma.yueba.baijia.view.MyBuyerView;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.FontManager;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -46,6 +47,12 @@ public class IndexFragmentForBaiJia extends Fragment {
 	FragmentManager fragmentManager;
 	View v;
 
+	@Override
+	public void onAttach(Activity activity) {
+		// TODO Auto-generated method stub
+		super.onAttach(activity);
+	}
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {

@@ -277,10 +277,17 @@ public class CircleInfoActivity extends BaseActivityWithTopView implements
 						CircleDetailBackBean result = (CircleDetailBackBean) obj;
 						CircleDetailBean bean = result.getData();
 						if (bean != null) {
-							tv_top_title_below.setVisibility(View.VISIBLE);
-							tv_top_title_below.setText("人数（"+bean.getMemberCount()+"）");
-							tv_circle_name.setText(ToolsUtil.nullToString(bean
-									.getGroupName()));
+							if(tv_top_title_below!=null)
+							{
+								tv_top_title_below.setVisibility(View.VISIBLE);
+								tv_top_title_below.setText("人数（"+bean.getMemberCount()+"）");
+							}
+							
+							if(tv_circle_name!=null)
+							{
+								tv_circle_name.setText(ToolsUtil.nullToString(bean.getGroupName()));
+							}
+							
 							MyApplication.getInstance().getBitmapUtil().display(riv_circle_head, ToolsUtil.getImage(ToolsUtil.nullToString(bean.getGroupPic()),100, 100));
 							List<Users> users = bean.getUsers();
 							if (users != null && users.size() > 0) {

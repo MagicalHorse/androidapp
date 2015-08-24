@@ -1,5 +1,6 @@
 package com.shenma.yueba.baijia.fragment;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,8 +74,12 @@ public class ShopPuBuliuFragment extends Fragment implements PubuliuFragmentList
 	}
 
 	void initView() {
-		pm = new PubuliuManager(getActivity(), parentView);
-		pm.setPubuliuInterfaceListener(this);
+		if(getActivity()!=null)
+		{
+			pm = new PubuliuManager(getActivity(), parentView);
+			pm.setPubuliuInterfaceListener(this);
+		}
+		
 	}
 
 	@Override
@@ -134,7 +139,11 @@ public class ShopPuBuliuFragment extends Fragment implements PubuliuFragmentList
 						ToolsUtil.showNoDataView(getActivity(), true);
 					}else
 					{
-						MyApplication.getInstance().showMessage(getActivity(), "没有更多信息");
+						if(getActivity()!=null)
+						{
+							MyApplication.getInstance().showMessage(getActivity(), "没有更多信息");
+						}
+					
 					}
 					return;
 				}else
@@ -165,7 +174,11 @@ public class ShopPuBuliuFragment extends Fragment implements PubuliuFragmentList
 			@Override
 			public void http_Fails(int error, String msg) {
 				refreshComplete();
-				MyApplication.getInstance().showMessage(getActivity(), msg);
+				if(getActivity()!=null)
+				{
+					MyApplication.getInstance().showMessage(getActivity(), msg);
+				}
+				
 			}
 		}, getActivity());
 	}
@@ -240,7 +253,11 @@ public class ShopPuBuliuFragment extends Fragment implements PubuliuFragmentList
 	 * 刷新完成
 	 * **/
 	void refreshLoading() {
-		View v = getActivity().findViewById(R.id.shop_main_layout_title_pulltorefreshscrollview);
+		if(getActivity()!=null)
+		{
+			View v = getActivity().findViewById(R.id.shop_main_layout_title_pulltorefreshscrollview);
+		}
+		
 		/*if(v!=null && v instanceof PullToRefreshScrollView ) 
 		{
 		 ((PullToRefreshScrollView)v).setRefreshing(); 
@@ -270,19 +287,16 @@ public class ShopPuBuliuFragment extends Fragment implements PubuliuFragmentList
 					{
 						if(getActivity()!=null)
 						{
-							/*View v=getActivity().findViewById(R.id.shop_main_head_layout_horizontal_line_include);
-							if(v!=null)
-							{
-								v.setVisibility(View.GONE);
-							}else
-							{
-								v.setVisibility(View.VISIBLE);
-							}*/
+							
 							ToolsUtil.showNoDataView(getActivity(), true);
 						}
 					}else
 					{
-						MyApplication.getInstance().showMessage(getActivity(), "没有更多信息");
+						if(getActivity()!=null)
+						{
+							MyApplication.getInstance().showMessage(getActivity(), "没有更多信息");
+						}
+						
 					}
 					return;
 				}else
@@ -313,7 +327,11 @@ public class ShopPuBuliuFragment extends Fragment implements PubuliuFragmentList
 			@Override
 			public void http_Fails(int error, String msg) {
 				refreshComplete();
-				MyApplication.getInstance().showMessage(getActivity(), msg);
+				if(getActivity()!=null)
+				{
+					MyApplication.getInstance().showMessage(getActivity(), msg);
+				}
+				
 			}
 		}, getActivity());
 	}
@@ -374,4 +392,21 @@ public class ShopPuBuliuFragment extends Fragment implements PubuliuFragmentList
 		  pm.onResher(item);
 		}
 	}
+	
+	@Override
+	public void onDetach() {
+	    super.onDetach();
+
+	    try {
+	        Field childFragmentManager = Fragment.class.getDeclaredField("mChildFragmentManager");
+	        childFragmentManager.setAccessible(true);
+	        childFragmentManager.set(this, null);
+
+	    } catch (NoSuchFieldException e) {
+	        throw new RuntimeException(e);
+	    } catch (IllegalAccessException e) {
+	        throw new RuntimeException(e);
+	    }
+	}
+
 }
