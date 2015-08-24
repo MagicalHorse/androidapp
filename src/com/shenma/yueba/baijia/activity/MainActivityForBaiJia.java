@@ -93,8 +93,7 @@ public class MainActivityForBaiJia extends FragmentActivity implements ImBroadca
 
 			@Override
 			public void http_Fails(int error, String msg) {
-				// TODO Auto-generated method stub
-
+				
 			}
 		}, MainActivityForBaiJia.this);
 
