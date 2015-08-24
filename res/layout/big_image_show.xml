@@ -32,7 +32,7 @@
                 android:gravity="center_horizontal"
                 android:text="请用微信扫码关注"
                 android:textColor="@color/text_gray_color"
-                android:textSize="20sp" />
+                android:textSize="@dimen/center_text_size" />
         </LinearLayout>
     </ScrollView>
 

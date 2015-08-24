@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.shenma.yueba"
     android:versionCode="1"
-    android:versionName="1.0.0.0" >
+    android:versionName="1.0.0" >
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -621,8 +621,8 @@
             </intent-filter>
         </receiver>
 
-        <!-- 友盟开发、测试环境 -->
-     <!--    <meta-data
+<!--         友盟开发、测试环境
+       <meta-data
             android:name="UMENG_APPKEY"
             android:value="555321fae0f55ae751002b84" >
         </meta-data>
@@ -632,7 +632,7 @@
             android:value="developer-default" />
         <meta-data
             android:name="JPUSH_APPKEY"
-            android:value="bd04e24380b02b787b18d013" /> -->
+            android:value="bd04e24380b02b787b18d013" />  -->
 
         
         
@@ -640,14 +640,11 @@
         
         
         
-        
-        <!-- 友盟生产环境 -->
+     <!-- 生产环境 --> 
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="55d43ae267e58eacaa002df8" >
         </meta-data>
-
-        <!-- 正式生产环境 -->
         <meta-data
             android:name="JPUSH_CHANNEL"
             android:value="developer-default" />

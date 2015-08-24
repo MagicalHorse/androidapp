@@ -8,8 +8,8 @@
 
     <com.shenma.yueba.view.RoundImageView
         android:id="@+id/riv_head"
-        android:layout_width="50dip"
-        android:layout_height="50dip"
+        android:layout_width="55dip"
+        android:layout_height="55dip"
         android:scaleType="fitXY"
         android:layout_gravity="center_vertical"
         android:src="@drawable/default_pic" />
@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:text="@null"
-            android:textSize="18sp" />
+            android:textSize="@dimen/center_text_size" />
 
         <TextView
             android:id="@+id/tv_atttention_count"

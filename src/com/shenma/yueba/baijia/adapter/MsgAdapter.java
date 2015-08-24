@@ -51,7 +51,7 @@ public class MsgAdapter extends BaseAdapterWithUtil {
 			holder.tv_time = (TextView) convertView.findViewById(R.id.mgstv_time);
 			holder.tv_msg = (TextView) convertView.findViewById(R.id.tv_msg);
 			holder.tv_msg_count = (TextView) convertView.findViewById(R.id.tv_msg_count);
-			//FontManager.changeFonts(ctx, holder.tv_name,holder.tv_time,holder.tv_msg);
+			FontManager.changeFonts(ctx, holder.tv_name,holder.tv_time,holder.tv_msg);
 			convertView.setTag(holder);
 		}else{
 			holder = (Holder) convertView.getTag();

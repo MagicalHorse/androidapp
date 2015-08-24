@@ -161,7 +161,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 			tv_top_title = (TextView) findViewById(R.id.tv_top_title);
 			tv_top_title.setText(chat_name);
 			tv_top_title.setVisibility(View.VISIBLE);
-			FontManager.changeFonts(this, tv_top_title,tv_top_right);
+			FontManager.changeFonts(this, tv_top_title,tv_top_right,mEditTextContent);
 		}
 		Intent getintent=ChatActivity.this.getIntent();
 		//获取圈子id

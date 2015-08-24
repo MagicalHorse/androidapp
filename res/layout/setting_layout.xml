@@ -43,7 +43,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:text="头像"
-                            android:textSize="18sp" />
+                            android:textSize="@dimen/center_text_size" />
 
                         <ImageView
                             android:id="@+id/iv_arrar_head"
@@ -83,7 +83,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:text="昵称"
-                            android:textSize="18sp" />
+                            android:textSize="@dimen/center_text_size" />
 
                         <ImageView
                             android:id="@+id/iv_arrar_nick"
@@ -101,7 +101,7 @@
                             android:layout_marginRight="10dip"
                             android:layout_toLeftOf="@id/iv_arrar_nick"
                             android:text="@null"
-                            android:textSize="18sp" />
+                            android:textSize="@dimen/center_text_size" />
                     </RelativeLayout>
                 </LinearLayout>
 
@@ -129,7 +129,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:text="修改密码"
-                            android:textSize="18sp" />
+                            android:textSize="@dimen/center_text_size" />
 
                         <ImageView
                             android:id="@+id/iv_arrar_nick"
@@ -155,12 +155,12 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:text="消息免打扰"
-                            android:textSize="18sp" />
+                            android:textSize="@dimen/center_text_size" />
 
                         <ImageView
                             android:id="@+id/switchButton"
-                            android:layout_width="70dip"
-                            android:layout_height="40dip"
+                            android:layout_width="58dip"
+                            android:layout_height="32dip"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
                             android:layout_marginRight="10dip"
@@ -192,7 +192,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:text="绑定手机号"
-                            android:textSize="18sp" />
+                            android:textSize="@dimen/center_text_size" />
 
                         <ImageView
                             android:id="@+id/iv_arrar_phone"
@@ -210,7 +210,7 @@
                             android:layout_marginRight="10dip"
                             android:layout_toLeftOf="@id/iv_arrar_phone"
                             android:text="@null"
-                            android:textSize="18sp" />
+                            android:textSize="@dimen/center_text_size" />
                     </RelativeLayout>
 
                     <View style="@style/style_horizontal_line" />
@@ -230,7 +230,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:text="绑定微信"
-                            android:textSize="18sp" />
+                            android:textSize="@dimen/center_text_size" />
 
                         <ImageView
                             android:id="@+id/iv_arrar_wechat"
@@ -248,7 +248,7 @@
                             android:layout_marginRight="10dip"
                             android:layout_toLeftOf="@id/iv_arrar_wechat"
                             android:text="@null"
-                            android:textSize="18sp" />
+                            android:textSize="@dimen/center_text_size" />
                     </RelativeLayout>
                 </LinearLayout>
 
@@ -261,7 +261,7 @@
                     android:drawableRight="@drawable/arrow_right"
                     android:padding="15dip"
                     android:text="检查更新"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/center_text_size" />
                                     <View style="@style/style_horizontal_line" />
                 <TextView
                     android:id="@+id/tv_about"
@@ -271,7 +271,7 @@
                     android:drawableRight="@drawable/arrow_right"
                     android:padding="15dip"
                     android:text="关于我们"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/center_text_size" />
 
                 <Button
                     android:id="@+id/user_config_exit_button"
@@ -280,6 +280,7 @@
                     android:layout_marginLeft="15dip"
                     android:layout_marginRight="15dip"
                     android:layout_marginTop="15dp"
+                    android:textSize="@dimen/center_text_size"
                     android:background="@drawable/user_config_exit_button_background"
                     android:text="@string/user_config_exit_str"
                     android:layout_marginBottom="15dip"
