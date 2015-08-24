@@ -21,6 +21,7 @@ import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.ToolsUtil;
 import com.umeng.socialize.utils.Log;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
@@ -59,10 +60,16 @@ public class BaiJiaOrderListFragment extends Fragment implements OrderBroadcaseL
 		super();
 		this.state = state;
 	}
+	
+	@Override
+	public void onAttach(Activity activity) {
+		Log.i("TAG", "--->> onAttach");
+		super.onAttach(activity);
+	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-
+		Log.i("TAG", "--->> onCreate");
 		super.onCreate(savedInstanceState);
 		orderBroadcaseReceiver=new OrderBroadcaseReceiver(this);
 	}
@@ -70,25 +77,25 @@ public class BaiJiaOrderListFragment extends Fragment implements OrderBroadcaseL
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		Log.i("TAG", "--->> onCreateView");
 		if (parentView == null) {
 			parentView = inflater.inflate(R.layout.baijiaorderlistfragment_layout, null);
 			initView();
-		    requestFalshData();
 		}
 		ViewGroup vp = (ViewGroup) parentView.getParent();
 		if (vp != null) {
 			vp.removeView(parentView);
 		}
-		registerBroadcase();
 		return parentView;
 	}
 
 	
 	@Override
 	public void onResume() {
+		Log.i("TAG", "--->> onResume");
 		super.onResume();
-		/*ishow=true;
-		requestFalshData();*/
+		registerBroadcase();
+		requestFalshData();
 	}
 	
 	void initView() {
@@ -302,6 +309,8 @@ public class BaiJiaOrderListFragment extends Fragment implements OrderBroadcaseL
 	
 	@Override
 	public void onDestroyView() {
+		Log.i("TAG", "--->> onDestroyView");
+
 		super.onDestroyView();
 		unRegisterBroadcase();
 	}
@@ -317,6 +326,7 @@ public class BaiJiaOrderListFragment extends Fragment implements OrderBroadcaseL
 			if(!isBroadcase)
 			{
 				getActivity().registerReceiver(orderBroadcaseReceiver, new IntentFilter(OrderBroadcaseReceiver.IntentFilter));
+				isBroadcase=true;
 			}
 			
 		}
@@ -324,6 +334,19 @@ public class BaiJiaOrderListFragment extends Fragment implements OrderBroadcaseL
 	}
 	
 	
+	@Override
+	public void onDetach() {
+		Log.i("TAG","----->>onDetach");
+		super.onDetach();
+		
+	}
+	
+	@Override
+	public void onPause() {
+		Log.i("TAG", "--->> onPause");
+		super.onPause();
+		unRegisterBroadcase();
+	}
 	
 	/****
 	 * 注销订单广播接收器
@@ -335,6 +358,7 @@ public class BaiJiaOrderListFragment extends Fragment implements OrderBroadcaseL
 			if(isBroadcase)
 			{
 				getActivity().unregisterReceiver(orderBroadcaseReceiver);
+				isBroadcase=false;
 			}
 			
 		}

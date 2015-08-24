@@ -11,7 +11,6 @@ import com.shenma.yueba.broadcaseReceiver.OrderBroadcaseReceiver;
 import com.shenma.yueba.util.FontManager;
 import com.umeng.analytics.MobclickAgent;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -123,11 +122,16 @@ int currid=-1;
 	    else if(currid==i)
 		{
 			return;
+		}else
+		{
+			if(!(((BaiJiaOrderListFragment) fragment_list.get(i).getFragment()).isAdded()))
+			{
+				fragmentManager.beginTransaction().replace(R.id.baijia_main_framelayout,(BaiJiaOrderListFragment) fragment_list.get(i).getFragment()).commit();
+			}
+			
 		}
 		currid=i;
-		setTextColor(i);
-		fragmentManager.beginTransaction().replace(R.id.baijia_main_framelayout,(BaiJiaOrderListFragment) fragment_list.get(i).getFragment()).commit();
-		
+		setTextColor(i);		
 	}
 	
 	/*****
@@ -189,4 +193,10 @@ int currid=-1;
 		super.onDestroy();
 	}
 
+	
+	@Override
+		protected void onSaveInstanceState(Bundle outState) {
+			// TODO Auto-generated method stub
+			//super.onSaveInstanceState(outState);
+		}
 }
