@@ -152,7 +152,9 @@ public class MyCircleInfoAdapter extends BaseAdapterWithUtil {
 		switch(users.getUser_Type())
 		{
 		  case data:
-			  initBitmap(ToolsUtil.nullToString(users.getLogo()), holder.riv_head);
+			  if(users.getLogo()!=null && users.getLogo().startsWith("http")){
+				  initBitmap(ToolsUtil.nullToString(users.getLogo()), holder.riv_head);
+			  }
 			  break;
 		  case jia:
 			  holder.riv_head.setImageResource(R.drawable.plus);
@@ -247,6 +249,9 @@ public class MyCircleInfoAdapter extends BaseAdapterWithUtil {
 				.defaultDisplayImageOptions(DisplayImageOptions.createSimple()) // default
 				.writeDebugLogs().build();
 		MyApplication.getInstance().getImageLoader().init(config);
-		MyApplication.getInstance().getImageLoader().displayImage(url, iv);
+		try {
+			MyApplication.getInstance().getImageLoader().displayImage(url, iv);
+		} catch (Exception e) {
+		}
 	}
 }
