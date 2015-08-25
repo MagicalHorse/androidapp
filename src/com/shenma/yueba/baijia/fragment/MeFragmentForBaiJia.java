@@ -264,7 +264,7 @@ public class MeFragmentForBaiJia extends BaseFragment implements OnClickListener
 		case 0:
 			if(!SharedUtil.getBooleanPerfernece(getActivity(), SharedUtil.user_IsBindWeiXin)){
 				DialogUtils dialog = new DialogUtils();
-				dialog.alertDialog(getActivity(), "提示", "您需要绑定微信才可以提款，现在去绑定吗？", new DialogUtilInter() {
+				dialog.alertDialog(getActivity(), "提示--申请认证买手第一步", "申请认证买手需绑定微信以便后期金钱交易，现在去绑定吗？", new DialogUtilInter() {
 					@Override
 					public void dialogCallBack(int... which) {
 						Toast.makeText(getActivity(), "正在绑定微信", 1000).show();
@@ -397,6 +397,7 @@ public class MeFragmentForBaiJia extends BaseFragment implements OnClickListener
 							Intent buyerCertificaitonIntent = new Intent(getActivity(),BuyerCertificationActivity1.class);
 							startActivity(buyerCertificaitonIntent);
 						}else{//没有关注
+							
 							WeChatDialog dialog = new WeChatDialog(getActivity(),data.getQRCode(),data.getName());
 							dialog.show();
 						}
