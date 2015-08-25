@@ -144,8 +144,11 @@ public class WeChatDialog extends Dialog implements
 		    if (!appDir.exists()) {
 		        appDir.mkdirs();
 		    }
-		    String fileName = "huimaishou"+System.currentTimeMillis() + ".jpg";
+		    String fileName = "买手" + ".jpg";
 		    File file = new File(appDir, fileName);
+		    if(file!=null && file.exists()){
+		    	file.delete();
+		    }
 		    try {
 		        FileOutputStream fos = new FileOutputStream(file);
 		        bmp.compress(CompressFormat.JPEG, 100, fos);
