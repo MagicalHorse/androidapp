@@ -276,7 +276,7 @@ public class ToolsUtil {
 		if (str == null) {
 			return "";
 		} else {
-			return str;
+			return str.trim();
 		}
 	}
 

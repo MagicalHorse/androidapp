@@ -256,23 +256,20 @@ public class BuyerAdapter extends BaseAdapter {
 		holder.buyersteetfragmeng_item_share_button.setTag(productsInfoBean);
 
 		// 商品名称
-		holder.baijia_tab1_item_productname_textview.setText(productsInfoBean
-				.getBuyerName());
+		holder.baijia_tab1_item_productname_textview.setText(ToolsUtil.nullToString(productsInfoBean.getBuyerName()));
 		// 地址
-		holder.baijia_tab1_item_productaddress_textview
-				.setText(productsInfoBean.getBuyerAddress());
+		holder.baijia_tab1_item_productaddress_textview.setText(ToolsUtil.nullToString(productsInfoBean.getBuyerAddress()));
 		// 商品价格
-		holder.buyersteetfragmeng_item_price_textview.setText("￥"
-				+ Double.toString(productsInfoBean.getPrice()));
+		holder.buyersteetfragmeng_item_price_textview.setText("￥"+ Double.toString(productsInfoBean.getPrice()));
 		// 商品的图片地址
-		String url = productsInfoBean.getBuyerLogo() + "640x0.jpg";
+		String url = ToolsUtil.nullToString(productsInfoBean.getBuyerLogo()) + "640x0.jpg";
 		// 买家头像
 		holder.customImage.setTag(productsInfoBean.getBuyerid());
 		//holder.customImage.setImageResource(R.drawable.default_pic);
 		/*// 下载买家头像
 		initPic(productsInfoBean.getBuyerLogo(), holder.customImage,
 				R.drawable.default_pic);*/
-		initBitmap(productsInfoBean.getBuyerLogo(), holder.customImage);
+		initBitmap(ToolsUtil.nullToString(productsInfoBean.getBuyerLogo()), holder.customImage);
 		ProductPicInfoBean productPicInfoBean = productsInfoBean
 				.getProductPic();
 		if (productPicInfoBean == null) {
@@ -282,11 +279,9 @@ public class BuyerAdapter extends BaseAdapter {
 		holder.baijia_tab1_item_time_textview.setText(ToolsUtil
 				.nullToString(productsInfoBean.getCreateTime()));
 		// 产品描述
-		holder.buyersteetfragmeng_item_desc_textview.setText(productsInfoBean
-				.getProductName());
+		holder.buyersteetfragmeng_item_desc_textview.setText(ToolsUtil.nullToString(productsInfoBean.getProductName()));
 		// 商品内容图片
-		holder.baijia_tab1_item_productcontent_imageview
-				.setTag(productsInfoBean.getProductId());
+		holder.baijia_tab1_item_productcontent_imageview.setTag(productsInfoBean.getProductId());
 		if (productsInfoBean.getPromotion() == null
 				|| !productsInfoBean.getPromotion().isIsShow()) {
 			holder.buyersteetfragment_item_footer_linearlyout_content_textview
@@ -301,7 +296,7 @@ public class BuyerAdapter extends BaseAdapter {
 							+ " "
 							+ productsInfoBean.getPromotion().getTipText());
 		}
-		String pic_name = productPicInfoBean.getName();
+		String pic_name = ToolsUtil.nullToString(productPicInfoBean.getName());
 		Log.i("TAG", "pic_name=" + pic_name);
 		// 加载商品图片
 		initBitmap(ToolsUtil.getImage(ToolsUtil.nullToString(pic_name), 640, 0), holder.baijia_tab1_item_productcontent_imageview);

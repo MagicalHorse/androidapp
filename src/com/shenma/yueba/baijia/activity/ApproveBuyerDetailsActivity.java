@@ -259,15 +259,15 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView
 	void setDatValue() {
 
 		// 自提地址
-		String address = Data.getPickAddress();
+		String address = ToolsUtil.nullToString(Data.getPickAddress());
 		// 成交数据
 		int truncount = Data.getTurnCount();
 		//好评率
 		String haoping="0%";;
 		// 买手头像
-		String usericon = Data.getBuyerLogo();
+		String usericon = ToolsUtil.nullToString(Data.getBuyerLogo());
 		// 买手昵称
-		String username = Data.getBuyerName();
+		String username =ToolsUtil.nullToString(Data.getBuyerName()) ;
 		// 商品发布时间
 		String creattime = Data.getCreateTime();
 		// 关注人列表
@@ -275,7 +275,7 @@ public class ApproveBuyerDetailsActivity extends BaseActivityWithTopView
 		// 价格
 		double price = Data.getPrice();
 		// 商品名称
-		String productName = Data.getProductName();
+		String productName = ToolsUtil.nullToString(Data.getProductName());
 		initPic(usericon, approvebuyerdetails_icon_imageview);
 		// 自提地址
 		setdataValue(R.id.approvebuyerdetails_addressvalue_textview, address);

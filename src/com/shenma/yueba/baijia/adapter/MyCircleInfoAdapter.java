@@ -148,7 +148,7 @@ public class MyCircleInfoAdapter extends BaseAdapterWithUtil {
 		Users users=mList.get(position);
 		holder.riv_head.setTag(users);
 		holder.iv_delete.setTag(users);
-		holder.tv_text.setText(users.getNickName());
+		holder.tv_text.setText(ToolsUtil.nullToString(users.getNickName()));
 		switch(users.getUser_Type())
 		{
 		  case data:
