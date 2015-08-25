@@ -10,11 +10,14 @@ import com.github.nkzawa.socketio.client.Ack;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
 import com.google.gson.Gson;
+import com.shenma.yueba.ChatActivity;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.SharedUtil;
 import com.shenma.yueba.util.ToolsUtil;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.SystemClock;
 import android.util.Log;
 import im.form.MessageBean;
@@ -26,12 +29,21 @@ import im.form.RoomBean;
  * **/
 public class SocketManger {
 	static Socket socket;
+	
 	static SocketManger socketManger;
 	final String URL = "2".equals(Constants.PublishStatus)?"http://chat.joybar.com.cn/chat?userid=":"http://182.92.7.70:8000/chat?userid=";//服务器地址
     List<MessageBean> mssageBean_list=new ArrayList<MessageBean>();
     String userId=null;
     RoomBean roomBean=null;
     private SocketManger() {
+	}
+    Context context;
+	public Context getContext() {
+		return context;
+	}
+
+	public void setContext(Context context) {
+		this.context = context;
 	}
 
 	/****
@@ -136,6 +148,11 @@ public class SocketManger {
 			}
 		} else {
 			contentSocket();
+			if(context!=null)
+			{
+				MyApplication.getInstance().showMessage(context, "网络已经断开，正在重连");
+			}
+			
 			Log.i("TAG", "未连接");
 		}
 	}
@@ -160,7 +177,14 @@ public class SocketManger {
 
 			@Override
 			public void call(Object... arg0) {
-				 Log.i("TAG","---->>>socket  Socket.EVENT_CONNECT");
+				//发送广播 通知 socketio链接成功
+				sendBroadcaseToChatAtConnect();
+				Log.i("TAG","---->>>socket  Socket.EVENT_CONNECT");
+				 if(context!=null)
+				 {
+					 MyApplication.getInstance().showMessage(context, "网络连接成功");
+				 }
+				 
 				//登录
 				onLineToUserID();
 				inroon(userId, roomBean);
@@ -173,6 +197,7 @@ public class SocketManger {
 			public void call(Object... arg0) {
 				SystemClock.sleep(800);
 				Log.i("TAG", "---->>>socket Socket.EVENT_CONNECT_ERROR   arg0:"+arg0);
+				sendBroadcaseToChatAtUnConnect();
 				contentSocket();
 			}
 		});
@@ -183,6 +208,7 @@ public class SocketManger {
 			@Override
 			public void call(Object... arg0) {
 				Log.i("TAG", "---->>>socket Socket.EVENT_CONNECT_TIMEOUT");
+				sendBroadcaseToChatAtUnConnect();
 				contentSocket();
 			}
 		});
@@ -193,6 +219,7 @@ public class SocketManger {
 			@Override
 			public void call(Object... arg0) {
 				Log.i("TAG", "---->>>socket Socket.EVENT_DISCONNECT");
+				sendBroadcaseToChatAtConnect();
 				//登录
 				onLineToUserID();
 			}
@@ -203,6 +230,7 @@ public class SocketManger {
 
 			@Override
 			public void call(Object... arg0) {
+				sendBroadcaseToChatAtUnConnect();
 				Log.i("TAG", "---->>>socket Socket.EVENT_DISCONNECT");
 				
 			}
@@ -416,5 +444,22 @@ public class SocketManger {
 			
 		}
 	}
+	
+	/*****
+	 * 发送广播 通知 socketio链接成功
+	 * ***/
+	void sendBroadcaseToChatAtConnect()
+	{
+		MyApplication.getInstance().getApplicationContext().sendBroadcast(new Intent(ChatActivity.IntentFilterChatAtConnect));
+	}
+	
+	/*****
+	 * 发送广播 通知 socketio链接断开
+	 * ***/
+	void sendBroadcaseToChatAtUnConnect()
+	{
+		MyApplication.getInstance().getApplicationContext().sendBroadcast(new Intent(ChatActivity.IntentFilterChatAtUnConnect));
+	}
+	
 	
 }

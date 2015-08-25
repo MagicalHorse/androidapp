@@ -32,6 +32,7 @@ import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.faceview.FaceView;
 import com.shenma.yueba.view.faceview.FaceView.OnChickCallback;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -131,11 +132,17 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 	private List<Integer> int_array=new ArrayList<Integer>();
 	private String chat_name = "";
 	private TextView tv_top_title;
+	private TextView pb_reserttitle_textview;//提示socke重连
 	private String littlePicPath;
 	private String littlePicPath_cache;
     public static Map<Integer,String> userid_logo=new HashMap<Integer,String>();
     private  ImBroadcastReceiver imBroadcastReceiver;
     private boolean isregister=false;
+    
+    public final static String IntentFilterChatAtConnect="com.shenma.yueba.ChatActivity.connect";//socketio已连接
+    public final static String IntentFilterChatAtUnConnect="com.shenma.yueba.ChatActivity.unconnect";//socketio已断开
+    
+    boolean isRegisterbroadcase=false;
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -144,7 +151,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_chat);
 		imBroadcastReceiver=new ImBroadcastReceiver(this);//初始化广播监听
-		registerImBroadcastReceiver();//注册广播
+		registerImBroadcastReceiver();//注册广播（接收 消息）
 		// 我的 userid
 		formUser_id = Integer.parseInt(SharedUtil.getUserId(ChatActivity.this));
 		// 我的昵称
@@ -194,6 +201,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 			finish();
 			return;
 		}
+		regiestSockIoBroadCase();//监听sockeoio链接变化
 	}
 	
 	
@@ -250,6 +258,12 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 				finish();
 			}
 		});
+		
+		//
+		pb_reserttitle_textview=(TextView)findViewById(R.id.pb_reserttitle_textview);
+		pb_reserttitle_textview.getBackground().setAlpha(5);
+		showOrHiddenAlertView();
+		
 		//商品对象
 		chat_product_head_layout_include = (RelativeLayout) findViewById(R.id.chat_product_head_layout_include);
 		tv_top_right = (TextView) findViewById(R.id.tv_top_right);
@@ -359,12 +373,14 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 	protected void onDestroy() {
 		super.onDestroy();
 		userid_logo.clear();
-		unRegisterImBroadcastReceiver();
+		unRegisterImBroadcastReceiver();//注销消息接收
+		unRegiestSockIoBroadCase();//注销socketio  链接变化监听
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
+		SocketManger.the().setContext(this);
 		if (fView.getVisibility() == View.VISIBLE) {
 			hideFace();
 		}
@@ -435,6 +451,11 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 			if (!NetUtils.isNetworkConnected(this)) {
 				Toast.makeText(ChatActivity.this, "网络不可用", 1000).show();
 				return;
+			}
+			if(!showOrHiddenAlertView())
+			{
+			  MyApplication.getInstance().showMessage(ChatActivity.this, "通信已断开，正在重连");
+			  return;	
 			}
 			setTextMsgData(content);
 			mEditTextContent.setText("");
@@ -1101,6 +1122,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 	@Override
 	protected void onStop() {
 		super.onStop();
+		SocketManger.the().setContext(null);
 	}
 	
 	
@@ -1186,6 +1208,71 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 		// TODO Auto-generated method stub
 		
 	}
+	
+	/******
+	 * 根据socket是否连接 显示 或隐藏  提示信息
+	 * ***/
+	boolean  showOrHiddenAlertView()
+	{
+		boolean isconnect=false;
+		if(!SocketManger.the().isConnect())
+		{
+			isconnect=false;
+		}else
+		{
+			isconnect=true;
+		}
+		if(pb_reserttitle_textview!=null)
+		{
+			if(isconnect)
+			{
+				pb_reserttitle_textview.setVisibility(View.VISIBLE);
+			}else
+			{
+				pb_reserttitle_textview.setVisibility(View.GONE);
+			}
+			
+		}
+		return isconnect;
+	}
+	
+	
+	void regiestSockIoBroadCase()
+	{
+		if(isRegisterbroadcase)
+		{
+			isRegisterbroadcase=true;
+			IntentFilter intentFilter=new IntentFilter();
+			intentFilter.addAction(IntentFilterChatAtConnect);
+			intentFilter.addAction(IntentFilterChatAtUnConnect);
+			ChatActivity.this.registerReceiver(broadcastReceiver, intentFilter);
+		}
+	}
+	
+	void unRegiestSockIoBroadCase()
+	{
+		if(isRegisterbroadcase)
+		{
+			ChatActivity.this.unregisterReceiver(broadcastReceiver);
+			isRegisterbroadcase=false;
+		}
+	}
+	
+	BroadcastReceiver broadcastReceiver=new BroadcastReceiver()
+	{
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			if(intent!=null)
+			{
+				if(intent.getAction().equals(ChatActivity.IntentFilterChatAtConnect) || intent.getAction().equals(ChatActivity.IntentFilterChatAtUnConnect))
+				{
+					showOrHiddenAlertView();
+				}
+			}
+		}
+
+	};
 	
 }
 

@@ -331,11 +331,18 @@ public class MyApplication extends Application {
 	 * @param String
 	 *            msg 提示的消息
 	 * ***/
-	public void showMessage(Context context, String msg) {
-		if(context!=null && msg!=null)
+	public void showMessage(final Context context, final String msg) {
+		if(context!=null && context instanceof Activity && msg!=null)
 		{
-		   Toast.makeText(context, msg, 1000).show();
+			((Activity)context).runOnUiThread(new Runnable() {
+				
+				@Override
+				public void run() {
+					Toast.makeText(context, msg, 1000).show();
+				}
+			});
 		}
+		
 	}
 
 	/*****

@@ -84,7 +84,31 @@ public class DynamicListFragment extends BaseFragment {
 
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,long arg3) {
-				
+				pull_refresh_list.setOnItemClickListener(new OnItemClickListener() {
+
+					@Override
+					public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,long arg3) {
+						
+						UserDynamicInfo msgListInfo=mList.get(arg2-1);
+						int type=msgListInfo.getType();  
+						switch(type)
+						{
+						case 0://0：关注了某人
+							ToolsUtil.forwardShopMainActivity(getActivity(),msgListInfo.getDataId());
+							break;
+						case 1://1：加入了圈子
+							ToolsUtil.forwardCircleActivity(getActivity(),msgListInfo.getDataId(),-1);
+							break;
+						case 2://2：购买了商品
+							ToolsUtil.forwardProductInfoActivity(getActivity(),msgListInfo.getDataId());
+							break;
+						case 3://3：赞了某件商品
+							ToolsUtil.forwardProductInfoActivity(getActivity(),msgListInfo.getDataId());
+							break;
+						}
+						
+					}
+				});
 			}
 		});
 		ToolsUtil.initPullResfresh(pull_refresh_list, getActivity());
