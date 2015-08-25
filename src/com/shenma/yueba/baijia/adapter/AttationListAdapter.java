@@ -2,22 +2,21 @@ package com.shenma.yueba.baijia.adapter;
 
 import java.util.List;
 
-import android.content.Context;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.widget.TextView;
-
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.AttationListActivity;
-import com.shenma.yueba.baijia.modle.AttationListBean;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.RoundImageView;
 import com.shenma.yueba.yangjia.modle.AttationAndFansItemBean;
+
+import android.content.Context;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 public class AttationListAdapter extends BaseAdapterWithUtil {
 	private List<AttationAndFansItemBean> mList;
@@ -58,6 +57,17 @@ public class AttationListAdapter extends BaseAdapterWithUtil {
 			holder = new Holder();
 			convertView = View.inflate(ctx, R.layout.fans_list_item, null);
 			holder.riv_head = (RoundImageView) convertView.findViewById(R.id.riv_head);
+			holder.riv_head.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					if(v.getTag()!=null && v.getTag() instanceof AttationAndFansItemBean)
+					{
+						AttationAndFansItemBean bean=(AttationAndFansItemBean)v.getTag();
+						ToolsUtil.forwardShopMainActivity(context, Integer.parseInt(bean.getUserId()));
+					}
+				}
+			});
 			holder.tv_name = (TextView) convertView.findViewById(R.id.tv_name);
 			holder.tv_attention_count = (TextView) convertView.findViewById(R.id.tv_attention_count);
 			holder.tv_fans_count = (TextView) convertView.findViewById(R.id.tv_fans_count);
@@ -117,6 +127,7 @@ public class AttationListAdapter extends BaseAdapterWithUtil {
 	void initValue(int position,Holder holder)
 	{
 		AttationAndFansItemBean bean=mList.get(position);
+		holder.riv_head.setTag(bean);
 		MyApplication.getInstance().getBitmapUtil().display(holder.riv_head, ToolsUtil.nullToString(bean.getUserLogo()));
 		holder.tv_name.setText(ToolsUtil.nullToString(bean.getUserName()));
 		holder.tv_atttention.setTag(bean);

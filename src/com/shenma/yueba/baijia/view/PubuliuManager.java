@@ -94,13 +94,16 @@ public class PubuliuManager {
     		for(int i=0;i<item.size();i++)
     		{
     			MyFavoriteProductListInfo bean=item.get(i);
+    			//左侧布局的宽度（即内部图片的 宽度）
     			int witdh=pubuliy_left_linearlayout.getWidth();
     			MyFavoriteProductListPic myFavoriteProductListPic=bean.getPic();
     			if(myFavoriteProductListPic==null)
     			{
     				myFavoriteProductListPic=new MyFavoriteProductListPic();
     			}
+    			//根据 图片的宽高比 计算出 图片的 高度
     			int height=(int)(witdh*myFavoriteProductListPic.getRatio());
+    			//图片的布局对象
     			View parentview=LinearLayout.inflate(context, R.layout.pubuliu_item_layout, null);
     			//价格
     			TextView pubuliu_item_layout_pricevalue_textview=(TextView)parentview.findViewById(R.id.pubuliu_item_layout_pricevalue_textview);
@@ -128,13 +131,13 @@ public class PubuliuManager {
     			if(height>0)
     			{
     				Log.i("TAG", "height="+height +" witdh="+witdh   +"ration="+myFavoriteProductListPic.getRatio());
-        			
+        			//设置 图片的高度
     				iv.getLayoutParams().height=height;
     			}else
     			{
     				height=witdh;
     				Log.i("TAG", "height="+height +" witdh="+witdh   +"ration="+myFavoriteProductListPic.getRatio());
-        			
+    				//设置 图片的高度
     				iv.getLayoutParams().height=height;
     			}
     			iv.setTag(bean);
@@ -151,7 +154,7 @@ public class PubuliuManager {
 					}
 				});
     			iv.setImageResource(R.drawable.default_pic);
-    			iv.setScaleType(ScaleType.FIT_XY);
+    			iv.setScaleType(ScaleType.CENTER_CROP);
     			android.util.Log.i("TAG", "leftHeight="+leftHeight+"   rightHeight="+rightHeight);
     		    //根据 左右高度判断
     			if(leftHeight<=rightHeight)
