@@ -156,6 +156,7 @@ public class SocketManger {
 			Log.i("TAG", "未连接");
 		}
 	}
+	
 
 	/******
 	 * 判断是否建立连接
