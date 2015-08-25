@@ -299,7 +299,8 @@
             android:layout_height="28dp"
             android:background="@color/red_text_color"
             android:textSize="@dimen/textsize8sp"
-            android:text="重新连接中"
+            android:textColor="@color/color_deeoyellow"
+            android:text="通信已断开,重新连接中"
             />
     </RelativeLayout>
 

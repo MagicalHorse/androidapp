@@ -157,6 +157,7 @@ public class SocketManger {
 		}
 	}
 	
+	
 
 	/******
 	 * 判断是否建立连接
@@ -181,11 +182,6 @@ public class SocketManger {
 				//发送广播 通知 socketio链接成功
 				sendBroadcaseToChatAtConnect();
 				Log.i("TAG","---->>>socket  Socket.EVENT_CONNECT");
-				 if(context!=null)
-				 {
-					 MyApplication.getInstance().showMessage(context, "网络连接成功");
-				 }
-				 
 				//登录
 				onLineToUserID();
 				inroon(userId, roomBean);
@@ -219,7 +215,12 @@ public class SocketManger {
 
 			@Override
 			public void call(Object... arg0) {
-				Log.i("TAG", "---->>>socket Socket.EVENT_DISCONNECT");
+				Log.i("TAG", "---->>>socket Socket.EVENT_RECONNECT");
+				 if(context!=null)
+				 {
+					 MyApplication.getInstance().showMessage(context, "网络连接成功");
+				 }
+				 
 				sendBroadcaseToChatAtConnect();
 				//登录
 				onLineToUserID();
@@ -231,6 +232,7 @@ public class SocketManger {
 
 			@Override
 			public void call(Object... arg0) {
+				contentSocket();
 				sendBroadcaseToChatAtUnConnect();
 				Log.i("TAG", "---->>>socket Socket.EVENT_DISCONNECT");
 				

@@ -151,7 +151,6 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_chat);
 		imBroadcastReceiver=new ImBroadcastReceiver(this);//初始化广播监听
-		registerImBroadcastReceiver();//注册广播（接收 消息）
 		// 我的 userid
 		formUser_id = Integer.parseInt(SharedUtil.getUserId(ChatActivity.this));
 		// 我的昵称
@@ -201,7 +200,6 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 			finish();
 			return;
 		}
-		regiestSockIoBroadCase();//监听sockeoio链接变化
 	}
 	
 	
@@ -261,7 +259,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 		
 		//
 		pb_reserttitle_textview=(TextView)findViewById(R.id.pb_reserttitle_textview);
-		pb_reserttitle_textview.getBackground().setAlpha(5);
+		pb_reserttitle_textview.getBackground().setAlpha(10);
 		showOrHiddenAlertView();
 		
 		//商品对象
@@ -381,6 +379,8 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 	protected void onResume() {
 		super.onResume();
 		SocketManger.the().setContext(this);
+		registerImBroadcastReceiver();//注册广播（接收 消息）
+		regiestSockIoBroadCase();//监听sockeoio链接变化
 		if (fView.getVisibility() == View.VISIBLE) {
 			hideFace();
 		}
@@ -1215,21 +1215,21 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 	boolean  showOrHiddenAlertView()
 	{
 		boolean isconnect=false;
-		if(!SocketManger.the().isConnect())
-		{
-			isconnect=false;
-		}else
+		if(SocketManger.the().isConnect())
 		{
 			isconnect=true;
+		}else
+		{
+			isconnect=false;
 		}
 		if(pb_reserttitle_textview!=null)
 		{
 			if(isconnect)
 			{
-				pb_reserttitle_textview.setVisibility(View.VISIBLE);
+				pb_reserttitle_textview.setVisibility(View.GONE);
 			}else
 			{
-				pb_reserttitle_textview.setVisibility(View.GONE);
+				pb_reserttitle_textview.setVisibility(View.VISIBLE);
 			}
 			
 		}
@@ -1239,7 +1239,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 	
 	void regiestSockIoBroadCase()
 	{
-		if(isRegisterbroadcase)
+		if(!isRegisterbroadcase)
 		{
 			isRegisterbroadcase=true;
 			IntentFilter intentFilter=new IntentFilter();
