@@ -272,7 +272,7 @@
             android:layout_width="28dp"
             android:layout_height="28dp"
             android:layout_centerHorizontal="true"
-            android:visibility="gone" />
+            android:visibility="visible" />
 
         <com.handmark.pulltorefresh.library.PullToRefreshListView
             android:id="@+id/chat_list"
@@ -291,6 +291,16 @@
             android:scrollbarStyle="outsideOverlay"
             android:smoothScrollbar="true"
             android:transcriptMode="normal" />
+        
+        <TextView 
+            android:id="@+id/pb_reserttitle_textview"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="28dp"
+            android:background="@color/red_text_color"
+            android:textSize="@dimen/textsize8sp"
+            android:text="重新连接中"
+            />
     </RelativeLayout>
 
 </RelativeLayout>
