@@ -150,6 +150,7 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_chat);
+		MyApplication.getInstance().addActivity(this);
 		imBroadcastReceiver=new ImBroadcastReceiver(this);//初始化广播监听
 		// 我的 userid
 		formUser_id = Integer.parseInt(SharedUtil.getUserId(ChatActivity.this));
@@ -373,6 +374,8 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 		userid_logo.clear();
 		unRegisterImBroadcastReceiver();//注销消息接收
 		unRegiestSockIoBroadCase();//注销socketio  链接变化监听
+		outRoom();
+		MyApplication.getInstance().removeActivity(this);
 	}
 
 	@Override
@@ -423,12 +426,13 @@ public class ChatActivity extends RoboActivity implements OnClickListener,
 				fView.setVisibility(View.GONE);
 			}
 		}
-		outRoom();
 	}
 
 	@Override
 	protected void onNewIntent(Intent intent) {
 		super.onNewIntent(intent);
+		outRoom();
+		Log.i("TAG", "onNewIntent------->>>>");
 		finish();
 		startActivity(intent);
 	}

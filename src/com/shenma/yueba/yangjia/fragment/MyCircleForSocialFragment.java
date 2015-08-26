@@ -8,6 +8,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.shenma.yueba.ChatActivity;
 import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.fragment.BaseFragment;
 import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.util.HttpControl;
@@ -60,6 +61,7 @@ public class MyCircleForSocialFragment extends BaseFragment {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int pos,
 					long arg3) {
+				MyApplication.getInstance().finishActivity(ChatActivity.class);
 				Intent intent = new Intent(getActivity(),ChatActivity.class);
 				intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 				intent.putExtra("Chat_NAME",mList.get(pos-1).getName());//圈子名字

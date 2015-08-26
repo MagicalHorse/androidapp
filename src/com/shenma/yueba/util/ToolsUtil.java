@@ -1056,6 +1056,7 @@ public class ToolsUtil {
 	 * ****/
 	public static void forwardChatActivity(Context ctx,String Chat_NAME,int toUser_id,int circleId,String Chat_RoomID,RequestProductDetailsInfoBean bean)
 	{
+		MyApplication.getInstance().finishActivity(ChatActivity.class);
 		Intent intent=new Intent(ctx,ChatActivity.class);
 		intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 		intent.putExtra("Chat_NAME",Chat_NAME);

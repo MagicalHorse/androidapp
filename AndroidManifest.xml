@@ -437,6 +437,7 @@
         <!-- 聊天界面 -->
         <activity
             android:name="com.shenma.yueba.ChatActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait" >
         </activity>
         <!-- 店铺介绍界面 -->
@@ -605,23 +606,24 @@
             android:enabled="true" >
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.REGISTRATION" />
- Required  用户注册SDK的intent
+ Required  用户注册SDK的intent
                 <action android:name="cn.jpush.android.intent.UNREGISTRATION" />
                 <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" />
- Required  用户接收SDK消息的intent
+ Required  用户接收SDK消息的intent
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" />
- Required  用户接收SDK通知栏信息的intent
+ Required  用户接收SDK通知栏信息的intent
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />
- Required  用户打开自定义通知栏的intent
+ Required  用户打开自定义通知栏的intent
                 <action android:name="cn.jpush.android.intent.ACTION_RICHPUSH_CALLBACK" />
- Optional 用户接受Rich Push Javascript 回调函数的intent
+ Optional 用户接受Rich Push Javascript 回调函数的intent
                 <action android:name="cn.jpush.android.intent.CONNECTION" />
-接收网络变化 连接/断开 since 1.6.3
+接收网络变化 连接/断开 since 1.6.3
                 <category android:name="com.shenma.yueba" />
             </intent-filter>
         </receiver>
 
-<!--         友盟开发、测试环境
+        <!--
+             友盟开发、测试环境
        <meta-data
             android:name="UMENG_APPKEY"
             android:value="555321fae0f55ae751002b84" >
@@ -632,15 +634,11 @@
             android:value="developer-default" />
         <meta-data
             android:name="JPUSH_APPKEY"
-            android:value="bd04e24380b02b787b18d013" />  -->
+            android:value="bd04e24380b02b787b18d013" />
+        -->
 
-        
-        
-        
-        
-        
-        
-     <!-- 生产环境 --> 
+
+        <!-- 生产环境 -->
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="55d43ae267e58eacaa002df8" >

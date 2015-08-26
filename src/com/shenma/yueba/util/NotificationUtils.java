@@ -121,6 +121,12 @@ public class NotificationUtils {
 			}
 			if("14".equals(type))//未读消息
 			{
+			
+				if(!ToolsUtil.isApplicationBroughtToBackground(MyApplication.getInstance().getPackageName().toString()+".ChatActivity"))
+				{
+					MyApplication.getInstance().finishActivity(ChatActivity.class);
+				}
+				
 				notificationIntent = new Intent(ctx,ChatActivity.class); // 点击该通知后要跳转的Activity
 				notificationIntent.setFlags(Intent. FLAG_ACTIVITY_REORDER_TO_FRONT);
 				notificationIntent.putExtra("Chat_RoomID", roomid.toString());
