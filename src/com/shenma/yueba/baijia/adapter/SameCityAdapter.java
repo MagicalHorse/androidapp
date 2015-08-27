@@ -62,6 +62,9 @@ public class SameCityAdapter extends BaseAdapterWithUtil {
 			holder.nick_name = (TextView) convertView.findViewById(R.id.tv_nick_name);
 			holder.tv_belong = (TextView) convertView.findViewById(R.id.tv_belong);
 			holder.tv_attention = (TextView) convertView.findViewById(R.id.tv_attention);
+			holder.brandlist_item_imageview1_linearlayout=(LinearLayout)convertView.findViewById(R.id.brandlist_item_imageview1_linearlayout);
+			holder.brandlist_item_imageview2_linearlayout=(LinearLayout)convertView.findViewById(R.id.brandlist_item_imageview2_linearlayout);
+			holder.brandlist_item_imageview3_linearlayout=(LinearLayout)convertView.findViewById(R.id.brandlist_item_imageview3_linearlayout);
 			holder.brandlist_item_imageview1=(ImageView)convertView.findViewById(R.id.brandlist_item_imageview1);
 			holder.brandlist_item_imageview2=(ImageView)convertView.findViewById(R.id.brandlist_item_imageview2);
 			holder.brandlist_item_imageview3=(ImageView)convertView.findViewById(R.id.brandlist_item_imageview3);
@@ -111,17 +114,10 @@ public class SameCityAdapter extends BaseAdapterWithUtil {
 		}else{
 			holder = (Holder) convertView.getTag();
 		}
-		int width=holder.brandlist_item_imageview1.getWidth();
-		if(width>0)
-		{
-			holder.brandlist_item_imageview1.setLayoutParams(new LinearLayout.LayoutParams(width, width));
-			holder.brandlist_item_imageview2.setLayoutParams(new LinearLayout.LayoutParams(width, width));
-			holder.brandlist_item_imageview3.setLayoutParams(new LinearLayout.LayoutParams(width, width));
-		}
 		
-		holder.brandlist_item_imageview1.setVisibility(View.INVISIBLE);
-		holder.brandlist_item_imageview2.setVisibility(View.INVISIBLE);
-		holder.brandlist_item_imageview3.setVisibility(View.INVISIBLE);
+		holder.brandlist_item_imageview1_linearlayout.setVisibility(View.INVISIBLE);
+		holder.brandlist_item_imageview2_linearlayout.setVisibility(View.INVISIBLE);
+		holder.brandlist_item_imageview3_linearlayout.setVisibility(View.INVISIBLE);
 		
 		BrandCityWideInfo brandCityWideInfo=items.get(position);
 		holder.iv_head.setTag(brandCityWideInfo.getUserId());
@@ -151,15 +147,15 @@ public class SameCityAdapter extends BaseAdapterWithUtil {
 			  switch(i)
 			  {
 			  case 0:
-				  holder.brandlist_item_imageview1.setVisibility(View.VISIBLE);
+				  holder.brandlist_item_imageview1_linearlayout.setVisibility(View.VISIBLE);
 				  initBitmap(ToolsUtil.getImage(ToolsUtil.nullToString(pic_array[0]), 320, 0), holder.brandlist_item_imageview1);
 				  break;
 			  case 1:
-				  holder.brandlist_item_imageview2.setVisibility(View.VISIBLE);
+				  holder.brandlist_item_imageview2_linearlayout.setVisibility(View.VISIBLE);
 				  initBitmap(ToolsUtil.getImage(ToolsUtil.nullToString(pic_array[1]), 320, 0), holder.brandlist_item_imageview2);
 				  break;
 			  case 2:
-				  holder.brandlist_item_imageview3.setVisibility(View.VISIBLE);
+				  holder.brandlist_item_imageview3_linearlayout.setVisibility(View.VISIBLE);
 				  initBitmap(ToolsUtil.getImage(ToolsUtil.nullToString(pic_array[2]), 320, 0), holder.brandlist_item_imageview3);
 				  break;
 			  }
@@ -174,6 +170,7 @@ public class SameCityAdapter extends BaseAdapterWithUtil {
 		TextView nick_name;
 		TextView tv_belong;
 		TextView tv_attention;
+		LinearLayout brandlist_item_imageview1_linearlayout,brandlist_item_imageview2_linearlayout,brandlist_item_imageview3_linearlayout;
 		ImageView brandlist_item_imageview1,brandlist_item_imageview2,brandlist_item_imageview3;
 		
 	}
