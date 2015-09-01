@@ -206,7 +206,7 @@ public class SalesManagerForBuyerActivity extends BaseFragmentActivity implement
 	
 	@Override
 	protected void onDestroy() {
-		MyApplication.getInstance().addActivity(this);
+		MyApplication.getInstance().removeActivity(this);
 		super.onDestroy();
 	}
 	

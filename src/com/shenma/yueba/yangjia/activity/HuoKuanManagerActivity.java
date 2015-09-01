@@ -388,7 +388,7 @@ public class HuoKuanManagerActivity extends BaseActivityWithTopView implements
 		// }
 		MyApplication.getInstance().getHuoKuanManagerRefreshService()
 				.removeFromList(this);
-		MyApplication.getInstance().removeActivity(this);// 加入回退栈
+		MyApplication.getInstance().removeActivity(this);// 移除
 		super.onDestroy();
 	}
 

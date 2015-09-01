@@ -100,7 +100,7 @@ public class ModifyNickNameActivity extends BaseActivityWithTopView {
 	
 	@Override
 	protected void onDestroy() {
-		MyApplication.getInstance().addActivity(this);
+		MyApplication.getInstance().removeActivity(this);
 		super.onDestroy();
 	}
 	

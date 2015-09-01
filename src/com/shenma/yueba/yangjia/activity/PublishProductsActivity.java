@@ -376,7 +376,7 @@ public class PublishProductsActivity extends BaseActivityWithTopView implements
 
 	@Override
 	protected void onDestroy() {
-		MyApplication.getInstance().addActivity(this);
+		MyApplication.getInstance().removeActivity(this);
 		super.onDestroy();
 		deleteImg();
 	}

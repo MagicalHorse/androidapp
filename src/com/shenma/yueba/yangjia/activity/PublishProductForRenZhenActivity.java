@@ -73,7 +73,7 @@ public class PublishProductForRenZhenActivity extends BaseActivityWithTopView im
 	
 	@Override
 	protected void onDestroy() {
-		MyApplication.getInstance().addActivity(this);
+		MyApplication.getInstance().removeActivity(this);
 		super.onDestroy();
 	}
 	

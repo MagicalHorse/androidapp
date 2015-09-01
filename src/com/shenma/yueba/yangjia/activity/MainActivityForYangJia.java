@@ -175,7 +175,7 @@ private View getTabItemView(int index) {
 
 @Override
 protected void onDestroy() {
-	MyApplication.getInstance().addActivity(this);
+	MyApplication.getInstance().removeActivity(this);
 	super.onDestroy();
 	unregisterBroadcase();
 }
