@@ -1,11 +1,24 @@
 
 package com.shenma.yueba.application;
 
+import im.control.SocketManger;
+
 import java.io.File;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+
+import roboguice.RoboGuice;
+import android.app.Activity;
+import android.app.Application;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
+import android.graphics.Typeface;
+import android.widget.Toast;
+import cn.jpush.android.api.JPushInterface;
 
 import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.bitmap.BitmapCommonUtils;
@@ -24,55 +37,33 @@ import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.activity.LoginAndRegisterActivity;
-import com.shenma.yueba.baijia.modle.UserRequestBean;
-import com.shenma.yueba.constants.Constants;
 import com.shenma.yueba.db.DBHelper;
 import com.shenma.yueba.refreshservice.HuoKuanManagerRefreshService;
 import com.shenma.yueba.refreshservice.IndexRefreshService;
 import com.shenma.yueba.util.LocationUtil;
 import com.shenma.yueba.util.PublishPicUtil;
 import com.shenma.yueba.util.SharedUtil;
-import com.shenma.yueba.util.ToolsUtil;
-
-import android.app.Activity;
-import android.app.Application;
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Bitmap.CompressFormat;
-import android.graphics.Typeface;
-import android.widget.Toast;
-import cn.jpush.android.api.JPushInterface;
-import im.control.SocketManger;
-import roboguice.RoboGuice;
 
 public class MyApplication extends Application {
 
 	
-	private IndexRefreshService indexRefreshService;
-	private HuoKuanManagerRefreshService huoKuanManagerRefreshService;
-	private static List<Activity> activityList = new LinkedList<Activity>();
+	private IndexRefreshService indexRefreshService;//养家首页刷新工具
+	private HuoKuanManagerRefreshService huoKuanManagerRefreshService;//货款页面刷新工具
+	private static List<Activity> activityList = new LinkedList<Activity>();//activity对象缓存
 	private static MyApplication instance;
-	private BitmapUtils bitmapUtils;
+	private BitmapUtils bitmapUtils;//图片加载工具类
 	public BitmapDisplayConfig bigPicDisplayConfig;
-
 	public float kuanggaobi = (float) 1.0;// 相册截图的宽高比
-
-	private Map<String, Integer> mFaceMap = new LinkedHashMap<String, Integer>();
+	private Map<String, Integer> mFaceMap = new LinkedHashMap<String, Integer>();//笑脸集合
 	private static DBHelper dbHelper;// 数据库帮助类
 	/**
 	 * /** 初始化图片加载类MyApplication123
 	 */
 	private ImageLoader ivL;
 	private DisplayImageOptions options;
-
-	private String text;
-	private String ddddddd;
-	private String cccc;
 	private DisplayImageOptions optionsForRound;
-	private UserRequestBean userRequestBean;
 	private Typeface tf;
-	private PublishPicUtil publishPicUtil;
+	private PublishPicUtil publishPicUtil;//发布商品缓存类
 
 	@Override
 	public void onCreate() {
@@ -93,6 +84,7 @@ public class MyApplication extends Application {
 		locationUtil.getLocation();
 	}
 
+	
 	
 	
 	/**
@@ -380,10 +372,6 @@ public class MyApplication extends Application {
 
 	}
 
-	private void initScreenWithAndHeight() {
-		int width = ToolsUtil.getDisplayHeight(getApplicationContext());
-		Constants.SCREENHEITH = width;
-	}
 
 	public Map<String, Integer> getFaceMap() {
 		if (!mFaceMap.isEmpty())
@@ -502,4 +490,10 @@ public class MyApplication extends Application {
 		mFaceMap.put("[鼓掌]", R.drawable.biaoqing084);
 	}
 
+	
+	
+	
+	
+	
+	
 }
