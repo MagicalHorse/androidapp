@@ -8,7 +8,6 @@ import java.util.Map;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,12 +15,12 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.shenma.yueba.R;
-import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.BaijiaBrandListActivity;
 import com.shenma.yueba.baijia.modle.ProductsDetailsTagsInfo;
+import com.shenma.yueba.util.DialogUtilInter;
+import com.shenma.yueba.util.DialogUtils;
 import com.shenma.yueba.util.ToolsUtil;
 
 /**
@@ -100,9 +99,28 @@ public class TagImageView extends RelativeLayout {
 			tagNameList.add(content);
 			tagTypeList.add(tagType);
 			tagIdList.add(tagId);
-	
+			layout.setOnLongClickListener(new OnLongClickListener() {
+				
+				@Override
+				public boolean onLongClick(View v) {
+					final int tag = (Integer) v.getTag();
+					int count = TagImageView.this.getChildCount();
+					DialogUtils utils = new DialogUtils();
+					utils.alertDialog(getContext(), "提示", "要删除该标签吗？", new DialogUtilInter() {
+						@Override
+						public void dialogCallBack(int... which) {
+							
+							clearTagView(tag);
+						}
+					}, true, "确定", "取消", true, true);
+					return false;
+				}
+			});
 	}
 
+	
+	
+	
 	
 	/**
 	 * 添加标签
@@ -236,7 +254,7 @@ public class TagImageView extends RelativeLayout {
 						break;
 					}
 				}
-				return true;
+				return false;
 			}
 		});
 
@@ -428,6 +446,22 @@ public class TagImageView extends RelativeLayout {
 	 * @updateAuthor
 	 * @updateInfo (此处输入修改内容,若无修改可不写.)
 	 */
+	public void clearTagView(int tag) {
+		if (tagViewList != null && tagViewList.size() > 0) {
+			for (int i = 0; i <tagViewList.size(); i++) {
+				if((Integer)tagViewList.get(i).getTag() == tag){
+					tagViewList.remove(i);
+					tagNameList.remove(i);
+					tagIdList.remove(i);
+					tagTypeList.remove(i);
+					positionList.remove(i);
+					removeViews(i+1, 1);
+					
+				}
+			}
+		}
+	}
+	
 	public void clearTagView() {
 		if (tagViewList != null && tagViewList.size() > 0) {
 			removeViews(1, tagViewList.size());
