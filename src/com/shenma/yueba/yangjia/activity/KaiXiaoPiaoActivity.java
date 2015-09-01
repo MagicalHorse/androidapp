@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,6 +17,7 @@ import com.shenma.yueba.baijia.dialog.QRCodeShareDialog;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
+import com.shenma.yueba.util.SoftKeyboardUtil;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.yangjia.modle.KaiXiaoPiaoBackBean;
 import com.shenma.yueba.yangjia.modle.kaixiaoPiaoBean;
@@ -44,6 +46,7 @@ public class KaiXiaoPiaoActivity extends BaseActivityWithTopView implements
 	}
 
 	private void initView() {
+		ToolsUtil.hideSoftInputKeyBoard(this);//隐藏软键盘
 		setTitle("开小票");
 		setLeftTextView(new OnClickListener() {
 			@Override

@@ -40,7 +40,11 @@ import com.shenma.yueba.util.WXLoginUtil;
 import com.shenma.yueba.yangjia.adapter.HuoKuanIncomeAndOutGoingAdapter;
 import com.shenma.yueba.yangjia.modle.HuoKuanItem;
 import com.shenma.yueba.yangjia.modle.HuoKuanListBackBean;
-
+/**
+ * 货款收支的Fragment
+ * @author a
+ *
+ */
 @SuppressLint("ValidFragment")
 public class HuoKuanIncomeAndOutGoingFragment extends BaseFragment implements OnClickListener{
 	private View rootView;// 缓存Fragment view

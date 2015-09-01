@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -22,32 +21,27 @@ import android.widget.TextView;
 import com.shenma.yueba.R;
 import com.shenma.yueba.baijia.adapter.MyFragmentPagerAdapter;
 import com.shenma.yueba.baijia.fragment.BaseFragment;
-import com.shenma.yueba.baijia.fragment.BrandFragment;
 import com.shenma.yueba.util.FontManager;
 
 /**
- * 发现
+ * 圈子的Fragment
  * 
  * @author a
  * 
  */
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-public class SearchFragment extends BaseFragment implements OnClickListener {
-	private BrandFragment brandFragment;// 品牌
-	private TagFragment tagFragment;// 标签
-	private BuyerFragment buyerFragment;// 买手
+public class CircleFragment extends BaseFragment implements OnClickListener {
+	private MsgListFragment msgListFragment;
+	private DynamicListFragment dynamicFragment;
 	private ArrayList<Fragment> fragmentList = new ArrayList<Fragment>();
-	private ViewPager viewpager_search;
-	private ImageView iv_cursor_left, iv_cursor_center, iv_cursor_right;
+	private ViewPager viewpager_circle;
+	private ImageView iv_cursor_left, iv_cursor_right;
 	private Button bt_search, bt_msg;
-	private TextView tv_recommended_circle;
 	private RelativeLayout rl_my_circle;
 	private View view;
 	private MyFragmentPagerAdapter myFragmentPagerAdapter;
-	private EditText et_search;
-	private TextView tv_brand;//品牌
-	private TextView tv_tag;//标签
-	private TextView tv_buyer;//买手
+	private TextView tv_msg;
+	private TextView tv_dynamic;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -74,9 +68,9 @@ public class SearchFragment extends BaseFragment implements OnClickListener {
 	}
 
 	private void initViewPager() {
-		viewpager_search.setAdapter(myFragmentPagerAdapter);
-		viewpager_search.setCurrentItem(0);
-		viewpager_search.setOnPageChangeListener(new OnPageChangeListener() {
+		viewpager_circle.setAdapter(myFragmentPagerAdapter);
+		viewpager_circle.setCurrentItem(0);
+		viewpager_circle.setOnPageChangeListener(new OnPageChangeListener() {
 
 			// private boolean isScrolled = false;
 
@@ -120,20 +114,13 @@ public class SearchFragment extends BaseFragment implements OnClickListener {
 			 * 页面跳转完成后调用的方法
 			 */
 			public void onPageSelected(int arg0) {
-				if (arg0 == 0) {
-					iv_cursor_left.setVisibility(View.VISIBLE);
-					iv_cursor_center.setVisibility(View.INVISIBLE);
-					iv_cursor_right.setVisibility(View.INVISIBLE);
-				}
 				if (arg0 == 1) {
-					iv_cursor_left.setVisibility(View.INVISIBLE);
-					iv_cursor_center.setVisibility(View.VISIBLE);
-					iv_cursor_right.setVisibility(View.INVISIBLE);
-				}
-				if (arg0 == 2) {
-					iv_cursor_left.setVisibility(View.INVISIBLE);
-					iv_cursor_center.setVisibility(View.INVISIBLE);
 					iv_cursor_right.setVisibility(View.VISIBLE);
+					iv_cursor_left.setVisibility(View.INVISIBLE);
+				}
+				if (arg0 == 0) {
+					iv_cursor_right.setVisibility(View.INVISIBLE);
+					iv_cursor_left.setVisibility(View.VISIBLE);
 				}
 
 			}
@@ -174,32 +161,12 @@ public class SearchFragment extends BaseFragment implements OnClickListener {
 	}
 
 	private void initFragment() {
-		brandFragment = new BrandFragment();
-		tagFragment = new TagFragment();
-		buyerFragment = new BuyerFragment();
-		fragmentList.add(brandFragment);
-		fragmentList.add(tagFragment);
-		fragmentList.add(buyerFragment);
+		msgListFragment = new MsgListFragment();
+		dynamicFragment = new DynamicListFragment();
+		fragmentList.add(msgListFragment);
+		fragmentList.add(dynamicFragment);
 		myFragmentPagerAdapter = new MyFragmentPagerAdapter(
 				getChildFragmentManager(), fragmentList);
-
-	}
-
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.tv_brand:// 品牌
-			viewpager_search.setCurrentItem(0);
-			break;
-		case R.id.tv_tag:// 标签
-			viewpager_search.setCurrentItem(1);
-			break;
-		case R.id.tv_buyer:// 买手
-			viewpager_search.setCurrentItem(2);
-			break;
-		default:
-			break;
-		}
 
 	}
 
@@ -207,29 +174,38 @@ public class SearchFragment extends BaseFragment implements OnClickListener {
 	 * 初始化view
 	 */
 	private void initViews(LayoutInflater inflater) {
-		view = inflater.inflate(R.layout.search_layout, null);
-		et_search = (EditText) view.findViewById(R.id.et_search);
-		bt_search = (Button) view.findViewById(R.id.bt_search);
-		viewpager_search = (ViewPager) view.findViewById(R.id.viewpager_search);
+		view = inflater.inflate(R.layout.msg_fragment_layout, null);
+		tv_msg = (TextView) view.findViewById(R.id.tv_msg);
+		tv_dynamic = (TextView) view.findViewById(R.id.tv_dynamic);
+		tv_msg.setOnClickListener(this);
+		tv_dynamic.setOnClickListener(this);
+		viewpager_circle = (ViewPager) view.findViewById(R.id.viewpager_circle);
 		iv_cursor_left = (ImageView) view.findViewById(R.id.iv_cursor_left);
 		iv_cursor_left.setVisibility(View.VISIBLE);
-		iv_cursor_center = (ImageView) view.findViewById(R.id.iv_cursor_center);
 		iv_cursor_right = (ImageView) view.findViewById(R.id.iv_cursor_right);
-		iv_cursor_left.setVisibility(View.VISIBLE);
-		tv_brand = (TextView) view.findViewById(R.id.tv_brand);
-		tv_tag = (TextView) view.findViewById(R.id.tv_tag);
-		tv_buyer = (TextView) view.findViewById(R.id.tv_buyer);
+		bt_search = (Button) view.findViewById(R.id.bt_search);
 		bt_search.setOnClickListener(this);
-		tv_brand.setOnClickListener(this);
-		tv_tag.setOnClickListener(this);
-		tv_buyer.setOnClickListener(this);
-		FontManager.changeFonts(getActivity(), et_search, bt_search, tv_brand,
-				tv_tag, tv_buyer);
+		FontManager.changeFonts(getActivity(), tv_msg, tv_dynamic);
 	}
 
 	@Override
 	public void onResume() {
 		Log.i("CircleFragment", "onResume");
 		super.onResume();
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.tv_msg:// 买手街
+			viewpager_circle.setCurrentItem(0);
+			break;
+		case R.id.tv_dynamic:// 他们说
+			viewpager_circle.setCurrentItem(1);
+			break;
+		default:
+			break;
+		}
+
 	}
 }

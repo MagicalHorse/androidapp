@@ -26,7 +26,7 @@ import com.shenma.yueba.camera2.ActivityCapture;
 import com.shenma.yueba.util.FileUtils;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.SelecteKXPOrPublishType;
-import com.shenma.yueba.yangjia.fragment.CartFragment;
+import com.shenma.yueba.yangjia.fragment.CircleFragment;
 import com.shenma.yueba.yangjia.fragment.IndexFragmentForYangJia;
 import com.shenma.yueba.yangjia.fragment.MeFragmentForYangJia;
 import com.shenma.yueba.yangjia.fragment.MessageFragmentForYangJia;
@@ -79,7 +79,7 @@ public final class MainActivityForYangJia extends FragmentActivity implements Im
 	// Tab选项卡的文字
 		private String mTextviewArray[] = { "主页", "红榜", "发布", "消息","我" };
 	// 定义数组来存放Fragment界面
-	private Class fragmentArray[] = { IndexFragmentForYangJia.class,TaskRewardFragment.class,CartFragment.class,MessageFragmentForYangJia.class,MeFragmentForYangJia.class};
+	private Class fragmentArray[] = { IndexFragmentForYangJia.class,TaskRewardFragment.class,CircleFragment.class,MessageFragmentForYangJia.class,MeFragmentForYangJia.class};
 	View round_view;//消息的原点
 	ImBroadcastReceiver imBroadcastReceiver;
 	boolean isbroadcase=false;

@@ -52,7 +52,7 @@ import com.shenma.yueba.yangjia.activity.SalesManagerForBuyerActivity;
 import com.shenma.yueba.yangjia.activity.SocialManagerActivity;
 
 /**
- * 主界面
+ * 养家主界面
  * 
  * @author a
  */

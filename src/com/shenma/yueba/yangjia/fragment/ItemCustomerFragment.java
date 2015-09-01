@@ -29,7 +29,11 @@ import com.shenma.yueba.yangjia.activity.OrderDetailActivity;
 import com.shenma.yueba.yangjia.adapter.SalesManagerForAttestationBuyerAdapter;
 import com.shenma.yueba.yangjia.modle.OrderItem;
 import com.shenma.yueba.yangjia.modle.OrderListBackBean;
-
+/**
+ * 销售管理Fragment
+ * @author a
+ *
+ */
 @SuppressLint("ValidFragment")
 public class ItemCustomerFragment extends BaseFragment implements RefreshOrderListener{
 	private View rootView;// 缓存Fragment view
