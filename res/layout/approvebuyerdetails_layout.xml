@@ -54,6 +54,8 @@
                     android:text="@null"
                     android:textSize="@dimen/textsize18sp" />
 
+                <!-- 成交与好评 -->
+
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -104,6 +106,8 @@
                 </RelativeLayout>
             </RelativeLayout>
 
+            <!-- 循环图片 -->
+
             <RelativeLayout
                 android:id="@+id/appprovebuyer_viewpager_relativelayout"
                 android:layout_width="match_parent"
@@ -118,6 +122,8 @@
                     android:layout_height="match_parent"
                     android:visibility="visible" />
 
+                <!-- 图片的 原点 -->
+
                 <LinearLayout
                     android:id="@+id/appprovebuyer_viewpager_footer_linerlayout"
                     android:layout_width="match_parent"
@@ -127,6 +133,8 @@
                     android:gravity="center"
                     android:orientation="horizontal" />
             </RelativeLayout>
+
+            <!-- 价格与提货方式 -->
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -157,15 +165,19 @@
                     android:textSize="@dimen/textsize12sp" />
             </RelativeLayout>
 
+            <!-- 商品名称 -->
+
             <TextView
                 android:id="@+id/approvebuyerdetails_producename_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:lineSpacingExtra="2dip"
                 android:paddingLeft="@dimen/margin_left_and_right"
                 android:paddingRight="@dimen/margin_left_and_right"
                 android:textColor="@color/black"
-                android:lineSpacingExtra="2dip"
                 android:textSize="@dimen/textsize13sp" />
+
+            <!-- 提货地址 -->
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -185,9 +197,9 @@
                     android:id="@+id/approvebuyerdetails_addressvalue_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:lineSpacingExtra="2dip"
                     android:layout_marginTop="@dimen/shop_main_width5_dimen"
                     android:layout_toRightOf="@id/approvebuyerdetails_address_textview"
+                    android:lineSpacingExtra="2dip"
                     android:textColor="@color/color_textgray"
                     android:textSize="@dimen/textsize12sp" />
             </RelativeLayout>
@@ -195,6 +207,8 @@
             <View
                 style="@style/style_horizontal_line"
                 android:layout_marginTop="@dimen/shop_main_width5_dimen" />
+
+            <!-- 打样购 信息 -->
 
             <LinearLayout
                 android:id="@+id/approvebuyerdetails_closeingtime_linearlayout"
@@ -225,8 +239,8 @@
                         android:id="@+id/approvebuyerdetails_closeingtime_textview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                         android:lineSpacingExtra="2dip"
                         android:layout_marginLeft="@dimen/shop_main_width5_dimen"
+                        android:lineSpacingExtra="2dip"
                         android:text="@null"
                         android:textColor="@color/color_textgray"
                         android:textSize="@dimen/textsize13sp" />
@@ -251,8 +265,8 @@
                         android:id="@+id/approvebuyerdetails_closeinginfo_textview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:lineSpacingExtra="2dip"
                         android:layout_marginLeft="@dimen/shop_main_width5_dimen"
+                        android:lineSpacingExtra="2dip"
                         android:textColor="@color/color_textgray"
                         android:textSize="@dimen/textsize13sp" />
                 </LinearLayout>
@@ -292,6 +306,12 @@
                     android:orientation="horizontal" >
                 </LinearLayout>
             </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:src="@drawable/productdetails_guide" />
         </LinearLayout>
     </ScrollView>
 
