@@ -34,54 +34,46 @@
             android:paddingTop="5dip" >
 
             <TextView
-                android:singleLine="true"
                 android:id="@+id/qzcodeshare_layouyt_name_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                   android:text="@null"
-                   android:textColor="@color/text_gray_color"
+                android:singleLine="true"
+                android:text="@null"
+                android:textColor="@color/text_gray_color"
                 android:textSize="15sp" />
 
             <TextView
-                android:singleLine="true"
                 android:id="@+id/qzcodeshare_layouyt_count_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
+                android:singleLine="true"
                 android:text="@null"
                 android:textColor="@color/red_text_color"
                 android:textSize="15sp" />
         </RelativeLayout>
 
         <ImageView
-            android:layout_centerHorizontal="true"
             android:id="@+id/qzcodeshare_layout_content_imageview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@+id/qzcodeshare_layout_title_textview"
             android:layout_below="@id/qzcodeshare_layouyt_customview"
-            android:padding="5dip"
+            android:layout_centerHorizontal="true"
             android:background="@color/white"
+            android:padding="5dip"
             android:src="@null" />
 
         <TextView
-            android:id="@+id/qzcodeshare_layout_title_textview"
-            android:layout_width="wrap_content"
+            android:id="@+id/tv_share"
+            android:textSize="@dimen/center_text_size"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:layout_above="@+id/qzcodeshare_layout_share_button"
-            android:layout_centerHorizontal="true"
-            android:text="点击分享给你的好友吧" />
-
-        <Button
-            android:id="@+id/qzcodeshare_layout_share_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:visibility="gone"
-            android:layout_centerHorizontal="true"
-            android:text="分享" />
+            android:layout_below="@id/qzcodeshare_layout_content_imageview"
+            android:layout_marginTop="10dip"
+            android:gravity="center_horizontal"
+            android:text="分享给好友" />
     </RelativeLayout>
 
     <ImageView
