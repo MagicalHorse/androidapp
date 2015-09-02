@@ -25,32 +25,33 @@
                 android:scaleType="fitCenter"
                 android:src="@drawable/default_pic" />
 
-            <LinearLayout
+            <RelativeLayout
                 android:padding="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/user_config_iconwidth60_dimen"
                 android:layout_toRightOf="@id/chat_product_head_layout_imageview"
-                android:orientation="vertical" >
+                 >
 
                 <TextView
-                    android:maxLines="2"
+                    android:singleLine="true"
+                    android:layout_alignParentTop="true"
                     android:id="@+id/chat_product_head_layout_name_textview"
                     android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:gravity="left|center_vertical"
                     android:text="@null"
-                    android:textSize="15sp" />
+                    android:textSize="@dimen/center_text_size" />
 
                 <TextView
+                    android:layout_alignParentBottom="true"
                     android:id="@+id/chat_product_head_layout_price_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@null"
                     android:textColor="@color/red"
-                    android:textSize="15sp" />
-            </LinearLayout>
+                    android:textSize="@dimen/center_text_size" />
+            </RelativeLayout>
         </RelativeLayout>
 
         <View

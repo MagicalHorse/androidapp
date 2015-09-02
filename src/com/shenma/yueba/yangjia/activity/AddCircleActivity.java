@@ -18,30 +18,20 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.sdk.android.oss.callback.SaveCallback;
 import com.alibaba.sdk.android.oss.model.OSSException;
-import com.lidroid.xutils.HttpUtils;
-import com.lidroid.xutils.exception.HttpException;
-import com.lidroid.xutils.http.RequestParams;
-import com.lidroid.xutils.http.ResponseInfo;
-import com.lidroid.xutils.http.callback.RequestCallBack;
-import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.BaseActivityWithTopView;
-import com.shenma.yueba.baijia.modle.BaseRequest;
 import com.shenma.yueba.constants.Constants;
-import com.shenma.yueba.constants.HttpConstants;
 import com.shenma.yueba.util.CustomProgressDialog;
 import com.shenma.yueba.util.FileUtils;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
-import com.shenma.yueba.util.ParserJson;
 import com.shenma.yueba.util.PhotoUtils;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.view.RoundImageView;
@@ -118,40 +108,6 @@ public class AddCircleActivity extends BaseActivityWithTopView implements
 
 	}
 
-	// public void createCircle2() {
-	// HttpUtils httpUtils = new HttpUtils();
-	// RequestParams map = new RequestParams();
-	// HttpControl httpControl = new HttpControl();
-	// map.addBodyParameter(Constants.NAME, et_circle_name.getText()
-	// .toString().trim());
-	// map.addBodyParameter(Constants.LOGO, littlePicPath_cache.substring(
-	// littlePicPath_cache.lastIndexOf("/") + 1,
-	// littlePicPath_cache.length()));
-	// httpUtils.send(HttpMethod.POST,
-	// HttpConstants.METHOD_CIRCLE_GETBUYERGROUPS, map,
-	// new RequestCallBack<String>() {
-	// @Override
-	// public void onSuccess(ResponseInfo<String> responseInfo) {
-	// progressDialog.dismiss();
-	// BaseRequest resultBean = ParserJson
-	// .parserBase(responseInfo.result);
-	// if (200 == resultBean.getStatusCode()) {// 返回成功
-	// Toast.makeText(mContext, "创建成功", 1000).show();
-	// setResult(Constants.RESULTCODE);
-	// AddCircleActivity.this.finish();
-	// } else {
-	// Toast.makeText(mContext, resultBean.getMessage(),
-	// 1000).show();
-	// }
-	// }
-	//
-	// @Override
-	// public void onFailure(HttpException error, String msg) {
-	// // progressDialog.dismiss();
-	// Toast.makeText(mContext, "创建失败！", 1000).show();
-	// }
-	// });
-	// }
 
 	public void createCircle() {
 		HttpControl httpContorl = new HttpControl();

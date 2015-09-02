@@ -2,10 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical" 
     android:background="@color/white"
-    android:padding="@dimen/margin_left_and_right"
-    >
+    android:orientation="vertical"
+    android:padding="@dimen/margin_left_and_right" >
 
     <ImageView
         android:id="@+id/chat_product_head_layout_imageview"
@@ -15,47 +14,47 @@
         android:scaleType="centerCrop"
         android:src="@drawable/default_pic" />
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dip"
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/shop_main_width5_dimen"
         android:layout_marginRight="@dimen/shop_main_width5_dimen"
         android:layout_toLeftOf="@+id/chat_product_head_layout_button"
-        android:layout_toRightOf="@id/chat_product_head_layout_imageview"
-        android:orientation="vertical" >
+        android:layout_toRightOf="@id/chat_product_head_layout_imageview" >
 
         <TextView
+            android:layout_marginTop="2dip"
             android:id="@+id/chat_product_head_layout_name_textview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
             android:layout_marginBottom="@dimen/shop_main_width1_dimen"
-            android:layout_weight="1"
-            android:maxLines="2"
             android:ellipsize="end"
-            android:gravity="bottom|left"
-            android:text="@null" />
+            android:singleLine="true"
+            android:text="@null"
+            android:textSize="@dimen/little_text_size" />
 
         <TextView
+            android:layout_marginBottom="2dip"
             android:id="@+id/chat_product_head_layout_price_textview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/shop_main_width1_dimen"
-            android:layout_weight="1"
-            android:gravity="top|left"
-            android:text="￥0"
-            android:textColor="@color/red" />
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:text="@null"
+            android:textColor="@color/red"
+            android:textSize="@dimen/little_text_size" />
+    </RelativeLayout>
 
     <Button
         android:id="@+id/chat_product_head_layout_button"
-        android:textColor="@color/white"
-                android:layout_width="@dimen/shop_main_iconwidth80_dimen"
+        android:layout_width="@dimen/shop_main_iconwidth80_dimen"
         android:layout_height="@dimen/shop_main_marginleft30_dimen"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:background="@drawable/yeollowsolid_background"
         android:text="立即购买"
-        android:textSize="@dimen/textsize11sp" />
+        android:textColor="@color/white"
+        android:textSize="@dimen/more_little_text_size" />
 
 </RelativeLayout>

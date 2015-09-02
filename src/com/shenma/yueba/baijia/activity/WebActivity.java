@@ -148,7 +148,7 @@ public class WebActivity extends BaseActivityWithTopView {
 	
 	  @Override
 	    protected void onDestroy() {
-	    	MyApplication.getInstance().removeActivity(this);//加入回退栈
+	    	MyApplication.getInstance().removeActivity(this);//移除activity对象
 	    	super.onDestroy();
 	    }
 	

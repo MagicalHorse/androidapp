@@ -16,23 +16,9 @@ package com.shenma.yueba.yangjia.activity;
  * limitations under the License.
  *******************************************************************************/
 
-import java.util.LinkedList;
-
-import com.shenma.yueba.R;
-import com.shenma.yueba.application.MyApplication;
-import com.shenma.yueba.baijia.activity.MainActivityForBaiJia;
-import com.shenma.yueba.baijia.modle.RequestUploadProductDataBean;
-import com.shenma.yueba.camera2.ActivityCapture;
-import com.shenma.yueba.util.FileUtils;
-import com.shenma.yueba.util.ToolsUtil;
-import com.shenma.yueba.view.SelecteKXPOrPublishType;
-import com.shenma.yueba.yangjia.fragment.CircleFragment;
-import com.shenma.yueba.yangjia.fragment.IndexFragmentForYangJia;
-import com.shenma.yueba.yangjia.fragment.MeFragmentForYangJia;
-import com.shenma.yueba.yangjia.fragment.MessageFragmentForYangJia;
-import com.shenma.yueba.yangjia.fragment.TaskRewardFragment;
-import com.umeng.analytics.MobclickAgent;
-
+import im.broadcast.ImBroadcastReceiver;
+import im.broadcast.ImBroadcastReceiver.ImBroadcastReceiverLinstener;
+import im.broadcast.ImBroadcastReceiver.RECEIVER_type;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -45,15 +31,25 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.Window;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 import android.widget.Toast;
-import im.broadcast.ImBroadcastReceiver;
-import im.broadcast.ImBroadcastReceiver.ImBroadcastReceiverLinstener;
-import im.broadcast.ImBroadcastReceiver.RECEIVER_type;
+
+import com.shenma.yueba.R;
+import com.shenma.yueba.application.MyApplication;
+import com.shenma.yueba.baijia.modle.RequestUploadProductDataBean;
+import com.shenma.yueba.camera2.ActivityCapture;
+import com.shenma.yueba.util.FileUtils;
+import com.shenma.yueba.util.ToolsUtil;
+import com.shenma.yueba.view.SelecteKXPOrPublishType;
+import com.shenma.yueba.yangjia.fragment.CircleFragment;
+import com.shenma.yueba.yangjia.fragment.IndexFragmentForYangJia;
+import com.shenma.yueba.yangjia.fragment.MeFragmentForYangJia;
+import com.shenma.yueba.yangjia.fragment.MessageFragmentForYangJia;
+import com.shenma.yueba.yangjia.fragment.TaskRewardFragment;
+import com.umeng.analytics.MobclickAgent;
 
 
 /**
@@ -62,15 +58,7 @@ import im.broadcast.ImBroadcastReceiver.RECEIVER_type;
  *
  */
 public final class MainActivityForYangJia extends FragmentActivity implements ImBroadcastReceiverLinstener{
-
-	static final int MENU_MANUAL_REFRESH = 0;
-	static final int MENU_DISABLE_SCROLL = 1;
-	static final int MENU_SET_MODE = 2;
-	static final int MENU_DEMO = 3;
-
 	private long exitTime = 0;// 初始化退出时间，用于两次点击返回退出程序
-	private LinkedList<String> mListItems;
-	private ArrayAdapter<String> mAdapter;
 	private FragmentTabHost mTabHost;
 //	// 定义数组来存放按钮图片
 	private int mImageViewArray[] = { R.drawable.tab_index_selector,

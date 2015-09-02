@@ -148,10 +148,17 @@ public class AffirmOrderActivity extends BaseActivityWithTopView implements
 		// 提货电话
 		affirmorder_item_tihuophonevalue_textview = (TextView) findViewById(R.id.affirmorder_item_tihuophonevalue_textview);
 		affirmorder_layout_icon_roundimageview = (RoundImageView) findViewById(R.id.affirmorder_layout_icon_roundimageview);
-		affirmorder_layout_icon_roundimageview.setTag(productsDetailsInfoBean.getBuyerId());
+		affirmorder_layout_icon_roundimageview.setTag(productsDetailsInfoBean
+				.getBuyerId());
 		affirmorder_layout_icon_roundimageview
 				.setOnClickListener(onClickListener);
-		MyApplication.getInstance().getBitmapUtil().display(affirmorder_layout_icon_roundimageview, ToolsUtil.nullToString(productsDetailsInfoBean.getBuyerLogo()));
+		MyApplication
+				.getInstance()
+				.getBitmapUtil()
+				.display(
+						affirmorder_layout_icon_roundimageview,
+						ToolsUtil.nullToString(productsDetailsInfoBean
+								.getBuyerLogo()));
 
 		affirmorder_layout_icon_imageview = (ImageView) findViewById(R.id.affirmorder_layout_icon_imageview);
 		// 设置联系电话
@@ -220,7 +227,6 @@ public class AffirmOrderActivity extends BaseActivityWithTopView implements
 				R.id.affirmorder_item_tihuophonevalue_textview,
 				R.id.affirmorder_item_tihuophonetitle_textview);
 		productsDetailsPromotion = productsDetailsInfoBean.getPromotion();
-		
 
 	}
 
@@ -237,19 +243,26 @@ public class AffirmOrderActivity extends BaseActivityWithTopView implements
 
 					@Override
 					public void http_Success(Object obj) {
-						if (obj != null && obj instanceof RequestCreatOrderInfoBean) {
-							RequestCreatOrderInfoBean requestCreatOrderInfoBean=(RequestCreatOrderInfoBean)obj;
-							if(requestCreatOrderInfoBean.getData()!=null)
-							{
-								MyApplication.getInstance().showMessage(AffirmOrderActivity.this, "下单成功");
-								Intent intent=new Intent(AffirmOrderActivity.this,BaijiaPayActivity.class);
-								PayResponseFormBean bean=new PayResponseFormBean();
-								bean.setOrderNo(requestCreatOrderInfoBean.getData().getOrderNo());
-								bean.setPrice(requestCreatOrderInfoBean.getData().getActualAmount());
-								bean.setContent(productsDetailsInfoBean.getProductName());
-								bean.setDesc(productsDetailsInfoBean.getProductName()+"  x "+buyCount);
+						if (obj != null
+								&& obj instanceof RequestCreatOrderInfoBean) {
+							RequestCreatOrderInfoBean requestCreatOrderInfoBean = (RequestCreatOrderInfoBean) obj;
+							if (requestCreatOrderInfoBean.getData() != null) {
+								MyApplication.getInstance().showMessage(
+										AffirmOrderActivity.this, "下单成功");
+								Intent intent = new Intent(
+										AffirmOrderActivity.this,
+										BaijiaPayActivity.class);
+								PayResponseFormBean bean = new PayResponseFormBean();
+								bean.setOrderNo(requestCreatOrderInfoBean
+										.getData().getOrderNo());
+								bean.setPrice(requestCreatOrderInfoBean
+										.getData().getActualAmount());
+								bean.setContent(productsDetailsInfoBean
+										.getProductName());
+								bean.setDesc(productsDetailsInfoBean
+										.getProductName() + "  x " + buyCount);
 								bean.setUrl(com.shenma.yueba.constants.Constants.WX_NOTIFY_URL);
-								intent.putExtra("PAYDATA",bean);
+								intent.putExtra("PAYDATA", bean);
 								AffirmOrderActivity.this.startActivity(intent);
 								ToolsUtil.sendOrderBroadcase();
 							}
@@ -272,7 +285,8 @@ public class AffirmOrderActivity extends BaseActivityWithTopView implements
 			switch (v.getId()) {
 			case R.id.affirmorder_layout_icon_roundimageview:
 				if (v.getTag() != null && v.getTag() instanceof Integer) {
-					ToolsUtil.forwardShopMainActivity(mContext, (Integer)v.getTag());
+					ToolsUtil.forwardShopMainActivity(mContext,
+							(Integer) v.getTag());
 				}
 
 				break;
@@ -286,7 +300,6 @@ public class AffirmOrderActivity extends BaseActivityWithTopView implements
 	void getBaijiaOrderPrice(int ProductId, int Quantity) {
 		httpControl.getBaijiaOrderPrice(ProductId, Quantity, true,
 				new HttpCallBackInterface() {
-
 					@Override
 					public void http_Success(Object obj) {
 						if (obj == null
@@ -330,7 +343,9 @@ public class AffirmOrderActivity extends BaseActivityWithTopView implements
 						R.id.affirmorder_item_allcount_textview, "共" + buyCount
 								+ "件商品");
 		ToolsUtil.setFontStyle(this, parentview,
-				R.id.affirmorder_item_pricevalue_textview, Double.toString(requestComputeAmountInfoBean.getData().getTotalamount()));
+				R.id.affirmorder_item_pricevalue_textview, Double
+						.toString(requestComputeAmountInfoBean.getData()
+								.getTotalamount()));
 		ToolsUtil.setFontStyle(this, parentview,
 				R.id.affrimorder_layout_footer_countprice_textview, ToolsUtil
 						.nullToString(Double
@@ -338,18 +353,25 @@ public class AffirmOrderActivity extends BaseActivityWithTopView implements
 										.getData().getSaletotalamount())));
 		if (productsDetailsPromotion != null) {
 			// 设置优惠名称
-			ToolsUtil.setFontStyle(this, parentview,R.id.affirmorder_item_youhuititle_textview,ToolsUtil.nullToString(productsDetailsPromotion.getName()));
-			
-			if(requestComputeAmountInfoBean.getData()!=null)
-			{
-				if(requestComputeAmountInfoBean.getData().getDiscountamount()>0)
-				{
-					affirmorder_item_youhui_linearlayout.setVisibility(View.VISIBLE);
+			ToolsUtil.setFontStyle(this, parentview,
+					R.id.affirmorder_item_youhuititle_textview,
+					ToolsUtil.nullToString(productsDetailsPromotion.getName()));
+
+			if (requestComputeAmountInfoBean.getData() != null) {
+				if (requestComputeAmountInfoBean.getData().getDiscountamount() > 0) {
+					affirmorder_item_youhui_linearlayout
+							.setVisibility(View.VISIBLE);
 				}
-			
-			// 优惠的金额
-			ToolsUtil.setFontStyle(this,parentview,R.id.affirmorder_item_youhuicontext_textview,ToolsUtil.nullToString("立减:￥"+ Double.toString(requestComputeAmountInfoBean.getData().getDiscountamount())));
-			
+
+				// 优惠的金额
+				ToolsUtil.setFontStyle(
+						this,
+						parentview,
+						R.id.affirmorder_item_youhuicontext_textview,
+						ToolsUtil.nullToString("立减:￥"
+								+ Double.toString(requestComputeAmountInfoBean
+										.getData().getDiscountamount())));
+
 			}
 		}
 
@@ -363,29 +385,27 @@ public class AffirmOrderActivity extends BaseActivityWithTopView implements
 			String phoneNo = (String) v.getTag();
 			if (!TextUtils.isEmpty(phoneNo)) {
 				ToolsUtil.callActivity(AffirmOrderActivity.this, phoneNo);
-			}else{
+			} else {
 				Toast.makeText(mContext, "该买手暂无联系电话", 1000).show();
 			}
 			break;
 		}
 	}
-	
-	
-	
-	
+
 	@Override
 	protected void onDestroy() {
-		MyApplication.getInstance().removeActivity(this);//加入回退栈
+		MyApplication.getInstance().removeActivity(this);// 加入回退栈
 		super.onDestroy();
 	}
-	
-	 public void onResume() {
-		  super.onResume();
-		  MobclickAgent.onResume(this);
-		  }
-		  public void onPause() {
-		  super.onPause();
-		  MobclickAgent.onPause(this);
-		  }
+
+	public void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+
+	public void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
 
 }

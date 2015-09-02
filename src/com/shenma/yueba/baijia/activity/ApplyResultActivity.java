@@ -107,9 +107,9 @@ public class ApplyResultActivity extends BaseActivityWithTopView implements OnCl
 	}
 	
 	
-//	@Override
-//	protected void onDestroy() {
-//		MyApplication.getInstance().removeActivity(this);//加入回退栈
-//		super.onDestroy();
-//	}
+	@Override
+	protected void onDestroy() {
+		MyApplication.getInstance().removeActivity(this);//加入回退栈
+		super.onDestroy();
+	}
 }

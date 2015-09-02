@@ -374,17 +374,18 @@ public class EditPicActivity extends BaseActivityWithTopView implements
 	}
 
 	private void saveBitmapToFile() {
+		String userId =  SharedUtil.getUserId(mContext);
+		String index = MyApplication.getInstance().getPublishUtil().getIndex();
 		File dir = new File(FileUtils.getRootPath() + "/tagPic/");
 		if (!dir.exists()) {
-			if (!dir.exists())
 				dir.mkdirs();
 		}
-		File file = new File(dir, "tagPic" + SharedUtil.getUserId(mContext)
-				+ MyApplication.getInstance().getPublishUtil().getIndex()
+		File file = new File(dir, "tagPic" + userId
+				+ index
 				+ ".png");
 		File file_yuan = new File(dir, "tagPic_yuan"
-				+ SharedUtil.getUserId(mContext)
-				+ MyApplication.getInstance().getPublishUtil().getIndex()
+				+ userId
+				+ index
 				+ ".png");
 		if (file.exists()) {
 			file.delete();

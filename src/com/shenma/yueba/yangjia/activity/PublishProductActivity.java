@@ -61,6 +61,7 @@ import com.umeng.analytics.MobclickAgent;
  */
 public class PublishProductActivity extends BaseActivityWithTopView implements
 		OnClickListener {
+	private int pictureCount = 3;// 图片个数
 	private Bitmap bitmap0, bitmap1, bitmap2;
 	public String pic1, pic2, pic3, pic;
 	private LinearLayout ll_guige_container;
@@ -101,8 +102,8 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 
 	private void getIntentData() {
 		from = getIntent().getStringExtra("from");
-		TagListBean tagListBean = (TagListBean) getIntent().getSerializableExtra(
-				"tagListBean");
+		TagListBean tagListBean = (TagListBean) getIntent()
+				.getSerializableExtra("tagListBean");
 		RequestUploadProductDataBean detailBean = (RequestUploadProductDataBean) getIntent()
 				.getSerializableExtra("data");
 		productId = getIntent().getStringExtra("id");
@@ -120,7 +121,7 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 			}
 			tv_publish.setText("修改");
 			setTitle("修改商品");
-			setTopRightTextView("");//取消右上角按钮
+			setTopRightTextView("");// 取消右上角按钮
 			setLeftTextView(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -173,9 +174,9 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 					.getPublishUtil().getBean().getImages();
 			if (imagesList != null && imagesList.size() > 0) {
 				String imageUrl = imagesList.get(0).getImageUrl();
-				if (!TextUtils.isEmpty(imageUrl)) {//缓存有网络图片地址
+				if (!TextUtils.isEmpty(imageUrl)) {// 缓存有网络图片地址
 					saveBitmapToFile(0, imageUrl);
-				}else{//说明图片已经本地修改的时候删除完，所以没有了图片
+				} else {// 说明图片已经本地修改的时候删除完，所以没有了图片
 					setImageView();
 				}
 			}
@@ -248,12 +249,12 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 
 	private void initView() {
 		setTitle("发布商品");
-//		setLeftTextView(new OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				PublishProductActivity.this.finish();
-//			}
-//		});
+		// setLeftTextView(new OnClickListener() {
+		// @Override
+		// public void onClick(View v) {
+		// PublishProductActivity.this.finish();
+		// }
+		// });
 		setTopRightTextView("取消发布", new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -313,19 +314,17 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 	}
 
 	private void setImageView() {
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < pictureCount; i++) {
 			StateBean bean = new StateBean();
 			View view = View.inflate(mContext, R.layout.tag_imageview, null);
 			final ImageView iv_pic = (ImageView) view.findViewById(R.id.iv_pic);
 			final ImageView iv_delete = (ImageView) view
 					.findViewById(R.id.iv_delete);
 			iv_delete.setTag(i);
-			// iv_pic.setTag(i);
 			iv_delete.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					int deletePosition = (Integer) iv_delete.getTag();// 获取删除属于哪个view的标记
-					// int picPosition = (Integer) iv_pic.getTag();//删除的图片的tag
 					// 以下是清空缓存的标签
 					ArrayList<List<TagCacheBean>> tagList = MyApplication
 							.getInstance().getPublishUtil().getTagCacheList();
@@ -353,31 +352,38 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 					bean.setSetPic(false);
 					iv_pic.setTag(bean);
 					File file = null;
+
 					if (deletePosition == 0) {
-						if (new File(FileUtils.getRootPath() + "/tagPic/" + "tagPic"
-								+ SharedUtil.getUserId(mContext) + "0.png").exists()) {
-							file = new File(FileUtils.getRootPath() + "/tagPic/" + "tagPic"
+						if (new File(FileUtils.getRootPath() + "/tagPic/"
+								+ "tagPic" + SharedUtil.getUserId(mContext)
+								+ "0.png").exists()) {
+							file = new File(FileUtils.getRootPath()
+									+ "/tagPic/" + "tagPic"
 									+ SharedUtil.getUserId(mContext) + "0.png");
 							pic1 = "";
 						}
 					}
 					if (deletePosition == 1) {
-						if (new File(FileUtils.getRootPath() + "/tagPic/" + "tagPic"
-								+ SharedUtil.getUserId(mContext) + "1.png").exists()) {
-							file = new File(FileUtils.getRootPath() + "/tagPic/" + "tagPic"
+						if (new File(FileUtils.getRootPath() + "/tagPic/"
+								+ "tagPic" + SharedUtil.getUserId(mContext)
+								+ "1.png").exists()) {
+							file = new File(FileUtils.getRootPath()
+									+ "/tagPic/" + "tagPic"
 									+ SharedUtil.getUserId(mContext) + "1.png");
 							pic2 = "";
 						}
 					}
 					if (deletePosition == 2) {
-						if (new File(FileUtils.getRootPath() + "/tagPic/" + "tagPic"
-								+ SharedUtil.getUserId(mContext) + "2.png").exists()) {
-							file = new File(FileUtils.getRootPath() + "/tagPic/" + "tagPic"
+						if (new File(FileUtils.getRootPath() + "/tagPic/"
+								+ "tagPic" + SharedUtil.getUserId(mContext)
+								+ "2.png").exists()) {
+							file = new File(FileUtils.getRootPath()
+									+ "/tagPic/" + "tagPic"
 									+ SharedUtil.getUserId(mContext) + "2.png");
 							pic3 = "";
 						}
 					}
-					if (file!=null && file.exists()) {
+					if (file != null && file.exists()) {
 						file.delete();
 					}
 				}
@@ -389,51 +395,37 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 					StateBean bean = (StateBean) v.getTag();
 					if (dataList.contains(bean)) {
 						index = dataList.indexOf(bean);
-						boolean canClick = true;
-						for (int j = 0; j < index; j++) {
-							if (dataList.get(j).isSetPic()) {
-								continue;
+						if (bean.isSetPic()) {
+							Intent intent = new Intent(
+									PublishProductActivity.this,
+									EditPicActivity.class);
+							MyApplication.getInstance().getPublishUtil()
+									.setFrom("publish");
+							if (!("" + index).equals(MyApplication
+									.getInstance().getPublishUtil().getIndex())) {
+								MyApplication.getInstance().getPublishUtil()
+										.setOtherPic(true);
 							} else {
-								canClick = false;
+								MyApplication.getInstance().getPublishUtil()
+										.setOtherPic(false);
 							}
-						}
-						if (true) {
-							if (bean.isSetPic()) {
-								Intent intent = new Intent(
-										PublishProductActivity.this,
-										EditPicActivity.class);
-								MyApplication.getInstance().getPublishUtil()
-										.setFrom("publish");
-								if (!("" + index).equals(MyApplication
-										.getInstance().getPublishUtil()
-										.getIndex())) {
-									MyApplication.getInstance()
-											.getPublishUtil().setOtherPic(true);
-								} else {
-									MyApplication.getInstance()
-											.getPublishUtil()
-											.setOtherPic(false);
-								}
-								MyApplication.getInstance().getPublishUtil()
-										.setIndex(index + "");
-								startActivity(intent);
-								PublishProductActivity.this.finish();
+							MyApplication.getInstance().getPublishUtil()
+									.setIndex(index + "");
+							startActivity(intent);
+							PublishProductActivity.this.finish();
 
-							} else {
-								Intent intent = new Intent(
-										PublishProductActivity.this,
-										ActivityCapture.class);
-								MyApplication.getInstance().getPublishUtil()
-										.setFrom("publish");
-								MyApplication.getInstance().getPublishUtil()
-										.setIndex(index + "");
-								MyApplication.getInstance().finishActivity(
-										EditPicActivity.class);
-								startActivity(intent);
-								PublishProductActivity.this.finish();
-							}
 						} else {
-							Toast.makeText(mContext, "请按顺序添加图片", 1000).show();
+							Intent intent = new Intent(
+									PublishProductActivity.this,
+									ActivityCapture.class);
+							MyApplication.getInstance().getPublishUtil()
+									.setFrom("publish");
+							MyApplication.getInstance().getPublishUtil()
+									.setIndex(index + "");
+							MyApplication.getInstance().finishActivity(
+									EditPicActivity.class);
+							startActivity(intent);
+							PublishProductActivity.this.finish();
 						}
 
 					}
@@ -447,16 +439,7 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 			params.width = ToolsUtil.getDisplayWidth(mContext) / 3
 					- ToolsUtil.dip2px(mContext, 15);
 			iv_pic.setLayoutParams(params);
-
 			bean.setPosition(i);
-			// for (int j = 0; j <tagList.size(); j++) {
-			// double x= tagList.get(j).get("x");
-			// double y = tagList.get(j).get("y");
-			//
-			// layout_tag_image.addTextTag("aaaa",((int)((iv_pic.getX()+iv_pic.getWidth())*x)),
-			// ((int)(iv_pic.getHeight()*y)));
-			// }
-
 			File files = new File(FileUtils.getRootPath() + "/tagPic/"
 					+ "tagPic" + SharedUtil.getUserId(mContext) + i + ".png");
 			if (files.exists()) {
@@ -729,22 +712,22 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 		}
 		HttpControl httpControl = new HttpControl();
 		if (upPicProgress == 0) {
-			if(!TextUtils.isEmpty(pic1)){//第一张图片不为空，上传第一张图片
+			if (!TextUtils.isEmpty(pic1)) {// 第一张图片不为空，上传第一张图片
 				pic = pic1;
-			}else{//第一张图片为空，设置标记位，开始上传第二张
+			} else {// 第一张图片为空，设置标记位，开始上传第二张
 				upPicProgress = 1;
 			}
-			
+
 		}
-		if (upPicProgress == 1) {//如果第二张不为空，上传第二张图片
-			if(!TextUtils.isEmpty(pic2)){
+		if (upPicProgress == 1) {// 如果第二张不为空，上传第二张图片
+			if (!TextUtils.isEmpty(pic2)) {
 				pic = pic2;
-			}else{//第二张为空，设置标记位，上传第三张图片
+			} else {// 第二张为空，设置标记位，上传第三张图片
 				upPicProgress = 2;
 			}
 		}
 		if (upPicProgress == 2) {
-			if(!TextUtils.isEmpty(pic3)){//如果第三章不为空，上传第三章
+			if (!TextUtils.isEmpty(pic3)) {// 如果第三章不为空，上传第三章
 				pic = pic3;
 			}
 		}
@@ -758,7 +741,7 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 
 			@Override
 			public void onFailure(String arg0, OSSException arg1) {
-				if (progressDialog!=null && progressDialog.isShowing()) {
+				if (progressDialog != null && progressDialog.isShowing()) {
 					progressDialog.dismiss();
 				}
 
@@ -776,14 +759,14 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 						MyApplication.getInstance().getPublishUtil().getBean()
 								.getImages().get(0).setImageUrl(imageName1);
 					}
-					if (!TextUtils.isEmpty(pic2)) {//第二张图片不为空
+					if (!TextUtils.isEmpty(pic2)) {// 第二张图片不为空
 						upPicProgress = 1;
 						uploadImage();
 					} else {
-						if (!TextUtils.isEmpty(pic3)) {//第三张图片不为空
+						if (!TextUtils.isEmpty(pic3)) {// 第三张图片不为空
 							upPicProgress = 2;
 							uploadImage();
-						}else{
+						} else {
 							runOnUiThread(new Runnable() {
 								public void run() {
 									publishProduct();
@@ -916,7 +899,6 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 
 	}
 
-
 	@Override
 	protected void onDestroy() {
 		if (bitmap0 != null) {
@@ -941,13 +923,12 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 		super.onPause();
 		MobclickAgent.onPause(this);
 	}
-	
-	
-	
+
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if(keyCode == KeyEvent.KEYCODE_BACK && KeyEvent.ACTION_DOWN == event.getAction()){
-			if("发布".equals(tv_publish.getText().toString().trim())){
+		if (keyCode == KeyEvent.KEYCODE_BACK
+				&& KeyEvent.ACTION_DOWN == event.getAction()) {
+			if ("发布".equals(tv_publish.getText().toString().trim())) {
 				DialogUtils utils = new DialogUtils();
 				utils.alertDialog(mContext, "提示", "您确定要取消发布商品吗？",
 						new DialogUtilInter() {
@@ -961,7 +942,7 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 										PublishProductActivity.class);
 							}
 						}, true, "确定", "取消", false, true);
-			}else{//修改
+			} else {// 修改
 				MyApplication.getInstance().finishActivity(
 						EditPicActivity.class);
 				MyApplication.getInstance().finishActivity(
@@ -973,6 +954,5 @@ public class PublishProductActivity extends BaseActivityWithTopView implements
 		}
 		return super.onKeyDown(keyCode, event);
 	}
-	
-	
+
 }
