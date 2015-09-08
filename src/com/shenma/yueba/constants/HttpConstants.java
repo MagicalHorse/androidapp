@@ -302,7 +302,12 @@ public class HttpConstants {
 	
 	public static String METHOD_ORDER_RMAConfirm = OrderFORWRITE
 			+ "RMAConfirm";
-	  
+	
+	
+	/**
+	 * 判断是否可以开小票
+	 */
+	public static String METHOD_ORDER_CHECK = OrderFORREAD+"CheckIsCanCreateGeneralOrder";
 	/**
 	 * 开小票
 	 */

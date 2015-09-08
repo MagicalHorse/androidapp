@@ -5,7 +5,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,10 +13,10 @@ import com.shenma.yueba.R;
 import com.shenma.yueba.application.MyApplication;
 import com.shenma.yueba.baijia.activity.BaseActivityWithTopView;
 import com.shenma.yueba.baijia.dialog.QRCodeShareDialog;
+import com.shenma.yueba.baijia.modle.BaseRequest;
 import com.shenma.yueba.util.FontManager;
 import com.shenma.yueba.util.HttpControl;
 import com.shenma.yueba.util.HttpControl.HttpCallBackInterface;
-import com.shenma.yueba.util.SoftKeyboardUtil;
 import com.shenma.yueba.util.ToolsUtil;
 import com.shenma.yueba.yangjia.modle.KaiXiaoPiaoBackBean;
 import com.shenma.yueba.yangjia.modle.kaixiaoPiaoBean;
@@ -83,7 +82,7 @@ public class KaiXiaoPiaoActivity extends BaseActivityWithTopView implements
 				Toast.makeText(mContext, "售价小数点后最多两位", 1000).show();
 				return;
 			}
-			KaiXiaoPiao();
+			checkCreateGeneralOrder();
 			break;
 
 		default:
@@ -91,7 +90,36 @@ public class KaiXiaoPiaoActivity extends BaseActivityWithTopView implements
 		}
 
 	}
+	
+	
+	
+	/**
+	 * 判断是否可以开小票
+	 */
+	private void checkCreateGeneralOrder() {
+		HttpControl httpcontrol = new HttpControl();
+		httpcontrol.checkCreateGeneralOrder(new HttpCallBackInterface() {
+					@Override
+					public void http_Success(Object obj) {
+						BaseRequest back = (BaseRequest) obj;
+						if(back!=null && back.isSuccessful()){
+							KaiXiaoPiao();
+						}else{
+							Toast.makeText(mContext, "当前时间不可以开小票", 1000).show();
+						}
+					}
+					@Override
+					public void http_Fails(int error, String msg) {
+						Toast.makeText(mContext, msg, 1000).show();
 
+					}
+				}, mContext, true);
+	}
+	
+	
+	/**
+	 * 开小票
+	 */
 	private void KaiXiaoPiao() {
 		HttpControl httpcontrol = new HttpControl();
 		httpcontrol.createGeneralOrder(et_product_price.getText().toString()

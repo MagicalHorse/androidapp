@@ -1062,7 +1062,18 @@ public class HttpControl {
 				OrderListBackBean.class, showDialog, false);
 	}
 	
-	
+	/**
+	 * 判断是否能开小票
+	 * @return void
+	 * **/
+	public void checkCreateGeneralOrder(
+			final HttpCallBackInterface httpCallBack, Context context,
+			boolean showDialog) {
+		Map<String, String> map = new HashMap<String, String>();
+		BasehttpSend(map, context,
+				HttpConstants.METHOD_ORDER_CHECK, httpCallBack,
+				BaseRequest.class, showDialog, false);
+	}
 	
 	
 	/**

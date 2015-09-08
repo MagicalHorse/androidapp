@@ -152,6 +152,7 @@ public class ProductManagerFragmentForOnLine extends BaseFragment implements Ref
 						if (isRefresh) {
 							mList.clear();
 							if(bean.getData().getItems()!=null && bean.getData().getItems().size()>0){
+								tv_nodata.setVisibility(View.GONE);
 								mList.addAll(bean.getData().getItems());
 							}else{
 								tv_nodata.setVisibility(View.VISIBLE);
