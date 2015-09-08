@@ -6,9 +6,9 @@ import com.shenma.yueba.application.MyApplication;
 import android.os.Environment;
 
 public class Constants {
-//	public static final String PublishStatus = "1";//开发环境
-  public static final String PublishStatus = "2";//生产环境
-//  public static final String PublishStatus = "3";//测试环境
+  //public static final String PublishStatus = "1";//开发环境
+  //public static final String PublishStatus = "2";//生产环境
+  public static final String PublishStatus = "3";//测试环境
 	
 	
 	
